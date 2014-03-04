@@ -1,15 +1,39 @@
-source 'https://rubygems.org'
-gem 'rails', '4.0.3'
-gem 'sass-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 1.2'
+source "https://rubygems.org"
+gem "rails", "4.0.3"
+gem "sass-rails", "~> 4.0.0"
+gem "uglifier", ">= 1.3.0"
+gem "coffee-rails", "~> 4.0.0"
+gem "jquery-rails"
+gem "turbolinks"
+gem "jbuilder", "~> 1.2"
+gem "resque"
+gem "resque-pool"
+gem "rails_config"
+gem "sanitize"
+gem "mini_magick"
+gem "mongoid", github: "mongoid/mongoid"
+gem "unicorn"
+gem "capistrano"
+gem "rvm-capistrano"
+gem "capistrano-ext"
 
 group :doc do
-  gem 'sdoc', require: false
+  gem "sdoc", require: false
 end
 
-gem 'unicorn'
-gem 'capistrano', group: :development
+group :development, :test do
+  gem "rspec-rails"
+  gem "spork-rails"
+  gem "guard-rspec"
+  gem "guard-spork"
+  gem "factory_girl_rails"
+  gem "database_cleaner"
+  gem "rb-fsevent"
+  gem "growl"
+  gem "pry-rails"
+  gem "pry-debugger"
+  gem "better_errors"
+  gem "rails-erd"
+  gem "rack-mini-profiler"
+  gem "resque-web", require: "resque_web"
+end

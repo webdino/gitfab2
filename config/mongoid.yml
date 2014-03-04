@@ -1,0 +1,19 @@
+development:
+  sessions:
+    default:
+      database: gitfab2_development
+      hosts:
+        - localhost:27017
+      options:
+  options:
+
+test:
+  sessions:
+    default:
+      database: gitfab2_test
+      hosts:
+        - localhost:27017
+      options:
+        read: primary
+        max_retries: 1
+        retry_interval: 0
