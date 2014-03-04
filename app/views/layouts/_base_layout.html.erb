@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gitfab2</title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= browserid_js_tag %>
+    <%= content_for?(:content) ? yield(:content) : yield %>
+    <%= content_for?(:bottom) ? yield(:bottom) : nil %>
+  </body>
+</html>

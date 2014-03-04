@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Gitfab2</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
-</html>
+<%= content_for :content do %>
+  <div id="content">
+    <%= yield %>
+  </div>
+<% end %>
+<%= render partial: "layouts/base_layout" %>

@@ -1,0 +1,30 @@
+<h1>Home</h1>
+<% if user_signed_in? %>
+  <p>Logged in: <%= current_user.email %></p>
+  <p><%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
+<% else%>
+  <%= link_to "Sign in", "#", class: "persona-login-button" %>
+<% end%>
+
+<script>
+  $(".persona-login-button").click(function(e) {
+    e.preventDefault();
+
+    navigator.id.get(function(assertion) {
+      if (assertion) {
+        $.ajax({
+          url: "/users/sign_in",
+          type: "POST",
+          dataType: "json",
+          cache: false,
+          data: {
+            "assertion": assertion
+          }
+          }).done(function() {
+          window.location.href = "/";
+        });
+      }
+    });
+  });
+</script>
+
