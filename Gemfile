@@ -16,6 +16,8 @@ gem "unicorn"
 gem "capistrano"
 gem "rvm-capistrano"
 gem "capistrano-ext"
+gem "rugged"
+gem "devise_browserid_authenticatable"
 
 group :doc do
   gem "sdoc", require: false
