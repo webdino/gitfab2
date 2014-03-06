@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @recipe.title %></h1>
+
+<p>
+  <%= image_tag "hanoi.jpg" %>
+</p>
+
+
+<p>
+  <strong>Description:</strong>
+  <%= @recipe.description %>
+</p>
+
+<%= link_to 'Edit', [:edit, @user, @recipe] %> |
+<%= link_to 'Back', [@user, :recipes] %>

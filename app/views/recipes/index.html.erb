@@ -1,0 +1,23 @@
+<section id="recipes_index">
+  <h1><%= @user.email %> のレシピ一覧</h1>
+  <div id="recipes">
+    <% @recipes.each do |recipe| %>
+      <div class="recipe">
+        <p class="cover"><%= link_to "", [@user, recipe] %></p>
+        <div class="summary">
+          <p><%= recipe.title %></p>
+          <p><%= recipe.description %></p>
+          <ul>
+            <li><%= link_to 'Show', [@user, recipe] %></li>
+            <li><%= link_to 'Edit', [:edit, @user, recipe] %></li>
+            <li><%= link_to 'Destroy', [@user, recipe], method: :delete, data: {confirm: 'Are you sure?'} %></li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <br>
+
+  <%= link_to 'New Recipe', [:new, current_user, :recipe] %>
+</section>

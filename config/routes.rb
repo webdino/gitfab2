@@ -1,4 +1,9 @@
 Gitfab2::Application.routes.draw do
+  resources :recipes
+
   devise_for :users, controllers: {sessions: "sessions"}
   root "home#index"
+  resources :users, only: [:show] do
+    resources :recipes
+  end
 end
