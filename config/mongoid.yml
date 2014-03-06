@@ -1,7 +1,25 @@
-development:
+development: &development
   sessions:
     default:
       database: gitfab2_development
+      hosts:
+        - localhost:27017
+      options:
+  options:
+
+staging:
+  sessions:
+    default:
+      database: gitfab2_staging
+      hosts:
+        - localhost:27017
+      options:
+  options:
+
+production:
+  sessions:
+    default:
+      database: gitfab2_production
       hosts:
         - localhost:27017
       options:
