@@ -1,0 +1,31 @@
+@import "mixins/clearfix.css.scss";
+#recipes_index {
+  h1 {
+    font-size: 2em;
+    margin: 20px auto;
+  }
+  #recipes {
+    @include cf;
+    margin-left: -20px;
+  }
+  .recipe {
+    background-color: #eee;
+    width: 400px;
+    height: 400px;
+    float: left;
+    margin-left: 20px;
+    .summary {
+      margin: 20px;
+    }
+    .cover {
+      a {
+        display: block;
+        height: 200px;
+        background-color: #eee;
+        background-image: asset-url("hanoi.jpg");
+        background-size: cover;
+        background-position: center;
+      }
+    }
+  }
+}
