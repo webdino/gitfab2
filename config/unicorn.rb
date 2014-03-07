@@ -1,10 +1,9 @@
-rails_env = ENV["RAILS_ENV"]  || "production"
-
+rails_env = ENV["RAILS_ENV"] || "production"
 workers_procs = {production: 5, staging: 2}
 workers_procs.default = 2
 worker_processes workers_procs[rails_env.to_sym]
 
-app_directory = "/usr/local/rails_apps/gitfab2/current"
+app_directory = "/usr/local/rails_app/gitfab2/current"
 working_directory app_directory # available in 0.94.0+
 
 listen "/tmp/unicorn_gitfab2.sock", backlog: 128

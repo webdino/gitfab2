@@ -13,11 +13,13 @@ gem "sanitize"
 gem "mini_magick"
 gem "mongoid", github: "mongoid/mongoid"
 gem "unicorn"
-gem "capistrano"
-gem "rvm-capistrano"
-gem "capistrano-ext"
+gem "capistrano", "~> 3.1.0"
+gem "capistrano-rvm"
+gem "capistrano-bundler"
+gem "capistrano-rails"
 gem "rugged"
 gem "devise_browserid_authenticatable"
+gem "therubyracer"
 
 group :doc do
   gem "sdoc", require: false
