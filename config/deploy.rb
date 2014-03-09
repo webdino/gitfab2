@@ -48,3 +48,11 @@ namespace :deploy do
 
   after :publishing, :restart
 end
+
+desc "symlinking after precompilation"
+task :symlink do
+  on roles(:app) do
+    execute "ln -s #{release_path}/config/database.ymls/#{fetch :rails_env}.yml #{release_path}/config/database.yml"
+  end
+end
+before "deploy:assets:precompile", :symlink
