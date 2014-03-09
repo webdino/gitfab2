@@ -1,6 +1,3 @@
-class Recipe
-  include Mongoid::Document
-  field :title, type: String
-  field :description, type: String
+class Recipe < ActiveRecord::Base
   belongs_to :user
 end
