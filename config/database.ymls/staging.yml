@@ -2,10 +2,10 @@ staging:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: <%= ENV["MYSQL_DATABASE_NAME"] %>
+  database: gitfab2_staging
   pool: 5
-  username: <%= ENV["MYSQL_USER"] %>
-  password: <%= ENV["MYSQL_PASSWORD"] %>
+  username: root
+  password: root
   socket: /var/lib/mysql/mysql.sock
 
 redis:
@@ -13,4 +13,4 @@ redis:
   port: 6379
   db: 0
   options:
-  namespace: <%= ENV["REDIS_NAMESPACE"] %>
+  namespace: gitfab2_staging
