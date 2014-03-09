@@ -11,7 +11,7 @@ gem "resque-pool"
 gem "rails_config"
 gem "sanitize"
 gem "mini_magick"
-gem "mongoid", github: "mongoid/mongoid"
+gem "mysql2"
 gem "unicorn"
 gem "capistrano", "~> 3.1.0"
 gem "capistrano-rvm"
@@ -20,6 +20,7 @@ gem "capistrano-rails"
 gem "rugged"
 gem "devise_browserid_authenticatable"
 gem "therubyracer"
+gem "gitolite"
 
 group :doc do
   gem "sdoc", require: false
@@ -38,6 +39,5 @@ group :development, :test do
   gem "pry-debugger"
   gem "better_errors"
   gem "rails-erd"
-  gem "rack-mini-profiler"
   gem "resque-web", require: "resque_web"
 end

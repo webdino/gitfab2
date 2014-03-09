@@ -1,0 +1,16 @@
+staging:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  database: <%= ENV["MYSQL_DATABASE_NAME"] %>
+  pool: 5
+  username: <%= ENV["MYSQL_USER"] %>
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  socket: /var/lib/mysql/mysql.sock
+
+redis:
+  host: localhost
+  port: 6379
+  db: 0
+  options:
+  namespace: <%= ENV["REDIS_NAMESPACE"] %>

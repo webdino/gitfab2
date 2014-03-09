@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Gitfab2::Application.config.secret_key_base = '0e33e16df030b8876ac612de2f19302955bc46b1a6eeda4d74906495805a8e74b37138e21a95c5e4ad8704ad16d6560e9c96ed694c60619d33960c62a0e204ed'
+Gitfab2::Application.config.secret_key_base = 'fbe91b55c9f77caee74e733d9399eaf75578e79b12455d6255a5dac75ba8c066085d05edbe11c51670e8c0e968313e28d926878a893f20081f80e569f31461eb'
