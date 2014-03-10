@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :set_user
+  before_action :set_owner
 
   def index
     @recipes = Recipe.all
@@ -11,6 +11,10 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @recipe.materials.build
+    @recipe.tools.build
+    @recipe.statuses.build
+    @recipe.ways.build
   end
 
   def edit
@@ -19,7 +23,7 @@ class RecipesController < ApplicationController
   def create
     @recipe = Recipe.new recipe_params
     if @recipe.save
-      redirect_to [current_user, @recipe], notice: "Recipe was successfully created."
+      redirect_to [@owner, @recipe], notice: "Recipe was successfully created."
     else
       render action: :new
     end
@@ -27,7 +31,7 @@ class RecipesController < ApplicationController
 
   def update
     if @recipe.update recipe_params
-      redirect_to [current_user, @recipe], notice: "Recipe was successfully updated."
+      redirect_to [@owner, @recipe], notice: "Recipe was successfully updated."
     else
       render action: :edit
     end
@@ -35,19 +39,19 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe.destroy
-    redirect_to [current_user, :recipes]
+    redirect_to [@owner, :recipes]
   end
 
   private
     def set_recipe
-      @recipe = Recipe.where(id: params[:id], user_id: params[:user_id]).first
+      @recipe = Recipe.where(id: params[:id], owner_id: params[:owner_id]).first
     end
 
-    def set_user
-      @user = User.find params[:user_id]
+    def set_owner
+      @owner = (Owner.find params[:owner_id]).becomes Owner
     end
 
     def recipe_params
-      params.require(:recipe).permit :user_id, :title, :description, :user_id
+      params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
     end
 end

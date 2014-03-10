@@ -12,5 +12,5 @@
   <%= @recipe.description %>
 </p>
 
-<%= link_to 'Edit', [:edit, @user, @recipe] %> |
-<%= link_to 'Back', [@user, :recipes] %>
+<%= link_to 'Edit', [:edit, @owner.becomes(Owner), @recipe] %> |
+<%= link_to 'Back', [@owner.becomes(Owner), :recipes] %>

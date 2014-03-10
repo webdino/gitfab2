@@ -1,4 +1,4 @@
-<%= form_for [current_user, @recipe] do |f| %>
+<%= form_for [@owner.becomes(Owner), @recipe] do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
@@ -19,10 +19,26 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
+  <%= f.fields_for :materials do |mf| %>
+    <p>materials</p>
+    <%= render "material_form", f: mf %>
+  <% end %>
+  <%= f.fields_for :tools do |tf| %>
+    <p>tools</p>
+    <%= render "tool_form", f: tf %>
+  <% end %>
+  <%= f.fields_for :statuses do |sf| %>
+    <p>statuses</p>
+    <%= render "status_form", f: sf %>
+  <% end %>
+  <%= f.fields_for :ways do |wf| %>
+    <p>ways</p>
+    <%= render "way_form", f: wf %>
+  <% end %>
   <div class="field">
-    <%= f.hidden_field :user_id, value: current_user.id %>
+    <%= f.hidden_field :owner_id, value: @owner.id %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "ok" %>
   </div>
 <% end %>

@@ -72,19 +72,20 @@ ActiveRecord::Schema.define(version: 20140310063329) do
     t.text     "description"
     t.string   "photo"
     t.string   "youtube_url"
-    t.integer  "user_id"
+    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "recipes", ["user_id"], name: "index_recipes_on_user_id", using: :btree
-
   create_table "statuses", force: true do |t|
     t.integer  "prev_id"
+    t.text     "description"
     t.integer  "recipe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "statuses", ["recipe_id"], name: "index_statuses_on_recipe_id", using: :btree
 
   create_table "tools", force: true do |t|
     t.string   "name"
@@ -105,9 +106,12 @@ ActiveRecord::Schema.define(version: 20140310063329) do
     t.string   "photo"
     t.integer  "prev_status_id"
     t.integer  "next_status_id"
+    t.integer  "recipe_id"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
 
 end
