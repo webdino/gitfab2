@@ -1,6 +1,7 @@
 <h1>Home</h1>
 <% if user_signed_in? %>
   <p>Logged in: <%= current_user.email %></p>
+  <p><%= link_to "Recipes", owner_recipes_path(current_user) %></p>
   <p><%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
 <% else%>
   <%= link_to "Sign in", "#", class: "persona-login-button" %>

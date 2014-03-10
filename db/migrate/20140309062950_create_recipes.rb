@@ -6,7 +6,7 @@ class CreateRecipes < ActiveRecord::Migration
       t.text :description
       t.string :photo
       t.string :youtube_url
-      t.belongs_to :user, index: true
+      t.integer :owner_id, index: true
 
       t.timestamps
     end

@@ -1,16 +1,16 @@
 <section id="recipes_index">
-  <h1><%= @user.email %> のレシピ一覧</h1>
+  <h1><%= @owner.name %> のレシピ一覧</h1>
   <div id="recipes">
     <% @recipes.each do |recipe| %>
       <div class="recipe">
-        <p class="cover"><%= link_to "", [@user, recipe] %></p>
+        <p class="cover"><%= link_to "", [@owner, recipe] %></p>
         <div class="summary">
           <p><%= recipe.title %></p>
           <p><%= recipe.description %></p>
           <ul>
-            <li><%= link_to 'Show', [@user, recipe] %></li>
-            <li><%= link_to 'Edit', [:edit, @user, recipe] %></li>
-            <li><%= link_to 'Destroy', [@user, recipe], method: :delete, data: {confirm: 'Are you sure?'} %></li>
+            <li><%= link_to 'Show', [@owner, recipe] %></li>
+            <li><%= link_to 'Edit', [:edit, @owner, recipe] %></li>
+            <li><%= link_to 'Destroy', [@owner, recipe], method: :delete, data: {confirm: 'Are you sure?'} %></li>
           </ul>
         </div>
       </div>
@@ -19,5 +19,5 @@
 
   <br>
 
-  <%= link_to 'New Recipe', [:new, current_user, :recipe] %>
+  <%= link_to 'New Recipe', new_owner_recipe_path(@owner) %>
 </section>
