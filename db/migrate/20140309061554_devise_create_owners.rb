@@ -1,6 +1,6 @@
-class DeviseCreateUsers < ActiveRecord::Migration
+class DeviseCreateOwners < ActiveRecord::Migration
   def change
-    create_table(:users) do |t|
+    create_table(:owners) do |t|
       ## Database authenticatable
       t.string :email,              :null => false, :default => ""
       t.string :encrypted_password, :null => false, :default => ""
@@ -30,13 +30,17 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
+      t.string :name
+      t.string :type, null: false
+      t.integer :group_id
+      t.integer :contributing_recipe_ids
 
       t.timestamps
     end
 
-    add_index :users, :email,                :unique => true
-    add_index :users, :reset_password_token, :unique => true
-    # add_index :users, :confirmation_token,   :unique => true
-    # add_index :users, :unlock_token,         :unique => true
+    add_index :owners, :email,                :unique => true
+    add_index :owners, :reset_password_token, :unique => true
+    # add_index :owners, :confirmation_token,   :unique => true
+    # add_index :owners, :unlock_token,         :unique => true
   end
 end
