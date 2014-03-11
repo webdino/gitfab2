@@ -21,6 +21,7 @@ gem "rugged"
 gem "devise_browserid_authenticatable"
 gem "therubyracer"
 gem "gitolite"
+gem "carrierwave"
 
 group :doc do
   gem "sdoc", require: false

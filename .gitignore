@@ -17,3 +17,4 @@
 /config/database.yml
 .DS_Store
 erd.pdf
+/public/uploads

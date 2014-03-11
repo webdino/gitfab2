@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   create_table "statuses", force: true do |t|
     t.integer  "prev_id"
     t.text     "description"
+    t.string   "photo"
     t.integer  "recipe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
