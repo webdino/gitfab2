@@ -37,12 +37,13 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
 
   create_table "namespaces", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "owner_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "namespaces", ["user_id"], name: "index_namespaces_on_user_id", using: :btree
+  add_index "namespaces", ["owner_id"], name: "index_namespaces_on_owner_id", using: :btree
 
   create_table "owners", force: true do |t|
     t.string   "email",                   default: "", null: false
