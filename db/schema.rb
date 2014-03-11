@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   end
 
   add_index "owners", ["email"], name: "index_owners_on_email", unique: true, using: :btree
+  add_index "owners", ["name"], name: "index_owners_on_name", unique: true, using: :btree
   add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true, using: :btree
 
   create_table "recipes", force: true do |t|

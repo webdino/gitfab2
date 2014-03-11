@@ -1,11 +1,17 @@
-<h1>Home</h1>
+<p id="notice"><%= notice %></p>
+<h1>Dashboard</h1>
 <% if user_signed_in? %>
   <p>Logged in: <%= current_user.email %></p>
-  <p><%= link_to "Dashboard", [current_user] %></p>
+  <p><%= link_to "Recipes", owner_recipes_path(current_user) %></p>
   <p><%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
 <% else%>
   <%= link_to "Sign in", "#", class: "persona-login-button" %>
 <% end%>
+
+<p><%= current_user.name %></p>
+
+<%= link_to 'Edit', edit_user_path(current_user) %> |
+<%= link_to 'Back', users_path %>
 
 <script>
   $(".persona-login-button").click(function(e) {
