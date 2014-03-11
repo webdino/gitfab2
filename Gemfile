@@ -22,6 +22,7 @@ gem "devise_browserid_authenticatable"
 gem "therubyracer"
 gem "gitolite"
 gem "carrierwave"
+gem "slim-rails"
 
 group :doc do
   gem "sdoc", require: false

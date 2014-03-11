@@ -1,0 +1,31 @@
+p id="notice" =notice
+
+h1 =@recipe.title
+p =image_tag @recipe.photo
+p
+  strong Description: =@recipe.description
+
+h1 Statuses
+- @recipe.statuses.each do |status|
+  p =image_tag status.photo
+  p =image_tag status.description
+
+h1 Materials
+- @recipe.materials.each do |material|
+  p =image_tag material.photo
+  p =image_tag material.description
+
+h1 Tools
+- @recipe.tools.each do |tool|
+  p =image_tag tool.photo
+  p =tool.description
+
+h1 Ways
+- @recipe.ways.each do |way|
+  p =image_tag way.photo
+  p =way.description
+
+p
+  =link_to "Edit", [:edit, @owner.becomes(Owner), @recipe]
+  '|
+  =link_to "Back", [@owner.becomes(Owner), :recipes]
