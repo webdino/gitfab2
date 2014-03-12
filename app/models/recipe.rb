@@ -20,6 +20,19 @@ class Recipe < ActiveRecord::Base
   after_create :ensure_repo_exist!
   after_save :commit_to_repo!
 
+  searchable do
+    text :name, :title, :description
+    [:materials, :tools, :statuses, :ways].each do |assoc|
+      text assoc do
+        self.send(assoc).map do |record|
+          (assoc.to_s.classify.constantize)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
+            record.send col
+          end
+        end.flatten
+      end
+    end
+  end
+
   def fork_for user
     recipe = self.dup
     recipe.orig_recipe = self

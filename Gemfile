@@ -24,6 +24,8 @@ gem "gitolite"
 gem "carrierwave"
 gem "slim-rails"
 gem "rails-config"
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 
 group :doc do
   gem "sdoc", require: false
