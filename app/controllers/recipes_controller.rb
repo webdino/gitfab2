@@ -21,8 +21,12 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = @owner.recipes.build recipe_params
-    @recipe.last_committer = current_user
+    if fr_id = params[:forked_recipe_id]
+      @recipe = Recipe.find(fr_id).fork_for current_user
+    else
+      @recipe = @owner.recipes.build recipe_params
+      @recipe.last_committer = current_user
+    end
     if @recipe.save
       redirect_to [@owner, @recipe], notice: "Recipe was successfully created."
     else

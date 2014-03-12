@@ -1,6 +1,11 @@
 p id="notice" =notice
 
 h1 =@recipe.title
+p
+  =form_for [current_user.becomes(Owner), Recipe.new] do |f|
+    =hidden_field_tag :forked_recipe_id, @recipe.id
+    =f.submit "Fork"
+
 p =image_tag @recipe.photo
 p
   strong Description: =@recipe.description
