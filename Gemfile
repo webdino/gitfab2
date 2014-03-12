@@ -23,6 +23,7 @@ gem "therubyracer"
 gem "gitolite"
 gem "carrierwave"
 gem "slim-rails"
+gem "rails-config"
 
 group :doc do
   gem "sdoc", require: false

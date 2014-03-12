@@ -36,15 +36,6 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
 
-  create_table "namespaces", force: true do |t|
-    t.integer  "owner_id"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "namespaces", ["owner_id"], name: "index_namespaces_on_owner_id", using: :btree
-
   create_table "owners", force: true do |t|
     t.string   "email",                   default: "", null: false
     t.string   "encrypted_password",      default: "", null: false
@@ -69,12 +60,15 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true, using: :btree
 
   create_table "recipes", force: true do |t|
+    t.string   "name"
     t.string   "title"
     t.string   "type"
     t.text     "description"
     t.string   "photo"
     t.string   "youtube_url"
     t.integer  "owner_id"
+    t.integer  "last_committer_id"
+    t.integer  "orig_recipe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

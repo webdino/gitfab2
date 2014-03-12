@@ -8,13 +8,14 @@ class User < Owner
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
   has_many :contributor_recipes, foreign_key: :contributor_id
 
-  after_save :prepare_namespace!
+  after_save :ensure_dir_exist!, if: ->{self.name.present?}
+
+  def dir_path
+    "#{Settings.git.repo_dir}/#{self.name}"
+  end
 
   private
-  def prepare_namespace!
-    self.create_namespace!(name: self.name) unless self.namespace
-    if self.name_changed?
-      self.namespace.update_attributes name: self.name
-    end
+  def ensure_dir_exist!
+    ::FileUtils.mkdir_p dir_path
   end
 end
