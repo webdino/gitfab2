@@ -1,0 +1,16 @@
+<section id="recipes_index">
+  <div id="recipes">
+    <% @recipes.each do |recipe| %>
+      <div class="recipe">
+        <p class="cover"><%= link_to "", [recipe.owner.becomes(Owner), recipe] %></p>
+        <div class="summary">
+          <p><%= recipe.title %></p>
+          <p><%= recipe.description %></p>
+          <ul>
+            <li><%= link_to 'Show', [recipe.owner.becomes(Owner), recipe] %></li>
+          </ul>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</section>

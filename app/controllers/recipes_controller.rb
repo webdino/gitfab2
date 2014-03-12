@@ -1,9 +1,16 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :set_owner
+  before_action :set_owner, except: :search
+
+  def search
+    q = params[:q] || ""
+    @recipes = Recipe.solr_search do
+      fulltext q.split.map{|word| "\"#{word}\""}.join(" AND ")
+    end.results
+  end
 
   def index
-    @recipes = Recipe.all
+    @recipes = @owner.recipes
   end
 
   def show
@@ -49,15 +56,15 @@ class RecipesController < ApplicationController
   end
 
   private
-    def set_recipe
-      @recipe = Recipe.where(id: params[:id], owner_id: params[:owner_id]).first
-    end
+  def set_recipe
+    @recipe = Recipe.where(id: params[:id], owner_id: params[:owner_id]).first
+  end
 
-    def set_owner
-      @owner = (Owner.find params[:owner_id]).becomes Owner
-    end
+  def set_owner
+    @owner = (Owner.find params[:owner_id]).becomes Owner
+  end
 
-    def recipe_params
-      params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
-    end
+  def recipe_params
+    params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
+  end
 end
