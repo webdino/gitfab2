@@ -20,6 +20,13 @@ class Recipe < ActiveRecord::Base
   after_create :ensure_repo_exist!
   after_save :commit_to_repo!
 
+  def fork_for user
+    recipe = self.dup
+    recipe.orig_recipe = self
+    recipe.owner = user
+    recipe
+  end
+
   private
   def ensure_repo_exist!
     ::Gitfab::Shell.new.add_repo! repo_path
