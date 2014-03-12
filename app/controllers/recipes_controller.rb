@@ -21,7 +21,8 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = @owner.recipes.create recipe_params
+    @recipe = @owner.recipes.build recipe_params
+    @recipe.last_committer = current_user
     if @recipe.save
       redirect_to [@owner, @recipe], notice: "Recipe was successfully created."
     else
@@ -30,6 +31,7 @@ class RecipesController < ApplicationController
   end
 
   def update
+    @recipe.last_committer = current_user
     if @recipe.update recipe_params
       redirect_to [@owner, @recipe], notice: "Recipe was successfully updated."
     else
