@@ -112,6 +112,9 @@ GEM
     guard-rspec (4.2.8)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
+    guard-spring (0.0.4)
+      guard
+      spring
     hashery (1.5.0)
       blankslate
     hike (1.2.3)
@@ -259,6 +262,8 @@ GEM
       slim (~> 2.0)
     slop (3.4.7)
     spring (1.1.2)
+    spring-commands-rspec (1.0.1)
+      spring (>= 0.9.1)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -334,6 +339,7 @@ DEPENDENCIES
   gitolite
   growl
   guard-rspec
+  guard-spring
   jbuilder (~> 1.2)
   jquery-rails
   mini_magick
@@ -355,6 +361,7 @@ DEPENDENCIES
   sdoc
   slim-rails
   spring
+  spring-commands-rspec
   sunspot_rails
   sunspot_solr
   therubyracer

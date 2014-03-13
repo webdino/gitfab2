@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :recipe do
-    title "MyString"
-    description "MyText"
+    name {SecureRandom.uuid}
+    title {SecureRandom.uuid}
+    description {SecureRandom.uuid}
     user nil
   end
 end
