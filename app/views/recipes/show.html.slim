@@ -1,34 +1,57 @@
 p id="notice" =notice
 
-h1 =@recipe.title
+main
+  section id = "basic-information"
+    h1
+      = @recipe.title
+    img src = @recipe.photo class = "visual"
+    p
+      = @recipe.description
+    time id = "created-datetime" datetime = @recipe.created_at
+      = @recipe.created_at
+    time id = "last-updated-datetime" datetime = @recipe.updated_at
+      = @recipe.updated_at
+
+
+  section id = "materials"
+    h1
+      = "Materials"
+    ul
+    - @recipe.materials.each do |material|
+        li
+          img src = material.photo
+          = material.description
+
+
+  section id = "tools"
+    h1
+      = "Tools"
+    ul
+    - @recipe.tools.each do |tool|
+        li
+          img src = tool.photo
+          = tool.description
+
+
+  section id = "making"
+    h1
+      = "Making"
+    ol
+      - @recipe.statuses.each do |status|
+        li
+          img src = status.photo
+          = status.description
+      - @recipe.ways.each do |way|
+        li
+          img src = way.photo
+          = way.description
+
+hr
+
 p
   =form_for [current_user, Recipe.new] do |f|
     =hidden_field_tag :forked_recipe_id, @recipe.id
     =f.submit "Fork"
-
-p =image_tag @recipe.photo
-p
-  strong Description: =@recipe.description
-
-h1 Statuses
-- @recipe.statuses.each do |status|
-  p =image_tag status.photo
-  p =image_tag status.description
-
-h1 Materials
-- @recipe.materials.each do |material|
-  p =image_tag material.photo
-  p =image_tag material.description
-
-h1 Tools
-- @recipe.tools.each do |tool|
-  p =image_tag tool.photo
-  p =tool.description
-
-h1 Ways
-- @recipe.ways.each do |way|
-  p =image_tag way.photo
-  p =way.description
 
 p
   =link_to "Edit", [:edit, @user, @recipe]
