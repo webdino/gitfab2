@@ -36,29 +36,6 @@ ActiveRecord::Schema.define(version: 20140310063329) do
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
 
-  create_table "owners", force: true do |t|
-    t.string   "email",                   default: "", null: false
-    t.string   "encrypted_password",      default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",           default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "name"
-    t.string   "type",                                 null: false
-    t.integer  "group_id"
-    t.integer  "contributing_recipe_ids"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "owners", ["email"], name: "index_owners_on_email", unique: true, using: :btree
-  add_index "owners", ["name"], name: "index_owners_on_name", unique: true, using: :btree
-  add_index "owners", ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true, using: :btree
-
   create_table "recipes", force: true do |t|
     t.string   "name"
     t.string   "title"
@@ -66,7 +43,7 @@ ActiveRecord::Schema.define(version: 20140310063329) do
     t.text     "description"
     t.string   "photo"
     t.string   "youtube_url"
-    t.integer  "owner_id"
+    t.integer  "user_id"
     t.integer  "last_committer_id"
     t.integer  "orig_recipe_id"
     t.datetime "created_at"
@@ -97,6 +74,28 @@ ActiveRecord::Schema.define(version: 20140310063329) do
 
   add_index "tools", ["recipe_id"], name: "index_tools_on_recipe_id", using: :btree
   add_index "tools", ["way_id"], name: "index_tools_on_way_id", using: :btree
+
+  create_table "users", force: true do |t|
+    t.string   "email",                   default: "", null: false
+    t.string   "encrypted_password",      default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",           default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "name"
+    t.integer  "group_id"
+    t.integer  "contributing_recipe_ids"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "ways", force: true do |t|
     t.string   "name"

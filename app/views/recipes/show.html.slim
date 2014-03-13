@@ -2,7 +2,7 @@ p id="notice" =notice
 
 h1 =@recipe.title
 p
-  =form_for [current_user.becomes(Owner), Recipe.new] do |f|
+  =form_for [current_user, Recipe.new] do |f|
     =hidden_field_tag :forked_recipe_id, @recipe.id
     =f.submit "Fork"
 
@@ -31,6 +31,6 @@ h1 Ways
   p =way.description
 
 p
-  =link_to "Edit", [:edit, @owner.becomes(Owner), @recipe]
+  =link_to "Edit", [:edit, @user, @recipe]
   '|
-  =link_to "Back", [@owner.becomes(Owner), :recipes]
+  =link_to "Back", [@user, :recipes]

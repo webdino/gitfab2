@@ -33,9 +33,8 @@ end
 
 group :development, :test do
   gem "rspec-rails"
-  gem "spork-rails"
   gem "guard-rspec"
-  gem "guard-spork"
+  gem "spring"
   gem "factory_girl_rails"
   gem "database_cleaner"
   gem "rb-fsevent"
