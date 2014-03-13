@@ -35,6 +35,8 @@ group :development, :test do
   gem "rspec-rails"
   gem "guard-rspec"
   gem "spring"
+  gem "spring-commands-rspec"
+  gem "guard-spring"
   gem "factory_girl_rails"
   gem "database_cleaner"
   gem "rb-fsevent"

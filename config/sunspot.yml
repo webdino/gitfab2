@@ -24,7 +24,7 @@ staging:
 test:
   solr:
     hostname: localhost
-    port: 8981
+    port: 8985
     log_level: WARNING
     path: /solr/gitfab2_test
     

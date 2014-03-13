@@ -26,3 +26,4 @@ config/environments/*.local.yml
 
 /solr
 /log
+Session.vim

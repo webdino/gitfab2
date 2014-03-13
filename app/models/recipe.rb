@@ -20,6 +20,8 @@ class Recipe < ActiveRecord::Base
   after_create :ensure_repo_exist!
   after_save :commit_to_repo!
 
+  validates :name, presence: true
+
   searchable do
     text :name, :title, :description
     [:materials, :tools, :statuses, :ways].each do |assoc|
@@ -34,10 +36,15 @@ class Recipe < ActiveRecord::Base
   end
 
   def fork_for user
+    return nil if user.recipes.find_by orig_recipe_id: self.id
     recipe = self.dup
     recipe.orig_recipe = self
     recipe.user = user
     recipe
+  end
+
+  def repo_path
+    "#{self.user.dir_path}/#{self.name}.git"
   end
 
   private
@@ -45,13 +52,9 @@ class Recipe < ActiveRecord::Base
     ::Gitfab::Shell.new.add_repo! repo_path
   end
 
-  def repo_path
-    "#{self.user.dir_path}/#{self.name}.git"
-  end
-
   def commit_to_repo!
     contents = [{file_path: "recipe.json", data: self.to_json}]
-    opts = {email: self.last_committer.email, name: self.last_committer.name}
+    opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
     ::Gitfab::Shell.new.commit_to_repo! repo_path, contents, opts
   end
 end
