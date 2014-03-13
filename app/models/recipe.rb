@@ -1,12 +1,12 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:owner_id, :name, :title, :description, :photo,
+  UPDATABLE_COLUMNS = [:user_id, :name, :title, :description, :photo,
     materials_attributes: [:name, :url, :quantity, :size, :description, :photo],
     tools_attributes: [:name, :url, :description, :photo],
     statuses_attributes: [:description, :photo],
     ways_attributes: [:description, :photo]
   ]
   mount_uploader :photo, PhotoUploader
-  belongs_to :owner
+  belongs_to :user
   belongs_to :last_committer, class_name: User.name
   belongs_to :orig_recipe, class_name: Recipe.name
   has_many :contributors, through: :contributor_recipes
@@ -36,7 +36,7 @@ class Recipe < ActiveRecord::Base
   def fork_for user
     recipe = self.dup
     recipe.orig_recipe = self
-    recipe.owner = user
+    recipe.user = user
     recipe
   end
 
@@ -46,7 +46,7 @@ class Recipe < ActiveRecord::Base
   end
 
   def repo_path
-    "#{self.owner.dir_path}/#{self.name}.git"
+    "#{self.user.dir_path}/#{self.name}.git"
   end
 
   def commit_to_repo!

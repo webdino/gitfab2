@@ -58,8 +58,6 @@ GEM
     celluloid-io (0.15.0)
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
-    childprocess (0.5.1)
-      ffi (~> 1.0, >= 1.0.11)
     choice (0.1.6)
     coderay (1.1.0)
     coffee-rails (4.0.1)
@@ -114,10 +112,6 @@ GEM
     guard-rspec (4.2.8)
       guard (~> 2.1)
       rspec (>= 2.14, < 4.0)
-    guard-spork (1.5.1)
-      childprocess (>= 0.2.3)
-      guard (>= 1.1)
-      spork (>= 0.8.4)
     hashery (1.5.0)
       blankslate
     hike (1.2.3)
@@ -264,10 +258,7 @@ GEM
       railties (>= 3.0, < 4.1)
       slim (~> 2.0)
     slop (3.4.7)
-    spork (1.0.0rc4)
-    spork-rails (4.0.0)
-      rails (>= 3.0.0, < 5)
-      spork (>= 1.0rc0)
+    spring (1.1.2)
     sprockets (2.11.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -343,7 +334,6 @@ DEPENDENCIES
   gitolite
   growl
   guard-rspec
-  guard-spork
   jbuilder (~> 1.2)
   jquery-rails
   mini_magick
@@ -364,7 +354,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   slim-rails
-  spork-rails
+  spring
   sunspot_rails
   sunspot_solr
   therubyracer
