@@ -54,4 +54,12 @@ describe Recipe do
       it{should_not be nil}
     end
   end
+
+  describe "on after_destroy" do
+    describe ".destroy_repo!" do
+      before{recipe.destroy}
+      subject{File.exists? recipe.repo_path}
+      it{should be_false}
+    end
+  end
 end

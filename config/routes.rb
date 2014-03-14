@@ -3,7 +3,8 @@ Gitfab2::Application.routes.draw do
   root "home#index"
   match "search" => "recipes#search", via: :get
   resources :users do
-    resources :recipes
+    resources :recipes do
+      post :fork
+    end
   end
-  resources :users
 end
