@@ -2,6 +2,7 @@ class CreateRecipes < ActiveRecord::Migration
   def change
     create_table :recipes do |t|
       t.string :name
+      t.string :repo_path
       t.string :title
       t.string :type
       t.text :description

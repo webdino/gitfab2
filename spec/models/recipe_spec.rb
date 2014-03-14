@@ -1,5 +1,5 @@
 require "spec_helper"
-require 'sunspot/rails/spec_helper'
+require "sunspot/rails/spec_helper"
 
 describe Recipe do
   disconnect_sunspot
@@ -46,11 +46,18 @@ describe Recipe do
     end
   end
 
+  describe "on after_update" do
+    describe ".rename_repo_name!" do
+      let!(:orig_repo_path){recipe.repo_path}
+      before{recipe.update_attributes name: "#{recipe.name}_modified"}
+      subject{recipe.repo_path}
+      it{should_not eq orig_repo_path}
+    end
+  end
+
   describe "on after_save" do
     describe ".commit_to_repo!" do
-      subject do
-        Rugged::Repository.new(recipe.repo_path).head.target
-      end
+      subject{Rugged::Repository.new(recipe.repo_path).head.target}
       it{should_not be nil}
     end
   end
