@@ -35,12 +35,16 @@ class Recipe < ActiveRecord::Base
     end
   end
 
-  def fork_for user
-    return nil if user.recipes.find_by orig_recipe_id: self.id
-    recipe = self.dup
-    recipe.orig_recipe = self
-    recipe.user = user
-    recipe
+  def fork_for! user
+    Recipe.transaction do
+      new_recipe = self.dup
+      new_recipe.orig_recipe = self
+      new_recipe.user_id = user.id
+      new_recipe.name = Gitfab::Shell.new
+        .copy_repo! self.repo_path, user.dir_path, new_recipe.name
+      new_recipe.save
+      new_recipe
+    end
   end
 
   def repo_path
