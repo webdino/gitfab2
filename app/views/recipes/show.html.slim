@@ -49,8 +49,8 @@ main
 hr
 
 p
-  =form_for [current_user, Recipe.new] do |f|
-    =hidden_field_tag :forked_recipe_id, @recipe.id
+  =form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
+    =hidden_field_tag :recipe_id, @recipe.id
     =f.submit "Fork"
 
 p

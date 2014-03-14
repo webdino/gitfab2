@@ -11,7 +11,8 @@ class User < ActiveRecord::Base
 
   after_save :ensure_dir_exist!
 
-  validates :name, :email, presence: true, uniqueness: true
+  validates :email, presence: true
+  validates :name, :email, uniqueness: true
 
   def dir_path
     return nil unless self.name.present?

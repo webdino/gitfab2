@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :set_recipe, only: [:show, :edit, :update, :destroy, :fork]
   before_action :set_user, except: :search
 
   def search
@@ -17,26 +17,29 @@ class RecipesController < ApplicationController
   end
 
   def new
-    @recipe = Recipe.new
-    @recipe.materials.build
-    @recipe.tools.build
-    @recipe.statuses.build
-    @recipe.ways.build
+    @recipe = @user.recipes.build
+    @recipe.fill_default_name_for! current_user
   end
 
   def edit
   end
 
   def create
-    if fr_id = params[:forked_recipe_id]
-      @recipe = Recipe.find(fr_id).fork_for! current_user
-    else
-      @recipe = @user.recipes.build recipe_params
-      @recipe.last_committer = current_user
-    end
+    @recipe = @user.recipes.build recipe_params
+    @recipe.last_committer = current_user
     if @recipe.save
       redirect_to [@user, @recipe], notice: "Recipe was successfully created."
     else
+      render action: :new
+    end
+  end
+
+  def fork
+    new_recipe = @recipe.fork_for! current_user
+    if new_recipe.save
+      redirect_to [@user, new_recipe], notice: "Recipe was successfully forked."
+    else
+      @recipe = new_recipe
       render action: :new
     end
   end
@@ -57,7 +60,8 @@ class RecipesController < ApplicationController
 
   private
   def set_recipe
-    @recipe = Recipe.where(id: params[:id], user_id: params[:user_id]).first
+    recipe_id = params[:id] || params[:recipe_id]
+    @recipe = Recipe.where(id: recipe_id, user_id: params[:user_id]).first
   end
 
   def set_user

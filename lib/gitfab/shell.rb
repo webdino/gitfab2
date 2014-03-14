@@ -33,6 +33,10 @@ module Gitfab
       Rugged::Commit.create repo, opts
     end
 
+    def destroy_repo! repo_path
+      ::FileUtils.rm_rf repo_path
+    end
+
     private
     def build_path dir, name
       "#{dir}/#{name}.git"
