@@ -29,7 +29,7 @@ class RecipesController < ApplicationController
 
   def create
     if fr_id = params[:forked_recipe_id]
-      @recipe = Recipe.find(fr_id).fork_for current_user
+      @recipe = Recipe.find(fr_id).fork_for! current_user
     else
       @recipe = @user.recipes.build recipe_params
       @recipe.last_committer = current_user
