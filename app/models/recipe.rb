@@ -18,6 +18,8 @@ class Recipe < ActiveRecord::Base
   has_many :statuses
   has_many :tools
   has_many :ways
+  has_many :recipe_tags
+  has_many :tags, through: :recipe_tags
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways
 
