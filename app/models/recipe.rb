@@ -21,8 +21,10 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways
 
-  after_initialize :build_assocs!,     if: ->{self.new_record?}
+  before_validation :set_repo_path!
+  after_initialize :build_assocs!, if: ->{self.new_record?}
   after_create :ensure_repo_exist!
+  before_update :rename_repo_name!, if: ->{self.name_changed?}
   after_save :commit_to_repo!
   after_destroy :destroy_repo!
 
@@ -53,10 +55,6 @@ class Recipe < ActiveRecord::Base
     end
   end
 
-  def repo_path
-    "#{self.user.dir_path}/#{self.name}.git"
-  end
-
   def fill_default_name_for! user
     suffix = 1
     names = user.recipes.map(&:name)
@@ -67,18 +65,22 @@ class Recipe < ActiveRecord::Base
   end
 
   private
+  def set_repo_path!
+    self.repo_path = "#{self.user.dir_path}/#{self.name}.git"
+  end
+
   def ensure_repo_exist!
-    ::Gitfab::Shell.new.add_repo! repo_path
+    Gitfab::Shell.new.add_repo! repo_path
   end
 
   def commit_to_repo!
     contents = [{file_path: "recipe.json", data: self.to_json}]
     opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
-    ::Gitfab::Shell.new.commit_to_repo! repo_path, contents, opts
+    Gitfab::Shell.new.commit_to_repo! repo_path, contents, opts
   end
 
   def destroy_repo!
-    ::Gitfab::Shell.new.destroy_repo! self.repo_path
+    Gitfab::Shell.new.destroy_repo! self.repo_path
   end
 
   def build_assocs!
@@ -86,5 +88,11 @@ class Recipe < ActiveRecord::Base
     self.tools.build
     self.statuses.build
     self.ways.build
+  end
+
+  def rename_repo_name!
+    old_name, new_name = self.name_change
+    old_path = "#{self.user.dir_path}/#{old_name}.git"
+    Gitfab::Shell.new.move_repo! old_path, self.user.dir_path, self.name
   end
 end

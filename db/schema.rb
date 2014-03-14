@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140310063329) do
 
   create_table "recipes", force: true do |t|
     t.string   "name"
+    t.string   "repo_path"
     t.string   "title"
     t.string   "type"
     t.text     "description"

@@ -7,12 +7,20 @@ module Gitfab
     def copy_repo! orig_path, dest_dir, dest_name
       _dest_name = dest_name.dup
       dest_path = build_path dest_dir, _dest_name
-      while ::File.exists? dest_path
+      while File.exists? dest_path
         dest_path = build_path dest_dir, _dest_name.sub!(/$/, "_")
       end
-      ::FileUtils.cp_r orig_path, dest_path
+      FileUtils.cp_r orig_path, dest_path
       _dest_name
     end
+
+    def move_repo! orig_path, dest_dir, dest_name
+      dest_path = build_path dest_dir, dest_name
+      raise if ::File.exists? dest_path
+      FileUtils.mv orig_path, dest_path
+      dest_path
+    end
+
 
     def commit_to_repo! repo_path, contents = [], opts = {}
       return nil if contents.empty?
@@ -34,7 +42,7 @@ module Gitfab
     end
 
     def destroy_repo! repo_path
-      ::FileUtils.rm_rf repo_path
+      FileUtils.rm_rf repo_path
     end
 
     private
