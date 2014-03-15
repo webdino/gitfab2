@@ -50,8 +50,8 @@ describe Recipe do
     describe ".rename_repo_name!" do
       let!(:orig_repo_path){recipe.repo_path}
       before{recipe.update_attributes name: "#{recipe.name}_modified"}
-      subject{recipe.repo_path}
-      it{should_not eq orig_repo_path}
+      subject{recipe}
+      its(:repo_path){should_not eq orig_repo_path}
     end
   end
 
@@ -68,5 +68,14 @@ describe Recipe do
       subject{File.exists? recipe.repo_path}
       it{should be_false}
     end
+  end
+
+  describe "can have tags" do
+    before do
+      recipe.tags << Tag.new(name: "foo")
+      recipe.tags << Tag.new(name: "bar")
+    end
+    subject{recipe}
+    its(:tags){should have(2).items}
   end
 end

@@ -1,9 +1,11 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:user_id, :name, :title, :description, :photo,
-    materials_attributes: [:name, :url, :quantity, :size, :description, :photo],
-    tools_attributes:     [:name, :url, :description, :photo],
-    statuses_attributes:  [:description, :photo],
-    ways_attributes:      [:description, :photo]
+  UPDATABLE_COLUMNS = [:id, :user_id, :name, :title, :description, :photo,
+    materials_attributes:   [:id, :name, :url, :quantity, :size, :description, :photo, :_destroy],
+    tools_attributes:       [:id, :name, :url, :description, :photo, :_destroy],
+    statuses_attributes:    [:id, :description, :photo, :_destroy],
+    ways_attributes:        [:id, :description, :photo, :_destroy],
+    recipe_tags_attributes: [:id, :tag_id, :recipe_id],
+    tag_ids: [],
   ]
 
   mount_uploader :photo, PhotoUploader
@@ -15,16 +17,15 @@ class Recipe < ActiveRecord::Base
   has_many :contributors, through: :contributor_recipes
   has_many :contributor_recipes
   has_many :materials
-  has_many :statuses
+  has_many :statuses, dependent: :destroy
   has_many :tools
   has_many :ways
   has_many :recipe_tags
   has_many :tags, through: :recipe_tags
 
-  accepts_nested_attributes_for :materials, :tools, :statuses, :ways
+  accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
 
   before_validation :set_repo_path!
-  after_initialize :build_assocs!, if: ->{self.new_record?}
   after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
   after_save :commit_to_repo!
@@ -83,13 +84,6 @@ class Recipe < ActiveRecord::Base
 
   def destroy_repo!
     Gitfab::Shell.new.destroy_repo! self.repo_path
-  end
-
-  def build_assocs!
-    self.materials.build
-    self.tools.build
-    self.statuses.build
-    self.ways.build
   end
 
   def rename_repo_name!

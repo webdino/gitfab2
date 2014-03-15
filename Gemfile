@@ -26,6 +26,7 @@ gem "slim-rails"
 gem "rails-config"
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+gem "nested_form"
 
 group :doc do
   gem "sdoc", require: false
