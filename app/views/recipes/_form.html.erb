@@ -1,4 +1,4 @@
-<%= form_for [@user, @recipe] do |f| %>
+<%= nested_form_for [@user, @recipe] do |f| %>
   <% if @recipe.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
@@ -28,23 +28,28 @@
     <%= f.file_field :photo %>
   </div>
   <h1>statuses</h1>
-  <%= f.fields_for :statuses do |sf| %>
+  <%= f.fields_for :statuses, @recipe.statuses do |sf| %>
     <%= render "status_form", f: sf %>
   <% end %>
+  <%= f.link_to_add "Add a status", :statuses %>
   <h1>materials</h1>
-  <%= f.fields_for :materials do |mf| %>
+  <%= f.fields_for :materials, @recipe.materials do |mf| %>
     <%= render "material_form", f: mf %>
   <% end %>
+  <p><%= f.link_to_add "Add a material", :materials %></p>
   <h1>tools</h1>
-  <%= f.fields_for :tools do |tf| %>
+  <%= f.fields_for :tools, @recipe.tools do |tf| %>
     <%= render "tool_form", f: tf %>
   <% end %>
+  <p><%= f.link_to_add "Add a tool", :tools %></p>
   <h1>ways</h1>
-  <%= f.fields_for :ways do |wf| %>
+  <%= f.fields_for :ways, @recipe.ways do |wf| %>
     <%= render "way_form", f: wf %>
   <% end %>
-  <div class="field">
-    <%= f.hidden_field :user_id, value: @user.id %>
+  <p><%= f.link_to_add "Add a way", :ways %></p>
+  <h1>tags</h1>
+  <div id="tags">
+    <%= render "tag_form", recipe: @recipe %>
   </div>
   <div class="actions">
     <%= f.submit "ok" %>

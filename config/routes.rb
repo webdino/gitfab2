@@ -7,4 +7,5 @@ Gitfab2::Application.routes.draw do
       post :fork
     end
   end
+  resources :tags
 end
