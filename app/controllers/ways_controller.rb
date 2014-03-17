@@ -9,7 +9,11 @@ class WaysController < ApplicationController
 
   private
   def way_params
-    params.require(:way).permit Way::UPDATABLE_COLUMNS
+    params.require(:way).permit (Way::UPDATABLE_COLUMNS + additional_params)
+  end
+
+  def additional_params
+    [:remove_photo]
   end
 
   def set_recipe

@@ -9,7 +9,11 @@ class ToolsController < ApplicationController
 
   private
   def tool_params
-    params.require(:tool).permit Way::UPDATABLE_COLUMNS
+    params.require(:tool).permit (Tool::UPDATABLE_COLUMNS + additional_params)
+  end
+
+  def additional_params
+    [:remove_photo]
   end
 
   def set_recipe

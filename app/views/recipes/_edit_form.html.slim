@@ -1,25 +1,14 @@
-li id="#{object.class.name.underscore}-#{object.id}"
-  - (object.class)::UPDATABLE_COLUMNS.each do |field|
-    - case field
-    - when :photo
-      span class="#{field}_field"
-        - if object.photo.present?
-          img src=object.photo
-    - else
-      span class="#{field}_field"
-        = object.send field
-  div class="edit-form-wrap"
-    = link_to "edit", "#", class: "edit-btn"
-    = form_for [@user, @recipe, object], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
-      - (object.class)::UPDATABLE_COLUMNS.each do |field|
-        - case field
-        - when :photo
-          p
-            = f.file_field field, class: "add-photo"
-        - when :remove_photo
-          p
-            = f.check_box field, checked: false, class: "remove-photo"
-            'remove photo
-        - else
-          p = f.text_field field
-      = f.submit "update"
+div class="edit-form-wrap"
+  = link_to "edit", "#", class: "edit-btn"
+  = form_for [@recipe.user, @recipe, item], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+    - (item.class)::UPDATABLE_COLUMNS.each do |field|
+      - case field
+      - when :photo
+        p
+          = f.file_field field, class: "add-photo"
+      - else
+        p = f.text_field field
+    p
+      = f.check_box :remove_photo, checked: false, class: "remove-photo"
+      'remove photo
+    = f.submit "update"

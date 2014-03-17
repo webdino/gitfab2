@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 #recipes-show {
+  .add-form,
   .edit-form {
     display: none;
   }

@@ -16,57 +16,54 @@ div id="recipes-show"
   
     section id = "materials"
       h1
-        = "Materials"
+        'Materials
       ul
-      - @recipe.materials.each do |material|
-        =render "edit_form", object: material
+      - @recipe.materials.each do |item|
+        = render "item", item: item
   
     section id = "tools"
       h1
-        = "Tools"
+        'Tools
       ul
-      - @recipe.tools.each do |tool|
-        =render "edit_form", object: tool
-  
+      - @recipe.tools.each do |item|
+        = render "item", item: item
   
     section id = "making"
       h1
-        = "Making"
-      ol
-        - @recipe.statuses.each do |status|
-          =render "edit_form", object: status
+        'Making
+      ol id="statuses"
+        - @recipe.statuses.each do |item|
+          = render "item", item: item
   
-        - @recipe.ways.each do |way|
-          =render "edit_form", object: way
+        - @recipe.ways.each do |item|
+          = render "item", item: item
+
+      = render "add_form", item: Status.new
   
   hr
   
   p
-    =form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
-      =hidden_field_tag :recipe_id, @recipe.id
-      =f.submit "Fork"
+    = form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
+      = hidden_field_tag :recipe_id, @recipe.id
+      = f.submit "Fork"
   
   p
-    =link_to "Edit", [:edit, @user, @recipe]
+    = link_to "Edit", [:edit, @user, @recipe]
     '|
-    =link_to "Back", [@user, :recipes]
+    = link_to "Back", [@user, :recipes]
 
   content_for :bottom
     coffee:
       $(document).on "ajax:success", ".edit-form", (event, data, status) ->
         if data.success
-          $(event.target).css "display", "none"
-          $(event.target).find(".remove-photo").attr "checked", false
-          selector = "li##{data.class}-#{data.object.id}"
-          $.each data.object, (elem) ->
-            if elem == "photo"
-              content = if data.object[elem].url then "<img src=#{data.object[elem].url}>" else ""
-              $(selector).children(".#{elem}_field").html content
-              unless data.object["photo"].url
-                $(event.target).find(".add-photo").val ""
-            else
-              $(selector).children(".#{elem}_field").html data.object[elem]
+          selector = "li##{data.class}-#{data.id}"
+          $(selector).replaceWith data.html
 
-      $(document).on "click", ".edit-btn", (event, data) ->
+      $(document).on "ajax:success", ".add-form", (event, data, status) ->
+        if data.success
+          $(event.target).find("input").val ""
+          $("#making #statuses").append data.html
+
+      $(document).on "click", ".edit-btn,.add-btn", (event, data) ->
         event.preventDefault()
         $(event.target).siblings("form").css "display", "block"
