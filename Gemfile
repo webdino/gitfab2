@@ -27,6 +27,7 @@ gem "rails-config"
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem "nested_form"
+gem "remotipart"
 
 group :doc do
   gem "sdoc", require: false

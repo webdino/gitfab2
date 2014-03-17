@@ -1,0 +1,2 @@
+module WaysHelper
+end

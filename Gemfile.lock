@@ -203,6 +203,7 @@ GEM
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
     ref (1.0.5)
+    remotipart (1.2.1)
     resque (1.25.2)
       mono_logger (~> 1.0)
       multi_json (~> 1.0)
@@ -353,6 +354,7 @@ DEPENDENCIES
   rails-erd
   rails_config
   rb-fsevent
+  remotipart
   resque
   resque-pool
   resque-web
