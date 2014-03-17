@@ -1,59 +1,68 @@
-p id="notice" =notice
+div id="recipes-show"
+  p id="notice" =notice
+  
+  main
+    section id = "basic-information"
+      h1
+        = @recipe.title
+      img src = @recipe.photo class = "visual"
+      p
+        = @recipe.description
+      time id = "created-datetime" datetime = @recipe.created_at
+        = @recipe.created_at
+      time id = "last-updated-datetime" datetime = @recipe.updated_at
+        = @recipe.updated_at
+  
+  
+    section id = "materials"
+      h1
+        = "Materials"
+      ul
+      - @recipe.materials.each do |material|
+        =render "edit_form", object: material
+  
+    section id = "tools"
+      h1
+        = "Tools"
+      ul
+      - @recipe.tools.each do |tool|
+        =render "edit_form", object: tool
+  
+  
+    section id = "making"
+      h1
+        = "Making"
+      ol
+        - @recipe.statuses.each do |status|
+          =render "edit_form", object: status
+  
+        - @recipe.ways.each do |way|
+          =render "edit_form", object: way
+  
+  hr
+  
+  p
+    =form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
+      =hidden_field_tag :recipe_id, @recipe.id
+      =f.submit "Fork"
+  
+  p
+    =link_to "Edit", [:edit, @user, @recipe]
+    '|
+    =link_to "Back", [@user, :recipes]
 
-main
-  section id = "basic-information"
-    h1
-      = @recipe.title
-    img src = @recipe.photo class = "visual"
-    p
-      = @recipe.description
-    time id = "created-datetime" datetime = @recipe.created_at
-      = @recipe.created_at
-    time id = "last-updated-datetime" datetime = @recipe.updated_at
-      = @recipe.updated_at
+  content_for :bottom
+    coffee:
+      $(document).on "ajax:success", ".edit-form", (event, data, status) ->
+        if data.success
+          $(event.target).css "display", "none"
+          selector = "li##{data.class}-#{data.object.id}"
+          $.each data.object, (elem) ->
+            if elem == "photo"
+              $(selector).children(".#{elem}_field").attr("src", data.object[elem].url)
+            else
+              $(selector).children(".#{elem}_field").html data.object[elem]
 
-
-  section id = "materials"
-    h1
-      = "Materials"
-    ul
-    - @recipe.materials.each do |material|
-        li
-          img src = material.photo
-          = material.description
-
-
-  section id = "tools"
-    h1
-      = "Tools"
-    ul
-    - @recipe.tools.each do |tool|
-        li
-          img src = tool.photo
-          = tool.description
-
-
-  section id = "making"
-    h1
-      = "Making"
-    ol
-      - @recipe.statuses.each do |status|
-        li
-          img src = status.photo
-          = status.description
-      - @recipe.ways.each do |way|
-        li
-          img src = way.photo
-          = way.description
-
-hr
-
-p
-  =form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
-    =hidden_field_tag :recipe_id, @recipe.id
-    =f.submit "Fork"
-
-p
-  =link_to "Edit", [:edit, @user, @recipe]
-  '|
-  =link_to "Back", [@user, :recipes]
+      $(document).on "click", ".edit-btn", (event, data) ->
+        event.preventDefault()
+        $(event.target).siblings("form").css "display", "block"

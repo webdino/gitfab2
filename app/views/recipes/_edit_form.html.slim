@@ -1,0 +1,18 @@
+li id="#{object.class.name.underscore}-#{object.id}"
+  - (object.class)::UPDATABLE_COLUMNS.each do |field|
+    - case field
+    - when :photo
+      img src=object.photo class="#{field}_field"
+    - else
+      span class="#{field}_field"
+        = object.send field
+  div class="edit-form-wrap"
+    = link_to "edit", "#", class: "edit-btn"
+    = form_for [@user, @recipe, object], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+      - (object.class)::UPDATABLE_COLUMNS.each do |field|
+        - case field
+        - when :photo
+          p = f.file_field field
+        - else
+          p = f.text_field field
+      = f.submit "update"
