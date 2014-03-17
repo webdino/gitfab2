@@ -1,6 +1,6 @@
 class Status < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:description]
-  UPDATABLE_COLUMNS = [:description, :photo, :remove_photo]
+  UPDATABLE_COLUMNS = [:description, :photo]
   has_many :materials
   has_many :prev_ways, class_name: Way.name
   has_many :next_ways, class_name: Way.name

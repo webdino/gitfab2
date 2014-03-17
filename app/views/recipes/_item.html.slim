@@ -1,0 +1,12 @@
+li id="#{item.class.name.underscore}-#{item.id}"
+  - (item.class)::UPDATABLE_COLUMNS.each do |field|
+    - case field
+    - when :photo
+      span class="#{field}_field"
+        - if item.photo.present?
+          img src=item.photo
+    - else
+      span class="#{field}_field"
+        = item.send field
+
+  = render "recipes/edit_form", item: item

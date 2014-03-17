@@ -9,7 +9,11 @@ class MaterialsController < ApplicationController
 
   private
   def material_params
-    params.require(:material).permit Material::UPDATABLE_COLUMNS
+    params.require(:material).permit (Material::UPDATABLE_COLUMNS + additional_params)
+  end
+
+  def additional_params
+    [:remove_photo]
   end
 
   def set_recipe

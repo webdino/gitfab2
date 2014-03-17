@@ -1,3 +1,4 @@
 json.success true
-json.class object.class.name.underscore
-json.object object
+json.class item.class.name.underscore
+json.id item.id
+json.html (render "recipes/item", item: item)
