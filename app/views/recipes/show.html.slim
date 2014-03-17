@@ -56,10 +56,14 @@ div id="recipes-show"
       $(document).on "ajax:success", ".edit-form", (event, data, status) ->
         if data.success
           $(event.target).css "display", "none"
+          $(event.target).find(".remove-photo").attr "checked", false
           selector = "li##{data.class}-#{data.object.id}"
           $.each data.object, (elem) ->
             if elem == "photo"
-              $(selector).children(".#{elem}_field").attr("src", data.object[elem].url)
+              content = if data.object[elem].url then "<img src=#{data.object[elem].url}>" else ""
+              $(selector).children(".#{elem}_field").html content
+              unless data.object["photo"].url
+                $(event.target).find(".add-photo").val ""
             else
               $(selector).children(".#{elem}_field").html data.object[elem]
 
