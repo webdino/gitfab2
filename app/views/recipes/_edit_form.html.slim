@@ -2,7 +2,9 @@ li id="#{object.class.name.underscore}-#{object.id}"
   - (object.class)::UPDATABLE_COLUMNS.each do |field|
     - case field
     - when :photo
-      img src=object.photo class="#{field}_field"
+      span class="#{field}_field"
+        - if object.photo.present?
+          img src=object.photo
     - else
       span class="#{field}_field"
         = object.send field
@@ -12,7 +14,12 @@ li id="#{object.class.name.underscore}-#{object.id}"
       - (object.class)::UPDATABLE_COLUMNS.each do |field|
         - case field
         - when :photo
-          p = f.file_field field
+          p
+            = f.file_field field, class: "add-photo"
+        - when :remove_photo
+          p
+            = f.check_box field, checked: false, class: "remove-photo"
+            'remove photo
         - else
           p = f.text_field field
       = f.submit "update"
