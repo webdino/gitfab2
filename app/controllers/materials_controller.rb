@@ -9,7 +9,7 @@ class MaterialsController < ApplicationController
   def update
     @material = @recipe.materials.find params[:id]
     @material.update_attributes material_params
-    render "recipes/update_elem", locals: {object: @material}
+    render "recipes/update_elem", locals: {item: @material}
   end
 
   private
