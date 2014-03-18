@@ -37,11 +37,8 @@ div id="recipes-show"
         - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
   
-        - @recipe.ways.each do |item|
-          = render "item", item: item
 
       = render "add_form", item: Status.new
-      = render "add_form", item: Way.new
   
   hr
   
@@ -65,7 +62,10 @@ div id="recipes-show"
       $(document).on "ajax:success", ".add-form", (event, data, status) ->
         if data.success
           $(event.target).find("input").val ""
-          $("##{data.class}-list").append data.html
+          if data.class == "way"
+            $(event.target).closest(".status").children(".way-list").append data.html
+          else
+            $("##{data.class}-list").append data.html
 
       $(document).on "click", ".edit-btn,.add-btn", (event, data) ->
         event.preventDefault()

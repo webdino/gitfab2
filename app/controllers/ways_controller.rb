@@ -1,10 +1,16 @@
 class WaysController < ApplicationController
   before_action :set_recipe
+  before_action :set_status
+
+  def create
+    @way = @status.ways.create way_params
+    render "recipes/update_elem", locals: {item: @way}
+  end
 
   def update
-    @way = @recipe.ways.find params[:id]
+    @way = @status.ways.find params[:id]
     @way.update_attributes way_params
-    render "recipes/update_elem", locals: {object: @way}
+    render "recipes/update_elem", locals: {item: @way}
   end
 
   private
@@ -18,5 +24,9 @@ class WaysController < ApplicationController
 
   def set_recipe
     @recipe = Recipe.find params[:recipe_id]
+  end
+
+  def set_status
+    @status = @recipe.statuses.find params[:status_id]
   end
 end

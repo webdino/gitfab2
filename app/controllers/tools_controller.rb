@@ -4,7 +4,7 @@ class ToolsController < ApplicationController
   def update
     @tool = @recipe.tools.find params[:id]
     @tool.update_attributes tool_params
-    render "recipes/update_elem", locals: {object: @tool}
+    render "recipes/update_elem", locals: {item: @tool}
   end
 
   private

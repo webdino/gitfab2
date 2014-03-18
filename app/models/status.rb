@@ -1,13 +1,11 @@
 class Status < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:description]
   UPDATABLE_COLUMNS = [:description, :photo]
-  has_many :materials
-  has_many :prev_ways, class_name: Way.name
-  has_many :next_ways, class_name: Way.name
-  has_one :next, class_name: Status.name
-  belongs_to :prev, class_name: Status.name
-  belongs_to :recipe
 
-  mount_uploader :photo, PhotoUploader
   acts_as_list_in_recipe
+  mount_uploader :photo, PhotoUploader
+
+  belongs_to :recipe
+  has_many :materials
+  has_many :ways
 end

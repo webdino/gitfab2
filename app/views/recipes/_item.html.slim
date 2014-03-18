@@ -1,4 +1,10 @@
-li id="#{item.class.name.underscore}-#{item.id}"
+li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.underscore}"
+  - if Status === item
+    ul class="way-list"
+      - item.ways.sorted_by_position.each do |way|
+        = render "item", item: way
+    - unless Status === item && item.first?
+      = render "add_form", item: [item, Way.new]
   - (item.class)::UPDATABLE_COLUMNS.each do |field|
     - case field
     - when :photo
@@ -9,4 +15,4 @@ li id="#{item.class.name.underscore}-#{item.id}"
       span class="#{field}_field"
         = item.send field
 
-  = render "recipes/edit_form", item: item
+  = render "recipes/edit_form", item: (Way === item ? [item.status, item] : item)

@@ -1,11 +1,10 @@
 div class="edit-form-wrap"
-  = link_to "edit", "#", class: "edit-btn"
-  = form_for [@recipe.user, @recipe, item], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
-    - (item.class)::UPDATABLE_COLUMNS.each do |field|
+  = link_to "edit #{[item].flatten.last.class.name.underscore}", "#", class: "edit-btn"
+  = form_for [@recipe.user, @recipe, item].flatten, remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+    - [item].flatten.last.class::UPDATABLE_COLUMNS.each do |field|
       - case field
       - when :photo
-        p
-          = f.file_field field, class: "add-photo"
+        p = f.file_field field, class: "add-photo"
       - else
         p = f.text_field field
     p
