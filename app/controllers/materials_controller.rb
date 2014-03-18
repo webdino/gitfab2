@@ -1,6 +1,11 @@
 class MaterialsController < ApplicationController
   before_action :set_recipe
 
+  def create
+    @material = @recipe.materials.create material_params
+    render "recipes/update_elem", locals: {item: @material}
+  end
+
   def update
     @material = @recipe.materials.find params[:id]
     @material.update_attributes material_params

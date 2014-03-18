@@ -7,6 +7,7 @@ class CreateTools < ActiveRecord::Migration
       t.text :description
       t.belongs_to :recipe, index: true
       t.belongs_to :way, index: true
+      t.integer :position, index: true
 
       t.timestamps
     end
