@@ -1,3 +1,4 @@
+<section id="users-show">
 <p id="notice"><%= notice %></p>
 <h1>Dashboard</h1>
 <% if user_signed_in? %>
@@ -12,6 +13,7 @@
 
 <%= link_to 'Edit', edit_user_path(current_user) %> |
 <%= link_to 'Back', users_path %>
+</section>
 
 <script>
   $(".persona-login-button").click(function(e) {
