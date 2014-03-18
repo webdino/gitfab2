@@ -1,0 +1,39 @@
+<section id ="layouts-header">
+  <div class="inner">
+    <div class="container">
+      <div id="logo">
+        <%= link_to "gitFab", root_path %>
+      </div>
+      <div id="search-box">
+        <%= form_tag :search, method: :get do %>
+          <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form"   %>
+        <% end %>
+      </div>
+
+      <% if user_signed_in? %>
+        <div id="tools">
+          <div class="box">
+            <div id="user">
+              <%#= img_tag current_user.avator %>
+              <%= current_user.name %>
+            </div>
+            <div id="create-recipe">
+              <%= link_to "+", [:new, current_user, :recipe] %>
+            </div>
+<!--             <div id="preferences">
+              >
+            </div> -->
+            <div id="logout">
+              <%= link_to "ロ", destroy_user_session_path, method: :delete  %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div id ="sign-in">
+          <%= link_to "Sign In", "#", class: "persona-login-button" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+</section>
