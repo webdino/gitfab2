@@ -9,6 +9,7 @@ class CreateMaterials < ActiveRecord::Migration
       t.text :description
       t.belongs_to :recipe, index: true
       t.belongs_to :status, index: true
+      t.integer :position, index: true
 
       t.timestamps
     end

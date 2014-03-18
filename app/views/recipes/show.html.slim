@@ -17,28 +17,31 @@ div id="recipes-show"
     section id = "materials"
       h1
         'Materials
-      ul
-      - @recipe.materials.each do |item|
-        = render "item", item: item
+      ul id="material-list"
+        - @recipe.materials.each do |item|
+          = render "item", item: item
+      = render "add_form", item: Material.new
   
     section id = "tools"
       h1
         'Tools
-      ul
-      - @recipe.tools.each do |item|
-        = render "item", item: item
+      ul id="tool-list"
+        - @recipe.tools.each do |item|
+          = render "item", item: item
+      = render "add_form", item: Tool.new
   
     section id = "making"
       h1
         'Making
-      ol id="statuses"
-        - @recipe.statuses.each do |item|
+      ol id="status-list"
+        - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
   
         - @recipe.ways.each do |item|
           = render "item", item: item
 
       = render "add_form", item: Status.new
+      = render "add_form", item: Way.new
   
   hr
   
@@ -62,7 +65,7 @@ div id="recipes-show"
       $(document).on "ajax:success", ".add-form", (event, data, status) ->
         if data.success
           $(event.target).find("input").val ""
-          $("#making #statuses").append data.html
+          $("##{data.class}-list").append data.html
 
       $(document).on "click", ".edit-btn,.add-btn", (event, data) ->
         event.preventDefault()
