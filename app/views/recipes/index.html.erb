@@ -1,23 +1,140 @@
 <section id="recipes-index">
-  <h1><%= @user.name %> のレシピ一覧</h1>
-  <div id="recipes">
-    <% @recipes.each do |recipe| %>
-      <div class="recipe">
-        <p class="cover"><%= link_to "", [@user, recipe] %></p>
-        <div class="summary">
-          <p><%= recipe.title %></p>
-          <p><%= recipe.description %></p>
-          <ul>
-            <li><%= link_to 'Show', [@user, recipe] %></li>
-            <li><%= link_to 'Edit', [:edit, @user, recipe] %></li>
-            <li><%= link_to 'Destroy', [@user, recipe], method: :delete, data: {confirm: 'Are you sure?'} %></li>
-          </ul>
+  <section id="user-pane">
+    <div id="avator">
+<!--  TODO: userのavatorをimg_tagで表示   -->
+    </div>
+<!--  TODO: userのrealnameが存在した場合に表示  -->
+    <div id="screen-name">
+      <%= @user.name %>
+    </div>
+    <div id= "joined-at">
+      <div id="clock-icon"></div>
+      <div id="date">
+        <%= @user.created_at.strftime("%b.%d.%Y") %>
+      </div>
+    </div>
+    <div id="follower">
+      <div id="num"></div>
+      <p>followers</p>
+    </div>
+    <div id="starred">
+      <div id="num"></div>
+      <p>starred</p>
+    </div>
+    <div id="following">
+      <div id="num"></div>
+      <p>followings</p>
+    </div>
+    <div id="teams">
+      <p>Teams</p>
+    </div>
+  </section>
+
+  <section id= "project-pane">
+<!--   oshima TODO: タブUIはTabby使う   -->
+    <ul class="tabs tabs-horisontal">
+      <li class="active"><a data-target="#project-tab" href="#">Projects</a></li>
+      <li><a data-target="#contribution-tab" href="#">Contribution</a></li>
+      <li><a data-target="#starred-tab" href="#">Starred</a></li>
+    </ul>
+<!--  TODO: searchメソッドを@userがオーナーのものだけを対象として検索するメソッドに変える   -->
+    <div class="tabs-content">
+      <div class="tabs-pane active" id="project-tab">
+        <div id="search-bar">
+          <div id="search-box">
+            <%= form_tag :search, method: :get do %>
+              <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form" %>
+            <% end %>
+          </div>
+          <div id="search-button">
+            Search
+          </div>
+          <% if @user == current_user %>
+            <div id="create-project">
+              <%= link_to "+Project", [:new, current_user, :recipe] %>
+            </div>
+          <% end %>
+        </div>
+
+        <div id="recipes">
+          <% @recipes.each do |recipe| %>
+            <div class="recipe">
+              <p class="cover"><%= link_to "", [@user, recipe] %></p>
+              <div class="summary">
+                <div class="title"><%= recipe.title %></div>
+                <div class="avator-thumb">
+<!--  TODO: userのavatorをimg_tagで表示   -->
+                </div>
+                <div class="name"><%= recipe.user.name %></div>
+                <div class="description"><%= recipe.description %></div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
-    <% end %>
-  </div>
 
-  <br>
+<!--  TODO: searchメソッドを@userがContributerのものだけを対象として検索するメソッドに変える   -->
+      <div class="tabs-pane" id="contribution-tab">
+        <div id="search-bar">
+          <div id="search-box">
+            <%= form_tag :search, method: :get do %>
+              <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form" %>
+            <% end %>
+          </div>
+          <div id="search-button">
+            Search
+          </div>
+        </div>
 
-  <%= link_to 'New Recipe', new_user_recipe_path(@user) %>
+        <div id="recipes">
+          <% @recipes.each do |recipe| %>
+            <div class="recipe">
+              <p class="cover"><%= link_to "", [@user, recipe] %></p>
+              <div class="summary">
+                <div class="title"><%= recipe.title %></div>
+                <div class="avator-thumb">
+<!--  TODO: userのavatorをimg_tagで表示   -->
+                </div>
+                <div class="name"><%= recipe.user.name %></div>
+                <div class="description"><%= recipe.description %></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+<!--  TODO: searchメソッドを@userがスターしたものだけを対象として検索するメソッドに変える   -->
+      <div class="tabs-pane" id="starred-tab">
+        <div id="search-bar">
+          <div id="search-box">
+            <%= form_tag :search, method: :get do %>
+              <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form" %>
+            <% end %>
+          </div>
+          <div id="search-button">
+            Search
+          </div>
+        </div>
+
+        <div id="recipes">
+          <% @recipes.each do |recipe| %>
+            <div class="recipe">
+              <p class="cover"><%= link_to "", [@user, recipe] %></p>
+              <div class="summary">
+                <div class="title"><%= recipe.title %></div>
+                <div class="avator-thumb">
+<!--  TODO: userのavatorをimg_tagで表示   -->
+                </div>
+                <div class="name"><%= recipe.user.name %></div>
+                <div class="description"><%= recipe.description %></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
 </section>
