@@ -63,7 +63,6 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   end
 
   create_table "statuses", force: true do |t|
-    t.integer  "prev_id"
     t.integer  "position"
     t.text     "description"
     t.string   "photo"
@@ -107,6 +106,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.string   "avatar"
     t.integer  "group_id"
     t.integer  "contributing_recipe_ids"
     t.datetime "created_at"

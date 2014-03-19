@@ -1,9 +1,11 @@
 class User < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:name]
+  UPDATABLE_COLUMNS = [:name, :avatar]
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+  mount_uploader :avatar, AvatarUploader
+
   belongs_to :group
   has_many :recipes
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe

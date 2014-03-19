@@ -31,6 +31,10 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit User::UPDATABLE_COLUMNS
+    params.require(:user).permit (User::UPDATABLE_COLUMNS + additional_params)
+  end
+
+  def additional_params
+    [:remove_avatar]
   end
 end
