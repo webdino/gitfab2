@@ -1,6 +1,7 @@
 class CreateRecipes < ActiveRecord::Migration
   def change
     create_table :recipes do |t|
+      t.string :uuid, index: true
       t.string :name
       t.string :repo_path
       t.string :title

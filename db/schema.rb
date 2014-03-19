@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   end
 
   create_table "materials", force: true do |t|
+    t.string   "uuid"
     t.string   "name"
     t.string   "url"
     t.string   "quantity"
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   add_index "recipe_tags", ["tag_id"], name: "index_recipe_tags_on_tag_id", using: :btree
 
   create_table "recipes", force: true do |t|
+    t.string   "uuid"
     t.string   "name"
     t.string   "repo_path"
     t.string   "title"
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   end
 
   create_table "statuses", force: true do |t|
+    t.string   "uuid"
     t.integer  "position"
     t.text     "description"
     t.string   "photo"
@@ -80,6 +83,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   end
 
   create_table "tools", force: true do |t|
+    t.string   "uuid"
     t.string   "name"
     t.string   "url"
     t.string   "photo"
@@ -118,6 +122,7 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "ways", force: true do |t|
+    t.string   "uuid"
     t.string   "name"
     t.string   "photo"
     t.integer  "status_id"
