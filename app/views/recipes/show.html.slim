@@ -61,12 +61,16 @@ div id="recipes-show"
 
       $(document).on "ajax:success", ".add-form", (event, data, status) ->
         if data.success
-          $(event.target).find("input").val ""
+          $(event.target).find("input[type!=submit]").val ""
           if data.class == "way"
             $(event.target).closest(".status").children(".way-list").append data.html
           else
             $("##{data.class}-list").append data.html
 
-      $(document).on "click", ".edit-btn,.add-btn", (event, data) ->
+      $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
+        $(event.target).closest("li").remove()
+
+      $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
         event.preventDefault()
         $(event.target).siblings("form").css "display", "block"
+
