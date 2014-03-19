@@ -119,6 +119,7 @@ GEM
       spring
     hashery (1.5.0)
       blankslate
+    highline (1.6.21)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (1.5.3)
@@ -155,10 +156,14 @@ GEM
     nio4r (1.0.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    options (2.3.2)
     orm_adapter (0.5.0)
     polyglot (0.3.4)
     posix-spawn (0.3.8)
     pr_geohash (1.0.0)
+    progress_bar (1.0.0)
+      highline (~> 1.6.1)
+      options (~> 2.3.0)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -350,6 +355,7 @@ DEPENDENCIES
   mini_magick
   mysql2
   nested_form
+  progress_bar
   pry-debugger
   pry-rails
   rails (= 4.0.3)

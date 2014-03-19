@@ -29,6 +29,7 @@ gem 'sunspot_solr'
 gem "nested_form"
 gem "remotipart"
 gem "acts_as_list"
+gem "progress_bar"
 
 group :doc do
   gem "sdoc", require: false

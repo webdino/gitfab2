@@ -5,8 +5,8 @@
         <%= link_to "gitFab", root_path %>
       </div>
       <div id="search-box">
-        <%= form_tag :search, method: :get do %>
-          <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form"   %>
+        <%= form_tag :search, method: :get do |f| %>
+          <%= text_field_tag :q, nil, placeholder: "Search project", id: "search-form" %>
         <% end %>
       </div>
 
