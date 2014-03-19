@@ -1,6 +1,7 @@
 class CreateMaterials < ActiveRecord::Migration
   def change
     create_table :materials do |t|
+      t.string :uuid, index: true
       t.string :name
       t.string :url
       t.string :quantity

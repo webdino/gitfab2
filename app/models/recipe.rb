@@ -7,6 +7,7 @@ class Recipe < ActiveRecord::Base
     recipe_tags_attributes: [:id, :tag_id, :recipe_id],
     tag_ids: [],
   ]
+  include Gitfab::UUID
 
   mount_uploader :photo, PhotoUploader
 

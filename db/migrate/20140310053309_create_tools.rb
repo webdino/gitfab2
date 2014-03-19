@@ -1,6 +1,7 @@
 class CreateTools < ActiveRecord::Migration
   def change
     create_table :tools do |t|
+      t.string :uuid, index: true
       t.string :name
       t.string :url
       t.string :photo
