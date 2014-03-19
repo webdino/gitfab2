@@ -31,6 +31,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
 
       t.string :name
+      t.string :avatar
       t.integer :group_id
       t.integer :contributing_recipe_ids
 
