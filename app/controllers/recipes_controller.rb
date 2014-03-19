@@ -1,16 +1,23 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy, :fork]
-  before_action :set_user, except: :search
-
-  def search
-    q = params[:q] || ""
-    @recipes = Recipe.solr_search do
-      fulltext q.split.map{|word| "\"#{word}\""}.join(" AND ")
-    end.results
-  end
+  before_action :set_user
 
   def index
-    @recipes = @user.recipes
+    if q = params[:q]
+      @recipes = @user.recipes.solr_search do
+        fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
+        case params[:type]
+        when "own"
+          with :user_id, params[:user_id]
+        when "contributed"
+          # TODO: Implement
+        when "starred"
+          # TODO: Implement
+        end
+      end.results
+    else
+      @recipes = @user.recipes
+    end
   end
 
   def show
