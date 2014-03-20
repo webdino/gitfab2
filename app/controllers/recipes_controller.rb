@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy, :fork]
   before_action :set_user
+  layout "dashboard"
 
   def index
     if q = params[:q]

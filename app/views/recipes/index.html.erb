@@ -33,9 +33,9 @@
   <section id= "project-pane">
 <!--   oshima TODO: タブUIはTabby使う   -->
     <ul class="tabs tabs-horisontal">
-      <li class="active"><a data-target="#project-tab" href="#">Projects</a></li>
-      <li><a data-target="#contribution-tab" href="#">Contribution</a></li>
-      <li><a data-target="#starred-tab" href="#">Starred</a></li>
+      <li class="active"><a data-tab="#project-tab" href="#">Projects</a></li>
+      <li><a data-tab="#contribution-tab" href="#">Contribution</a></li>
+      <li><a data-tab="#starred-tab" href="#">Starred</a></li>
     </ul>
 <!--  TODO: searchメソッドを@userがオーナーのものだけを対象として検索するメソッドに変える   -->
     <div class="tabs-content">
@@ -141,3 +141,15 @@
   </section>
 
 </section>
+
+<% content_for :bottom %>
+  <script>
+    tabby.init({
+      toggleActiveClass: 'active',
+      contentActiveClass: 'active',
+      initClass: 'js-tabby',
+      callbackBefore: function ( toggle, tabID ) {},
+      callbackAfter: function ( toggle, tabID ) {}
+   });
+  </script>
+<% end %>
