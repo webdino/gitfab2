@@ -1,7 +1,7 @@
 class CreateStatuses < ActiveRecord::Migration
   def change
     create_table :statuses do |t|
-      t.string :uuid, index: true
+      t.string :filename, index: true
       t.integer :position, index: true
       t.text :description
       t.string :photo

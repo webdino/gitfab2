@@ -5,7 +5,7 @@ div id="recipes-show"
     section id = "basic-information"
       h1
         = @recipe.title
-      img src = @recipe.photo class = "visual"
+      = image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
       p
         = @recipe.description
       time id = "created-datetime" datetime = @recipe.created_at

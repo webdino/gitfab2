@@ -5,9 +5,8 @@ class Recipe < ActiveRecord::Base
     statuses_attributes:    [:id, :description, :photo, :_destroy],
     ways_attributes:        [:id, :description, :photo, :_destroy],
     recipe_tags_attributes: [:id, :tag_id, :recipe_id],
-    tag_ids: [],
+    tag_ids: []
   ]
-  include Gitfab::UUID
 
   mount_uploader :photo, PhotoUploader
 
@@ -30,13 +29,12 @@ class Recipe < ActiveRecord::Base
   has_many :ways
   has_many :recipe_tags
   has_many :tags, through: :recipe_tags
+  has_many :ways, through: :statuses
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
 
-  before_validation :set_repo_path!
   after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
-  after_save :commit_to_repo!
   after_destroy :destroy_repo!
 
   validates :name, presence: true
@@ -54,13 +52,35 @@ class Recipe < ActiveRecord::Base
     end
   end
 
+  def repo
+    Rugged::Repository.new repo_path if File.exists? repo_path
+  end
+
+  def commit!
+    contents = [{file_path: "recipe.json", data: self.to_json}]
+    dirs = [:statuses, :materials, :ways, :tools]
+    dirs.each do |dir|
+      items = self.send dir
+      items.each do |item|
+        contents << {file_path: item.to_path, data: item.to_json}
+      end
+    end
+    opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
+    Gitfab::Shell.new.commit_to_repo! self.repo.path, contents, opts
+  end
+
   def fork_for! user
     Recipe.transaction do
       new_recipe = self.dup
+      new_recipe.statuses = self.statuses.collect do |status|
+        status.dup.tap{|st| st.way_ids = status.way_ids}
+      end
+      new_recipe.materials = self.materials.collect{|material| material.dup}
+      new_recipe.tools = self.tools.collect{|tool| tool.dup}
       new_recipe.orig_recipe = self
       new_recipe.user_id = user.id
       new_recipe.name = Gitfab::Shell.new
-        .copy_repo! self.repo_path, user.dir_path, new_recipe.name
+        .copy_repo! self.repo.path, user.dir_path, new_recipe.name
       new_recipe.save
       new_recipe
     end
@@ -76,22 +96,16 @@ class Recipe < ActiveRecord::Base
   end
 
   private
-  def set_repo_path!
-    self.repo_path = "#{self.user.dir_path}/#{self.name}.git"
-  end
-
   def ensure_repo_exist!
     Gitfab::Shell.new.add_repo! repo_path
   end
 
-  def commit_to_repo!
-    contents = [{file_path: "recipe.json", data: self.to_json}]
-    opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
-    Gitfab::Shell.new.commit_to_repo! repo_path, contents, opts
+  def repo_path
+    "#{self.user.dir_path}/#{self.name}.git"
   end
 
   def destroy_repo!
-    Gitfab::Shell.new.destroy_repo! self.repo_path
+    Gitfab::Shell.new.destroy_repo! self.repo.path
   end
 
   def rename_repo_name!
