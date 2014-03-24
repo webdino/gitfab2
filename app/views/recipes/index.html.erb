@@ -1,142 +1,186 @@
 <section id="recipes-index">
   <section id="user-pane">
-    <div id="avator">
-<!--  TODO: userのavatorをimg_tagで表示   -->
-    </div>
-<!--  TODO: userのrealnameが存在した場合に表示  -->
-    <div id="screen-name">
-      <%= @user.name %>
-    </div>
-    <div id= "joined-at">
-      <div id="clock-icon"></div>
-      <div id="date">
-        <%= @user.created_at.strftime("%b.%d.%Y") %>
+    <div class ="inner">
+      <div id="avatar">
+        <% if @user.avatar != nil %>
+          <%= image_tag @user.avatar %>
+        <% end %>
       </div>
-    </div>
-    <div id="follower">
-      <div id="num"></div>
-      <p>followers</p>
-    </div>
-    <div id="starred">
-      <div id="num"></div>
-      <p>starred</p>
-    </div>
-    <div id="following">
-      <div id="num"></div>
-      <p>followings</p>
-    </div>
-    <div id="teams">
-      <p>Teams</p>
+      <div id="name">
+<%#  TODO: userのrealnameが存在した場合に表示  %>
+        <div id="screen-name">
+          <%= @user.name %>
+        </div>
+      </div>
+      <div id="joined-on">
+        <div id="clock-icon"></div>
+        <div id="date">
+          Joined on <%= @user.created_at.strftime("%b %d,%Y") %>
+        </div>
+      </div>
+      <div class="stats">
+        <div id="follower" class= "card">
+          <div class="count">
+<%#  TODO: userのfollower数を表示  %>
+            7
+          </div>
+          <p>followers</p>
+        </div>
+        <div id="starred" class= "card">
+<%#  TODO: userがstarした数を表示  %>
+          <div class="count">
+            5
+          </div>
+          <p>starred</p>
+        </div>
+        <div id="following" class= "card">
+<%#  TODO: userがstarした数を表示  %>
+          <div class="count">
+            12
+          </div>
+          <p>followings</p>
+        </div>
+      </div>
+      <div id="teams">
+        <p>Teams</p>
+      </div>
     </div>
   </section>
 
   <section id= "project-pane">
-<!--   oshima TODO: タブUIはTabby使う   -->
+    <div class ="inner">
+
+<%# TODO: #contribution-tabをクリックした時に@userがcontributeしたものだけを表示   %>
+<%# TODO: #starred-tabをクリックした時に@userがstarしたものだけを表示   %>
+
     <ul class="tabs tabs-horisontal">
-      <li class="active"><a data-tab="#project-tab" href="#">Projects</a></li>
-      <li><a data-tab="#contribution-tab" href="#">Contribution</a></li>
-      <li><a data-tab="#starred-tab" href="#">Starred</a></li>
-    </ul>
-<!--  TODO: searchメソッドを@userがオーナーのものだけを対象として検索するメソッドに変える   -->
-    <div class="tabs-content">
-      <div class="tabs-pane active" id="project-tab">
-        <div id="search-bar">
-          <div id="search-box">
-            <%= form_tag [@user, :recipes], method: :get do %>
-              <%= text_field_tag :q, (params[:q] if params[:type] == "own"), placeholder: "Search project", class: "q-field" %>
-              <%= hidden_field_tag :type, :own %>
+        <li class="active"><a data-tab="#project-tab" href="#">Projects</a></li>
+        <li><a data-tab="#contribution-tab" href="#">Contribution</a></li>
+        <li><a data-tab="#starred-tab" href="#">Starred</a></li>
+      </ul>
+
+      <div class="tabs-content">
+        <div class="tabs-pane active" id="project-tab">
+          <div class="search-bar">
+            <div class="search-box">
+              <%= form_tag [@user, :recipes], method: :get do %>
+                <%= text_field_tag :q, (params[:q] if params[:type] == "own"), placeholder: "Search project", class: "q-field" %>
+                <%= hidden_field_tag :type, :own %>
+                <%= submit_tag "Search", class:"search-button" %>
+              <% end %>
+            </div>
+            <% if @user == current_user %>
+              <span id="create-project">
+                <%= link_to "+Project", [:new, current_user, :recipe] %>
+              </span>
             <% end %>
           </div>
-          <div id="search-button">
-            Search
+
+          <div class="recipes">
+            <ul class="recipe-list">
+              <% @recipes.each do |recipe| %>
+                <li class="recipe-item">
+                  <p class="cover"><%= link_to "", [@user, recipe] %></p>
+                    <span class="summary">
+                        <span class="title">
+                          <%= link_to recipe.title, [@user, recipe] %>
+                        </span>
+                        <span class="avatar-thumb">
+                          <% if @user.avatar != nil %>
+                            <%= link_to image_tag(@user.avatar), @user %>
+                          <% end %>
+                        </span>
+                        <span class="name">
+                          <%= link_to recipe.user.name, @user %>
+                        </span>
+                        <span class="description">
+                          <%= recipe.description %>
+                        </span>
+                    </span>
+                </li>
+              <% end %>
+            </ul>
           </div>
-          <% if @user == current_user %>
-            <div id="create-project">
-              <%= link_to "+Project", [:new, current_user, :recipe] %>
-            </div>
-          <% end %>
         </div>
 
-        <div id="recipes">
-          <% @recipes.each do |recipe| %>
-            <div class="recipe">
-              <p class="cover"><%= link_to "", [@user, recipe] %></p>
-              <div class="summary">
-                <div class="title"><%= recipe.title %></div>
-                <div class="avator-thumb">
-<!--  TODO: userのavatorをimg_tagで表示   -->
-                </div>
-                <div class="name"><%= recipe.user.name %></div>
-                <div class="description"><%= recipe.description %></div>
-              </div>
+        <div class="tabs-pane" id="contribution-tab">
+          <div class="search-bar">
+            <div class="search-box">
+              <%= form_tag [@user, :recipes], method: :get do %>
+                <%= text_field_tag :q, (params[:q] if params[:type] == "contributed"), placeholder: "Search project", class: "q-field" %>
+                <%= hidden_field_tag :type, :contributed %>
+                <%= submit_tag "Search", class:"search-button" %>
+              <% end %>
             </div>
-          <% end %>
+          </div>
+
+          <div class="recipes">
+            <ul class="recipe-list">
+              <% @recipes.each do |recipe| %>
+                <li class="recipe-item">
+                  <p class="cover"><%= link_to "", [@user, recipe] %></p>
+                    <span class="summary">
+                        <span class="title">
+                          <%= link_to recipe.title, [@user, recipe] %>
+                        </span>
+                        <span class="avatar-thumb">
+                          <% if @user.avatar != nil %>
+                            <%= link_to image_tag(@user.avatar), @user %>
+                          <% end %>
+                        </span>
+                        <span class="name">
+                          <%= link_to recipe.user.name, @user %>
+                        </span>
+                        <span class="description">
+                          <%= recipe.description %>
+                        </span>
+                    </span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
+
+        <div class="tabs-pane" id="starred-tab">
+          <div class="search-bar">
+            <div class="search-box">
+              <%= form_tag [@user, :recipes], method: :get do %>
+                <%= text_field_tag :q, (params[:q] if params[:type] == "starred"), placeholder: "Search project", class: "q-field" %>
+                <%= hidden_field_tag :type, :starred %>
+                <%= submit_tag "Search", class:"search-button" %>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="recipes">
+            <ul class="recipe-list">
+              <% @recipes.each do |recipe| %>
+                <li class="recipe-item">
+                  <p class="cover"><%= link_to "", [@user, recipe] %></p>
+                    <span class="summary">
+                        <span class="title">
+                          <%= link_to recipe.title, [@user, recipe] %>
+                        </span>
+                        <span class="avatar-thumb">
+                          <% if @user.avatar != nil %>
+                            <%= link_to image_tag(@user.avatar), @user %>
+                          <% end %>
+                        </span>
+                        <span class="name">
+                          <%= link_to recipe.user.name, @user %>
+                        </span>
+                        <span class="description">
+                          <%= recipe.description %>
+                        </span>
+                    </span>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+
       </div>
-
-<!--  TODO: searchメソッドを@userがContributerのものだけを対象として検索するメソッドに変える   -->
-      <div class="tabs-pane" id="contribution-tab">
-        <div id="search-bar">
-          <div id="search-box">
-            <%= form_tag [@user, :recipes], method: :get do %>
-              <%= text_field_tag :q, (params[:q] if params[:type] == "contributed"), placeholder: "Search project", class: "q-field" %>
-              <%= hidden_field_tag :type, :contributed %>
-            <% end %>
-          </div>
-          <div id="search-button">
-            Search
-          </div>
-        </div>
-
-        <div id="recipes">
-          <% @recipes.each do |recipe| %>
-            <div class="recipe">
-              <p class="cover"><%= link_to "", [@user, recipe] %></p>
-              <div class="summary">
-                <div class="title"><%= recipe.title %></div>
-                <div class="avator-thumb">
-<!--  TODO: userのavatorをimg_tagで表示   -->
-                </div>
-                <div class="name"><%= recipe.user.name %></div>
-                <div class="description"><%= recipe.description %></div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-<!--  TODO: searchメソッドを@userがスターしたものだけを対象として検索するメソッドに変える   -->
-      <div class="tabs-pane" id="starred-tab">
-        <div id="search-bar">
-          <div id="search-box">
-            <%= form_tag [@user, :recipes], method: :get do %>
-              <%= text_field_tag :q, (params[:q] if params[:type] == "starred"), placeholder: "Search project", class: "q-field" %>
-              <%= hidden_field_tag :type, :starred %>
-            <% end %>
-          </div>
-          <div id="search-button">
-            Search
-          </div>
-        </div>
-
-        <div id="recipes">
-          <% @recipes.each do |recipe| %>
-            <div class="recipe">
-              <p class="cover"><%= link_to "", [@user, recipe] %></p>
-              <div class="summary">
-                <div class="title"><%= recipe.title %></div>
-                <div class="avator-thumb">
-<!--  TODO: userのavatorをimg_tagで表示   -->
-                </div>
-                <div class="name"><%= recipe.user.name %></div>
-                <div class="description"><%= recipe.description %></div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-
     </div>
   </section>
 
