@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :set_recipe
   before_action :set_parent
+  after_action :commit_recipe, only: [:create, :update, :destroy]
 
   def create
     @item = @parent.send(controller_name).create item_params
@@ -14,7 +15,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @parent.send(controller_name).find(params[:id]).destroy
+    @item = @parent.send(controller_name).find(params[:id])
+    @item.destroy
     render "recipes/destroy_item"
   end
 
@@ -35,5 +37,9 @@ class ItemsController < ApplicationController
 
   def set_parent
     @parent = @recipe
+  end
+
+  def commit_recipe
+    @item.recipe.commit!
   end
 end

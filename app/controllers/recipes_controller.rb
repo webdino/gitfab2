@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :edit, :update, :destroy, :fork]
   before_action :set_user
+  after_action :commit, only: [:create, :update]
   layout "dashboard"
 
   def index
@@ -78,5 +79,9 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
+  end
+
+  def commit
+    @recipe.commit!
   end
 end
