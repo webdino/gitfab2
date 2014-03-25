@@ -80,23 +80,25 @@
             <ul class="recipe-list">
               <% @recipes.each do |recipe| %>
                 <li class="recipe-item">
-                  <p class="cover"><%= link_to "", [@user, recipe] %></p>
-                    <span class="summary">
-                        <span class="title">
-                          <%= link_to recipe.title, [@user, recipe] %>
-                        </span>
-                        <span class="avatar-thumb">
-                          <% if @user.avatar != nil %>
-                            <%= link_to image_tag(@user.avatar), @user %>
-                          <% end %>
-                        </span>
-                        <span class="name">
-                          <%= link_to recipe.user.name, @user %>
-                        </span>
-                        <span class="description">
-                          <%= recipe.description %>
-                        </span>
-                    </span>
+                  <p class="cover" style="background-image: url('<%= "#{recipe.photo.url}" %>')">
+                    <%= link_to "", [@user, recipe] %>
+                  </p>
+                  <span class="summary">
+                      <span class="title">
+                        <%= link_to recipe.title, [@user, recipe] %>
+                      </span>
+                      <span class="avatar-thumb">
+                        <% if @user.avatar.present? %>
+                          <%= link_to image_tag(@user.avatar), @user %>
+                        <% end %>
+                      </span>
+                      <span class="name">
+                        <%= link_to recipe.user.name, @user %>
+                      </span>
+                      <span class="description">
+                        <%= recipe.description %>
+                      </span>
+                  </span>
                 </li>
               <% end %>
             </ul>
@@ -124,7 +126,7 @@
                           <%= link_to recipe.title, [@user, recipe] %>
                         </span>
                         <span class="avatar-thumb">
-                          <% if @user.avatar != nil %>
+                          <% if @user.avatar.present? %>
                             <%= link_to image_tag(@user.avatar), @user %>
                           <% end %>
                         </span>
@@ -162,7 +164,7 @@
                           <%= link_to recipe.title, [@user, recipe] %>
                         </span>
                         <span class="avatar-thumb">
-                          <% if @user.avatar != nil %>
+                          <% if @user.avatar.present? %>
                             <%= link_to image_tag(@user.avatar), @user %>
                           <% end %>
                         </span>
