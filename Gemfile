@@ -30,6 +30,7 @@ gem "nested_form"
 gem "remotipart"
 gem "acts_as_list"
 gem "progress_bar"
+gem "cancan"
 
 group :doc do
   gem "sdoc", require: false

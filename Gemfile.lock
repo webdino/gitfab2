@@ -37,6 +37,7 @@ GEM
       erubis (>= 2.6.6)
     blankslate (3.1.2)
     builder (3.1.4)
+    cancan (1.6.10)
     capistrano (3.1.0)
       i18n
       rake (>= 10.0.0)
@@ -337,6 +338,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_list
   better_errors
+  cancan
   capistrano (~> 3.1.0)
   capistrano-bundler
   capistrano-rails
