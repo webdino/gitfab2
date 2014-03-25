@@ -14,15 +14,14 @@
         <div id="tools">
           <div class="box">
             <div id="user">
-              <%#= img_tag current_user.avator %>
-              <%= current_user.name %>
+              <% if current_user.avatar.present? %>
+                <%= link_to image_tag(current_user.avatar, class: "avator-thumb"), [current_user] %>
+              <% end %>
+              <%= link_to current_user.name, [current_user] %>
             </div>
             <div id="create-recipe">
               <%= link_to "+", [:new, current_user, :recipe] %>
             </div>
-<!--             <div id="preferences">
-              >
-            </div> -->
             <div id="logout">
               <%= link_to "ロ", destroy_user_session_path, method: :delete  %>
             </div>
