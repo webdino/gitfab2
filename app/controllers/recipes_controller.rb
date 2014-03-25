@@ -1,8 +1,12 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: [:show, :edit, :update, :destroy, :fork]
-  before_action :set_user
-  after_action :commit, only: [:create, :update]
   layout "dashboard"
+
+  before_action :load_user
+  before_action :build_recipe, only: [:new, :create]
+  before_action :load_recipe, only: [:show, :edit, :update, :destroy, :fork]
+  after_action :commit, only: [:create, :update]
+
+  authorize_resource
 
   def index
     if q = params[:q]
@@ -26,7 +30,6 @@ class RecipesController < ApplicationController
   end
 
   def new
-    @recipe = @user.recipes.build
     @recipe.fill_default_name_for! current_user
   end
 
@@ -34,10 +37,9 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = @user.recipes.build recipe_params
     @recipe.last_committer = current_user
     if @recipe.save
-      redirect_to [@user, @recipe], notice: "Recipe was successfully created."
+      redirect_to [@recipe.user, @recipe], notice: "Recipe was successfully created."
     else
       render action: :new
     end
@@ -68,17 +70,23 @@ class RecipesController < ApplicationController
   end
 
   private
-  def set_recipe
+  def build_recipe
+    @recipe = @user.recipes.build recipe_params
+  end
+
+  def load_recipe
     recipe_id = params[:id] || params[:recipe_id]
     @recipe = Recipe.where(id: recipe_id, user_id: params[:user_id]).first
   end
 
-  def set_user
+  def load_user
     @user = User.find params[:user_id]
   end
 
   def recipe_params
-    params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
+    if params[:recipe]
+      params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
+    end
   end
 
   def commit

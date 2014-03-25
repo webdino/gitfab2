@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
+  include Gitfab::ErrorHandling
+  handle_as_unauthorized CanCan::AccessDenied
+
   protect_from_forgery with: :exception
+
   before_action :verify_name
 
   private
