@@ -2,16 +2,16 @@
 <p id="notice"><%= notice %></p>
 <h1>Dashboard</h1>
 <% if user_signed_in? %>
-  <p>Logged in: <%= current_user.email %></p>
-  <p><%= link_to "Recipes", user_recipes_path(current_user) %></p>
+  <p>Logged in: <%= @user.email %></p>
+  <p><%= link_to "Recipes", user_recipes_path(@user) %></p>
   <p><%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
 <% else%>
   <%= link_to "Sign in", "#", class: "persona-login-button" %>
 <% end%>
 
-<p><%= current_user.name %></p>
+<p><%= @user.name %></p>
 
-<%= link_to 'Edit', edit_user_path(current_user) %> |
+<%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
 </section>
 
