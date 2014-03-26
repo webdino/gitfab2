@@ -109,6 +109,8 @@ div id="recipes-show"
             $("##{data.class}-list").append data.html
 
       $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
+        if data.class == "way"
+          $(event.target).closest(".status").find(".add-btn").css("display", "block")
         $(event.target).closest("li").remove()
 
       $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
