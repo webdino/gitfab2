@@ -1,10 +1,10 @@
-<%= form_for(current_user) do |f| %>
-  <% if current_user.errors.any? %>
+<%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(current_user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
-      <% current_user.errors.full_messages.each do |msg| %>
+      <% @user.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -17,7 +17,7 @@
   </div>
 
   <div class="field">
-    <%= image_tag current_user.avatar_url(:thumb) if current_user.avatar.present? %>
+    <%= image_tag @user.avatar_url(:thumb) if @user.avatar.present? %>
     <%= f.label :avatar %><br>
     <%= f.file_field :avatar %>
     <%= f.hidden_field :avatar_cache %>

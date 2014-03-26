@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: :show
+  before_action :load_user, only: [:show, :edit, :update, :destroy]
   before_action :verify_name, except: [:edit, :update]
+
+  authorize_resource
 
   def index
     @users = User.all
@@ -13,21 +15,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.update user_params
-      redirect_to current_user, notice: 'User was successfully updated.'
+    if @user.update user_params
+      redirect_to @user, notice: 'User was successfully updated.'
     else
       render action: 'edit'
     end
   end
 
   def destroy
-    current_user.destroy
-    redirect_to users_url
+    @user.destroy
+    redirect_to @user
   end
 
   private
-  def set_user
-    current_user = User.find(params[:id])
+  def load_user
+    @user = User.find params[:id]
   end
 
   def user_params

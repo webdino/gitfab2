@@ -20,7 +20,7 @@ div id="recipes-show"
       ul id="material-list"
         - @recipe.materials.each do |item|
           = render "item", item: item
-      = render "add_form", item: Material.new
+      = render "add_form", item: Material.new if can? :manage, @recipe
   
     section id = "tools"
       h1
@@ -28,7 +28,7 @@ div id="recipes-show"
       ul id="tool-list"
         - @recipe.tools.each do |item|
           = render "item", item: item
-      = render "add_form", item: Tool.new
+      = render "add_form", item: Tool.new if can? :manage, @recipe
   
     section id = "making"
       h1
@@ -36,9 +36,7 @@ div id="recipes-show"
       ol id="status-list"
         - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
-  
-
-      = render "add_form", item: Status.new
+      = render "add_form", item: Status.new if can? :manage, @recipe
   
   hr
   
@@ -48,7 +46,7 @@ div id="recipes-show"
       = f.submit "Fork"
   
   p
-    = link_to "Edit", [:edit, @user, @recipe]
+    = link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
     '|
     = link_to "Back", [@user, :recipes]
 
