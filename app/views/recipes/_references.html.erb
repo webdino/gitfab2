@@ -1,0 +1,8 @@
+<section id="references">
+  <h1>References</h1>
+  <% @recipe.references.each do |reference| %>
+    <section class="reference">
+      <h1><%= reference.name %></h1>
+    </section>
+  <% end %>
+</section>

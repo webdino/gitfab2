@@ -1,0 +1,82 @@
+<section id="making">
+  <h1>Making</h1>
+  <ol>
+  <% @recipe.statuses.each do |status| %>
+    <% if status.ways.present? %>
+      <li>
+        <ul class="ways">
+          <% status.ways.each do |way| %>
+            <li>
+              <article class="way">
+                <dl>
+                  <dt>image</dt>
+                  <dd>
+                    <% if way.photo.present? %>
+                      <%= image_tag way.photo %>
+                    <% end %>
+                  </dd>
+                  <dt>tools</dt>
+                  <dd>
+                    <ul>
+                      <% way.tools.each do |tool| %>
+                        <li class="tool">
+                          <a href="">
+                            <h1><%= tool.name %></h1>
+                            <dl>
+                              <% if tool.amount.present? %>
+                                <dt>x</dt>
+                                <dd><%= tool.amount %></dd>
+                              <% end %>
+                            </dl>
+                          </a>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </dd>
+                  <dt>remark</dt>
+                  <dd>
+                    <% if way.description.present? %>
+                      <%= way.description %>
+                    <% end %>
+                  </dd>
+                </dl>
+              </article>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+      <li>
+        <article class="status">
+          <header>
+            <% if status.photo.present? %>
+              <%= image_tag status.photo %>
+            <% end %>
+          </header>
+          <dl>
+            <dt>add</dt>
+            <dd>
+              <ul>
+                <% status.materials.each do |material| %>
+                  <li class="material">
+                    <a href="">
+                      <h1><%= material.name %></h1>
+                      <dl>
+                        <dt>x</dt>
+                        <dd><%= material.amount %></dd>
+                      </dl>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </dd>
+            <dt>blueprints</dt>
+            <dd></dd>
+            <dt>remark</dt>
+            <dd></dd>
+          </dl>
+        </article>
+      </li>
+    <% end %>
+  </ol>
+</section>
