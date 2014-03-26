@@ -15,7 +15,8 @@ div id="recipes-show"
     section id = "utils"
       section id = "tooltips"
         div id = "slide-show-button"
-          'Slideshow
+          p
+            = link_to "Slideshow", "#", id: "slideshow-btn"
         div id = "fork-button"
           p
             = form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
@@ -83,6 +84,13 @@ div id="recipes-show"
     = link_to "Back", [@user, :recipes]
 
   content_for :bottom
+    javascript:
+      $(document).ready(function() {
+      	$(".fancybox").fancybox({
+      		openEffect	: 'none',
+      		closeEffect	: 'none'
+      	});
+      })
     coffee:
       $(document).on "ajax:success", ".edit-form", (event, data, status) ->
         if data.success
@@ -112,3 +120,7 @@ div id="recipes-show"
 
       $(document).on "ajax:success", ".tag-delete-btn", (event, data, status) ->
         $("#tag-list #tag-#{data.id}").remove()
+
+      $(document).on "click", "#slideshow-btn", (event, data) ->
+        event.preventDefault()
+        $(".fancybox").first().trigger "click"
