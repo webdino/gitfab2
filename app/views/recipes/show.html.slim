@@ -5,6 +5,10 @@ div id="recipes-show"
     section id = "basic-information"
       h1
         = @recipe.title
+      p
+        - if @recipe.orig_recipe
+          'Forked from:
+          = link_to "#{@recipe.orig_recipe.user.name}/#{@recipe.orig_recipe.name}", [@recipe.orig_recipe.user, @recipe.orig_recipe]
       = image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
       section class = "description"
         h2
