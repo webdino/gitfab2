@@ -1,0 +1,3 @@
+li id="tag-#{tag.id}"
+  = link_to "[x]", tag_path(id: tag.id, recipe_id: recipe.id), method: :delete, remote: true, class: "tag-delete-btn"
+  = tag.name

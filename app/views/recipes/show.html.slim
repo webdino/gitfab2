@@ -38,6 +38,14 @@ div id="recipes-show"
           = render "item", item: item
       = render "add_form", item: Status.new if can? :manage, @recipe
   
+    section id = "tags"
+      h1
+        'Tags
+      ul id="tag-list" class="item-list"
+        - @recipe.tags.each do |tag|
+          = render "tags/tag", tag: tag, recipe: @recipe
+      = render "tag_form", recipe: @recipe
+
   hr
   
   p
@@ -72,3 +80,8 @@ div id="recipes-show"
         event.preventDefault()
         $(event.target).siblings("form").css "display", "block"
 
+      $(document).on "ajax:success", "#new_tag", (event, data, status) ->
+        $(event.target).siblings("#tag-list").append data.html
+
+      $(document).on "ajax:success", ".tag-delete-btn", (event, data, status) ->
+        $("#tag-list #tag-#{data.id}").remove()

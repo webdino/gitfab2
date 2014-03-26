@@ -1,7 +1,0 @@
-<%= hidden_field_tag "recipe[tag_ids][]", nil %>
-<% recipe.tags.each do |tag| %>
-  <label>
-    <%= check_box_tag "recipe[tag_ids][]", tag.id, true %>
-    <%= tag.name %>
-  </label>
-<% end %>
