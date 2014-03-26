@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140314134027) do
+ActiveRecord::Schema.define(version: 20140326085043) do
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"
@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 20140314134027) do
     t.datetime "updated_at"
   end
 
+  create_table "stars", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "stars", ["recipe_id"], name: "index_stars_on_recipe_id", using: :btree
+  add_index "stars", ["user_id"], name: "index_stars_on_user_id", using: :btree
+
   create_table "statuses", force: true do |t|
     t.string   "filename"
     t.integer  "position"
@@ -97,12 +107,12 @@ ActiveRecord::Schema.define(version: 20140314134027) do
   add_index "tools", ["way_id"], name: "index_tools_on_way_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                   default: "", null: false
-    t.string   "encrypted_password",      default: "", null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",           default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -110,7 +120,6 @@ ActiveRecord::Schema.define(version: 20140314134027) do
     t.string   "name"
     t.string   "avatar"
     t.integer  "group_id"
-    t.integer  "contributing_recipe_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
