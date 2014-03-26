@@ -2,9 +2,9 @@ class ItemsController < ApplicationController
 
   before_action :load_recipe
   before_action :set_parent
-  before_action :build_item,    only: [:create]
-  before_action :load_item,     only: [:update, :destroy]
-  after_action  :commit_recipe, only: [:create, :update, :destroy]
+  before_action :build_item, only: [:create]
+  before_action :load_item, only: [:update, :destroy]
+  after_action  :update_and_commit_recipe, only: [:create, :update, :destroy]
 
   authorize_resource through: :recipe
   authorize_resource through: :item, through: :parent
@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
     @parent = @recipe
   end
 
-  def commit_recipe
-    @item.recipe.commit!
+  def update_and_commit_recipe
+    @item.recipe.update_attributes last_committer: current_user
   end
 end

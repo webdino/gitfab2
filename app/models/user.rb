@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
 
   belongs_to :group
   has_many :recipes
-  has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
   has_many :contributor_recipes, foreign_key: :contributor_id
+  has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
 
   after_save :ensure_dir_exist!
 

@@ -4,6 +4,7 @@ class RecipesController < ApplicationController
   before_action :load_user
   before_action :build_recipe, only: [:new, :create]
   before_action :load_recipe, only: [:show, :edit, :update, :destroy, :fork]
+  before_action :set_last_committer, only: [:create, :update]
   after_action :commit, only: [:create, :update]
 
   authorize_resource
@@ -37,7 +38,6 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe.last_committer = current_user
     if @recipe.save
       redirect_to [@recipe.user, @recipe], notice: "Recipe was successfully created."
     else
@@ -56,7 +56,6 @@ class RecipesController < ApplicationController
   end
 
   def update
-    @recipe.last_committer = current_user
     if @recipe.update recipe_params
       redirect_to [@user, @recipe], notice: "Recipe was successfully updated."
     else
@@ -91,5 +90,9 @@ class RecipesController < ApplicationController
 
   def commit
     @recipe.commit!
+  end
+
+  def set_last_committer
+    @recipe.last_committer = current_user
   end
 end
