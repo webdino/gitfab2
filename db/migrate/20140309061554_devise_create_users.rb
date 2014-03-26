@@ -33,7 +33,6 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :avatar
       t.integer :group_id
-      t.integer :contributing_recipe_ids
 
       t.timestamps
     end

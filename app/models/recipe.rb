@@ -21,8 +21,8 @@ class Recipe < ActiveRecord::Base
   belongs_to :orig_recipe,    class_name: Recipe.name
   belongs_to :last_committer, class_name: User.name
 
+  has_many :contributor_recipes, foreign_key: :recipe_id
   has_many :contributors, through: :contributor_recipes
-  has_many :contributor_recipes
   has_many :materials
   has_many :statuses, dependent: :destroy
   has_many :tools
