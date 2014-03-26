@@ -56,6 +56,8 @@ div id="recipes-show"
   p
     = link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
     '|
+    = link_to "Delete", [@user, @recipe], method: :delete if can? :manage, @recipe
+    '|
     = link_to "Back", [@user, :recipes]
 
   content_for :bottom
