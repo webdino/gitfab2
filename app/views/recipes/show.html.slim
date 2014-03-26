@@ -92,7 +92,7 @@ div id="recipes-show"
       $(document).on "ajax:success", ".add-form", (event, data, status) ->
         if data.success
           $(event.target).find("input[type!=submit]").val ""
-          $(event.target).parent().find(".add-btn").css "display","none"
+          $(event.target).parent().find(".add-btn").css "display", "none"
           $(event.target).css "display","none"
 
           if data.class == "way"
