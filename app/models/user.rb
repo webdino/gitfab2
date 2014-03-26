@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :recipes
   has_many :contributor_recipes, foreign_key: :contributor_id
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
+  has_many :star, foreign_key: :user_id
+  has_many :starred_recipes, through: :star
 
   after_save :ensure_dir_exist!
 
