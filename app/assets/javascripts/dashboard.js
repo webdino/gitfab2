@@ -16,3 +16,4 @@
 //= require jquery.remotipart
 //= require turbolinks
 //= require_tree ./dashboard
+//= require_tree ./fancybox

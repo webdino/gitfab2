@@ -10,7 +10,7 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
     - when :photo
       span class="#{field}_field"
         - if item.photo.present?
-          img src=item.photo
+          = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox" 
     - else
       span class="#{field}_field"
         = item.send field
