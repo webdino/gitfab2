@@ -1,35 +1,61 @@
 div id="recipes-show"
   p id="notice" =notice
-  
+
   main
     section id = "basic-information"
       h1
         = @recipe.title
       = image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
-      p
-        = @recipe.description
-      time id = "created-datetime" datetime = @recipe.created_at
-        = @recipe.created_at
-      time id = "last-updated-datetime" datetime = @recipe.updated_at
-        = @recipe.updated_at
-  
-  
+      section class = "description"
+        h2
+          'Abstract
+        p
+          = @recipe.description
+
+    section id = "utils"
+      section id = "tooltips"
+        div id = "slide-show-button"
+          'Slideshow
+        div id = "fork-button"
+          p
+            = form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
+              = hidden_field_tag :recipe_id, @recipe.id
+              = f.submit "Fork"
+
+      section id = "user-id"
+        div class = "thumbnail"
+        div class = "screen-name"
+        time id = "created-datetime" datetime = @recipe.created_at
+          = @recipe.created_at
+        time id = "last-updated-datetime" datetime = @recipe.updated_at
+          = @recipe.updated_at
+      section id = "tool-options"
+        h2
+          'Tool Options
+      section id = "tags"
+        h2
+          'Tags
+
     section id = "materials"
       h1
         'Materials
-      ul id="material-list"
+      ul id="material-list" class="item-list"
         - @recipe.materials.each do |item|
           = render "item", item: item
       = render "add_form", item: Material.new if can? :manage, @recipe
-  
+
+  hr
+
     section id = "tools"
       h1
         'Tools
-      ul id="tool-list"
+      ul id="tool-list" class="item-list"
         - @recipe.tools.each do |item|
           = render "item", item: item
       = render "add_form", item: Tool.new if can? :manage, @recipe
-  
+
+  hr
+
     section id = "making"
       h1
         'Making
@@ -37,7 +63,7 @@ div id="recipes-show"
         - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
       = render "add_form", item: Status.new if can? :manage, @recipe
-  
+
     section id = "tags"
       h1
         'Tags
@@ -47,12 +73,8 @@ div id="recipes-show"
       = render "tag_form", recipe: @recipe
 
   hr
-  
-  p
-    = form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
-      = hidden_field_tag :recipe_id, @recipe.id
-      = f.submit "Fork"
-  
+
+
   p
     = link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
     '|
@@ -70,6 +92,9 @@ div id="recipes-show"
       $(document).on "ajax:success", ".add-form", (event, data, status) ->
         if data.success
           $(event.target).find("input[type!=submit]").val ""
+          $(event.target).parent().find(".add-btn").css "display","none"
+          $(event.target).css "display","none"
+
           if data.class == "way"
             $(event.target).closest(".status").children(".way-list").append data.html
           else

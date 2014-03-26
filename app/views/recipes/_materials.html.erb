@@ -1,0 +1,29 @@
+<section id="materials">
+  <h1>Materials</h1>
+  <ul class="material-list">
+    <% @recipe.materials.each do |material| %>
+      <li>
+        <article class="material-item">
+          <header>
+            <% if material.photo.present? %>
+              <%= image_tag material.photo %>
+            <% end %>
+            <% if material.name.present? %>
+              <h1><%= material.name %></h1>
+            <% end %>
+          </header>
+          <dl>
+            <dt>amount</dt>
+            <dd></dd>
+            <dt>size</dt>
+            <dd></dd>
+            <dt>url</dt>
+            <dd></dd>
+            <dt>remarks</dt>
+            <dd></dd>  
+          </dl>
+        </article>
+      </li>
+    <% end %>
+  </ul>
+</section>

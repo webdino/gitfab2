@@ -1,0 +1,29 @@
+<section id="tools">
+  <h1>Tools</h1>
+  <ul class="tool-list">
+    <% @recipe.tools.each do |tool| %>
+      <li>
+        <article class="tool-item">
+          <header>
+            <% if tool.photo.present? %>
+              <%= image_tag tool.photo %>
+            <% end %>
+            <% if tool.name.present? %>
+              <h1><%= tool.name %></h1>
+            <% end %>
+          </header>
+          <dl>
+            <dt>amount</dt>
+            <dd></dd>
+            <dt>size</dt>
+            <dd></dd>
+            <dt>url</dt>
+            <dd></dd>
+            <dt>remarks</dt>
+            <dd></dd>
+          </dl>
+        </article>
+      </li>
+    <% end %>
+  </ul>
+</section>

@@ -1,0 +1,18 @@
+<section id="basic-information">
+  <h1><%= @recipe.name %></h1>
+  <%# TODO: YouTube対応 %>
+  <%# TODO: Assets画像の作成 %>
+  <div class="visual">
+    <% if @recipe.photo.present? %>
+        <%= image_tag @recipe.photo %>
+    <% end %>
+  </div>
+  <section class="description">
+    <h2>Abstract</h2>
+    <p>
+      <% if @recipe.description.present? %>
+        <%= @recipe.description %>
+      <% end %>
+    </p>
+  </section>
+</section>

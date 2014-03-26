@@ -1,5 +1,284 @@
 @import "mixins/clearfix.css.scss";
 #recipes-show {
+
+  #basic-information {
+    float:left;
+    display: block;
+    width: 720px;
+    height: auto;
+  	background: #CCC;
+    h1 {
+      display:block;
+      margin-top: 20px;
+      width: 100%;
+      height: 40px;
+      padding-left: 20px;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .visual {
+      float: left;
+      margin: auto;
+      width: 480px;
+      height: 360px;
+    }
+    .description {
+      float: right;
+      padding: 0 20px 0 20px;
+    	width: 200px;
+    	height: 360px;
+      h2 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  }
+
+  #utils {
+    float: right;
+  	width: 240px;
+  	height: 800px;
+    background: #EEE;
+    h2 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    #tooltips {
+      width: 100%;
+      height: auto;
+      #slide-show-button {
+        background-image: url("http://placehold.it/120x120");
+      }
+      #fork-button {
+        background-image: url("http://placehold.it/120x120");
+      }
+    }
+    #user-id {
+      padding: 20px 20px;
+      width: 100%;
+      height: 40px;
+      .thumbnail {
+        float: left;
+        margin: 20px;
+        background-image: url("http://placehold.it/40x40");
+      }
+      .screen-name {
+        float: left;
+        clear: right;
+        font-size: 18px;
+      }
+      #created-datetime {}
+      #last-updated-datetime {}
+    }
+    #tool-options {
+      width: 100%;
+      min-height: 40px;
+    }
+    #tags {
+      width: 100%;
+      min-height: 40px;
+    }
+  }
+
+  #materials,
+  #tools {
+    float: left;
+    display:block;
+    padding: 30px 20px;
+    width: 680px;
+    height: auto;
+    min-height: 100px;
+    h1 {
+      margin-bottom: 20px;
+      height: 40px;
+      line-height: 1.5em;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    .item-list {
+      width: 100%;
+      li {
+        margin-top: 20px;
+        width: 100%;
+        height: 180px;
+        span.name_field {
+          float: right;
+          margin: 20px 20px 10px 40px;
+          width: 380px;
+          text-align: left;
+          font-size: 18px;
+        }
+        span.description_field {
+          float: right;
+          margin: 20px 20px 10px 40px;
+          width: 380px;
+          text-align: left;
+          font-size: 14px;
+        }
+        span.photo_field{
+          float: left;
+          margin-top: -48px;
+          width: 240px;
+          height: 180px;
+          background-image: url("http://placehold.it/240x180");
+          img{
+            // margin-top: -48px;
+            position: center;
+            width: 240px;
+            height: 180px;
+          }
+        }
+        .edit-form-wrap {
+          float: right;
+          margin: 20px 20px 10px 40px;
+          width: 380px;
+          text-align: left;
+          font-size: 14px;
+        }
+      }
+    }
+    .add-form-wrap {
+      display: block;
+      clear: both;
+      margin: 40px 20px 10px 40px;
+      width: 100%;
+      text-align: left;
+      font-size: 24px;
+      font-weight: 900;
+    }
+  }
+
+  #making {
+    float: left;
+    display:block;
+    padding: 30px 20px;
+    width: 920px;
+    height: auto;
+    min-height: 100px;
+    h1 {
+      margin-bottom: 20px;
+      font-size: 36px;
+      font-weight: bold;
+    }
+    #status-list {
+      width: 100%;
+      li.status {
+        display:block;
+        margin-bottom: 20px;
+        width: 960px;
+        &:first-child{
+          height: 180px;
+        }
+        &:not(:first-child){
+          height: 405px;
+        }
+        counter-increment: status_count;
+        span.description_field:before{
+          float: right;
+          width: 640px;
+          font-size: 18px;
+          font-weight: 700;
+          content: "Status" counter(status_count);
+        }
+        span.description_field {
+          display:block;
+          float: right;
+          margin: 0px 20px 10px 40px;
+          width: 640px;
+          text-align: left;
+          font-size: 14px;
+        }
+        span.photo_field {
+          display:block;
+          float: left;
+          width: 240px;
+          height: 180px;
+          background-image: url("http://placehold.it/240x180");
+          img{
+            position: center;
+            width: 240px;
+            height: 180px;
+          }
+        }
+        .edit-form-wrap {
+          display:block;
+          float: right;
+          margin: 20px 20px 10px 40px;
+          width: 620px;
+          text-align: left;
+          font-size: 14px;
+        }
+      }
+      .way-list {
+        float: right;
+        width: 680px;
+        li.way {
+          display:block;
+          margin-bottom: 20px;
+          height: 180px;
+          span.name_field {
+            float: right;
+            margin: 20px 20px 10px 40px;
+            width: 380px;
+            text-align: left;
+            font-size: 18px;
+          }
+          span.description_field {
+            float: right;
+            margin: 20px 20px 10px 40px;
+            width: 380px;
+            text-align: left;
+            font-size: 14px;
+          }
+          span.photo_field img{
+            float: left;
+            position: center;
+            width: 240px;
+            height: 180px;
+          }
+          .edit-form-wrap {
+            float: right;
+            margin: 20px 20px 10px 40px;
+            width: 380px;
+            text-align: left;
+            font-size: 14px;
+          }
+        }
+      }
+      .add-form-wrap  {
+        width: 140px;
+        height: 125px;
+        padding: 100px 0px 0px 140px;
+        position: center;
+        background-image: asset-url("arrow.png");
+        background-repeat: no-repeat;
+        background-size: 45px 200px;
+        background-position: 90px 0;
+        .add-btn:before{
+          content: "+ ";
+          font-size: 36px;
+          font-weight: 700;
+        }
+        .add-btn {
+          font-size: 24px;
+          font-weight: 500;
+        }
+
+      }
+
+    }
+
+    .add-btn:before{
+      content: "+ ";
+      font-size: 36px;
+      font-weight: 700;
+    }
+    .add-btn {
+      font-size: 24px;
+      font-weight: 500;
+    }
+  }
+
   .add-form,
   .edit-form {
     display: none;
