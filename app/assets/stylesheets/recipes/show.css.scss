@@ -77,6 +77,22 @@
     #tags {
       width: 100%;
       min-height: 40px;
+      #tag-list {
+        margin: 10px 0;
+        .tag {
+          border-radius: 10px;
+          background-color: #ccc;
+          display: inline-block;
+          padding: 2px 4px;
+          margin: 0 4px;
+        }
+        .tag-delete-btn {
+          background: #fff;
+          border-radius: 50%;
+          padding: 0 4px;
+          margin-right: 4px;
+        }
+      }
     }
   }
 
