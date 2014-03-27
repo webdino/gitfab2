@@ -1,5 +1,5 @@
 div class="add-form-wrap"
-  = link_to "add #{[item].flatten.last.class.name.underscore}", "#", class: "add-btn", style: display_style(item)
+  = link_to "add #{[item].flatten.last.class.name.underscore}", "#", class: "add-btn"
   = form_for [@recipe.user, @recipe, item].flatten, remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
     - [item].flatten.last.class::UPDATABLE_COLUMNS.each do |field|

@@ -2,7 +2,7 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
   - if Status === item
     ul class="way-list"
       - item.ways.sorted_by_position.each do |way|
-        = render "item", item: way
+        = render "recipes/item", item: way
     - unless Status === item && item.first?
       = render "recipes/add_form", item: [item, Way.new]
   - (item.class)::UPDATABLE_COLUMNS.each do |field|
