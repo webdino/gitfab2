@@ -32,10 +32,10 @@ div id="recipes-show"
           = current_user.name
         time id = "created-datetime" datetime = @recipe.created_at
           'created date
-          = @recipe.created_at.strftime("%Y,%m-%d, %H:%M:%S")
+          = @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
         time id = "last-updated-datetime" datetime = @recipe.updated_at
           'updated date
-          = @recipe.updated_at.strftime("%Y,%m-%d, %H:%M:%S")
+          = @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
       section id = "tool-options"
         h1
           'Tool Options
@@ -107,7 +107,6 @@ div id="recipes-show"
 
           if data.class == "way"
             $(event.target).closest(".status").children(".way-list").append data.html
-
           else
             $("##{data.class}-list").append data.html
 

@@ -1,4 +1,5 @@
 #layouts-header{
+  
   .inner {
     width: 100%;
     background: #EEE;
@@ -9,7 +10,6 @@
     height: 60px;
     font-family: san-serif;
   }
-
   #logo {
     float: left;
     padding-top:20px;
@@ -32,7 +32,6 @@
   }
 
   #tools{
-
     .box{
       float: right;
       padding: 20px 0 0;
@@ -40,7 +39,6 @@
       min-width: 200px;
       height: 40px;
     }
-
     #user{
       float: left;
       margin-right: 20px;
@@ -51,12 +49,11 @@
       font-size: 16px;
       .avator-thumb{
         float: left;
-        margin: -10px 10px 0 0 ;
+        margin: -10px 10px 0 0;
         width: 40px;
         height: 40px;
       }
     }
-
     #create-recipe{
       float: left;
       width: 40px;
@@ -64,28 +61,24 @@
       font-weight: 700;
       font-size: 32px;
     }
-
     #preferences{
       float: left;
-      margin: -10px 10px 0 0 ;
+      margin: -10px 10px 0 0;
       width: 40px;
       height: 40px;
       font-weight: 700;
       font-size: 32px;
       background-image: url(http://placehold.it/40x40);
     }
-
     #logout{
       float: left;
-      margin: -10px 10px 0 0 ;
+      margin: -10px 10px 0 0;
       width: 40px;
       height: 40px;
       font-weight: 700;
       font-size: 32px;
       background-image: url(http://placehold.it/40x40);
     }
-
-
   }
 
   #sign-in{
