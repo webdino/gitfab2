@@ -6,7 +6,6 @@
     display: block;
     width: 720px;
     height: auto;
-  	background: #CCC;
     h1 {
       display:block;
       margin-top: 20px;
@@ -21,13 +20,17 @@
       margin: auto;
       width: 480px;
       height: 360px;
+      background-image: url("http://placehold.it/480x360");
     }
     .description {
       float: right;
-      padding: 0 20px 0 20px;
+      padding: 5px 20px 0 20px;
     	width: 200px;
     	height: 360px;
-      h2 {
+      font-size: 14px;
+      h1 {
+        margin: 5px 0 0 0;
+        padding: 0;
         font-size: 24px;
         font-weight: bold;
       }
@@ -39,43 +42,75 @@
   	width: 240px;
   	height: 800px;
     background: #EEE;
-    h2 {
-      font-size: 24px;
-      font-weight: bold;
-    }
     #tooltips {
+      @include cf;
       width: 100%;
-      height: auto;
+      height: 120px;
       #slide-show-button {
+        float: left;
+        margin: 0;
+        width: 120px;
+        height: 120px;
         background-image: url("http://placehold.it/120x120");
       }
       #fork-button {
+        float: left;
+        margin: 0;
+        width: 120px;
+        height: 120px;
         background-image: url("http://placehold.it/120x120");
       }
     }
     #user-id {
+      @include cf;
       padding: 20px 20px;
       width: 100%;
-      height: 40px;
+      height: 100px;
       .thumbnail {
         float: left;
-        margin: 20px;
+        @include cf;
         background-image: url("http://placehold.it/40x40");
+        img {
+          margin:0;
+          width:40px;
+          height:40px;
+        }
       }
       .screen-name {
+        @include cf;
         float: left;
-        clear: right;
+        margin: 15px 10px ;
+        width: 160px;
+        height: 30px;
         font-size: 18px;
       }
-      #created-datetime {}
-      #last-updated-datetime {}
+      #created-datetime {
+        display: block;
+        margin: 15px 0;
+        width: 100%;
+        height: 24px;
+      }
+      #last-updated-datetime {
+        display: block;
+        margin-top: 40px;
+        width: 100%;
+        height: 24px;
+      }
     }
     #tool-options {
+      padding: 20px;
       width: 100%;
+      height: auto;
       min-height: 40px;
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
     }
     #tags {
+      padding: 20px;
       width: 100%;
+      height: auto;
       min-height: 40px;
       #tag-list {
         margin: 10px 0;
@@ -92,6 +127,10 @@
           padding: 0 4px;
           margin-right: 4px;
         }
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
       }
     }
   }
@@ -138,7 +177,6 @@
           height: 180px;
           background-image: url("http://placehold.it/240x180");
           img{
-            // margin-top: -48px;
             position: center;
             width: 240px;
             height: 180px;

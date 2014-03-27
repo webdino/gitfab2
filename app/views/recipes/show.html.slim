@@ -5,13 +5,10 @@ div id="recipes-show"
     section id = "basic-information"
       h1
         = @recipe.title
-      p
-        - if @recipe.orig_recipe
-          'Forked from:
-          = link_to "#{@recipe.orig_recipe.user.name}/#{@recipe.orig_recipe.name}", [@recipe.orig_recipe.user, @recipe.orig_recipe]
       = image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
+
       section class = "description"
-        h2
+        h1
           'Abstract
         p
           = @recipe.description
@@ -29,12 +26,21 @@ div id="recipes-show"
 
       section id = "user-id"
         div class = "thumbnail"
+          - if current_user.avatar.present?
+            = image_tag current_user.avatar
         div class = "screen-name"
+          = current_user.name
+        time id = "created-datetime" datetime = @recipe.created_at
+          'created date
+          = @recipe.created_at.strftime("%Y,%m-%d, %H:%M:%S")
+        time id = "last-updated-datetime" datetime = @recipe.updated_at
+          'updated date
+          = @recipe.updated_at.strftime("%Y,%m-%d, %H:%M:%S")
       section id = "tool-options"
-        h2
+        h1
           'Tool Options
       section id = "tags"
-        h2
+        h1
           'Tags
         ul id="tag-list" class="item-list"
           - @recipe.tags.each do |tag|
@@ -101,6 +107,7 @@ div id="recipes-show"
 
           if data.class == "way"
             $(event.target).closest(".status").children(".way-list").append data.html
+
           else
             $("##{data.class}-list").append data.html
 
