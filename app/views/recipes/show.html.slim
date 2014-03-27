@@ -30,16 +30,17 @@ div id="recipes-show"
       section id = "user-id"
         div class = "thumbnail"
         div class = "screen-name"
-        time id = "created-datetime" datetime = @recipe.created_at
-          = @recipe.created_at
-        time id = "last-updated-datetime" datetime = @recipe.updated_at
-          = @recipe.updated_at
       section id = "tool-options"
         h2
           'Tool Options
       section id = "tags"
         h2
           'Tags
+        ul id="tag-list" class="item-list"
+          - @recipe.tags.each do |tag|
+            = render "tags/tag", tag: tag, recipe: @recipe
+        = render "tag_form", recipe: @recipe
+
 
     section id = "materials"
       h1
@@ -68,14 +69,6 @@ div id="recipes-show"
         - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
       = render "add_form", item: Status.new if can? :manage, @recipe
-
-    section id = "tags"
-      h1
-        'Tags
-      ul id="tag-list" class="item-list"
-        - @recipe.tags.each do |tag|
-          = render "tags/tag", tag: tag, recipe: @recipe
-      = render "tag_form", recipe: @recipe
 
   hr
 
