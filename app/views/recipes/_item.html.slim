@@ -1,18 +1,17 @@
 li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.underscore}"
-  - if Status === item
-    ul class="way-list"
-      - item.ways.sorted_by_position.each do |way|
-        = render "recipes/item", item: way
-    - unless Status === item && item.first?
-      = render "recipes/add_form", item: [item, Way.new]
+  - if item.is_a? Status
+    span class="index-field"
+      = "#{item.class.name}#{item.position}"
   - (item.class)::UPDATABLE_COLUMNS.each do |field|
     - case field
     - when :photo
-      span class="#{field}_field"
+      span class="#{field}-field"
         - if item.photo.present?
           = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox" 
+    - when :number
+      - # don't display it
     - else
-      span class="#{field}_field"
+      span class="#{field}-field"
         = item.send field
 
-  = render "recipes/edit_form", item: (Way === item ? [item.status, item] : item)
+  = render "recipes/edit_form", item: item

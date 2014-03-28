@@ -74,6 +74,11 @@ div id="recipes-show"
       ol id="status-list"
         - @recipe.statuses.sorted_by_position.each do |item|
           = render "item", item: item
+          li
+            ul class="way-list"
+              - @recipe.ways.where(number: item.position).each do |way|
+                = render "recipes/item", item: way
+            = render "recipes/add_form", item: Way.new, opts: {number: item.position}
       = render "add_form", item: Status.new if can? :manage, @recipe
 
   hr
@@ -106,7 +111,7 @@ div id="recipes-show"
           $(event.target).css "display","none"
 
           if data.class == "way"
-            $(event.target).closest(".status").children(".way-list").append data.html
+            $(event.target).closest(".add-form-wrap").siblings(".way-list").append data.html
           else
             $("##{data.class}-list").append data.html
 

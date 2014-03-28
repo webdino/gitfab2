@@ -5,5 +5,4 @@ class Status < ActiveRecord::Base
   include Gitfab::ActsAsItemInRecipe
 
   has_many :materials
-  has_many :ways
 end

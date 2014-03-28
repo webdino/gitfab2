@@ -30,7 +30,6 @@ class Recipe < ActiveRecord::Base
   has_many :ways
   has_many :recipe_tags
   has_many :tags, through: :recipe_tags
-  has_many :ways, through: :statuses
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
 

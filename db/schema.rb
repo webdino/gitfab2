@@ -132,8 +132,8 @@ ActiveRecord::Schema.define(version: 20140326085043) do
     t.string   "filename"
     t.string   "name"
     t.string   "photo"
-    t.integer  "status_id"
     t.integer  "recipe_id"
+    t.integer  "number"
     t.text     "description"
     t.integer  "position"
     t.datetime "created_at"
@@ -141,6 +141,5 @@ ActiveRecord::Schema.define(version: 20140326085043) do
   end
 
   add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
-  add_index "ways", ["status_id"], name: "index_ways_on_status_id", using: :btree
 
 end

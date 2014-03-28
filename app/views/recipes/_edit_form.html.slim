@@ -1,14 +1,16 @@
 div class="edit-form-wrap"
   = link_to "edit", "#", class: "edit-btn"
   '|
-  = link_to "delete", [@recipe.user, @recipe, item].flatten, remote: true, method: :delete, class: "delete-btn"
-  = form_for [@recipe.user, @recipe, item].flatten, remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
-    - [item].flatten.last.class::UPDATABLE_COLUMNS.each do |field|
+  = link_to "delete", [@recipe.user, @recipe, item], remote: true, method: :delete, class: "delete-btn"
+  = form_for [@recipe.user, @recipe, item], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+    - item.class::UPDATABLE_COLUMNS.each do |field|
       - case field
       - when :photo
-        p = f.file_field field, class: "add-photo"
+        = f.file_field field, class: "add-photo"
+      - when :number
+        = f.hidden_field field
       - else
-        p = f.text_field field
+        = f.text_field field
     p
       = f.check_box :remove_photo, checked: false, class: "remove-photo"
       'remove photo

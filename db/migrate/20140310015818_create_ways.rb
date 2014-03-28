@@ -4,8 +4,8 @@ class CreateWays < ActiveRecord::Migration
       t.string :filename, index: true
       t.string :name
       t.string :photo
-      t.belongs_to :status, index: true
       t.belongs_to :recipe, index: true
+      t.integer :number, index: true
       t.text :description
       t.integer :position, index: true
 
