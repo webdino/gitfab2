@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :way do
     name "MyString"
-    status nil
     description "MyText"
+    recipe_id nil
   end
 end

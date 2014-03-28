@@ -21,20 +21,20 @@ describe Recipe do
     end
     describe "saves the repo tree" do
       let(:tree){recipe.repo.lookup(repo.head.target).tree}
+      let(:assocs){[:statuses, :ways, :materials, :tools]}
       before do
-        recipe.statuses.create description: "st1"
-        st2 = recipe.statuses.create description: "st2"
-        st2.ways.create description: "wy1"
-        recipe.materials.create description: "mt1"
-        recipe.materials.create description: "mt2"
-        recipe.tools.create description: "mt2"
+        assocs.each do |assoc|
+          2.times do |i|
+            recipe.send(assoc).create description: "#{assoc}#{i}"
+          end
+        end
         recipe.commit!
         tree
       end
       describe "with dirs" do
         let(:dirs){Array.new.tap{|arr| tree.each_tree{|entry| arr << entry[:name]}}}
         subject{dirs.size}
-        it{should be 4}
+        it{should be assocs.size}
       end
       describe "with items in each dirs" do
         let(:items) do
@@ -48,7 +48,7 @@ describe Recipe do
           end
         end
         subject{items.size}
-        it{should be 6}
+        it{should be 8}
       end
     end
   end

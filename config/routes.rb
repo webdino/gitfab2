@@ -5,9 +5,8 @@ Gitfab2::Application.routes.draw do
   resources :users do
     resources :recipes do
       post :fork
-      resources :statuses do
-        resources :ways
-      end
+      resources :statuses
+      resources :ways
       resources :materials
       resources :tools
     end

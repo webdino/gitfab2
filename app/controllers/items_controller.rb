@@ -1,13 +1,12 @@
 class ItemsController < ApplicationController
 
   before_action :load_recipe
-  before_action :set_parent
   before_action :build_item, only: [:create]
   before_action :load_item, only: [:update, :destroy]
   after_action  :update_and_commit_recipe, only: [:create, :update, :destroy]
 
   authorize_resource through: :recipe
-  authorize_resource through: :item, through: :parent
+  authorize_resource through: :item, through: :recipe
 
   def create
     @item.save
@@ -38,19 +37,15 @@ class ItemsController < ApplicationController
   end
 
   def build_item
-    @item = @parent.send(controller_name).build item_params
+    @item = @recipe.send(controller_name).build item_params
   end
 
   def load_item
-    @item = @parent.send(controller_name).find params[:id]
+    @item = @recipe.send(controller_name).find params[:id]
   end
 
   def load_recipe
     @recipe = Recipe.find params[:recipe_id]
-  end
-
-  def set_parent
-    @parent = @recipe
   end
 
   def update_and_commit_recipe

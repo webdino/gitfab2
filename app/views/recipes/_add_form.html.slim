@@ -1,12 +1,14 @@
+- opts ||= {}
 div class="add-form-wrap"
-  = link_to "add #{[item].flatten.last.class.name.underscore}", "#", class: "add-btn"
-  = form_for [@recipe.user, @recipe, item].flatten, remote: true,
+  = link_to "add #{item.class.name.underscore}", "#", class: "add-btn"
+  = form_for [@recipe.user, @recipe, item], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
-    - [item].flatten.last.class::UPDATABLE_COLUMNS.each do |field|
+    - item.class::UPDATABLE_COLUMNS.each do |field|
       - case field
       - when :photo
-        p
-          = f.file_field field, class: "add-photo"
+        = f.file_field field, class: "add-photo"
+      - when :number
+        = f.hidden_field field, value: opts[:number]
       - else
-        p = f.text_field field
+        = f.text_field field
     = f.submit "create"
