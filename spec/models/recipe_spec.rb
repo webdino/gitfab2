@@ -9,11 +9,16 @@ describe Recipe do
 
   let(:user){FactoryGirl.create :user}
   let(:recipe){FactoryGirl.create :recipe, user: user}
+  let(:status){FactoryGirl.create :status, recipe: recipe}
+  let(:way){FactoryGirl.create :way, recipe: recipe}
+  let(:tool){FactoryGirl.create :tool, recipe: recipe}
+  let(:material){FactoryGirl.create :material, recipe: recipe}
 
   describe "#commit!" do
     let(:repo){recipe.repo}
     describe "creates a new commit" do
       before do
+        status
         recipe.commit!
       end
       subject{recipe.repo.head.target}
@@ -57,10 +62,21 @@ describe Recipe do
     let(:other){FactoryGirl.create :user}
     let(:forked_recipe){recipe.fork_for! other}
     let(:forked_recipe2){recipe.fork_for! other}
+    before do
+      status; way; tool; material;
+      recipe.commit!
+    end
+
+    Recipe::ASSOCS.each do |assoc|
+      describe "copies photo of #{assoc}" do
+        subject{File.exists? forked_recipe.send(assoc).first.photo.path}
+        it{should be_true}
+      end
+    end
 
     context "when a repository which has duplicated name doesn't exists" do
       describe "produces a new repo forked from the original repo" do
-        subject{File.exists? forked_recipe.repo.path}
+        subject{Dir.exists? forked_recipe.repo.path}
         it{should be_true}
       end
     end
@@ -68,11 +84,12 @@ describe Recipe do
     context "when a repository which has duplicated name already exists" do
       let(:forked_recipe2){recipe.fork_for! other}
       before do
+        status
         forked_recipe
         forked_recipe2
       end
       describe "produces a new repo forked from the original repo" do
-        subject{File.exists? forked_recipe2.repo.path}
+        subject{Dir.exists? forked_recipe2.repo.path}
         it{should be_true}
       end
       describe "produces a new repo suffixed with underscore(s)" do

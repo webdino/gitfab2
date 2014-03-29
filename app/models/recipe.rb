@@ -7,6 +7,7 @@ class Recipe < ActiveRecord::Base
     recipe_tags_attributes: [:id, :tag_id, :recipe_id],
     tag_ids: []
   ]
+  ASSOCS = [:statuses, :materials, :ways, :tools]
 
   mount_uploader :photo, PhotoUploader
 
@@ -20,15 +21,15 @@ class Recipe < ActiveRecord::Base
   belongs_to :user
   belongs_to :orig_recipe,    class_name: Recipe.name
   belongs_to :last_committer, class_name: User.name
-  has_many :contributor_recipes, foreign_key: :recipe_id
+  has_many :contributor_recipes, foreign_key: :recipe_id, dependent: :destroy
   has_many :contributors, through: :contributor_recipes
-  has_many :stars, foreign_key: :recipe_id
+  has_many :stars, foreign_key: :recipe_id, dependent: :destroy
   has_many :raters, through: :star
-  has_many :materials
+  has_many :materials, dependent: :destroy
   has_many :statuses, dependent: :destroy
-  has_many :tools
-  has_many :ways
-  has_many :recipe_tags
+  has_many :tools, dependent: :destroy
+  has_many :ways, dependent: :destroy
+  has_many :recipe_tags, dependent: :destroy
   has_many :tags, through: :recipe_tags
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
@@ -41,7 +42,7 @@ class Recipe < ActiveRecord::Base
 
   searchable do
     text :name, :title, :description
-    [:materials, :tools, :statuses, :ways].each do |assoc|
+    ASSOCS.each do |assoc|
       text assoc do
         self.send(assoc).map do |record|
           (assoc.to_s.classify.constantize)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
@@ -58,11 +59,13 @@ class Recipe < ActiveRecord::Base
 
   def commit!
     contents = [{file_path: "recipe.json", data: self.to_json}]
-    dirs = [:statuses, :materials, :ways, :tools]
-    dirs.each do |dir|
+    ASSOCS.each do |dir|
       items = self.send dir
       items.each do |item|
         contents << {file_path: item.to_path, data: item.to_json}
+        if item.photo.present?
+          contents << {file_path: item.photo_path, data: File.open(item.photo.path).read}
+        end
       end
     end
     opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
@@ -71,18 +74,17 @@ class Recipe < ActiveRecord::Base
 
   def fork_for! user
     Recipe.transaction do
-      new_recipe = self.dup
-      new_recipe.statuses = self.statuses.collect do |status|
-        status.dup.tap{|st| st.way_ids = status.way_ids}
+      self.dup.tap do |recipe|
+        recipe.statuses = self.statuses.collect{|status| status.dup_with_photo}
+        recipe.ways = self.ways.collect{|way| way.dup_with_photo}
+        recipe.materials = self.materials.collect{|material| material.dup_with_photo}
+        recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
+        recipe.orig_recipe = self
+        recipe.user_id = user.id
+        recipe.name = Gitfab::Shell.new
+          .copy_repo! self.repo.path, user.dir_path, recipe.name
+        recipe.save
       end
-      new_recipe.materials = self.materials.collect{|material| material.dup}
-      new_recipe.tools = self.tools.collect{|tool| tool.dup}
-      new_recipe.orig_recipe = self
-      new_recipe.user_id = user.id
-      new_recipe.name = Gitfab::Shell.new
-        .copy_repo! self.repo.path, user.dir_path, new_recipe.name
-      new_recipe.save
-      new_recipe
     end
   end
 

@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :status do
+    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/assets/images/image.jpg')))
   end
 end

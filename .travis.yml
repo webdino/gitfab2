@@ -1,3 +1,5 @@
 language: ruby
 rvm:
   - 2.1.0
+before_script:
+  - ln -s /home/travis/build/mozilla-japan/gitfab2/config/database.ymls/development.yml /home/travis/build/mozilla-japan/gitfab2/config/database.yml

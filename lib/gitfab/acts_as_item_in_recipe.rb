@@ -10,9 +10,24 @@ module Gitfab::ActsAsItemInRecipe
     before_create ->{self.filename = "#{SecureRandom.uuid}.json" unless self.filename}
 
     def to_path
-      repo_path = self.recipe.repo.path
-      dir_name  = self.class.name.underscore.pluralize
-      File.join dir_name, self.filename
+      File.join dir_path, self.filename
+    end
+
+    def photo_path
+      File.join dir_path, "photos", self.photo.file.filename
+    end
+
+    def dir_path
+      self.class.name.underscore.pluralize
+    end
+
+    def dup_photo
+      ActionDispatch::Http::UploadedFile.new filename: self.photo.file.filename,
+        type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
+    end
+
+    def dup_with_photo
+      self.dup.tap{|item| item.photo = self.dup_photo}
     end
   end
 end
