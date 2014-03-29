@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Status do
+  disconnect_sunspot
   let(:user){FactoryGirl.create :user}
   let(:recipe){FactoryGirl.create :recipe, user: user}
   let(:status){FactoryGirl.create :status, recipe: recipe}

@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe User do
   before do
-    Dir.glob("/home/git/repositories_test/*").each{|path| FileUtils.rm_rf path}
+    Dir.glob("#{Settings.git.repo_dir}/*").each{|path| FileUtils.rm_rf path}
   end
 
   let(:user){FactoryGirl.build :user}

@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe WaysController do
+  disconnect_sunspot
   let(:user1){FactoryGirl.create :user}
   let(:user2){FactoryGirl.create :user}
   let(:recipe1){FactoryGirl.create :recipe, user_id: user1.id}

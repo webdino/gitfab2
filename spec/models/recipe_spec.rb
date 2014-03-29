@@ -1,10 +1,9 @@
 require "spec_helper"
-require "sunspot/rails/spec_helper"
 
 describe Recipe do
   disconnect_sunspot
   before do
-    Dir.glob("/home/git/repositories_test/*").each{|path| FileUtils.rm_rf path}
+    Dir.glob("#{Settings.git.repo_dir}/*").each{|path| FileUtils.rm_rf path}
   end
 
   let(:user){FactoryGirl.create :user}
