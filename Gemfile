@@ -26,7 +26,6 @@ gem "slim-rails"
 gem "rails-config"
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-gem "nested_form"
 gem "remotipart"
 gem "acts_as_list"
 gem "progress_bar"

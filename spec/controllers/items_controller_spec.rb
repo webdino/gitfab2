@@ -2,6 +2,7 @@ require "spec_helper"
 
 ["status", "material", "tool"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
+    disconnect_sunspot
     let(:user1){FactoryGirl.create :user}
     let(:user2){FactoryGirl.create :user}
     let(:recipe1){FactoryGirl.create :recipe, user_id: user1.id}
