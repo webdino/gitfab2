@@ -76,6 +76,23 @@ describe RecipesController do
     end
   end
 
+  describe "POST fork" do
+    context "with owner" do
+      before do
+        controller.stub(:current_user).and_return user1
+        post :fork, user_id: user1.id, recipe_id: recipe1.id
+      end
+      it_behaves_like "redirected"
+    end
+    context "with non owner" do
+      before do
+        controller.stub(:current_user).and_return user2
+        post :fork, user_id: user1.id, recipe_id: recipe1.id
+      end
+      it_behaves_like "redirected"
+    end
+  end
+
   describe "DELETE destroy" do
     context "with owner" do
       before do

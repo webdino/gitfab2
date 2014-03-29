@@ -4,6 +4,6 @@ FactoryGirl.define do
   factory :way do
     name "MyString"
     description "MyText"
-    recipe_id nil
+    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/assets/images/image.jpg')))
   end
 end

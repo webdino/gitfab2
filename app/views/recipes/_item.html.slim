@@ -15,3 +15,9 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
         = item.send field
 
   = render "recipes/edit_form", item: item
+  - if item.is_a? Status
+    li
+      ul class="way-list"
+        - @recipe.ways.where(number: item.position).each do |way|
+          = render "recipes/item", item: way
+      = render "recipes/add_form", item: Way.new, opts: {number: item.position}

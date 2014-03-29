@@ -6,6 +6,6 @@ FactoryGirl.define do
     size "MyString"
     url "MyString"
     description "MyText"
-    recipe nil
+    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/assets/images/image.jpg')))
   end
 end
