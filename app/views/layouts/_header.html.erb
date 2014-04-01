@@ -15,9 +15,9 @@
           <div class="box">
             <div id="user">
               <% if current_user.avatar.present? %>
-                <%= link_to image_tag(current_user.avatar, class: "avator-thumb"), [current_user] %>
+                <%= link_to image_tag(current_user.avatar, class: "avator-thumb"), [current_user, :recipes] %>
               <% end %>
-              <%= link_to current_user.name, [current_user] %>
+              <%= link_to current_user.name, [current_user, :recipes] %>
             </div>
             <div id="create-recipe">
               <%= link_to "+", [:new, current_user, :recipe] %>
