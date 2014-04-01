@@ -1,0 +1,52 @@
+#users-edit {
+  margin: 40px 10px 0 10px;
+  border: 1px solid gray;
+
+  h1 {
+    background-color: #eee;
+    padding: 10px 0 10px 10px;
+  }
+
+  dt {
+    display: block;
+    padding: 15px 0 5px 10px;
+  }
+
+  dd {
+    display: block;
+    padding: 0 0 0 10px;
+  }
+
+  #user-avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  #user-avatar-form {
+    display: none;
+  }
+
+  #user-name-form {
+    width: 250px;
+    background-color: #eee;
+    border: 1px solid black;
+  }
+
+  #submit {
+    margin: 20px 0 10px 10px;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: white;
+  }
+
+  #upload-button {
+    margin-left: 10px;
+    border: 1px solid black;
+    padding: 7px;
+    vertical-align: top;
+    background-color: white;
+    cursor: default;
+    position: relative;
+    top: 7px;
+  }
+}
