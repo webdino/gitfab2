@@ -1,24 +1,31 @@
-main
+main#users-edit
   h1
-    'Edit your profile
+    'Public Profile
 
   == form_for @current_user do |f|
     dl
       dt
-        'User Avatar
+        'Profile Picture
       dd
         == image_tag current_user.avatar, id: "user-avatar"
         == f.file_field :avatar, id: "user-avatar-form"
+        == link_to "Upload new picture", "#", id: "upload-button" 
+         
       dt
-        'User Name
+        'Name
       dd
-        == f.text_field :name, placeholder: "Please enter your name (It will be your repo name)."
+        == f.text_field :name, placeholder: "Please enter your name (It will be your repo name).", id: "user-name-form"
 
-    == f.submit "Save"
+    == f.submit "Save", id: "submit"
 
 content_for :bottom
   coffee:
     $(document).on "click", "#user-avatar", (event, data) ->
+      event.preventDefault()
+      $("#user-avatar-form").trigger "click"
+
+    $(document).on "click", "#upload-button", (event, data) ->
+      event.preventDefault()
       $("#user-avatar-form").trigger "click"
 
     $(document).on "change", "#user-avatar-form", (event, data, status) ->
