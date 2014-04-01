@@ -1,48 +1,36 @@
 div id="recipes-new"
-
   main
-    / TODO: showと共用の#basic-informationのclick to editなパーシャルを作る
     section#basic-information
-      h1.title
-        - if @recipe.title.present?
-          == @recipe.title
-        - else
-          'Add Title
-      == image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
-      section.description
-        h1
-          'Summary
-        p
-          - if @recipe.description.present?
-            == @recipe.description
-          - else
-            'Add Summary
-
+      == form_for [@user, @recipe] do |f|
+        == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
+        == f.text_field :name, placeholder: "Input_Repository_Name"
+        section.visual
+          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
+          == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
+          'or
+          #input-url-form
+            / TODO: YouTubeのURL入力フォームをつくる
+            'Input YouTube URL
+        section.description
+          h1
+            'Summary
+          == f.text_area :description, placeholder: "Add Summary", tabindex: 3
     section#utils
       section#tooltips
-        / TODO: saveボタン作る
-        #save-button
-          p
-            'Save Project
-        / TODO: deleteボタン作る
-        #delete-button
-          p
-            'Delete Project
-        - if @recipe.created_at.present?
-          time#created-datetime datetime=@recipe.created_at
-            'created date:
-            == @recipe.created_at.strftime " %Y-%m-%d, %H:%M:%S"
-        - if @recipe.updated_at.present?
-          time#last-updated-datetime datetime=@recipe.updated_at
-            'updated date:
-            == @recipe.updated_at.strftime " %Y-%m-%d, %H:%M:%S"
-      section#tool-options
-        h1
-          'Tool Options
-      section#tags
-        h1
-          'Tags
-        ul#tag-list.item-list
-          - @recipe.tags.each do |tag|
-            == render "tags/tag", tag: tag, recipe: @recipe
-        == render "tag_form", recipe: @recipe
+        #save-btn
+          == link_to "Save Project", "", title: "Save button"
+        #delete-btn
+          == link_to "Delete Project", [@user, :recipes], title: "Delete Project"
+
+content_for :bottom
+  coffee:
+    $(document).on "click", "#save-btn", (event, data) ->
+      $('form#new_recipe').submit()
+
+    $(document).on "click", "#photo-upload-btn", (event, data) ->
+      event.preventDefault()
+      $("input#recipe_photo").trigger "click"
+
+    $(document).on "change", "#recipe_photo", (event, data, status) ->
+  / TODO: section.visualの背景画像をアップデート
+  / TODO: uploadボタン代わりに、removeボタンの表示
