@@ -1,9 +1,0 @@
-<h1>Editing user</h1>
-<% if current_user.name.blank? %>
-  <p>Please enter your name (It will be your repo name).</p>
-<% end %>
-
-<%= render 'form' %>
-
-<%= link_to 'Show', current_user %> |
-<%= link_to 'Back', users_path %>
