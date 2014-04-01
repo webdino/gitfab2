@@ -1,0 +1,30 @@
+main
+  h1
+    'Edit your profile
+
+  == form_for @current_user do |f|
+    dl
+      dt
+        'User Avatar
+      dd
+        == image_tag current_user.avatar, id: "user-avatar"
+        == f.file_field :avatar, id: "user-avatar-form"
+      dt
+        'User Name
+      dd
+        == f.text_field :name, placeholder: "Please enter your name (It will be your repo name)."
+
+    == f.submit "Save"
+
+content_for :bottom
+  coffee:
+    $(document).on "click", "#user-avatar", (event, data) ->
+      $("#user-avatar-form").trigger "click"
+
+    $(document).on "change", "#user-avatar-form", (event, data, status) ->
+      file = event.target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        $("#user-avatar").attr("src", reader.result)
+
+      reader.readAsDataURL(file);
