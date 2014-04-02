@@ -1,0 +1,30 @@
+#posts-show {
+  margin: 40px 0px 0px 10px;
+  width: 400px;
+  border: 1px solid gray;
+  padding: 10px;
+  #post-attachment {
+    img {
+      width: 100%;
+    }
+  }
+  #post-title {
+    padding: 15px 0px;
+  }
+  #post-body {
+    white-space: pre-wrap;
+  }
+  footer {
+    margin-top: 20px;
+    text-align: right;
+    margin-bottom: 5px;
+    a {
+      text-decoration: none;
+      color: black;
+      border: 1px solid black;
+      padding: 7px;
+      background-color: white;
+      cursor: default;
+    }
+  }
+}
