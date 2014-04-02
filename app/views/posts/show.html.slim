@@ -1,18 +1,14 @@
-p#notice = notice
+article#posts-show
 
-p
-  strong Title:
-  = @post.title
-p
-  strong Body:
-  = @post.body
+  section#post-attachment
+    - @post.post_attachments.each do |post_attachment|
+      == image_tag post_attachment.content
 
-p
-  strong
-    'Post Attachments:
-- @post.post_attachments.each do |post_attachment|
-  == image_tag post_attachment.content
+  h1#post-title
+    = @post.title
 
-= link_to 'Edit', [:edit, @user, @recipe, @post]
-'|
-= link_to 'Back', [@user, @recipe, :posts]
+  section#post-body
+    = @post.body
+
+  footer
+    = link_to 'Edit', [:edit, @user, @recipe, @post]
