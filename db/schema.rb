@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140326085043) do
+ActiveRecord::Schema.define(version: 20140402021108) do
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"
@@ -37,6 +37,25 @@ ActiveRecord::Schema.define(version: 20140326085043) do
 
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
+
+  create_table "post_attachments", force: true do |t|
+    t.integer  "post_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "post_attachments", ["post_id"], name: "index_post_attachments_on_post_id", using: :btree
+
+  create_table "posts", force: true do |t|
+    t.integer  "recipe_id"
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["recipe_id"], name: "index_posts_on_recipe_id", using: :btree
 
   create_table "recipe_tags", force: true do |t|
     t.integer  "recipe_id"
