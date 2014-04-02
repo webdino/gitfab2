@@ -1,0 +1,18 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @post.title
+p
+  strong Body:
+  = @post.body
+
+p
+  strong
+    'Post Attachments:
+- @post.post_attachments.each do |post_attachment|
+  == image_tag post_attachment.content
+
+= link_to 'Edit', [:edit, @user, @recipe, @post]
+'|
+= link_to 'Back', [@user, @recipe, :posts]

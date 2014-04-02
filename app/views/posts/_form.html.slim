@@ -1,0 +1,24 @@
+== nested_form_for [@user, @recipe, @post], html: {multipart: true} do |f|
+  - if @post.errors.any?
+    #error_explanation
+      h2 == "#{pluralize(@post.errors.count, "error")} prohibited this post from being saved:"
+      ul
+        - @post.errors.full_messages.each do |message|
+          li == message
+
+  .field
+    == f.label :title
+    == f.text_field :title
+  .field
+    == f.label :body
+    == f.text_area :body
+  p
+    'Post Attachments
+    == f.fields_for :post_attachments do |at_f|
+      .field
+        == at_f.label :content
+        == image_tag at_f.object.content if at_f.object.content.present?
+        == at_f.file_field :content
+        == at_f.link_to_remove "remove photo"
+    == f.link_to_add "add photo", :post_attachments
+  .actions == f.submit 'Save'

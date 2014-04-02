@@ -1,41 +1,43 @@
 div id="recipes-show"
-  p id="notice" =notice
+  p
+    == link_to "posts", [@user, @recipe, :posts]
+  p id="notice" ==notice
 
   main
     section id = "basic-information"
       h1
-        = @recipe.title
-      = image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
+        == @recipe.title
+      == image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
 
       section class = "description"
         h1
           'Abstract
         .text
-          = @recipe.description
+          == @recipe.description
 
     section id = "utils"
       section id = "tooltips"
         div id = "slide-show-button"
           p
-            = link_to "Slideshow", "#", id: "slideshow-btn"
+            == link_to "Slideshow", "#", id: "slideshow-btn"
         div id = "fork-button"
           p
-            = form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
-              = hidden_field_tag :recipe_id, @recipe.id
-              = f.submit "Fork"
+            == form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
+              == hidden_field_tag :recipe_id, @recipe.id
+              == f.submit "Fork"
 
       section id = "user-id"
         div class = "thumbnail"
           - if current_user.avatar.present?
-            = image_tag current_user.avatar
+            == image_tag current_user.avatar
         div class = "screen-name"
-          = current_user.name
+          == current_user.name
         time id = "created-datetime" datetime = @recipe.created_at
           'created date
-          = @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+          == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
         time id = "last-updated-datetime" datetime = @recipe.updated_at
           'updated date
-          = @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+          == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
       section id = "tool-options"
         h1
           'Tool Options
@@ -44,8 +46,8 @@ div id="recipes-show"
           'Tags
         ul id="tag-list" class="item-list"
           - @recipe.tags.each do |tag|
-            = render "tags/tag", tag: tag, recipe: @recipe
-        = render "tag_form", recipe: @recipe
+            == render "tags/tag", tag: tag, recipe: @recipe
+        == render "tag_form", recipe: @recipe
 
 
     section id = "materials"
@@ -53,8 +55,8 @@ div id="recipes-show"
         'Materials
       ul id="material-list" class="item-list"
         - @recipe.materials.each do |item|
-          = render "item", item: item
-      = render "add_form", item: Material.new if can? :manage, @recipe
+          == render "item", item: item
+      == render "add_form", item: Material.new if can? :manage, @recipe
 
   hr
 
@@ -63,8 +65,8 @@ div id="recipes-show"
         'Tools
       ul id="tool-list" class="item-list"
         - @recipe.tools.each do |item|
-          = render "item", item: item
-      = render "add_form", item: Tool.new if can? :manage, @recipe
+          == render "item", item: item
+      == render "add_form", item: Tool.new if can? :manage, @recipe
 
   hr
 
@@ -73,18 +75,18 @@ div id="recipes-show"
         'Making
       ol id="status-list"
         - @recipe.statuses.sorted_by_position.each do |item|
-          = render "item", item: item
-      = render "add_form", item: Status.new if can? :manage, @recipe
+          == render "item", item: item
+      == render "add_form", item: Status.new if can? :manage, @recipe
 
   hr
 
 
   p
-    = link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
+    == link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
     '|
-    = link_to "Delete", [@user, @recipe], method: :delete if can? :manage, @recipe
+    == link_to "Delete", [@user, @recipe], method: :delete if can? :manage, @recipe
     '|
-    = link_to "Back", [@user, :recipes]
+    == link_to "Back", [@user, :recipes]
 
   content_for :bottom
     javascript:
