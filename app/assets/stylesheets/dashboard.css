@@ -3,5 +3,6 @@
  *= require_tree ./_shared
  *= require_tree ./dashboard
  *= require_tree ./recipes
+ *= require_tree ./groups
  *= require_tree ./layouts
  */

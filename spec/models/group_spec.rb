@@ -5,12 +5,12 @@ describe Group do
   let(:user2){FactoryGirl.create :user}
   let(:group1){FactoryGirl.create :group, creator: user1}
 
-  describe ".owners" do
+  describe ".admins" do
     subject do
-      group1.owners.map do |owner|
-        group1.add_owner user2
-        ms = owner.memberships.where(group_id: group1.id).first
-        ms.owner?
+      group1.admins.map do |admin|
+        group1.add_admin user2
+        ms = admin.memberships.where(group_id: group1.id).first
+        ms.admin?
       end.all?
     end
     it{should be true}

@@ -6,7 +6,7 @@ describe MembershipsController do
   let(:user2){FactoryGirl.create :user}
   let(:group1){FactoryGirl.create :group, creator: user1}
   let(:membership1){group1.memberships.first}
-  let(:valid_attributes){{user_id: user2.id, group_id: group1.id, role: Membership::ROLE[:owner]}}
+  let(:valid_attributes){{user_id: user2.id, group_id: group1.id, role: Membership::ROLE[:admin]}}
 
   describe "valid attributes" do
     subject do

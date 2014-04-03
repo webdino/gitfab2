@@ -1,6 +1,6 @@
 class Membership < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:id, :user_id, :group_id, :role]
-  ROLE = {owner: "owner", editor: "editor"}
+  ROLE = {admin: "admin", editor: "editor"}
 
   belongs_to :user
   belongs_to :group
