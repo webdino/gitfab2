@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   has_many :contributor_recipes, foreign_key: :contributor_id
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
   has_many :star, foreign_key: :user_id
-  has_many :starred_recipes, through: :star
+  has_many :starred_recipes, through: :star, source: :recipe
   has_many :memberships, foreign_key: :user_id
   has_many :groups, through: :memberships
 

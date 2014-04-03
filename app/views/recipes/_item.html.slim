@@ -6,8 +6,7 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
     - case field
     - when :photo
       span class="#{field}-field"
-        - if item.photo.present?
-          = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox" 
+        = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox" 
     - when :number
       - # don't display it
     - else

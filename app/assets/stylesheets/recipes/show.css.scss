@@ -19,7 +19,6 @@
       margin: auto;
       width: 480px;
       height: 360px;
-      background-image: url("http://placehold.it/480x360");
     }
     .description {
       float: right;
@@ -75,7 +74,6 @@
         float: left;
         width: 40px;
         height: 40px;
-        background-image: url("http://placehold.it/40x40");
         img {
           margin:0;
           max-width: 100%;
@@ -95,12 +93,14 @@
         margin: 15px 0;
         width: 100%;
         height: 24px;
+        font-size: 12px;
       }
       #last-updated-datetime {
         display: block;
         margin-top: 40px;
         width: 100%;
         height: 24px;
+        font-size: 12px;
       }
     }
     #tool-options {
@@ -145,7 +145,7 @@
   #tools {
     float: left;
     display:block;
-    padding: 30px 20px;
+    padding: 30px 20px 30px 0;
     width: 680px;
     height: auto;
     min-height: 100px;
@@ -182,9 +182,9 @@
           width: 240px;
           height: auto;
           min-height: 180px;
-          background-image: url("http://placehold.it/240x180");
           img {
             position: center;
+            padding-left: 20px;
             max-width: 100%;
             height: auto;
           }
@@ -211,7 +211,7 @@
   #making {
     float: left;
     display:block;
-    padding: 30px 20px;
+    padding: 30px 20px 30px 0;
     width: 920px;
     height: auto;
     min-height: 100px;
@@ -262,9 +262,9 @@
           width: 240px;
           height: auto;
           min-height: 180px;
-          background-image: url("http://placehold.it/240x180");
           img{
             position: center;
+            padding-left: 20px;
             max-width: 100%;
             height: auto;
           }
