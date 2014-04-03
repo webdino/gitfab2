@@ -8,15 +8,15 @@
     margin: 0px auto;
     width: 960px;
     height: 60px;
-    font-family: san-serif;
+    font-family: sans-serif;
   }
   #logo {
     float: left;
-    padding-top:20px;
+    padding-top: 18px;
     width: 120px;
     height: 40px;
     font-weight: 900;
-    font-size: 36px;
+    font-size: 32px;
   }
   #search-box {
     float: left;
@@ -56,10 +56,14 @@
           max-width: 100%;
           height: auto;
         }
+        &:not(:first-child) {
+          margin-top: 2px;
+        }
       }
     }
     #create-recipe {
       float: left;
+      margin-top: -10px;
       width: 40px;
       height: 40px;
       font-weight: 700;
