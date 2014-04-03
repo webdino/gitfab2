@@ -4,7 +4,7 @@
     width: 100%;
     background: #EEE;
   }
-  .container{
+  .container {
     margin: 0px auto;
     width: 960px;
     height: 60px;
@@ -31,15 +31,15 @@
     font-size: 16px;
   }
 
-  #tools{
-    .box{
+  #tools {
+    .box {
       float: right;
       padding: 20px 0 0;
       width: auto;
       min-width: 200px;
       height: 40px;
     }
-    #user{
+    #user {
       float: left;
       margin-right: 20px;
       width: auto;
@@ -47,21 +47,25 @@
       height: 40px;
       font-weight: 700;
       font-size: 16px;
-      .avator-thumb{
+      .avator-thumb {
         float: left;
         margin: -10px 10px 0 0;
         width: 40px;
         height: 40px;
+        img {
+          max-width: 100%;
+          height: auto;
+        }
       }
     }
-    #create-recipe{
+    #create-recipe {
       float: left;
       width: 40px;
       height: 40px;
       font-weight: 700;
       font-size: 32px;
     }
-    #preferences{
+    #preferences {
       float: left;
       margin: -10px 10px 0 0;
       width: 40px;
@@ -70,7 +74,7 @@
       font-size: 32px;
       background-image: url(http://placehold.it/40x40);
     }
-    #logout{
+    #logout {
       float: left;
       margin: -10px 0 0 0;
       width: 40px;
@@ -81,7 +85,7 @@
     }
   }
 
-  #sign-in{
+  #sign-in {
     float: right;
     margin: 20px 0 0;
     width: 240px;
