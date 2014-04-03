@@ -20,6 +20,26 @@ ActiveRecord::Schema.define(version: 20140402021108) do
     t.datetime "updated_at"
   end
 
+  create_table "friendly_id_slugs", force: true do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "materials", force: true do |t|
     t.string   "filename"
     t.string   "name"
@@ -37,6 +57,18 @@ ActiveRecord::Schema.define(version: 20140402021108) do
 
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.string   "role"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
+  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
+  add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "post_attachments", force: true do |t|
     t.integer  "post_id"
@@ -77,6 +109,7 @@ ActiveRecord::Schema.define(version: 20140402021108) do
     t.integer  "user_id"
     t.integer  "last_committer_id"
     t.integer  "orig_recipe_id"
+    t.integer  "group_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -139,6 +172,7 @@ ActiveRecord::Schema.define(version: 20140402021108) do
     t.string   "name"
     t.string   "avatar"
     t.integer  "group_id"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -146,6 +180,7 @@ ActiveRecord::Schema.define(version: 20140402021108) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   create_table "ways", force: true do |t|
     t.string   "filename"

@@ -13,4 +13,7 @@ Gitfab2::Application.routes.draw do
     end
   end
   resources :tags
+  resources :groups do
+    resources :memberships
+  end
 end

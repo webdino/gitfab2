@@ -31,6 +31,7 @@ gem "acts_as_list"
 gem "progress_bar"
 gem "cancancan"
 gem "nested_form"
+gem "friendly_id", "~> 5.0.0"
 
 group :doc do
   gem "sdoc", require: false
