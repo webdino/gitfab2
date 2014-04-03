@@ -23,6 +23,6 @@ class Group < ActiveRecord::Base
 
   private
   def add_initial_member
-    self.memberships.create user: self.creator, role: Membership::ROLE[:owner]
+    self.memberships.create user: self.creator, role: Membership::ROLE[:admin]
   end
 end

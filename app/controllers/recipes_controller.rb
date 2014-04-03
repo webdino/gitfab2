@@ -75,7 +75,7 @@ class RecipesController < ApplicationController
 
   def load_recipe
     recipe_id = params[:id] || params[:recipe_id]
-    @recipe = Recipe.where(id: recipe_id, user_id: params[:user_id]).first
+    @recipe = @user.recipes.find recipe_id
   end
 
   def load_user

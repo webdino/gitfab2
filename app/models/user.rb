@@ -26,8 +26,20 @@ class User < ActiveRecord::Base
     "#{Settings.git.repo_dir}/#{self.name}"
   end
 
+  def is_owner_of? recipe
+    self == recipe.user
+  end
+
   def is_creator_of? group
+    return false unless group
     self == group.creator
+  end
+
+  [:admin, :editor, :member].each do |role|
+    define_method "is_#{role}_of?" do |group|
+      return false unless group
+      group.send(role.pluralize).include? self
+    end
   end
 
   private

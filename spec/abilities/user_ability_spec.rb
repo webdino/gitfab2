@@ -3,9 +3,11 @@ require "cancan/matchers"
 
 describe "User ability" do
   let(:user){FactoryGirl.create :user}
+  let(:other){FactoryGirl.create :user}
   let(:recipe){user.recipes.create}
+
   subject(:ability){Ability.new user}
-  context "when is the owner of the recipe" do
+  context "when is the admin of the recipe" do
     describe "lets user manage own recipe" do
       it{should be_able_to :manage, recipe}
     end
@@ -22,7 +24,7 @@ describe "User ability" do
       it{should be_able_to :manage, Way, recipe_id: recipe.id}
     end
   end
-  context "when isn't the owner of the recipe" do
+  context "when isn't the admin of the recipe" do
     let(:other){FactoryGirl.create :user}
     let(:recipe){other.recipes.create}
     let(:status){Status.create recipe: recipe}
@@ -38,14 +40,37 @@ describe "User ability" do
     describe "doesn't let user manage the materials of the recipe" do
       it{should_not be_able_to :manage, material}
     end
-    describe "doesn't let user manage the tools of the recipe" do
-      it{should_not be_able_to :manage, tool}
+    describe "lets user manage the tools of the recipe" do
+      it{should be_able_to :manage, tool}
     end
     describe "lets user manage the ways of the recipe" do
       it{should be_able_to :manage, way}
     end
     describe "lets user read the recipe" do
       it{should be_able_to :read, recipe}
+    end
+  end
+  context "when is an admin of a group" do
+    let(:group){FactoryGirl.create :group, creator: user}
+    before{group.add_admin other}
+    describe "lets user manage the memberships of the group" do
+      it{should be_able_to :manage, group.memberships.find_by(user_id: other.id)}
+    end
+    describe "doesn't let user manage his/her memberships of the group" do
+      it{should_not be_able_to :manage, group.memberships.find_by(user_id: user.id)}
+    end
+  end
+  context "when is an editor of a group" do
+    let(:group){FactoryGirl.create :group, creator: other}
+    before{group.add_editor user}
+    describe "doesn't let user the memberships of the group" do
+      it{should_not be_able_to :manage, group.memberships.find_by(user_id: other.id)}
+    end
+  end
+  context "when isn't a member of a group" do
+    let(:group){FactoryGirl.create :group, creator: other}
+    describe "doesn't let user manage the memberships of the group" do
+      it{should_not be_able_to :manage, group.memberships.find_by(user_id: other.id)}
     end
   end
 end

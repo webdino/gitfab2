@@ -8,10 +8,19 @@ class Ability
     can :manage, Recipe, Recipe do |recipe|
       user.groups.include? recipe.group
     end
-    can :manage, Status, recipe: {user_id: user.id}
-    can :manage, Material, recipe: {user_id: user.id}
-    can :manage, Tool, recipe: {user_id: user.id}
+    can :manage, Status, Status do |status|
+      recipe = status.recipe
+      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
+    end
+    can :manage, Material, Material do |material|
+      recipe = material.recipe
+      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
+    end
+    can :manage, Tool
     can :manage, Way
+    can :manage, Membership, Membership do |membership|
+      user.is_admin_of?(membership.group) && user != membership.user
+    end
     can :read, :all
   end
 end

@@ -1,7 +1,13 @@
-li
+li.membership
   == membership.user.name
   '|
-  == membership.role
-  - unless membership.user.is_creator_of? membership.group
-    '|
-    == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn"
+  - if can? :manage, membership
+    == form_for [@group, membership], remote: true do |f|
+      == f.hidden_field :user_id, value: membership.user.id
+      == f.select :role, Membership::ROLE, {}, class: "membership-role", "data-persisted-role" => membership.role
+      == f.submit "apply"
+    - unless membership.user.is_creator_of? membership.group
+      '|
+      == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn"
+  - else
+    == membership.role

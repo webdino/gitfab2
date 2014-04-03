@@ -1,4 +1,4 @@
-div#groups-show
+#groups-show
   h1
     'Show Group
   p == @group.name
@@ -28,3 +28,13 @@ div#groups-show
     $(document).on "click", ".remove-member-btn", (event) ->
       event.preventDefault
       $(this).closest("li").remove()
+
+    $(document).on "change", ".membership-role", (event) ->
+      if event.target.value == $(event.target).attr("data-persisted-role")
+        style = "hidden"
+      else
+        style = "visible"
+      $(event.target).siblings("input[type=submit]").css "visibility", style
+
+    $(document).on "ajax:success", ".edit_membership", (event, data) ->
+      $(event.target).closest("li.membership").replaceWith data.html
