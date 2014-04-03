@@ -1,1 +1,3 @@
-class MaterialsController < ItemsController; end
+class MaterialsController < ItemsController
+  authorize_resource :material
+end

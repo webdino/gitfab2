@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   [:admin, :editor, :member].each do |role|
     define_method "is_#{role}_of?" do |group|
       return false unless group
-      group.send(role.pluralize).include? self
+      group.send(role.to_s.pluralize).include? self
     end
   end
 

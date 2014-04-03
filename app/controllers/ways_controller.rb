@@ -1,9 +1,12 @@
 class WaysController < ItemsController
+  authorize_resource :way
+
   after_action :add_contributor, [:create, :update, :destroy]
 
+  private
   def add_contributor
-    unless @item.recipe.user == current_user
-      @item.recipe.contributors << current_user
+    unless @way.recipe.user == current_user
+      @way.recipe.contributors << current_user
     end
   end
 end

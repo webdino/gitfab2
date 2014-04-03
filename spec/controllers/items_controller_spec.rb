@@ -1,6 +1,6 @@
 require "spec_helper"
 
-["status", "material", "tool"].each do |klass|
+["status", "material", "tool", "way"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
     disconnect_sunspot
     let(:user1){FactoryGirl.create :user}
@@ -24,7 +24,19 @@ require "spec_helper"
           post :create, user_id: user1.id, recipe_id: recipe1.id,
             klass => valid_attributes, format: :json
         end
-        it_behaves_like "unauthorized"
+        it_behaves_like "operation without team privilege", klass
+
+      end
+      context "with a member of the group which owns the recipe" do
+        let(:group){FactoryGirl.create :group, creator: user1}
+        before do
+          controller.stub(:current_user).and_return user2
+          group.add_editor user2
+          recipe1.update_attributes group_id: group.id
+          post :create, user_id: user1.id, recipe_id: recipe1.id,
+            klass => valid_attributes, format: :json
+        end
+        it_behaves_like "success"
       end
     end
 
@@ -43,7 +55,18 @@ require "spec_helper"
           patch :update, user_id: user1.id, recipe_id: recipe1.id,
             id: send("#{klass}1").id, klass => valid_attributes, format: :json
         end
-        it_behaves_like "unauthorized"
+        it_behaves_like "operation without team privilege", klass
+      end
+      context "with a member of the group which owns the recipe" do
+        let(:group){FactoryGirl.create :group, creator: user1}
+        before do
+          controller.stub(:current_user).and_return user2
+          group.add_editor user2
+          recipe1.update_attributes group_id: group.id
+          patch :update, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id, klass => valid_attributes, format: :json
+        end
+        it_behaves_like "success"
       end
     end
 
@@ -62,7 +85,18 @@ require "spec_helper"
           delete :destroy, user_id: user1.id, recipe_id: recipe1.id,
             id: send("#{klass}1").id, format: :json
         end
-        it_behaves_like "unauthorized"
+        it_behaves_like "operation without team privilege", klass
+      end
+      context "with a member of the group which owns the recipe" do
+        let(:group){FactoryGirl.create :group, creator: user1}
+        before do
+          controller.stub(:current_user).and_return user2
+          group.add_editor user2
+          recipe1.update_attributes group_id: group.id
+          delete :destroy, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id, format: :json
+        end
+        it_behaves_like "success"
       end
     end
   end

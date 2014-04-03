@@ -57,7 +57,7 @@
       ul#material-list.item-list
         - @recipe.materials.each do |item|
           == render "item", item: item
-      == render "add_form", item: Material.new if can? :manage, @recipe
+      == render "add_form", item: Material.new if can? :manage, @recipe.materials.build
 
     section#tools
       h1
@@ -65,7 +65,7 @@
       ul#tool-list.item-list
         - @recipe.tools.each do |item|
           == render "item", item: item
-      == render "add_form", item: Tool.new if can? :manage, @recipe
+      == render "add_form", item: Tool.new if can? :manage, @recipe.tools.build
 
     section#making
       h1
@@ -73,7 +73,7 @@
       ol#status-list
         - @recipe.statuses.sorted_by_position.each do |item|
           == render "item", item: item
-      == render "add_form", item: Status.new if can? :manage, @recipe
+      == render "add_form", item: Status.new if can? :manage, @recipe.statuses.build
 
   hr
 

@@ -14,7 +14,8 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
       span class="#{field}-field"
         = item.send field
 
-  = render "recipes/edit_form", item: item
+  - if can? :manage, item
+    = render "recipes/edit_form", item: item
   - if item.is_a? Status
     li
       ul class="way-list"
