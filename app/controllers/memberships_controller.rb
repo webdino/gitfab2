@@ -7,13 +7,12 @@ class MembershipsController < ApplicationController
     if @membership.save
       render "create"
     else
-      p @membership.errors
       render "failed"
     end
   end
 
   def update
-    if @membership.update_attributes member_params
+    if @membership.update_attributes membership_params
       render "update"
     else
       render "failed"
@@ -27,7 +26,9 @@ class MembershipsController < ApplicationController
   private
   def membership_params
     if params[:membership]
-      params[:membership][:user_id] = User.find(params[:membership][:user_id]).id
+      if user = User.friendly.find_by(id: params[:membership][:user_id])
+        params[:membership][:user_id] = user.id
+      end
       params.require(:membership).permit Membership::UPDATABLE_COLUMNS
     end
   end
