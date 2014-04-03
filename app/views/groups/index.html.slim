@@ -1,0 +1,9 @@
+h1
+  'index
+
+ul
+  - @groups.each do |group|
+    li
+      == link_to group.name, group
+
+== link_to "new group", [:new, :group]

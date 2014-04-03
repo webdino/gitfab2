@@ -1,3 +1,6 @@
+<%= content_for :stylesheet do %>
+  <%= stylesheet_link_tag "dashboard", media: "all", "data-turbolinks-track" => true %>
+<% end %>
 <%= content_for :javascript do %>
   <%= javascript_include_tag "dashboard", "data-turbolinks-track" => true %>
 <% end %>

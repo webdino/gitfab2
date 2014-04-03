@@ -1,0 +1,7 @@
+li
+  == membership.user.name
+  '|
+  == membership.role
+  - unless membership.user.is_creator_of? membership.group
+    '|
+    == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn"

@@ -1,0 +1,30 @@
+div#groups-show
+  h1
+    'Show Group
+  p == @group.name
+  
+  == form_for [@group, Membership.new], remote: true do |f|
+    == f.text_field :user_id
+    == f.select :role, Membership::ROLE 
+    == f.hidden_field :group_id, value: @group.id
+    == f.submit "add"
+
+  p
+    'members
+  ul#members
+    - @group.memberships.each do |ms|
+      == render "membership", membership: ms
+
+  == link_to "back", :groups
+  == link_to "edit", [:edit, @group]
+  == link_to "destroy", @group, method: :delete
+  
+- content_for :bottom do
+  coffee:
+    $(document).on "ajax:success", "#new_membership", (event, data) ->
+      $("#members").append data.html
+      $("input#membership_user_id").val ""
+
+    $(document).on "click", ".remove-member-btn", (event) ->
+      event.preventDefault
+      $(this).closest("li").remove()

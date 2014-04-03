@@ -14,3 +14,8 @@ shared_examples "redirected" do
   subject{response.status}
   it{should be 302}
 end
+
+shared_examples "render template" do |name|
+  subject{response}
+  it{should render_template name}
+end

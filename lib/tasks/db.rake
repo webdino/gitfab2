@@ -1,7 +1,6 @@
 namespace :db do
-  desc "Re-Create database, db:drop, db:create, db:migrate, db:seed, db:test:prepare"
-  task __recreate__: ["db:drop", "db:create", "db:migrate", "db:seed", "db:test:prepare"]
-  #task __recreate__: ["db:drop", "db:create", "db:migrate", "db:seed", "sunspot:solr:reindex", "db:test:prepare"]
+  desc "Re-Create database"
+  task __recreate__: ["db:drop", "db:create", "db:migrate", "db:seed", "sunspot:solr:reindex", "db:test:prepare"]
   task recreate: :environment do
     if Rails.env.development?
       Dir.glob("/home/git/repositories_development/*").each{|path| FileUtils.rm_rf path}

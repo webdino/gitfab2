@@ -96,6 +96,8 @@ GEM
       railties (>= 3.0.0)
     ffi (1.9.3)
     formatador (0.2.4)
+    friendly_id (5.0.3)
+      activerecord (>= 4.0.0)
     gitolite (1.1.0)
       gratr19 (~> 0.4.4.1)
       grit (~> 2.5.0)
@@ -348,6 +350,7 @@ DEPENDENCIES
   database_cleaner
   devise_browserid_authenticatable
   factory_girl_rails
+  friendly_id (~> 5.0.0)
   gitolite
   growl
   guard-rspec

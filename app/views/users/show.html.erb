@@ -4,6 +4,7 @@
 <% if user_signed_in? %>
   <p>Logged in: <%= @user.email %></p>
   <p><%= link_to "Recipes", user_recipes_path(@user) %></p>
+  <p><%= link_to "Groups", :groups %></p>
   <p><%= link_to "Sign out", destroy_user_session_path, method: :delete %></p>
 <% else%>
   <%= link_to "Sign in", "#", class: "persona-login-button" %>
