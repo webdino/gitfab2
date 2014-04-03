@@ -5,4 +5,5 @@
  *= require_tree ./recipes
  *= require_tree ./groups
  *= require_tree ./layouts
+ *= require_tree ./fancybox
  */
