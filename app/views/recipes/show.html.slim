@@ -1,79 +1,76 @@
-div id="recipes-show"
+
+#recipes-show
   p
     == link_to "posts", [@user, @recipe, :posts]
-  p id="notice" ==notice
+  p id="notice" =notice
 
   main
-    section id = "basic-information"
+    section#basic-information
       h1
         == @recipe.title
       == image_tag @recipe.photo, class: "visual" if @recipe.photo.present?
 
-      section class = "description"
+      section.description
         h1
           'Abstract
         .text
           == @recipe.description
 
-    section id = "utils"
-      section id = "tooltips"
-        div id = "slide-show-button"
+    section#utils
+      section#tooltips
+        #slide-show-button
           p
             == link_to "Slideshow", "#", id: "slideshow-btn"
-        div id = "fork-button"
+        #fork-button
           p
             == form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
               == hidden_field_tag :recipe_id, @recipe.id
               == f.submit "Fork"
 
-      section id = "user-id"
-        div class = "thumbnail"
+      section#user-id
+        .thumbnail
           - if current_user.avatar.present?
             == image_tag current_user.avatar
-        div class = "screen-name"
+        .screen-name
           == current_user.name
-        time id = "created-datetime" datetime = @recipe.created_at
+        time#created-datetime datetime = @recipe.created_at
           'created date
           == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
-        time id = "last-updated-datetime" datetime = @recipe.updated_at
+        time#last-updated-datetime datetime = @recipe.updated_at
           'updated date
           == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
-      section id = "tool-options"
+      section#tool-options
         h1
           'Tool Options
-      section id = "tags"
+      section#tags
         h1
           'Tags
-        ul id="tag-list" class="item-list"
+        ul#tag-list.item-list
           - @recipe.tags.each do |tag|
             == render "tags/tag", tag: tag, recipe: @recipe
         == render "tag_form", recipe: @recipe
 
 
-    section id = "materials"
+    section#materials
       h1
         'Materials
-      ul id="material-list" class="item-list"
+      ul#material-list.item-list
         - @recipe.materials.each do |item|
           == render "item", item: item
       == render "add_form", item: Material.new if can? :manage, @recipe
 
-  hr
-
-    section id = "tools"
+    section#tools
       h1
         'Tools
-      ul id="tool-list" class="item-list"
+      ul#tool-list.item-list
         - @recipe.tools.each do |item|
           == render "item", item: item
       == render "add_form", item: Tool.new if can? :manage, @recipe
 
-  hr
-
-    section id = "making"
+    section#making
       h1
         'Making
-      ol id="status-list"
+      ol#status-list
         - @recipe.statuses.sorted_by_position.each do |item|
           == render "item", item: item
       == render "add_form", item: Status.new if can? :manage, @recipe
@@ -87,6 +84,7 @@ div id="recipes-show"
     == link_to "Delete", [@user, @recipe], method: :delete if can? :manage, @recipe
     '|
     == link_to "Back", [@user, :recipes]
+
 
   content_for :bottom
     javascript:
@@ -112,9 +110,12 @@ div id="recipes-show"
           else
             $("##{data.class}-list").append data.html
 
+
       $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
         if data.class == "way"
           $(event.target).closest(".status").find(".add-btn").css("display", "block")
+        else if data.class == "status"
+          $(event.target).closest("li").next("li").remove()
         $(event.target).closest("li").remove()
 
       $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
