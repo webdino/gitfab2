@@ -12,4 +12,12 @@ class ApplicationController < ActionController::Base
       redirect_to [:edit, current_user]
     end
   end
+
+  def current_user
+    if session[:su]
+      User.find session[:su]
+    else
+      super
+    end
+  end
 end

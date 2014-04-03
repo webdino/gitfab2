@@ -5,21 +5,18 @@ class ItemsController < ApplicationController
   before_action :load_item, only: [:update, :destroy]
   after_action  :update_and_commit_recipe, only: [:create, :update, :destroy]
 
-  authorize_resource through: :recipe
-  authorize_resource through: :item, through: :recipe
-
   def create
-    @item.save
-    render "recipes/create_item", locals: {item: @item}
+    item.save
+    render "recipes/create_item", locals: {item: item}
   end
 
   def update
-    @item.update_attributes item_params
-    render "recipes/update_item", locals: {item: @item}
+    item.update_attributes item_params
+    render "recipes/update_item", locals: {item: item}
   end
 
   def destroy
-    @item.destroy
+    item.destroy
     render "recipes/destroy_item"
   end
 
@@ -37,11 +34,11 @@ class ItemsController < ApplicationController
   end
 
   def build_item
-    @item = @recipe.send(controller_name).build item_params
+    self.item = @recipe.send(controller_name).build item_params
   end
 
   def load_item
-    @item = @recipe.send(controller_name).find params[:id]
+    self.item = @recipe.send(controller_name).find params[:id]
   end
 
   def load_recipe
@@ -49,6 +46,14 @@ class ItemsController < ApplicationController
   end
 
   def update_and_commit_recipe
-    @item.recipe.update_attributes last_committer: current_user
+    item.recipe.update_attributes last_committer: current_user
+  end
+
+  def item
+    instance_variable_get "@#{controller_name.singularize}"
+  end
+
+  def item= val
+    instance_variable_set "@#{controller_name.singularize}", val
   end
 end

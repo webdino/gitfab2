@@ -5,14 +5,14 @@ class Ability
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Recipe, user_id: user.id
-    can :manage, Recipe, Recipe do |recipe|
+    can :manage, Recipe do |recipe|
       user.groups.include? recipe.group
     end
-    can :manage, Status, Status do |status|
+    can :manage, Status do |status|
       recipe = status.recipe
       user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
     end
-    can :manage, Material, Material do |material|
+    can :manage, Material do |material|
       recipe = material.recipe
       user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
     end

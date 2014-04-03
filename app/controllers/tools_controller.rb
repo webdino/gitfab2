@@ -1,1 +1,3 @@
-class ToolsController < ItemsController; end
+class ToolsController < ItemsController
+  authorize_resource :tool
+end

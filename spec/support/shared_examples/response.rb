@@ -19,3 +19,14 @@ shared_examples "render template" do |name|
   subject{response}
   it{should render_template name}
 end
+
+shared_examples "operation without team privilege" do |klass|
+  subject{response.status}
+  it do
+    if ["status", "material"].include? klass
+      should be 401
+    else
+      should be 200
+    end
+  end
+end

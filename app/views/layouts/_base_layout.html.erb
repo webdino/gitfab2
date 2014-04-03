@@ -11,5 +11,13 @@
     <%= browserid_js_tag %>
     <%= content_for?(:content) ? yield(:content) : yield %>
     <%= content_for?(:bottom) ? yield(:bottom) : nil %>
+    <hr>
+    <% if Rails.env.development?  %>
+      <%= form_tag "/su" do %>
+        <%= select_tag "user_id", options_from_collection_for_select(User.all, :id, :name) %>
+        <%= submit_tag "su" %>
+        <%= submit_tag "reset" %>
+      <% end %>
+    <% end %>
   </body>
 </html>
