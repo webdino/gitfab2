@@ -27,7 +27,7 @@ module Gitfab::ActsAsItemInRecipe
     end
 
     def dup_with_photo
-      self.dup.tap{|item| item.photo = self.dup_photo}
+      self.dup.tap{|item| item.photo = self.dup_photo if self.photo.present?}
     end
   end
 end
