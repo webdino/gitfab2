@@ -26,7 +26,8 @@
       height: 360px;
       font-size: 24px;
       text-align: center;
-      background-image: url("http://placehold.it/480x360");
+      background-size: contain;
+      background-repeat: no-repeat;
       #photo-upload-btn, #input-url-form {
         display: block;
         margin: 35px auto;
