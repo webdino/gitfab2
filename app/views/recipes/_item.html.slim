@@ -1,23 +1,23 @@
 li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.underscore}"
   - if item.is_a? Status
     span class="index-field"
-      = "#{item.class.name}#{item.position}"
+      == "#{item.class.name}#{item.position}"
   - (item.class)::UPDATABLE_COLUMNS.each do |field|
     - case field
     - when :photo
       span class="#{field}-field"
-        = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox" 
+        = link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+        - if can? :manage, item
+          - if item.photo.blank?
+            == link_to "Upload Image File…", "#", title: "upload-image", class: "upload-image-btn"
+          - else
+            == link_to "Delete Image", "#", title: "delete-image", class: "delete-image-btn"
+
     - when :number
       - # don't display it
     - else
       span class="#{field}-field"
-        = item.send field
+        == item.send field
 
   - if can? :manage, item
     = render "recipes/edit_form", item: item
-  - if item.is_a? Status
-    li
-      ul class="way-list"
-        - @recipe.ways.where(number: item.position).each do |way|
-          = render "recipes/item", item: way
-      = render "recipes/add_form", item: Way.new, opts: {number: item.position}

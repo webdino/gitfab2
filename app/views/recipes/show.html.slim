@@ -73,6 +73,12 @@
       ol#status-list
         - @recipe.statuses.sorted_by_position.each do |item|
           == render "item", item: item
+          li
+            ul.way-list
+              - @recipe.ways.where(number: item.position).each do |way|
+                == render "recipes/item", item: way
+            == render "recipes/add_form", item: Way.new, opts: {number: item.position}
+
       == render "add_form", item: Status.new if can? :manage, @recipe.statuses.build
 
   hr
@@ -94,6 +100,7 @@
       		closeEffect	: 'none'
       	});
       })
+
     coffee:
       $(document).on "ajax:success", ".edit-form", (event, data, status) ->
         if data.success
@@ -104,12 +111,10 @@
         if data.success
           $(event.target).find("input[type!=submit]").val ""
           $(event.target).css "display","none"
-
           if data.class == "way"
             $(event.target).closest(".add-form-wrap").siblings(".way-list").append data.html
           else
             $("##{data.class}-list").append data.html
-
 
       $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
         if data.class == "way"
@@ -131,3 +136,21 @@
       $(document).on "click", "#slideshow-btn", (event, data) ->
         event.preventDefault()
         $(".fancybox").first().trigger "click"
+
+      $(document).on "click", ".upload-image-btn", (event, data) ->
+        event.preventDefault()
+        $(event.target).parents(".photo-field").siblings(".edit-form-wrap").find(".add-photo").trigger "click"
+
+      $(document).on "change", ".add-photo", (event, data, status) ->
+        file = event.target.files[0]
+        reader = new FileReader()
+        reader.onload = ->
+          $(event.target).closest(".edit-form-wrap").siblings(".photo-field").find("img").attr "src", reader.result
+          $(event.target).parents("form.edit-form").submit()
+        reader.readAsDataURL file
+
+      $(document).on "click", ".delete-image-btn", (event, data) ->
+        event.preventDefault()
+        element = $(event.target).parents(".photo-field").siblings(".edit-form-wrap")
+        element.find(".remove-photo").attr "checked", true
+        element.find("form.edit-form").submit()

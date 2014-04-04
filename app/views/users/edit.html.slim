@@ -9,8 +9,8 @@ main#users-edit
       dd
         == image_tag current_user.avatar, id: "user-avatar"
         == f.file_field :avatar, id: "user-avatar-form"
-        == link_to "Upload new picture", "#", id: "upload-button" 
-         
+        == link_to "Upload new picture", "#", id: "upload-button"
+
       dt
         'Name
       dd
@@ -32,6 +32,6 @@ content_for :bottom
       file = event.target.files[0]
       reader = new FileReader()
       reader.onload = ->
-        $("#user-avatar").attr("src", reader.result)
+        $("#user-avatar").attr "src", reader.result
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL file
