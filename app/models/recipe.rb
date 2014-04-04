@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :user_id, :name, :title, :description, :photo,
+  UPDATABLE_COLUMNS = [:id, :user_id, :group_id, :name, :title, :description, :photo,
     materials_attributes:   [:id, :name, :url, :quantity, :size, :description, :photo, :_destroy],
     tools_attributes:       [:id, :name, :url, :description, :photo, :_destroy],
     statuses_attributes:    [:id, :description, :photo, :_destroy],
@@ -56,6 +56,21 @@ class Recipe < ActiveRecord::Base
     end
   end
 
+  def owner
+    self.group || self.user
+  end
+
+  def owner= owner
+    case owner
+    when Group
+      self.group_id = owner.id
+    when User
+      self.user_id = owner.id
+    else
+      raise "error"
+    end
+  end
+
   def repo
     Rugged::Repository.new repo_path if File.exists? repo_path
   end
@@ -75,17 +90,17 @@ class Recipe < ActiveRecord::Base
     Gitfab::Shell.new.commit_to_repo! self.repo.path, contents, opts
   end
 
-  def fork_for! user
+  def fork_for! owner
     Recipe.transaction do
       self.dup.tap do |recipe|
+        recipe.owner = owner
         recipe.statuses = self.statuses.collect{|status| status.dup_with_photo}
         recipe.ways = self.ways.collect{|way| way.dup_with_photo}
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self
-        recipe.user_id = user.id
         recipe.name = Gitfab::Shell.new
-          .copy_repo! self.repo.path, user.dir_path, recipe.name
+          .copy_repo! self.repo.path, owner.dir_path, recipe.name
         recipe.save
       end
     end
@@ -93,7 +108,7 @@ class Recipe < ActiveRecord::Base
 
   def fill_default_name_for! user
     suffix = 1
-    names = user.recipes.map(&:name)
+    names = user.recipes.map &:name
     while names.include? (candidate = "recipe#{suffix}") do
       suffix += 1
     end
@@ -106,7 +121,11 @@ class Recipe < ActiveRecord::Base
   end
 
   def repo_path
-    "#{self.user.dir_path}/#{self.name}.git"
+    if self.group
+      "#{self.group.dir_path}/#{self.name}.git"
+    else
+      "#{self.user.dir_path}/#{self.name}.git"
+    end
   end
 
   def destroy_repo!
@@ -115,7 +134,7 @@ class Recipe < ActiveRecord::Base
 
   def rename_repo_name!
     old_name, new_name = self.name_change
-    old_path = "#{self.user.dir_path}/#{old_name}.git"
-    Gitfab::Shell.new.move_repo! old_path, self.user.dir_path, self.name
+    old_path = "#{self.owner.dir_path}/#{old_name}.git"
+    Gitfab::Shell.new.move_repo! old_path, self.owner.dir_path, self.name
   end
 end

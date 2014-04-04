@@ -36,9 +36,13 @@ ActiveRecord::Schema.define(version: 20140402021108) do
   create_table "groups", force: true do |t|
     t.string   "name"
     t.integer  "creator_id"
+    t.string   "avatar"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
 
   create_table "materials", force: true do |t|
     t.string   "filename"
@@ -113,6 +117,8 @@ ActiveRecord::Schema.define(version: 20140402021108) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "recipes", ["group_id"], name: "index_recipes_on_group_id", using: :btree
 
   create_table "stars", force: true do |t|
     t.integer  "user_id"

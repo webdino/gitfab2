@@ -1,7 +1,6 @@
-
 #recipes-show
   p
-    == link_to "posts", [@user, @recipe, :posts]
+    == link_to "posts", [@owner, @recipe, :posts]
   p id="notice" =notice
 
   main
@@ -21,18 +20,23 @@
         #slide-show-button
           p
             == link_to "Slideshow", "#", id: "slideshow-btn"
-        #fork-button
-          p
-            == form_for [@user, @recipe], url: [@user, @recipe, :fork], method: :post do |f|
-              == hidden_field_tag :recipe_id, @recipe.id
-              == f.submit "Fork"
+        == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
+        #fork-destinations
+          == form_for [current_user, current_user.recipes.new] do |f|
+            == hidden_field_tag :base_recipe_id, @recipe.id
+            == f.submit "Fork for #{current_user.name}"
+
+          - current_user.groups.each do |group|
+            == form_for [group, group.recipes.new] do |f|
+              == hidden_field_tag :base_recipe_id, @recipe.id
+              == f.submit "Fork for #{group.name}"
 
       section#user-id
         .thumbnail
-          - if current_user.avatar.present?
-            == image_tag current_user.avatar
+          - if @owner.avatar.present?
+            == image_tag @owner.avatar
         .screen-name
-          == current_user.name
+          == @owner.name
         time#created-datetime datetime = @recipe.created_at
           'created date
           == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
@@ -85,11 +89,11 @@
 
 
   p
-    == link_to "Edit", [:edit, @user, @recipe] if can? :manage, @recipe
+    == link_to "Edit", [:edit, @owner, @recipe] if can? :manage, @recipe
     '|
-    == link_to "Delete", [@user, @recipe], method: :delete if can? :manage, @recipe
+    == link_to "Delete", [@owner, @recipe], method: :delete if can? :manage, @recipe
     '|
-    == link_to "Back", [@user, :recipes]
+    == link_to "Back", [@owner, :recipes]
 
 
   content_for :bottom

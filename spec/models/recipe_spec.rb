@@ -7,11 +7,24 @@ describe Recipe do
   end
 
   let(:user){FactoryGirl.create :user}
+  let(:group){FactoryGirl.create :group, creator: user}
   let(:recipe){FactoryGirl.create :recipe, user: user}
+  let(:g_recipe){FactoryGirl.create :recipe, group: group}
   let(:status){FactoryGirl.create :status, recipe: recipe}
   let(:way){FactoryGirl.create :way, recipe: recipe}
   let(:tool){FactoryGirl.create :tool, recipe: recipe}
   let(:material){FactoryGirl.create :material, recipe: recipe}
+
+  describe "#owner" do
+    context "when owned by a user" do
+      subject{recipe.owner}
+      it{should eq user}
+    end
+    context "when owned by a group" do
+      subject{g_recipe.owner}
+      it{should eq group}
+    end
+  end
 
   describe "#commit!" do
     let(:repo){recipe.repo}
@@ -106,6 +119,15 @@ describe Recipe do
       end
       subject{recipe.fork_for! other}
       it{should be_a Recipe}
+    end
+  end
+
+  describe "on after_create" do
+    describe "#ensure_repo_exist!" do
+      context "with group recipe" do
+        subject{g_recipe.repo.path}
+        it{should eq "#{g_recipe.group.dir_path}/#{g_recipe.name}.git/"}
+      end
     end
   end
 

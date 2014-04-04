@@ -1,11 +1,11 @@
-class RecipesController < ApplicationController
+class Recipes::GroupRecipesController < ApplicationController
   layout "dashboard"
 
   before_action :load_owner
   before_action :build_recipe, only: [:new, :create]
-  before_action :load_recipe, only: [:show, :edit, :update, :destroy]
+  before_action :load_recipe, only: [:show, :edit, :update, :destroy, :fork]
   before_action :set_last_committer, only: [:create, :update]
-  after_action :commit, only: [:create, :update], unless: ->{params[:base_recipe_id]}
+  after_action :commit, only: [:create, :update]
 
   authorize_resource
 
@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
         fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
         case params[:type]
         when "own"
-          with :user_id, params[:user_id]
+          with :owner_id, params[:owner_id]
         when "contributed"
           # TODO: Implement
         when "starred"
@@ -31,31 +31,26 @@ class RecipesController < ApplicationController
   end
 
   def new
-    @recipe.fill_default_name_for! @owner
+    @recipe.fill_default_name_for! current_owner
   end
 
   def edit
   end
 
   def create
-    if params[:base_recipe_id]
-      self.fork
+    if @recipe.save
+      redirect_to [@recipe.owner, @recipe], notice: "Recipe was successfully created."
     else
-      if @recipe.save
-        redirect_to [@owner, @recipe], notice: "Recipe was successfully created."
-      else
-        render action: :new
-      end
+      render action: :new
     end
   end
 
   def fork
-    base_recipe = Recipe.find params[:base_recipe_id]
-    @recipe = base_recipe.fork_for! @owner
-    if @recipe.save
-      redirect_to [@owner, @recipe], notice: "Recipe was successfully forked."
+    new_recipe = @recipe.fork_for! current_owner
+    if new_recipe.save
+      redirect_to [@owner, new_recipe], notice: "Recipe was successfully forked."
     else
-      raise "error"
+      @recipe = new_recipe
       render action: :new
     end
   end
@@ -84,11 +79,7 @@ class RecipesController < ApplicationController
   end
 
   def load_owner
-    if params[:user_id]
-      @owner = User.find params[:user_id]
-    else
-      @owner = Group.find params[:group_id]
-    end
+    @owner = User.find params[:owner_id]
   end
 
   def recipe_params
@@ -102,6 +93,6 @@ class RecipesController < ApplicationController
   end
 
   def set_last_committer
-    @recipe.last_committer = current_user
+    @recipe.last_committer = current_owner
   end
 end

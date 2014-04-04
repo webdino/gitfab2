@@ -1,7 +1,9 @@
 div id="recipes-new"
   main
     section#basic-information
-      == form_for [@user, @recipe] do |f|
+      == form_for [@owner, @recipe] do |f|
+        - if @owner.is_a?(User) && @owner.groups.any?
+          == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}
         == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
         == f.text_field :name, placeholder: "Input_Repository_Name"
         section.visual style="background-image: url('#{@recipe.photo}')"
@@ -20,7 +22,7 @@ div id="recipes-new"
         #save-btn
           == link_to "Save Project", "", title: "Save button"
         #delete-btn
-          == link_to "Delete Project", [@user, :recipes], title: "Delete Project"
+          == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
 
 content_for :bottom
   coffee:
@@ -37,5 +39,8 @@ content_for :bottom
       reader.onload = ->
         $("section.visual").css("background-image", "url('#{reader.result}')")
       reader.readAsDataURL(file)
+
+    $(document).on "change", "select#recipe_group_id", (event) ->
+      $("#new_recipe").attr "action", $(this).val()
 
   / TODO: uploadボタン代わりに、removeボタンの表示

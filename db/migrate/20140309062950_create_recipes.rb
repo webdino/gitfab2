@@ -10,7 +10,7 @@ class CreateRecipes < ActiveRecord::Migration
       t.integer :user_id, index: true
       t.integer :last_committer_id, index: true
       t.integer :orig_recipe_id, index: true
-      t.belongs_to :group
+      t.belongs_to :group, index: true
 
       t.timestamps
     end

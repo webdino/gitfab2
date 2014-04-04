@@ -64,6 +64,10 @@
         width: 120px;
         height: 120px;
         background-image: url("http://placehold.it/120x120");
+        display: block;
+      }
+      #fork-destinations {
+        display: none;
       }
     }
     #user-id {

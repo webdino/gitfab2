@@ -26,7 +26,7 @@ class MembershipsController < ApplicationController
   private
   def membership_params
     if params[:membership]
-      if user = User.friendly.find_by(id: params[:membership][:user_id])
+      if user = User.where(slug: params[:membership][:user_id]).first
         params[:membership][:user_id] = user.id
       end
       params.require(:membership).permit Membership::UPDATABLE_COLUMNS
