@@ -4,7 +4,7 @@ div id="recipes-new"
       == form_for [@user, @recipe] do |f|
         == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
         == f.text_field :name, placeholder: "Input_Repository_Name"
-        section.visual
+        section.visual style="background-image: url('#{@recipe.photo}')"
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
           == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
           'or
@@ -31,6 +31,12 @@ content_for :bottom
       event.preventDefault()
       $("input#recipe_photo").trigger "click"
 
-    $(document).on "change", "#recipe_photo", (event, data, status) ->
+    $(document).on "change", "input#recipe_photo", (event, data, status) ->
+      file = event.target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        $("section.visual").css("background-image", "url('#{reader.result}')")
+      reader.readAsDataURL(file)
+
   / TODO: section.visualの背景画像をアップデート
   / TODO: uploadボタン代わりに、removeボタンの表示
