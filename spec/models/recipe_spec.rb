@@ -96,6 +96,17 @@ describe Recipe do
         it{should eq forked_recipe.repo.path.sub!(/\.git\/$/, "_.git/")}
       end
     end
+
+    context "when the repository has items which don't have photo" do
+      before do
+        recipe.statuses.create
+        recipe.ways.create
+        recipe.tools.create
+        recipe.materials.create
+      end
+      subject{recipe.fork_for! other}
+      it{should be_a Recipe}
+    end
   end
 
   describe "on after_update" do
