@@ -32,6 +32,8 @@ gem "progress_bar"
 gem "cancancan"
 gem "nested_form"
 gem "friendly_id", "~> 5.0.0"
+gem "tinymce-rails"
+gem "tinymce-rails-imageupload", "~> 4.0.0.beta"
 
 group :doc do
   gem "sdoc", require: false

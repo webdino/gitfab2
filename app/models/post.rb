@@ -1,7 +1,5 @@
 class Post < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :recipe_id, :title, :body,
-    post_attachments_attributes: PostAttachment::UPDATABLE_COLUMNS
-  ]
+  UPDATABLE_COLUMNS = [:id, :recipe_id, :title, :body]
 
   belongs_to :recipe
   has_many :post_attachments
