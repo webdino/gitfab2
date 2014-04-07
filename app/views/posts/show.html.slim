@@ -1,5 +1,5 @@
+== link_to "posts", [@user, @recipe, :posts]
 article#posts-show
-
   h1#post-title
     = @post.title
 
@@ -7,4 +7,4 @@ article#posts-show
     = @post.body.html_safe
 
   footer
-    = link_to 'Edit', [:edit, @user, @recipe, @post]
+    = link_to "Edit", [:edit, @user, @recipe, @post]

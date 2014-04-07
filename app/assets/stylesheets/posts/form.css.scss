@@ -1,0 +1,32 @@
+.post-form {
+  dt {
+    display: block;
+    padding: 0px 0 5px 0px;
+  }
+
+  dd {
+    display: block;
+    margin: 0;
+    padding: 0px 0 15px 0px;
+  }
+
+  #post-title {
+    width: 90%;
+    background-color: #eee;
+    border: 1px solid black;
+  }
+
+  textarea {
+    width: 100%;
+  }
+
+  footer {
+    text-align: right;
+    margin-bottom: 5px;
+    #submit {
+      border: 1px solid black;
+      padding: 5px;
+      background-color: white;
+    }
+  }
+}

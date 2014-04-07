@@ -1,9 +1,7 @@
+== link_to "posts", [@user, @recipe, :posts]
 main#posts-edit
   h1
     'Edit post
 
-  == render 'form'
-
-/= link_to 'Show', [@user, @recipe, @post]
-/'|
-/= link_to 'Back', [@user, @recipe, :posts]
+  article#post-article
+    == render "form"

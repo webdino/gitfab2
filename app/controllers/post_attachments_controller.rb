@@ -1,10 +1,9 @@
 class PostAttachmentsController < ApplicationController
   before_action :load_user
   before_action :load_recipe
-  before_action :load_post, only: [:create]
 
   def create
-    post_attachment = @post.post_attachments.build content: params[:file]
+    post_attachment = @recipe.post_attachments.build content: params[:file]
     if post_attachment.save
       render json: {
         image: {
@@ -25,10 +24,6 @@ class PostAttachmentsController < ApplicationController
 
   def load_recipe
     @recipe = @user.recipes.find params[:recipe_id]
-  end
-
-  def load_post
-    @post = @recipe.posts.find params[:post_id]
   end
 
 end
