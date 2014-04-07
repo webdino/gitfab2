@@ -54,7 +54,7 @@
     section#materials
       h1
         'Materials
-      ul#material-list.item-list
+      ul#material-list.sortable.item-list
         - @recipe.materials.each do |item|
           == render "item", item: item
       == render "add_form", item: Material.new if can? :manage, @recipe.materials.build
@@ -62,7 +62,7 @@
     section#tools
       h1
         'Tools
-      ul#tool-list.item-list
+      ul#tool-list.sortable.item-list
         - @recipe.tools.each do |item|
           == render "item", item: item
       == render "add_form", item: Tool.new if can? :manage, @recipe.tools.build
@@ -70,11 +70,11 @@
     section#making
       h1
         'Making
-      ol#status-list
+      ol#status-list.sortable
         - @recipe.statuses.sorted_by_position.each do |item|
           == render "item", item: item
-          li
-            ul.way-list
+          li.way-list-wrapper id="way-list-wrapper-#{item.id}"
+            ul.way-list.linked-sortable
               - @recipe.ways.where(number: item.position).each do |way|
                 == render "recipes/item", item: way
             == render "recipes/add_form", item: Way.new, opts: {number: item.position}
@@ -100,6 +100,87 @@
       		closeEffect	: 'none'
       	});
       })
+
+      // TODO: refactoring html insert part
+      // TODO: add transaction
+      $(document).ready(function() {
+        $(".sortable").sortable({
+          items       : "li:nth-of-type(2n+1):not(.way)",
+          placeholder : "ui-state-highlight",
+          update      : function(event, ui) {
+            if( ui.item.hasClass("status")) {
+              addWayListWrapper(event, ui);
+              combineWayListWrapper(event, ui);
+              refreshListItemsId(event, ui);
+              refreshStatusIndex(event, ui);
+            }
+          },
+        });
+        $(".sortable").disableSelection();
+
+        $(".linked-sortable").sortable({
+          items       : "li",
+          placeholder : "ui-state-highlight",
+          connectWith : ".linked-sortable",
+          create      : function(event, ui) {
+            $(this).append("<li class='way-placeholder'></li>");
+          },
+          update      : function(event, ui) {
+            $(".linked-sortable").each( function() {
+              refreshWayPlaceholder(event, ui);
+            });
+          },
+        });
+        $(".linked-sotable").disableSelection();
+      })
+
+      function addWayListWrapper(event, ui) {
+        if(ui.item.prev().hasClass("way") || ui.item.next().hasClass("status")) {
+          $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertAfter("#"+ui.item.attr("id"));
+          $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
+          var clone = $(".add-form-wrap").eq(-2).clone(true);
+          $("li#way-list-wrapper-new").append(clone);
+        }
+        else if(ui.item.prev().hasClass("status") || ui.item.next().hasClass("way")){
+          $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertBefore("#"+ui.item.attr("id"));
+          $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
+          var clone = $(".add-form-wrap").eq(-2).clone(true);
+          $("li#way-list-wrapper-new").append(clone);
+        }
+      }
+
+      function combineWayListWrapper(event, ui) {
+        var path = $("#way-list-wrapper-" + (ui.item.attr("id").slice(-1)-1) +" "+"ul.way-list");
+        $("#way-list-wrapper-"+ui.item.attr("id").slice(-1)).find(".way").appendTo(path);
+        $("#way-list-wrapper-"+ui.item.attr("id").slice(-1)).remove();
+      }
+
+      function refreshListItemsId(event, ui) {
+        $("li.status").each( function(index) {
+          $(this).attr("id", "status-"+(index+1));
+        });
+        $("li.way-list-wrapper").each( function(index) {
+          $(this).attr("id", "way-list-wrapper-"+(index+1));
+        });
+        $(".way").each( function(index) {
+          $(this).attr("id", "way-"+(index+1));
+        });
+      }
+
+      function refreshStatusIndex(event, ui) {
+        $("li.status .index-field").each( function(index) {
+          $(this).text("Status"+(index+1));
+        });
+      }
+
+      function refreshWayPlaceholder(event, ui) {
+        if( $(this).find("li")[1] && $(this).find("li").hasClass("way-placeholder") ) {
+          $(this).find("li.way-placeholder").remove();
+        }
+        else if( !($(this).find("li")[0]) ) {
+          $(this).append("<li class='way-placeholder'></li>");
+        }
+      }
 
     coffee:
       $(document).on "ajax:success", ".edit-form", (event, data, status) ->
@@ -154,3 +235,8 @@
         element = $(event.target).parents(".photo-field").siblings(".edit-form-wrap")
         element.find(".remove-photo").attr "checked", true
         element.find("form.edit-form").submit()
+
+      $ ->
+        $(".linked-sortable").each (index) ->
+          if !($(this).find("li")[0])
+            $(this).append "<li class='way-placeholder'></li>"

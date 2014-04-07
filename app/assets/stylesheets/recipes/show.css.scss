@@ -158,7 +158,7 @@
       font-size: 36px;
       font-weight: bold;
     }
-    .item-list {
+    .sortable.item-list {
       width: 100%;
       li {
         margin-top: 20px;
@@ -227,7 +227,7 @@
     li {
       list-style: none;
     }
-    #status-list {
+    #status-list.sortable {
       width: 100%;
       li.status {
         @include cf;
@@ -283,6 +283,10 @@
       ul.way-list {
         float: right;
         width: 640px;
+        li.way-placeholder {
+          width: 400px;
+          height: 30px;
+        }
         li.way {
           display:block;
           margin-bottom: 20px;
