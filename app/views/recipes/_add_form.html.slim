@@ -1,7 +1,7 @@
 - opts ||= {}
 div class="add-form-wrap"
   = link_to "add #{item.class.name.underscore}", "#", class: "add-btn"
-  = form_for [@recipe.user, @recipe, item], remote: true,
+  = form_for [@owner, @recipe, item], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
     - item.class::UPDATABLE_COLUMNS.each do |field|
       - case field
