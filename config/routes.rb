@@ -10,7 +10,9 @@ Gitfab2::Application.routes.draw do
       resources :ways
       resources :materials
       resources :tools
-      resources :posts
+      resources :posts do
+        resources :post_attachments
+      end
     end
   end
   resources :tags
