@@ -1,24 +1,24 @@
-article#post-article
-  == nested_form_for [@user, @recipe, @post], html: {multipart: true} do |f|
-    dl
-      dt
-        'Title
-      dd
-        == f.text_field :title, id: "post-title"
-      dt
-        'Body
-      dd
-        == f.text_area :body,:id=>'editor', :class => "tinymce", :rows => 40, :cols => 70
-    footer
-      == f.submit "Save", id: "submit"
+== nested_form_for [@user, @recipe, @post], html: {multipart: true, class: "post-form"} do |f|
+  dl
+    dt
+      'Title
+    dd
+      == f.text_field :title, id: "post-title"
+    dt
+      'Body
+    dd
+      == f.text_area :body, id: :editor, class: :tinymce, rows: 40, cols: 70
+  footer
+    == f.submit "Save", id: "submit"
 
-== content_for :bottom
+- content_for :bottom
   javascript:
-    var url = "#{url_for [@user, @recipe, @post, PostAttachment.new]}";
+    var url = "#{url_for [@user, @recipe, PostAttachment.new]}";
     tinymce.init({
       selector: "textarea",
       theme: "modern",
       menubar : false,
+      convert_urls : false,
       uploadimage_form_url: url,
       plugins: [
         "advlist autolink lists link image charmap hr anchor pagebreak",

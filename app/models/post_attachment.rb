@@ -3,5 +3,5 @@ class PostAttachment < ActiveRecord::Base
 
   mount_uploader :content, PostAttachmentUploader
 
-  belongs_to :post
+  belongs_to :recipe
 end

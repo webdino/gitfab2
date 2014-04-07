@@ -71,13 +71,13 @@ ActiveRecord::Schema.define(version: 20140402021108) do
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
 
   create_table "post_attachments", force: true do |t|
-    t.integer  "post_id"
+    t.integer  "recipe_id"
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "post_attachments", ["post_id"], name: "index_post_attachments_on_post_id", using: :btree
+  add_index "post_attachments", ["recipe_id"], name: "index_post_attachments_on_recipe_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.integer  "recipe_id"
