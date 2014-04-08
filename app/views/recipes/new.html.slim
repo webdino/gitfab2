@@ -3,7 +3,7 @@ div id="recipes-new"
     section#basic-information
       == form_for [@owner, @recipe] do |f|
         - if @owner.is_a?(User) && @owner.groups.any?
-          == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}
+          == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
         == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
         == f.text_field :name, placeholder: "Input_Repository_Name"
         section.visual style="background-image: url('#{@recipe.photo}')"
