@@ -1,7 +1,4 @@
-= link_to "Recipe", [@user, @recipe]
-br
-= link_to "New Post", [:new, @user, @recipe, :post]
-
+== render "links"
 main#posts-index
   - @posts.each do |post|
     article.post
