@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   layout "posts"
 
   def index
-    @posts = @recipe.posts
+    @posts = @recipe.posts.page params[:page]
   end
 
   def show

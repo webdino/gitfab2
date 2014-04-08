@@ -26,6 +26,11 @@
         margin-left: 10px;
       }
     }
-
+  }
+  .pagination {
+    a {
+      text-decoration: underline;
+      color: black;
+    }
   }
 }
