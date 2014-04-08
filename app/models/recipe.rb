@@ -43,6 +43,8 @@ class Recipe < ActiveRecord::Base
 
   validates :name, presence: true
 
+  paginates_per 10
+
   searchable do
     text :name, :title, :description
     ASSOCS.each do |assoc|

@@ -1,0 +1,43 @@
+main#home-index
+  header
+    - if user_signed_in?
+      == link_to "Dashboard", [current_user]
+    - else
+      == link_to "Sign in", "#", class: "persona-login-button"
+
+  ul.recipe-list
+    - @recipes.each do |recipe|
+      li.recipe-item
+        article.recipe
+          == link_to [recipe.owner, recipe] do
+            p.cover style="background-image: url('#{recipe.photo.url}')"
+          span.summary
+            span.title
+              == link_to recipe.title, [recipe.owner, recipe]
+            span.description
+              == recipe.description
+
+  footer
+    == paginate @recipes
+
+- content_for :bottom
+  javascript:
+    $(".persona-login-button").click(function(e) {
+      e.preventDefault();
+
+      navigator.id.get(function(assertion) {
+        if (assertion) {
+          $.ajax({
+            url: "/users/sign_in",
+            type: "POST",
+            dataType: "json",
+            cache: false,
+            data: {
+              "assertion": assertion
+            }
+          }).done(function() {
+            window.location.href = "/";
+          });
+        }
+      });
+    });

@@ -1,0 +1,66 @@
+@import "mixins/clearfix.css.scss";
+
+#home-index {
+  margin-top:30px;
+  font-family: helvetica, sans-serif;
+
+  header {
+    
+  }
+  h1 {
+    font-size: 2em;
+    margin: 20px auto;
+  }
+  .recipes {
+    @include cf;
+  }
+  .recipe-item {
+    width: 320px;
+    float: left;
+    margin: 40px 0 20px 20px;
+    color: #FFF;
+    .cover {
+      height: 240px;
+      background-size: cover;
+      background-position: center;
+      a {
+        display: block;
+        background-size: cover;
+        background-position: center;
+      }
+    }
+    .summary {
+      display: block;
+      padding-top: 8px;
+      width: 320px;
+      a {
+        color: #4183C4;
+        text-decoration: none;
+        &:hover{
+          color: #4183C4;
+          text-decoration: underline;
+        }
+      }
+      .title {
+        margin: 20px 0 20px 0px;
+        width: 320px;
+        font-size:32px;
+        font-weight: 900;
+      }
+      .description {
+        display: block;
+        margin-top: 6px;
+        font-size: 14px;
+        color: #000;
+      }
+    }
+  }
+  footer {
+    clear: both;
+    .pagination {
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+}
