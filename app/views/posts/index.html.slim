@@ -1,22 +1,15 @@
-h1 Listing posts
-
-table
-  tr
-    th Title
-    th Body
-    th
-    th
-    th
-
-  - @posts.each do |post|
-    tr
-      td = post.title
-      td = post.body
-      td = link_to "Show", [@user, @recipe, post]
-      td = link_to "Edit", [:edit, @user, @recipe, post]
-      td = link_to "Destroy", [@user, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
-
-br
-
-= link_to "New Post", [:new, @user, @recipe, :post]
 = link_to "Recipe", [@user, @recipe]
+br
+= link_to "New Post", [:new, @user, @recipe, :post]
+
+main#posts-index
+  - @posts.each do |post|
+    article.post
+      h1.post-title
+        = post.title
+      section.post-body
+        = post.body.html_safe
+      footer
+        = link_to "Show", [@user, @recipe, post]
+        = link_to "Edit", [:edit, @user, @recipe, post]
+        = link_to "Destroy", [@user, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
