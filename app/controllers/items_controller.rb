@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
+  include ItemsHelper
 
+  before_action :load_owner
   before_action :load_recipe
   before_action :build_item, only: [:create]
   before_action :load_item, only: [:update, :destroy]
@@ -45,15 +47,15 @@ class ItemsController < ApplicationController
     @recipe = Recipe.find params[:recipe_id]
   end
 
+  def load_owner
+    if params[:user_id]
+      @owner = User.find params[:user_id]
+    else
+      @owner = Group.find params[:group_id]
+    end
+  end
+
   def update_and_commit_recipe
     item.recipe.update_attributes last_committer: current_user
-  end
-
-  def item
-    instance_variable_get "@#{controller_name.singularize}"
-  end
-
-  def item= val
-    instance_variable_set "@#{controller_name.singularize}", val
   end
 end
