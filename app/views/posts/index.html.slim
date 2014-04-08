@@ -10,3 +10,4 @@ main#posts-index
         = link_to "Show", [@user, @recipe, post]
         = link_to "Edit", [:edit, @user, @recipe, post]
         = link_to "Destroy", [@user, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
+  == paginate @posts
