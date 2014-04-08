@@ -1,0 +1,31 @@
+#posts-index {
+  margin: 40px 0px 0px 10px;
+  width: 400px;
+  .post {
+    border: 1px solid gray;
+    padding: 0px 10px 10px 10px;
+    margin-bottom: 20px;
+    .post-title {
+    }
+    .post-body {
+    }
+    img {
+      width: 100%;
+    }
+    footer {
+      margin-top: 20px;
+      text-align: right;
+      margin-bottom: 5px;
+      a {
+        text-decoration: none;
+        color: black;
+        border: 1px solid black;
+        padding: 7px;
+        background-color: white;
+        cursor: default;
+        margin-left: 10px;
+      }
+    }
+
+  }
+}
