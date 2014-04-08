@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    @recipes = Recipe.page params[:page]
   end
 
   def su
