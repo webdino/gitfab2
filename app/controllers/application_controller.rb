@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
   private
   def verify_name
-    if user_signed_in? and current_user.name.blank?
+    if user_signed_in? && current_user.name.blank?
       redirect_to [:edit, current_user]
     end
   end

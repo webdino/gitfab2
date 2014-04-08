@@ -4,9 +4,8 @@ class Ability
   def initialize user
     user ||= User.new
     can :manage, User, id: user.id
-    can :manage, Recipe, user_id: user.id
     can :manage, Recipe do |recipe|
-      user.groups.include? recipe.group
+      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
     end
     can :manage, Status do |status|
       recipe = status.recipe
@@ -21,6 +20,8 @@ class Ability
     can :manage, Membership, Membership do |membership|
       user.is_admin_of?(membership.group) && user != membership.user
     end
+    can :create, Tag
+    can [:create, :destroy], RecipeTag
     can :read, :all
   end
 end

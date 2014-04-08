@@ -3,6 +3,8 @@ require "spec_helper"
 ["status", "material", "tool", "way"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
     disconnect_sunspot
+    render_views
+
     let(:user1){FactoryGirl.create :user}
     let(:user2){FactoryGirl.create :user}
     let(:recipe1){FactoryGirl.create :recipe, user_id: user1.id}
@@ -13,16 +15,16 @@ require "spec_helper"
       context "with owner" do
         before do
           controller.stub(:current_user).and_return user1
-          post :create, user_id: user1.id, recipe_id: recipe1.id,
-            klass => valid_attributes, format: :json
+          xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+            klass => valid_attributes
         end
         it_behaves_like "success"
       end
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          post :create, user_id: user1.id, recipe_id: recipe1.id,
-            klass => valid_attributes, format: :json
+          xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+            klass => valid_attributes
         end
         it_behaves_like "operation without team privilege", klass
 
@@ -33,8 +35,8 @@ require "spec_helper"
           controller.stub(:current_user).and_return user2
           group.add_editor user2
           recipe1.update_attributes group_id: group.id
-          post :create, user_id: user1.id, recipe_id: recipe1.id,
-            klass => valid_attributes, format: :json
+          xhr :post, :create, group_id: group.id, recipe_id: recipe1.id,
+            klass => valid_attributes
         end
         it_behaves_like "success"
       end
@@ -44,16 +46,16 @@ require "spec_helper"
       context "with owner" do
         before do
           controller.stub(:current_user).and_return user1
-          patch :update, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, klass => valid_attributes, format: :json
+          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "success"
       end
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          patch :update, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, klass => valid_attributes, format: :json
+          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "operation without team privilege", klass
       end
@@ -63,8 +65,8 @@ require "spec_helper"
           controller.stub(:current_user).and_return user2
           group.add_editor user2
           recipe1.update_attributes group_id: group.id
-          patch :update, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, klass => valid_attributes, format: :json
+          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "success"
       end
@@ -74,16 +76,16 @@ require "spec_helper"
       context "with owner" do
         before do
           controller.stub(:current_user).and_return user1
-          delete :destroy, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, format: :json
+          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id
         end
         it_behaves_like "success"
       end
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          delete :destroy, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, format: :json
+          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id
         end
         it_behaves_like "operation without team privilege", klass
       end
@@ -93,8 +95,8 @@ require "spec_helper"
           controller.stub(:current_user).and_return user2
           group.add_editor user2
           recipe1.update_attributes group_id: group.id
-          delete :destroy, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, format: :json
+          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+            id: send("#{klass}1").id
         end
         it_behaves_like "success"
       end
