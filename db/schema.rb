@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402021108) do
+ActiveRecord::Schema.define(version: 20140409084232) do
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"
@@ -165,6 +165,18 @@ ActiveRecord::Schema.define(version: 20140402021108) do
 
   add_index "tools", ["recipe_id"], name: "index_tools_on_recipe_id", using: :btree
   add_index "tools", ["way_id"], name: "index_tools_on_way_id", using: :btree
+
+  create_table "usages", force: true do |t|
+    t.integer  "recipe_id"
+    t.string   "filename"
+    t.integer  "position"
+    t.text     "description"
+    t.string   "photo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "usages", ["recipe_id"], name: "index_usages_on_recipe_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -9,6 +9,8 @@ div class="add-form-wrap"
         = f.file_field field, class: "add-photo"
       - when :number
         = f.hidden_field field, value: opts[:number]
+      - when :description
+        = f.text_area field
       - else
         = f.text_field field
     = f.submit "create"

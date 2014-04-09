@@ -20,6 +20,9 @@ class Ability
     can :manage, Membership, Membership do |membership|
       user.is_admin_of?(membership.group) && user != membership.user
     end
+    can :manage, Usage do
+      user.persisted?
+    end
     can :manage, Post do |post|
       user.is_owner_of?(post.recipe) || user.is_member_of?(post.recipe.group)
     end

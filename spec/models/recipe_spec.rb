@@ -79,7 +79,7 @@ describe Recipe do
       recipe.commit!
     end
 
-    Recipe::ASSOCS.each do |assoc|
+    Recipe::COMMITABLE_ITEM_ASSOCS.each do |assoc|
       describe "copies photo of #{assoc}" do
         subject{File.exists? forked_recipe.send(assoc).first.photo.path}
         it{should be_true}

@@ -5,6 +5,7 @@ Gitfab2::Application.routes.draw do
       resources :ways
       resources :materials
       resources :tools
+      resources :usages
       resources :posts
       resources :post_attachments
     end
@@ -29,6 +30,7 @@ Gitfab2::Application.routes.draw do
     resources :ways, constraints: {id: /.+/}
     resources :materials, constraints: {id: /.+/}
     resources :tools, constraints: {id: /.+/}
+    resources :usages, constraints: {id: /.+/}
     resources :posts, constraints: {id: /.+/}
     resources :post_attachments, constraints: {id: /.+/}
   end          

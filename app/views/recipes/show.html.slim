@@ -85,6 +85,14 @@
 
       == render "add_form", item: Status.new if can? :manage, @recipe.statuses.build
 
+    section#usages
+      h1
+        'Usages
+      ul#usage-list.sortable.item-list
+        - @recipe.usages.each do |item|
+          == render "item", item: item
+      == render "add_form", item: Usage.new if can? :manage, @recipe.usages.build
+
   hr
 
 
