@@ -1,6 +1,8 @@
 class PostAttachmentsController < ApplicationController
-  before_action :load_user
+  before_action :load_owner
   before_action :load_recipe
+
+  authorize_resource
 
   def create
     post_attachment = @recipe.post_attachments.build content: params[:file]
@@ -18,12 +20,17 @@ class PostAttachmentsController < ApplicationController
   end
 
   private
-  def load_user
-    @user = User.find params[:user_id]
+  def load_owner
+    owner_name = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = if User.exists? owner_name
+      User.find owner_name
+    elsif Group.exists? owner_name
+      Group.find owner_name
+    end
   end
 
   def load_recipe
-    @recipe = @user.recipes.find params[:recipe_id]
+    @recipe = @owner.recipes.find params[:recipe_id]
   end
 
 end

@@ -23,4 +23,13 @@ Gitfab2::Application.routes.draw do
   resources :groups, concerns: :owner do
     resources :memberships
   end
+
+  resources :recipes, except: [:new, :create, :index], path: "/:owner_name" do
+    resources :statuses, constraints: {id: /.+/}
+    resources :ways, constraints: {id: /.+/}
+    resources :materials, constraints: {id: /.+/}
+    resources :tools, constraints: {id: /.+/}
+    resources :posts, constraints: {id: /.+/}
+    resources :post_attachments, constraints: {id: /.+/}
+  end          
 end

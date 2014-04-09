@@ -7,4 +7,4 @@ article#posts-show
     = @post.body.html_safe
 
   footer
-    = link_to "Edit", [:edit, @user, @recipe, @post]
+    = link_to "Edit", [:edit, @owner, @recipe, @post]

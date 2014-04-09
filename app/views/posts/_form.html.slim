@@ -1,4 +1,4 @@
-== nested_form_for [@user, @recipe, @post], html: {multipart: true, class: "post-form"} do |f|
+== nested_form_for [@owner, @recipe, @post], html: {multipart: true, class: "post-form"} do |f|
   dl
     dt
       'Title
@@ -13,7 +13,7 @@
 
 - content_for :bottom
   javascript:
-    var url = "#{url_for [@user, @recipe, PostAttachment.new]}";
+    var url = "#{url_for [@owner, @recipe, PostAttachment.new]}";
     tinymce.init({
       selector: "textarea",
       theme: "modern",

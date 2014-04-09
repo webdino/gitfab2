@@ -9,6 +9,9 @@ class Recipe < ActiveRecord::Base
   ]
   ASSOCS = [:statuses, :materials, :ways, :tools]
 
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
+
   mount_uploader :photo, PhotoUploader
 
   searchable do
