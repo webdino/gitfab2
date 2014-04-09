@@ -114,11 +114,13 @@ ActiveRecord::Schema.define(version: 20140402021108) do
     t.integer  "last_committer_id"
     t.integer  "orig_recipe_id"
     t.integer  "group_id"
+    t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "recipes", ["group_id"], name: "index_recipes_on_group_id", using: :btree
+  add_index "recipes", ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
 
   create_table "stars", force: true do |t|
     t.integer  "user_id"

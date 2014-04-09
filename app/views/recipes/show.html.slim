@@ -1,6 +1,6 @@
 #recipes-show
   p
-    == link_to "posts", [@owner, @recipe, :posts]
+    == link_to "posts", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
   p id="notice" =notice
 
   main

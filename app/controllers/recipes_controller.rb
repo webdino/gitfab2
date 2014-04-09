@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
       self.fork
     else
       if @recipe.save
-        redirect_to [@owner, @recipe], notice: "Recipe was successfully created."
+        redirect_to recipe_path(id: @recipe.name, owner_name: @recipe.owner.name), notice: "Recipe was successfully created."
       else
         render action: :new
       end
@@ -53,7 +53,7 @@ class RecipesController < ApplicationController
     base_recipe = Recipe.find params[:base_recipe_id]
     @recipe = base_recipe.fork_for! @owner
     if @recipe.save
-      redirect_to [@owner, @recipe], notice: "Recipe was successfully forked."
+      redirect_to recipe_path(id: @recipe.name, owner_name: @recipe.owner.name), notice: "Recipe was successfully forked."
     else
       raise "error"
       render action: :new
@@ -84,10 +84,11 @@ class RecipesController < ApplicationController
   end
 
   def load_owner
-    if params[:user_id]
-      @owner = User.find params[:user_id]
-    else
-      @owner = Group.find params[:group_id]
+    owner_name = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = if User.exists? owner_name
+      User.find owner_name
+    elsif Group.exists? owner_name
+      Group.find owner_name
     end
   end
 

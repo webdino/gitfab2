@@ -1,10 +1,12 @@
 class PostsController < ApplicationController
-  before_action :load_user
+  before_action :load_owner
   before_action :load_recipe
   before_action :build_post, only: [:new, :create]
   before_action :load_post, only: [:show, :edit, :update, :destroy]
 
   layout "posts"
+
+  authorize_resource
 
   def index
     @posts = @recipe.posts.page params[:page]
@@ -21,7 +23,7 @@ class PostsController < ApplicationController
 
   def create
     if @post.save
-      redirect_to [@user, @recipe, @post], notice: "Post was successfully created."
+      redirect_to [@owner, @recipe, @post], notice: "Post was successfully created."
     else
       render :new
     end
@@ -29,7 +31,7 @@ class PostsController < ApplicationController
 
   def update
     if @post.update post_params
-      redirect_to [@user, @recipe, @post], notice: "Post was successfully updated."
+      redirect_to [@owner, @recipe, @post], notice: "Post was successfully updated."
     else
       render :edit
     end
@@ -37,16 +39,21 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to [@user, @recipe, :posts]
+    redirect_to [@owner, @recipe, :posts]
   end
 
   private
-  def load_user
-    @user = User.find params[:user_id]
+  def load_owner
+    owner_name = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = if User.exists? owner_name
+      User.find owner_name
+    elsif Group.exists? owner_name
+      Group.find owner_name
+    end
   end
 
   def load_recipe
-    @recipe = @user.recipes.find params[:recipe_id]
+    @recipe = @owner.recipes.find params[:recipe_id]
   end
 
   def load_post

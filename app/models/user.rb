@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:name, :avatar]
 
   extend FriendlyId
-
   friendly_id :name, use: [:slugged, :finders]
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
