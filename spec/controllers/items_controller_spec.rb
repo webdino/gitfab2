@@ -1,9 +1,10 @@
 require "spec_helper"
 
-["status", "material", "tool", "way"].each do |klass|
+#["status", "material", "tool", "way"].each do |klass|
+["usage"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
     disconnect_sunspot
-    render_views
+#    render_views
 
     let(:user1){FactoryGirl.create :user}
     let(:user2){FactoryGirl.create :user}

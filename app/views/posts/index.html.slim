@@ -7,7 +7,7 @@ main#posts-index
       section.post-body
         = post.body.html_safe
       footer
-        = link_to "Show", [@user, @recipe, post]
-        = link_to "Edit", [:edit, @user, @recipe, post]
-        = link_to "Destroy", [@user, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
+        = link_to "Show", [@owner, @recipe, post]
+        = link_to "Edit", [:edit, @owner, @recipe, post]
+        = link_to "Destroy", [@owner, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
   == paginate @posts

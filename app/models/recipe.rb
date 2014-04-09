@@ -4,10 +4,12 @@ class Recipe < ActiveRecord::Base
     tools_attributes:       [:id, :name, :url, :description, :photo, :_destroy],
     statuses_attributes:    [:id, :description, :photo, :_destroy],
     ways_attributes:        [:id, :description, :photo, :_destroy],
+    usages_attributes:      [:id, :description, :photo],
     recipe_tags_attributes: [:id, :tag_id, :recipe_id],
     tag_ids: []
   ]
-  ASSOCS = [:statuses, :materials, :ways, :tools]
+  COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :ways, :tools]
+  ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
 
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
@@ -37,6 +39,7 @@ class Recipe < ActiveRecord::Base
   has_many :recipe_tags, dependent: :destroy
   has_many :tags, through: :recipe_tags
   has_many :post_attachments, dependent: :destroy
+  has_many :usages, dependent: :destroy
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
 
@@ -50,7 +53,7 @@ class Recipe < ActiveRecord::Base
 
   searchable do
     text :name, :title, :description
-    ASSOCS.each do |assoc|
+    ITEM_ASSOCS.each do |assoc|
       text assoc do
         self.send(assoc).map do |record|
           (assoc.to_s.classify.constantize)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
@@ -82,7 +85,7 @@ class Recipe < ActiveRecord::Base
 
   def commit!
     contents = [{file_path: "recipe.json", data: self.to_json}]
-    ASSOCS.each do |dir|
+    COMMITABLE_ITEM_ASSOCS.each do |dir|
       items = self.send dir
       items.each do |item|
         contents << {file_path: item.to_path, data: item.to_json}
