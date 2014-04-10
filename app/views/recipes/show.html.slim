@@ -76,13 +76,7 @@
         'Making
       ol#status-list.sortable
         - @recipe.statuses.sorted_by_position.each do |item|
-          == render "item", item: item
-          li.way-list-wrapper id="way-list-wrapper-#{item.id}"
-            ul.way-list.linked-sortable
-              - @recipe.ways.where(number: item.position).each do |way|
-                == render "recipes/item", item: way
-            == render "recipes/add_form", item: Way.new, opts: {number: item.position}
-
+          == render "status_item", item: item
       == render "add_form", item: Status.new if can? :manage, @recipe.statuses.build
 
     section#usages
@@ -149,16 +143,13 @@
       function addWayListWrapper(event, ui) {
         if(ui.item.prev().hasClass("way") || ui.item.next().hasClass("status")) {
           $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertAfter("#"+ui.item.attr("id"));
-          $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
-          var clone = $(".add-form-wrap").eq(-2).clone(true);
-          $("li#way-list-wrapper-new").append(clone);
         }
         else if(ui.item.prev().hasClass("status") || ui.item.next().hasClass("way")){
           $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertBefore("#"+ui.item.attr("id"));
-          $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
-          var clone = $(".add-form-wrap").eq(-2).clone(true);
-          $("li#way-list-wrapper-new").append(clone);
         }
+        $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
+        var clone = $(".add-form-wrap").eq(-2).clone(true);
+        $("li#way-list-wrapper-new").append(clone);
       }
 
       function combineWayListWrapper(event, ui) {
