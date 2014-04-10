@@ -12,8 +12,6 @@ li id="status-#{item.id}" class="status"
           - else
             == link_to "Delete Image", "#", title: "delete-image", class: "delete-image-btn"
 
-    - when :number
-      - # don't display it
     - else
       span class="#{field}-field"
         == item.send field
@@ -21,8 +19,9 @@ li id="status-#{item.id}" class="status"
   - if can? :manage, item
     = render "recipes/edit_form", item: item
 
-li.way-list-wrapper id="way-list-wrapper-#{item.id}"
-  ul.way-list.linked-sortable
-    - @recipe.ways.where(number: item.position).each do |way|
-      == render "recipes/item", item: way
-  == render "recipes/add_form", item: Way.new, opts: {number: item.position}
+- WaySet.next_to_status(item).tap do |way_set|
+  li.way-list-wrapper id="way-list-wrapper-#{item.id}" data-id="#{way_set.id}"
+    ul.way-list.linked-sortable
+      - way_set.ways.each do |way|
+        == render "recipes/item", item: way
+    == render "recipes/add_form", item: Way.new, opts: {way_set_id: item.position}

@@ -4,7 +4,7 @@ require "cancan/matchers"
 describe "User ability" do
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
-  let(:recipe){user.recipes.create}
+  let(:recipe){FactoryGirl.create :recipe, user: user}
 
   subject(:ability){Ability.new user}
   context "when is the admin of the recipe" do
@@ -26,7 +26,7 @@ describe "User ability" do
   end
   context "when isn't the admin of the recipe" do
     let(:other){FactoryGirl.create :user}
-    let(:recipe){other.recipes.create}
+    let(:recipe){FactoryGirl.create :recipe, user: other}
     let(:status){Status.create recipe: recipe}
     let(:way){Way.create recipe: recipe}
     let(:material){Material.create recipe: recipe}

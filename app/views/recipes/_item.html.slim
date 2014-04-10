@@ -10,7 +10,7 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
           - else
             == link_to "Delete Image", "#", title: "delete-image", class: "delete-image-btn"
 
-    - when :number
+    - when :prev_status_position
       - # don't display it
     - else
       span class="#{field}-field"

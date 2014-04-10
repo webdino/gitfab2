@@ -121,6 +121,15 @@
               refreshStatusIndex(event, ui);
             }
           },
+          stop        : function(event, ui) {
+            var new_position = $("section#making .status").index(ui.item) + 1;
+            $.ajax({
+              url: $(ui.item).find("form").attr("action"),
+              type: "PATCH",
+              dataType: "json",
+              data: {target: "position", position: new_position}
+            });
+          },
         });
         $(".sortable").disableSelection();
 
@@ -134,6 +143,15 @@
           update      : function(event, ui) {
             $(".linked-sortable").each( function() {
               refreshWayPlaceholder(event, ui);
+            });
+          },
+          stop      : function(event, ui) {
+            var way_set_id = $(ui.item).closest(".way_set").attr("data-id");
+            $.ajax({
+              url: $(ui.item).find("form").attr("action"),
+              type: "PATCH",
+              dataType: "json",
+              data: {target: "prev_status_position", position: way_set_id}
             });
           },
         });

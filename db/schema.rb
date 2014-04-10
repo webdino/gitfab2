@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409084232) do
+ActiveRecord::Schema.define(version: 20140410081832) do
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"
@@ -202,12 +202,21 @@ ActiveRecord::Schema.define(version: 20140409084232) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
+  create_table "way_sets", force: true do |t|
+    t.integer  "recipe_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "way_sets", ["recipe_id"], name: "index_way_sets_on_recipe_id", using: :btree
+
   create_table "ways", force: true do |t|
     t.string   "filename"
     t.string   "name"
     t.string   "photo"
     t.integer  "recipe_id"
-    t.integer  "number"
+    t.integer  "way_set_id"
     t.text     "description"
     t.integer  "position"
     t.datetime "created_at"
@@ -215,5 +224,6 @@ ActiveRecord::Schema.define(version: 20140409084232) do
   end
 
   add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
+  add_index "ways", ["way_set_id"], name: "index_ways_on_way_set_id", using: :btree
 
 end

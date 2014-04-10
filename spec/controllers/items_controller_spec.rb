@@ -1,10 +1,9 @@
 require "spec_helper"
 
-#["status", "material", "tool", "way"].each do |klass|
-["usage"].each do |klass|
+["status", "material", "tool", "way", "usage"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
     disconnect_sunspot
-#    render_views
+    render_views
 
     let(:user1){FactoryGirl.create :user}
     let(:user2){FactoryGirl.create :user}
@@ -44,6 +43,22 @@ require "spec_helper"
     end
 
     describe "PATCH update" do
+      context "when updating position" do
+        let(:first_item){recipe1.send(klass.pluralize).first}
+        let(:pos){3}
+        before do
+          FactoryGirl.create_list klass, 3, recipe_id: recipe1.id
+          controller.stub(:current_user).and_return user1
+          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+            id: first_item.id, target: "position", position: pos
+        end
+        subject{first_item.reload}
+        its(:position){should be pos}
+        describe "response" do
+          subject{response}
+          it_behaves_like "success"
+        end
+      end
       context "with owner" do
         before do
           controller.stub(:current_user).and_return user1

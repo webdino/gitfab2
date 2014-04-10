@@ -34,6 +34,7 @@ class Recipe < ActiveRecord::Base
   has_many :materials, dependent: :destroy
   has_many :statuses, dependent: :destroy
   has_many :tools, dependent: :destroy
+  has_many :way_sets, dependent: :destroy
   has_many :ways, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :recipe_tags, dependent: :destroy
