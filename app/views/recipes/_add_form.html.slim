@@ -7,8 +7,8 @@ div class="add-form-wrap"
       - case field
       - when :photo
         = f.file_field field, class: "add-photo"
-      - when :number
-        = f.hidden_field field, value: opts[:number]
+      - when :way_set_id
+        = f.hidden_field field, value: opts[:way_set_id]
       - when :description
         = f.text_area field
       - else
