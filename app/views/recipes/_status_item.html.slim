@@ -1,5 +1,7 @@
-li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.underscore}"
-  - (item.class)::UPDATABLE_COLUMNS.each do |field|
+li id="status-#{item.id}" class="status"
+  span class="index-field"
+    == "Status #{item.position}"
+  - Status::UPDATABLE_COLUMNS.each do |field|
     - case field
     - when :photo
       span class="#{field}-field"
@@ -18,3 +20,9 @@ li id="#{item.class.name.underscore}-#{item.id}" class="#{item.class.name.unders
 
   - if can? :manage, item
     = render "recipes/edit_form", item: item
+
+li.way-list-wrapper id="way-list-wrapper-#{item.id}"
+  ul.way-list.linked-sortable
+    - @recipe.ways.where(number: item.position).each do |way|
+      == render "recipes/item", item: way
+  == render "recipes/add_form", item: Way.new, opts: {number: item.position}
