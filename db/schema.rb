@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410081832) do
+ActiveRecord::Schema.define(version: 20140411071215) do
+
+  create_table "collaborations", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "recipe_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "collaborations", ["recipe_id"], name: "index_collaborations_on_recipe_id", using: :btree
+  add_index "collaborations", ["user_id"], name: "index_collaborations_on_user_id", using: :btree
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"

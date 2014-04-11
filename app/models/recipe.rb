@@ -41,6 +41,8 @@ class Recipe < ActiveRecord::Base
   has_many :tags, through: :recipe_tags
   has_many :post_attachments, dependent: :destroy
   has_many :usages, dependent: :destroy
+  has_many :collaborators, through: :collaborations, source: :user
+  has_many :collaborations, foreign_key: :recipe_id, dependent: :destroy
 
   accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
 

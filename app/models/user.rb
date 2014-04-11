@@ -13,8 +13,10 @@ class User < ActiveRecord::Base
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
   has_many :star, foreign_key: :user_id
   has_many :starred_recipes, through: :star, source: :recipe
-  has_many :memberships, foreign_key: :user_id
+  has_many :memberships, foreign_key: :user_id, dependent: :destroy
   has_many :groups, through: :memberships
+  has_many :collaborating_recipes, through: :collaborations, source: :recipe
+  has_many :collaborations, foreign_key: :user_id, dependent: :destroy
 
   after_save :ensure_dir_exist!
 
@@ -30,9 +32,17 @@ class User < ActiveRecord::Base
     self == recipe.user
   end
 
+  def is_collaborator_of? recipe
+    recipe.collaborators.include? self
+  end
+
   def is_creator_of? group
     return false unless group
     self == group.creator
+  end
+
+  def can_manage? recipe
+    is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member_of?(recipe.group)
   end
 
   [:admin, :editor, :member].each do |role|
