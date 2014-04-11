@@ -4,17 +4,6 @@ class Ability
   def initialize user
     user ||= User.new
     can :manage, User, id: user.id
-    can :manage, Recipe do |recipe|
-      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
-    end
-    can :manage, Status do |status|
-      recipe = status.recipe
-      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
-    end
-    can :manage, Material do |material|
-      recipe = material.recipe
-      user.is_owner_of?(recipe) || user.is_member_of?(recipe.group)
-    end
     can :manage, Tool
     can :manage, Way
     can :manage, Membership, Membership do |membership|
@@ -23,11 +12,23 @@ class Ability
     can :manage, Usage do
       user.persisted?
     end
+    can :manage, Recipe do |recipe|
+      user.can_manage? recipe
+    end
+    can :manage, Status do |status|
+      user.can_manage? status.recipe
+    end
+    can :manage, Material do |material|
+      user.can_manage? material.recipe
+    end
     can :manage, Post do |post|
-      user.is_owner_of?(post.recipe) || user.is_member_of?(post.recipe.group)
+      user.can_manage? post.recipe
     end
     can :manage, PostAttachment do |pa|
-      user.is_owner_of?(pa.recipe) || user.is_member_of?(pa.recipe.group)
+      user.can_manage? pa.recipe
+    end
+    can :manage, Collaboration do |collabo|
+      user.can_manage? collabo.recipe
     end
     can :create, Tag
     can [:create, :destroy], RecipeTag

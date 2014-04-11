@@ -2,6 +2,7 @@ require "spec_helper"
 require "cancan/matchers"
 
 describe "User ability" do
+  disconnect_sunspot
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
   let(:recipe){FactoryGirl.create :recipe, user: user}
@@ -71,6 +72,18 @@ describe "User ability" do
     let(:group){FactoryGirl.create :group, creator: other}
     describe "doesn't let user manage the memberships of the group" do
       it{should_not be_able_to :manage, group.memberships.find_by(user_id: other.id)}
+    end
+  end
+
+  context "when is a collaborator of a group" do
+    let(:other){FactoryGirl.create :user}
+    subject(:ability){Ability.new other}
+    describe "lets user manage the memberships of the group" do
+      before{recipe.collaborators << other}
+      it{should be_able_to :manage, recipe}
+    end
+    describe "doesn't let user manage his/her memberships of the group" do
+      it{should_not be_able_to :manage, recipe}
     end
   end
 end
