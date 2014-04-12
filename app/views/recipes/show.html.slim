@@ -232,9 +232,10 @@
 
       $(document).on "ajax:success", "#new_tag", (event, data, status) ->
         $(event.target).siblings("#tag-list").append data.html
+        $(event.target).find("#tag_name").val ""
 
-      $(document).on "ajax:success", ".tag-delete-btn", (event, data, status) ->
-        $("#tag-list #tag-#{data.id}").remove()
+      $(document).on "click", ".tag-delete-btn", (event, data) ->
+        $(this).closest(".tag").remove()
 
       $(document).on "click", "#slideshow-btn", (event, data) ->
         event.preventDefault()

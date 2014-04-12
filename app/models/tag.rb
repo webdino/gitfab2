@@ -1,6 +1,19 @@
-class Tag < ActiveRecord::Base
+class Tag
   UPDATABLE_COLUMNS = [:name]
-  has_many :recipe_tags
-  has_many :recipes, through: :recipe_tags
-  validates :name, presence: true, uniqueness: true
+
+  include ActiveModel::Validations
+  include ActiveModel::Conversion
+  extend ActiveModel::Naming
+
+  attr_accessor :name
+
+  def initialize attributes = {}
+    attributes.each do |name, value|
+      send "#{name}=", value
+    end
+  end
+
+  def persisted?
+    false
+  end
 end

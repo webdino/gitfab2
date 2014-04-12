@@ -1,19 +1,25 @@
 class TagsController < ApplicationController
   before_action :load_recipe
+  before_action :load_tag, only: :destroy
 
   def create
-    @tag = Tag.find_or_create_by name: tag_params[:name]
-    @recipe.tags << @tag
+    @recipe.tag_list.add tag_params[:name]
+    @recipe.save
+    @tag = @recipe.tags.find_by name: tag_params[:name]
   end
 
   def destroy
-    @tag = Tag.find params[:id]
-    @recipe.tags.destroy @tag
+    @recipe.tag_list.remove @tag.name
+    @recipe.save
   end
 
   private
   def tag_params
     params.require(:tag).permit Tag::UPDATABLE_COLUMNS
+  end
+
+  def load_tag
+    @tag = @recipe.tags.find params[:id]
   end
 
   def load_recipe

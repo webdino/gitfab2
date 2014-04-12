@@ -5,14 +5,13 @@ class Recipe < ActiveRecord::Base
     statuses_attributes:    [:id, :description, :photo, :_destroy],
     ways_attributes:        [:id, :description, :photo, :_destroy],
     usages_attributes:      [:id, :description, :photo],
-    recipe_tags_attributes: [:id, :tag_id, :recipe_id],
-    tag_ids: []
   ]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :ways, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
 
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
+  acts_as_taggable
 
   mount_uploader :photo, PhotoUploader
 
@@ -37,14 +36,12 @@ class Recipe < ActiveRecord::Base
   has_many :way_sets, dependent: :destroy
   has_many :ways, dependent: :destroy
   has_many :posts, dependent: :destroy
-  has_many :recipe_tags, dependent: :destroy
-  has_many :tags, through: :recipe_tags
   has_many :post_attachments, dependent: :destroy
   has_many :usages, dependent: :destroy
   has_many :collaborators, through: :collaborations, source: :user
   has_many :collaborations, foreign_key: :recipe_id, dependent: :destroy
 
-  accepts_nested_attributes_for :materials, :tools, :statuses, :ways, :recipe_tags, allow_destroy: true
+  accepts_nested_attributes_for :materials, :tools, :statuses, :ways, allow_destroy: true
 
   after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
