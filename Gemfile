@@ -35,7 +35,8 @@ gem "friendly_id", "~> 5.0.0"
 gem "tinymce-rails"
 gem "tinymce-rails-imageupload", "~> 4.0.0.beta"
 gem "jquery-ui-rails"
-gem 'kaminari'
+gem "kaminari"
+gem "acts-as-taggable-on", "~> 3.1.0"
 
 group :doc do
   gem "sdoc", require: false

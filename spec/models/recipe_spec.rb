@@ -150,10 +150,10 @@ describe Recipe do
 
   describe "can have tags" do
     before do
-      recipe.tags << Tag.new(name: "foo")
-      recipe.tags << Tag.new(name: "bar")
+      recipe.tag_list = ["foo", "bar"]
+      recipe.save
     end
-    subject{recipe}
+    subject{recipe.reload}
     its(:tags){should have(2).items}
   end
 end

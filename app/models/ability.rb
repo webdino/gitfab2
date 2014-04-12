@@ -30,8 +30,6 @@ class Ability
     can :manage, Collaboration do |collabo|
       user.can_manage? collabo.recipe
     end
-    can :create, Tag
-    can [:create, :destroy], RecipeTag
     can :read, :all
   end
 end
