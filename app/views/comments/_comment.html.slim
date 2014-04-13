@@ -1,0 +1,8 @@
+article.comment
+  p
+    == comment.title
+  p
+    == comment.comment
+  - if can? :destroy, comment
+    p
+      == link_to "delete", comment, method: :delete, remote: true, class: "delete-btn"

@@ -29,6 +29,7 @@ GEM
       actionpack (>= 3, < 5)
       activerecord (>= 3, < 5)
       activesupport (>= 3, < 5)
+    acts_as_commentable (4.0.1)
     acts_as_list (0.4.0)
       activerecord (>= 3.0)
     arel (4.0.2)
@@ -352,6 +353,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
+  acts_as_commentable
   acts_as_list
   better_errors
   cancancan

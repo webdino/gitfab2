@@ -11,7 +11,9 @@ class Recipe < ActiveRecord::Base
 
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders]
+
   acts_as_taggable
+  acts_as_commentable
 
   mount_uploader :photo, PhotoUploader
 

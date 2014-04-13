@@ -84,11 +84,16 @@ class RecipesController < ApplicationController
   end
 
   def load_owner
-    owner_name = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = if User.exists? owner_name
-      User.find owner_name
-    elsif Group.exists? owner_name
-      Group.find owner_name
+    if user_id = params[:user_id]
+      @owner = User.find user_id
+    elsif group_id = params[:group_id]
+      @owner = Group.find group_id
+    elsif owner_name = params[:owner_name]
+      @owner = if User.exists? owner_name
+        User.find owner_name
+      elsif Group.exists? owner_name
+        Group.find owner_name
+      end
     end
   end
 
