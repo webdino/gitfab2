@@ -8,3 +8,25 @@ article#posts-show
 
   footer
     = link_to "Edit", [:edit, @owner, @recipe, @post]
+
+section#comments
+  h1
+    'Comments
+  == form_for Comment.new, remote: true do |f|
+    p == f.text_field :title
+    p == f.text_area :comment
+    == f.hidden_field :commentable_type, value: @post.class.name
+    == f.hidden_field :commentable_id, value: @post.id
+    p == f.submit "Add Comment"
+
+  - @post.comments.created_at_desc.each do |comment|
+    == render "comments/comment", comment: comment
+
+- content_for :bottom
+  coffee:
+    $(document).on "click", ".comment .delete-btn", ->
+      $(this).closest("article").remove()
+
+    $(document).on "ajax:success", "#new_comment", (e, data) ->
+      $("#new_comment").after data.html
+      $("#new_comment").find(":text, textarea").val ""

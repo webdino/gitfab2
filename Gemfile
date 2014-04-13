@@ -37,6 +37,7 @@ gem "tinymce-rails-imageupload", "~> 4.0.0.beta"
 gem "jquery-ui-rails"
 gem "kaminari"
 gem "acts-as-taggable-on", "~> 3.1.0"
+gem "acts_as_commentable"
 
 group :doc do
   gem "sdoc", require: false

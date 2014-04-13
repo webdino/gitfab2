@@ -1,4 +1,5 @@
 Gitfab2::Application.routes.draw do
+
   concern :owner do
     resources :recipes do
       resources :statuses
@@ -21,6 +22,7 @@ Gitfab2::Application.routes.draw do
   match "search" => "global_recipes#index", via: :get
 
   resources :tags
+  resources :comments
   resources :users, concerns: :owner
   resources :groups, concerns: :owner do
     resources :memberships

@@ -17,14 +17,14 @@ describe RecipesController do
       context "(user)" do
         before do
           controller.stub(:current_user).and_return user1
-          get :new, user_id: user1.id
+          get :new, user_id: user1.name
         end
         it_behaves_like "success"
       end
       context "(group)" do
         before do
           controller.stub(:current_user).and_return user1
-          get :new, group_id: group1.id
+          get :new, group_id: group1.name
         end
         it_behaves_like "success"
       end
@@ -33,14 +33,14 @@ describe RecipesController do
       context "(user)" do
         before do
           controller.stub(:current_user).and_return user2
-          get :new, user_id: user1.id
+          get :new, user_id: user1.name
         end
         it_behaves_like "unauthorized"
       end
       context "(group)" do
         before do
           controller.stub(:current_user).and_return user2
-          get :new, group_id: group1.id
+          get :new, group_id: group1.name
         end
         it_behaves_like "unauthorized"
       end
@@ -52,14 +52,14 @@ describe RecipesController do
       context "(user)" do
         before do
           controller.stub(:current_user).and_return user1
-          get :edit, user_id: user1.id, id: recipe1.id
+          get :edit, user_id: user1.name, id: recipe1.id
         end
         it_behaves_like "success"
       end
       context "(group)" do
         before do
           controller.stub(:current_user).and_return user1
-          get :edit, group_id: group1.id, id: g_recipe1.id
+          get :edit, group_id: group1.name, id: g_recipe1.id
         end
         it_behaves_like "success"
       end
@@ -68,14 +68,14 @@ describe RecipesController do
       context "(user)" do
         before do
           controller.stub(:current_user).and_return user2
-          get :edit, user_id: user1.id, id: recipe1.id
+          get :edit, user_id: user1.name, id: recipe1.id
         end
         it_behaves_like "unauthorized"
       end
       context "(group)" do
         before do
           controller.stub(:current_user).and_return user2
-          get :edit, group_id: group1.id, id: g_recipe1.id
+          get :edit, group_id: group1.name, id: g_recipe1.id
         end
         it_behaves_like "unauthorized"
       end
@@ -88,14 +88,14 @@ describe RecipesController do
         context "(user)" do
           before do
             controller.stub(:current_user).and_return user1
-            post :create, user_id: user1.id, recipe: valid_attributes
+            post :create, user_id: user1.name, recipe: valid_attributes
           end
           it_behaves_like "redirected"
         end
         context "(group)" do
           before do
             controller.stub(:current_user).and_return user1
-            post :create, group_id: group1.id, recipe: valid_attributes
+            post :create, group_id: group1.name, recipe: valid_attributes
           end
           it_behaves_like "redirected"
         end
@@ -104,14 +104,14 @@ describe RecipesController do
         context "(user)" do
           before do
             controller.stub(:current_user).and_return user2
-            post :create, user_id: user1.id, recipe: valid_attributes
+            post :create, user_id: user1.name, recipe: valid_attributes
           end
           it_behaves_like "unauthorized"
         end
         context "(group)" do
           before do
             controller.stub(:current_user).and_return user2
-            post :create, group_id: group1.id, recipe: valid_attributes
+            post :create, group_id: group1.name, recipe: valid_attributes
           end
           it_behaves_like "unauthorized"
         end
@@ -122,14 +122,14 @@ describe RecipesController do
         context "(user)" do
           before do
             controller.stub(:current_user).and_return user1
-            post :create, user_id: user1.id, base_recipe_id: recipe1.id
+            post :create, user_id: user1.name, base_recipe_id: recipe1.id
           end
           it_behaves_like "redirected"
         end
         context "(group)" do
           before do
             controller.stub(:current_user).and_return user1
-            post :create, group_id: group1.id, base_recipe_id: recipe1.id
+            post :create, group_id: group1.name, base_recipe_id: recipe1.id
           end
           it_behaves_like "redirected"
         end

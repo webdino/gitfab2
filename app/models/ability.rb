@@ -30,6 +30,12 @@ class Ability
     can :manage, Collaboration do |collabo|
       user.can_manage? collabo.recipe
     end
+    can :create, Comment do
+      user.persisted?
+    end
+    can [:update, :destroy], Comment do |comment|
+      comment.user == user || (can? :manage, comment.commentable)
+    end
     can :read, :all
   end
 end
