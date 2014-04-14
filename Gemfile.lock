@@ -32,6 +32,7 @@ GEM
     acts_as_commentable (4.0.1)
     acts_as_list (0.4.0)
       activerecord (>= 3.0)
+    acts_as_votable (0.8.0)
     arel (4.0.2)
     atomic (1.1.16)
     bcrypt (3.1.7)
@@ -355,6 +356,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
   acts_as_list
+  acts_as_votable (~> 0.8.0)
   better_errors
   cancancan
   capistrano (~> 3.1.0)

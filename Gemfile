@@ -38,6 +38,7 @@ gem "jquery-ui-rails"
 gem "kaminari"
 gem "acts-as-taggable-on", "~> 3.1.0"
 gem "acts_as_commentable"
+gem "acts_as_votable", "~> 0.8.0"
 
 group :doc do
   gem "sdoc", require: false

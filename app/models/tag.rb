@@ -7,6 +7,8 @@ class Tag
 
   attr_accessor :name
 
+  validates :name, presence: true
+
   def initialize attributes = {}
     attributes.each do |name, value|
       send "#{name}=", value
