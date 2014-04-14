@@ -4,10 +4,10 @@
       'Title
     dd
       == f.text_field :title, id: "post-title"
-    dt
-      'Body
-    dd
-      == f.text_area :body, id: :editor, class: :tinymce, rows: 40, cols: 70
+    / dt
+      / 'Body
+    / dd
+  == f.text_area :body, id: :editor, class: :tinymce, rows: 40, cols: 70
   footer
     == f.submit "Save", id: "submit"
 
@@ -22,12 +22,13 @@
       uploadimage_form_url: url,
       toolbar1: "bold italic forecolor backcolor | bullist numlist | link uploadimage media insertfile |  alignleft aligncenter alignright | hr",
       image_advtab: true,
+
       plugins: [
         "advlist autolink lists link image charmap hr anchor pagebreak",
         "searchreplace wordcount visualblocks visualchars code fullscreen",
         "insertdatetime media nonbreaking save table contextmenu directionality",
         "paste textcolor uploadimage"
-      ]
+      ],
     });
 
   coffee:

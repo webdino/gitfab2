@@ -1,5 +1,9 @@
-== render "links"
+
 main#posts-index
+  == render "basic_information"
+  == render "utils"
+  == render "links"
+
   - @posts.each do |post|
     article.post
       h1.post-title

@@ -1,0 +1,105 @@
+@import "mixins/clearfix.css.scss";
+#utils {
+  float: right;
+  width: 240px;
+  height: 800px;
+  background: #EEE;
+  #tooltips {
+    @include cf;
+    width: 100%;
+    height: 120px;
+    #slide-show-button {
+      float: left;
+      margin: 0;
+      width: 120px;
+      height: 120px;
+      background-image: url("http://placehold.it/120x120");
+    }
+    #fork-button {
+      float: left;
+      margin: 0;
+      width: 120px;
+      height: 120px;
+      background-image: url("http://placehold.it/120x120");
+      display: block;
+    }
+    #fork-destinations {
+      display: none;
+    }
+  }
+  #user-id {
+    @include cf;
+    padding: 20px 20px;
+    width: 100%;
+    height: 100px;
+    .thumbnail {
+      @include cf;
+      float: left;
+      width: 40px;
+      height: 40px;
+      img {
+        margin:0;
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    .screen-name {
+      @include cf;
+      float: left;
+      margin: 15px 10px;
+      width: 160px;
+      height: 30px;
+      font-size: 18px;
+    }
+    #created-datetime {
+      display: block;
+      margin: 15px 0;
+      width: 100%;
+      height: 24px;
+      font-size: 12px;
+    }
+    #last-updated-datetime {
+      display: block;
+      margin-top: 40px;
+      width: 100%;
+      height: 24px;
+      font-size: 12px;
+    }
+  }
+  #tool-options {
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+  #tags {
+    padding: 20px;
+    width: 100%;
+    height: auto;
+    min-height: 40px;
+    #tag-list {
+      margin: 10px 0;
+      .tag {
+        border-radius: 10px;
+        background-color: #ccc;
+        display: inline-block;
+        padding: 2px 4px;
+        margin: 0 4px;
+      }
+      .tag-delete-btn {
+        background: #fff;
+        border-radius: 50%;
+        padding: 0 4px;
+        margin-right: 4px;
+      }
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}

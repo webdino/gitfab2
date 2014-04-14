@@ -1,8 +1,15 @@
+@import "mixins/clearfix.css.scss";
 #posts-new {
-  width: 400px;
+  width: 960px;
+
+  h1{
+    width: 640px;
+    margin: 20px 10px;
+    font-size: 32px;
+  }
 
   #post-article {
-    border: 1px solid gray;
+    width: 640px;
     padding: 0px 10px 10px 10px;
   }
 }

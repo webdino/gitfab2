@@ -1,5 +1,9 @@
-== render "links"
+
 article#posts-show
+  == render "basic_information"
+  == render "utils"
+  == render "links"
+
   h1#post-title
     = @post.title
 

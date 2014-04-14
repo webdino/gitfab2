@@ -2,6 +2,8 @@
   dt {
     display: block;
     padding: 0px 0 5px 0px;
+    font-size: 32px;
+    font-weight: 700;
   }
 
   dd {
@@ -11,13 +13,18 @@
   }
 
   #post-title {
-    width: 90%;
-    background-color: #eee;
+    width: 640px;
     border: 1px solid black;
+    font-size: 32px;
+    font-weight: 700;
   }
 
   textarea {
     width: 100%;
+    img {
+      width: 640px;
+      height: auto;
+    }
   }
 
   footer {
