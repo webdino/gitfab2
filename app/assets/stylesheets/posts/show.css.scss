@@ -1,7 +1,7 @@
 #posts-show {
+
   margin: 40px 0px 0px 10px;
-  width: 400px;
-  border: 1px solid gray;
+  width: 960px;
   padding: 10px;
   #post-attachment {
     img {
@@ -9,12 +9,17 @@
     }
   }
   #post-title {
+    width: 720px;
     padding: 15px 0px;
+    font-size: 32px;
   }
   #post-body {
+    width: 720px;
+    font-size: 14px;
     white-space: pre-wrap;
   }
   footer {
+    width: 700px;
     margin-top: 20px;
     text-align: right;
     margin-bottom: 5px;

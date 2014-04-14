@@ -1,7 +1,9 @@
-== render "links"
-main#posts-new
-  h1
-    'New post
 
+main#posts-new
+  == render "basic_information"
+  == render "utils"
+  == render "links"
+  h1
+    'New Journal
   article#post-article
     == render "form"

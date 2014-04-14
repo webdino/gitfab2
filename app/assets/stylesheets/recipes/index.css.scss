@@ -139,7 +139,7 @@
         padding: 10px;
         box-sizing: border-box;
         width: 100px;
-        height: 40px;
+        height: 20px;
         text-align: center;
         font-size: 18px;
         font-weight: 700;
@@ -156,7 +156,8 @@
     }
     .recipe-item {
       width: 320px;
-      height: 260px;
+      height: auto;
+      min-height: 260px;
       float: left;
       margin: 40px 0 20px 20px;
       color: #FFF;
@@ -174,7 +175,8 @@
         display: block;
         padding-top: 8px;
         width: 320px;
-        height: 40px;
+        height: auto;
+        min-height: 40px;
         a {
           color: #4183C4;
           text-decoration: none;

@@ -1,0 +1,10 @@
+section#basic-information
+  h1
+    == @recipe.title
+  .visual style="background-image: url('#{@recipe.photo}')"
+
+  section.description
+    h1
+      'Abstract
+    .text
+      == @recipe.description

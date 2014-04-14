@@ -53,7 +53,7 @@
         ul#tag-list.item-list
           - @recipe.tags.each do |tag|
             == render "tags/tag", tag: tag, recipe: @recipe
-        == render "tag_form", recipe: @recipe
+        == render "recipes/tag_form", recipe: @recipe
 
 
     section#materials
