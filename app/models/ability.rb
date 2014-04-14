@@ -36,6 +36,12 @@ class Ability
     can [:update, :destroy], Comment do |comment|
       comment.user == user || (can? :manage, comment.commentable)
     end
+    can :create, Like do |like|
+      user.persisted?
+    end
+    can :destroy, Like do |like|
+      like.voter_id == user.id
+    end
     can :read, :all
   end
 end

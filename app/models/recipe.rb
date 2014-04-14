@@ -14,6 +14,7 @@ class Recipe < ActiveRecord::Base
 
   acts_as_taggable
   acts_as_commentable
+  acts_as_votable
 
   mount_uploader :photo, PhotoUploader
 
@@ -30,8 +31,6 @@ class Recipe < ActiveRecord::Base
   belongs_to :group
   has_many :contributor_recipes, foreign_key: :recipe_id, dependent: :destroy
   has_many :contributors, through: :contributor_recipes
-  has_many :stars, foreign_key: :recipe_id, dependent: :destroy
-  has_many :raters, through: :star
   has_many :materials, dependent: :destroy
   has_many :statuses, dependent: :destroy
   has_many :tools, dependent: :destroy

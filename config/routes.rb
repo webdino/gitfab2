@@ -23,6 +23,7 @@ Gitfab2::Application.routes.draw do
 
   resources :tags
   resources :comments
+  resources :likes
   resources :users, concerns: :owner
   resources :groups, concerns: :owner do
     resources :memberships

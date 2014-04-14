@@ -1,7 +1,10 @@
 #recipes-show
   p
     == link_to "posts", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
+    '|
     == link_to "collaborators", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name)
+    '|
+    == toggle_star_link_for @recipe
   p id="notice" =notice
 
   main
