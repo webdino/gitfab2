@@ -1,7 +1,7 @@
 class WaysController < ItemsController
   authorize_resource :way
 
-  after_action :add_contributor, [:create, :update, :destroy]
+  after_action :add_contributor, only: [:create, :update, :destroy]
 
   private
   def add_contributor
