@@ -84,6 +84,7 @@ section#recipes-index
                 li.recipe-item
                   == link_to [@owner, recipe] do
                     p.cover style="background-image: url('#{recipe.photo.url}')"
+                      == toggle_star_link_for recipe
                   span.summary
                     span.title
                       == link_to recipe.title, [@owner, recipe]
@@ -110,6 +111,7 @@ section#recipes-index
                   li.recipe-item
                     == link_to [recipe.owner, recipe] do
                       p.cover style="background-image: url('#{recipe.photo.url}')"
+                        == toggle_star_link_for recipe
                     span.summary
                       span.title
                         == link_to recipe.title, [recipe.owner, recipe]
@@ -135,6 +137,7 @@ section#recipes-index
                   li.recipe-item
                     == link_to [recipe.owner, recipe] do
                       p.cover style="background-image: url('#{recipe.photo.url}')"
+                        == toggle_star_link_for recipe
                     span.summary
                       span.title
                         == link_to recipe.title, [recipe.owner, recipe]
