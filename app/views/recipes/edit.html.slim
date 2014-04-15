@@ -1,0 +1,11 @@
+section#recipes-edit
+  h1
+    'Editing Recipe
+  == render  "basic_information"
+  == render  "utils"
+  == render  "materials"
+  == render  "tools"
+  == render  "making"
+
+  == link_to "Show", [@owner, @recipe]
+  == link_to "Back", [@owner, :recipes]

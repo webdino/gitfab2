@@ -1,0 +1,28 @@
+section#utils
+  section#tooltips
+    #save-btn
+      == link_to "Save Project", "", title: "Save button"
+    #delete-btn
+      == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
+  section#user-id
+    .thumbnail
+      - if @owner.avatar.present?
+        == image_tag @owner.avatar
+    .screen-name
+      == @owner.name
+    time#created-datetime datetime = @recipe.created_at
+      'created date
+      == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+    time#last-updated-datetime datetime = @recipe.updated_at
+      'updated date
+      == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+  section#tool-options
+    h1
+      'Tool Options
+  section#tags
+    h1
+      'Tags
+    ul#tag-list.item-list
+      - @recipe.tags.each do |tag|
+        == render "tags/tag", tag: tag, recipe: @recipe
+    == render "recipes/tag_form", recipe: @recipe
