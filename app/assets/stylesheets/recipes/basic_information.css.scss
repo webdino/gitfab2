@@ -1,19 +1,13 @@
 @import "mixins/clearfix.css.scss";
 #basic-information {
-  float: left;
-  display: block;
-  width: 720px;
   height: auto;
   h1 {
-    display:block;
     margin-top: 20px;
-    width: 100%;
     height: 40px;
     font-size: 36px;
     font-weight: bold;
   }
   .visual {
-    float: left;
     margin: auto;
     width: 480px;
     height: 360px;
@@ -21,8 +15,7 @@
     background-repeat: no-repeat;
   }
   .description {
-    float: right;
-    padding: 5px 20px 0 20px;
+    padding: 0 20px 0;
     width: 200px;
     height: 360px;
     font-size: 14px;

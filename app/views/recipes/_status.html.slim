@@ -1,0 +1,15 @@
+li.status
+  .photo
+    == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+  .summary
+    span.index-field
+      == "Status #{item.position}"
+    .description
+      == item.description
+
+- WaySet.next_to_status(item).tap do |way_set|
+  .way-set-wrapper
+    .arrow
+    ul.way-set
+      - way_set.ways.each do |way|
+        == render "recipes/way", item: way

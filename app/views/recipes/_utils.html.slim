@@ -1,9 +1,23 @@
-section#utils
+section#recipes-utils
   section#tooltips
     #save-btn
       == link_to "Save Project", "", title: "Save button"
     #delete-btn
       == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
+    #slide-show-button
+      p
+        == link_to "Slideshow", "#", id: "slideshow-btn"
+    #fork-button
+      == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
+    #fork-destinations
+      == form_for [current_user, current_user.recipes.new] do |f|
+        == hidden_field_tag :base_recipe_id, recipe.id
+        == f.submit "Fork for #{current_user.name}"
+
+      - current_user.groups.each do |group|
+        == form_for [group, group.recipes.new] do |f|
+          == hidden_field_tag :base_recipe_id, recipe.id
+          == f.submit "Fork for #{group.name}"
   section#user-id
     .thumbnail
       - if @owner.avatar.present?

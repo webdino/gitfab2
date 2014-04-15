@@ -3,7 +3,7 @@ module Gitfab::ActsAsItemInRecipe
   included do
     acts_as_list scope: :recipe
     scope :sorted_by_position, ->{order :position}
-    mount_uploader :photo, PhotoUploader
+    mount_uploader :photo, ItemPhotoUploader
 
     belongs_to :recipe
 

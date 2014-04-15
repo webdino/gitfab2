@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  layout "dashboard"
+  layout "recipe"
 
   before_action :load_owner
   before_action :build_recipe, only: [:new, :create]
