@@ -40,6 +40,11 @@ class User < ActiveRecord::Base
     self == group.creator
   end
 
+  def is_admin_of? group
+    return false unless group
+    group.admins.include? self
+  end
+
   def can_manage? recipe
     is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member_of?(recipe.group)
   end

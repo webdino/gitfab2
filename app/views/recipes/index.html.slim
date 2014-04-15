@@ -21,7 +21,9 @@ section#recipes-index
             'followers
         #starred.card
           .count
-            == @owner.get_voted(Recipe).count
+            '5
+            / TODO: @ownerのRecipeがスターされた数を表示
+            / == @owner.get_voted(Recipe).count
           p
             'starred
         #following.card
@@ -30,19 +32,34 @@ section#recipes-index
             / TODO: userのfollowing数を表示
           p
             'followings
-      #teams
-        p
-          'Teams
+
+      - if @owner.class.name.downcase == "group"
+        #members
+          p
+            'Members
+          ul
+            - @owner.members.each do |member|
+              == link_to image_tag(member.avatar, class: "groups-member-avatar" , name: "#{member.name}"), [member, :recipes]
+      - else
+        #groups
+          p
+            'Groups
+          ul
+            - @owner.groups.each do |group|
+              == link_to image_tag(group.avatar, class: "users-group-avatar" , name: "#{group.name}"), [group, :recipes]
+
+
 
   section#project-pane
     .inner
       ul.tabs.tab-horisontal
         li.active
           == link_to "Project", "#", data: {tab: "#project-tab"}
-        li
-          == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
-        li
-          == link_to "Starred", "#", data: {tab: "#starred-tab"}
+        - if @owner.class.name.downcase == "user"
+          li
+            == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
+          li
+            == link_to "Starred", "#", data: {tab: "#starred-tab"}
 
       .tabs-content
         #project-tab.tabs-pane.active
@@ -52,9 +69,14 @@ section#recipes-index
                 == text_field_tag :q, (params[:q] if params[:type] == "own"), placeholder: "Search project", class: "q-field"
                 == hidden_field_tag :type, :own
                 == submit_tag "Search", class: "search-button"
-            - if @owner == current_user
-              span#create-project
-                == link_to "+Project", [:new, current_user, :recipe]
+            - if @owner.class.name.downcase == "user"
+              - if @owner == current_user
+                span#create-project
+                  == link_to "+Project", [:new, current_user, :recipe]
+            - else
+              - if current_user.is_admin_of? @owner
+                span#create-group-project
+                  == link_to "+Group Project", [:new, @owner, :recipe]
 
           .recipes
             ul.recipe-list
@@ -72,55 +94,56 @@ section#recipes-index
                     span.description
                       == recipe.description
 
+        - if @owner.class.name.downcase == "user"
 
-        #contribution-tab.tabs-pane
-          .search-bar
-            .search-box
-              == form_tag [@owner, :recipes], method: :get do
-                == text_field_tag :q, (params[:q] if params[:type] == "contributed"), placeholder: "Search project", class: "q-field"
-                == hidden_field_tag :type, :contributed
-                == submit_tag "Search", class: "search-button"
+          #contribution-tab.tabs-pane
+            .search-bar
+              .search-box
+                == form_tag [@owner, :recipes], method: :get do
+                  == text_field_tag :q, (params[:q] if params[:type] == "contributed"), placeholder: "Search project", class: "q-field"
+                  == hidden_field_tag :type, :contributed
+                  == submit_tag "Search", class: "search-button"
 
-          .recipes
-            ul.recipe-list
-              - @owner.contributing_recipes.each do |recipe|
-                li.recipe-item
-                  == link_to [recipe.owner, recipe] do
-                    p.cover style="background-image: url('#{recipe.photo.url}')"
-                  span.summary
-                    span.title
-                      == link_to recipe.title, [recipe.owner, recipe]
-                    span.avatar-thumb
-                      == link_to image_tag(recipe.owner.avatar), recipe.owner
-                    span.name
-                      == link_to recipe.owner.name, recipe.owner
-                    span.description
-                      == recipe.description
+            .recipes
+              ul.recipe-list
+                - @owner.contributing_recipes.each do |recipe|
+                  li.recipe-item
+                    == link_to [recipe.owner, recipe] do
+                      p.cover style="background-image: url('#{recipe.photo.url}')"
+                    span.summary
+                      span.title
+                        == link_to recipe.title, [recipe.owner, recipe]
+                      span.avatar-thumb
+                        == link_to image_tag(recipe.owner.avatar), recipe.owner
+                      span.name
+                        == link_to recipe.owner.name, recipe.owner
+                      span.description
+                        == recipe.description
 
 
-        #starred-tab.tabs-pane
-          .search-bar
-            .search-box
-              == form_tag [@owner, :recipes], method: :get do
-                == text_field_tag :q, (params[:q] if params[:type] == "starred"), placeholder: "Search project", class: "q-field"
-                == hidden_field_tag :type, :starred
-                == submit_tag "Search", class: "search-button"
+          #starred-tab.tabs-pane
+            .search-bar
+              .search-box
+                == form_tag [@owner, :recipes], method: :get do
+                  == text_field_tag :q, (params[:q] if params[:type] == "starred"), placeholder: "Search project", class: "q-field"
+                  == hidden_field_tag :type, :starred
+                  == submit_tag "Search", class: "search-button"
 
-          .recipes
-            ul.recipe-list
-              - @owner.get_voted(Recipe).each do |recipe|
-                li.recipe-item
-                  == link_to [recipe.owner, recipe] do
-                    p.cover style="background-image: url('#{recipe.photo.url}')"
-                  span.summary
-                    span.title
-                      == link_to recipe.title, [recipe.owner, recipe]
-                    span.avatar-thumb
-                      == link_to image_tag(recipe.owner.avatar), recipe.owner
-                    span.name
-                      == link_to recipe.owner.name, recipe.owner
-                    span.description
-                      == recipe.description
+            .recipes
+              ul.recipe-list
+                - @owner.get_voted(Recipe).each do |recipe|
+                  li.recipe-item
+                    == link_to [recipe.owner, recipe] do
+                      p.cover style="background-image: url('#{recipe.photo.url}')"
+                    span.summary
+                      span.title
+                        == link_to recipe.title, [recipe.owner, recipe]
+                      span.avatar-thumb
+                        == link_to image_tag(recipe.owner.avatar), recipe.owner
+                      span.name
+                        == link_to recipe.owner.name, recipe.owner
+                      span.description
+                        == recipe.description
 
   content_for :bottom
     javascript:
