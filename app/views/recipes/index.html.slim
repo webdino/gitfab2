@@ -21,7 +21,7 @@ section#recipes-index
             'followers
         #starred.card
           .count
-            == @owner.star.length
+            == @owner.get_voted(Recipe).count
           p
             'starred
         #following.card
@@ -108,7 +108,7 @@ section#recipes-index
 
           .recipes
             ul.recipe-list
-              - @owner.starred_recipes.each do |recipe|
+              - @owner.get_voted(Recipe).each do |recipe|
                 li.recipe-item
                   == link_to [recipe.owner, recipe] do
                     p.cover style="background-image: url('#{recipe.photo.url}')"
