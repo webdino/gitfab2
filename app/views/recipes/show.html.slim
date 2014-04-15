@@ -49,8 +49,7 @@ main#recipes-show
       'Usages
     ul#usage-list
       - @recipe.usages.each do |item|
-        == render "item", item: item
-
+        == render "usage", item: item
 
   hr
 

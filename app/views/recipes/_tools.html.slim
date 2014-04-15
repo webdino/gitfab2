@@ -1,7 +1,0 @@
-section#tools
-  h1
-    'Tools
-  ul#tool-list.sortable.item-list
-    - @recipe.tools.each do |item|
-      == render "item", item: item
-  == render "add_form", item: Tool.new if can? :manage, @recipe.tools.build
