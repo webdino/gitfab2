@@ -73,13 +73,19 @@
         }
       }
     }
-    #teams {
+    #members, #groups {
       border-top:solid 1px;
-      width:220px;
+      width: 220px;
       height: auto;
       min-height: 60px;
       font-size: 14px;
       padding: 10px 10px;
+
+      .groups-member-avatar, .users-group-avatar {
+        margin: 10px 10px 0 0;
+        max-width: 40px;
+        max-height: 40px;
+      }
     }
   }
 
@@ -139,6 +145,18 @@
         padding: 10px;
         box-sizing: border-box;
         width: 100px;
+        height: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 700;
+        background: #CCC;
+      }
+      span#create-group-project {
+        float: right;
+        margin: 10px 20px;
+        padding: 10px;
+        box-sizing: border-box;
+        width: 140px;
         height: 20px;
         text-align: center;
         font-size: 18px;
