@@ -18,3 +18,4 @@
 //= require turbolinks
 //= require_tree ./fancybox
 //= require_tree ./helpers
+//= require_tree ./dashboard
