@@ -1,7 +1,0 @@
-section#materials
-  h1
-    'Materials
-  ul#material-list.sortable.item-list
-    - @recipe.materials.each do |item|
-      == render "item", item: item
-  == render "add_form", item: Material.new if can? :manage, @recipe.materials.build
