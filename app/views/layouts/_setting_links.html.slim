@@ -1,0 +1,18 @@
+#layouts-setting-links
+  #user
+    #user-name.name
+      == image_tag current_user.avatar, id: "user-avatar", class: "avatar"
+      == current_user.name
+    ul
+      li#user-account
+        == link_to "Account", [:edit, current_user]
+      li#user-groups
+        == link_to "Groups", :groups
+  - current_user.groups.each do |group|
+    div id="#{group.name}"
+      div id="#{group.name}-name" class="name"
+        == image_tag group.avatar, id: "#{group.name}-avatar", class: "avatar"
+        == group.name
+      ul
+        li id="#{group.name}-profile"
+          == link_to "Group Profile & Members", [:edit, group]
