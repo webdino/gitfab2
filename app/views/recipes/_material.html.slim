@@ -1,0 +1,8 @@
+li.material
+  .photo
+    == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+  .summary
+    .name
+      == item.name
+    .description
+      == item.description

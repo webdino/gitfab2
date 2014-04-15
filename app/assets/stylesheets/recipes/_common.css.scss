@@ -1,0 +1,12 @@
+@import "mixins/clearfix.css.scss";
+main { 
+  section {
+    h1 {
+      margin-bottom: 20px;
+      height: 40px;
+      line-height: 1.5em;
+      font-size: 36px;
+      font-weight: bold;
+    }
+  }
+}

@@ -1,8 +1,7 @@
 @import "mixins/clearfix.css.scss";
-#utils {
-  float: right;
+#recipes-utils {
   width: 240px;
-  height: 800px;
+  float: left;
   background: #EEE;
   #tooltips {
     @include cf;

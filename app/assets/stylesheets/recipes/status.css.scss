@@ -1,0 +1,56 @@
+@import "mixins/clearfix.css.scss";
+li.status {
+  @include cf;
+  margin-bottom: 20px;
+  .photo {
+    float: left;
+  }
+  .summary {
+    float: left;
+    margin-left: 20px;
+  }
+  &:first-child{
+    min-height: 180px;
+  }
+  &:not(:first-child) {
+    min-height: 180px;
+  }
+  span.index-field {
+    float: right;
+    margin-right: 40px;
+    width: 640px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  span.description-field {
+    display:block;
+    float: right;
+    margin: 10px 40px 10px 40px;
+    width: 640px;
+    text-align: left;
+    font-size: 14px;
+  }
+  span.photo-field {
+    @include cf;
+    display:block;
+    float: left;
+    margin-top: -20px;
+    width: 240px;
+    height: auto;
+    min-height: 180px;
+    img{
+      position: center;
+      padding-left: 20px;
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  .edit-form-wrap {
+    display:block;
+    float: right;
+    margin: 20px 20px 10px 40px;
+    width: 620px;
+    text-align: left;
+    font-size: 14px;
+  }
+}
