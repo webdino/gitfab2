@@ -1,0 +1,12 @@
+- content_for :stylesheets do
+  == stylesheet_link_tag "groups", "data-turbolinks-track" => true
+
+- content_for :javascript do
+  == javascript_include_tag "groups", "data-turbolinks-track" => true
+
+- content_for :content do
+  == render partial: "layouts/setting_links"
+  #content
+    == yield
+
+== render partial: "layouts/base_layout"

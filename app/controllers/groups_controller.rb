@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  layout "dashboard"
+  layout "groups"
 
   before_action :build_group, only: [:new, :create]
   before_action :load_group, only: [:show, :edit, :update, :destroy]
@@ -49,7 +49,7 @@ class GroupsController < ApplicationController
   def build_group
     @group = Group.new group_params
   end
-  
+
   def load_group
     @group = Group.find params[:id]
   end

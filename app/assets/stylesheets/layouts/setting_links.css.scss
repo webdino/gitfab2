@@ -1,0 +1,21 @@
+#layouts-setting-links {
+  float: left;
+  width: 200px;
+  height: auto;
+  padding: 20px 20px 20px 0;
+  font-size: 16px;
+  .name {
+    padding: 5px;
+    height: 50px;
+    font-weight: 700;
+    background-color: #CCC;
+    img.avatar {
+      margin: auto;
+      max-width: 40px;
+      max-height: 40px;
+    }
+  }
+  li {
+    height: 40px;
+  }
+}
