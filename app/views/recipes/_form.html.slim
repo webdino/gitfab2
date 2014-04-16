@@ -1,32 +1,80 @@
-== form_for [@user, @recipe] do |f|
-  - if @recipe.errors.any?
-    #error_explanation
-      h2
-        == pluralize @recipe.errors.count, "error"
-        'prohibited this recipe from being saved:
-      ul
-        - @recipe.errors.full_messages.each do |msg|
-          li
-            == msg
-  .field
-    == f.label :group_id
-    br
-    == f.collection_select @user.groups
-  .field
-    == f.label :title
-    br
-    == f.text_field :title
-  .field
-    == f.label :name, "Repository Name"
-    br
-    == f.text_field :name
-  .field
-    == f.label :description
-    br
-    == f.text_area :description
-  .field
-    == f.label :photo
-    br
-    == f.file_field :photo
-  .actions
-    == f.submit "ok"
+== nested_form_for [@owner, @recipe] do |f|
+  - if @owner.is_a?(User) && @owner.groups.any?
+    == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
+  == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
+  == f.text_field :name, placeholder: "Input_Repository_Name"
+  section.visual style="background-image: url('#{@recipe.photo}')"
+    == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
+    == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
+    'or
+    #input-url-form
+      / TODO: YouTubeのURL入力フォームをつくる
+      'Input YouTube URL
+  section.description
+    h1
+      'Summary
+    == f.text_area :description, placeholder: "Add Summary", tabindex: 3
+
+  - if @recipe.persisted?
+    #materials
+      == f.fields_for :materials do |mf|
+        .material
+          == mf.file_field :photo
+          == mf.text_area :description
+          == mf.link_to_remove "Remove Material"
+      == f.link_to_add "Add Material", :materials
+
+  hr
+
+    #tools
+      == f.fields_for :tools do |tf|
+        .tool
+          == tf.file_field :photo
+          == tf.text_field :name
+          == tf.text_area :description
+          == tf.link_to_remove "Remove Tool"
+      == f.link_to_add "Add Tool", :tools
+
+  hr
+
+    #making
+      .statuses
+        == f.fields_for :statuses do |sf|
+          .status
+            == sf.file_field :photo
+            == sf.text_area :description
+            == sf.link_to_remove "Remove Status"
+            .way-sets
+              == sf.fields_for :way_set do |wsf|
+                .way-set
+                  == wsf.hidden_field :recipe_id
+                  .ways
+                    == wsf.fields_for :ways do |wf|
+                      .way
+                        == wf.file_field :photo
+                        == wf.text_area :description
+                        == wf.link_to_remove "Remove Way"
+                    == wsf.link_to_add "Add Way", :ways
+        == f.link_to_add "Add Status", :statuses
+    == f.submit
+
+- content_for :bottom do
+  coffee:
+    $(document).on "click", "#save-btn", (event, data) ->
+      $('form#new_recipe').submit()
+
+    $(document).on "click", "#photo-upload-btn", (event, data) ->
+      event.preventDefault()
+      $("input#recipe_photo").trigger "click"
+
+    $(document).on "change", "input#recipe_photo", (event, data, status) ->
+      file = event.target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        $("section.visual").css("background-image", "url('#{reader.result}')")
+      reader.readAsDataURL(file)
+
+    $(document).on "change", "select#recipe_group_id", (event) ->
+      $("#new_recipe").attr "action", $(this).val()
+
+  / TODO: uploadボタン代わりに、removeボタンの表示

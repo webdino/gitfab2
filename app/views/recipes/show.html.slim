@@ -1,5 +1,5 @@
 - content_for :utils do
-  == render "recipes/utils", recipe: @recipe, owner: @owner
+  == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:fork, :slide, :tag]
 
 main#recipes-show
   p
