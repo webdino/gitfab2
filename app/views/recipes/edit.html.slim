@@ -1,11 +1,6 @@
-section#recipes-edit
-  h1
-    'Editing Recipe
-  == render  "basic_information"
-  == render  "utils"
-  == render  "materials"
-  == render  "tools"
-  == render  "making"
+- content_for :utils do
+  == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:save, :delete]
 
-  == link_to "Show", [@owner, @recipe]
-  == link_to "Back", [@owner, :recipes]
+main#recipes-edit
+  section#basic-information
+    == render "form"

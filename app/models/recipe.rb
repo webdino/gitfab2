@@ -2,11 +2,12 @@ class Recipe < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:id, :user_id, :group_id, :name, :title, :description, :photo,
     materials_attributes:   [:id, :name, :url, :quantity, :size, :description, :photo, :_destroy],
     tools_attributes:       [:id, :name, :url, :description, :photo, :_destroy],
-    statuses_attributes:    [:id, :description, :photo, :_destroy],
-    ways_attributes:        [:id, :description, :photo, :_destroy],
-    usages_attributes:      [:id, :description, :photo],
+    statuses_attributes:    [:id, :description, :photo, :_destroy,
+      way_set_attributes:    [:id, :recipe_id, :_destroy, ways_attributes: [:id, :description, :photo, :_destroy]],
+    ],
+    usages_attributes:      [:id, :description, :photo, :_destroy],
   ]
-  COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :ways, :tools]
+  COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
 
   extend FriendlyId
@@ -34,15 +35,13 @@ class Recipe < ActiveRecord::Base
   has_many :materials, dependent: :destroy
   has_many :statuses, dependent: :destroy
   has_many :tools, dependent: :destroy
-  has_many :way_sets, dependent: :destroy
-  has_many :ways, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_attachments, dependent: :destroy
   has_many :usages, dependent: :destroy
   has_many :collaborators, through: :collaborations, source: :user
   has_many :collaborations, foreign_key: :recipe_id, dependent: :destroy
 
-  accepts_nested_attributes_for :materials, :tools, :statuses, :ways, allow_destroy: true
+  accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
   after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
@@ -104,7 +103,6 @@ class Recipe < ActiveRecord::Base
       self.dup.tap do |recipe|
         recipe.owner = owner
         recipe.statuses = self.statuses.collect{|status| status.dup_with_photo}
-        recipe.ways = self.ways.collect{|way| way.dup_with_photo}
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self

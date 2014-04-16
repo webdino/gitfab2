@@ -237,18 +237,19 @@ ActiveRecord::Schema.define(version: 20140414013837) do
 
   create_table "way_sets", force: true do |t|
     t.integer  "recipe_id"
+    t.integer  "status_id"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "way_sets", ["recipe_id"], name: "index_way_sets_on_recipe_id", using: :btree
+  add_index "way_sets", ["status_id"], name: "index_way_sets_on_status_id", using: :btree
 
   create_table "ways", force: true do |t|
     t.string   "filename"
     t.string   "name"
     t.string   "photo"
-    t.integer  "recipe_id"
     t.integer  "way_set_id"
     t.text     "description"
     t.integer  "position"
@@ -256,7 +257,6 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.datetime "updated_at"
   end
 
-  add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
   add_index "ways", ["way_set_id"], name: "index_ways_on_way_set_id", using: :btree
 
 end

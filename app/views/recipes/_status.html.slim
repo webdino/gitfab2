@@ -7,7 +7,7 @@ li.status
     .description
       == item.description
 
-- WaySet.next_to_status(item).tap do |way_set|
+- item.way_set.try :tap do |way_set|
   .way-set-wrapper
     .arrow
     ul.way-set

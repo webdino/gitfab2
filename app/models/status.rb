@@ -5,11 +5,11 @@ class Status < ActiveRecord::Base
   include Gitfab::ActsAsItemInRecipe
 
   has_many :materials
+  has_one :way_set
 
-  after_create :create_way_set
+  accepts_nested_attributes_for :way_set, allow_destroy: true
 
-  private
-  def create_way_set
-    self.recipe.way_sets.create
+  def way_set
+    super || build_way_set
   end
 end

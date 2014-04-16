@@ -1,42 +1,49 @@
 section#recipes-utils
   section#tooltips
-    #save-btn
-      == link_to "Save Project", "", title: "Save button"
-    #delete-btn
-      == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
-    #slide-show-button
-      p
-        == link_to "Slideshow", "#", id: "slideshow-btn"
-    #fork-button
-      == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
-    #fork-destinations
-      == form_for [current_user, current_user.recipes.new] do |f|
-        == hidden_field_tag :base_recipe_id, recipe.id
-        == f.submit "Fork for #{current_user.name}"
+    - if available_operations.include? :save
+      #save-btn
+        == link_to "Save Project", "", title: "Save button"
+    - if available_operations.include? :delete
+      #delete-btn
+        == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
+    - if available_operations.include? :slide
+      #slide-show-button
+        p
+          == link_to "Slideshow", "#", id: "slideshow-btn"
+    - if available_operations.include? :fork
+      #fork-button
+        == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
+      #fork-destinations
+        == form_for [current_user, current_user.recipes.new] do |f|
+          == hidden_field_tag :base_recipe_id, @recipe.id
+          == f.submit "Fork for #{current_user.name}"
 
-      - current_user.groups.each do |group|
-        == form_for [group, group.recipes.new] do |f|
-          == hidden_field_tag :base_recipe_id, recipe.id
-          == f.submit "Fork for #{group.name}"
-  section#user-id
-    .thumbnail
-      - if @owner.avatar.present?
-        == image_tag @owner.avatar
-    .screen-name
-      == @owner.name
-    time#created-datetime datetime = @recipe.created_at
-      'created date
-      == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
-    time#last-updated-datetime datetime = @recipe.updated_at
-      'updated date
-      == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
-  section#tool-options
-    h1
-      'Tool Options
-  section#tags
-    h1
-      'Tags
-    ul#tag-list.item-list
-      - @recipe.tags.each do |tag|
-        == render "tags/tag", tag: tag, recipe: @recipe
-    == render "recipes/tag_form", recipe: @recipe
+        - current_user.groups.each do |group|
+          == form_for [group, group.recipes.new] do |f|
+            == hidden_field_tag :base_recipe_id, @recipe.id
+            == f.submit "Fork for #{group.name}"
+
+  - @recipe.persisted?
+    section#user-id
+      .thumbnail
+        - if @owner.avatar.present?
+          == image_tag @owner.avatar
+      .screen-name
+        == @owner.name
+      time#created-datetime datetime = @recipe.created_at
+        'created date
+        == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+      time#last-updated-datetime datetime = @recipe.updated_at
+        'updated date
+        == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+    section#tool-options
+      h1
+        'Tool Options
+    - if available_operations.include? :tag
+      section#tags
+        h1
+          'Tags
+        ul#tag-list.item-list
+          - @recipe.tags.each do |tag|
+            == render "tags/tag", tag: tag, recipe: @recipe
+        == render "recipes/tag_form", recipe: @recipe
