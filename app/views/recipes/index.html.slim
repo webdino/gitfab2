@@ -60,6 +60,8 @@ section#recipes-index
       ul.tabs.tab-horisontal
         li.active
           == link_to "Project", "#", data: {tab: "#project-tab"}
+        li
+          == link_to "Journal", "#", data: {tab: "#journal-tab"}
         - if @owner.class.name.downcase == "user"
           li
             == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
@@ -87,18 +89,47 @@ section#recipes-index
             ul.recipe-list
               - @recipes.each do |recipe|
                 li.recipe-item
-                  == link_to [@owner, recipe] do
-                    p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == toggle_star_link_for recipe
+                  p.cover style="background-image: url('#{recipe.photo.url}')"
+                    == link_to "", [@owner, recipe]
                   span.summary
                     span.title
                       == link_to recipe.title, [@owner, recipe]
+                    span.star
+                      == toggle_star_link_for recipe
                     span.avatar-thumb
                       == link_to image_tag(@owner.avatar), @owner
                     span.name
                       == link_to recipe.owner.name, @owner
                     span.description
                       == recipe.description
+
+        #journal-tab.tabs-pane
+          .search-bar
+            .search-box
+              == form_tag [@owner, :recipes], method: :get do
+                == text_field_tag :q, (params[:q] if params[:type] == "having_posts"), placeholder: "Search project", class: "q-field"
+                == hidden_field_tag :type, :having_posts
+                == submit_tag "Search", class: "search-button"
+
+          .recipes
+            ul.recipe-list
+              - @recipes.each do |recipe|
+                - if recipe.posts.length != 0
+                  li.recipe-item
+                    p.cover style="background-image: url('#{recipe.photo.url}')"
+                      == link_to "", recipe_posts_path(owner_name: @owner.name, recipe_id: recipe.name)
+                    span.summary
+                      span.title
+                        == link_to recipe.title, recipe_posts_path(owner_name: @owner.name, recipe_id: recipe.name)
+                      span.star
+                        == toggle_star_link_for recipe
+                      span.avatar-thumb
+                        == link_to image_tag(@owner.avatar), @owner
+                      span.name
+                        == link_to recipe.owner.name, @owner
+                      span.description
+                        == recipe.description
+
 
         - if @owner.class.name.downcase == "user"
 
@@ -114,12 +145,13 @@ section#recipes-index
               ul.recipe-list
                 - @owner.contributing_recipes.each do |recipe|
                   li.recipe-item
-                    == link_to [recipe.owner, recipe] do
-                      p.cover style="background-image: url('#{recipe.photo.url}')"
-                        == toggle_star_link_for recipe
+                    p.cover style="background-image: url('#{recipe.photo.url}')"
+                      == link_to "", [@owner, recipe]
                     span.summary
                       span.title
                         == link_to recipe.title, [recipe.owner, recipe]
+                      span.star
+                        == toggle_star_link_for recipe
                       span.avatar-thumb
                         == link_to image_tag(recipe.owner.avatar), recipe.owner
                       span.name
@@ -140,12 +172,13 @@ section#recipes-index
               ul.recipe-list
                 - @owner.get_voted(Recipe).each do |recipe|
                   li.recipe-item
-                    == link_to [recipe.owner, recipe] do
-                      p.cover style="background-image: url('#{recipe.photo.url}')"
-                        == toggle_star_link_for recipe
+                    p.cover style="background-image: url('#{recipe.photo.url}')"
+                      == link_to "", [@owner, recipe]
                     span.summary
                       span.title
                         == link_to recipe.title, [recipe.owner, recipe]
+                      span.star
+                        == toggle_star_link_for recipe
                       span.avatar-thumb
                         == link_to image_tag(recipe.owner.avatar), recipe.owner
                       span.name
