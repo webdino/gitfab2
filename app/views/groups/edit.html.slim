@@ -2,6 +2,7 @@
   h1
     'Edit Group
   == render "form"
+  == link_to "delete", @group, method: :delete
 
   == link_to "back", :groups
   == link_to "show", @group
