@@ -6,6 +6,11 @@ section#recipes-index
       #name
         #screen-name
           == @owner.name
+      / TODO: userが@ownerをmanageできるときだけ #Edit 追加
+      #edit
+        #owner-edit-btn
+          == link_to "Edit #{@owner.class.name}", [:edit, @owner]
+
       #joined-on
         #clock-icon
           / TODO: 時計のアイコンを表示
