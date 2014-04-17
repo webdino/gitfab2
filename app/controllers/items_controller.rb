@@ -13,13 +13,8 @@ class ItemsController < ApplicationController
   end
 
   def update
-    if params[:target] == "position" && params[:position]
-      item.insert_at params[:position].to_i
-      render "recipes/update_item_position"
-    else
-      item.update_attributes item_params
-      render "recipes/update_item", locals: {item: item}
-    end
+    item.update_attributes item_params
+    render "recipes/update_item", locals: {item: item}
   end
 
   def destroy

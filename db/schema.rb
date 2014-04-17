@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "filename"
     t.string   "name"
     t.string   "photo"
+    t.integer  "recipe_id"
     t.integer  "way_set_id"
     t.text     "description"
     t.integer  "position"
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.datetime "updated_at"
   end
 
+  add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
   add_index "ways", ["way_set_id"], name: "index_ways_on_way_set_id", using: :btree
 
 end

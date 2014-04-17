@@ -5,6 +5,7 @@ class Way < ActiveRecord::Base
   include Gitfab::ActsAsItemInRecipe
 
   belongs_to :way_set
+  belongs_to :recipe
   has_many :tools
 
   def dir_path
