@@ -4,3 +4,47 @@
 main#recipes-edit
   section#basic-information
     == render "form"
+
+- content_for :bottom
+  coffee:
+    $ ->
+      makeSortableWay = (elem) ->
+        $(elem).sortable({
+          items       : "> .fields:not(.dummy)",
+          connectWith : ".ways",
+          placeholder : "ui-state-highlight",
+          forcePlaceholderSize : true,
+          update      : (event, ui) -> console.log "update",
+          stop        : (event, ui) -> updateStatusId ui.item,
+      })
+
+      updatePosition = (form) ->
+        position = $(form).index("#making > .fields") + 1
+        $(form).find("input.position-field").val position
+
+      updateStatusId = (form) ->
+        reassocToken = $(form).closest(".ways").siblings("input.status-reassoc-token-field").val()
+        $(form).find("input.way-reassoc-token-field").val reassocToken
+
+      setStatusReassocToken = (field) ->
+        token = Math.ceil(Math.random() * 900000000000000000)
+        $(field).find("input.status-reassoc-token-field").val token
+
+      setWayReassocToken = (field) ->
+        token = Math.ceil(Math.random() * 900000000000000000)
+        $(field).find("input.way-reassoc-token-field").val token
+
+      $(document).on "nested:fieldAdded", (e) ->
+        setStatusReassocToken e.field
+        makeSortableWay e.field.find(".ways")
+
+      $("#making").sortable({
+        items       : "> .fields",
+        placeholder : "ui-state-highlight",
+        forcePlaceholderSize : true,
+        update      : (event, ui) -> console.log "update",
+        stop        : (event, ui) -> updatePosition ui.item,
+      })
+      makeSortableWay $(".ways")
+      $("#making").disableSelection()
+

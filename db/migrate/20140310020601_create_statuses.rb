@@ -6,6 +6,7 @@ class CreateStatuses < ActiveRecord::Migration
       t.text :description
       t.string :photo
       t.belongs_to :recipe, index: true
+      t.string :reassoc_token
 
       t.timestamps
     end

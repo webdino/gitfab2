@@ -1,15 +1,15 @@
 li.status
-  .photo
-    == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
-  .summary
-    span.index-field
-      == "Status #{item.position}"
-    .description
-      == item.description
+  .status-fields
+    .photo
+      == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+    .summary
+      span.index-field
+        == "Status #{item.position}"
+      .description
+        == item.description
 
-- item.way_set.try :tap do |way_set|
-  .way-set-wrapper
+  .ways
     .arrow
-    ul.way-set
-      - way_set.ways.each do |way|
+    ul
+      - item.ways.each do |way|
         == render "recipes/way", item: way

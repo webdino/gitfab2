@@ -38,24 +38,7 @@
   hr
 
     #making
-      .statuses
-        == f.fields_for :statuses do |sf|
-          .status
-            == sf.file_field :photo
-            == sf.text_area :description
-            == sf.link_to_remove "Remove Status"
-            .way-sets
-              == sf.fields_for :way_set do |wsf|
-                .way-set
-                  == wsf.hidden_field :recipe_id
-                  .ways
-                    == wsf.fields_for :ways do |wf|
-                      .way
-                        == wf.file_field :photo
-                        == wf.text_area :description
-                        == wf.link_to_remove "Remove Way"
-                    == wsf.link_to_add "Add Way", :ways
-        == f.link_to_add "Add Status", :statuses
+      == render "status_form", f: f
     == f.submit
 
 - content_for :bottom do

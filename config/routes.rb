@@ -2,8 +2,9 @@ Gitfab2::Application.routes.draw do
 
   concern :owner do
     resources :recipes do
-      resources :statuses
-      resources :ways
+      resources :statuses do
+        resources :ways
+      end
       resources :materials
       resources :tools
       resources :usages
@@ -30,9 +31,7 @@ Gitfab2::Application.routes.draw do
   end
 
   resources :recipes, except: [:new, :create, :index], path: "/:owner_name" do
-    resources :statuses, constraints: {id: /.+/}
     resources :ways, constraints: {id: /.+/}
-    resources :materials, constraints: {id: /.+/}
     resources :tools, constraints: {id: /.+/}
     resources :usages, constraints: {id: /.+/}
     resources :posts, constraints: {id: /.+/}

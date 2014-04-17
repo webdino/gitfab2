@@ -1,6 +1,6 @@
 require "spec_helper"
 
-["tool", "way"].each do |klass|
+["tool", "usage"].each do |klass|
   describe "#{klass.classify.pluralize}Controller".constantize do
     disconnect_sunspot
     render_views
@@ -9,7 +9,7 @@ require "spec_helper"
     let(:user2){FactoryGirl.create :user}
     let(:recipe1){FactoryGirl.create :recipe, user_id: user1.id}
     let("#{klass}1"){FactoryGirl.create "#{klass}", recipe_id: recipe1.id}
-    let(:valid_attributes){FactoryGirl.build(klass).attributes}
+    let(:valid_attributes){{name: "name", description: "description"}}
 
     describe "POST create" do
       context "with owner" do

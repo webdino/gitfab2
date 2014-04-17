@@ -29,8 +29,7 @@ describe "User ability" do
     let(:other){FactoryGirl.create :user}
     let(:recipe){FactoryGirl.create :recipe, user: other}
     let(:status){FactoryGirl.create :status, recipe: recipe}
-    let(:way_set){FactoryGirl.create :way_set, status: status}
-    let(:way){FactoryGirl.create :way, way_set: way_set}
+    let(:way){FactoryGirl.create :way, status: status}
     let(:material){Material.create recipe: recipe}
     let(:tool){Tool.create recipe: recipe}
     describe "doesn't let user create other's recipe" do

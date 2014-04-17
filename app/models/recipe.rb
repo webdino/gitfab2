@@ -1,11 +1,9 @@
 class Recipe < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:id, :user_id, :group_id, :name, :title, :description, :photo,
-    materials_attributes:   [:id, :name, :url, :quantity, :size, :description, :photo, :_destroy],
-    tools_attributes:       [:id, :name, :url, :description, :photo, :_destroy],
-    statuses_attributes:    [:id, :description, :photo, :_destroy,
-      way_set_attributes:    [:id, :recipe_id, :_destroy, ways_attributes: [:id, :description, :photo, :_destroy]],
-    ],
-    usages_attributes:      [:id, :description, :photo, :_destroy],
+    materials_attributes: Material::UPDATABLE_COLUMNS,
+    tools_attributes:     Tool::UPDATABLE_COLUMNS,
+    statuses_attributes:  Status::UPDATABLE_COLUMNS.push(ways_attributes: Way::UPDATABLE_COLUMNS),
+    usages_attributes:    Usage::UPDATABLE_COLUMNS
   ]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
@@ -34,7 +32,7 @@ class Recipe < ActiveRecord::Base
   has_many :contributors, through: :contributor_recipes
   has_many :materials, dependent: :destroy
   has_many :statuses, dependent: :destroy
-  has_many :ways, dependent: :destroy
+  has_many :ways, through: :statuses
   has_many :tools, dependent: :destroy
   has_many :posts, dependent: :destroy
   has_many :post_attachments, dependent: :destroy
@@ -46,6 +44,7 @@ class Recipe < ActiveRecord::Base
 
   after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
+  after_commit :reassoc_ways
   after_destroy :destroy_repo!
 
   validates :name, presence: true
@@ -144,5 +143,15 @@ class Recipe < ActiveRecord::Base
     old_name, new_name = self.name_change
     old_path = "#{self.owner.dir_path}/#{old_name}.git"
     Gitfab::Shell.new.move_repo! old_path, self.owner.dir_path, self.name
+  end
+
+  def reassoc_ways
+    Way.transaction do
+      self.ways.where("ways.reassoc_token is not null")
+        .where("ways.reassoc_token <> ''").each do |way|
+          status = self.statuses.find_by reassoc_token: way.reassoc_token
+          way.update_attributes status_id: status.id, reassoc_token: nil
+      end
+    end
   end
 end
