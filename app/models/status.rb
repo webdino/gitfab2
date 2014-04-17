@@ -4,6 +4,8 @@ class Status < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
+  after_create :create_way_set, if: ->{self.way_set.blank?}
+
   has_many :materials
   has_one :way_set
 
@@ -11,5 +13,10 @@ class Status < ActiveRecord::Base
 
   def way_set
     super || build_way_set
+  end
+
+  private
+  def create_way_set
+    create_way_set
   end
 end

@@ -4,6 +4,7 @@ class CreateWays < ActiveRecord::Migration
       t.string :filename, index: true
       t.string :name
       t.string :photo
+      t.belongs_to :recipe, index: true
       t.belongs_to :way_set, index: true
       t.text :description
       t.integer :position, index: true

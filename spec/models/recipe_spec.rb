@@ -11,7 +11,8 @@ describe Recipe do
   let(:recipe){FactoryGirl.create :recipe, user: user}
   let(:g_recipe){FactoryGirl.create :recipe, group: group}
   let(:status){FactoryGirl.create :status, recipe: recipe}
-  let(:way){FactoryGirl.create :way, recipe: recipe}
+  let(:way_set){FactoryGirl.create :way_set, status: status}
+  let(:way){FactoryGirl.create :way, way_set: way_set}
   let(:tool){FactoryGirl.create :tool, recipe: recipe}
   let(:material){FactoryGirl.create :material, recipe: recipe}
 
@@ -38,7 +39,7 @@ describe Recipe do
     end
     describe "saves the repo tree" do
       let(:tree){recipe.repo.lookup(repo.head.target).tree}
-      let(:assocs){[:statuses, :ways, :materials, :tools]}
+      let(:assocs){Recipe::COMMITABLE_ITEM_ASSOCS}
       before do
         assocs.each do |assoc|
           2.times do |i|
@@ -53,20 +54,6 @@ describe Recipe do
         subject{dirs.size}
         it{should be assocs.size}
       end
-      describe "with items in each dirs" do
-        let(:items) do
-          Array.new.tap do |arr|
-            tree.each_tree do |t_entry|
-              dir = repo.lookup t_entry[:oid]
-              dir.each_blob do |b_entry|
-                arr << b_entry[:name]
-              end
-            end
-          end
-        end
-        subject{items.size}
-        it{should be 8}
-      end
     end
   end
 
@@ -75,7 +62,7 @@ describe Recipe do
     let(:forked_recipe){recipe.fork_for! other}
     let(:forked_recipe2){recipe.fork_for! other}
     before do
-      status; way; tool; material;
+      status; way; tool; material
       recipe.commit!
     end
 
@@ -112,8 +99,8 @@ describe Recipe do
 
     context "when the repository has items which don't have photo" do
       before do
-        recipe.statuses.create
-        recipe.ways.create
+        status = recipe.statuses.create
+        status.way_set.ways.create
         recipe.tools.create
         recipe.materials.create
       end
