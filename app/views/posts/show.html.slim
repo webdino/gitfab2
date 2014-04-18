@@ -1,17 +1,15 @@
-
 article#posts-show
   == render "basic_information"
   == render "utils"
-  == render "links"
+  section#links
+    == render "links"
+    == link_to "Edit", [:edit, @owner, @recipe, @post]
 
   h1#post-title
     = @post.title
 
   section#post-body
     = @post.body.html_safe
-
-  footer
-    = link_to "Edit", [:edit, @owner, @recipe, @post]
 
 section#comments
   h1

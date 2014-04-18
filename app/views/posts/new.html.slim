@@ -2,8 +2,11 @@
 main#posts-new
   == render "basic_information"
   == render "utils"
-  == render "links"
+  section#links
+    == render "links"
+
   h1
     'New Journal
+
   article#post-article
     == render "form"
