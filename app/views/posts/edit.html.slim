@@ -1,7 +1,10 @@
 main#posts-edit
   == render "basic_information"
   == render "utils"
-  == render "links"
+
+  section#links
+    == render "links"
+    == link_to "Destroy", [@owner, @recipe, @post], data: {confirm: "Are you sure?"}, method: :delete
 
   h1
     'Edit post

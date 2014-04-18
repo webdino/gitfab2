@@ -2,7 +2,10 @@
 main#posts-index
   == render "basic_information"
   == render "utils"
-  == render "links"
+
+  section#links
+    == render "links"
+    == link_to "New Post", [:new, @owner, @recipe, :post]
 
   - @posts.each do |post|
     article.post
@@ -12,6 +15,4 @@ main#posts-index
         = post.body.html_safe
       footer
         = link_to "Show", [@owner, @recipe, post]
-        = link_to "Edit", [:edit, @owner, @recipe, post]
-        = link_to "Destroy", [@owner, @recipe, post], data: {confirm: "Are you sure?"}, method: :delete
   == paginate @posts
