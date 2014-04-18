@@ -11,8 +11,7 @@ describe Recipe do
   let(:recipe){FactoryGirl.create :recipe, user: user}
   let(:g_recipe){FactoryGirl.create :recipe, group: group}
   let(:status){FactoryGirl.create :status, recipe: recipe}
-  let(:way_set){FactoryGirl.create :way_set, status: status}
-  let(:way){FactoryGirl.create :way, way_set: way_set}
+  let(:way){FactoryGirl.create :way, status: status}
   let(:tool){FactoryGirl.create :tool, recipe: recipe}
   let(:material){FactoryGirl.create :material, recipe: recipe}
 
@@ -68,7 +67,9 @@ describe Recipe do
 
     Recipe::COMMITABLE_ITEM_ASSOCS.each do |assoc|
       describe "copies photo of #{assoc}" do
-        subject{File.exists? forked_recipe.send(assoc).first.photo.path}
+        subject do
+          File.exists? forked_recipe.send(assoc).first.photo.path.to_s
+        end
         it{should be_true}
       end
     end
@@ -100,7 +101,7 @@ describe Recipe do
     context "when the repository has items which don't have photo" do
       before do
         status = recipe.statuses.create
-        status.way_set.ways.create
+        status.ways.create
         recipe.tools.create
         recipe.materials.create
       end

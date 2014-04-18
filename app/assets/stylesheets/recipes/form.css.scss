@@ -1,7 +1,16 @@
 form.edit_recipe {
   #making {
-    .way-set {
-      margin-left: 200px;
+    & > .fields {
+      min-height: 160px;
+      background: #efefef;
+      margin-bottom: 4px;
+      .fields.dummy {
+        min-height: 4px;
+        background: #ccc;
+      }
+      .ways {
+        margin-left: 200px;
+      }
     }
   }
 }

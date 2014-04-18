@@ -1,0 +1,17 @@
+== f.fields_for :statuses do |sf|
+  == sf.hidden_field :reassoc_token, class: "status-reassoc-token-field"
+  == sf.text_area :description
+  == sf.file_field :photo
+  == sf.hidden_field :id, class: "id-field"
+  == sf.hidden_field :position, class: "position-field"
+  == sf.link_to_remove "Remove Status"
+  .ways
+    .fields.dummy
+    == sf.fields_for :ways do |wf|
+      == wf.hidden_field :reassoc_token, class: "way-reassoc-token-field"
+      == wf.text_area :description
+      == wf.file_field :photo
+      == wf.hidden_field :status_id, class: "status-id-field"
+      == wf.link_to_remove "Remove Way"
+    == sf.link_to_add "Add Way", :ways
+== f.link_to_add "Add Status", :statuses
