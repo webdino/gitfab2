@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :user_id, :group_id, :name, :title, :description, :photo,
+  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type,
     materials_attributes: Material::UPDATABLE_COLUMNS,
     tools_attributes:     Tool::UPDATABLE_COLUMNS,
     statuses_attributes:  Status::UPDATABLE_COLUMNS.push(ways_attributes: Way::UPDATABLE_COLUMNS),
@@ -9,7 +9,7 @@ class Recipe < ActiveRecord::Base
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
 
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :finders]
+  friendly_id :name, use: [:slugged, :finders, :scoped], scope: [:owner_id, :owner_type]
 
   acts_as_taggable
   acts_as_commentable
@@ -21,13 +21,13 @@ class Recipe < ActiveRecord::Base
     string :name
     string :title
     string :description
-    integer :user_id
+    string :owner_type
+    integer :owner_id
   end
 
-  belongs_to :user
+  belongs_to :owner, polymorphic: true
   belongs_to :orig_recipe,    class_name: Recipe.name
   belongs_to :last_committer, class_name: User.name
-  belongs_to :group
   has_many :contributor_recipes, foreign_key: :recipe_id, dependent: :destroy
   has_many :contributors, through: :contributor_recipes
   has_many :materials, dependent: :destroy
@@ -42,8 +42,8 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
-  after_create :ensure_repo_exist!
   before_update :rename_repo_name!, if: ->{self.name_changed?}
+  after_create :ensure_repo_exist!
   after_commit :reassoc_ways
   after_destroy :destroy_repo!
 
@@ -65,18 +65,13 @@ class Recipe < ActiveRecord::Base
   end
 
   def owner
-    self.group || self.user
+    klass = self.owner_type.constantize
+    klass.find self.owner_id
   end
 
   def owner= owner
-    case owner
-    when Group
-      self.group_id = owner.id
-    when User
-      self.user_id = owner.id
-    else
-      raise "error"
-    end
+    self.owner_id = owner.id
+    self.owner_type = owner.class.name
   end
 
   def repo
@@ -128,11 +123,7 @@ class Recipe < ActiveRecord::Base
   end
 
   def repo_path
-    if self.group
-      "#{self.group.dir_path}/#{self.name}.git"
-    else
-      "#{self.user.dir_path}/#{self.name}.git"
-    end
+    "#{self.owner.dir_path}/#{self.name}.git"
   end
 
   def destroy_repo!

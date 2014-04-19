@@ -66,7 +66,7 @@ class WaysController < ApplicationController
   end
 
   def add_contributor
-    unless @way.recipe.user == current_user
+    unless @way.recipe.owner == current_user
       @way.recipe.contributors << current_user
     end
   end

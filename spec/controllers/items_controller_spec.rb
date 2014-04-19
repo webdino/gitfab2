@@ -7,15 +7,17 @@ require "spec_helper"
 
     let(:user1){FactoryGirl.create :user}
     let(:user2){FactoryGirl.create :user}
-    let(:recipe1){FactoryGirl.create :recipe, user_id: user1.id}
-    let("#{klass}1"){FactoryGirl.create "#{klass}", recipe_id: recipe1.id}
+    let(:recipe){FactoryGirl.create :user_recipe}
+    let(:g_recipe){FactoryGirl.create :group_recipe}
+    let("#{klass}1"){FactoryGirl.create "#{klass}", recipe_id: recipe.id}
+    let("g_#{klass}1"){FactoryGirl.create "#{klass}", recipe_id: g_recipe.id}
     let(:valid_attributes){{name: "name", description: "description"}}
 
     describe "POST create" do
       context "with owner" do
         before do
-          controller.stub(:current_user).and_return user1
-          xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+          controller.stub(:current_user).and_return recipe.owner
+          xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
             klass => valid_attributes
         end
         it_behaves_like "success"
@@ -23,19 +25,19 @@ require "spec_helper"
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+          xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
             klass => valid_attributes
         end
         it_behaves_like "operation without team privilege", klass
 
       end
       context "with a member of the group which owns the recipe" do
-        let(:group){FactoryGirl.create :group, creator: user1}
+        let(:group){FactoryGirl.create :group, creator: recipe.owner}
         before do
           controller.stub(:current_user).and_return user2
           group.add_editor user2
-          recipe1.update_attributes group_id: group.id
-          xhr :post, :create, group_id: group.id, recipe_id: recipe1.id,
+          recipe.update_attributes owner_id: group.id
+          xhr :post, :create, group_id: group.id, recipe_id: recipe.id,
             klass => valid_attributes
         end
         it_behaves_like "success"
@@ -45,8 +47,8 @@ require "spec_helper"
     describe "PATCH update" do
       context "with owner" do
         before do
-          controller.stub(:current_user).and_return user1
-          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+          controller.stub(:current_user).and_return recipe.owner
+          xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
             id: send("#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "success"
@@ -54,19 +56,17 @@ require "spec_helper"
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+          xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
             id: send("#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "operation without team privilege", klass
       end
       context "with a member of the group which owns the recipe" do
-        let(:group){FactoryGirl.create :group, creator: user1}
         before do
           controller.stub(:current_user).and_return user2
-          group.add_editor user2
-          recipe1.update_attributes group_id: group.id
-          xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id, klass => valid_attributes
+          g_recipe.owner.add_editor user2
+          xhr :patch, :update, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
+            id: send("g_#{klass}1").id, klass => valid_attributes
         end
         it_behaves_like "success"
       end
@@ -75,8 +75,8 @@ require "spec_helper"
     describe "DELETE destroy" do
       context "with owner" do
         before do
-          controller.stub(:current_user).and_return user1
-          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+          controller.stub(:current_user).and_return recipe.owner
+          xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
             id: send("#{klass}1").id
         end
         it_behaves_like "success"
@@ -84,19 +84,17 @@ require "spec_helper"
       context "with non owner" do
         before do
           controller.stub(:current_user).and_return user2
-          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+          xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
             id: send("#{klass}1").id
         end
         it_behaves_like "operation without team privilege", klass
       end
       context "with a member of the group which owns the recipe" do
-        let(:group){FactoryGirl.create :group, creator: user1}
         before do
           controller.stub(:current_user).and_return user2
-          group.add_editor user2
-          recipe1.update_attributes group_id: group.id
-          xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
-            id: send("#{klass}1").id
+          g_recipe.owner.add_editor user2
+          xhr :delete, :destroy, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
+            id: send("g_#{klass}1").id
         end
         it_behaves_like "success"
       end

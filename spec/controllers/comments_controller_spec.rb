@@ -5,7 +5,7 @@ describe CommentsController do
   render_views
 
   let(:user){FactoryGirl.create :user}
-  let(:recipe){FactoryGirl.create :recipe, user_id: user.id}
+  let(:recipe){FactoryGirl.create :user_recipe}
   let(:comment){FactoryGirl.create :comment, valid_attributes}
   let(:valid_attributes) do
     {
