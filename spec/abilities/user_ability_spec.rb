@@ -5,7 +5,7 @@ describe "User ability" do
   disconnect_sunspot
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
-  let(:recipe){FactoryGirl.create :recipe, user: user}
+  let(:recipe){FactoryGirl.create :recipe, owner_id: user.id, owner_type: User.name}
 
   subject(:ability){Ability.new user}
   context "when is the admin of the recipe" do
@@ -27,7 +27,7 @@ describe "User ability" do
   end
   context "when isn't the admin of the recipe" do
     let(:other){FactoryGirl.create :user}
-    let(:recipe){FactoryGirl.create :recipe, user: other}
+    let(:recipe){FactoryGirl.create :recipe, owner_id: other.id, owner_type: User.name}
     let(:status){FactoryGirl.create :status, recipe: recipe}
     let(:way){FactoryGirl.create :way, status: status}
     let(:material){Material.create recipe: recipe}

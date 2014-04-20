@@ -9,11 +9,12 @@ class Group < ActiveRecord::Base
   belongs_to :creator, class_name: User.name
   has_many :memberships, foreign_key: :group_id
   has_many :members, through: :memberships, source: :user
-  has_many :recipes
+  has_many :recipes, as: :owner, dependent: :destroy
 
   after_create :add_initial_member
+  after_save :ensure_dir_exist!
 
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true, unique_owner_name: true
 
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
@@ -37,7 +38,7 @@ class Group < ActiveRecord::Base
   end
 
   def ensure_dir_exist!
-    return nil unless self.name.present?
+    return nil if self.name.blank?
     ::FileUtils.mkdir_p dir_path
   end
 end

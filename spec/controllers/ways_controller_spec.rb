@@ -6,16 +6,19 @@ describe WaysController do
 
   let(:user1){FactoryGirl.create :user}
   let(:user2){FactoryGirl.create :user}
-  let(:recipe1){FactoryGirl.create :recipe, user: user1}
-  let(:status){FactoryGirl.create :status, recipe: recipe1}
+  let(:recipe){FactoryGirl.create :user_recipe}
+  let(:g_recipe){FactoryGirl.create :group_recipe}
+  let(:status){FactoryGirl.create :status, recipe: recipe}
+  let(:g_status){FactoryGirl.create :status, recipe: g_recipe}
   let(:way){FactoryGirl.create :way, status: status}
+  let(:g_way){FactoryGirl.create :way, status: g_status}
   let(:valid_attributes){{name: "name", description: "description"}}
 
   describe "POST create" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return user1
-        xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+        controller.stub(:current_user).and_return recipe.owner
+        xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, way: valid_attributes
       end
       it_behaves_like "success"
@@ -23,20 +26,18 @@ describe WaysController do
     context "with non owner" do
       before do
         controller.stub(:current_user).and_return user2
-        xhr :post, :create, user_id: user1.id, recipe_id: recipe1.id,
+        xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, way: valid_attributes
       end
       it_behaves_like "operation without team privilege", :way
 
     end
     context "with a member of the group which owns the recipe" do
-      let(:group){FactoryGirl.create :group, creator: user1}
       before do
         controller.stub(:current_user).and_return user2
-        group.add_editor user2
-        recipe1.update_attributes group_id: group.id
-        xhr :post, :create, group_id: group.id, recipe_id: recipe1.id,
-          status_id: status.id, way: valid_attributes
+        g_recipe.owner.add_editor user2
+        xhr :post, :create, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
+          status_id: g_status.id, way: valid_attributes
       end
       it_behaves_like "success"
     end
@@ -45,8 +46,8 @@ describe WaysController do
   describe "PATCH update" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return user1
-        xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+        controller.stub(:current_user).and_return recipe.owner
+        xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id, way: valid_attributes
       end
       it_behaves_like "success"
@@ -54,19 +55,17 @@ describe WaysController do
     context "with non owner" do
       before do
         controller.stub(:current_user).and_return user2
-        xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
+        xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id, way: valid_attributes
       end
       it_behaves_like "success"
     end
     context "with a member of the group which owns the recipe" do
-      let(:group){FactoryGirl.create :group, creator: user1}
       before do
         controller.stub(:current_user).and_return user2
-        group.add_editor user2
-        recipe1.update_attributes group_id: group.id
-        xhr :patch, :update, user_id: user1.id, recipe_id: recipe1.id,
-          status_id: status.id, id: way.id, way: valid_attributes
+        g_recipe.owner.add_editor user2
+        xhr :patch, :update, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
+          status_id: g_status.id, id: g_way.id, way: valid_attributes
       end
       it_behaves_like "success"
     end
@@ -75,8 +74,8 @@ describe WaysController do
   describe "DELETE destroy" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return user1
-        xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+        controller.stub(:current_user).and_return recipe.owner
+        xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id
       end
       it_behaves_like "success"
@@ -84,19 +83,17 @@ describe WaysController do
     context "with non owner" do
       before do
         controller.stub(:current_user).and_return user2
-        xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
+        xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id
       end
       it_behaves_like "operation without team privilege", :way
     end
     context "with a member of the group which owns the recipe" do
-      let(:group){FactoryGirl.create :group, creator: user1}
       before do
         controller.stub(:current_user).and_return user2
-        group.add_editor user2
-        recipe1.update_attributes group_id: group.id
-        xhr :delete, :destroy, user_id: user1.id, recipe_id: recipe1.id,
-          status_id: status.id, id: way.id
+        g_recipe.owner.add_editor user2
+        xhr :delete, :destroy, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
+          status_id: g_status.id, id: g_way.id
       end
       it_behaves_like "success"
     end

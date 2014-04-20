@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
-  has_many :recipes
+  has_many :recipes, as: :owner, dependent: :destroy
   has_many :contributor_recipes, foreign_key: :contributor_id
   has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
   has_many :memberships, foreign_key: :user_id, dependent: :destroy
@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def is_owner_of? recipe
-    self == recipe.user
+    self == recipe.owner
   end
 
   def is_collaborator_of? recipe
@@ -46,7 +46,10 @@ class User < ActiveRecord::Base
   end
 
   def can_manage? recipe
-    is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member_of?(recipe.group)
+    if recipe.owner_type == Group.name
+      is_member = is_member_of?(recipe.owner)
+    end
+    is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member
   end
 
   [:admin, :editor, :member].each do |role|

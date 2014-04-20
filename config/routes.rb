@@ -30,7 +30,7 @@ Gitfab2::Application.routes.draw do
     resources :memberships
   end
 
-  resources :recipes, except: [:new, :create, :index], path: "/:owner_name" do
+  resources :recipes, path: "/:owner_name" do
     resources :ways, constraints: {id: /.+/}
     resources :tools, constraints: {id: /.+/}
     resources :usages, constraints: {id: /.+/}

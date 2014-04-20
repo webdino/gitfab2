@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.datetime "updated_at"
   end
 
+  add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
   add_index "groups", ["slug"], name: "index_groups_on_slug", unique: true, using: :btree
 
   create_table "materials", force: true do |t|
@@ -125,17 +126,18 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.text     "description"
     t.string   "photo"
     t.string   "youtube_url"
-    t.integer  "user_id"
+    t.integer  "owner_id"
+    t.string   "owner_type"
     t.integer  "last_committer_id"
     t.integer  "orig_recipe_id"
-    t.integer  "group_id"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "recipes", ["group_id"], name: "index_recipes_on_group_id", using: :btree
-  add_index "recipes", ["slug"], name: "index_recipes_on_slug", unique: true, using: :btree
+  add_index "recipes", ["owner_id", "owner_type", "slug"], name: "index_recipes_on_owner_id_and_owner_type_and_slug", unique: true, using: :btree
+  add_index "recipes", ["owner_id"], name: "index_recipes_on_owner_id", using: :btree
+  add_index "recipes", ["owner_type"], name: "index_recipes_on_owner_type", using: :btree
 
   create_table "statuses", force: true do |t|
     t.string   "filename"

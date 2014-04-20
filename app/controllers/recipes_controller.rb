@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
         fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
         case params[:type]
         when "own"
-          with :user_id, params[:user_id]
+          with :owner_id, params[:user_id]
         when "contributed"
           # TODO: Implement
         when "starred"
@@ -53,7 +53,7 @@ class RecipesController < ApplicationController
     base_recipe = Recipe.find params[:base_recipe_id]
     @recipe = base_recipe.fork_for! @owner
     if @recipe.save
-      redirect_to recipe_path(id: @recipe.name, owner_name: @recipe.owner.name), notice: "Recipe was successfully forked."
+      redirect_to recipe_path(id: @recipe.name, owner_name: @owner.name), notice: "Recipe was successfully forked."
     else
       raise "error"
       render action: :new
@@ -62,7 +62,7 @@ class RecipesController < ApplicationController
 
   def update
     if @recipe.update recipe_params
-      redirect_to [@owner, @recipe], notice: "Recipe was successfully updated."
+      redirect_to recipe_path(id: @recipe.name, owner_name: @owner.name), notice: "Recipe was successfully updated."
     else
       render action: :edit
     end
@@ -70,7 +70,7 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe.destroy
-    redirect_to [@owner, :recipes]
+    redirect_to recipes_path owner_name: @owner.name
   end
 
   private
@@ -84,16 +84,13 @@ class RecipesController < ApplicationController
   end
 
   def load_owner
-    if user_id = params[:user_id]
-      @owner = User.find user_id
-    elsif group_id = params[:group_id]
-      @owner = Group.find group_id
-    elsif owner_name = params[:owner_name]
-      @owner = if User.exists? owner_name
-        User.find owner_name
-      elsif Group.exists? owner_name
-        Group.find owner_name
-      end
+    if params[:owner_name]
+      @owner ||= User.find_by slug: params[:owner_name]
+      @owner ||= Group.find_by slug: params[:owner_name]
+    elsif params[:user_id]
+      @owner = User.find params[:user_id]
+    elsif params[:group_id]
+      @owner = Group.find params[:group_id]
     end
   end
 

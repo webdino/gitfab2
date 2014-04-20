@@ -5,7 +5,7 @@ describe LikesController do
   render_views
 
   let(:user){FactoryGirl.create :user}
-  let(:recipe){FactoryGirl.create :recipe, user_id: user.id}
+  let(:recipe){FactoryGirl.create :user_recipe}
   let(:like){FactoryGirl.create :like, valid_attributes}
   let(:valid_attributes){{voter_id: user.id, votable_id: recipe.id, votable_type: recipe.class.name}}
 
