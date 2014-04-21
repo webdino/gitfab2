@@ -4,6 +4,8 @@ class GroupsController < ApplicationController
   before_action :build_group, only: [:new, :create]
   before_action :load_group, only: [:show, :edit, :update, :destroy]
 
+  authorize_resource
+
   def index
     @groups = Group.all
   end
