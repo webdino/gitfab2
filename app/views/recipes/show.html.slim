@@ -36,6 +36,7 @@ main#recipes-show
     ul#tool-list
       - @recipe.tools.each do |item|
         == render "tool", item: item
+    == render "add_form", item: @recipe.tools.build
 
   section#making
     h1
@@ -63,79 +64,63 @@ main#recipes-show
 
 
   - content_for :bottom
-    javascript:
-      $(document).ready(function() {
-      	$(".fancybox").fancybox({
-      		openEffect	: 'none',
-      		closeEffect	: 'none'
-      	});
-      })
-
-      function addWayListWrapper(event, ui) {
-        if(ui.item.prev().hasClass("way") || ui.item.next().hasClass("status")) {
-          $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertAfter("#"+ui.item.attr("id"));
-        }
-        else if(ui.item.prev().hasClass("status") || ui.item.next().hasClass("way")){
-          $("<li id='way-list-wrapper-new' class='way-list-wrapper'></li>").insertBefore("#"+ui.item.attr("id"));
-        }
-        $("li#way-list-wrapper-new").append("<ul class='way-list'></ul>");
-        var clone = $(".add-form-wrap").eq(-2).clone(true);
-        $("li#way-list-wrapper-new").append(clone);
-      }
-
-
     coffee:
-      $(document).on "ajax:success", ".edit-form", (event, data, status) ->
-        if data.success
-          selector = "li##{data.class}-#{data.id}"
-          $(selector).replaceWith data.html
+      $ ->
+      	$(".fancybox").fancybox({
+      		openEffect	: "none",
+      		closeEffect	: "none"
+      	})
 
-      $(document).on "ajax:success", ".add-form", (event, data, status) ->
-        if data.success
-          $(event.target).find("input[type!=submit]").val ""
-          $(event.target).css "display","none"
+        $(document).on "ajax:success", ".edit-form", (event, data, status) ->
+          if data.success
+            $(this).closest("li.way").replaceWith data.html
+
+        $(document).on "ajax:success", ".add-form", (event, data, status) ->
+          if data.success
+            $(event.target).find("textarea, input[type!=submit]").val ""
+            $(event.target).css "display","none"
+            if data.class == "way"
+              $(event.target).closest(".ways").find("ul").append data.html
+            else
+              $("##{data.class}-list").append data.html
+
+        $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
           if data.class == "way"
-            $(event.target).closest(".add-form-wrap").siblings(".way-list").append data.html
-          else
-            $("##{data.class}-list").append data.html
+            $(event.target).closest(".status").find(".add-btn").css("display", "block")
+          else if data.class == "status"
+            $(event.target).closest("li").next("li").remove()
+          $(event.target).closest("li").remove()
 
-      $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
-        if data.class == "way"
-          $(event.target).closest(".status").find(".add-btn").css("display", "block")
-        else if data.class == "status"
-          $(event.target).closest("li").next("li").remove()
-        $(event.target).closest("li").remove()
+        $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
+          event.preventDefault()
+          $(event.target).siblings("form").toggle()
 
-      $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
-        event.preventDefault()
-        $(event.target).siblings("form").css "display", "block"
+        $(document).on "ajax:success", "#new_tag", (event, data, status) ->
+          $(event.target).siblings("#tag-list").append data.html
+          $(event.target).find("#tag_name").val ""
 
-      $(document).on "ajax:success", "#new_tag", (event, data, status) ->
-        $(event.target).siblings("#tag-list").append data.html
-        $(event.target).find("#tag_name").val ""
+        $(document).on "click", ".tag-delete-btn", (event, data) ->
+          $(this).closest(".tag").remove()
 
-      $(document).on "click", ".tag-delete-btn", (event, data) ->
-        $(this).closest(".tag").remove()
+        $(document).on "click", "#slideshow-btn", (event, data) ->
+          event.preventDefault()
+          $(".fancybox").first().trigger "click"
 
-      $(document).on "click", "#slideshow-btn", (event, data) ->
-        event.preventDefault()
-        $(".fancybox").first().trigger "click"
+        $(document).on "click", ".upload-image-btn", (event, data) ->
+          event.preventDefault()
+          $(event.target).parents(".photo-field").siblings(".edit-form-wrap").find(".add-photo").trigger "click"
 
-      $(document).on "click", ".upload-image-btn", (event, data) ->
-        event.preventDefault()
-        $(event.target).parents(".photo-field").siblings(".edit-form-wrap").find(".add-photo").trigger "click"
+        $(document).on "change", ".add-photo", (event, data, status) ->
+          file = event.target.files[0]
+          reader = new FileReader()
+          reader.onload = ->
+            $(event.target).closest(".edit-form-wrap").siblings(".photo-field").find("img").attr "src", reader.result
+            $(event.target).parents("form.edit-form").submit()
+          reader.readAsDataURL file
 
-      $(document).on "change", ".add-photo", (event, data, status) ->
-        file = event.target.files[0]
-        reader = new FileReader()
-        reader.onload = ->
-          $(event.target).closest(".edit-form-wrap").siblings(".photo-field").find("img").attr "src", reader.result
-          $(event.target).parents("form.edit-form").submit()
-        reader.readAsDataURL file
-
-      $(document).on "click", ".delete-image-btn", (event, data) ->
-        event.preventDefault()
-        element = $(event.target).parents(".photo-field").siblings(".edit-form-wrap")
-        element.find(".remove-photo").attr "checked", true
-        element.find("form.edit-form").submit()
+        $(document).on "click", ".delete-image-btn", (event, data) ->
+          event.preventDefault()
+          element = $(event.target).parents(".photo-field").siblings(".edit-form-wrap")
+          element.find(".remove-photo").attr "checked", true
+          element.find("form.edit-form").submit()
 

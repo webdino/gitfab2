@@ -1,4 +1,4 @@
-@import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
 body {
     font-family: helvetica, sans-serif;
     a {
@@ -12,12 +12,6 @@ body {
     }
 }
 #content {
-  width: 960px;
+  width: $content_width;
   margin: 0 auto;
-}
-.row {
-  @include cf;
-  & > * {
-    float: left;
-  }
 }

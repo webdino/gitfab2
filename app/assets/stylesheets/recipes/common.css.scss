@@ -1,5 +1,9 @@
-@import "mixins/clearfix.css.scss";
+#content, main, #recipes-utils {
+  @include cf;
+}
 main { 
+  width: $recipe_main_width;
+  float: left;
   section {
     h1 {
       margin-bottom: 20px;
@@ -9,4 +13,8 @@ main {
       font-weight: bold;
     }
   }
+}
+#recipes-utils { 
+  width: 240px;
+  float: left;
 }

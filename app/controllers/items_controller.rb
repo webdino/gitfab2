@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
   end
 
   def additional_params
-    [:remove_photo]
+    [:id, :remove_photo, :_destroy]
   end
 
   def build_item
