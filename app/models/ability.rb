@@ -13,22 +13,32 @@ class Ability
       user.persisted?
     end
     can :manage, Recipe do |recipe|
-      user.can_manage? recipe
+      if recipe.owner_type == Group.name
+        is_admin = user.is_admin_of? recipe.owner
+      end
+      user.is_owner_of?(recipe) ||
+        user.is_collaborator_of?(recipe) ||
+        is_admin
+    end
+    can :update, Recipe do |recipe|
+      if recipe.owner_type == Group.name
+        user.is_member_of? recipe.owner
+      end
     end
     can :manage, Status do |status|
-      user.can_manage? status.recipe
+      can? :update, status.recipe
     end
     can :manage, Material do |material|
-      user.can_manage? material.recipe
+      can? :update, material.recipe
     end
     can :manage, Post do |post|
-      user.can_manage? post.recipe
+      can? :update, post.recipe
     end
     can :manage, PostAttachment do |pa|
-      user.can_manage? pa.recipe
+      can? :update, pa.recipe
     end
     can :manage, Collaboration do |collabo|
-      user.can_manage? collabo.recipe
+      can? :manage, collabo.recipe
     end
     can :create, Comment do
       user.persisted?
@@ -41,6 +51,12 @@ class Ability
     end
     can :destroy, Like do |like|
       like.voter_id == user.id
+    end
+    can :manage, Group do |group|
+      user.is_admin_of? group
+    end
+    can :create, Group do |group|
+      user.persisted?
     end
     can :read, :all
   end

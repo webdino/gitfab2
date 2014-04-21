@@ -19,9 +19,10 @@ section#recipes-utils
           == f.submit "Fork for #{current_user.name}"
 
         - current_user.groups.each do |group|
-          == form_for [group, group.recipes.new] do |f|
-            == hidden_field_tag :base_recipe_id, @recipe.id
-            == f.submit "Fork for #{group.name}"
+          - if can? :manage, group
+            == form_for [group, group.recipes.new] do |f|
+              == hidden_field_tag :base_recipe_id, @recipe.id
+              == f.submit "Fork for #{group.name}"
 
   - @recipe.persisted?
     section#user-id

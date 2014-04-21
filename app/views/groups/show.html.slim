@@ -3,11 +3,12 @@
     'Show Group
   p == @group.name
   
-  == form_for [@group, Membership.new], remote: true do |f|
-    == f.text_field :user_id
-    == f.select :role, Membership::ROLE 
-    == f.hidden_field :group_id, value: @group.id
-    == f.submit "add"
+  - if can? :manage, @group
+    == form_for [@group, Membership.new], remote: true do |f|
+      == f.text_field :user_id
+      == f.select :role, Membership::ROLE 
+      == f.hidden_field :group_id, value: @group.id
+      == f.submit "add"
 
   p
     'members
@@ -16,8 +17,9 @@
       == render "membership", membership: ms
 
   == link_to "back", :groups
-  == link_to "edit", [:edit, @group]
-  == link_to "destroy", @group, method: :delete
+  - if can? :manage, @group
+    == link_to "edit", [:edit, @group]
+    == link_to "destroy", @group, method: :delete
   
 - content_for :bottom do
   coffee:
