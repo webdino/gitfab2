@@ -1,4 +1,3 @@
-@import "mixins/clearfix.css.scss";
 .ways {
   @include cf;
   width: 100%;
@@ -6,6 +5,10 @@
   article.way-placeholder {
     width: 400px;
     height: 30px;
+  }
+  .add-form,
+  .edit-form {
+    display: none;
   }
   li {
     float: left;

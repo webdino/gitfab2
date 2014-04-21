@@ -34,11 +34,11 @@ class WaysController < ApplicationController
   end
 
   def additional_params
-    [:remove_photo]
+    [:id, :remove_photo, :_destroy]
   end
 
   def build_way
-    @way = @status.ways.build
+    @way = @status.ways.build way_params
   end
 
   def load_way

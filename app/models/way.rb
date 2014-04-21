@@ -1,6 +1,6 @@
 class Way < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :description]
-  UPDATABLE_COLUMNS = [:id, :description, :photo, :status_id, :reassoc_token, :_destroy]
+  UPDATABLE_COLUMNS = [:description, :photo, :status_id, :reassoc_token]
 
   include Gitfab::ActsAsItemInRecipe
 
