@@ -8,6 +8,15 @@ article#posts-show
   h1#post-title
     = @post.title
 
+  h2#post-meta
+    .author
+      == link_to recipes_path(owner_name: @post.user.name) do
+        == image_tag @post.user.avatar, class: "avatar"
+        .name
+          =@post.user.name
+    .created_at
+      = @post.created_at
+
   section#post-body
     = @post.body.html_safe
 

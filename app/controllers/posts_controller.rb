@@ -22,6 +22,7 @@ class PostsController < ApplicationController
   end
 
   def create
+    @post.user = current_user
     if @post.save
       redirect_to [@owner, @recipe, @post], notice: "Post was successfully created."
     else

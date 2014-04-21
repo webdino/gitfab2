@@ -1,5 +1,4 @@
 #posts-show {
-
   margin: 40px 0px 0px 10px;
   width: 960px;
   padding: 10px;
@@ -12,6 +11,27 @@
     width: 720px;
     padding: 15px 0px;
     font-size: 32px;
+  }
+  #post-meta {
+    .author {
+      display: inline-block;
+      .avatar {
+        width: 40px;
+        height: 40px;
+      }
+      .name {
+        height: 40px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-left: 10px;
+      }
+    }
+    .created_at {
+      height: 40px;
+      vertical-align: middle;
+      display: inline-block;
+      margin-left: 10px;
+    }
   }
   #post-body {
     width: 720px;
