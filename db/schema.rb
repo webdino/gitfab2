@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
 
   create_table "posts", force: true do |t|
     t.integer  "recipe_id"
+    t.integer  "user_id"
     t.string   "title"
     t.text     "body"
     t.datetime "created_at"
@@ -118,6 +119,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   end
 
   add_index "posts", ["recipe_id"], name: "index_posts_on_recipe_id", using: :btree
+  add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
   create_table "recipes", force: true do |t|
     t.string   "name"

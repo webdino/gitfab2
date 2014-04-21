@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   has_many :groups, through: :memberships
   has_many :collaborating_recipes, through: :collaborations, source: :recipe
   has_many :collaborations, foreign_key: :user_id, dependent: :destroy
+  has_many :posts
 
   after_save :ensure_dir_exist!
 

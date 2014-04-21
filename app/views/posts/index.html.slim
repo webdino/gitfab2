@@ -11,6 +11,14 @@ main#posts-index
     article.post
       h1.post-title
         = post.title
+      h2.post-meta
+        .author
+          == image_tag post.user.avatar, class: "avatar"
+          .name
+            = post.user.name
+        .created_at
+          = post.created_at
+
       section.post-body
         = post.body.html_safe
       footer
