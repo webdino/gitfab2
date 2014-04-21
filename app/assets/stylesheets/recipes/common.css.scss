@@ -1,3 +1,5 @@
+@import "mixins/variables.css.scss";
+@import "mixins/clearfix.css.scss";
 #content, main, #recipes-utils {
   @include cf;
 }

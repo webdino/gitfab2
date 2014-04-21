@@ -1,3 +1,5 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/rows.css.scss";
 #basic-information {
   height: auto;
   h1 {
@@ -5,6 +7,9 @@
     height: 40px;
     font-size: 36px;
     font-weight: bold;
+  }
+  #project-summary {
+    @include row;
   }
   .visual {
     margin: auto;

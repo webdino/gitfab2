@@ -1,10 +1,7 @@
 /*
  *= require_self
- *= require_tree ./_shared
- *= require_tree ./dashboard
- *= require_tree ./groups
+ *= require_tree ./shared
  *= require_tree ./layouts
- *= require_tree ./fancybox
- *= require_tree ./home
- *= require jquery.ui.selectable
+ *= require ./recipes/index
+ *= require_tree ../../../vendor/assets/stylesheets/tabby
  */
