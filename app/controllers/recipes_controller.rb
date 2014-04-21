@@ -25,6 +25,7 @@ class RecipesController < ApplicationController
     else
       @recipes = @owner.recipes
     end
+    render layout: "dashboard"
   end
 
   def show

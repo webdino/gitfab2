@@ -1,5 +1,5 @@
 /*
  *= require_self
- *= require_tree ./_shared
+ *= require_tree ./shared
  *= require_tree ./groups
  */

@@ -1,7 +1,7 @@
 /*
  *= require_self
- *= require_tree ./_shared
- *= require ./recipes/main
+ *= require_tree ./shared
+ *= require_tree ./recipes
  *= require_tree ./layouts
  *= require_tree ./fancybox
  *= require jquery.ui.selectable

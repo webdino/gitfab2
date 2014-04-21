@@ -1,3 +1,6 @@
+@import "mixins/variables.css.scss";
+@import "mixins/clearfix.css.scss";
+@import "mixins/rows.css.scss";
 #recipes-show {
   @include cf;
   #project-summary {

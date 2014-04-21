@@ -1,5 +1,5 @@
 @import "mixins/clearfix.css.scss";
-@mixin basic-row {
+@mixin row {
   @include cf;
   & > * {
     float: left;
@@ -7,8 +7,7 @@
 }
 
 @mixin spacing-row($parent_width, $spacing_width, $num_cols) {
-  background: #000;
-  @include basic-row;
+  @include row;
   margin-left: -($spacing_width);
   & > * {
     margin-left: $spacing_width;
