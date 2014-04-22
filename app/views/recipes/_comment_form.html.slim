@@ -1,0 +1,14 @@
+- opts ||= {}
+div class="add-form-wrap"
+  == link_to "add #{item.class.name.underscore}", "#", class: "add-btn"
+  == form_for item, remote: true,
+      html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
+    - item.class::UPDATABLE_COLUMNS.each do |field|
+      - case field
+      - when :commentable_id
+        == f.hidden_field field, class: "not-cleared"
+      - when :commentable_type
+        == f.hidden_field field, class: "not-cleared"
+      - else
+        == f.text_field field
+    == f.submit "create"
