@@ -30,13 +30,14 @@ main#recipes-show
       - @recipe.materials.each do |item|
         == render "material", item: item
 
-  section#tools
-    h1
-      'Tools
-    ul#tool-list
-      - @recipe.tools.each do |item|
-        == render "tool", item: item
-    == render "add_form", item: @recipe.tools.build
+  / NOTE: now shown temporary
+  /section#tools
+  /  h1
+  /    'Tools
+  /  ul#tool-list
+  /    - @recipe.tools.each do |item|
+  /      == render "tool", item: item
+  /  == render "add_form", item: @recipe.tools.build
 
   section#making
     h1
