@@ -28,16 +28,43 @@
       text-align: center;
       background-size: contain;
       background-repeat: no-repeat;
-      #photo-upload-btn, #input-url-form {
-        display: block;
-        margin: 35px auto;
-        width: 240px;
-        height: 100px;
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 100px;
-        text-align: center;
-        background: #FFF;
+
+      iframe {
+        margin: 0;
+        width: 480px;
+        height: 360px;
+      }
+      .form-wrapper {
+        margin-top: -360px;
+        width: 480px;
+        height: 300px;
+        #photo-upload-btn {
+          display: block;
+          margin: 55px 100px;
+          width: 280px;
+          height: 100px;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 100px;
+          text-align: center;
+          background: white;
+          position: absolute;
+          z-index: 999;
+        }
+        #input-video-url-btn {
+          display: block;
+          margin: 200px 100px;
+          width: 280px;
+          height: 100px;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 100px;
+          text-align: center;
+          background: white;
+          position: absolute;
+          z-index: 999;
+        }
+
       }
     }
     .description {
@@ -53,9 +80,9 @@
         font-weight: bold;
       }
       textarea#recipe_description {
-        margin-top: 10px;
+        margin-top: -8px;
         width: 190px;
-        height: 320px;
+        height: 315px;
       }
     }
   }
@@ -86,4 +113,9 @@
     }
 
   }
+}
+
+input#recipe_youtube_url {
+  width: 580px;
+  font-size: 12px;
 }

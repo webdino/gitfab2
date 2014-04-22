@@ -4,12 +4,14 @@
   == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
   == f.text_field :name, placeholder: "Input_Repository_Name"
   section.visual style="background-image: url('#{@recipe.photo}')"
-    == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
-    == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
-    'or
-    #input-url-form
-      / TODO: YouTubeのURL入力フォームをつくる
-      'Input YouTube URL
+    iframe src: "", frameborder: 0, allowfullscreen:
+    .form-wrapper
+      == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
+      == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
+      == link_to "Input YouTube URL…", "", title: "input-video-url", id: "input-video-url-btn"
+      #dialog-form
+        == f.text_field :youtube_url, title: "YouTube動画をアップロード"
+        #caution style="font-size: 12px; color: red;"
   section.description
     h1
       'Summary
@@ -44,6 +46,38 @@
 
 - content_for :bottom do
   coffee:
+
+    $ ->
+      $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
+      $("input#recipe_youtube_url").bind 'keyup', check_video_url(this)
+      # TODO:Add Movieのとき本体にビデオsrc適用
+      $("#dialog-form").dialog({
+        autoOpen: false,
+        title: "Input YouTube URL",
+        height: 200,
+        width:  640,
+        modal:  true,
+        buttons: {
+          "Add Movie": ->
+            $(this).dialog "close"
+          ,
+          "Delete Movie": ->
+            $(this).dialog "close"
+            $("iframe").attr "src", ""
+            $("#photo-upload-btn").css "display", "block"
+            $("#photo-upload-btn").css "color", "black"
+            $("#input-video-url-btn").css "display", "block"
+            $("#input-video-url-btn").css "color", "black"
+          ,
+          cancel: ->
+            $(this).dialog "close"
+        },
+      });
+
+    remove_button = ->
+      $("#photo-upload-btn").css "display","none"
+      $("#input-video-url-btn").css "display","none"
+
     $(document).on "click", "#save-btn", (event, data) ->
       $('form#new_recipe').submit()
 
@@ -56,9 +90,56 @@
       reader = new FileReader()
       reader.onload = ->
         $("section.visual").css("background-image", "url('#{reader.result}')")
+        $("iframe").attr "src",""
+        $("#photo-upload-btn").css "color","black"
+        $("#input-video-url-btn").css "color","black"
+        remove_button()
       reader.readAsDataURL(file)
+
+    $(document).on "click", "#input-video-url-btn", (event, data) ->
+      event.preventDefault()
+      $("#dialog-form").dialog("open");
 
     $(document).on "change", "select#recipe_group_id", (event) ->
       $("#new_recipe").attr "action", $(this).val()
 
-  / TODO: uploadボタン代わりに、removeボタンの表示
+    $(document).on "change", "input#recipe_youtube_url", (event, data, status) ->
+      check_video_url(this)
+
+    check_video_url = (element) ->
+      input_url = past_input_url = element.value
+      return ->
+        # TODO: videoの中身を表示するのを、ダイアログの中にする
+        if past_input_url != (input_url = element.value)
+          past_input_url = input_url
+          youtube_url_min_length = 41
+          if input_url.length > youtube_url_min_length
+            url = input_url
+            if url.indexOf /https?:\/\/(?:www\.)?youtube.com\/watch\?v=\w+(&\S*)?$/
+              videoid = url.split("?v=")[1]
+              if videoid.length == 11
+                youtube_data_url = "http://gdata.youtube.com/feeds/api/videos/"
+                youtube_video_url = "http://www.youtube.com/embed/"
+                get_url = youtube_data_url + videoid
+                $.ajax
+                  async:    true
+                  type:     "GET"
+                  url:      get_url
+                  context:  this
+                  success: (data, status, xhr) ->
+                    embed_url = youtube_video_url + videoid
+                    $("iframe").attr "src", embed_url
+                    remove_button()
+                  error: (data, status, xhr) ->
+                    $("#caution").text(status + " :" + xhr.status)
+                  complete: (xhr, status) ->
+                    $("#caution").text(status + " :" + xhr.status)
+              else
+                $("#caution").text("Invalid URL: video id is too short")
+            else
+              $("#caution").text("Invalid URL: not youtube.")
+
+    $("iframe").hover ->
+        $("#photo-upload-btn").css "display","block"
+        $("#input-video-url-btn").css "display","block"
+      ,->

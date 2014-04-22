@@ -5,4 +5,5 @@
  *= require_tree ./layouts
  *= require_tree ./fancybox
  *= require jquery.ui.selectable
+ *= require jquery.ui.all
  */
