@@ -52,9 +52,19 @@ main#recipes-show
     ul#usage-list
       - @recipe.usages.each do |item|
         == render "usage", item: item
+    == render "add_form", item: @recipe.usages.build
 
   hr
 
+  section#comments
+    h1
+      'Comments
+    ul#comment-list
+      - @recipe.comments.each do |item|
+        == render "comments/comment", comment: item
+    == render "comment_form", item: @recipe.comments.build
+
+  hr
 
   p
     == link_to "Edit", [:edit, @owner, @recipe] if can? :manage, @recipe
@@ -78,7 +88,7 @@ main#recipes-show
 
         $(document).on "ajax:success", ".add-form", (event, data, status) ->
           if data.success
-            $(event.target).find("textarea, input[type!=submit]").val ""
+            $(event.target).find("textarea:not(.not-cleared), input[type!=submit]:not(.not-cleared)").val ""
             $(event.target).css "display","none"
             if data.class == "way"
               $(event.target).closest(".ways").find("ul").append data.html
