@@ -1,56 +1,58 @@
 @import "mixins/clearfix.css.scss";
-.ways {
-  @include cf;
-  width: 100%;
-  margin-top: 10px;
-  article.way-placeholder {
-    width: 400px;
-    height: 30px;
-  }
-  .add-form,
-  .edit-form {
-    display: none;
-  }
-  li {
-    float: left;
-    height: 90px;
-    width: 240px;
+#recipes-show {
+  .ways {
     @include cf;
-    .photo {
-      float: left;
+    width: 100%;
+    margin-top: 10px;
+    article.way-placeholder {
+      width: 400px;
+      height: 30px;
     }
-    .photo img {
-      width: 80px;
-      max-height: 60px;
+    .add-form,
+    .edit-form {
+      display: none;
     }
-    .summary {
+    li {
       float: left;
-      .description {
-        margin: 10px;
-        width: 140px;
-        text-align: left;
-        font-size: 14px;
+      height: 90px;
+      width: 240px;
+      @include cf;
+      .photo {
+        float: left;
       }
-    }
-    &:first-child {
-      width: auto;
-      height: 180px;
-      margin: 0 20px 20px 0;
       .photo img {
-        width: 240px;
-        max-height: 180px;
+        width: 80px;
+        max-height: 60px;
+      }
+      .summary {
+        float: left;
+        .description {
+          margin: 10px;
+          width: 140px;
+          text-align: left;
+          font-size: 14px;
+        }
+      }
+      &:first-child {
+        width: auto;
+        height: 180px;
+        margin: 0 20px 20px 0;
+        .photo img {
+          width: 240px;
+          max-height: 180px;
+        }
       }
     }
-  }
-  .arrow {
-    float: left;
-    width: 140px;
-    height: 125px;
-    padding: 100px 0px 0px 140px;
-    position: center;
-    background-image: asset-url("arrow.png");
-    background-repeat: no-repeat;
-    background-size: 45px 200px;
-    background-position: 90px 0;
+    .arrow {
+      float: left;
+      width: 140px;
+      height: 125px;
+      padding: 100px 0px 0px 140px;
+      position: center;
+      background-image: asset-url("arrow.png");
+      background-repeat: no-repeat;
+      background-size: 45px 200px;
+      background-position: 90px 0;
+    }
   }
 }

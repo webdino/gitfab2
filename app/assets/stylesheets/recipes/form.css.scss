@@ -1,16 +1,44 @@
+@import "mixins/clearfix.css.scss";
 form.edit_recipe {
   #making {
     & > .fields {
       min-height: 160px;
       background: #efefef;
       margin-bottom: 4px;
+      padding: 10px;
       .fields.dummy {
-        min-height: 4px;
-        background: #ccc;
+        height: 1px;
+        opacity: 0;
       }
       .ways {
         margin-left: 200px;
       }
+      .item {
+        @include cf;
+        margin-bottom: 8px;
+        input,
+        textarea,
+        a {
+          float: left;
+          margin-left: 10px;
+        }
+        img {
+          float: left;
+          width: 50px;
+          height: 50px;
+        }
+        p.remove-way {
+          text-align: right;
+          a {
+            float: none;
+          }
+        }
+      }
     }
   }
+}
+
+input#recipe_youtube_url {
+  width: 580px;
+  font-size: 12px;
 }
