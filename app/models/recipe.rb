@@ -1,10 +1,5 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type,
-    materials_attributes: Material::UPDATABLE_COLUMNS,
-    tools_attributes:     Tool::UPDATABLE_COLUMNS,
-    statuses_attributes:  Status::UPDATABLE_COLUMNS.push(ways_attributes: Way::UPDATABLE_COLUMNS),
-    usages_attributes:    Usage::UPDATABLE_COLUMNS
-  ]
+  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
 

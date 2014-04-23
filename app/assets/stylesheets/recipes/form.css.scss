@@ -4,14 +4,22 @@ form.edit_recipe {
     & > .fields {
       min-height: 160px;
       background: #efefef;
+      border: 1px solid #000;
       margin-bottom: 4px;
-      padding: 10px;
+      padding: 12px;
+      cursor: all-scroll;
       .fields.dummy {
         height: 1px;
         opacity: 0;
       }
       .ways {
         margin-left: 200px;
+        .item {
+          padding: 12px;
+          border: 1px solid #000;
+          background-color: #f9f9f9;
+          position: relative;
+        }
       }
       .item {
         @include cf;

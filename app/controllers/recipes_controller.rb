@@ -97,7 +97,18 @@ class RecipesController < ApplicationController
 
   def recipe_params
     if params[:recipe]
-      params.require(:recipe).permit Recipe::UPDATABLE_COLUMNS
+      params_for_tools     = Tool::UPDATABLE_COLUMNS   + [:id, :_destroy]
+      params_for_usages    = Usage::UPDATABLE_COLUMNS  + [:id, :_destroy]
+      params_for_materials = Tool::UPDATABLE_COLUMNS   + [:id, :_destroy]
+      params_for_ways      = Way::UPDATABLE_COLUMNS    + [:id, :_destroy]
+      params_for_statuses  = Status::UPDATABLE_COLUMNS + [:id, :_destroy, ways_attributes: params_for_ways]
+
+      params.require(:recipe)
+        .permit Recipe::UPDATABLE_COLUMNS + [
+          tools_attributes: params_for_tools,
+          usages_attributes: params_for_usages,
+          statuses_attributes: params_for_statuses
+        ]
     end
   end
 
