@@ -12,7 +12,7 @@ set :assets_roles, [:web, :app]
 ask :branch, proc {`git rev-parse --abbrev-ref HEAD`.chomp}
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, "/usr/local/rails_app/gitfab2"
+set :deploy_to, "/usr/local/rails_apps/gitfab2"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -27,7 +27,7 @@ set :deploy_to, "/usr/local/rails_app/gitfab2"
 # set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
@@ -48,11 +48,3 @@ namespace :deploy do
 
   after :publishing, :restart
 end
-
-desc "symlinking after precompilation"
-task :symlink do
-  on roles(:app) do
-    execute "ln -s #{release_path}/config/database.ymls/#{fetch :rails_env}.yml #{release_path}/config/database.yml"
-  end
-end
-before "deploy:assets:precompile", :symlink
