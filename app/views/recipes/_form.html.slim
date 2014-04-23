@@ -49,7 +49,6 @@
 
     $ ->
       $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
-      $("input#recipe_youtube_url").bind 'keyup', check_video_url(this)
       # TODO:Add Movieのとき本体にビデオsrc適用
       $("#dialog-form").dialog({
         autoOpen: false,
@@ -74,44 +73,40 @@
         },
       });
 
-    remove_button = ->
-      $("#photo-upload-btn").css "display","none"
-      $("#input-video-url-btn").css "display","none"
-
-    $(document).on "click", "#save-btn", (event, data) ->
-      $('form#new_recipe').submit()
-
-    $(document).on "click", "#photo-upload-btn", (event, data) ->
-      event.preventDefault()
-      $("input#recipe_photo").trigger "click"
-
-    $(document).on "change", "input#recipe_photo", (event, data, status) ->
-      file = event.target.files[0]
-      reader = new FileReader()
-      reader.onload = ->
-        $("section.visual").css("background-image", "url('#{reader.result}')")
-        $("iframe").attr "src",""
-        $("#photo-upload-btn").css "color","black"
-        $("#input-video-url-btn").css "color","black"
-        remove_button()
-      reader.readAsDataURL(file)
-
-    $(document).on "click", "#input-video-url-btn", (event, data) ->
-      event.preventDefault()
-      $("#dialog-form").dialog("open");
-
-    $(document).on "change", "select#recipe_group_id", (event) ->
-      $("#new_recipe").attr "action", $(this).val()
-
-    $(document).on "change", "input#recipe_youtube_url", (event, data, status) ->
-      check_video_url(this)
-
-    check_video_url = (element) ->
-      input_url = past_input_url = element.value
-      return ->
+      remove_button = ->
+        $("#photo-upload-btn").css "display","none"
+        $("#input-video-url-btn").css "display","none"
+  
+      $(document).on "click", "#save-btn", (event, data) ->
+        $('form#new_recipe').submit()
+  
+      $(document).on "click", "#photo-upload-btn", (event, data) ->
+        event.preventDefault()
+        $("input#recipe_photo").trigger "click"
+  
+      $(document).on "change", "input#recipe_photo", (event, data, status) ->
+        file = event.target.files[0]
+        reader = new FileReader()
+        reader.onload = ->
+          $("section.visual").css("background-image", "url('#{reader.result}')")
+          $("iframe").attr "src",""
+          $("#photo-upload-btn").css "color","black"
+          $("#input-video-url-btn").css "color","black"
+          remove_button()
+        reader.readAsDataURL(file)
+  
+      $(document).on "click", "#input-video-url-btn", (event, data) ->
+        event.preventDefault()
+        $("#dialog-form").dialog("open");
+  
+      $(document).on "change", "select#recipe_group_id", (event) ->
+        $("#new_recipe").attr "action", $(this).val()
+  
+      check_video_url = ->
+        input_url = $(this).val()
         # TODO: videoの中身を表示するのを、ダイアログの中にする
-        if past_input_url != (input_url = element.value)
-          past_input_url = input_url
+        if window.past_input_url != input_url
+          window.past_input_url = input_url
           youtube_url_min_length = 41
           if input_url.length > youtube_url_min_length
             url = input_url
@@ -139,7 +134,10 @@
             else
               $("#caution").text("Invalid URL: not youtube.")
 
-    $("iframe").hover ->
-        $("#photo-upload-btn").css "display","block"
-        $("#input-video-url-btn").css "display","block"
-      ,->
+      $(document).on "keyup", "input#recipe_youtube_url", check_video_url
+      $(document).on "change", "input#recipe_youtube_url", check_video_url
+  
+      $("iframe").hover ->
+          $("#photo-upload-btn").css "display","block"
+          $("#input-video-url-btn").css "display","block"
+        ,->
