@@ -27,10 +27,10 @@ set :deploy_to, "/usr/local/rails_apps/gitfab2"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml logs/production.log logs/unicorn_production.log}
+set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{log}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
