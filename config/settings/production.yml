@@ -1,0 +1,2 @@
+git:
+  repo_dir: <%= ENV["GITFAB_REPO_DIR"] %>
