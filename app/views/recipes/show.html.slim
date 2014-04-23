@@ -77,10 +77,14 @@ main#recipes-show
   - content_for :bottom
     coffee:
       $ ->
-      	$(".fancybox").fancybox({
-      		openEffect	: "none",
-      		closeEffect	: "none"
-      	})
+      	$(".fancybox").fancybox
+          openEffect: "none"
+          closeEffect: "none"
+          wrapCSS: ".fork-popup"
+          helpers:
+            overlay:
+              css:
+                "background":"rgba(0, 0, 0, 0.2)"
 
         $(document).on "ajax:success", ".edit-form", (event, data, status) ->
           if data.success
@@ -135,3 +139,5 @@ main#recipes-show
           element.find(".remove-photo").attr "checked", true
           element.find("form.edit-form").submit()
 
+        $(document).on "click", ".fork-destination", (event, data) ->
+          $(this).find("form").submit()
