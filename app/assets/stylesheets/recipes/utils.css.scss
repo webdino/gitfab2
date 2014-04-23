@@ -1,4 +1,32 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/rows.css.scss";
+
+$popup-width: 360px;
+
+#fork-destinations {
+  @include spacing-row($popup-width, 20px, 3);
+  width: $popup-width;
+  display: none;
+  .fork-destination {
+    .dest-name {
+      margin-top: 10px;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .fork-btn {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+  }
+}
 #recipes-utils {
   width: 240px;
   float: left;
@@ -22,11 +50,8 @@
       background-image: url("http://placehold.it/120x120");
       display: block;
     }
-    #fork-destinations {
-      display: none;
-    }
   }
-  #user-id {
+  #user-info {
     @include cf;
     padding: 20px 20px;
     width: 100%;

@@ -14,18 +14,13 @@ section#recipes-utils
       #fork-button
         == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
       #fork-destinations
-        == form_for [current_user, current_user.recipes.new] do |f|
-          == hidden_field_tag :base_recipe_id, @recipe.id
-          == f.submit "Fork for #{current_user.name}"
-
+        == render "fork_destination", owner: current_user, recipe: @recipe
         - current_user.groups.each do |group|
           - if can? :manage, group
-            == form_for [group, group.recipes.new] do |f|
-              == hidden_field_tag :base_recipe_id, @recipe.id
-              == f.submit "Fork for #{group.name}"
+            == render "fork_destination", owner: group, recipe: @recipe
 
   - @recipe.persisted?
-    section#user-id
+    section#user-info
       .thumbnail
         - if @owner.avatar.present?
           == image_tag @owner.avatar
