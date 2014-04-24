@@ -1,7 +1,7 @@
 production:
   solr:
     hostname: localhost
-    port: 8983
+    port: 8984
     log_level: WARNING
     path: /solr/gitfab2_production
     # read_timeout: 2
