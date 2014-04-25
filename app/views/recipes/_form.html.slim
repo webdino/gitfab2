@@ -34,23 +34,22 @@
           == mf.link_to_remove "Remove Material"
       == f.link_to_add "Add Material", :materials
 
-  / NOTE: temporary not shown
-  /hr
-
-  /  #tools
-  /    == f.fields_for :tools do |tf|
-  /      .tool
-  /        == tf.file_field :photo
-  /        == tf.text_field :name
-  /        == tf.text_area :description
-  /        == tf.link_to_remove "Remove Tool"
-  /    == f.link_to_add "Add Tool", :tools
-
-  hr
-
     #making
       == render "status_form", f: f
     == f.submit
+
+    / NOTE: temporary not shown
+    /hr
+
+    /  #tools
+    /    == f.fields_for :tools do |tf|
+    /      .tool
+    /        == tf.file_field :photo
+    /        == tf.text_field :name
+    /        == tf.text_area :description
+    /        == tf.link_to_remove "Remove Tool"
+    /    == f.link_to_add "Add Tool", :tools
+
 
 - content_for :bottom do
   coffee:
