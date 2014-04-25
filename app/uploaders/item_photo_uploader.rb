@@ -3,8 +3,12 @@ class ItemPhotoUploader < CarrierWave::Uploader::Base
 
   storage :file
 
+  version :small do
+    process resize_to_fit: [240, 180]
+  end
+
   version :thumb do
-    process :resize_to_fit => [50, 50]
+    process resize_to_fit: [50, 50]
   end
 
   def store_dir
@@ -12,7 +16,7 @@ class ItemPhotoUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    ActionController::Base.helpers.asset_path("fallback/noimage_240x180.png")
+    ActionController::Base.helpers.asset_path "fallback/noimage_240x180.png"
   end
 
   def extension_white_list

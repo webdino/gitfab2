@@ -1,7 +1,7 @@
 li.status
   .status-fields
     .photo
-      == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+      == link_to image_tag(item.photo.small), item.photo.url, class: "fancybox", rel: "fancybox"
     .summary
       span.index-field
         == "Status #{item.position}"
