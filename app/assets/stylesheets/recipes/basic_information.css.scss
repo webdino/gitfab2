@@ -17,6 +17,10 @@
     height: 360px;
     background-size: contain;
     background-repeat: no-repeat;
+    iframe {
+      width: 100%;
+      height: 100%;
+    }
   }
   .description {
     padding: 0 20px 0;

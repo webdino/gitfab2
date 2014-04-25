@@ -1,7 +1,8 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type]
+  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type, :youtube_url]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
+  YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
 
   extend FriendlyId
   friendly_id :name, use: [:slugged, :finders, :scoped], scope: [:owner_id, :owner_type]
@@ -110,6 +111,10 @@ class Recipe < ActiveRecord::Base
       suffix += 1
     end
     self.name = candidate
+  end
+
+  def youtube_embed_url
+    "#{YOUTUBE_EMBED_URL_BASE}#{self.youtube_url}"
   end
 
   private
