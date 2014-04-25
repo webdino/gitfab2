@@ -39,5 +39,12 @@
     li {
       list-style: none;
     }
+    a.item-photo {
+      display: block;
+      width: 240px;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
   }
 }
