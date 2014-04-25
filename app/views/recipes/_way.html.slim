@@ -1,6 +1,6 @@
 li.way
   .photo
-    == link_to image_tag(item.photo.url), item.photo.url, class: "fancybox", rel: "fancybox"
+    == link_to "#", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
   .summary
     .description
       == item.description
