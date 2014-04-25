@@ -4,12 +4,20 @@ main#users-edit
   h1
     'Public Profile
 
-  == form_for current_user do |f|
+  == form_for @user do |f|
+    - if @user.errors.any?
+      #error_explanation
+        h2
+          == pluralize(@user.errors.count, "error")
+          'prohibited this user from being saved:
+        ul
+          - @user.errors.full_messages.each do |msg|
+            li == msg
     dl
       dt
         'Profile Picture
       dd
-        == image_tag current_user.avatar, id: "user-avatar"
+        == image_tag @user.avatar, id: "user-avatar"
         == f.file_field :avatar, id: "user-avatar-form"
         == link_to "Upload new picture", "#", id: "upload-button"
 

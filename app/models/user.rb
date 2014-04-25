@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   after_save :ensure_dir_exist!
 
   validates :email, presence: true
-  validates :name, :email, uniqueness: true
+  validates :name,  unique_owner_name: true
+  validates :email, uniqueness: true
 
   def dir_path
     return nil unless self.name.present?
@@ -64,5 +65,9 @@ class User < ActiveRecord::Base
   def ensure_dir_exist!
     return nil unless self.name.present?
     ::FileUtils.mkdir_p dir_path
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
   end
 end

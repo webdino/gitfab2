@@ -6,6 +6,8 @@ class Post < ActiveRecord::Base
   belongs_to :recipe
   belongs_to :user
 
+  validates :title, :body, :recipe_id, presence: true
+
   paginates_per 10
 end
 	

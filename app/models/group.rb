@@ -41,4 +41,8 @@ class Group < ActiveRecord::Base
     return nil if self.name.blank?
     ::FileUtils.mkdir_p dir_path
   end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
 end
