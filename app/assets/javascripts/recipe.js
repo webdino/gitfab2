@@ -16,5 +16,6 @@
 //= require jquery_nested_form
 //= require jquery.remotipart
 //= require turbolinks
+//= require jquery.turbolinks
 //= require_tree ./fancybox
 //= require_tree ./helpers

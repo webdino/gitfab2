@@ -1,4 +1,7 @@
 @import "mixins/clearfix.css.scss";
+#video-form {
+  display: none;
+}
 form.edit_recipe {
   #making {
     & > .fields {

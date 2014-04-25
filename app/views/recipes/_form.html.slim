@@ -1,3 +1,4 @@
+== link_to "Input YouTube URL…", "#video-form", id: "input-video-btn", class: "fancybox"
 == nested_form_for [@owner, @recipe] do |f|
   - if @recipe.errors.any?
     #error_explanation
@@ -12,14 +13,22 @@
   == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
   == f.text_field :name, placeholder: "Input_Repository_Name"
   section.visual style="background-image: url('#{@recipe.photo}')"
-    iframe src: "", frameborder: 0, allowfullscreen:
+    iframe src="#{@recipe.youtube_embed_url}"
     .form-wrapper
       == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
       == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
-      == link_to "Input YouTube URL…", "", title: "input-video-url", id: "input-video-url-btn"
-      #dialog-form
-        == f.text_field :youtube_url, title: "YouTube動画をアップロード"
+      == link_to "Input YouTube URL…", "#video-form", id: "input-video-btn", class: "fancybox"
+      #video-form
+        p
+          'Input a Youtube URL
+        == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.youtube_url}", id: "youtube-url-input"
+        == f.hidden_field :youtube_url, id: "youtube-url-field" 
         #caution style="font-size: 12px; color: red;"
+        #video-form-preview-wrapper
+          iframe.video-form-preview src: #{f.object.youtube_url}
+        #video-form-buttons
+          == link_to "OK", "#", class: "ok-btn btn"
+          == link_to "Cancel", "#", class: "cancel-btn btn"
   section.description
     h1
       'Summary
@@ -53,32 +62,18 @@
 
 - content_for :bottom do
   coffee:
+    $(".fancybox").fancybox
+      openEffect: "none"
+      closeEffect: "none"
+      wrapCSS: ".fork-popup"
+      helpers:
+        overlay:
+          css:
+            "background":"rgba(0, 0, 0, 0.2)"
 
     $ ->
+      w = window
       $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
-      # TODO:Add Movieのとき本体にビデオsrc適用
-      $("#dialog-form").dialog({
-        autoOpen: false,
-        title: "Input YouTube URL",
-        height: 200,
-        width:  640,
-        modal:  true,
-        buttons: {
-          "Add Movie": ->
-            $(this).dialog "close"
-          ,
-          "Delete Movie": ->
-            $(this).dialog "close"
-            $("iframe").attr "src", ""
-            $("#photo-upload-btn").css "display", "block"
-            $("#photo-upload-btn").css "color", "black"
-            $("#input-video-url-btn").css "display", "block"
-            $("#input-video-url-btn").css "color", "black"
-          ,
-          cancel: ->
-            $(this).dialog "close"
-        },
-      });
 
       remove_button = ->
         $("#photo-upload-btn").css "display","none"
@@ -95,54 +90,44 @@
         file = event.target.files[0]
         reader = new FileReader()
         reader.onload = ->
-          $("section.visual").css("background-image", "url('#{reader.result}')")
+          $("section.visual").css "background-image", "url('#{reader.result}')"
           $("iframe").attr "src",""
           $("#photo-upload-btn").css "color","black"
           $("#input-video-url-btn").css "color","black"
           remove_button()
-        reader.readAsDataURL(file)
-  
-      $(document).on "click", "#input-video-url-btn", (event, data) ->
-        event.preventDefault()
-        $("#dialog-form").dialog("open");
+        reader.readAsDataURL file
   
       $(document).on "change", "select#recipe_group_id", (event) ->
         $("#new_recipe").attr "action", $(this).val()
   
-      check_video_url = ->
-        input_url = $(this).val()
-        # TODO: videoの中身を表示するのを、ダイアログの中にする
-        if window.past_input_url != input_url
-          window.past_input_url = input_url
-          youtube_url_min_length = 41
-          if input_url.length > youtube_url_min_length
-            url = input_url
-            if url.indexOf /https?:\/\/(?:www\.)?youtube.com\/watch\?v=\w+(&\S*)?$/
-              videoid = url.split("?v=")[1]
-              if videoid.length == 11
-                youtube_data_url = "http://gdata.youtube.com/feeds/api/videos/"
-                youtube_video_url = "http://www.youtube.com/embed/"
-                get_url = youtube_data_url + videoid
-                $.ajax
-                  async:    true
-                  type:     "GET"
-                  url:      get_url
-                  context:  this
-                  success: (data, status, xhr) ->
-                    embed_url = youtube_video_url + videoid
-                    $("iframe").attr "src", embed_url
-                    remove_button()
-                  error: (data, status, xhr) ->
-                    $("#caution").text(status + " :" + xhr.status)
-                  complete: (xhr, status) ->
-                    $("#caution").text(status + " :" + xhr.status)
-              else
-                $("#caution").text("Invalid URL: video id is too short")
+      YOUTUBE_URL_MIN_LENGTH   = 41
+      YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
+      # TODO: constantize '11'
+      YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:www\.)?youtube.com\/watch\?v=([^&]{11,})(&\S*)?$/
+      VIDEOID_MATCH_INDEX      = 1
+      getVideo = ->
+        url = $(this).val()
+        if w.previous_url != url
+          w.previous_url = url
+          if url.length > YOUTUBE_URL_MIN_LENGTH
+            if matched = url.match YOUTUBE_WATCH_URL_REGEXP
+              w.videoId = matched[VIDEOID_MATCH_INDEX]
+              embed_url = YOUTUBE_EMBED_URL_BASE + w.videoId
+              $("iframe.video-form-preview").attr "src", embed_url
             else
-              $("#caution").text("Invalid URL: not youtube.")
+              $("#caution").text "Invalid Youtube URL"
 
-      $(document).on "keyup", "input#recipe_youtube_url", check_video_url
-      $(document).on "change", "input#recipe_youtube_url", check_video_url
+      $(document).on "keyup", "input#youtube-url-input", getVideo
+      $(document).on "change", "input#youtube-url-input", getVideo
+
+      $(document).on "click", "#video-form-buttons .ok-btn", (event) ->
+        event.preventDefault()
+        $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
+        $("input#youtube-url-field").val w.videoId
+        $.fancybox.close()
+      $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
+        event.preventDefault()
+        $.fancybox.close()
   
       $("iframe").hover ->
           $("#photo-upload-btn").css "display","block"
