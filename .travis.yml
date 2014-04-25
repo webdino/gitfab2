@@ -5,5 +5,3 @@ before_script:
   - ln -s /home/travis/build/mozilla-japan/gitfab2/config/database.ymls/travis.yml /home/travis/build/mozilla-japan/gitfab2/config/database.yml
   - mysql -e "create database gitfab2_test;"
   - mkdir -p /home/travis/build/mozilla-japan/gitfab2/tmp/repositories_test
-  - bundle exec rake db:migrate
-  - bundle exec rake db:prepare
