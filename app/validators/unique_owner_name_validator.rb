@@ -1,7 +1,9 @@
 class UniqueOwnerNameValidator < ActiveModel::EachValidator
   def validate record
-    if User.find_by(slug: record.name) || Group.find_by(slug: record.name)
-      record.errors[:name] << "has been alreadly taken."
+    _rec   = User.find_by slug: record.name
+    _rec ||= Group.find_by slug: record.name
+    if _rec && record != _rec
+      record.errors[:name] << "has already been taken."
     end
   end
 end

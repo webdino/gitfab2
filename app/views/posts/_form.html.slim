@@ -1,4 +1,12 @@
 == nested_form_for [@owner, @recipe, @post], html: {multipart: true, class: "post-form"} do |f|
+  - if @post.errors.any?
+    #error_explanation
+      h2
+        == pluralize(@post.errors.count, "error")
+        'prohibited this user from being saved:
+      ul
+        - @post.errors.full_messages.each do |msg|
+          li == msg
   dl
     dt
       'Title

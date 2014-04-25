@@ -42,7 +42,7 @@ class Recipe < ActiveRecord::Base
   after_commit :reassoc_ways
   after_destroy :destroy_repo!
 
-  validates :name, presence: true
+  validates :name, :title, presence: true
 
   paginates_per 10
 
@@ -139,5 +139,9 @@ class Recipe < ActiveRecord::Base
           way.update_attributes status_id: status.id, reassoc_token: nil
       end
     end
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
   end
 end
