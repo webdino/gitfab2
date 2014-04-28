@@ -1,6 +1,8 @@
-main#posts-edit
-  == render "basic_information"
-  == render "utils"
+- content_for :utils do
+  == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: []
+
+main#posts-edit.recipe-layout
+  == render "recipes/basic_information"
 
   section#links
     == render "links"
