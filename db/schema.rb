@@ -193,6 +193,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "recipe_id"
     t.string   "filename"
     t.integer  "position"
+    t.string   "title"
     t.text     "description"
     t.string   "photo"
     t.datetime "created_at"

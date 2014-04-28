@@ -4,6 +4,7 @@ class CreateUsages < ActiveRecord::Migration
       t.belongs_to :recipe, index: true
       t.string :filename, index: true
       t.integer :position, index: true
+      t.string :title
       t.text :description
       t.string :photo
 

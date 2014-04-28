@@ -1,0 +1,33 @@
+@import "mixins/variables.css.scss";
+@import "mixins/clearfix.css.scss";
+@import "mixins/rows.css.scss";
+#recipes-show {
+  section#usages {
+    width: $content-width;
+    ul#usage-list {
+      @include cf;
+      margin-left: -40px;
+      li.usage {
+        margin: 0 0 20px 40px;
+        float: left;
+        .photo {
+          margin-bottom: 6px;
+        }
+        .summary {
+          @include cf;
+          p.star {
+            float: right;
+          }
+        }
+      }
+    }
+    .add-form-wrap {
+      a.add-btn {
+        font-size: 24px;
+      }
+      form {
+        display: none;
+      }
+    }
+  }
+}

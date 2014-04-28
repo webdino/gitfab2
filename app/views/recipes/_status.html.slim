@@ -3,16 +3,14 @@ li.status
     .photo
       == link_to "", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
     .summary
-      span.index-field
-        == "Status #{item.position}"
-      span.star
+      p.star
         == toggle_star_link_for item
-      .description
+      p.description
         == item.description
 
   .ways
     .arrow
+      .add-way == render "add_way_form", status: item, item: item.ways.build
     ul
       - item.ways.each do |way|
         == render "recipes/way", item: way
-    == render "add_way_form", status: item, item: item.ways.build

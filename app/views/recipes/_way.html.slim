@@ -2,8 +2,8 @@ li.way
   .photo
     == link_to "", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
   .summary
-    span.star
+    p.star
       == toggle_star_link_for item
-    .description
+    p.description
       == item.description
   == render "recipes/edit_way_form", status: item.status, item: item
