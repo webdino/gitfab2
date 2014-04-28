@@ -1,0 +1,8 @@
+@import "mixins/clearfix.css.scss";
+#content.recipe-layout {
+  @include cf;
+  #project-summary {
+    @include cf;
+    margin-bottom: 30px;
+  }
+}

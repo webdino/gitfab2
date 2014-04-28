@@ -3,7 +3,7 @@
 == content_for :javascript do
   == javascript_include_tag "recipe", "data-turbolinks-track" => true
 - content_for :content do
-  #content
+  #content.recipe-layout
     == yield
     == yield :utils
 == render "layouts/base_layout"
