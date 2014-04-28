@@ -1,7 +1,5 @@
 - content_for :utils do
   == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:save]
 
-div id="recipes-new"
-  main
-    section#basic-information
-      == render "form"
+main#recipes-new
+  == render "form"

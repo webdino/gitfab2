@@ -1,6 +1,10 @@
 @import "mixins/clearfix.css.scss";
 #content.recipe-layout {
   @include cf;
+  main {
+    width: 700px;
+    margin-right: 20px;
+  }
   #project-summary {
     @include cf;
     margin-bottom: 30px;
