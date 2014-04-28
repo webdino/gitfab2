@@ -6,41 +6,55 @@ main#posts-show.recipe-layout
 
   section#links
     == render "links"
-    == link_to "Edit", [:edit, @owner, @recipe, @post]
+    == link_to "Edit Post", [:edit, @owner, @recipe, @post]
+
+  h1#post-header
+    'Journal
 
   h1#post-title
-    = @post.title
+    == @post.title
 
   h2#post-meta
     .author
+      .decoration-text
+        'posted by
       == link_to recipes_path(owner_name: @post.user.name) do
-        == image_tag @post.user.avatar, class: "avatar"
         .name
-          =@post.user.name
+          == @post.user.name
     .created_at
-      = @post.created_at
+      == @post.created_at
 
   section#post-body
-    = @post.body.html_safe
+    == @post.body.html_safe
+
+  section#links
+    == link_to "Journal List", [@owner, @recipe, :posts]
 
   section#comments
-    h1
-      'Comments
+    #comments-meta
+      .how-many
+        == "#{@post.comments.length} comments"
+    ul#comment-list
+      - @post.comments.each do |comment|
+        == render "comments/comment", comment: comment
+
     == form_for Comment.new, remote: true do |f|
-      p == f.text_field :title
-      p == f.text_area :comment
+      == image_tag current_user.avatar, class: "avatar"
+      == f.text_area :comment, placeholder: "Add comment…"
       == f.hidden_field :commentable_type, value: @post.class.name
       == f.hidden_field :commentable_id, value: @post.id
-      p == f.submit "Add Comment"
-  
-    - @post.comments.created_at_desc.each do |comment|
-      == render "comments/comment", comment: comment
-  
+      == f.submit "Add Comment", id: "submit-comment"
+      #submit-comment-btn
+        'Add Comment
+
   - content_for :bottom
     coffee:
       $(document).on "click", ".comment .delete-btn", ->
         $(this).closest("article").remove()
-  
+
       $(document).on "ajax:success", "#new_comment", (e, data) ->
-        $("#new_comment").after data.html
+        $("ul#comment-list").append data.html
         $("#new_comment").find(":text, textarea").val ""
+
+      $(document).on "click", "#submit-comment-btn", ->
+        $("#submit-comment").trigger "click"

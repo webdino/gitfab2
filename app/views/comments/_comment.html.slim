@@ -1,10 +1,15 @@
 li.comment
-  p
-    == comment.title
+  .comment-meta
+    .avatar
+      == image_tag comment.user.avatar, class: "avatar"
+    .user-name
+      == comment.user.name
+    .created-at
+      == comment.created_at
     span.star
       == toggle_star_link_for comment
-  p
+  .comment-body
     == comment.comment
   - if can? :destroy, comment
-    p
+    .comment-link
       == link_to "delete", comment, method: :delete, remote: true, class: "delete-btn"
