@@ -27,19 +27,4 @@ main {
       }
     }
   }
-  #making {
-    width: 960px;
-    padding: 30px 20px 30px 0;
-    min-height: 100px;
-    li {
-      list-style: none;
-    }
-    a.item-photo {
-      display: block;
-      width: 240px;
-      height: 180px;
-      background-size: cover;
-      background-position: center;
-    }
-  }
 }

@@ -1,0 +1,79 @@
+@import "mixins/clearfix.css.scss";
+main#recipes-show {
+  #making {
+    width: 960px;
+    padding: 30px 20px 30px 0;
+    min-height: 100px;
+    li.status {
+      .photo {
+        float: left;
+        a.item-photo {
+          display: block;
+          width: 240px;
+          height: 180px;
+          background-size: cover;
+          background-position: center;
+        }
+      }
+      @include cf;
+      .status-fields {
+        @include cf;
+        .summary {
+          float: left;
+          margin-left: 20px;
+        }
+      }
+      &:first-child{
+        min-height: 180px;
+      }
+      &:not(:first-child) {
+        min-height: 180px;
+      }
+      .ways {
+        @include cf;
+        width: 100%;
+        margin-top: 10px;
+        .add-form,
+        .edit-form {
+          display: none;
+        }
+        li.way {
+          @include cf;
+          float: left;
+          width: 400px;
+          height: 180px;
+          margin: 0 20px 20px 0;
+          .summary {
+            float: left;
+            .description {
+              margin: 10px;
+              width: 140px;
+              text-align: left;
+              font-size: 14px;
+            }
+          }
+          &:not(:first-child) {
+            height: 90px;
+            width: 260px;
+            margin: 0;
+            a.item-photo {
+              width: 80px;
+              max-height: 60px;
+            }
+          }
+        }
+        .arrow {
+          float: left;
+          width: 140px;
+          height: 125px;
+          padding: 100px 0px 0px 140px;
+          position: center;
+          background-image: asset-url("arrow.png");
+          background-repeat: no-repeat;
+          background-size: 45px 200px;
+          background-position: 90px 0;
+        }
+      }
+    }
+  }
+}
