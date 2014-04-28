@@ -17,10 +17,8 @@
       height: 90px;
       width: 240px;
       @include cf;
-      .photo {
+      a.item-photo {
         float: left;
-      }
-      .photo img {
         width: 80px;
         max-height: 60px;
       }
@@ -34,10 +32,9 @@
         }
       }
       &:first-child {
-        width: auto;
         height: 180px;
         margin: 0 20px 20px 0;
-        .photo img {
+        a.item-photo {
           width: 240px;
           max-height: 180px;
         }
