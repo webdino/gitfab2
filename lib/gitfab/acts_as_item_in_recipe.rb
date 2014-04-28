@@ -2,6 +2,8 @@ module Gitfab::ActsAsItemInRecipe
   extend ActiveSupport::Concern
   included do
     acts_as_list scope: :recipe
+    acts_as_votable
+
     scope :sorted_by_position, ->{order :position}
     mount_uploader :photo, ItemPhotoUploader
 

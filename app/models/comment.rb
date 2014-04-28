@@ -3,7 +3,9 @@ class Comment < ActiveRecord::Base
 
   include ActsAsCommentable::Comment
 
-  belongs_to :commentable, :polymorphic => true
+  acts_as_votable
+
+  belongs_to :commentable, polymorphic: true
 
   scope :created_at_desc, ->{order "created_at DESC"}
 

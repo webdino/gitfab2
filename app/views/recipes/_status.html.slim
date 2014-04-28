@@ -5,6 +5,8 @@ li.status
     .summary
       span.index-field
         == "Status #{item.position}"
+      span.star
+        == toggle_star_link_for item
       .description
         == item.description
 
