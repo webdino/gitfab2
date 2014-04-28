@@ -1,7 +1,7 @@
 - content_for :utils do
   == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:tag, :post]
 
-main#posts-index
+main#posts-index.recipe-layout
   == render "recipes/basic_information"
 
   section#links
