@@ -33,23 +33,26 @@ $popup-width: 360px;
   float: left;
   background: #EEE;
   #tooltips {
-    @include cf;
-    width: 100%;
-    height: 120px;
+    height: 118px;
+    border: 1px solid #000;
+    #slide-show-button,
+    #fork-button {
+      display: inline-block;
+      width: 118px;
+      height: 118px;
+      a {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
     #slide-show-button {
-      float: left;
-      margin: 0;
-      width: 120px;
-      height: 120px;
-      background-image: url("http://placehold.it/120x120");
+      background-image: asset-url("slideshow.png");
+      border-right: 1px solid #000;
+      cursor: pointer;
     }
     #fork-button {
-      float: left;
-      margin: 0;
-      width: 120px;
-      height: 120px;
-      background-image: url("http://placehold.it/120x120");
-      display: block;
+      background-image: asset-url("fork.png");
     }
   }
   #user-info {
