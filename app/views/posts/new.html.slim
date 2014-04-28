@@ -1,7 +1,9 @@
+- content_for :utils do
+  == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: []
 
-main#posts-new
-  == render "basic_information"
-  == render "utils"
+main#posts-new.recipe-layout
+  == render "recipes/basic_information"
+
   section#links
     == render "links"
 

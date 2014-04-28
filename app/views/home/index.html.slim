@@ -9,11 +9,11 @@ main#home-index
     - @recipes.each do |recipe|
       li.recipe-item
         article.recipe
-          == link_to [recipe.owner, recipe] do
+          == link_to recipe_path(recipe, owner_name: recipe.owner) do
             p.cover style="background-image: url('#{recipe.photo.url}')"
           span.summary
             span.title
-              == link_to recipe.title, [recipe.owner, recipe]
+              == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
             span.description
               == recipe.description
 

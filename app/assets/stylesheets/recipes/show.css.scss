@@ -1,7 +1,7 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
-#recipes-show {
+main.recipe-layout {
   @include cf;
   #project-summary {
     @include cf;

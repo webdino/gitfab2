@@ -1,10 +1,13 @@
 section#basic-information
   h1
     == @recipe.title
-  .visual style="background-image: url('#{@recipe.photo}')"
 
-  section.description
-    h1
-      'Abstract
-    .text
-      == @recipe.description
+  #project-summary
+    .visual style="background-image: url('#{@recipe.photo if @recipe.photo.present?}')"
+      iframe src="#{@recipe.youtube_embed_url}"
+
+    section.description
+      h1
+        'Abstract
+      .text
+        == @recipe.description

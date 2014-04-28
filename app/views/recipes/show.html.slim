@@ -1,7 +1,7 @@
 - content_for :utils do
   == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:fork, :slide, :tag]
 
-main#recipes-show
+main#recipes-show.recipe-layout
   p
     == link_to "posts", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
     '|
@@ -10,19 +10,7 @@ main#recipes-show
     == toggle_star_link_for @recipe
   p id="notice" =notice
 
-  section#basic-information
-    h1
-      == @recipe.title
-
-    #project-summary
-      .visual style="background-image: url('#{@recipe.photo if @recipe.photo.present?}')"
-        iframe src="#{@recipe.youtube_embed_url}"
-
-      section.description
-        h1
-          'Abstract
-        .text
-          == @recipe.description
+  == render "basic_information"
 
   section#materials
     h1
