@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :build_post, only: [:new, :create]
   before_action :load_post, only: [:show, :edit, :update, :destroy]
 
-  layout "recipe"
+  layout "posts"
 
   authorize_resource
 
