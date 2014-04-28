@@ -1,6 +1,8 @@
 li.comment
   p
     == comment.title
+    span.star
+      == toggle_star_link_for comment
   p
     == comment.comment
   - if can? :destroy, comment

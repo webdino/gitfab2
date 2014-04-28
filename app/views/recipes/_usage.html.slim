@@ -2,5 +2,7 @@ li.usage
   .photo
     == link_to image_tag(item.photo.url), item.photo.url
   .summary
+    span.star
+      == toggle_star_link_for item
     .description
       == item.description
