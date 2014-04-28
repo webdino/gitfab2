@@ -12,11 +12,10 @@ section#recipes-utils
           == link_to "New Journal", [:new, current_user, @recipe, :post], id: "add-journal-btn"
     - if available_operations.include? :slide
       #slide-show-button
-        p
-          == link_to "Slideshow", "#", id: "slideshow-btn"
+        == link_to "", "#", id: "slideshow-btn"
     - if available_operations.include? :fork
       #fork-button
-        == link_to "fork", "#fork-destinations", id: "fork-button", class: "fancybox"
+        == link_to "", "#fork-destinations", class: "fancybox"
       #fork-destinations
         - if signed_in?
           == render "fork_destination", owner: current_user, recipe: @recipe
