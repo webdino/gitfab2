@@ -7,6 +7,7 @@ main#recipes-show {
     li.status {
       .photo {
         float: left;
+        margin: 0 20px 2px 0;
         a.item-photo {
           display: block;
           width: 240px;
@@ -15,12 +16,14 @@ main#recipes-show {
           background-position: center;
         }
       }
+      .edit-form-wrap {
+        float: left;
+      }
       @include cf;
       .status-fields {
         @include cf;
         .summary {
           float: left;
-          margin-left: 20px;
         }
       }
       &:first-child{
@@ -37,41 +40,66 @@ main#recipes-show {
         .edit-form {
           display: none;
         }
-        li.way {
-          @include cf;
-          float: left;
-          width: 400px;
-          height: 180px;
-          margin: 0 20px 20px 0;
-          .summary {
-            float: left;
-            .description {
-              margin: 10px;
-              width: 140px;
-              text-align: left;
-              font-size: 14px;
-            }
-          }
-          &:not(:first-child) {
-            height: 90px;
-            width: 260px;
-            margin: 0;
-            a.item-photo {
-              width: 80px;
-              max-height: 60px;
-            }
-          }
-        }
         .arrow {
           float: left;
-          width: 140px;
-          height: 125px;
-          padding: 100px 0px 0px 140px;
+          width: 240px;
+          height: 200px;
+          margin-right: 40px;
           position: center;
           background-image: asset-url("arrow.png");
           background-repeat: no-repeat;
           background-size: 45px 200px;
           background-position: 90px 0;
+          position: relative;
+          .add-way {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            a {
+              font-size: 24px;
+            }
+          }
+        }
+        ul {
+          @include cf;
+        }
+        li.way {
+          @include cf;
+          float: left;
+          width: 480px;
+          height: 180px;
+          margin: 0 20px 20px 0;
+          .summary {
+            width: 100%;
+            .description {
+              margin: 10px;
+              width: 100%;
+              text-align: left;
+              font-size: 14px;
+            }
+          }
+          &:not(:first-child) {
+            width: 80px;
+            height: 100px;
+            margin: 0 10px 0 0;
+            .photo {
+              margin: 0;
+            }
+            .summary {
+              width: 100%;
+              p.star {
+                text-align: right;
+                width: 100%;
+              }
+              .description {
+                display: none;
+              }
+            }
+            a.item-photo {
+              width: 80px;
+              max-height: 60px;
+            }
+          }
         }
       }
     }
