@@ -9,30 +9,32 @@
           li == msg
   - if @owner.is_a?(User) && @owner.groups.any?
     == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
-  == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
-  == f.text_field :name, placeholder: "Input_Repository_Name"
-  #project-summary
-    section.visual style="background-image: url('#{@recipe.photo}')"
-      iframe src="#{@recipe.youtube_embed_url}"
-      .video-form-wrapper
-        == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
-        == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
-        == link_to "Input YouTube URL…", "#video-form", id: "input-video-btn", class: "fancybox"
-        #video-form
-          p
-            'Input a Youtube URL
-          == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.youtube_url}", id: "youtube-url-input"
-          == f.hidden_field :youtube_url, id: "youtube-url-field" 
-          #caution style="font-size: 12px; color: red;"
-          #video-form-preview-wrapper
-            iframe.video-form-preview src: #{f.object.youtube_url}
-          #video-form-buttons
-            == link_to "OK", "#", class: "ok-btn btn"
-            == link_to "Cancel", "#", class: "cancel-btn btn"
-    section.description
-      h1
-        'Summary
-      == f.text_area :description, placeholder: "Add Summary", tabindex: 3
+  #basic-information
+    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
+    == f.text_field :name, placeholder: "Input_Repository_Name"
+    #project-summary
+      section.visual style="background-image: url('#{@recipe.photo}')"
+        - if @recipe.youtube_url
+          iframe src="#{@recipe.youtube_embed_url}"
+        .video-form-wrapper
+          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
+          == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
+          == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox"
+          #video-form
+            p
+              'Input a Youtube URL
+            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.youtube_url}", id: "youtube-url-input"
+            == f.hidden_field :youtube_url, id: "youtube-url-field" 
+            #caution style="font-size: 12px; color: red;"
+            #video-form-preview-wrapper
+              iframe.video-form-preview src: #{f.object.youtube_url}
+            #video-form-buttons
+              == link_to "OK", "#", class: "ok-btn btn"
+              == link_to "Cancel", "#", class: "cancel-btn btn"
+      section.description
+        h1
+          'Summary
+        == f.text_area :description, placeholder: "Add Summary", tabindex: 3
 
   - if @recipe.persisted?
     #materials
@@ -122,6 +124,8 @@
 
       $(document).on "click", "#video-form-buttons .ok-btn", (event) ->
         event.preventDefault()
+        if $("section.visual iframe").length < 1
+          $("section.visual").append "<iframe></iframe>"
         $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
         $("input#youtube-url-field").val w.videoId
         $.fancybox.close()

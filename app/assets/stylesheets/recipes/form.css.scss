@@ -12,6 +12,10 @@ form.recipe-form {
   input#recipe_name {
     display: none;
   }
+  input#recipe_youtube_url {
+    width: 580px;
+    font-size: 12px;
+  }
   #project-summary {
     @include cf;
     .description {
@@ -35,57 +39,36 @@ form.recipe-form {
       text-align: center;
       background-size: contain;
       background-repeat: no-repeat;
-      position: relative;
       margin-right: 20px;
+      position: relative;
       iframe {
         width: 480px;
         height: 360px;
+        position: absolute;
+        top: 0;
+        left: 0;
       }
       .video-form-wrapper {
-        margin-top: -360px;
-        width: 480px;
-        height: 300px;
-        #photo-upload-btn {
-          display: block;
-          margin: 55px 100px;
-          width: 280px;
-          height: 100px;
-          font-size: 24px;
-          font-weight: 700;
-          line-height: 100px;
-          text-align: center;
-          background: white;
-          position: absolute;
-          z-index: 999;
-        }
+        height: 100%;
+        #photo-upload-btn,
         #input-video-url-btn {
           display: block;
-          margin: 200px 100px;
-          width: 280px;
-          height: 100px;
           font-size: 24px;
           font-weight: 700;
-          line-height: 100px;
-          text-align: center;
-          background: white;
           position: absolute;
           z-index: 999;
+          top: 20%;
+          left: 26%;
+          padding: 20px;
+          background: #fff;
+        }
+        #input-video-url-btn {
+          top: 62%;
+          left: 26%;
         }
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
 
   #making {
     & > .fields {
@@ -133,7 +116,3 @@ form.recipe-form {
   }
 }
 
-input#recipe_youtube_url {
-  width: 580px;
-  font-size: 12px;
-}
