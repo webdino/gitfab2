@@ -2,8 +2,7 @@
   == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:save, :delete]
 
 main#recipes-edit
-  section#basic-information
-    == render "form"
+  == render "form"
 
 - content_for :bottom
   coffee:
