@@ -1,11 +1,13 @@
 #links {
-  margin-top: 40px;
+  margin-top: 20px;
   a {
     text-decoration: none;
     color: black;
     margin-right: 10px;
     border-left: 1px solid gray;
-    padding-left: 10px;
+    &:not(:first-child) {
+      padding-left: 10px;
+    }
   }
 
   a:first-child {

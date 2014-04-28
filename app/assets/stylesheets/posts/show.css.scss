@@ -4,37 +4,129 @@
       width: 100%;
     }
   }
-  #post-title {
+  #post-header {
     width: 720px;
-    padding: 15px 0px;
+    padding: 15px 0 0 0;
+    font-size: 36px;
+  }
+  #post-title {
+    width: 680px;
+    margin: 36px 20px 8px;
     font-size: 32px;
   }
   #post-meta {
+    width: 680px;
+    margin: 0 20px;
     .author {
       display: inline-block;
+      .decoration-text {
+        height: 26px;
+        vertical-align: middle;
+        display: inline-block;
+        font-weight: 500;
+      }
       .avatar {
         width: 40px;
         height: 40px;
       }
       .name {
-        height: 40px;
+        height: 26px;
         vertical-align: middle;
         display: inline-block;
         margin-left: 10px;
       }
     }
     .created_at {
-      height: 40px;
+      height: 26px;
       vertical-align: middle;
       display: inline-block;
       margin-left: 10px;
+      font-weight: 500;
     }
   }
+
   #post-body {
-    width: 720px;
-    font-size: 14px;
+    width: 640px;
+    font-size: 18px;
     white-space: pre-wrap;
+    margin: 0px 20px;
+    padding: 20px 20px;
+    border-top : solid 1px black;
+    border-bottom : solid 1px black;
   }
+
+  #comments {
+    margin-top: 20px;
+    #comments-meta {
+      display: inline-block;
+      width: 100%;
+      padding-bottom: 6px;
+      border-bottom : solid 1px black;
+      .how-many {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+
+    ul#comment-list {
+      margin: 0;
+      list-style: none;
+      li.comment{
+        display: inline-block;
+        margin-top: 20px;
+        width: 100%;
+        .comment-meta {
+          .avatar {
+            float: left;
+            width: 40px;
+            height: 40px;
+          }
+          .user-name, .created-at {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 12px;
+            font-weight: 700;
+          }
+        }
+        .comment-body {
+          margin: 5px 0 0 60px;
+          width: 600px;
+          font-size: 18px;
+        }
+        .comment-link {
+          float: right;
+          width: auto;
+        }
+      }
+    }
+
+    form#new_comment {
+      display: inline-block;
+      margin: 20px 0;
+      .avatar {
+        float: left;
+        width: 40px;
+        height: 40px;
+      }
+      #comment_comment {
+        float: left;
+        width: 620px;
+        height: 36px;
+        margin-left: 20px;
+      }
+      #submit-comment {
+        display: none;
+      }
+      #submit-comment-btn {
+        float: right;
+        margin-top: 6px;
+        font-weight: 900;
+      }
+    }
+  }
+
+
   footer {
     width: 700px;
     margin-top: 20px;

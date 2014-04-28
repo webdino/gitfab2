@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
   authorize_resource
 
   def create
+    @comment.user = current_user
     if @comment.save
       render :create
     else
