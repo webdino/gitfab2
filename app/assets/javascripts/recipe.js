@@ -17,5 +17,6 @@
 //= require jquery.remotipart
 //= require turbolinks
 //= require jquery.turbolinks
+//= require tinymce
 //= require_tree ./fancybox
 //= require_tree ./helpers
