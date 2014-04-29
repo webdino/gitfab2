@@ -1,4 +1,5 @@
 class Group < ActiveRecord::Base
+  FULLTEXT_SEARCHABLE_COLUMNS = [:name]
   UPDATABLE_COLUMNS = [:id, :name, :creator, member_ids: []]
 
   extend FriendlyId
