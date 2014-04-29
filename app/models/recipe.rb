@@ -58,6 +58,11 @@ class Recipe < ActiveRecord::Base
         end.flatten
       end
     end
+    text :owner do
+      (self.owner.class)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
+        self.owner.send col
+      end
+    end
   end
 
   def owner
