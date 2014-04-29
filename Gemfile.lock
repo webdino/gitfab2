@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/radar/paranoia.git
+  revision: d657443970a857c88f212c6f7e2265d7e2ec98d5
+  branch: rails4
+  specs:
+    paranoia (2.0.2)
+      activerecord (~> 4.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -383,6 +391,7 @@ DEPENDENCIES
   mini_magick
   mysql2
   nested_form
+  paranoia!
   progress_bar
   pry-debugger
   pry-rails

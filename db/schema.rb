@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "orig_recipe_id"
     t.string   "slug"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
