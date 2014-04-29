@@ -9,8 +9,11 @@ class CreateWays < ActiveRecord::Migration
       t.text :description
       t.integer :position, index: true
       t.string :reassoc_token
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
+
+    add_index :ways, :cached_votes_score
   end
 end

@@ -11,8 +11,11 @@ class CreateMaterials < ActiveRecord::Migration
       t.belongs_to :recipe, index: true
       t.belongs_to :status, index: true
       t.integer :position, index: true
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
+
+    add_index :materials, :cached_votes_score
   end
 end

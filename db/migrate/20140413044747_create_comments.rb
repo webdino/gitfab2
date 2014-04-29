@@ -7,11 +7,14 @@ class CreateComments < ActiveRecord::Migration
       t.references :user
       t.string :role, :default => "comments"
       t.timestamps
+
+      t.integer :cached_votes_score, default: 0
     end
 
     add_index :comments, :commentable_type
     add_index :comments, :commentable_id
     add_index :comments, :user_id
+    add_index :comments, :cached_votes_score
   end
 
   def self.down

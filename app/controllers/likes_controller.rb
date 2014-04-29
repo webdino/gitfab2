@@ -1,6 +1,5 @@
 class LikesController < ApplicationController
-  before_action :load_votable, only: :create
-  before_action :load_like, only: :destroy
+  before_action :load_votable, only: [:create, :destroy]
   before_action :build_like, only: :create
 
   authorize_resource
@@ -14,7 +13,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    @like.destroy
+    current_user.unlike @votable
   end
 
   private
@@ -25,10 +24,6 @@ class LikesController < ApplicationController
 
   def build_like
     @like = @votable.likes.build.becomes Like
-  end
-
-  def load_like
-    @like = Like.find params[:id]
   end
 
   def like_params

@@ -9,8 +9,11 @@ class CreateTools < ActiveRecord::Migration
       t.belongs_to :recipe, index: true
       t.belongs_to :way, index: true
       t.integer :position, index: true
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
+
+    add_index :tools, :cached_votes_score
   end
 end
