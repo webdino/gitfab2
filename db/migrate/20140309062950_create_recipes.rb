@@ -12,7 +12,6 @@ class CreateRecipes < ActiveRecord::Migration
       t.integer :orig_recipe_id, index: true
       t.string :slug
       t.integer :cached_votes_score, default: 0
-      t.datetime :deleted_at
 
       t.timestamps
     end

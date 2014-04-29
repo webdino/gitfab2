@@ -16,10 +16,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   create_table "collaborations", force: true do |t|
     t.integer  "user_id"
     t.integer  "recipe_id"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "collaborations", ["deleted_at"], name: "index_collaborations_on_deleted_at", using: :btree
   add_index "collaborations", ["recipe_id"], name: "index_collaborations_on_recipe_id", using: :btree
   add_index "collaborations", ["user_id"], name: "index_collaborations_on_user_id", using: :btree
 
@@ -32,20 +34,25 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "role",                          default: "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "deleted_at"
     t.integer  "cached_votes_score",            default: 0
   end
 
   add_index "comments", ["cached_votes_score"], name: "index_comments_on_cached_votes_score", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
+  add_index "comments", ["deleted_at"], name: "index_comments_on_deleted_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "contributor_recipes", force: true do |t|
     t.integer  "contributor_id"
     t.integer  "recipe_id"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "contributor_recipes", ["deleted_at"], name: "index_contributor_recipes_on_deleted_at", using: :btree
 
   create_table "friendly_id_slugs", force: true do |t|
     t.string   "slug",                      null: false
@@ -84,11 +91,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "status_id"
     t.integer  "position"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "materials", ["cached_votes_score"], name: "index_materials_on_cached_votes_score", using: :btree
+  add_index "materials", ["deleted_at"], name: "index_materials_on_deleted_at", using: :btree
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
 
@@ -107,10 +116,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   create_table "post_attachments", force: true do |t|
     t.integer  "recipe_id"
     t.string   "content"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "post_attachments", ["deleted_at"], name: "index_post_attachments_on_deleted_at", using: :btree
   add_index "post_attachments", ["recipe_id"], name: "index_post_attachments_on_recipe_id", using: :btree
 
   create_table "posts", force: true do |t|
@@ -119,11 +130,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "title"
     t.text     "body"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "posts", ["cached_votes_score"], name: "index_posts_on_cached_votes_score", using: :btree
+  add_index "posts", ["deleted_at"], name: "index_posts_on_deleted_at", using: :btree
   add_index "posts", ["recipe_id"], name: "index_posts_on_recipe_id", using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
@@ -140,7 +153,6 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "orig_recipe_id"
     t.string   "slug"
     t.integer  "cached_votes_score", default: 0
-    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -158,11 +170,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "recipe_id"
     t.string   "reassoc_token"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "statuses", ["cached_votes_score"], name: "index_statuses_on_cached_votes_score", using: :btree
+  add_index "statuses", ["deleted_at"], name: "index_statuses_on_deleted_at", using: :btree
   add_index "statuses", ["recipe_id"], name: "index_statuses_on_recipe_id", using: :btree
 
   create_table "taggings", force: true do |t|
@@ -194,11 +208,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "way_id"
     t.integer  "position"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "tools", ["cached_votes_score"], name: "index_tools_on_cached_votes_score", using: :btree
+  add_index "tools", ["deleted_at"], name: "index_tools_on_deleted_at", using: :btree
   add_index "tools", ["recipe_id"], name: "index_tools_on_recipe_id", using: :btree
   add_index "tools", ["way_id"], name: "index_tools_on_way_id", using: :btree
 
@@ -210,11 +226,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.text     "description"
     t.string   "photo"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "usages", ["cached_votes_score"], name: "index_usages_on_cached_votes_score", using: :btree
+  add_index "usages", ["deleted_at"], name: "index_usages_on_deleted_at", using: :btree
   add_index "usages", ["recipe_id"], name: "index_usages_on_recipe_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -266,11 +284,13 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "position"
     t.string   "reassoc_token"
     t.integer  "cached_votes_score", default: 0
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "ways", ["cached_votes_score"], name: "index_ways_on_cached_votes_score", using: :btree
+  add_index "ways", ["deleted_at"], name: "index_ways_on_deleted_at", using: :btree
   add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
   add_index "ways", ["status_id"], name: "index_ways_on_status_id", using: :btree
 

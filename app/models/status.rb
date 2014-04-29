@@ -4,6 +4,8 @@ class Status < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
+  acts_as_paranoid
+
   has_many :materials
   has_many :ways, dependent: :destroy
 

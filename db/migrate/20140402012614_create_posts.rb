@@ -6,10 +6,12 @@ class CreatePosts < ActiveRecord::Migration
       t.string :title
       t.text :body
       t.integer :cached_votes_score, default: 0
+      t.datetime :deleted_at
 
       t.timestamps
     end
 
     add_index :posts, :cached_votes_score
+    add_index :posts, :deleted_at
   end
 end
