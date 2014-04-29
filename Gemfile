@@ -40,6 +40,7 @@ gem "kaminari"
 gem "acts-as-taggable-on", "~> 3.1.0"
 gem "acts_as_commentable"
 gem "acts_as_votable", "~> 0.8.0"
+gem "paranoia", github: "radar/paranoia", branch: "rails4"
 
 group :doc do
   gem "sdoc", require: false

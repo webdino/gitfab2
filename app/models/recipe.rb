@@ -10,6 +10,7 @@ class Recipe < ActiveRecord::Base
   acts_as_taggable
   acts_as_commentable
   acts_as_votable
+  acts_as_paranoid
 
   mount_uploader :photo, PhotoUploader
 
