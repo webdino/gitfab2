@@ -7,8 +7,11 @@ class CreateUsages < ActiveRecord::Migration
       t.string :title
       t.text :description
       t.string :photo
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
+
+    add_index :usages, :cached_votes_score
   end
 end

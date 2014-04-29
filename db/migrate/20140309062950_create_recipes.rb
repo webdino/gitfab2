@@ -11,6 +11,7 @@ class CreateRecipes < ActiveRecord::Migration
       t.integer :last_committer_id, index: true
       t.integer :orig_recipe_id, index: true
       t.string :slug
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
@@ -18,5 +19,6 @@ class CreateRecipes < ActiveRecord::Migration
     add_index :recipes, :owner_type
     add_index :recipes, :owner_id
     add_index :recipes, [:owner_id, :owner_type, :slug], unique: true
+    add_index :recipes, :cached_votes_score
   end
 end

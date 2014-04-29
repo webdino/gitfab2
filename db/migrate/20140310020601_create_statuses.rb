@@ -7,8 +7,11 @@ class CreateStatuses < ActiveRecord::Migration
       t.string :photo
       t.belongs_to :recipe, index: true
       t.string :reassoc_token
+      t.integer :cached_votes_score, default: 0
 
       t.timestamps
     end
+
+    add_index :statuses, :cached_votes_score
   end
 end

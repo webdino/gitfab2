@@ -24,16 +24,18 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   add_index "collaborations", ["user_id"], name: "index_collaborations_on_user_id", using: :btree
 
   create_table "comments", force: true do |t|
-    t.string   "title",            limit: 50, default: ""
+    t.string   "title",              limit: 50, default: ""
     t.text     "comment"
     t.integer  "commentable_id"
     t.string   "commentable_type"
     t.integer  "user_id"
-    t.string   "role",                        default: "comments"
+    t.string   "role",                          default: "comments"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "cached_votes_score",            default: 0
   end
 
+  add_index "comments", ["cached_votes_score"], name: "index_comments_on_cached_votes_score", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
@@ -81,10 +83,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "recipe_id"
     t.integer  "status_id"
     t.integer  "position"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "materials", ["cached_votes_score"], name: "index_materials_on_cached_votes_score", using: :btree
   add_index "materials", ["recipe_id"], name: "index_materials_on_recipe_id", using: :btree
   add_index "materials", ["status_id"], name: "index_materials_on_status_id", using: :btree
 
@@ -114,10 +118,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "user_id"
     t.string   "title"
     t.text     "body"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "posts", ["cached_votes_score"], name: "index_posts_on_cached_votes_score", using: :btree
   add_index "posts", ["recipe_id"], name: "index_posts_on_recipe_id", using: :btree
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
 
@@ -133,10 +139,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "last_committer_id"
     t.integer  "orig_recipe_id"
     t.string   "slug"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "recipes", ["cached_votes_score"], name: "index_recipes_on_cached_votes_score", using: :btree
   add_index "recipes", ["owner_id", "owner_type", "slug"], name: "index_recipes_on_owner_id_and_owner_type_and_slug", unique: true, using: :btree
   add_index "recipes", ["owner_id"], name: "index_recipes_on_owner_id", using: :btree
   add_index "recipes", ["owner_type"], name: "index_recipes_on_owner_type", using: :btree
@@ -148,10 +156,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "photo"
     t.integer  "recipe_id"
     t.string   "reassoc_token"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "statuses", ["cached_votes_score"], name: "index_statuses_on_cached_votes_score", using: :btree
   add_index "statuses", ["recipe_id"], name: "index_statuses_on_recipe_id", using: :btree
 
   create_table "taggings", force: true do |t|
@@ -182,10 +192,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "recipe_id"
     t.integer  "way_id"
     t.integer  "position"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "tools", ["cached_votes_score"], name: "index_tools_on_cached_votes_score", using: :btree
   add_index "tools", ["recipe_id"], name: "index_tools_on_recipe_id", using: :btree
   add_index "tools", ["way_id"], name: "index_tools_on_way_id", using: :btree
 
@@ -196,10 +208,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "title"
     t.text     "description"
     t.string   "photo"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "usages", ["cached_votes_score"], name: "index_usages_on_cached_votes_score", using: :btree
   add_index "usages", ["recipe_id"], name: "index_usages_on_recipe_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -250,10 +264,12 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.text     "description"
     t.integer  "position"
     t.string   "reassoc_token"
+    t.integer  "cached_votes_score", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "ways", ["cached_votes_score"], name: "index_ways_on_cached_votes_score", using: :btree
   add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
   add_index "ways", ["status_id"], name: "index_ways_on_status_id", using: :btree
 
