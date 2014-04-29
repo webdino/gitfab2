@@ -10,10 +10,12 @@ class CreateTools < ActiveRecord::Migration
       t.belongs_to :way, index: true
       t.integer :position, index: true
       t.integer :cached_votes_score, default: 0
+      t.datetime :deleted_at
 
       t.timestamps
     end
 
     add_index :tools, :cached_votes_score
+    add_index :tools, :deleted_at
   end
 end

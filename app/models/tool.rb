@@ -4,5 +4,7 @@ class Tool < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
+  acts_as_paranoid
+
   belongs_to :way
 end
