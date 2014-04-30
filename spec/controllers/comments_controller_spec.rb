@@ -20,7 +20,7 @@ describe CommentsController do
   describe "POST create" do
     context "when user logged in" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :post, :create, comment: valid_attributes
       end
       it_behaves_like "success"
@@ -36,7 +36,7 @@ describe CommentsController do
   describe "PATCH update" do
     context "when user is the owner of the comment" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :patch, :update, id: comment.id, comment: valid_attributes
       end
       it_behaves_like "success"
@@ -52,7 +52,7 @@ describe CommentsController do
   describe "DELETE destroy" do
     context "when user is the owner of the comment" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :delete, :destroy, id: comment.id
       end
       it_behaves_like "success"

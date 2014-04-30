@@ -17,7 +17,7 @@ describe WaysController do
   describe "POST create" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return recipe.owner
+        sign_in recipe.owner
         xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, way: valid_attributes
       end
@@ -25,7 +25,7 @@ describe WaysController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, way: valid_attributes
       end
@@ -34,7 +34,7 @@ describe WaysController do
     end
     context "with a member of the group which owns the recipe" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         g_recipe.owner.add_editor user2
         xhr :post, :create, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
           status_id: g_status.id, way: valid_attributes
@@ -46,7 +46,7 @@ describe WaysController do
   describe "PATCH update" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return recipe.owner
+        sign_in recipe.owner
         xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id, way: valid_attributes
       end
@@ -54,7 +54,7 @@ describe WaysController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         xhr :patch, :update, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id, way: valid_attributes
       end
@@ -62,7 +62,7 @@ describe WaysController do
     end
     context "with a member of the group which owns the recipe" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         g_recipe.owner.add_editor user2
         xhr :patch, :update, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
           status_id: g_status.id, id: g_way.id, way: valid_attributes
@@ -74,7 +74,7 @@ describe WaysController do
   describe "DELETE destroy" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return recipe.owner
+        sign_in recipe.owner
         xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id
       end
@@ -82,7 +82,7 @@ describe WaysController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id
       end
@@ -90,7 +90,7 @@ describe WaysController do
     end
     context "with a member of the group which owns the recipe" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         g_recipe.owner.add_editor user2
         xhr :delete, :destroy, group_id: g_recipe.owner.id, recipe_id: g_recipe.id,
           status_id: g_status.id, id: g_way.id

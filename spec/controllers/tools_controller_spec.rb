@@ -15,7 +15,7 @@ describe ToolsController do
   describe "POST create" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return recipe.owner
+        sign_in recipe.owner
         xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           tool: valid_attributes
       end
@@ -23,7 +23,7 @@ describe ToolsController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
           tool: valid_attributes
       end
@@ -33,7 +33,7 @@ describe ToolsController do
     context "with a member of the group which owns the recipe" do
       let(:group){FactoryGirl.create :group, creator: recipe.owner}
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         group.add_editor user
         recipe.update_attributes owner_id: group.id
         xhr :post, :create, group_id: group.id, recipe_id: recipe.id,
@@ -46,7 +46,7 @@ describe ToolsController do
   describe "PATCH update" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :patch, :update, user_id: user.id, recipe_id: recipe.id,
           id: tool.id, tool: valid_attributes
       end
@@ -54,7 +54,7 @@ describe ToolsController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         xhr :patch, :update, user_id: user.id, recipe_id: recipe.id,
           id: tool.id, tool: valid_attributes
       end
@@ -62,7 +62,7 @@ describe ToolsController do
     end
     context "with a member of the group which owns the recipe" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         g_recipe.owner.add_editor user2
         xhr :patch, :update, user_id: user.id, recipe_id: g_recipe.id,
           id: g_tool.id, tool: valid_attributes
@@ -74,7 +74,7 @@ describe ToolsController do
   describe "DELETE destroy" do
     context "with owner" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :delete, :destroy, user_id: user.id, recipe_id: recipe.id,
           id: tool.id
       end
@@ -82,7 +82,7 @@ describe ToolsController do
     end
     context "with non owner" do
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         xhr :delete, :destroy, user_id: user.id, recipe_id: recipe.id,
           id: tool.id
       end
@@ -91,7 +91,7 @@ describe ToolsController do
     context "with a member of the group which owns the recipe" do
       let(:group){FactoryGirl.create :group, creator: user}
       before do
-        controller.stub(:current_user).and_return user2
+        sign_in user2
         g_recipe.owner.add_editor user2
         xhr :delete, :destroy, user_id: user.id, recipe_id: g_recipe.id,
           id: g_tool.id

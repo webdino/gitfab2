@@ -11,7 +11,7 @@ describe GroupsController do
 
   describe "GET index" do
     before do
-      controller.stub(:current_user).and_return admin
+      sign_in admin
       get :index
     end
     it_behaves_like "success"
@@ -19,7 +19,7 @@ describe GroupsController do
 
   describe "GET show" do
     before do
-      controller.stub(:current_user).and_return admin
+      sign_in admin
       get :show, id: group.id
     end
     it_behaves_like "success"
@@ -28,7 +28,7 @@ describe GroupsController do
 
   describe "GET new" do
     before do
-      controller.stub(:current_user).and_return admin
+      sign_in admin
       get :new
     end
     it_behaves_like "success"
@@ -37,7 +37,7 @@ describe GroupsController do
 
   describe "POST create" do
     before do
-      controller.stub(:current_user).and_return admin
+      sign_in admin
       post :create, group: group_params
     end
     context "with valid params" do
@@ -54,7 +54,7 @@ describe GroupsController do
   describe "GET edit" do
     describe "as an admin" do
       before do
-        controller.stub(:current_user).and_return admin
+        sign_in admin
         get :edit, id: group.id
       end
       it_behaves_like "success"
@@ -62,7 +62,7 @@ describe GroupsController do
     end
     describe "as an editor" do
       before do
-        controller.stub(:current_user).and_return editor
+        sign_in editor
         get :edit, id: group.id
       end
       it_behaves_like "unauthorized"
@@ -73,7 +73,7 @@ describe GroupsController do
     describe "as an admin" do
       before do
         @orig_group = group.dup
-        controller.stub(:current_user).and_return admin
+        sign_in admin
         patch :update, id: group.id, group: group_params
       end
       context "with valid params" do
@@ -89,7 +89,7 @@ describe GroupsController do
     describe "as an editor" do
       before do
         @orig_group = group.dup
-        controller.stub(:current_user).and_return editor
+        sign_in editor
         patch :update, id: group.id, group: valid_attributes
       end
       it_behaves_like "unauthorized"
@@ -99,14 +99,14 @@ describe GroupsController do
   describe "DELETE destroy" do
     describe "as an admin" do
       before do
-        controller.stub(:current_user).and_return admin
+        sign_in admin
         delete :destroy, id: group.id
       end
       it_behaves_like "redirected"
     end
     describe "as an editor" do
       before do
-        controller.stub(:current_user).and_return editor
+        sign_in editor
         delete :destroy, id: group.id
       end
       it_behaves_like "unauthorized"

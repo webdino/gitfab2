@@ -50,7 +50,7 @@ class Ability
       user.persisted?
     end
     can :destroy, Like do |like|
-      like.voter_id == user.id
+      user.persisted? && like.voter_id == user.id
     end
     can :manage, Group do |group|
       user.is_admin_of? group

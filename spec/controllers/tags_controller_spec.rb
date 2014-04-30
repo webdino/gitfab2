@@ -11,7 +11,7 @@ describe TagsController do
 
     context "when user logged in" do
       before do
-        controller.stub(:current_user).and_return recipe.owner
+        sign_in recipe.owner
         xhr :post, :create, user: recipe.owner, recipe_id: recipe.id,
           tag: valid_attributes
       end

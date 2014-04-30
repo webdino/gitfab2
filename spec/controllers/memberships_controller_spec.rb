@@ -18,7 +18,7 @@ describe MembershipsController do
 
   describe "POST create" do
     before do
-      controller.stub(:current_user).and_return user1
+      sign_in user1
       post :create, group_id: group1.id,
         membership: membership_params, format: :json
     end
@@ -36,7 +36,7 @@ describe MembershipsController do
 
   describe "PATCH update" do
     before do
-      controller.stub(:current_user).and_return user1
+      sign_in user1
       patch :update, group_id: group1.id, id: membership1.id,
         membership: membership_params, format: :json
     end
@@ -54,7 +54,7 @@ describe MembershipsController do
 
   describe "DELETE destroy" do
     before do
-      controller.stub(:current_user).and_return user1
+      sign_in user1
       delete :destroy, group_id: group1.id, user_id: user1.id,
         id: membership1.id, format: :json
     end
