@@ -4,8 +4,7 @@ class Way < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
-  acts_as_paranoid
-
+  
   belongs_to :recipe
   belongs_to :status
   has_many :tools

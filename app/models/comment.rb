@@ -4,8 +4,7 @@ class Comment < ActiveRecord::Base
   include ActsAsCommentable::Comment
 
   acts_as_votable
-  acts_as_paranoid
-
+  
   belongs_to :commentable, polymorphic: true
 
   scope :created_at_desc, ->{order "created_at DESC"}

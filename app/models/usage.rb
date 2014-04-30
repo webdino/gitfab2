@@ -4,6 +4,5 @@ class Usage < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
-  acts_as_paranoid
-
+  
 end
