@@ -10,7 +10,7 @@ li.status
 
   .ways
     .arrow
-      .add-way == render "add_way_form", status: item, item: item.ways.build
+      .add-way == render "add_way_form", status: item, item: Way.new
     ul
       - item.ways.each do |way|
         == render "recipes/way", item: way
