@@ -21,14 +21,14 @@ describe RecipesController do
     context "a user recipe" do
       context "owned by oneself" do
         before do
-          controller.stub(:current_user).and_return recipe.owner
+          sign_in recipe.owner
           get :new, user_id: recipe.owner_id
         end
         it_behaves_like "success"
       end
       context "owned by others" do
         before do
-          controller.stub(:current_user).and_return g_recipe.owner.creator
+          sign_in g_recipe.owner.creator
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "success"
@@ -37,21 +37,21 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           get :new, user_id: recipe.owner_id
         end
         it_behaves_like "unauthorized"
       end
       context "when the user is an editor of the group" do
         before do
-          controller.stub(:current_user).and_return g_editor
+          sign_in g_editor
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "unauthorized"
       end
       context "when the user is not an admin of the group" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "unauthorized"
@@ -63,7 +63,7 @@ describe RecipesController do
     context "a user recipe" do
       context "with the owner" do
         before do
-          controller.stub(:current_user).and_return user1
+          sign_in user1
           post :create, user_id: user1.name, 
             recipe: valid_attributes
         end
@@ -71,7 +71,7 @@ describe RecipesController do
       end
       context "with a non-owner" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           post :create, user_id: user1.name, 
             recipe: valid_attributes
         end
@@ -81,7 +81,7 @@ describe RecipesController do
     context "a group recipe" do
       context "with an admin user" do
         before do
-          controller.stub(:current_user).and_return user1
+          sign_in user1
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -89,7 +89,7 @@ describe RecipesController do
       end
       context "when the user is an editor of the group" do
         before do
-          controller.stub(:current_user).and_return g_editor
+          sign_in g_editor
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -97,7 +97,7 @@ describe RecipesController do
       end
       context "with a non-admin user" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -110,7 +110,7 @@ describe RecipesController do
     context "a user recipe" do
       context "as a user recipe" do
         before do
-          controller.stub(:current_user).and_return user1
+          sign_in user1
           post :create, user_id: user1.name, 
             base_recipe_id: recipe.id
         end
@@ -118,7 +118,7 @@ describe RecipesController do
       end
       context "as a group recipe" do
         before do
-          controller.stub(:current_user).and_return user1
+          sign_in user1
           post :create, group_id: group.name, 
             base_recipe_id: recipe.id
         end
@@ -128,7 +128,7 @@ describe RecipesController do
     context "a group recipe" do
       context "as a user recipe" do
         before do
-          controller.stub(:current_user).and_return user1
+          sign_in user1
           post :create, user_id: user1.name, 
             base_recipe_id: g_recipe.id
         end
@@ -136,7 +136,7 @@ describe RecipesController do
       end
       context "as a group recipe" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           post :create, group_id: group2.name, 
             base_recipe_id: g_recipe.id
         end
@@ -149,7 +149,7 @@ describe RecipesController do
     context "a user recipe" do
       context "owned by oneself" do
         before do
-          controller.stub(:current_user).and_return recipe.owner
+          sign_in recipe.owner
           patch :update, user_id: recipe.owner_id,
             id: recipe.id, recipe: valid_attributes
         end
@@ -157,7 +157,7 @@ describe RecipesController do
       end
       context "owned by others" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           patch :update, user_id: recipe.owner_id, id: recipe.id,
             recipe: valid_attributes
         end
@@ -167,7 +167,7 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          controller.stub(:current_user).and_return g_recipe.owner.creator
+          sign_in g_recipe.owner.creator
           patch :update, group_id: g_recipe.owner_id,
             id: g_recipe.id, recipe: valid_attributes
         end
@@ -175,7 +175,7 @@ describe RecipesController do
       end
       context "when the user is not an admin of the group" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           patch :update, group_id: g_recipe.owner_id,
             id: g_recipe.id, recipe: valid_attributes
         end
@@ -188,7 +188,7 @@ describe RecipesController do
     context "a user recipe" do
       context "owned by oneself" do
         before do
-          controller.stub(:current_user).and_return recipe.owner
+          sign_in recipe.owner
           delete :destroy, user_id: recipe.owner_id,
             id: recipe.id
         end
@@ -196,7 +196,7 @@ describe RecipesController do
       end
       context "owned by others" do
         before do
-          controller.stub(:current_user).and_return g_recipe.owner.creator
+          sign_in g_recipe.owner.creator
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end
@@ -206,7 +206,7 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          controller.stub(:current_user).and_return g_recipe.owner.creator
+          sign_in g_recipe.owner.creator
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end
@@ -214,7 +214,7 @@ describe RecipesController do
       end
       context "when the user is not an admin of the group" do
         before do
-          controller.stub(:current_user).and_return user2
+          sign_in user2
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end

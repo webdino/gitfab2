@@ -12,7 +12,7 @@ describe LikesController do
   describe "POST create" do
     context "when user logged in" do
       before do
-        controller.stub(:current_user).and_return user
+        sign_in user
         xhr :post, :create, like: valid_attributes
       end
       it_behaves_like "success"
@@ -29,15 +29,17 @@ describe LikesController do
   describe "DELETE destroy" do
     context "when user logged in" do
       before do
-        controller.stub(:current_user).and_return user
-        xhr :delete, :destroy, id: like.id
+        sign_in user
+        xhr :delete, :destroy, id: like.id,
+          like: {votable_id: like.votable.id, votable_type: like.votable.class.name}
       end
       it_behaves_like "success"
     end
 
     context "when user not logged in" do
       before do
-        xhr :delete, :destroy, id: like.id
+        xhr :delete, :destroy, id: like.id,
+          like: {votable_id: like.votable.id, votable_type: like.votable.class.name}
       end
       it_behaves_like "unauthorized"
     end

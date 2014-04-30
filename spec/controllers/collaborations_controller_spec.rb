@@ -16,7 +16,7 @@ describe CollaborationsController do
 
   describe "POST create" do
     before do
-      controller.stub(:current_user).and_return recipe.owner
+      sign_in recipe.owner
       xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
         collaboration: collaboration_params
     end
@@ -48,7 +48,7 @@ describe CollaborationsController do
 
   describe "DELETE destroy" do
     before do
-      controller.stub(:current_user).and_return user1
+      sign_in user1
       xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
         id: collaboration.id
     end

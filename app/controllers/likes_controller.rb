@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!
   before_action :load_votable, only: [:create, :destroy]
   before_action :build_like, only: :create
-
   authorize_resource
 
   def create
