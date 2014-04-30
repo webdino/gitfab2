@@ -1,0 +1,11 @@
+.btn {
+  display: inline-block;
+  padding: 4px 6px;
+  background: #fff;
+  background: -moz-linear-gradient(#fff, #e9e9e9);
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#e9e9e9)); 
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+}
