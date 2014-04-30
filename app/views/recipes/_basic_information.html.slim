@@ -3,8 +3,9 @@ section#basic-information
     == @recipe.title
 
   #project-summary
-    .visual style="background-image: url('#{@recipe.photo if @recipe.photo.present?}')"
-      iframe src="#{@recipe.youtube_embed_url}"
+    .visual style="background-image: url('#{@recipe.photo}')"
+      - if @recipe.youtube_url.present?
+        iframe src="#{@recipe.youtube_embed_url}"
 
     section.description
       h1
