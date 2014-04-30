@@ -3,7 +3,6 @@ class PostAttachment < ActiveRecord::Base
 
   mount_uploader :content, PostAttachmentUploader
 
-  acts_as_paranoid
-
+  
   belongs_to :recipe
 end

@@ -4,7 +4,6 @@ class Material < ActiveRecord::Base
 
   include Gitfab::ActsAsItemInRecipe
 
-  acts_as_paranoid
-
+  
   belongs_to :status
 end
