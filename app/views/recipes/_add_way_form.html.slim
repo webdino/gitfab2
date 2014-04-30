@@ -9,6 +9,8 @@ div class="add-form-wrap"
         = f.file_field field, class: "add-photo"
       - when :description
         = f.text_area field
+      - when :reassoc_token
+        = f.hidden_field field
       - when :status_id
       - else
         = f.text_field field
