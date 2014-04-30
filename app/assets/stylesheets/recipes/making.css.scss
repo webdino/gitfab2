@@ -1,9 +1,12 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/box-sizing.css.scss";
 main#recipes-show {
   #making {
     width: 960px;
-    padding: 30px 20px 30px 0;
+    padding: 10px 0px;
     min-height: 100px;
+    border-bottom: solid 1px black;
+    @include content-box;
     li.status {
       .photo {
         float: left;
@@ -16,6 +19,13 @@ main#recipes-show {
           background-position: center;
         }
       }
+      .summary {
+        width: 320px;
+        height: 180px;
+        .description {
+          margin-top: 10px;
+        }
+      }
       .edit-form-wrap {
         float: left;
       }
@@ -24,14 +34,23 @@ main#recipes-show {
         @include cf;
         .summary {
           float: left;
+          .toggle-star-btn {
+            font-size: 21px;
+          }
         }
       }
-      &:first-child{
+      &:first-child {
         min-height: 180px;
       }
       &:not(:first-child) {
         min-height: 180px;
       }
+      &:last-child {
+        .ways {
+          display: none;
+        }
+      }
+
       .ways {
         @include cf;
         width: 100%;
@@ -56,7 +75,7 @@ main#recipes-show {
             top: 50%;
             right: 0;
             a {
-              font-size: 24px;
+              font-size: 18px;
             }
           }
         }
@@ -71,12 +90,20 @@ main#recipes-show {
           margin: 0 20px 20px 0;
           .summary {
             width: 100%;
+            max-height: 156px;
             .description {
               margin: 10px;
               width: 100%;
+              height: 115px;
               text-align: left;
-              font-size: 14px;
+              font-size: 16px;
             }
+          }
+          .toggle-star-btn {
+            font-size: 21px;
+          }
+          .edit-btn, .delete-btn {
+            font-size: 14px;
           }
           &:not(:first-child) {
             width: 80px;
@@ -87,6 +114,7 @@ main#recipes-show {
             }
             .summary {
               width: 100%;
+              max-height: 10px;
               p.star {
                 text-align: right;
                 width: 100%;
@@ -98,6 +126,13 @@ main#recipes-show {
             a.item-photo {
               width: 80px;
               max-height: 60px;
+            }
+            .toggle-star-btn {
+              font-size: 13px;
+            }
+            .edit-btn, .delete-btn {
+              display: none;
+              font-size: 11px;
             }
           }
         }

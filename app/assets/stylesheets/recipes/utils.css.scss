@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/box-sizing.css.scss";
 
 $popup-width: 360px;
 
@@ -29,12 +30,16 @@ $popup-width: 360px;
 }
 #recipes-utils,
 #posts-utils {
-  width: 240px;
   float: left;
-  background: #EEE;
+  width: 240px;
+  min-height: 442px;
+  border: solid 1px black;
+  border-left: none;
+  @include border-box;
+
   #tooltips {
     height: 118px;
-    border: 1px solid #000;
+    @include border-box;
     #slide-show-button,
     #fork-button {
       display: inline-block;
@@ -49,49 +54,58 @@ $popup-width: 360px;
     #slide-show-button {
       background-image: asset-url("slideshow.png");
       border-right: 1px solid #000;
+      border-bottom: 1px solid #000;
       cursor: pointer;
     }
     #fork-button {
       background-image: asset-url("fork.png");
+      border-bottom: 1px solid #000;
     }
   }
   #user-info {
     @include cf;
     padding: 20px 20px;
-    width: 100%;
+    width: 200px;
     height: 100px;
-    .thumbnail {
+    .owner {
       @include cf;
-      float: left;
-      width: 40px;
-      height: 40px;
-      img {
-        margin:0;
-        max-width: 100%;
-        height: auto;
+      width: 240px;
+      .thumbnail {
+        float: left;
+        width: 40px;
+        height: 40px;
+        img {
+          margin: 0;
+          max-width: 100%;
+          height: auto;
+        }
+      }
+      .screen-name {
+        float: left;
+        margin: 15px 10px;
+        width: 160px;
+        height: 30px;
+        font-size: 18px;
       }
     }
-    .screen-name {
-      @include cf;
-      float: left;
-      margin: 15px 10px;
-      width: 160px;
-      height: 30px;
-      font-size: 18px;
+    #add-collaborator-btn {
+      display: inline-block;
+      margin: 0 0 20px 0;
     }
-    #created-datetime {
-      display: block;
-      margin: 15px 0;
-      width: 100%;
-      height: 24px;
-      font-size: 12px;
-    }
-    #last-updated-datetime {
-      display: block;
-      margin-top: 40px;
-      width: 100%;
-      height: 24px;
-      font-size: 12px;
+    .timestamps {
+      width: 240px;
+      #created-datetime {
+        display: block;
+        width: 100%;
+        height: 24px;
+        font-size: 12px;
+      }
+      #last-updated-datetime {
+        display: block;
+        width: 100%;
+        height: 24px;
+        font-size: 12px;
+      }
     }
   }
   #tool-options {

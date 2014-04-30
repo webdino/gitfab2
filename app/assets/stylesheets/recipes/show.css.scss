@@ -1,10 +1,37 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/box-sizing.css.scss";
 main {
+
+  ul#tabs {
+    @include cf;
+    font-size: 18px;
+    border-bottom: solid 1px black;
+    li#recipe-tab {
+      margin-bottom: -1px;
+      border: solid 1px black;
+      border-bottom: solid 1px white;
+      display: inline-block;
+      padding: 6px 10px;
+      font-weight: 900;
+    }
+    li#journal-tab{
+      display: inline-block;
+      padding: 6px 10px;
+      font-weight: 500;
+    }
+    li#go-to-index {
+      float: right;
+      margin-top: 1px;
+    }
+  }
+
   #tools,
   #materials {
     @include cf;
+    @include content-box;
+    border-bottom: solid 1px black;
     .add-form,
     .edit-form {
       display: none;
@@ -24,6 +51,88 @@ main {
           width: 80px;
           max-height: 80px;
         }
+      }
+    }
+  }
+
+  .links {
+    text-align: right;
+    margin-top: 10px;
+    a.btn {
+      margin-bottom: 2px;
+      margin-left: 20px;
+      font-size: 16px;
+    }
+  }
+
+  #comments {
+    margin-top: 20px;
+    #comments-meta {
+      display: inline-block;
+      width: 100%;
+      padding-bottom: 6px;
+      border-bottom : solid 1px black;
+      .how-many {
+        display: inline-block;
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+
+    ul#comment-list {
+      margin: 0;
+      list-style: none;
+      li.comment {
+        display: inline-block;
+        margin-top: 20px;
+        width: 100%;
+        .comment-meta {
+          @include cf;
+          .avatar {
+            float: left;
+            width: 40px;
+            height: 40px;
+          }
+          .user-name, .created-at {
+            display: inline-block;
+            margin-left: 20px;
+            font-size: 12px;
+            font-weight: 700;
+          }
+          .star {
+            margin-left: 20px;
+          }
+        }
+        .comment-body {
+          margin: -15px 0 0 60px;
+          width: 600px;
+          font-size: 18px;
+        }
+        .comment-link {
+          float: right;
+          width: auto;
+        }
+      }
+    }
+
+    form#new_comment {
+      display: inline-block;
+      margin: 20px 0;
+      .avatar {
+        float: left;
+        width: 40px;
+        height: 40px;
+      }
+      #comment_comment {
+        float: left;
+        width: 620px;
+        height: 36px;
+        margin-left: 20px;
+      }
+      #submit-comment {
+        float: right;
+        margin-top: 6px;
+        font-weight: 900;
       }
     }
   }

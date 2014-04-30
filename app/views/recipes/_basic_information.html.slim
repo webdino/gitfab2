@@ -1,6 +1,9 @@
 section#basic-information
-  h1
-    == @recipe.title
+
+  #title
+    h1
+      == @recipe.title
+    == toggle_star_link_for @recipe
 
   #project-summary
     .visual style="background-image: url('#{@recipe.photo}')"
