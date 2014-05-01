@@ -56,7 +56,7 @@ main#recipes-show
   hr
 
   p
-    == link_to "Edit", [:edit, @owner, @recipe] if can? :manage, @recipe
+    == link_to "Edit", edit_recipe_path(@recipe, owner_name: @owner.name) if can? :manage, @recipe
     '|
     == link_to "Delete", [@owner, @recipe], method: :delete if can? :manage, @recipe
     '|

@@ -90,10 +90,10 @@ section#recipes-index
               - @recipes.each do |recipe|
                 li.recipe-item
                   p.cover style="background-image: url('#{recipe.photo.url}')"
-                    == link_to "", [@owner, recipe]
+                    == link_to "", recipe_path(recipe, owner_name: @owner.name)
                   span.summary
                     span.title
-                      == link_to recipe.title, [@owner, recipe]
+                      == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
                     span.star
                       == toggle_star_link_for recipe
                     span.avatar-thumb
@@ -146,10 +146,10 @@ section#recipes-index
                 - @owner.contributing_recipes.each do |recipe|
                   li.recipe-item
                     p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == link_to "", [@owner, recipe]
+                      == link_to "", recipe_path(recipe, owner_name: @owner.name)
                     span.summary
                       span.title
-                        == link_to recipe.title, [recipe.owner, recipe]
+                        == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
                       span.star
                         == toggle_star_link_for recipe
                       span.avatar-thumb
@@ -173,10 +173,10 @@ section#recipes-index
                 - @owner.get_voted(Recipe).each do |recipe|
                   li.recipe-item
                     p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == link_to "", [@owner, recipe]
+                      == link_to "", recipe_path(recipe, owner_name: @owner)
                     span.summary
                       span.title
-                        == link_to recipe.title, [recipe.owner, recipe]
+                        == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
                       span.star
                         == toggle_star_link_for recipe
                       span.avatar-thumb
