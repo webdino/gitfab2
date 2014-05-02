@@ -32,7 +32,8 @@ section#recipes-utils
             == image_tag @owner.avatar
         .screen-name
           == @owner.name
-      == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
+      - if can? :manage, @recipe
+        == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
       .timestamps
         time#created-datetime datetime = @recipe.created_at
           'created date
