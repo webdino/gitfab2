@@ -1,0 +1,23 @@
+section#layouts-header
+  .inner
+    .container
+      #logo
+        == link_to "gitFab", root_path
+      #search-box
+        == form_tag :search, method: :get do |f|
+          == text_field_tag :q, nil, placeholder: "Search Project…", id: "search-form"
+      - if user_signed_in? && current_user.name
+        #tools
+          .box
+            #user
+              == link_to image_tag(current_user.avatar, class: "avator-thumb"), [current_user, :recipes]
+              == link_to current_user.name, recipes_path(owner_name: current_user.name)
+            #create-recipe
+              == link_to "+", new_recipe_path(owner_name: current_user.name)
+            #settings
+              == link_to image_tag("settings.png"), edit_user_path(current_user)
+            #logout
+              == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete
+      - else
+        #sign-in
+          == link_to "Sign In", "#", class: ["persona-login-button", "btn"]
