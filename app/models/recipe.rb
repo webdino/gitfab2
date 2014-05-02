@@ -100,7 +100,7 @@ class Recipe < ActiveRecord::Base
     Recipe.transaction do
       self.dup.tap do |recipe|
         recipe.owner = owner
-        recipe.statuses = self.statuses.collect{|status| status.dup_with_photo}
+        recipe.statuses = self.statuses.collect{|status| status.dup_with_photo_and_ways}
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self
