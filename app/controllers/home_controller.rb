@@ -5,6 +5,10 @@ class HomeController < ApplicationController
     @recipes = Recipe.page params[:page]
   end
 
+  def proxy_to_userhome
+    redirect_to recipes_path owner_name: current_user.name
+  end
+
   def su
     case params[:commit]
     when "su"

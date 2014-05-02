@@ -3,6 +3,7 @@
 main#users-edit
   h1
     'Public Profile
+  p#notice == notice
 
   == form_for @user do |f|
     - if @user.errors.any?
