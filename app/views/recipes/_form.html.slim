@@ -18,7 +18,7 @@
           iframe src="#{@recipe.youtube_embed_url}"
         .video-form-wrapper
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
-          == f.file_field :photo, title: "画像をアップロード", accept: "image", style: "display:none"
+          == f.file_field :photo, title: "Upload Image", accept: "image", style: "display:none"
           == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox"
           #video-form
             p
@@ -37,13 +37,13 @@
         == f.text_area :description, placeholder: "Add Summary", tabindex: 3
 
   - if @recipe.persisted?
-    #materials
-      == f.fields_for :materials do |mf|
-        .material
-          == mf.file_field :photo
-          == mf.text_area :description
-          == mf.link_to_remove "Remove Material"
-      == f.link_to_add "Add Material", :materials
+    /#materials
+    /  == f.fields_for :materials do |mf|
+    /    .material
+    /      == mf.file_field :photo
+    /      == mf.text_area :description
+    /      == mf.link_to_remove "Remove Material"
+    /  == f.link_to_add "Add Material", :materials
 
     #making
       == render "status_form", f: f
