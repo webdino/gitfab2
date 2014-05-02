@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :recipe do
-    name {SecureRandom.uuid}
+    name {"recipe_#{SecureRandom.hex 10}"}
     title {SecureRandom.uuid}
     description {SecureRandom.uuid}
 

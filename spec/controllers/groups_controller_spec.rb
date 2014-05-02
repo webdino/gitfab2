@@ -7,7 +7,7 @@ describe GroupsController do
   let(:admin){FactoryGirl.create :user}
   let(:editor){FactoryGirl.create :user}
   let(:group){FactoryGirl.create :group, creator: admin}
-  let(:valid_attributes){{name: "group_#{SecureRandom.uuid}"}}
+  let(:valid_attributes){{name: "group_#{SecureRandom.hex 10}"}}
 
   describe "GET index" do
     before do

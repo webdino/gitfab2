@@ -44,7 +44,8 @@ class Recipe < ActiveRecord::Base
   after_destroy :destroy_repo!
 
   # TODO unique in owner
-  validates :name, :title, presence: true, name_format: true
+  validates :name, presence: true, name_format: true
+  validates :title, presence: true
 
   paginates_per 10
 
