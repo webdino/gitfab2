@@ -20,6 +20,7 @@ Gitfab2::Application.routes.draw do
 
   devise_for :users, controllers: {sessions: "sessions"}
   root "home#index"
+  match "home" => "home#proxy_to_userhome", via: :get
   match "search" => "global_recipes#index", via: :get
 
   resources :tags
