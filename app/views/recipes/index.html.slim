@@ -45,7 +45,7 @@ section#recipes-index
           ul
             - @owner.members.each do |member|
               == link_to image_tag(member.avatar, class: "groups-member-avatar" , name: "#{member.name}"), [member, :recipes]
-      - else
+      - elsif @owner.groups.any?
         #groups
           p
             'Groups
