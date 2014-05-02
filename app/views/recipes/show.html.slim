@@ -108,7 +108,7 @@ main#recipes-show
 
         $(document).on "click", "#slideshow-btn", (event, data) ->
           event.preventDefault()
-          $(".fancybox").first().trigger "click"
+          $(".fancybox.item-photo").first().trigger "click"
 
         $(document).on "click", ".upload-image-btn", (event, data) ->
           event.preventDefault()
