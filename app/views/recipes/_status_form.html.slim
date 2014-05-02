@@ -4,7 +4,8 @@ h1
   .item.status
     == image_tag sf.object.photo.thumb, class: "image-field"
     == sf.file_field :photo, class: "file-field"
-    == sf.text_area :description, class: "description-field"
+    .description_container
+      == sf.text_area :description, class: "description-field"
     == sf.hidden_field :id, class: "id-field"
     == sf.hidden_field :position, class: "position-field"
     == sf.hidden_field :reassoc_token, class: "status-reassoc-token-field"
@@ -15,7 +16,8 @@ h1
       .item.way
         == image_tag wf.object.photo.thumb, class: "image-field"
         == wf.file_field :photo, class: "file-field"
-        == wf.text_area :description, class: "description-field"
+        .description_container
+          == wf.text_area :description, class: "description-field"
         == wf.hidden_field :status_id, class: "status-id-field"
         == wf.hidden_field :reassoc_token, class: "way-reassoc-token-field"
         p.remove-way == wf.link_to_remove "X"
@@ -37,4 +39,29 @@ h1
       reader.onload = ->
         imageFiled.attr("src", reader.result)
 
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file)
+
+    tinymce.init
+      selector: "textarea"
+      theme: "modern"
+      menubar : false
+      convert_urls : false
+      toolbar1: "link insertfile"
+      image_advtab: true
+      statusbar: false
+      toolbar_items_size: "small"
+      plugins: [
+        "autolink link"
+      ],
+      setup: (editor) ->
+        editor.on "focus", (e) ->
+          toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
+          toolbar.css "visibility", "visible"
+        editor.on "blur", (e) ->
+          toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
+          toolbar.css "visibility", "hidden"
+
+    $(document).on "nested:fieldAdded", (event) ->
+      textarea = event.field.find ".description-field"
+      id = textarea.attr "id"
+      tinymce.execCommand "mceAddEditor", false, id
