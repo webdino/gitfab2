@@ -24,7 +24,7 @@
             p
               'Input a Youtube URL
             == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.youtube_url}", id: "youtube-url-input"
-            == f.hidden_field :youtube_url, id: "youtube-url-field" 
+            == f.hidden_field :youtube_url, id: "youtube-url-field"
             #caution style="font-size: 12px; color: red;"
             #video-form-preview-wrapper
               iframe.video-form-preview src: #{f.object.youtube_url}
@@ -47,7 +47,8 @@
 
     #making
       == render "status_form", f: f
-    == f.submit
+
+  == f.submit
 
     / NOTE: temporary not shown
     /hr
@@ -80,14 +81,14 @@
       remove_button = ->
         $("#photo-upload-btn").css "display","none"
         $("#input-video-url-btn").css "display","none"
-  
+
       $(document).on "click", "#save-btn", (event, data) ->
         $('form#new_recipe').submit()
-  
+
       $(document).on "click", "#photo-upload-btn", (event, data) ->
         event.preventDefault()
         $("input#recipe_photo").trigger "click"
-  
+
       $(document).on "change", "input#recipe_photo", (event, data, status) ->
         file = event.target.files[0]
         reader = new FileReader()
@@ -98,10 +99,10 @@
           $("#input-video-url-btn").css "color","black"
           remove_button()
         reader.readAsDataURL file
-  
+
       $(document).on "change", "select#recipe_group_id", (event) ->
         $("#new_recipe").attr "action", $(this).val()
-  
+
       YOUTUBE_URL_MIN_LENGTH   = 41
       YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
       # TODO: constantize '11'
@@ -132,7 +133,7 @@
       $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
         event.preventDefault()
         $.fancybox.close()
-  
+
       $("iframe").hover ->
           $("#photo-upload-btn").css "display","block"
           $("#input-video-url-btn").css "display","block"
