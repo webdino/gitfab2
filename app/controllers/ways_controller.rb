@@ -10,6 +10,7 @@ class WaysController < ApplicationController
   authorize_resource
 
   def create
+    @way.creator = current_user
     @way.save
     render "recipes/create_item", locals: {item: @way}
   end

@@ -280,6 +280,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "photo"
     t.integer  "recipe_id"
     t.integer  "status_id"
+    t.integer  "creator_id"
     t.text     "description"
     t.integer  "position"
     t.string   "reassoc_token"
@@ -290,6 +291,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   end
 
   add_index "ways", ["cached_votes_score"], name: "index_ways_on_cached_votes_score", using: :btree
+  add_index "ways", ["creator_id"], name: "index_ways_on_creator_id", using: :btree
   add_index "ways", ["deleted_at"], name: "index_ways_on_deleted_at", using: :btree
   add_index "ways", ["recipe_id"], name: "index_ways_on_recipe_id", using: :btree
   add_index "ways", ["status_id"], name: "index_ways_on_status_id", using: :btree

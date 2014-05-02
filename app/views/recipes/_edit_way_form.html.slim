@@ -1,17 +1,20 @@
 .edit-form-wrap
-  = link_to "edit", "#", class: ["edit-btn", "btn"]
-  = link_to "delete", [@owner, @recipe, status, item], remote: true, method: :delete, class: ["delete-btn", "btn"]
-  = form_for [@owner, @recipe, status, item], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
-    - item.class::UPDATABLE_COLUMNS.each do |field|
-      - case field
-      - when :photo
-        = f.file_field field, class: "add-photo"
-      - when :prev_status_position, :status_id, :reassoc_token
-        = f.hidden_field field
-      - else
-        = f.text_field field
-    p
-      = f.check_box :remove_photo, checked: false, class: "remove-photo"
-      'remove photo
-    p
-    = f.submit "update", class: "update-way-description-btn"
+  - if can? :update, item
+    == link_to "edit", "#", class: ["edit-btn", "btn"]
+  - if can? :manage, item
+    == link_to "delete", [@owner, @recipe, status, item], remote: true, method: :delete, class: ["delete-btn", "btn"]
+  - if can? :update, item
+    == form_for [@owner, @recipe, status, item], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+      - item.class::UPDATABLE_COLUMNS.each do |field|
+        - case field
+        - when :photo
+          == f.file_field field, class: "add-photo"
+        - when :prev_status_position, :status_id, :reassoc_token
+          == f.hidden_field field
+        - else
+          == f.text_field field
+      p
+        == f.check_box :remove_photo, checked: false, class: "remove-photo"
+        'remove photo
+      p
+      == f.submit "update", class: "update-way-description-btn"

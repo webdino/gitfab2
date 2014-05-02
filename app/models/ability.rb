@@ -5,7 +5,6 @@ class Ability
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Tool
-    can :manage, Way
     can :manage, Membership, Membership do |membership|
       user.is_admin_of?(membership.group) && user != membership.user
     end
@@ -27,6 +26,12 @@ class Ability
     end
     can :manage, Status do |status|
       can? :update, status.recipe
+    end
+    can :manage, Way do |way|
+      can?(:manage, way.recipe) || user.is_creator_of?(way)
+    end
+    can [:create, :update], Way do
+      user.persisted?
     end
     can :manage, Material do |material|
       can? :update, material.recipe
