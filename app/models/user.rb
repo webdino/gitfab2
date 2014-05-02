@@ -22,8 +22,9 @@ class User < ActiveRecord::Base
   after_save :ensure_dir_exist!
 
   validates :email, presence: true
-  validates :name,  unique_owner_name: true
-  validates :name, name_format: true, if: ->{self.name.present?}
+  validates :name, presence: true, if: ->{self.persisted?}
+  validates :name, unique_owner_name: true,
+    name_format: true, if: ->{self.name.present?}
   validates :email, uniqueness: true
 
   def dir_path

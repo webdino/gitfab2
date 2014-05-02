@@ -5,7 +5,7 @@ main#users-edit
     'Public Profile
   p#notice == notice
 
-  == form_for @user do |f|
+  == form_for @user, url: user_path(id: @user.id) do |f|
     - if @user.errors.any?
       #error_explanation
         h2
