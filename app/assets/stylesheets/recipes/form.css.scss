@@ -36,7 +36,7 @@ form.recipe-form {
       }
       textarea {
         width: 100%;
-        height: 320px;
+        height: 280px;
       }
     }
     .visual {
@@ -101,11 +101,16 @@ form.recipe-form {
       .file-field {
         display: none;
       }
-      .description-field {
+      .description_container {
         float: left;
         width: 240px;
-        height: 175px;
-        margin-left: 2px;
+        height: 170px;
+        padding: 3px;
+        .description-field {
+          width: 100%;
+          height: 100%;
+          margin-left: 2px;
+        }
       }
       .arrow {
         float: left;
@@ -146,6 +151,19 @@ form.recipe-form {
           position: absolute;
           top: -10px;
           right: -10px;
+        }
+
+        .mce-tinymce {
+          position: relative;
+          top: -27px;
+        }
+        .mce-panel {
+          border: none;
+          background-image: none;
+          background-color: rgba(0, 0, 0, 0);
+        }
+        .mce-toolbar-grp {
+          visibility: hidden;
         }
       }
 
