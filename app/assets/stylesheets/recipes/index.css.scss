@@ -1,16 +1,17 @@
 @import "mixins/clearfix.css.scss";
 
 #recipes-index {
+  @include cf;
   margin-top: 30px;
   font-family: helvetica, sans-serif;
 
   #user-pane {
+    float: left;
     .inner {
       margin: 0;
       width: 240px;
       height: auto;
       min-height: 480px;
-      float: left;
     }
     #avatar {
       width: 240px;
@@ -90,8 +91,8 @@
   }
 
   #project-pane {
+    float:left;
     .inner {
-      float:left;
       margin-left: 20px;
       width: 700px;
       height: auto;
