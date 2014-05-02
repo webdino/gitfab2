@@ -15,7 +15,8 @@ class Group < ActiveRecord::Base
   after_create :add_initial_member
   after_save :ensure_dir_exist!
 
-  validates :name, presence: true, uniqueness: true, unique_owner_name: true
+  validates :name, presence: true, uniqueness: true,
+    unique_owner_name: true, name_format: true
 
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
