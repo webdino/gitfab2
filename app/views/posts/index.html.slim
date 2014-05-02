@@ -11,17 +11,17 @@ main#posts-index.recipe-layout
   - @posts.each do |post|
     article.post
       h1.post-title
-        = post.title
+        == post.title
       h2.post-meta
         .author
           == image_tag post.user.avatar, class: "avatar"
           .name
-            = post.user.name
+            == post.user.name
         .created_at
-          = post.created_at
+          == post.created_at
 
       section.post-body
-        = post.body.html_safe
+        == Sanitize.clean post.body.html_safe, Sanitize::Config::RELAXED
       footer
-        = link_to "Show", [@owner, @recipe, post]
+        == link_to "Show", [@owner, @recipe, post]
   == paginate @posts
