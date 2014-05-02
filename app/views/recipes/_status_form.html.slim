@@ -1,21 +1,40 @@
+h1
+ = "Making"
 == f.fields_for :statuses do |sf|
-  .item
-    == image_tag sf.object.photo.thumb
-    == sf.file_field :photo
-    == sf.text_area :description
+  .item.status
+    == image_tag sf.object.photo.thumb, class: "image-field"
+    == sf.file_field :photo, class: "file-field"
+    == sf.text_area :description, class: "description-field"
     == sf.hidden_field :id, class: "id-field"
     == sf.hidden_field :position, class: "position-field"
     == sf.hidden_field :reassoc_token, class: "status-reassoc-token-field"
-    == sf.link_to_remove "Remove Status"
+    == sf.link_to_remove "X"
+  .arrow
   .ways
-    .fields.dummy
     == sf.fields_for :ways do |wf|
-      .item
-        == image_tag wf.object.photo.thumb, class: "status-image"
-        == wf.file_field :photo
-        == wf.text_area :description
+      .item.way
+        == image_tag wf.object.photo.thumb, class: "image-field"
+        == wf.file_field :photo, class: "file-field"
+        == wf.text_area :description, class: "description-field"
         == wf.hidden_field :status_id, class: "status-id-field"
         == wf.hidden_field :reassoc_token, class: "way-reassoc-token-field"
-        p.remove-way == wf.link_to_remove "Remove Way"
-    == sf.link_to_add "Add Way", :ways
-== f.link_to_add "Add Status", :statuses
+        p.remove-way == wf.link_to_remove "X"
+    == sf.link_to_add "+ Add Way", :ways
+== f.link_to_add "+ Add Status", :statuses
+
+- content_for :bottom
+  coffee:
+    $(document).on "click", ".image-field", (event, data) ->
+      event.preventDefault()
+      fileFiled = $(event.target.parentNode).find(".file-field")
+      fileFiled.trigger "click"
+
+    $(document).on "change", ".file-field", (event, data, status) ->
+      target = event.target
+      imageFiled = $(target.parentNode).find(".image-field")
+      file = target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        imageFiled.attr("src", reader.result)
+
+      reader.readAsDataURL(file);
