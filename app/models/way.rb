@@ -7,6 +7,7 @@ class Way < ActiveRecord::Base
   
   belongs_to :recipe
   belongs_to :status
+  belongs_to :creator, class_name: User.name
   has_many :tools
 
   delegate :recipe, to: :status

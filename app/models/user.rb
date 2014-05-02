@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :collaborating_recipes, through: :collaborations, source: :recipe
   has_many :collaborations, foreign_key: :user_id, dependent: :destroy
   has_many :posts
+  has_many :ways, as: :creator
 
   after_save :ensure_dir_exist!
 
@@ -40,9 +41,9 @@ class User < ActiveRecord::Base
     recipe.collaborators.include? self
   end
 
-  def is_creator_of? group
-    return false unless group
-    self == group.creator
+  def is_creator_of? record
+    return false unless record.respond_to? :creator
+    self == record.creator
   end
 
   def is_admin_of? group

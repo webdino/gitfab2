@@ -6,6 +6,7 @@ class CreateWays < ActiveRecord::Migration
       t.string :photo
       t.belongs_to :recipe, index: true
       t.belongs_to :status, index: true
+      t.belongs_to :creator, index: true
       t.text :description
       t.integer :position, index: true
       t.string :reassoc_token
