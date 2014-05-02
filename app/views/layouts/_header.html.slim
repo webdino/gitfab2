@@ -2,7 +2,7 @@ section#layouts-header
   .inner
     .container
       #logo
-        == link_to "gitFab", root_path
+        == link_to image_tag("logo.png"), root_path
       #search-box
         == form_tag :search, method: :get do |f|
           == text_field_tag :q, nil, placeholder: "Search Project…", id: "search-form"
