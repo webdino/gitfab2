@@ -25,7 +25,7 @@ main#posts-show.recipe-layout
       == @post.created_at
 
   section#post-body
-    == @post.body.html_safe
+    == Sanitize.clean @post.body.html_safe, Sanitize::Config::RELAXED
 
   section#links
     == link_to "Journal List", [@owner, @recipe, :posts]
