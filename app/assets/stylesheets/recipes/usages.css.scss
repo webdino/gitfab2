@@ -1,9 +1,13 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/box-sizing.css.scss";
 #recipes-show {
   section#usages {
     width: $content-width;
+    padding-top: 10px;
+    border-bottom: solid 1px black;
+    @include content-box;
     ul#usage-list {
       @include cf;
       margin-left: -40px;
@@ -23,7 +27,7 @@
     }
     .add-form-wrap {
       a.add-btn {
-        font-size: 24px;
+        font-size: 18px;
       }
       form {
         display: none;

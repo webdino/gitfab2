@@ -2,22 +2,24 @@
   == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:fork, :slide, :tag]
 
 main#recipes-show
-  p
-    == link_to "posts", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
-    '|
-    == link_to "collaborators", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name)
-    '|
-    == toggle_star_link_for @recipe
-  p id="notice" =notice
 
   == render "basic_information"
 
-  section#materials
-    h1
-      'Materials
-    ul#material-list
-      - @recipe.materials.each do |item|
-        == render "material", item: item
+  ul#tabs
+    li.tab#recipe-tab
+     'Recipe
+    li.tab#journal-tab
+      == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name), class: "tab"
+    li#go-to-index
+      == link_to "#{@recipe.owner.name}'s Recipe List", [@owner, :recipes], class: "btn"
+
+  /  NOTE: now shown temporary
+  / section#materials
+  /   h1
+  /     'Materials
+  /   ul#material-list
+  /     - @recipe.materials.each do |item|
+  /       == render "material", item: item
 
   / NOTE: now shown temporary
   /section#tools
@@ -42,26 +44,24 @@ main#recipes-show
       - @recipe.usages.each do |item|
         == render "usage", item: item
     == render "add_form", item: @recipe.usages.build
-
-  hr
+    section.links
+      == link_to "Delete Recipe", [@owner, @recipe], method: :delete, class: "btn" if can? :manage, @recipe
+      == link_to "Edit Recipe", edit_recipe_path(@recipe, owner_name: @owner.name), class: "btn" if can? :manage, @recipe
 
   section#comments
-    h1
-      'Comments
+    #comments-meta
+      .how-many
+        == "#{@recipe.comments.length} comments"
     ul#comment-list
-      - @recipe.comments.each do |item|
-        == render "comments/comment", comment: item
-    == render "comment_form", item: @recipe.comments.build
+      - @recipe.comments.each do |comment|
+        == render "comments/comment", comment: comment
 
-  hr
-
-  p
-    == link_to "Edit", edit_recipe_path(@recipe, owner_name: @owner.name) if can? :manage, @recipe
-    '|
-    == link_to "Delete", [@owner, @recipe], method: :delete if can? :manage, @recipe
-    '|
-    == link_to "Back", [@owner, :recipes]
-
+    == form_for Comment.new, remote: true do |f|
+      == image_tag current_user.avatar, class: "avatar" if user_signed_in?
+      == f.text_area :comment, placeholder: "Add comment…"
+      == f.hidden_field :commentable_type, value: @recipe.class.name
+      == f.hidden_field :commentable_id, value: @recipe.id
+      == f.submit "Add Comment", id: "submit-comment", class: "btn"
 
   - content_for :bottom
     coffee:
@@ -130,3 +130,10 @@ main#recipes-show
 
         $(document).on "click", ".fork-destination", (event, data) ->
           $(this).find("form").submit()
+
+        $(document).on "click", ".comment .delete-btn", ->
+          $(this).closest("article").remove()
+
+        $(document).on "ajax:success", "#new_comment", (e, data) ->
+          $("ul#comment-list").append data.html
+          $("#new_comment").find(":text, textarea").val ""
