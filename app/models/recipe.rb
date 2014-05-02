@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:id, :name, :title, :description, :photo, :owner_id, :owner_type, :youtube_url]
+  UPDATABLE_COLUMNS = [:name, :title, :description, :photo, :owner_id, :owner_type, :youtube_url]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
   YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
@@ -96,9 +96,13 @@ class Recipe < ActiveRecord::Base
     Gitfab::Shell.new.commit_to_repo! self.repo.path, contents, opts
   end
 
+  def dup_with_photo
+    self.dup.tap{|item| item.photo = dup_photo if self.photo.present?}
+  end
+
   def fork_for! owner
     Recipe.transaction do
-      self.dup.tap do |recipe|
+      self.dup_with_photo.tap do |recipe|
         recipe.owner = owner
         recipe.statuses = self.statuses.collect{|status| status.dup_with_photo_and_ways}
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
@@ -155,5 +159,10 @@ class Recipe < ActiveRecord::Base
 
   def should_generate_new_friendly_id?
     name_changed?
+  end
+
+  def dup_photo
+    ActionDispatch::Http::UploadedFile.new filename: self.photo.file.filename,
+      type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
   end
 end

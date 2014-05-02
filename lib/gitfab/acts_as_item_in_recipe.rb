@@ -23,13 +23,14 @@ module Gitfab::ActsAsItemInRecipe
       self.class.name.underscore.pluralize
     end
 
+    def dup_with_photo
+      self.dup.tap{|item| item.photo = dup_photo if self.photo.present?}
+    end
+
+    private
     def dup_photo
       ActionDispatch::Http::UploadedFile.new filename: self.photo.file.filename,
         type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
-    end
-
-    def dup_with_photo
-      self.dup.tap{|item| item.photo = self.dup_photo if self.photo.present?}
     end
   end
 end

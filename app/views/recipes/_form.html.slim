@@ -14,11 +14,12 @@
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
       section.visual style="background-image: url('#{@recipe.photo}')"
-        - if @recipe.youtube_url
+        - if @recipe.youtube_url.present?
           iframe src="#{@recipe.youtube_embed_url}"
         .video-form-wrapper
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
           == f.file_field :photo, title: "Upload Image", accept: "image", style: "display:none"
+          == f.hidden_field :photo_cache
           == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox"
           #video-form
             p
