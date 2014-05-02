@@ -28,7 +28,7 @@ class Ability
       can? :update, status.recipe
     end
     can :manage, Way do |way|
-      can?(:manage, way.recipe) || user.is_creator_of?(way)
+      can?(:update, way.recipe) || user.is_creator_of?(way)
     end
     can [:create, :update], Way do
       user.persisted?

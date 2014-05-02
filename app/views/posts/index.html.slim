@@ -6,7 +6,8 @@ main#posts-index.recipe-layout
 
   section#links
     == render "links"
-    == link_to "New Post", [:new, @owner, @recipe, :post]
+    - if can? :update, @recipe
+      == link_to "New Post", [:new, @owner, @recipe, :post]
 
   - @posts.each do |post|
     article.post
