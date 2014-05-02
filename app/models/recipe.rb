@@ -43,7 +43,8 @@ class Recipe < ActiveRecord::Base
   after_commit :reassoc_ways
   after_destroy :destroy_repo!
 
-  validates :name, :title, presence: true
+  # TODO unique in owner
+  validates :name, :title, presence: true, name_format: true
 
   paginates_per 10
 

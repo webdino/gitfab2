@@ -23,6 +23,7 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true
   validates :name,  unique_owner_name: true
+  validates :name, name_format: true, if: ->{self.name.present?}
   validates :email, uniqueness: true
 
   def dir_path
