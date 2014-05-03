@@ -75,10 +75,10 @@ section#recipes-index
               == form_tag [@owner, :recipes], method: :get do
                 == text_field_tag :q, (params[:q] if params[:type] == "own"), placeholder: "Search project", class: "q-field"
                 == hidden_field_tag :type, :own
-                == submit_tag "Search", class: "search-button"
+                == submit_tag "Search", class: ["search-btn", "btn"]
             - if @owner.class.name.downcase == "user"
               - if @owner == current_user
-                span#create-project
+                span#create-project.btn
                   == link_to "+Project", [:new, current_user, :recipe]
             - else
               - if current_user.is_admin_of? @owner
