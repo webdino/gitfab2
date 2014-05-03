@@ -22,6 +22,7 @@ main#recipes-show {
       .summary {
         width: 320px;
         height: 180px;
+        word-break: break-all;
         .description {
           margin-top: 10px;
         }
@@ -91,6 +92,7 @@ main#recipes-show {
           .summary {
             width: 100%;
             max-height: 156px;
+            word-break: break-all;
             .description {
               margin: 10px;
               width: 100%;
@@ -115,6 +117,7 @@ main#recipes-show {
             .summary {
               width: 100%;
               max-height: 10px;
+              word-break: break-all;
               p.star {
                 text-align: right;
                 width: 100%;
