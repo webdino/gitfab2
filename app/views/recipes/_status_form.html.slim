@@ -2,7 +2,7 @@ h1
  = "Making"
 == f.fields_for :statuses do |sf|
   .item.status
-    == image_tag sf.object.photo.thumb, class: "image-field"
+    .image-field style="background-image: url('#{sf.object.photo.thumb}')"
     == sf.file_field :photo, class: "file-field"
     .description_container
       == sf.text_area :description, class: "description-field"
@@ -14,7 +14,7 @@ h1
   .ways
     == sf.fields_for :ways do |wf|
       .item.way
-        == image_tag wf.object.photo.thumb, class: "image-field"
+        .image-field style="background-image: url('#{wf.object.photo.thumb}')"
         == wf.file_field :photo, class: "file-field"
         .description_container
           == wf.text_area :description, class: "description-field"
@@ -28,16 +28,16 @@ h1
   coffee:
     $(document).on "click", ".image-field", (event, data) ->
       event.preventDefault()
-      fileFiled = $(event.target.parentNode).find(".file-field")
-      fileFiled.trigger "click"
+      fileField = $(event.target.parentNode).find(".file-field")
+      fileField.trigger "click"
 
     $(document).on "change", ".file-field", (event, data, status) ->
       target = event.target
-      imageFiled = $(target.parentNode).find(".image-field")
+      imageField = $(target.parentNode).find(".image-field")
       file = target.files[0]
       reader = new FileReader()
       reader.onload = ->
-        imageFiled.attr("src", reader.result)
+        imageField.css("background-image", "url('#{reader.result}')")
 
       reader.readAsDataURL(file)
 

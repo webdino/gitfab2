@@ -135,10 +135,12 @@ form.recipe-form {
           margin-left: 10px;
           float: left;
         }
-        img {
+        .image-field {
           float: left;
           width: 240px;
           height: 180px;
+          background-size: cover;
+          background-position: center;
         }
         .remove_nested_fields {
           border-radius: 10px;
