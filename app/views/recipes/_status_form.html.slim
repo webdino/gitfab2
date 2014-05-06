@@ -23,6 +23,7 @@ h1
         p.remove-way == wf.link_to_remove "X"
     == sf.link_to_add "+ Add Way", :ways
 == f.link_to_add "+ Add Status", :statuses
+#editor-help data-upload-path = url_for([@owner, @recipe, PostAttachment.new]) data-css-path = "/assets/recipes/markup.css"
 
 - content_for :bottom
   coffee:
@@ -41,18 +42,30 @@ h1
 
       reader.readAsDataURL(file)
 
+    markupPluginOptions = {
+      name: "markup",
+      tooltip: "markup",
+      icon: "link",
+      width: 460,
+      height: 400
+    }
+    markupPlugin = MarkupPluginFactory.create(tinymce, markupPluginOptions)
+    tinymce.PluginManager.add(markupPluginOptions.name, markupPlugin)
+
     tinymce.init
       selector: "textarea"
       theme: "modern"
       menubar : false
       convert_urls : false
-      toolbar1: "link insertfile"
+      toolbar1: "bullist numlist | markup unlink"
       image_advtab: true
       statusbar: false
       toolbar_items_size: "small"
+      content_css: $("#editor-help").attr("data-css-path"),
+      uploadimage_form_url: $("#editor-help").attr("data-upload-path")
       plugins: [
-        "autolink link"
-      ],
+        "autolink markup link"
+      ]
       setup: (editor) ->
         editor.on "focus", (e) ->
           toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
