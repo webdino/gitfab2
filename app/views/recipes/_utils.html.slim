@@ -28,8 +28,7 @@ section#recipes-utils
     section#user-info
       .owner
         .thumbnail
-          - if @owner.avatar.present?
-            == image_tag @owner.avatar
+          == image_tag @owner.avatar
         .screen-name
           == @owner.name
       - if can? :manage, @recipe
