@@ -23,7 +23,7 @@ end
 shared_examples "operation without team privilege" do |klass|
   subject{response.status}
   it do
-    if ["status", "material"].include? klass
+    if ["status", "material", "way"].include? klass
       should be 401
     else
       should be 200

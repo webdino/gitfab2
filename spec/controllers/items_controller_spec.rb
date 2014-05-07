@@ -36,7 +36,7 @@ require "spec_helper"
         before do
           sign_in user2
           group.add_editor user2
-          recipe.update_attributes owner_id: group.id
+          recipe.update_attributes owner_id: group.id, owner_type: Group.name
           xhr :post, :create, group_id: group.id, recipe_id: recipe.id,
             klass => valid_attributes
         end
