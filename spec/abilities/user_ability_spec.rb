@@ -45,7 +45,7 @@ describe "User ability" do
       it{should be_able_to :manage, tool}
     end
     describe "lets user manage the ways of the recipe" do
-      it{should be_able_to :manage, way}
+      it{should_not be_able_to :manage, way}
     end
     describe "lets user read the recipe" do
       it{should be_able_to :read, recipe}
