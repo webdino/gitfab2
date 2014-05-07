@@ -8,21 +8,51 @@
     padding-top: 10px;
     border-bottom: solid 1px black;
     @include content-box;
+
     ul#usage-list {
       @include cf;
-      margin-left: -40px;
       li.usage {
-        margin: 0 0 20px 40px;
+        margin: 0 120px 20px 0px;
+        &:nth-of-type(3n) {
+          margin: 0 0 20px 0px;
+        }
+        width: 240px;
         float: left;
         .photo {
           margin-bottom: 6px;
+          a.item-photo {
+            display: block;
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+          }
         }
         .summary {
           @include cf;
+          width: 100%;
+          p.title {
+            float: left;
+            max-width: 200px;
+            min-height: 40px;
+            font-size: 24px;
+            font-weight: 900;
+          }
           p.star {
             float: right;
+            font-size: 24px;
+          }
+          p.description {
+            width: 100%;
+            min-height: 60px;
+            word-break: break-all;
+            overflow: hidden;
           }
         }
+      }
+
+      .edit-form {
+        display: none;
       }
     }
     .add-form-wrap {
