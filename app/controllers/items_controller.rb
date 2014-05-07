@@ -44,7 +44,7 @@ class ItemsController < ApplicationController
   end
 
   def load_recipe
-    @recipe = Recipe.find params[:recipe_id]
+    @recipe = @owner.recipes.find params[:recipe_id]
   end
 
   def load_owner
