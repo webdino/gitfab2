@@ -17,6 +17,23 @@ require "spec_helper"
       context "with owner" do
         before do
           sign_in recipe.owner
+        end
+        context "when another recipe in the same name has already been owned other owner" do
+          let(:recipe_named_foo){FactoryGirl.create :user_recipe, name: "foo"}
+          before do
+            FactoryGirl.create :user_recipe, name: "foo"
+          end
+          it do
+            expect do
+              xhr :post, :create, user_id: recipe_named_foo.owner.id, recipe_id: recipe_named_foo.name,
+                klass => valid_attributes
+            end.to change{recipe_named_foo.send(klass.pluralize).count}.from(0).to 1
+          end
+        end
+      end
+      context "with owner" do
+        before do
+          sign_in recipe.owner
           xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
             klass => valid_attributes
         end
@@ -29,7 +46,6 @@ require "spec_helper"
             klass => valid_attributes
         end
         it_behaves_like "operation without team privilege", klass
-
       end
       context "with a member of the group which owns the recipe" do
         let(:group){FactoryGirl.create :group, creator: recipe.owner}
