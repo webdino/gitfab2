@@ -5,6 +5,7 @@ FactoryGirl.define do
     name {"recipe_#{SecureRandom.hex 10}"}
     title {SecureRandom.uuid}
     description {SecureRandom.uuid}
+    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, "/spec/assets/images/image.jpg")))
 
     factory :user_recipe, class: Recipe do |ur|
       ur.owner {|o| o.association :user}
