@@ -137,3 +137,13 @@ main#recipes-show
         $(document).on "ajax:success", "#new_comment", (e, data) ->
           $("ul#comment-list").append data.html
           $("#new_comment").find(":text, textarea").val ""
+
+        UPLOAD_LIMIT = 6 * 1000 * 1000
+
+        $(document).on "change", ".add-photo", (event) ->
+          if $(this)[0].files[0].size > UPLOAD_LIMIT
+            $(this).siblings(".filesize-caution").css "display", "block"
+            $(this).siblings("input").attr "disabled", true
+          else
+            $(this).siblings(".filesize-caution").css "display", "none"
+            $(this).siblings("input").attr "disabled", false

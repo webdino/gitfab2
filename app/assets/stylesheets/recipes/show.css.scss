@@ -136,4 +136,10 @@ main {
       }
     }
   }
+
+  .filesize-caution {
+    display: none;
+    color: red;
+    font-size: 24px;
+  }
 }
