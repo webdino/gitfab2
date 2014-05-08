@@ -122,6 +122,21 @@ describe Recipe do
      subject{recipe.fork_for! other}
      it{should be_a Recipe}
    end
+
+   describe "copies the photo file which the original recipe has" do
+     subject{forked_recipe.photo.present?}
+     it{should be_true}
+   end
+
+   describe "copies the photo file which the items belong to the original recipe has" do
+     subject do
+       forked_recipe.statuses.all?{|status| status.photo.present?} &&
+         forked_recipe.ways.all?{|way| way.photo.present?} &&
+         forked_recipe.tools.all?{|tool| tool.photo.present?} &&
+         forked_recipe.materials.all?{|material| material.photo.present?}
+     end
+     it{should be_true}
+   end
  end
 
   describe "on after_create" do
