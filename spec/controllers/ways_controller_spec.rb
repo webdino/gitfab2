@@ -86,7 +86,7 @@ describe WaysController do
         xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
           status_id: status.id, id: way.id
       end
-      it_behaves_like "operation without team privilege", "way"
+      it_behaves_like "unauthorized"
     end
     context "with a member of the group which owns the recipe" do
       before do
