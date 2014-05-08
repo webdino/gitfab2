@@ -49,6 +49,12 @@
     #making
       == render "status_form", f: f
 
+  #filesize-caution
+    p
+      'File Size Limit Exceed on an upload(6MB).
+    p
+      'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
+
   == f.submit
 
     / NOTE: temporary not shown
