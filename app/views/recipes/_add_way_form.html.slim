@@ -1,20 +1,16 @@
 - opts ||= {}
 div class="add-form-wrap"
-  = link_to "+ Add #{item.class.name.underscore}", "#", class: "add-btn"
-  = form_for [@owner, @recipe, status, item], remote: true,
+  == link_to "+ Add #{item.class.name.underscore}", "#", class: "add-btn"
+  == form_for [@owner, @recipe, status, item], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
     - item.class::UPDATABLE_COLUMNS.each do |field|
       - case field
       - when :photo
-        = f.file_field field, class: "add-photo"
+        == f.file_field field, class: "add-photo"
       - when :description
-        = f.text_area field
+        == f.text_area field
       - when :status_id, :reassoc_token
       - else
-        = f.text_field field
-    .filesize-caution
-      p
-        'File Size Limit Exceed on an upload(6MB).
-      p
-        'You have to change the uploaded file on this session to less size one.
-    = f.submit "create"
+        == f.text_field field
+    == render "filesize_caution"
+    == f.submit "create"
