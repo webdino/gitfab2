@@ -59,7 +59,14 @@ Gitfab2::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w(application.js recipe.js posts.js dashboard.js home.css recipe.css dashboard.css posts.css groups.css)
+  config.assets.precompile += %w(
+    application.js
+    home.css
+    groups.js    groups.css
+    dashboard.js dashboard.css
+    posts.js     posts.css
+    recipe.js    recipe.css
+  )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
