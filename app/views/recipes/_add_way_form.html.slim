@@ -12,4 +12,9 @@ div class="add-form-wrap"
       - when :status_id, :reassoc_token
       - else
         = f.text_field field
+    .filesize-caution
+      p
+        'File Size Limit Exceed on an upload(6MB).
+      p
+        'You have to change the uploaded file on this session to less size one.
     = f.submit "create"
