@@ -26,7 +26,8 @@
               'Input a Youtube URL
             == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.video_id}", id: "youtube-url-input"
             == f.hidden_field :video_id, id: "video-id-field"
-            #caution style="font-size: 12px; color: red;"
+            #caution
+              'Invalid YouTube URL
             #video-form-preview-wrapper
               iframe.video-form-preview src: #{f.object.video_id}
             #video-form-buttons
@@ -110,6 +111,11 @@
       $(document).on "change", "select#recipe_group_id", (event) ->
         $("#new_recipe").attr "action", $(this).val()
 
+      disableVideoSubmitButton = ->
+        $("#caution").css "display", "block"
+        $("iframe.video-form-preview").attr "src", ""
+        $(".ok-btn").addClass "disabled"
+
       YOUTUBE_URL_MIN_LENGTH   = 41
       YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
       # TODO: constantize '11'
@@ -124,24 +130,37 @@
               w.videoId = matched[VIDEOID_MATCH_INDEX]
               embed_url = YOUTUBE_EMBED_URL_BASE + w.videoId
               $("iframe.video-form-preview").attr "src", embed_url
+              $("#caution").css "display", "none"
+              $(".ok-btn").removeClass "disabled"
             else
-              $("#caution").text "Invalid Youtube URL"
+              $("#caution").text "Invalid YouTube URL"
+              disableVideoSubmitButton()
+          else
+            $("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+            disableVideoSubmitButton()
+
 
       $(document).on "keyup", "input#youtube-url-input", getVideo
       $(document).on "change", "input#youtube-url-input", getVideo
 
       $(document).on "click", "#video-form-buttons .ok-btn", (event) ->
         event.preventDefault()
-        if $("section.visual iframe").length < 1
-          $("section.visual").append "<iframe></iframe>"
-        $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
-        $("input#video-id-field").val w.videoId
-        $.fancybox.close()
+        if $(this).hasClass "disabled"
+          return false
+        else
+          if $("section.visual iframe").length < 1
+            $("section.visual").append "<iframe></iframe>"
+          $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
+          $("input#video-id-field").val w.videoId
+          $.fancybox.close()
+          $("#photo-upload-btn").css "display", "none"
+          $("#input-video-url-btn").css "display", "none"
+
       $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
         event.preventDefault()
         $.fancybox.close()
 
       $("iframe").hover ->
-          $("#photo-upload-btn").css "display","block"
-          $("#input-video-url-btn").css "display","block"
+          $("#photo-upload-btn").css "display", "block"
+          $("#input-video-url-btn").css "display", "block"
         ,->
