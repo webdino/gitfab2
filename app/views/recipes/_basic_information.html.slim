@@ -7,7 +7,7 @@ section#basic-information
 
   #project-summary
     .visual style="background-image: url('#{@recipe.photo}')"
-      - if @recipe.youtube_url.present?
+      - if @recipe.video_id.present?
         iframe src="#{@recipe.youtube_embed_url}"
 
     section.description

@@ -1,5 +1,5 @@
 class Recipe < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:name, :title, :description, :photo, :owner_id, :owner_type, :youtube_url]
+  UPDATABLE_COLUMNS = [:name, :title, :description, :photo, :owner_id, :owner_type, :video_id]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
   YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
@@ -38,6 +38,7 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
+  before_update :clear_video_id_or_photo_if_needed
   before_update :rename_repo_name!, if: ->{self.name_changed?}
   after_create :ensure_repo_exist!
   after_commit :reassoc_ways
@@ -65,6 +66,11 @@ class Recipe < ActiveRecord::Base
         self.owner.send col
       end
     end
+  end
+
+  def photo= obj
+    @photo_changed = true
+    super obj
   end
 
   def owner
@@ -125,7 +131,7 @@ class Recipe < ActiveRecord::Base
   end
 
   def youtube_embed_url
-    "#{YOUTUBE_EMBED_URL_BASE}#{self.youtube_url}"
+    "#{YOUTUBE_EMBED_URL_BASE}#{self.video_id}"
   end
 
   private
@@ -164,5 +170,13 @@ class Recipe < ActiveRecord::Base
   def dup_photo
     ActionDispatch::Http::UploadedFile.new filename: self.photo.file.filename,
       type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
+  end
+
+  def clear_video_id_or_photo_if_needed
+    if self.video_id_changed?
+      self.remove_photo!
+    elsif @photo_changed
+      self.video_id = nil
+    end
   end
 end

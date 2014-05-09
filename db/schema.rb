@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "type"
     t.text     "description"
     t.string   "photo"
-    t.string   "youtube_url"
+    t.string   "video_id"
     t.integer  "owner_id"
     t.string   "owner_type"
     t.integer  "last_committer_id"

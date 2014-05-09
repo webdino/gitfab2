@@ -14,7 +14,7 @@
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
       section.visual style="background-image: url('#{@recipe.photo}')"
-        - if @recipe.youtube_url.present?
+        - if @recipe.video_id.present?
           iframe src="#{@recipe.youtube_embed_url}"
         .video-form-wrapper
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
@@ -24,11 +24,11 @@
           #video-form
             p
               'Input a Youtube URL
-            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.youtube_url}", id: "youtube-url-input"
-            == f.hidden_field :youtube_url, id: "youtube-url-field"
+            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.video_id}", id: "youtube-url-input"
+            == f.hidden_field :video_id, id: "video-id-field"
             #caution style="font-size: 12px; color: red;"
             #video-form-preview-wrapper
-              iframe.video-form-preview src: #{f.object.youtube_url}
+              iframe.video-form-preview src: #{f.object.video_id}
             #video-form-buttons
               == link_to "OK", "#", class: "ok-btn btn"
               == link_to "Cancel", "#", class: "cancel-btn btn"
@@ -129,7 +129,7 @@
         if $("section.visual iframe").length < 1
           $("section.visual").append "<iframe></iframe>"
         $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
-        $("input#youtube-url-field").val w.videoId
+        $("input#video-id-field").val w.videoId
         $.fancybox.close()
       $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
         event.preventDefault()
