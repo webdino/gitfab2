@@ -12,5 +12,5 @@ div class="add-form-wrap"
       - when :status_id, :reassoc_token
       - else
         == f.text_field field
-    == render "filesize_caution"
+    == render "recipes/filesize_caution"
     == f.submit "create"
