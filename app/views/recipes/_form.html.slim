@@ -149,7 +149,7 @@
           return false
         else
           if $("section.visual iframe").length < 1
-            $("section.visual").append "<iframe></iframe>"
+            $("section.visual").append "<iframe>"
           $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
           $("input#video-id-field").val w.videoId
           $.fancybox.close()
@@ -160,7 +160,6 @@
         event.preventDefault()
         $.fancybox.close()
 
-      $("iframe").hover ->
+      $(document).on "mouseenter", "section.visual iframe", ->
           $("#photo-upload-btn").css "display", "block"
           $("#input-video-url-btn").css "display", "block"
-        ,->
