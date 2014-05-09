@@ -67,7 +67,8 @@ describe RecipesController do
           post :create, user_id: user1.name, 
             recipe: valid_attributes
         end
-        it_behaves_like "redirected"
+        subject{response}
+        it{should redirect_to edit_recipe_path(user1.recipes.last, owner_name: user1.name)}
       end
       context "with a non-owner" do
         before do

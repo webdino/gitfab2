@@ -43,7 +43,7 @@ class RecipesController < ApplicationController
       self.fork
     else
       if @recipe.save
-        redirect_to recipe_path(id: @recipe.name, owner_name: @recipe.owner.name), notice: "Recipe was successfully created."
+        redirect_to edit_recipe_path(@recipe, owner_name: @recipe.owner.name), notice: "Recipe was successfully created."
       else
         render action: :new
       end
