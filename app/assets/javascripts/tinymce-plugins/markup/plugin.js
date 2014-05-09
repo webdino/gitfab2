@@ -4,7 +4,6 @@
  */
 var MarkupPluginFactory = {
   create: function(tinymce, options) {
-    tinymce.PluginManager.requireLangPack(options.name);
     var plugin = function(editor, url) {
       editor.addButton(options.name, {
         tooltip: editor.translate(options.tooltip),
