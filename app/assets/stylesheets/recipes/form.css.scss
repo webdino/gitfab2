@@ -166,6 +166,14 @@ form.recipe-form {
       }
     }
   }
+
+  #filesize-caution {
+    display: none;
+    margin-top: 40px;
+    color: red;
+    font-size: 21px;
+  }
+
   .mce-tinymce {
     position: relative;
     top: -27px;

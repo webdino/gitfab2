@@ -37,6 +37,31 @@ main#recipes-edit
         setStatusReassocToken e.field
         makeSortableWay e.field.find(".ways")
 
+      UPLOAD_LIMIT = 6 * 1000 * 1000
+
+      checkFileSizeLimit = ->
+        sum_of_filesize = 0
+        thumb_files = $("#recipe_photo")[0].files
+        if thumb_files.length > 0
+          sum_of_filesize += thumb_files[0].size
+        $(".file-field").each ->
+          if $(this).parents(".fields").css("display") != "none"
+            if $(this)[0].files.length > 0
+              sum_of_filesize += $(this)[0].files[0].size
+        submitButton = $("main#recipes-edit input").last()
+        if sum_of_filesize > UPLOAD_LIMIT
+          $("#filesize-caution").css "display", "block"
+          submitButton.attr "disabled", true
+        else
+          $("#filesize-caution").css "display", "none"
+          submitButton.attr "disabled", false
+
+      $(document).on "change", "form.recipe-form", ->
+        checkFileSizeLimit()
+
+      $(document).on "click", "a.remove_nested_fields", ->
+        checkFileSizeLimit()
+
       $("#making").sortable({
         items       : "> .fields",
         placeholder : "ui-state-highlight",
@@ -46,4 +71,3 @@ main#recipes-edit
       })
       makeSortableWay $(".ways")
       $("#making").disableSelection()
-
