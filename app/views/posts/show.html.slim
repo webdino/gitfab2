@@ -6,7 +6,9 @@ main#posts-show.recipe-layout
 
   section#links
     == render "links"
-    == link_to "Edit Post", [:edit, @owner, @recipe, @post]
+    - if can? :update, @recipe
+      == link_to "Edit Post", [:edit, @owner, @recipe, @post]
+      == link_to "Delete Post", [@owner, @recipe, @post], method: :delete
 
   h1#post-header
     'Journal
