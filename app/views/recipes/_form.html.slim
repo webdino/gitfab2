@@ -17,10 +17,11 @@
         - if @recipe.video_id.present?
           iframe src="#{@recipe.youtube_embed_url}"
         .video-form-wrapper
-          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn"
+          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
           == f.file_field :photo, title: "Upload Image", accept: "image", style: "display:none"
           == f.hidden_field :photo_cache
-          == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox"
+          == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox btn"
+          == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
           #video-form
             p
               'Input a Youtube URL
@@ -86,9 +87,6 @@
       w = window
       $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
 
-      remove_button = ->
-        $("#photo-upload-btn").css "display","none"
-        $("#input-video-url-btn").css "display","none"
 
       $(document).on "click", "#save-btn", (event, data) ->
         $('form#new_recipe').submit()
@@ -105,7 +103,6 @@
           $("iframe").attr "src",""
           $("#photo-upload-btn").css "color","black"
           $("#input-video-url-btn").css "color","black"
-          remove_button()
         reader.readAsDataURL file
 
       $(document).on "change", "select#recipe_group_id", (event) ->
@@ -149,17 +146,18 @@
           return false
         else
           if $("section.visual iframe").length < 1
-            $("section.visual").append "<iframe>"
+            $("section.visual").prepend "<iframe>"
           $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
           $("input#video-id-field").val w.videoId
           $.fancybox.close()
-          $("#photo-upload-btn").css "display", "none"
-          $("#input-video-url-btn").css "display", "none"
 
       $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
         event.preventDefault()
         $.fancybox.close()
 
-      $(document).on "mouseenter", "section.visual iframe", ->
-          $("#photo-upload-btn").css "display", "block"
-          $("#input-video-url-btn").css "display", "block"
+      $(document).on "click", "#remove-image-btn", (event) ->
+        event.preventDefault()
+        $("section.visual").css "background-image", "url('/assets/fallback/noimage_480x360.png')"
+        $("section.visual iframe").attr "src", ""
+        $("input#recipe_photo").val ""
+        $("input#video-id-field").val ""

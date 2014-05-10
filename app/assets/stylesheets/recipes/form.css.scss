@@ -62,6 +62,7 @@ form.recipe-form {
       background-repeat: no-repeat;
       margin-right: 20px;
       position: relative;
+
       iframe {
         width: 480px;
         height: 360px;
@@ -73,7 +74,7 @@ form.recipe-form {
         height: 100%;
         #photo-upload-btn,
         #input-video-url-btn {
-          display: block;
+          display: none;
           font-size: 24px;
           font-weight: 700;
           position: absolute;
@@ -81,12 +82,27 @@ form.recipe-form {
           top: 20%;
           left: 26%;
           padding: 20px;
-          background: #fff;
         }
         #input-video-url-btn {
           top: 62%;
           left: 26%;
         }
+        #remove-image-btn {
+          display: none;
+          position: absolute;
+          z-index: 999;
+          top: 8%;
+          left: 92%;
+          width: 21px;
+          font-size: 24px;
+        }
+      }
+    }
+    .visual:hover {
+      #photo-upload-btn,
+      #input-video-url-btn,
+      #remove-image-btn {
+        display: block;
       }
     }
   }
