@@ -15,10 +15,11 @@
 }
 form.recipe-form {
   input#recipe_title {
-    width: 100%;
-    font-size: 32px;
+    width: 703px;
+    font-size: 36px;
     font-weight: bold;
-    margin-bottom: 10px;
+    padding: 16px 0 21px 15px;
+    border: solid 1px #000;
   }
   input#recipe_name {
     display: none;
@@ -38,7 +39,7 @@ form.recipe-form {
     @include cf;
     .description {
       float: left;
-      width: 200px;
+      width: 240px;
       h1 {
         width: 100%;
         font-size: 24px;
@@ -60,7 +61,6 @@ form.recipe-form {
       text-align: center;
       background-size: contain;
       background-repeat: no-repeat;
-      margin-right: 20px;
       position: relative;
 
       iframe {

@@ -38,7 +38,7 @@ $popup-width: 360px;
   @include border-box;
 
   #tooltips {
-    height: 118px;
+    max-height: 118px;
     @include border-box;
     #slide-show-button,
     #fork-button {
