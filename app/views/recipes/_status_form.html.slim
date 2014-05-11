@@ -5,7 +5,7 @@ h1
     .image-field style="background-image: url('#{sf.object.photo.thumb}')"
     == sf.file_field :photo, class: "file-field"
     .description_container
-      == sf.text_area :description, class: "description-field"
+      == sf.text_area :description, class: "description-field status-textarea"
     == sf.hidden_field :id, class: "id-field"
     == sf.hidden_field :position, class: "position-field"
     == sf.hidden_field :reassoc_token, class: "status-reassoc-token-field"
@@ -17,64 +17,9 @@ h1
         .image-field style="background-image: url('#{wf.object.photo.thumb}')"
         == wf.file_field :photo, class: "file-field"
         .description_container
-          == wf.text_area :description, class: "description-field"
+          == wf.text_area :description, class: "description-field way-textarea"
         == wf.hidden_field :status_id, class: "status-id-field"
         == wf.hidden_field :reassoc_token, class: "way-reassoc-token-field"
         p.remove-way == wf.link_to_remove "X"
     == sf.link_to_add "+ Add Way", :ways
 == f.link_to_add "+ Add Status", :statuses
-#editor-help data-upload-path = url_for([@owner, @recipe, PostAttachment.new]) data-css-path = asset_path("recipe.css")
-
-- content_for :bottom
-  coffee:
-    $(document).on "click", ".image-field", (event, data) ->
-      event.preventDefault()
-      fileField = $(event.target.parentNode).find(".file-field")
-      fileField.trigger "click"
-
-    $(document).on "change", ".file-field", (event, data, status) ->
-      target = event.target
-      imageField = $(target.parentNode).find(".image-field")
-      file = target.files[0]
-      reader = new FileReader()
-      reader.onload = ->
-        imageField.css("background-image", "url('#{reader.result}')")
-
-      reader.readAsDataURL(file)
-
-    markupPluginOptions = {
-      name: "markup",
-      tooltip: "markup",
-      icon: "link",
-      width: 460,
-      height: 400
-    }
-    markupPlugin = MarkupPluginFactory.create(tinymce, markupPluginOptions)
-    tinymce.PluginManager.add(markupPluginOptions.name, markupPlugin)
-
-    tinymce.init
-      selector: "textarea"
-      theme: "modern"
-      menubar : false
-      convert_urls : false
-      toolbar1: "bullist numlist | markup unlink"
-      image_advtab: true
-      statusbar: false
-      toolbar_items_size: "small"
-      content_css: $("#editor-help").attr("data-css-path"),
-      uploadimage_form_url: $("#editor-help").attr("data-upload-path")
-      plugins: [
-        "autolink markup link"
-      ]
-      setup: (editor) ->
-        editor.on "focus", (e) ->
-          toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
-          toolbar.css "visibility", "visible"
-        editor.on "blur", (e) ->
-          toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
-          toolbar.css "visibility", "hidden"
-
-    $(document).on "nested:fieldAdded", (event) ->
-      textarea = event.field.find ".description-field"
-      id = textarea.attr "id"
-      tinymce.execCommand "mceAddEditor", false, id

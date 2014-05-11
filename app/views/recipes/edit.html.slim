@@ -3,6 +3,7 @@
 
 main#recipes-edit
   == render "form"
+#markup-help data-upload-path = url_for([@owner, @recipe, PostAttachment.new]) data-css-path = asset_path("recipe.css")
 
 - content_for :bottom
   coffee:

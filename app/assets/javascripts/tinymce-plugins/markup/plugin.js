@@ -9,7 +9,7 @@ var MarkupPluginFactory = {
         tooltip: editor.translate(options.tooltip),
         icon : options.icon,
         onclick: showDialog,
-        stateSelector: "a[href]"
+        stateSelector: "a." + options.name
       });
 
       function createTextForm(label, name, value) {
@@ -74,51 +74,36 @@ var MarkupPluginFactory = {
         return containerElement;
       }
 
-      function createRadioForm(label, name, values, checkedValue) {
-        var containerElement = $(document.createElement("div"));
-        containerElement.addClass("container");
-        containerElement.addClass(name);
-        var labelElement = $(document.createElement("label"));
-        labelElement.text(label);
-        containerElement.append(labelElement);
-        var groupElement = $(document.createElement("span"));
-        for (var i = 0, n = values.length; i < n; i++) {
-          var inputElement = $(document.createElement("input"));
-          inputElement.attr("type", "radio");
-          inputElement.attr("name", name);
-          var value = values[i];
-          inputElement.val(value);
-          if (value == checkedValue) {
-
-            inputElement.attr("checked", "checked");
-          }
-          groupElement.append(inputElement);
-          groupElement.append($(document.createTextNode(value)));
-        }
-        containerElement.append(groupElement);
-        return containerElement;
-      }
-
-      function createForm(data) {
+      function createForm(data, tools) {
         var formElement = $(document.createElement("form"));
         formElement.attr("id", "markup-form");
-        formElement.append($(document.createElement("div")).text("link").addClass("link"));
+        var linkElement = $(document.createElement("div")).text("link");
+        linkElement.addClass("link");
+        linkElement.addClass("form-field");
         var urlElement = createTextForm("url", "url", data.url);
         urlElement.addClass("link-selection");
-        formElement.append(urlElement);
-        formElement.append($(document.createElement("div")).text("OR").addClass("center"));
+        linkElement.append(urlElement);
+        linkElement.append($(document.createElement("div")).text("OR").addClass("center"));
         var attachmentElement = createFileForm("attachment", "attachment");
         attachmentElement.addClass("link-selection");
-        formElement.append(attachmentElement);
-        formElement.append($(document.createElement("hr")));
+        linkElement.append(attachmentElement);
+        linkElement.addClass("form-field");
+        formElement.append(linkElement);
+        if (tools.indexOf("link") < 0) {
+          linkElement.css("display", "none");
+        }
         var textElement = createTextForm("text", "text", data.text);
+        textElement.addClass("form-field");
         formElement.append(textElement);
-        formElement.append($(document.createElement("hr")));
+        if (tools.indexOf("text") < 0) {
+          textElement.css("display", "none");
+        }
         var imageElement = createImageForm("image", "image", data.image);
+        imageElement.addClass("form-field");
         formElement.append(imageElement);
-        formElement.append($(document.createElement("hr")));
-        var kindElement = createRadioForm("kind", "kind", ["link", "material", "tool", "blueprint"], data.kind);
-        formElement.append(kindElement);
+        if (tools.indexOf("image") < 0) {
+          imageElement.css("display", "none");
+        }
         return formElement;
       }
 
@@ -174,7 +159,7 @@ var MarkupPluginFactory = {
           data.url = "http://";
           data.kind = "link";
         }
-        var form = createForm(data);
+        var form = createForm(data, options.tools);
         var dialog = editor.windowManager.open({
           title: editor.translate(options.tooltip),
           width:  options.width,
@@ -183,7 +168,7 @@ var MarkupPluginFactory = {
             {
               text: editor.translate("Markup"),
               onclick: function() {
-                var kind = $("#markup-form input[name=kind]:checked").val();
+                var kind = options.kind;
                 var url = $("#markup-form input[name=url]").val();
                 var text = $("#markup-form input[name=text]").val();
                 var attachmentElement = $("#markup-form input[name=attachment]").get(0);
@@ -244,6 +229,7 @@ var MarkupPluginFactory = {
         $(".mce-window-head + .mce-container-body").append(form);
       }
     }
+    tinymce.PluginManager.add(options.name, plugin);
     return plugin;
   }
 

@@ -15,4 +15,20 @@
     color: orange;
     font-weight: bold;
   }
+
+  .mce-edit-area iframe {
+    background-color: white;
+  }
+}
+
+#markup-form {
+  .form-field {
+    border-top: 1px solid gray;
+    padding-top: 10px;
+  }
+
+  .form-field:first-child {
+    border: none;
+    padding: 0;
+  }
 }

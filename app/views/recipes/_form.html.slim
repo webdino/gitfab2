@@ -37,7 +37,7 @@
       section.description
         h1
           'Summary
-        == f.text_area :description, placeholder: "Add Summary", tabindex: 3
+        == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
 
   - if @recipe.persisted?
     /#materials

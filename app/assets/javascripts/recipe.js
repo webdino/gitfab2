@@ -21,3 +21,4 @@
 //= require_tree ./fancybox
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
+//= require ./markup
