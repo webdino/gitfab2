@@ -24,6 +24,16 @@ $(document).ready ->
     tools: ["link", "text"]
   })
 
+  attachmentPlugin = MarkupPluginFactory.create(tinymce, {
+    name: "attachment",
+    tooltip: "link",
+    kind: "link",
+    icon: "link",
+    width: 460,
+    height: 200,
+    tools: ["link", "attachment", "text"]
+  })
+
   materialPlugin = MarkupPluginFactory.create(tinymce, {
     name: "material",
     tooltip: "material",
@@ -31,7 +41,7 @@ $(document).ready ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "text", "image"]
+    tools: ["link", "attachment", "text", "image"]
   })
 
   toolPlugin = MarkupPluginFactory.create(tinymce, {
@@ -41,7 +51,7 @@ $(document).ready ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "text", "image"]
+    tools: ["link", "attachment", "text", "image"]
   })
   
   blueprintPlugin = MarkupPluginFactory.create(tinymce, {
@@ -51,16 +61,19 @@ $(document).ready ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "text", "image"]
+    tools: ["link", "attachment", "text", "image"]
   })
 
   installTinyMCE = (type, selector) ->
     if type is "status-textarea"
-      tools = "material blueprint markup unlink | bullist numlist"
-      plugins = "autolink markup material blueprint link"
+      tools = "material blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment material blueprint link"
     else if type is "way-textarea"
-      tools = "tool blueprint markup unlink | bullist numlist"
-      plugins = "autolink markup tool blueprint link"
+      tools = "tool blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment tool blueprint link"
+    else if type is "attachment-textarea"
+      tools = "tool blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment tool blueprint link"
     else
       tools = "markup unlink | bullist numlist"
       plugins = "autolink link markup"
@@ -86,7 +99,7 @@ $(document).ready ->
           toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
           toolbar.css "visibility", "hidden"
 
-  textareaTypes = ["status-textarea", "way-textarea", "link-textarea"]
+  textareaTypes = ["status-textarea", "way-textarea", "link-textarea", "attachment-textarea"]
   for type in textareaTypes
     installTinyMCE type, type
 
