@@ -54,11 +54,11 @@ $(document).ready ->
     tools: ["link", "text", "image"]
   })
 
-  installTinyMCE = (selector) ->
-    if selector is "status-textarea"
+  installTinyMCE = (type, selector) ->
+    if type is "status-textarea"
       tools = "material blueprint markup unlink | bullist numlist"
       plugins = "autolink markup material blueprint link"
-    else if selector is "way-textarea"
+    else if type is "way-textarea"
       tools = "tool blueprint markup unlink | bullist numlist"
       plugins = "autolink markup tool blueprint link"
     else
@@ -88,14 +88,14 @@ $(document).ready ->
 
   textareaTypes = ["status-textarea", "way-textarea", "link-textarea"]
   for type in textareaTypes
-    installTinyMCE type
+    installTinyMCE type, type
 
   $(document).on "nested:fieldAdded", (event) ->
     textarea = event.field.find ".description-field"
     id = textarea.attr "id"
     for type in textareaTypes
       if textarea.hasClass type
-        installTinyMCE type
+        selector = id + type
+        textarea.addClass selector
+        installTinyMCE type, selector
         break
-
-    tinymce.execCommand "mceAddEditor", false, id
