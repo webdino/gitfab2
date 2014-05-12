@@ -5,11 +5,11 @@ class CreateStatuses < ActiveRecord::Migration
       t.integer :position, index: true
       t.text :description
       t.string :photo
+      t.string :video_id
       t.belongs_to :recipe, index: true
       t.string :reassoc_token
       t.integer :cached_votes_score, default: 0
       t.datetime :deleted_at
-
       t.timestamps
     end
 

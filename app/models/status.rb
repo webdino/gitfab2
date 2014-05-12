@@ -1,10 +1,11 @@
 class Status < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:description]
-  UPDATABLE_COLUMNS = [:id, :description, :photo, :position, :reassoc_token, :_destroy]
+  UPDATABLE_COLUMNS = [:id, :description, :photo, :video_id, :position, :reassoc_token, :_destroy]
+  YOUTUBE_EMBED_URL_BASE = "http://www.youtube.com/embed/"
 
   include Gitfab::ActsAsItemInRecipe
 
-  
+
   has_many :materials
   has_many :ways, dependent: :destroy
 
@@ -16,6 +17,10 @@ class Status < ActiveRecord::Base
       new_status.ways << way.dup_with_photo
     end
     new_status
+  end
+
+  def youtube_embed_url
+    "#{YOUTUBE_EMBED_URL_BASE}#{self.video_id}"
   end
 
 end

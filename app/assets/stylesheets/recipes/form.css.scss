@@ -5,7 +5,7 @@
   #caution {
     display: none;
     font-size: 12px;
-    color :red;
+    color: red;
   }
   .ok-btn.disabled {
     background-color: #ddd;
@@ -14,6 +14,22 @@
     }
   }
 }
+
+.video-form {
+  display: none;
+  .caution {
+    display: none;
+    font-size: 12px;
+    color: red;
+  }
+  .ok-btn.disabled {
+    background-color: #ddd;
+    &:hover {
+      cursor: default;
+    }
+  }
+}
+
 form.recipe-form {
   input#recipe_title {
     width: 703px;
@@ -177,6 +193,49 @@ form.recipe-form {
           height: 180px;
           background-size: cover;
           background-position: center;
+
+          iframe {
+            width: 240px;
+            height: 180px;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+          .video-form-wrapper {
+            height: 100%;
+            .photo-upload-btn,
+            .input-video-url-btn {
+              display: none;
+              font-size: 16px;
+              font-weight: 700;
+              position: absolute;
+              z-index: 999;
+              top: 20%;
+              left: 6%;
+              padding: 10px;
+            }
+            .input-video-url-btn {
+              top: 62%;
+              left: 6%;
+            }
+            .remove-image-btn {
+              display: none;
+              position: absolute;
+              z-index: 999;
+              top: 8%;
+              left: 42%;
+              width: 10px;
+              font-size: 16px;
+            }
+          }
+
+        }
+        .image-field:hover {
+          .photo-upload-btn,
+          .input-video-url-btn,
+          .remove-image-btn {
+            display: block;
+          }
         }
         .remove_nested_fields {
           border-radius: 10px;
