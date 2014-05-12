@@ -1,6 +1,9 @@
 li.way
   .photo
-    == link_to "", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
+    - if item.video_id.present?
+      iframe src="#{item.youtube_embed_url}"
+    - else
+      == link_to "", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
   .summary
     p.star
       == toggle_star_link_for item

@@ -1,10 +1,11 @@
 class Way < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :description]
-  UPDATABLE_COLUMNS = [:description, :photo, :status_id, :reassoc_token]
+  UPDATABLE_COLUMNS = [:description, :photo, :video_id, :status_id, :reassoc_token]
+  YOUTUBE_EMBED_URL_BASE = "http://www.youtube.com/embed/"
 
   include Gitfab::ActsAsItemInRecipe
 
-  
+
   belongs_to :recipe
   belongs_to :status
   belongs_to :creator, class_name: User.name
@@ -15,4 +16,9 @@ class Way < ActiveRecord::Base
   def dir_path
     "statuses/#{self.status_id}/ways"
   end
+
+  def youtube_embed_url
+    "#{YOUTUBE_EMBED_URL_BASE}#{self.video_id}"
+  end
+
 end

@@ -1,18 +1,4 @@
 $(document).ready ->
-  $(document).on "click", ".image-field", (event) ->
-    event.preventDefault
-    fileField = $(event.target.parentNode).find ".file-field"
-    fileField.trigger "click"
-
-  $(document).on "change", ".file-field", (event) ->
-    target = event.target
-    imageField = $(target.parentNode).find ".image-field"
-    file = target.files[0]
-    reader = new FileReader
-    reader.onload = ->
-      imageField.css "background-image", "url('#{reader.result}')"
-
-    reader.readAsDataURL file
 
   markupPlugin = MarkupPluginFactory.create(tinymce, {
     name: "markup",
@@ -53,7 +39,7 @@ $(document).ready ->
     height: 400,
     tools: ["link", "attachment", "text", "image"]
   })
-  
+
   blueprintPlugin = MarkupPluginFactory.create(tinymce, {
     name: "blueprint",
     tooltip: "blueprint",

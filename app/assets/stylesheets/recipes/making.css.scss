@@ -18,6 +18,11 @@ main#recipes-show {
           background-size: cover;
           background-position: center;
         }
+        iframe {
+          display: block;
+          width: 240px;
+          height: 180px;
+        }
       }
       .summary {
         width: 320px;

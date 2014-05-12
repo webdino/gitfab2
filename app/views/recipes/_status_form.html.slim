@@ -2,8 +2,29 @@ h1
  = "Making"
 == f.fields_for :statuses do |sf|
   .item.status
-    .image-field style="background-image: url('#{sf.object.photo.thumb}')"
-    == sf.file_field :photo, class: "file-field"
+    .image-field style="background-image: url('#{sf.object.photo.thumb}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
+      - if sf.object.video_id.present?
+        iframe src="#{sf.object.youtube_embed_url}"
+      .video-form-wrapper
+        .photo-upload-btn.btn
+          'Upload Image File…
+        == sf.file_field :photo, title: "Upload Image", accept: "image", class: "file-field"
+        .input-video-url-btn.btn
+          'Input YouTube URL…
+        .remove-image-btn.btn
+          '×
+        .video-form
+          p
+            'Input a Youtube URL
+          == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{sf.object.video_id}", class: "youtube-url-input"
+          == sf.hidden_field :video_id, class: "video-id-field"
+          .caution
+            'Invalid YouTube URL
+          .video-form-preview-wrapper
+            iframe.video-form-preview src: #{sf.object.video_id}
+          .video-form-buttons
+            == link_to "OK", "#", class: "ok-btn btn"
+            == link_to "Cancel", "#", class: "cancel-btn btn"
     .description_container
       == sf.text_area :description, class: "description-field status-textarea"
     == sf.hidden_field :id, class: "id-field"
@@ -14,8 +35,29 @@ h1
   .ways
     == sf.fields_for :ways do |wf|
       .item.way
-        .image-field style="background-image: url('#{wf.object.photo.thumb}')"
-        == wf.file_field :photo, class: "file-field"
+        .image-field style="background-image: url('#{wf.object.photo.thumb}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
+          - if wf.object.video_id.present?
+            iframe src="#{wf.object.youtube_embed_url}"
+          .video-form-wrapper
+            .photo-upload-btn.btn
+              'Upload Image File…
+            == wf.file_field :photo, title: "Upload Image", accept: "image", class: "file-field"
+            .input-video-url-btn.btn
+              'Input YouTube URL…
+            .remove-image-btn.btn
+              '×
+            .video-form
+              p
+                'Input a Youtube URL
+              == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{wf.object.video_id}", class: "youtube-url-input"
+              == wf.hidden_field :video_id, class: "video-id-field"
+              .caution
+                'Invalid YouTube URL
+              .video-form-preview-wrapper
+                iframe.video-form-preview src: #{wf.object.video_id}
+              .video-form-buttons
+                == link_to "OK", "#", class: "ok-btn btn"
+                == link_to "Cancel", "#", class: "cancel-btn btn"
         .description_container
           == wf.text_area :description, class: "description-field way-textarea"
         == wf.hidden_field :status_id, class: "status-id-field"
