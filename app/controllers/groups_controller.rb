@@ -57,10 +57,6 @@ class GroupsController < ApplicationController
     @group = Group.new group_params
   end
 
-  def load_user
-    @user = current_user
-  end
-
   def load_group
     @group = Group.find params[:id]
   end
