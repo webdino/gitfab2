@@ -2,24 +2,15 @@ require "spec_helper"
 
 describe MembershipsController do
   disconnect_sunspot
-  let(:user1){FactoryGirl.create :user}
-  let(:user2){FactoryGirl.create :user}
-  let(:group1){FactoryGirl.create :group, creator: user1}
-  let(:membership1){group1.memberships.first}
-  let(:valid_attributes){{user_id: user2.id, group_id: group1.id, role: Membership::ROLE[:admin]}}
-
-  describe "valid attributes" do
-    subject do
-      ms = Membership.new(valid_attributes)
-      ms.valid?
-    end
-    it{should be true}
-  end
+  let(:user){FactoryGirl.create :user}
+  let(:other){FactoryGirl.create :user}
+  let(:valid_attributes){{user_id: other.id, role: Membership::ROLE[:admin]}}
 
   describe "POST create" do
     before do
-      sign_in user1
-      post :create, group_id: group1.id,
+      sign_in user
+      group = user.groups.create name: "foo"
+      post :create, group_id: group.id,
         membership: membership_params, format: :json
     end
     context "with valid params" do
@@ -36,8 +27,10 @@ describe MembershipsController do
 
   describe "PATCH update" do
     before do
-      sign_in user1
-      patch :update, group_id: group1.id, id: membership1.id,
+      sign_in user
+      group = user.groups.create name: "foo"
+      membership = group.memberships.first
+      patch :update, group_id: group.id, id: membership.id,
         membership: membership_params, format: :json
     end
     context "with valid params" do
@@ -54,9 +47,11 @@ describe MembershipsController do
 
   describe "DELETE destroy" do
     before do
-      sign_in user1
-      delete :destroy, group_id: group1.id, user_id: user1.id,
-        id: membership1.id, format: :json
+      sign_in user
+      group = user.groups.create name: "foo"
+      membership = group.memberships.first
+      delete :destroy, group_id: group.id, user_id: user.id,
+        id: membership.id, format: :json
     end
     it_behaves_like "render template", "destroy"
   end

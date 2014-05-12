@@ -2,15 +2,9 @@ require "spec_helper"
 
 describe RecipesController do
   disconnect_sunspot
-  let(:user1){FactoryGirl.create :user}
-  let(:user2){FactoryGirl.create :user}
-  let(:group){FactoryGirl.create :group, creator: user1}
-  let(:g_editor) do
-    FactoryGirl.create(:user).tap do |u|
-      group.members << u
-    end
-  end
-  let(:group2){FactoryGirl.create :group, creator: user2}
+  let(:user){FactoryGirl.create :user}
+  let(:other){FactoryGirl.create :user}
+  let(:group){FactoryGirl.create :group}
   let(:recipe){FactoryGirl.create :user_recipe}
   let(:g_recipe){FactoryGirl.create :group_recipe}
   let(:valid_attributes){{name: "recipe_#{SecureRandom.hex 16}", title: "title"}}
@@ -26,9 +20,10 @@ describe RecipesController do
         end
         it_behaves_like "success"
       end
-      context "owned by others" do
+      context "owned by group" do
         before do
-          sign_in g_recipe.owner.creator
+          sign_in user
+          g_recipe.owner.add_admin user
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "success"
@@ -37,21 +32,22 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          sign_in user2
+          sign_in user
           get :new, user_id: recipe.owner_id
         end
         it_behaves_like "unauthorized"
       end
       context "when the user is an editor of the group" do
         before do
-          sign_in g_editor
+          sign_in user
+          group.add_editor user
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "unauthorized"
       end
       context "when the user is not an admin of the group" do
         before do
-          sign_in user2
+          sign_in user
           get :new, group_id: g_recipe.owner_id
         end
         it_behaves_like "unauthorized"
@@ -63,17 +59,17 @@ describe RecipesController do
     context "a user recipe" do
       context "with the owner" do
         before do
-          sign_in user1
-          post :create, user_id: user1.name, 
+          sign_in user
+          post :create, user_id: user.name, 
             recipe: valid_attributes
         end
         subject{response}
-        it{should redirect_to edit_recipe_path(user1.recipes.last, owner_name: user1.name)}
+        it{should redirect_to edit_recipe_path(user.recipes.last, owner_name: user.name)}
       end
       context "with a non-owner" do
         before do
-          sign_in user2
-          post :create, user_id: user1.name, 
+          sign_in other
+          post :create, user_id: user.name, 
             recipe: valid_attributes
         end
         it_behaves_like "unauthorized"
@@ -82,7 +78,8 @@ describe RecipesController do
     context "a group recipe" do
       context "with an admin user" do
         before do
-          sign_in user1
+          sign_in user
+          group.add_admin user
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -90,7 +87,8 @@ describe RecipesController do
       end
       context "when the user is an editor of the group" do
         before do
-          sign_in g_editor
+          sign_in user
+          group.add_editor user
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -98,7 +96,7 @@ describe RecipesController do
       end
       context "with a non-admin user" do
         before do
-          sign_in user2
+          sign_in user
           post :create, group_id: group.name, 
             recipe: valid_attributes
         end
@@ -111,15 +109,16 @@ describe RecipesController do
     context "a user recipe" do
       context "as a user recipe" do
         before do
-          sign_in user1
-          post :create, user_id: user1.name, 
+          sign_in user
+          post :create, user_id: user.name, 
             base_recipe_id: recipe.id
         end
         it_behaves_like "redirected"
       end
       context "as a group recipe" do
         before do
-          sign_in user1
+          sign_in user
+          group.add_admin user
           post :create, group_id: group.name, 
             base_recipe_id: recipe.id
         end
@@ -129,16 +128,17 @@ describe RecipesController do
     context "a group recipe" do
       context "as a user recipe" do
         before do
-          sign_in user1
-          post :create, user_id: user1.name, 
+          sign_in user
+          post :create, user_id: user.name, 
             base_recipe_id: g_recipe.id
         end
         it_behaves_like "redirected"
       end
       context "as a group recipe" do
         before do
-          sign_in user2
-          post :create, group_id: group2.name, 
+          sign_in user
+          group.add_admin user
+          post :create, group_id: group.name, 
             base_recipe_id: g_recipe.id
         end
         it_behaves_like "redirected"
@@ -158,7 +158,7 @@ describe RecipesController do
       end
       context "owned by others" do
         before do
-          sign_in user2
+          sign_in user
           patch :update, user_id: recipe.owner_id, id: recipe.id,
             recipe: valid_attributes
         end
@@ -168,7 +168,8 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          sign_in g_recipe.owner.creator
+          sign_in user
+          g_recipe.owner.add_admin user
           patch :update, group_id: g_recipe.owner_id,
             id: g_recipe.id, recipe: valid_attributes
         end
@@ -176,7 +177,7 @@ describe RecipesController do
       end
       context "when the user is not an admin of the group" do
         before do
-          sign_in user2
+          sign_in user
           patch :update, group_id: g_recipe.owner_id,
             id: g_recipe.id, recipe: valid_attributes
         end
@@ -197,7 +198,8 @@ describe RecipesController do
       end
       context "owned by others" do
         before do
-          sign_in g_recipe.owner.creator
+          sign_in user
+          g_recipe.owner.add_admin user
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end
@@ -207,7 +209,8 @@ describe RecipesController do
     context "a group recipe" do
       context "when the user is an admin of the group" do
         before do
-          sign_in g_recipe.owner.creator
+          sign_in user
+          g_recipe.owner.add_admin user
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end
@@ -215,7 +218,7 @@ describe RecipesController do
       end
       context "when the user is not an admin of the group" do
         before do
-          sign_in user2
+          sign_in user
           delete :destroy, group_id: g_recipe.owner_id,
             id: g_recipe.id
         end

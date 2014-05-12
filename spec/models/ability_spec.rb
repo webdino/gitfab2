@@ -6,6 +6,7 @@ describe "User ability" do
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
   let(:recipe){FactoryGirl.create :recipe, owner_id: user.id, owner_type: User.name}
+  let(:group){FactoryGirl.create :group}
 
   subject(:ability){Ability.new user}
   context "when is the admin of the recipe" do
@@ -52,24 +53,27 @@ describe "User ability" do
     end
   end
   context "when is an admin of a group" do
-    let(:group){FactoryGirl.create :group, creator: user}
-    before{group.add_admin other}
-    describe "lets user manage the memberships of the group" do
+    before do
+      group.add_admin user
+      group.members << other
+    end
+    describe "lets user manage the other member's membership of the group" do
       it{should be_able_to :manage, group.memberships.find_by(user_id: other.id)}
     end
-    describe "doesn't let user manage his/her memberships of the group" do
+    describe "doesn't let user manage own memberships of the group" do
       it{should_not be_able_to :manage, group.memberships.find_by(user_id: user.id)}
     end
   end
   context "when is an editor of a group" do
-    let(:group){FactoryGirl.create :group, creator: other}
-    before{group.add_editor user}
-    describe "doesn't let user the memberships of the group" do
+    before do
+      group.add_editor user
+      group.members << other
+    end
+    describe "doesn't let user manage the memberships of the group" do
       it{should_not be_able_to :manage, group.memberships.find_by(user_id: other.id)}
     end
   end
   context "when isn't a member of a group" do
-    let(:group){FactoryGirl.create :group, creator: other}
     describe "doesn't let user manage the memberships of the group" do
       it{should_not be_able_to :manage, group.memberships.find_by(user_id: other.id)}
     end

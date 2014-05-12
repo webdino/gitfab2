@@ -3,7 +3,7 @@ require "spec_helper"
 describe Group do
   let(:user1){FactoryGirl.create :user}
   let(:user2){FactoryGirl.create :user}
-  let(:group1){FactoryGirl.create :group, creator: user1}
+  let(:group1){FactoryGirl.create :group}
 
   describe ".admins" do
     subject do
@@ -30,7 +30,7 @@ describe Group do
   describe "on after create" do
     describe "#add_initial_member" do
       let(:user1){FactoryGirl.create :user}
-      let(:new_group){FactoryGirl.create :group, creator: user1}
+      let(:new_group){user1.groups.create name: "foo"}
       before{new_group.save}
       subject{new_group.members}
       it{should eq [user1]}
