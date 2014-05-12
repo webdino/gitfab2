@@ -17,7 +17,8 @@
     / dd
   == f.text_area :body, id: :editor, class: :tinymce, rows: 40, cols: 70
   footer
-    == f.submit "Save", id: "submit"
+    == f.submit "Save", id: "submit", class: "btn"
+    == link_to "Cancel", :back, class: "btn"
 
 - content_for :bottom
   javascript:

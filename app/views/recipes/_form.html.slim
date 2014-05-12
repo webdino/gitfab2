@@ -57,7 +57,12 @@
     p
       'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
 
-  == f.submit
+  .buttons
+    == f.submit class: "btn"
+    - if @recipe.id.nil?
+      == link_to "Cancel", :back, class: "cancel-btn btn"
+    - else
+      == link_to "Cancel", [@owner, @recipe], class: "cancel-btn btn"
 
     / NOTE: temporary not shown
     /hr

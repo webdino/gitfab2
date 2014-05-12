@@ -1,4 +1,5 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/box-sizing.css.scss";
 #video-form {
   display: none;
   #caution {
@@ -28,12 +29,17 @@ form.recipe-form {
     width: 580px;
     font-size: 12px;
   }
-  input[type=submit] {
-    border: 1px solid black;
-    background-color: white;
-    font-size: 26px;
-    margin-left: 25px;
+  .buttons {
     margin-top: 30px;
+    input[type=submit] {
+      @include content-box;
+      font-family: helvetica, sans-serif;
+      font-size: 24px;
+    }
+    .cancel-btn {
+      margin-left: 20px;
+      font-size: 24px;
+    }
   }
   #project-summary {
     @include cf;
