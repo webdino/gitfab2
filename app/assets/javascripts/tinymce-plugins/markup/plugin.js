@@ -9,7 +9,7 @@ var MarkupPluginFactory = {
         tooltip: editor.translate(options.tooltip),
         icon : options.icon,
         onclick: showDialog,
-        stateSelector: "a." + options.name
+        stateSelector: "a." + options.kind
       });
 
       function createTextForm(label, name, value) {
@@ -83,7 +83,8 @@ var MarkupPluginFactory = {
         var urlElement = createTextForm("url", "url", data.url);
         urlElement.addClass("link-selection");
         linkElement.append(urlElement);
-        linkElement.append($(document.createElement("div")).text("OR").addClass("center"));
+        var orElement = $(document.createElement("div")).text("OR").addClass("center");
+        linkElement.append(orElement);
         var attachmentElement = createFileForm("attachment", "attachment");
         attachmentElement.addClass("link-selection");
         linkElement.append(attachmentElement);
@@ -91,6 +92,10 @@ var MarkupPluginFactory = {
         formElement.append(linkElement);
         if (tools.indexOf("link") < 0) {
           linkElement.css("display", "none");
+        }
+        if (tools.indexOf("attachment") < 0) {
+          orElement.css("display", "none");
+          attachmentElement.css("display", "none");
         }
         var textElement = createTextForm("text", "text", data.text);
         textElement.addClass("form-field");
