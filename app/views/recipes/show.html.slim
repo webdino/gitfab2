@@ -10,8 +10,10 @@ main#recipes-show
      'Recipe
     li.tab#journal-tab
       == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name), class: "tab"
-    li#go-to-index
-      == link_to "#{@recipe.owner.name}'s Recipe List", [@owner, :recipes], class: "btn"
+    li.links
+      == link_to "Delete Recipe", [@owner, @recipe], method: :delete, class: "btn" if can? :manage, @recipe
+      == link_to "Edit Recipe", edit_recipe_path(@recipe, owner_name: @owner.name), class: "btn" if can? :manage, @recipe
+
 
   /  NOTE: now shown temporary
   / section#materials
@@ -44,9 +46,6 @@ main#recipes-show
       - @recipe.usages.each do |item|
         == render "usage", item: item
     == render "add_form", item: @recipe.usages.build
-    section.links
-      == link_to "Delete Recipe", [@owner, @recipe], method: :delete, class: "btn" if can? :manage, @recipe
-      == link_to "Edit Recipe", edit_recipe_path(@recipe, owner_name: @owner.name), class: "btn" if can? :manage, @recipe
 
   section#comments
     #comments-meta

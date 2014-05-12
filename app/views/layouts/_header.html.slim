@@ -13,7 +13,7 @@ section#layouts-header
         #tools
           .box
             #user
-              == link_to image_tag(current_user.avatar, class: "avator-thumb"), [current_user, :recipes]
+              == link_to image_tag(current_user.avatar, class: "avator-thumb"), recipes_path(owner_name: current_user.name)
               == link_to current_user.name, recipes_path(owner_name: current_user.name)
             #create-recipe
               == link_to "+", new_recipe_path(owner_name: current_user.name)

@@ -27,10 +27,8 @@ section#recipes-utils
   - if @recipe.persisted?
     section#user-info
       .owner
-        .thumbnail
-          == image_tag @owner.avatar
-        .screen-name
-          == @owner.name
+        == link_to image_tag(@owner.avatar), recipes_path(owner_name: @owner.name), class: "thumbnail"
+        == link_to @owner.name, recipes_path(owner_name: @owner.name), class: "screen-name"
       - if can? :manage, @recipe
         == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
       .timestamps
@@ -40,6 +38,9 @@ section#recipes-utils
         time#last-updated-datetime datetime = @recipe.updated_at
           'updated date
           == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+      #go-to-index
+        == link_to "#{@recipe.owner.name}'s Recipe List", recipes_path(owner_name: @owner.name), class: "btn"
+
 
     / NOTE: now shown temporary
     / section#tool-options
@@ -58,7 +59,8 @@ section#recipes-utils
     / section#related-projects
 
   - if available_operations.include? :post
-
+    #journal-links
+      == link_to "Journals", [@owner, @recipe, :posts], id: "journal-link"
       ul#journal-list
         - @recipe.posts.each do |post|
           li
