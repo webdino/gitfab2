@@ -16,18 +16,6 @@ describe User do
     it{expect(user1.dir_path).to eq "#{Settings.git.repo_dir}/#{user1.name}"}
   end
 
-  describe "#creator_of?" do
-    let(:group){FactoryGirl.create :group, creator: user1}
-    context "when the user is the creator of the group" do
-      subject{user1.is_creator_of? group}
-      it{should be true}
-    end
-    context "when the user isn't the creator of the group" do
-      subject{user2.is_creator_of? group}
-      it{should be false}
-    end
-  end
-
   describe "after_save" do
     describe ".ensure_dir_exist!" do
       context "when the user has a name" do

@@ -3,6 +3,5 @@
 FactoryGirl.define do
   factory :group do |group|
     name {"group_#{SecureRandom.hex 10}"}
-    group.creator {|o| o.association :user}
   end
 end

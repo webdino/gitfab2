@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20140414013837) do
 
   create_table "groups", force: true do |t|
     t.string   "name"
-    t.integer  "creator_id"
     t.string   "avatar"
     t.string   "slug"
     t.datetime "created_at"

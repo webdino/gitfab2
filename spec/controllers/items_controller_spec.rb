@@ -48,7 +48,7 @@ require "spec_helper"
         it_behaves_like "operation without team privilege", klass
       end
       context "with a member of the group which owns the recipe" do
-        let(:group){FactoryGirl.create :group, creator: recipe.owner}
+        let(:group){recipe.owner.groups.create name: "foo"}
         before do
           sign_in user2
           group.add_editor user2

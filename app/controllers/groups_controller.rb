@@ -17,8 +17,9 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group.creator = current_user
+    @group = Group.new group_params
     if @group.save
+      @group.add_admin current_user
       redirect_to @group
     else
       render :new
@@ -44,12 +45,20 @@ class GroupsController < ApplicationController
   private
   def group_params
     if params[:group]
-      params.require(:group).permit Group::UPDATABLE_COLUMNS
+      params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params
     end
+  end
+
+  def additional_params
+    [:id, member_ids: []]
   end
 
   def build_group
     @group = Group.new group_params
+  end
+
+  def load_user
+    @user = current_user
   end
 
   def load_group

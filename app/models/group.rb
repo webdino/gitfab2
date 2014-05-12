@@ -1,18 +1,16 @@
 class Group < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name]
-  UPDATABLE_COLUMNS = [:id, :name, :creator, member_ids: []]
+  UPDATABLE_COLUMNS = [:name]
 
   extend FriendlyId
 
   friendly_id :name, use: [:slugged, :finders]
   mount_uploader :avatar, AvatarUploader
 
-  belongs_to :creator, class_name: User.name
   has_many :memberships, foreign_key: :group_id
   has_many :members, through: :memberships, source: :user
   has_many :recipes, as: :owner, dependent: :destroy
 
-  after_create :add_initial_member
   after_save :ensure_dir_exist!
 
   validates :name, presence: true, uniqueness: true,
@@ -35,10 +33,6 @@ class Group < ActiveRecord::Base
   end
 
   private
-  def add_initial_member
-    self.memberships.create user: self.creator, role: Membership::ROLE[:admin]
-  end
-
   def ensure_dir_exist!
     return nil if self.name.blank?
     ::FileUtils.mkdir_p dir_path
