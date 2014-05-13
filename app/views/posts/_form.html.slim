@@ -22,7 +22,7 @@
 
 - content_for :bottom
   javascript:
-    var url = "#{url_for [@owner, @recipe, PostAttachment.new]}";
+    var url = "#{url_for [@owner, @recipe, Attachment.new, format: :json]}";
     tinymce.init({
       selector: "textarea",
       theme: "modern",

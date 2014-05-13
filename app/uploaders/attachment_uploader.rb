@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class PostAttachmentUploader < CarrierWave::Uploader::Base
+class AttachmentUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   storage :file

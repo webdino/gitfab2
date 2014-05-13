@@ -31,7 +31,7 @@ class Recipe < ActiveRecord::Base
   has_many :ways, through: :statuses
   has_many :tools, dependent: :destroy
   has_many :posts, dependent: :destroy
-  has_many :post_attachments, dependent: :destroy
+  has_many :attachments, dependent: :destroy
   has_many :usages, dependent: :destroy
   has_many :collaborators, through: :collaborations, source: :user
   has_many :collaborations, foreign_key: :recipe_id, dependent: :destroy

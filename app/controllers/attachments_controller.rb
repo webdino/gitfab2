@@ -1,22 +1,12 @@
-class PostAttachmentsController < ApplicationController
+class AttachmentsController < ApplicationController
   before_action :load_owner
   before_action :load_recipe
+  before_action :build_attachment, only: :create
 
   authorize_resource
 
   def create
-    post_attachment = @recipe.post_attachments.build content: params[:file]
-    if post_attachment.save
-      render json: {
-        image: {
-         url: post_attachment.content.figure.url
-        }
-      }, content_type: "text/html"
-    else
-      render json: {
-        result: "failed to upload"
-      }, content_type: "text/html"
-    end
+    render (@attachment.save ? :create : :failed), content_type: "text/html"
   end
 
   private
@@ -33,4 +23,8 @@ class PostAttachmentsController < ApplicationController
     @recipe = @owner.recipes.find params[:recipe_id]
   end
 
+  def build_attachment
+    @attachment = @recipe.attachments.build content: params[:file],
+      description: params[:alt]
+  end
 end
