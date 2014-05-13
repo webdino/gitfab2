@@ -52,7 +52,7 @@ main#posts-show.recipe-layout
   - content_for :bottom
     coffee:
       $(document).on "click", ".comment .delete-btn", ->
-        $(this).closest("article").remove()
+        $(this).closest("li").remove()
 
       $(document).on "ajax:success", "#new_comment", (e, data) ->
         $("ul#comment-list").append data.html

@@ -131,7 +131,7 @@ main#recipes-show
           $(this).find("form").submit()
 
         $(document).on "click", ".comment .delete-btn", ->
-          $(this).closest("article").remove()
+          $(this).closest("li").remove()
 
         $(document).on "ajax:success", "#new_comment", (e, data) ->
           $("ul#comment-list").append data.html
