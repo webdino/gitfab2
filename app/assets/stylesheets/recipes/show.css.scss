@@ -82,10 +82,14 @@ main {
         width: 100%;
         .comment-meta {
           @include cf;
-          .avatar {
+          .avatar-wrapper {
             float: left;
             width: 40px;
             height: 40px;
+            .avatar {
+              max-width: 100%;
+              max-height: 100%;
+            }
           }
           .user-name, .created-at {
             display: inline-block;
@@ -110,12 +114,17 @@ main {
     }
 
     form#new_comment {
+      @include cf;
       display: inline-block;
       margin: 20px 0;
-      .avatar {
+      .avatar-wrapper {
         float: left;
         width: 40px;
         height: 40px;
+        .avatar {
+          max-width: 100%;
+          max-height: 100%;
+        }
       }
       #comment_comment {
         float: left;
@@ -123,7 +132,7 @@ main {
         height: 36px;
         margin-left: 20px;
       }
-      #submit-comment {
+      .submit-btn {
         float: right;
         margin-top: 6px;
         font-weight: 900;
