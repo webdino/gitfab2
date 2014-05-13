@@ -16,8 +16,13 @@ class UsersController < ApplicationController
   end
 
   def update
+    redirect_to_user_home = @user.name.blank?
     if @user.update user_params
-      redirect_to [:edit, @user], notice: "User was successfully updated."
+      if redirect_to_user_home
+        redirect_to recipes_path(owner_name: @user.name), notice: "Welcome to gitFAB!"
+      else
+        redirect_to [:edit, @user], notice: "User was successfully updated."
+      end
     else
       render action: "edit"
     end
