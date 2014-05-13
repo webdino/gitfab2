@@ -79,10 +79,14 @@
         margin-top: 20px;
         width: 100%;
         .comment-meta {
-          .avatar {
+          .avatar-wrappwer {
             float: left;
             width: 40px;
             height: 40px;
+            .avatar {
+              max-width: 100%;
+              max-height: 100%;
+            }
           }
           .user-name, .created-at {
             display: inline;
@@ -107,10 +111,14 @@
       @include cf;
       display: inline-block;
       margin: 20px 0;
-      .avatar {
+      .avatar-wrapper {
         float: left;
         width: 40px;
         height: 40px;
+        .avatar {
+          max-width: 100%;
+          max-height: 100%;
+        }
       }
       #comment_comment {
         float: left;
@@ -118,10 +126,7 @@
         height: 36px;
         margin-left: 20px;
       }
-      #submit-comment {
-        display: none;
-      }
-      #submit-comment-btn {
+      .submit-btn {
         float: right;
         margin-top: 6px;
         font-weight: 900;
