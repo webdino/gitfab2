@@ -13,6 +13,18 @@
 
 ActiveRecord::Schema.define(version: 20140414013837) do
 
+  create_table "attachments", force: true do |t|
+    t.integer  "recipe_id"
+    t.string   "content"
+    t.string   "description"
+    t.datetime "deleted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attachments", ["deleted_at"], name: "index_attachments_on_deleted_at", using: :btree
+  add_index "attachments", ["recipe_id"], name: "index_attachments_on_recipe_id", using: :btree
+
   create_table "collaborations", force: true do |t|
     t.integer  "user_id"
     t.integer  "recipe_id"
@@ -111,17 +123,6 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   add_index "memberships", ["group_id"], name: "index_memberships_on_group_id", using: :btree
   add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
   add_index "memberships", ["user_id"], name: "index_memberships_on_user_id", using: :btree
-
-  create_table "post_attachments", force: true do |t|
-    t.integer  "recipe_id"
-    t.string   "content"
-    t.datetime "deleted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "post_attachments", ["deleted_at"], name: "index_post_attachments_on_deleted_at", using: :btree
-  add_index "post_attachments", ["recipe_id"], name: "index_post_attachments_on_recipe_id", using: :btree
 
   create_table "posts", force: true do |t|
     t.integer  "recipe_id"

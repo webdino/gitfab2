@@ -39,7 +39,7 @@ class Ability
     can :manage, Post do |post|
       can? :update, post.recipe
     end
-    can :manage, PostAttachment do |pa|
+    can :manage, Attachment do |pa|
       can? :update, pa.recipe
     end
     can :manage, Collaboration do |collabo|
