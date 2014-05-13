@@ -44,6 +44,7 @@ class RecipesController < ApplicationController
     else
       if @recipe.save
         redirect_to edit_recipe_path(@recipe, owner_name: @recipe.owner.name), notice: "Recipe was successfully created."
+        @recipe.remove_unused_items!
       else
         render action: :new
       end
@@ -64,6 +65,7 @@ class RecipesController < ApplicationController
   def update
     if @recipe.update recipe_params
       redirect_to recipe_path(id: @recipe.name, owner_name: @owner.name), notice: "Recipe was successfully updated."
+      @recipe.remove_unused_items!
     else
       render action: :edit
     end

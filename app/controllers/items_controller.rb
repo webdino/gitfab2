@@ -9,7 +9,7 @@ class ItemsController < ApplicationController
 
   def create
     item.save
-    render "recipes/create_item", locals: {item: item}
+    render "items/create", locals: {item: item}
   end
 
   def update
@@ -24,10 +24,17 @@ class ItemsController < ApplicationController
 
   private
   def item_params
-    if params[controller_name.singularize]
+    if params[singulized_resource_name]
       resource_name = self.class.name
-      params.require(controller_name.singularize)
-        .permit (controller_name.classify.constantize::UPDATABLE_COLUMNS + additional_params)
+      params.require(singulized_resource_name)
+        .permit (resource_class::UPDATABLE_COLUMNS + additional_params)
+    end
+  end
+
+  def item_params_for_create
+    Hash.new.tap do |resource|
+      resource[:photo] = params[:file]
+      resource[:name] = params[:text]
     end
   end
 
@@ -36,7 +43,7 @@ class ItemsController < ApplicationController
   end
 
   def build_item
-    self.item = @recipe.send(controller_name).build item_params
+    self.item = @recipe.send(controller_name).build item_params_for_create
   end
 
   def load_item
@@ -57,5 +64,13 @@ class ItemsController < ApplicationController
 
   def update_and_commit_recipe
     item.recipe.update_attributes last_committer: current_user
+  end
+
+  def singulized_resource_name
+    controller_name.singularize
+  end
+
+  def resource_class
+    controller_name.classify.constantize
   end
 end
