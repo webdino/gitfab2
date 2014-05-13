@@ -53,16 +53,16 @@ $(document).ready ->
   installTinyMCE = (type, selector) ->
     if type is "status-textarea"
       tools = "material blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment material blueprint link"
+      plugins = "autolink attachment material blueprint link paste"
     else if type is "way-textarea"
       tools = "tool blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment tool blueprint link"
+      plugins = "autolink attachment tool blueprint link paste"
     else if type is "attachment-textarea"
       tools = "tool blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment tool blueprint link"
+      plugins = "autolink attachment tool blueprint link paste"
     else
       tools = "markup unlink | bullist numlist"
-      plugins = "autolink link markup"
+      plugins = "autolink link markup paste"
 
     tinymce.init
       mode : "textareas"
@@ -84,6 +84,13 @@ $(document).ready ->
         editor.on "blur", (e) ->
           toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
           toolbar.css "visibility", "hidden"
+      paste_preprocess: (plugin, args) ->
+        element = $(document.createElement "div")
+        element.html args.content
+        element.find("[style]").removeAttr "style"
+        element.find("[class]").removeAttr "class"
+        element.find("[id]").removeAttr "id"
+        args.content = element.get(0).innerHTML
 
   textareaTypes = ["status-textarea", "way-textarea", "link-textarea", "attachment-textarea"]
   for type in textareaTypes

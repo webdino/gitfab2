@@ -21,6 +21,23 @@
   }
 }
 
+#recipes-show .description,
+#tinymce {
+  font-family: helvetica, sans-serif;
+  font-size: 16px;
+
+  ul {
+    list-style-type: disc;
+    padding: 0px 0px 0px 22px;
+  }
+
+  ol {
+    list-style-type: decimal;
+    padding: 0px 0px 0px 25px;
+  }
+
+}
+
 #markup-form {
   .form-field {
     border-top: 1px solid gray;

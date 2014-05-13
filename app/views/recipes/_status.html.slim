@@ -6,10 +6,10 @@ li.status
       - else
         == link_to "", item.photo.url, class: "fancybox item-photo", rel: "fancybox", style: "background-image: url('#{item.photo.small.url}')"
     .summary
-        p.star
-          == toggle_star_link_for item
-        p.description
-          == item.description
+      span.star
+        == toggle_star_link_for item
+      .description
+        == item.description
 
   .ways
     .arrow
