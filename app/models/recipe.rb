@@ -134,6 +134,26 @@ class Recipe < ActiveRecord::Base
     "#{YOUTUBE_EMBED_URL_BASE}#{self.video_id}"
   end
 
+  def remove_unused_items!
+    existing_items = {"tool" => [0], "material" => [0]}.tap do |_existing_items|
+      ["statuses", "ways", "usages"].each do |assoc|
+        self.send(assoc).each do |item|
+          doc = Nokogiri::HTML.parse item.description
+          doc.css("a").each do |anchor|
+            item_id = anchor.attribute("data-item-id").try :value
+            item_type = anchor.attribute("data-item-type").try :value
+            if item_id && item_type
+              _existing_items[item_type] << item_id
+            end
+          end
+        end
+      end
+    end
+    existing_items.each do |type, ids|
+      self.send(type.pluralize).where.not(id: ids).destroy_all
+    end
+  end
+
   private
   def ensure_repo_exist!
     Gitfab::Shell.new.add_repo! repo_path
@@ -179,4 +199,5 @@ class Recipe < ActiveRecord::Base
       self.video_id = nil
     end
   end
+
 end

@@ -15,22 +15,18 @@ main#recipes-show
       == link_to "Edit Recipe", edit_recipe_path(@recipe, owner_name: @owner.name), class: "btn" if can? :manage, @recipe
 
 
-  /  NOTE: now shown temporary
-  / section#materials
-  /   h1
-  /     'Materials
-  /   ul#material-list
-  /     - @recipe.materials.each do |item|
-  /       == render "material", item: item
+  section#materials
+    h1
+      'Materials
+    ul#material-list
+      - @recipe.materials.each do |item|
+        == render "material", item: item
 
-  / NOTE: now shown temporary
-  /section#tools
-  /  h1
-  /    'Tools
-  /  ul#tool-list
-  /    - @recipe.tools.each do |item|
-  /      == render "tool", item: item
-  /  == render "add_form", item: @recipe.tools.build
+    h1
+      'Tools
+    ul#tool-list
+      - @recipe.tools.each do |item|
+        == render "tool", item: item
 
   section#making
     h1

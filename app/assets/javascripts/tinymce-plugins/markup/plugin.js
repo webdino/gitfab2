@@ -122,9 +122,10 @@ var MarkupPluginFactory = {
         return null;
       }
 
-      function upload(action, type, file) {
+      function upload(action, type, data) {
         var formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", data.file);
+        formData.append("text", data.text);
         formData.append("utf8", "✓");
         formData.append("authenticity_token", getMetaContents("csrf-token"));
         formData.append("hint", editor.getParam("uploadimage_hint", ""));
@@ -161,7 +162,7 @@ var MarkupPluginFactory = {
           data.kind = anchorElement.getAttribute("class");
         } else {
           data.text = editor.selection.getContent({format: "text"});
-          data.url = "http://";
+          data.url = "";
           data.kind = "link";
         }
         var form = createForm(data, options.tools);
@@ -179,15 +180,17 @@ var MarkupPluginFactory = {
                 var attachmentElement = $("#markup-form input[name=attachment]").get(0);
                 var imageElement = $("#markup-form input[name=image]").get(0);
                 var promises = []
-                var uploadURL = editor.getParam("uploadimage_form_url", "/tinymce_assets");
+                var uploadURL = $("#markup-help").attr("data-" + kind + "-upload-path");
                 if (attachmentElement.files && attachmentElement.files.length != 0) {
-                    promises.push(upload(uploadURL, "attachment", attachmentElement.files[0]));
+                    promises.push(upload(uploadURL, "attachment", {file: attachmentElement.files[0], text: text}));
                 }
                 if (imageElement.files && imageElement.files.length != 0) {
-                    promises.push(upload(uploadURL, "image", imageElement.files[0]));
+                    promises.push(upload(uploadURL, "image", {file: imageElement.files[0], text: text}));
                 }
                 $.when.apply($, promises).done(function() {
                   var image = data.image || "";
+                  var item = null;
+                  var itemType = null;
                   for (var i = 0, n = arguments.length; i < n; i++) {
                     var updata = arguments[i];
                     if (updata.type == "image") {
@@ -196,9 +199,11 @@ var MarkupPluginFactory = {
                       //attachment is stronger than url
                       url = updata.image.url;
                     }
+                    item = updata.item;
+                    itemType = updata.klass;
                   }
                   if (text.length == 0) {
-                    if (url.length == 0 || url == "http://") {
+                    if (url.length == 0) {
                       editor.windowManager.close();
                       return;
                     }
@@ -210,8 +215,20 @@ var MarkupPluginFactory = {
                     anchor.attr("href", url);
                     anchor.attr("class", kind);
                     anchor.attr("data-image", image);
+                    if (item) {
+                      anchor.attr("data-item-id", item.id);
+                    }
                   } else {
-                    var html = "<a href=\""+url+"\" class=\""+kind+"\" data-image=\""+image+"\">";
+                    if (url.length < 1) {
+                      url = image
+                    }
+                    var html = "<a " + 
+                      "href='"           + url      + "' " +
+                      "class='"          + kind     + "' " +
+                      "data-item-id='"   + item.id  + "' " +
+                      "data-item-type='" + itemType + "' " +
+                      "data-image='"     + image    + "' " +
+                      ">";
                     html += text;
                     html += "</a>";            
                     editor.execCommand("mceInsertContent", false, html);

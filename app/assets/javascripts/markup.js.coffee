@@ -1,4 +1,4 @@
-$(document).ready ->
+$ ->
 
   markupPlugin = MarkupPluginFactory.create(tinymce, {
     name: "markup",
@@ -75,7 +75,6 @@ $(document).ready ->
       statusbar: false
       toolbar_items_size: "small"
       content_css: $("#markup-help").attr("data-css-path"),
-      uploadimage_form_url: $("#markup-help").attr("data-upload-path")
       plugins: plugins
       setup: (editor) ->
         editor.on "focus", (e) ->
