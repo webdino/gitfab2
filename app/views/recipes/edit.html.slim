@@ -72,3 +72,10 @@ main#recipes-edit
       })
       makeSortableWay $(".ways")
       $("#making").disableSelection()
+
+      $(document).on "click", "main#recipes-edit .buttons input", (event)->
+        event.preventDefault()
+        wayFields = $("#making .fields .ways").last().find(".fields")
+        if $(wayFields).length > 0 && $(wayFields).has(".item.way").length > 0
+          $(".add_nested_fields").last().click()
+        $("form.recipe-form").submit()
