@@ -166,9 +166,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.integer  "position"
     t.text     "description"
     t.string   "photo"
-    t.string   "statuses"
     t.string   "video_id"
-    t.string   "string"
     t.integer  "recipe_id"
     t.string   "reassoc_token"
     t.integer  "cached_votes_score", default: 0
