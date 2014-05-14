@@ -1,26 +1,26 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/box-sizing.css.scss";
-#video-form {
-  display: none;
-  #caution {
-    display: none;
-    font-size: 12px;
-    color: red;
-  }
-  .ok-btn.disabled {
-    background-color: #ddd;
-    &:hover {
-      cursor: default;
-    }
-  }
-}
 
-.video-form {
+
+#video-form, .video-form {
   display: none;
-  .caution {
-    display: none;
+  width: 340px;
+  p {
+    font-size: 24px;
+    font-weight: 900;
+  }
+  input {
+    margin: 10px 0;
+    width: 320px;
     font-size: 12px;
+  }
+  #caution, .caution {
+    display: none;
+    font-size: 14px;
     color: red;
+  }
+  .btn {
+    margin: 20px 10px 0px 0px;
   }
   .ok-btn.disabled {
     background-color: #ddd;
