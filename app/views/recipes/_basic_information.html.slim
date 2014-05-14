@@ -1,5 +1,8 @@
 section#basic-information
 
+  - if orig_recipe = @recipe.orig_recipe
+    p.forked-from
+      == link_to "(Forked from #{orig_recipe.owner.name}'s \"#{orig_recipe.title}\")", recipe_path(orig_recipe, owner_name: orig_recipe.owner.name)
   #title
     h1
       == @recipe.title

@@ -4,6 +4,13 @@
 #basic-information {
   width: auto;
   height: auto;
+  position: relative;
+  p.forked-from {
+    line-height: 22px;
+    font-size: 16px;
+    position: absolute;
+    top: -22px;
+  }
   #title {
     @include cf;
     font-size: 36px;
@@ -11,14 +18,13 @@
     border: 1px solid black;
     h1 {
       float: left;
-      padding: 15px 0 20px 15px;
+      margin: 15px 0 0 15px;
       height: 40px;
-      margin: 0;
     }
     a.toggle-star-btn {
       float: right;
       height: 40px;
-      padding: 25px 10px 15px;
+      margin: 25px 10px 15px;
     }
   }
 
