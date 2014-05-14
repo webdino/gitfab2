@@ -73,7 +73,7 @@ main#recipes-show
 
         $(document).on "ajax:success", ".edit-form", (event, data, status) ->
           if data.success
-            $(this).closest("li.way").replaceWith data.html
+            $(this).closest("li.#{data.class}").replaceWith data.html
 
         $(document).on "ajax:success", ".add-form", (event, data, status) ->
           if data.success
