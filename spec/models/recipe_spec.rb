@@ -177,6 +177,30 @@ describe Recipe do
     end
   end
 
+  describe "ensure the statuses are terminated with a Status which has no Way" do
+    context "when the last status which doesn't have Way" do
+      before do
+        status1 = recipe.statuses.create
+        status1.ways.create
+        recipe.statuses.create
+        recipe.run_callbacks :commit
+      end
+      subject{recipe.statuses.last}
+      it{should have(0).ways}
+    end
+    context "when the last status which has Way" do
+      before do
+        status1 = recipe.statuses.create
+        status1.ways.create
+        status2 = recipe.statuses.create
+        status2.ways.create
+        recipe.run_callbacks :commit
+      end
+      subject{recipe.statuses.last}
+      it{should have(0).ways}
+    end
+  end
+
   describe "on after_destroy" do
     describe "#destroy_repo!" do
       before{recipe.destroy}
