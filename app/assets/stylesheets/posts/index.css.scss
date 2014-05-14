@@ -1,34 +1,59 @@
 @import "mixins/clearfix.css.scss";
 #posts-index {
+  h1.page {
+    padding-top: 32px;
+    font-size: 42px;
+  }
   .post {
-    width: 400px;
-    border: 1px solid gray;
-    padding: 0px 10px 10px 10px;
-    margin: 40px 0px 20px 10px;
+    .post-header {
+      width: 720px;
+      padding: 15px 0 0 0;
+      font-size: 36px;
+    }
     .post-title {
+      width: 680px;
+      margin: 36px 20px 8px 0;
+      font-size: 32px;
     }
     .post-meta {
+      width: 680px;
+      margin: 0 20px  0 0;
       .author {
         display: inline-block;
+        .decoration-text {
+          height: 26px;
+          vertical-align: middle;
+          display: inline-block;
+          font-weight: 500;
+        }
         .avatar {
           width: 20px;
           height: 20px;
         }
         .name {
-          height: 20px;
+          height: 26px;
           vertical-align: middle;
           display: inline-block;
           margin-left: 10px;
         }
       }
       .created_at {
-        height: 20px;
+        height: 26px;
         vertical-align: middle;
         display: inline-block;
         margin-left: 10px;
+        font-weight: 500;
       }
     }
     .post-body {
+      width: 680px;
+      font-size: 14px;
+      white-space: pre-wrap;
+      margin: 0px 20px 20px 0;
+      padding: 20px 0px;
+      border-top : solid 1px gray;
+      border-bottom : solid 1px gray;
+      line-height: 1.7;
     }
     img {
       width: 100%;

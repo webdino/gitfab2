@@ -8,18 +8,26 @@ main {
     @include cf;
     font-size: 18px;
     border-bottom: solid 1px black;
-    li#recipe-tab {
+    li.selected {
       margin-bottom: -1px;
-      border: solid 1px black;
       border-bottom: solid 1px white;
       display: inline-block;
       padding: 6px 10px;
       font-weight: 900;
     }
-    li#journal-tab{
+    li.not-selected {
       display: inline-block;
       padding: 6px 10px;
       font-weight: 500;
+    }
+    li.tab:first-child {
+      border-left: 1px solid black;
+      border-top: 1px solid black;
+      border-right: 1px solid black;
+    }
+    li.tab:nth-of-type(2) {
+      border-top: 1px solid black;
+      border-right: 1px solid black;
     }
 
     li.links {
