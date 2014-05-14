@@ -189,7 +189,7 @@ var MarkupPluginFactory = {
                 }
                 $.when.apply($, promises).done(function() {
                   var image = data.image || "";
-                  var item = null;
+                  var itemId = null;
                   var itemType = null;
                   for (var i = 0, n = arguments.length; i < n; i++) {
                     var updata = arguments[i];
@@ -199,7 +199,9 @@ var MarkupPluginFactory = {
                       //attachment is stronger than url
                       url = updata.image.url;
                     }
-                    item = updata.item;
+                    if (updata.item) {
+                      itemId = updata.item.id
+                    }
                     itemType = updata.klass;
                   }
                   if (text.length == 0) {
@@ -215,9 +217,7 @@ var MarkupPluginFactory = {
                     anchor.attr("href", url);
                     anchor.attr("class", kind);
                     anchor.attr("data-image", image);
-                    if (item) {
-                      anchor.attr("data-item-id", item.id);
-                    }
+                    anchor.attr("data-item-id", itemId);
                   } else {
                     if (url.length < 1) {
                       url = image
@@ -225,7 +225,7 @@ var MarkupPluginFactory = {
                     var html = "<a " + 
                       "href='"           + url      + "' " +
                       "class='"          + kind     + "' " +
-                      "data-item-id='"   + item.id  + "' " +
+                      "data-item-id='"   + itemId  + "' " +
                       "data-item-type='" + itemType + "' " +
                       "data-image='"     + image    + "' " +
                       ">";
