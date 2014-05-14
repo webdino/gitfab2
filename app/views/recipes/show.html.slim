@@ -108,7 +108,7 @@ main#recipes-show
           $form.find("input[type=file]").each ->
             $(this).val ""
           $(this).hide()
-          $(this).siblings(".edit-btn").show()
+          $(this).siblings(".edit-btn, .add-btn").show()
 
         $(document).on "ajax:success", "#new_tag", (event, data, status) ->
           $(event.target).siblings("#tag-list").append data.html
