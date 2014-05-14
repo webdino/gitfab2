@@ -13,14 +13,6 @@ class Recipe < ActiveRecord::Base
 
   mount_uploader :photo, PhotoUploader
 
-  searchable do
-    string :name
-    string :title
-    string :description
-    string :owner_type
-    integer :owner_id
-  end
-
   belongs_to :owner, polymorphic: true
   belongs_to :orig_recipe,    class_name: Recipe.name
   belongs_to :last_committer, class_name: User.name
@@ -51,7 +43,8 @@ class Recipe < ActiveRecord::Base
   paginates_per 10
 
   searchable do
-    text :name, :title, :description
+    string :name, :title
+    text :description
     ITEM_ASSOCS.each do |assoc|
       text assoc do
         self.send(assoc).map do |record|
