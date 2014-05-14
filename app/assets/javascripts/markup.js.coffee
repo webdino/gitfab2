@@ -27,7 +27,7 @@ $ ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "attachment", "text", "image"]
+    tools: ["link", "attachment", "text", "image", "description"]
   })
 
   toolPlugin = MarkupPluginFactory.create(tinymce, {
@@ -37,7 +37,7 @@ $ ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "attachment", "text", "image"]
+    tools: ["link", "attachment", "text", "image", "description"]
   })
 
   blueprintPlugin = MarkupPluginFactory.create(tinymce, {
@@ -47,7 +47,7 @@ $ ->
     icon: "link",
     width: 460,
     height: 400,
-    tools: ["link", "attachment", "text", "image"]
+    tools: ["link", "attachment", "text", "image", "description"]
   })
 
   installTinyMCE = (type, selector) ->
