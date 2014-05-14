@@ -1,6 +1,7 @@
 .edit-form-wrap
   - if can? :update, item
     == link_to "edit", "#", class: ["edit-btn", "btn"]
+    == link_to "cancel", "#", class: ["cancel-btn", "btn"]
   - if can? :manage, item
     == link_to "delete", [@owner, @recipe, item], remote: true, method: :delete, class: ["delete-btn", "btn"]
   - if can? :update, item
@@ -8,9 +9,9 @@
       - item.class::UPDATABLE_COLUMNS.each do |field|
         - case field
         - when :photo
-          == f.file_field field, class: "add-photo"
+          == f.file_field field, class: "add-photo", "data-original-value" => ""
         - else
-          == f.text_field field
+          == f.text_field field, "data-original-value" => item.send(field)
       p
         == f.check_box :remove_photo, checked: false, class: "remove-photo"
         'remove photo

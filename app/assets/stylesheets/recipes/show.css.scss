@@ -3,7 +3,6 @@
 @import "mixins/rows.css.scss";
 @import "mixins/box-sizing.css.scss";
 main {
-
   ul#tabs {
     @include cf;
     font-size: 18px;
@@ -144,5 +143,8 @@ main {
     display: none;
     color: red;
     font-size: 24px;
+  }
+  .cancel-btn {
+    display: none;
   }
 }
