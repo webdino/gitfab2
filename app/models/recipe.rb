@@ -41,7 +41,7 @@ class Recipe < ActiveRecord::Base
   before_update :clear_video_id_or_photo_if_needed
   before_update :rename_repo_name!, if: ->{self.name_changed?}
   after_create :ensure_repo_exist!
-  after_commit :reassoc_ways
+  after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
   after_destroy :destroy_repo!
 
   # TODO unique in owner
@@ -183,6 +183,10 @@ class Recipe < ActiveRecord::Base
     end
   end
 
+  def ensure_terminate_making_flow_with_a_status
+    self.statuses.create if self.statuses.last.ways.any?
+  end
+
   def should_generate_new_friendly_id?
     name_changed?
   end
@@ -199,5 +203,4 @@ class Recipe < ActiveRecord::Base
       self.video_id = nil
     end
   end
-
 end

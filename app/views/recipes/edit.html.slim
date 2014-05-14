@@ -28,15 +28,15 @@ main#recipes-edit
         $(form).find("input.position-field").val position
 
       updateStatusId = (form) ->
-        reassocToken = $(form).closest(".ways").siblings("input.status-reassoc-token-field").val()
+        reassocToken = $(form).closest(".ways").siblings(".status").find("input.status-reassoc-token-field").val()
         $(form).find("input.way-reassoc-token-field").val reassocToken
 
       setStatusReassocToken = (field) ->
-        token = Math.ceil(Math.random() * 900000000000000000)
+        token = Math.ceil(Math.random() * 9000000000000000000)
         $(field).find("input.status-reassoc-token-field").val token
 
       setWayReassocToken = (field) ->
-        token = Math.ceil(Math.random() * 900000000000000000)
+        token = Math.ceil(Math.random() * 9000000000000000000)
         $(field).find("input.way-reassoc-token-field").val token
 
       $(document).on "nested:fieldAdded", (e) ->
