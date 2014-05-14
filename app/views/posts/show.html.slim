@@ -4,14 +4,15 @@
 main#posts-show.recipe-layout
   == render "recipes/basic_information"
 
-  section#links
-    == render "links"
+  ul#tabs
+    li#recipe-tab.tab.not-selected
+      == link_to "Recipe", recipe_path(@recipe, owner_name: @owner.name)
+    li#journal-tab.tab.selected
+      == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
     - if can? :update, @recipe
-      == link_to "Edit Post", [:edit, @owner, @recipe, @post]
-      == link_to "Delete Post", [@owner, @recipe, @post], method: :delete
-
-  h1#post-header
-    'Journal
+      li.links
+        == link_to "Edit Journal", [:edit, @owner, @recipe, @post], class: "btn"
+        == link_to "Delete Journal", [@owner, @recipe, @post], method: :delete, class: "btn"
 
   h1#post-title
     == @post.title
@@ -28,8 +29,6 @@ main#posts-show.recipe-layout
   section#post-body
     == Sanitize.clean @post.body.html_safe, Sanitize::Config::RELAXED
 
-  section#links
-    == link_to "Journal List", [@owner, @recipe, :posts]
 
   section#comments
     #comments-meta
