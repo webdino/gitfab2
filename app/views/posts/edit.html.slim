@@ -4,12 +4,14 @@
 main#posts-edit.recipe-layout
   == render "recipes/basic_information"
 
-  section#links
-    == render "links"
-    == link_to "Destroy", [@owner, @recipe, @post], data: {confirm: "Are you sure?"}, method: :delete
+  ul#tabs
+    li#recipe-tab.tab.not-selected
+      == link_to "Recipe", recipe_path(@recipe, owner_name: @owner.name)
+    li#journal-tab.tab.selected
+      == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
 
-  h1
-    'Edit post
+  h1.page
+    'Edit Journal
 
   article#post-article
     == render "form"
