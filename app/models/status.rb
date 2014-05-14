@@ -11,8 +11,6 @@ class Status < ActiveRecord::Base
 
   accepts_nested_attributes_for :ways, allow_destroy: true
 
-  validates :reassoc_token, uniqueness: true
-
   before_validation ->{self.reassoc_token ||= SecureRandom.hex 20}
 
   def dup_with_photo_and_ways
