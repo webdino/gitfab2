@@ -6,9 +6,9 @@ main#recipes-show
   == render "basic_information"
 
   ul#tabs
-    li.tab#recipe-tab
+    li.tab#recipe-tab.selected
      'Recipe
-    li.tab#journal-tab
+    li.tab#journal-tab.not-selected
       == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name), class: "tab"
     li.links
       == link_to "Delete Recipe", [@owner, @recipe], method: :delete, class: "btn" if can? :manage, @recipe

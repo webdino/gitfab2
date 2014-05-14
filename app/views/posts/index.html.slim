@@ -4,25 +4,31 @@
 main#posts-index.recipe-layout
   == render "recipes/basic_information"
 
-  section#links
-    == render "links"
+  ul#tabs
+    li.tab#recipe-tab.not-selected
+      == link_to "Recipe", [@owner, @recipe]
+    li.tab#journal-tab.selected
+      == link_to "Journals", recipe_posts_path(owner_name: @owner.name, recipe_id: @recipe.name)
     - if can? :update, @recipe
-      == link_to "New Post", [:new, @owner, @recipe, :post]
+      li.links
+        == link_to "+Add Journal", [:new, @owner, @recipe, :post], class: "btn"
+  h1.page
+    == "#{@recipe.title} Journals"
 
   - @posts.each do |post|
     article.post
       h1.post-title
-        == post.title
+        == link_to post.title, [@owner, @recipe, post]
       h2.post-meta
         .author
-          == image_tag post.user.avatar, class: "avatar"
-          .name
-            == post.user.name
+          .decoration-text
+            'possted by
+          == link_to recipes_path(owner_name: post.user.name) do
+            .name
+              == post.user.name
         .created_at
           == post.created_at
 
       section.post-body
         == Sanitize.clean post.body.html_safe, Sanitize::Config::RELAXED
-      footer
-        == link_to "Show", [@owner, @recipe, post]
   == paginate @posts

@@ -12,12 +12,12 @@
   }
   #post-title {
     width: 680px;
-    margin: 36px 20px 8px;
+    margin: 36px 20px 8px 0;
     font-size: 32px;
   }
   #post-meta {
     width: 680px;
-    margin: 0 20px;
+    margin: 0 20px 0 0;
     .author {
       display: inline-block;
       .decoration-text {
@@ -47,13 +47,14 @@
   }
 
   #post-body {
-    width: 640px;
-    font-size: 18px;
+    width: 680px;
+    font-size: 14px;
     white-space: pre-wrap;
-    margin: 0px 20px;
-    padding: 20px 20px;
-    border-top : solid 1px black;
-    border-bottom : solid 1px black;
+    margin: 0px 20px 20px 0;
+    padding: 20px 0px;
+    border-top : solid 1px gray;
+    border-bottom : solid 1px gray;
+    line-height: 1.7;
   }
 
   #comments {
