@@ -93,7 +93,22 @@ main#recipes-show
 
         $(document).on "click", ".edit-btn, .add-btn", (event, data) ->
           event.preventDefault()
-          $(event.target).siblings("form").toggle()
+          $(event.target).siblings("form").show()
+          $(this).hide()
+          $(this).siblings(".cancel-btn").show()
+
+        $(document).on "click", ".cancel-btn", (event, data) ->
+          event.preventDefault()
+          $form = $($(event.target).siblings "form")
+          $form.hide()
+          $form.find("input[type=text], textarea").each ->
+            $(this).val $(this).attr("data-original-value")
+          $form.find("input[type=checkbox]").each ->
+            $(this).attr("checked", false)
+          $form.find("input[type=file]").each ->
+            $(this).val ""
+          $(this).hide()
+          $(this).siblings(".edit-btn").show()
 
         $(document).on "ajax:success", "#new_tag", (event, data, status) ->
           $(event.target).siblings("#tag-list").append data.html
