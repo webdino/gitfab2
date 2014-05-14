@@ -83,6 +83,8 @@ main#recipes-show
               $(event.target).closest(".ways").find("ul").append data.html
             else
               $("##{data.class}-list").append data.html
+            $(event.target).siblings(".cancel-btn").hide()
+            $(event.target).siblings(".add-btn").show()
 
         $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
           if data.class == "way"
