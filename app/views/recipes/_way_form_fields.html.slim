@@ -1,3 +1,5 @@
+p.star
+  == toggle_star_link_for item
 .item.way
   - if can? :update, item      
     .image-field style="background-image: url('#{f.object.photo.small.url}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
