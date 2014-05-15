@@ -4,5 +4,6 @@
  *= require_tree ./layouts
  *= require ./recipes/index
  *= require_tree ./users
+ *= require_tree ./groups
  *= require_tree ../../../vendor/assets/stylesheets/tabby
  */
