@@ -1,13 +1,14 @@
 li.membership
-  == membership.user.name
-  '|
+  == link_to image_tag(membership.user.avatar, class: "avatar"), recipes_path(owner_name: membership.user.name)
+  .name
+    == link_to membership.user.name, recipes_path(owner_name: membership.user.name)
   - if can? :manage, membership
+    == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn btn"
     == form_for [@group, membership], remote: true do |f|
       == f.hidden_field :user_id, value: membership.user.id
       == f.select :role, Membership::ROLE, {}, class: "membership-role", "data-persisted-role" => membership.role
       == f.submit "apply"
-    - unless membership.user.is_creator_of? membership.group
-      '|
-      == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn"
+
   - else
-    == membership.role
+    .role
+      == membership.role

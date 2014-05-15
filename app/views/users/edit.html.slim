@@ -27,7 +27,7 @@ main#users-edit
 
     == f.submit "Save", id: "submit", class: "btn"
 
-content_for :bottom
+- content_for :bottom
   coffee:
     $(document).on "click", "#user-avatar", (event, data) ->
       event.preventDefault()

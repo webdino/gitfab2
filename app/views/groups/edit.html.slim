@@ -1,8 +1,53 @@
 #groups-edit
-  h1
-    'Edit Group
-  == render "form"
-  == link_to "delete", @group, method: :delete
+  #edit-profile
+    h1
+      == "#{@group.name} Public Profile"
+    == render "form"
 
-  == link_to "back", :groups
-  == link_to "show", @group
+  #edit-members
+    h1
+     'Members
+    ul#members
+      - @group.memberships.each do |ms|
+        == render "membership", membership: ms
+
+    - if can? :manage, @group
+      == form_for [@group, Membership.new], remote: true do |f|
+        h2
+          'Add memeber
+        p
+          'user name
+        == f.text_field :user_id
+        == f.select :role, Membership::ROLE
+        == f.hidden_field :group_id, value: @group.id
+        == f.submit "Add Member", id: "add-btn", class: "btn"
+
+- content_for :bottom
+  coffee:
+    $(document).on "click", "#group-avatar", (event) ->
+      event.preventDefault()
+      $("#group-avatar-form").trigger "click"
+
+    $(document).on "click", "#upload-button", (event) ->
+      event.preventDefault()
+      $("#group-avatar-form").trigger "click"
+
+    $(document).on "change", "#group-avatar-form", (event, data, status) ->
+      file = event.target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        $("#group-avatar").attr "src", reader.result
+
+      reader.readAsDataURL file
+
+    $(document).on "change", ".membership-role", (event, data) ->
+      event.preventDefault()
+      $(this).submit()
+
+    $(document).on "click", ".remove-member-btn", (event) ->
+      event.preventDefault
+      $(this).closest("li").remove()
+
+    $(document).on "ajax:success", "#new_membership", (event, data) ->
+      $("#members").append data.html
+      $("input#membership_user_id").val ""

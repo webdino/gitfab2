@@ -7,5 +7,18 @@
       ul
         - @group.errors.full_messages.each do |msg|
           li == msg
-  p == f.text_field :name
-  p == f.submit "ok"
+
+  dl
+    dt
+      'Profile Picture
+    dd
+      == image_tag @group.avatar, id: "group-avatar"
+      == f.file_field :avatar, id: "group-avatar-form"
+      == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+
+    dt
+      'Name
+    dd
+      == f.text_field :name, placeholder: "Please enter group name (It will be group repo name).", id: "group-name-form"
+
+  == f.submit "Save", id: "submit", class: "btn"
