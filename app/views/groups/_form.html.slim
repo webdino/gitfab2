@@ -22,3 +22,4 @@
       == f.text_field :name, placeholder: "Please enter group name (It will be group repo name).", id: "group-name-form"
 
   == f.submit "Save", id: "submit", class: "btn"
+  == link_to "Cancel", :groups, class: "cancel-btn btn"
