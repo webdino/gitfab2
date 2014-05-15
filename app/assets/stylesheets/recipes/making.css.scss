@@ -59,9 +59,8 @@ main#recipes-show {
         @include cf;
         width: 100%;
         margin-top: 10px;
-        .add-form,
-        .edit-form {
-          display: none;
+        .ui {
+          @include cf;
         }
         .arrow {
           float: left;
@@ -82,9 +81,6 @@ main#recipes-show {
               font-size: 18px;
             }
           }
-        }
-        ul {
-          @include cf;
         }
         li.way {
           @include cf;
@@ -109,99 +105,14 @@ main#recipes-show {
           .edit-btn, .delete-btn {
             font-size: 14px;
           }
-          &:not(:first-child) {
-            width: 80px;
-            height: 100px;
-            margin: 0 10px 0 0;
-            .photo {
-              margin: 0;
-            }
-            .summary {
-              width: 100%;
-              max-height: 10px;
-              word-break: break-all;
-              p.star {
-                text-align: right;
-                width: 100%;
-              }
-              .description {
-                display: none;
-              }
-            }
-            a.item-photo {
-              width: 80px;
-              max-height: 60px;
-            }
-            .toggle-star-btn {
-              font-size: 13px;
-            }
-            .edit-btn, .delete-btn {
-              display: none;
-              font-size: 11px;
-            }
+        }
+        .add-form {
+          display: none;
+          iframe {
+            min-height: 172px;
           }
         }
       }
     }
-  }
-}
-
-#markup-form {
-  .container {
-    margin-left: 10px;
-    margin-top: 14px;
-
-    label + * {
-      position: absolute;
-      left: 110px
-    }
-
-    input[type=text] {
-      border: 1px solid gray;
-      border-radius: 10px;
-      width: 300px;
-      padding-left: 6px;
-    }
-
-    input[type=radio] {
-      margin-top: 2px;
-      margin-left: 10px;
-    }
-
-    span {
-      margin-left: 20px;
-    }
-  }
-  .image {
-    height: 98px;
-    input {
-      display: none;
-    }
-    img {
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      left: 204px;
-    }
-  }
-
-
-  .link {
-    margin-top: 14px;
-    margin-left: 10px;
-  }
-
-  .link-selection {
-    margin-left: 20px;
-  }
-  .center {
-    margin-top: 14px;
-    text-align: center;
-    margin-left: 16px;
-  }
-
-  hr {
-    border: 1px solid #ddd;
-    margin-top: 16px;
   }
 }

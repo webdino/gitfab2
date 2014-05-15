@@ -12,7 +12,6 @@ class WaysController < ApplicationController
   def create
     @way.creator = current_user
     @way.save
-    render "recipes/create_item", locals: {item: @way}
   end
 
   def update
