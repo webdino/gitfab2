@@ -126,7 +126,7 @@ class Recipe < ActiveRecord::Base
           doc.css("a").each do |anchor|
             item_id = anchor.attribute("data-item-id").try :value
             item_type = anchor.attribute("data-item-type").try :value
-            if item_id && item_type
+            if item_id && item_type && item_type != "null"
               _existing_items[item_type] << item_id
             end
           end
