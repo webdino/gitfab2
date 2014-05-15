@@ -74,10 +74,15 @@ main {
       }
       .ui {
         float: left;
+
+        .create-btn,
+        .submit-btn {
+          margin-left: 430px;
+        }
+
         .item {
           @include cf;
           position: relative;
-          margin-bottom: 12px;
           background: #efefef;
           border: 1px solid #000;
           width: 487px;
