@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  layout "user"
+
   before_action :load_user, only: [:show, :edit, :update, :destroy]
   before_action :verify_name, except: [:edit, :update]
 

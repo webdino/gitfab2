@@ -66,6 +66,7 @@ Gitfab2::Application.configure do
     dashboard.js dashboard.css
     posts.js     posts.css
     recipe.js    recipe.css
+    user.js      user.css
   )
 
   # Ignore bad email addresses and do not raise email delivery errors.

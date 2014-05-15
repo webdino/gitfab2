@@ -1,21 +1,36 @@
 #layouts-setting-links {
-  float: left;
+  display: inline-block;
+  vertical-align: top;
   width: 200px;
   height: auto;
-  padding: 20px 20px 20px 0;
+  margin: 20px 20px 20px 0;
   font-size: 16px;
+  border: 1px solid black;
+  border-bottom: none;
   .name {
     padding: 5px;
-    height: 50px;
+    height: 40px;
     font-weight: 700;
     background-color: #CCC;
+    border-bottom: 1px solid black;
     img.avatar {
       margin: auto;
       max-width: 40px;
       max-height: 40px;
     }
+    p {
+      display: inline-block;
+      vertical-align: top;
+      margin: 14px 0 0 10px;
+    }
   }
   li {
     height: 40px;
+    border-bottom: 1px solid black;
+    a {
+      display: inline-block;
+      vertical-align: top;
+      margin: 14px 0 0 10px;
+    }
   }
 }
