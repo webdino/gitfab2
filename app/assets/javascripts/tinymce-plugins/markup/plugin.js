@@ -74,6 +74,20 @@ var MarkupPluginFactory = {
         return containerElement;
       }
 
+      function createTextAreaForm(label, name, value) {
+        var containerElement = $(document.createElement("div"));
+        containerElement.addClass("container");
+        containerElement.addClass(name);
+        var labelElement = $(document.createElement("label"));
+        labelElement.text(label);
+        var inputElement = $(document.createElement("textarea"));
+        inputElement.val(value);
+        inputElement.attr("name", name);
+        containerElement.append(labelElement);
+        containerElement.append(inputElement);
+        return containerElement;
+      }
+
       function createForm(data, tools) {
         var formElement = $(document.createElement("form"));
         formElement.attr("id", "markup-form");
@@ -108,6 +122,12 @@ var MarkupPluginFactory = {
         formElement.append(imageElement);
         if (tools.indexOf("image") < 0) {
           imageElement.css("display", "none");
+        }
+        var descriptionElement = createTextAreaForm("description", "description", data.description);
+        descriptionElement.addClass("form-field");
+        formElement.append(descriptionElement);
+        if (tools.indexOf("description") < 0) {
+          descriptionElement.css("display", "none");
         }
         return formElement;
       }
@@ -153,17 +173,21 @@ var MarkupPluginFactory = {
       function showDialog() {
         var data = {};
         var selectedElement = editor.selection.getNode();
-        var anchorElement = editor.dom.getParent(selectedElement, "a[href]");
+        var anchorElement = editor.dom.getParent(selectedElement, "a");
         if (anchorElement) {
           data.anchor = anchorElement;
           data.text = $(anchorElement).text();
           data.url = editor.dom.getAttrib(anchorElement, "href");
           data.image = editor.dom.getAttrib(anchorElement, "data-image");
           data.kind = anchorElement.getAttribute("class");
+          data.description = editor.dom.getAttrib(anchorElement, "data-description");
+          data.itemId = editor.dom.getAttrib(anchorElement, "data-item-id");
+          data.itemType = editor.dom.getAttrib(anchorElement, "data-item-type");
         } else {
           data.text = editor.selection.getContent({format: "text"});
           data.url = "";
-          data.kind = "link";
+          data.kind = options.kind;
+          data.description = "";
         }
         var form = createForm(data, options.tools);
         var dialog = editor.windowManager.open({
@@ -177,6 +201,7 @@ var MarkupPluginFactory = {
                 var kind = options.kind;
                 var url = $("#markup-form input[name=url]").val();
                 var text = $("#markup-form input[name=text]").val();
+                var description = $("#markup-form textarea").val();
                 var attachmentElement = $("#markup-form input[name=attachment]").get(0);
                 var imageElement = $("#markup-form input[name=image]").get(0);
                 var promises = []
@@ -191,6 +216,10 @@ var MarkupPluginFactory = {
                   var image = data.image || "";
                   var itemId = null;
                   var itemType = null;
+                  if (url == data.url) {
+                    itemId = data.itemId;
+                    itemType = data.itemType;
+                  }
                   for (var i = 0, n = arguments.length; i < n; i++) {
                     var updata = arguments[i];
                     if (updata.type == "image") {
@@ -211,27 +240,24 @@ var MarkupPluginFactory = {
                     }
                     text = url;
                   }
-                  if (data.anchor) {
-                    var anchor = $(data.anchor);
-                    anchor.text(text);
-                    anchor.attr("href", url);
-                    anchor.attr("class", kind);
-                    anchor.attr("data-image", image);
+                  if (url.length < 1) {
+                    url = image
+                  }
+                  var anchor = data.anchor || document.createElement("a");
+                  anchor = $(anchor);
+                  anchor.text(text);
+                  anchor.attr("href", url);
+                  anchor.attr("class", kind);
+                  anchor.attr("data-image", image);
+                  anchor.attr("data-description", description);
+                  if (itemId) {
                     anchor.attr("data-item-id", itemId);
-                  } else {
-                    if (url.length < 1) {
-                      url = image
-                    }
-                    var html = "<a " + 
-                      "href='"           + url      + "' " +
-                      "class='"          + kind     + "' " +
-                      "data-item-id='"   + itemId  + "' " +
-                      "data-item-type='" + itemType + "' " +
-                      "data-image='"     + image    + "' " +
-                      ">";
-                    html += text;
-                    html += "</a>";            
-                    editor.execCommand("mceInsertContent", false, html);
+                  }
+                  if (itemType) {
+                    anchor.attr("data-item-type", itemType);
+                  }
+                  if (!data.anchor) {
+                    editor.execCommand("mceInsertContent", false, anchor.get(0).outerHTML);
                   }
                   editor.windowManager.close();
                 }).fail(function(e) {
