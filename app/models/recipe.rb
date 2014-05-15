@@ -2,16 +2,17 @@ class Recipe < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:name, :title, :description, :photo, :owner_id, :owner_type, :video_id]
   COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
   ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
-  YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
+
+  mount_uploader :photo, PhotoUploader
+  include Gitfab::HasVideoOrPhoto
 
   extend FriendlyId
+
   friendly_id :name, use: [:slugged, :finders, :scoped], scope: [:owner_id, :owner_type]
 
   acts_as_taggable
   acts_as_commentable
   acts_as_votable
-
-  mount_uploader :photo, PhotoUploader
 
   belongs_to :owner, polymorphic: true
   belongs_to :orig_recipe,    class_name: Recipe.name
@@ -30,7 +31,6 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
-  before_update :clear_video_id_or_photo_if_needed
   before_update :rename_repo_name!, if: ->{self.name_changed?}
   after_create :ensure_repo_exist!
   after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
@@ -59,11 +59,6 @@ class Recipe < ActiveRecord::Base
         self.owner.send col
       end
     end
-  end
-
-  def photo= obj
-    @photo_changed = true
-    super obj
   end
 
   def owner
@@ -121,10 +116,6 @@ class Recipe < ActiveRecord::Base
       suffix += 1
     end
     self.name = candidate
-  end
-
-  def youtube_embed_url
-    "#{YOUTUBE_EMBED_URL_BASE}#{self.video_id}"
   end
 
   def remove_unused_items!
@@ -189,11 +180,4 @@ class Recipe < ActiveRecord::Base
       type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
   end
 
-  def clear_video_id_or_photo_if_needed
-    if self.video_id_changed?
-      self.remove_photo!
-    elsif @photo_changed
-      self.video_id = nil
-    end
-  end
 end

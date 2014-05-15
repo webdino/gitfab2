@@ -175,6 +175,31 @@ describe Recipe do
       subject{recipe.repo.path}
       it{should_not eq orig_repo_path}
     end
+
+    describe "clears video_id field when a photo was uploaded" do
+      let(:recipe_having_video_id) do
+        FactoryGirl.create :user_recipe, video_id: "foo", photo: nil
+      end
+      before do
+        recipe_having_video_id
+          .update_attributes photo: UploadFileHelper.upload_file
+      end
+      subject{recipe_having_video_id.video_id.blank?}
+      it{should be_true}
+    end
+
+    describe "clears photo field when video_id was uploaded" do
+      let(:recipe_having_photo) do
+        FactoryGirl.create :user_recipe,
+          video_id: nil, photo: UploadFileHelper.upload_file
+      end
+      before do
+        recipe_having_photo.update_attributes video_id: "foo"
+      end
+      subject{recipe_having_photo.photo.blank?}
+      it{should be_true}
+    end
+
   end
 
   describe "ensure the statuses are terminated with a Status which has no Way" do

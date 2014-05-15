@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "title"
     t.text     "description"
     t.string   "photo"
+    t.string   "video_id"
     t.integer  "cached_votes_score", default: 0
     t.datetime "deleted_at"
     t.datetime "created_at"

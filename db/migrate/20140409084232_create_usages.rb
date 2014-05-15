@@ -7,6 +7,7 @@ class CreateUsages < ActiveRecord::Migration
       t.string :title
       t.text :description
       t.string :photo
+      t.string :video_id
       t.integer :cached_votes_score, default: 0
       t.datetime :deleted_at
 
