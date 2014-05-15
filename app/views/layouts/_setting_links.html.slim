@@ -1,9 +1,9 @@
 #layouts-setting-links
   #user
     #user-name.name
-      == link_to (image_tag current_user.avatar, class: "avatar"), recipes_path(owner_name: current_user.name)
+      == image_tag @user.avatar, class: "avatar"
       p
-        == link_to current_user.name, recipes_path(owner_name: current_user.name)
+        == @user.name
     ul
       li#user-account
         == link_to "Account", [:edit, current_user]
