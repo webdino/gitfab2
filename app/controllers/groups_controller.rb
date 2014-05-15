@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
     @group = Group.new group_params
     if @group.save
       @group.add_admin current_user
-      redirect_to @group
+      redirect_to [:edit, @group]
     else
       render :new
     end
@@ -31,7 +31,7 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update_attributes group_params
-      redirect_to @group
+      redirect_to [:edit, @group], notice: "Group profile was successfully updated."
     else
       render :edit
     end

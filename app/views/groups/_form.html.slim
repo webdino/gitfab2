@@ -1,8 +1,10 @@
 == form_for @group, class: "group-form" do |f|
+  p#notice == notice
+
   - if @group.errors.any?
     #error_explanation
       h2
-        == pluralize(@group.errors.count, "error")
+        == pluralize(@group.errors.count, "error occured:: ")
         'prohibited this user from being saved:
       ul
         - @group.errors.full_messages.each do |msg|
