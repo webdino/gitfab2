@@ -1,10 +1,9 @@
 class Way < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :description]
   UPDATABLE_COLUMNS = [:description, :photo, :video_id, :status_id, :reassoc_token]
-  YOUTUBE_EMBED_URL_BASE = "http://www.youtube.com/embed/"
 
   include Gitfab::ActsAsItemInRecipe
-
+  include Gitfab::HasVideoOrPhoto
 
   belongs_to :recipe
   belongs_to :status
