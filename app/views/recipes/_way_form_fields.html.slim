@@ -1,0 +1,40 @@
+.item.way
+  - if can? :update, item      
+    .image-field style="background-image: url('#{f.object.photo.small.url}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
+      - if f.object.video_id.present?
+        iframe src="#{f.object.youtube_embed_url}"
+      - if can? :update, item      
+        == f.hidden_field :status_id, id: SecureRandom.hex, class: "status-id-field"
+        == f.hidden_field :reassoc_token, id: SecureRandom.hex, class: "way-reassoc-token-field"
+        .video-form-wrapper
+          .photo-upload-btn.btn
+            'Upload Image File…
+          == f.file_field :photo, id: SecureRandom.hex, title: "Upload Image", accept: "image", class: "file-field"
+          .input-video-url-btn.btn
+            'Input YouTube URL…
+          .remove-image-btn.btn
+            '×
+          .video-form
+            p
+              'Input a Youtube URL
+            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{f.object.video_id}", id: SecureRandom.hex, class: "youtube-url-input"
+            == f.hidden_field :video_id, id: SecureRandom.hex, class: "video-id-field"
+            .caution
+              'Invalid YouTube URL
+            .video-form-preview-wrapper
+              iframe.video-form-preview src: #{f.object.video_id}
+            .video-form-buttons
+              == link_to "OK", "#", class: "ok-btn btn"
+              == link_to "Cancel", "#", class: "cancel-btn btn"
+  - else
+    == link_to "", f.object.photo.url, class: "image-field fancybox item-photo", rel: "fancybox", style: "background-image: url('#{f.object.photo.small.url}')"
+
+  .description_container 
+    - clazz = "description-field way-textarea"
+    - if cannot? :update, item
+      - clazz << " readonly"
+
+    == f.text_area :description, id: SecureRandom.hex, class: clazz
+
+  - if can? :manage, item
+    p.remove-way == link_to "X", [@owner, @recipe, status, way], remote: true, method: :delete

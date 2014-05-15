@@ -77,12 +77,20 @@ $ ->
       content_css: $("#markup-help").attr("data-css-path"),
       plugins: plugins
       setup: (editor) ->
+        if $("#" + editor.id).hasClass "readonly"
+          editor.settings.readonly = true 
+          return
+
         editor.on "focus", (e) ->
           toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
           toolbar.css "visibility", "visible"
         editor.on "blur", (e) ->
           toolbar = $(e.target.contentAreaContainer.parentNode).find ".mce-toolbar-grp"
           toolbar.css "visibility", "hidden"
+
+        editor.on "init", ->
+          editor.setContent $("#" + editor.id).text()
+
       paste_preprocess: (plugin, args) ->
         element = $(document.createElement "div")
         element.html args.content
@@ -95,8 +103,8 @@ $ ->
   for type in textareaTypes
     installTinyMCE type, type
 
-  $(document).on "nested:fieldAdded", (event) ->
-    textarea = event.field.find ".description-field"
+  $(document).on "tinymcize", ->
+    textarea = $(this).find ".description-field"
     id = textarea.attr "id"
     for type in textareaTypes
       if textarea.hasClass type

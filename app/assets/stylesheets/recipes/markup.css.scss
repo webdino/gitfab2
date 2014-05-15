@@ -21,6 +21,27 @@
   }
 }
 
+#tinymce {
+  padding-top: 5px;
+}
+
+#project-summary,
+#recipes-show,
+#recipes-edit {
+  .mce-tinymce {
+    position: relative;
+    top: -27px;
+  }
+  .mce-panel {
+    border: none;
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  .mce-toolbar-grp {
+    visibility: hidden;
+  }
+}
+
 #recipes-show .description,
 #tinymce {
   font-family: helvetica, sans-serif;
@@ -53,5 +74,62 @@
     border: 1px solid gray;
     width: 310px;
     height: 70px;
+  }
+  .container {
+    margin-left: 10px;
+    margin-top: 14px;
+
+    label + * {
+      position: absolute;
+      left: 110px
+    }
+
+    input {      
+      *[type=text] {
+        border: 1px solid gray;
+        border-radius: 10px;
+        width: 300px;
+        padding-left: 6px;
+      }
+      *[type=radio] {
+        margin-top: 2px;
+        margin-left: 10px;
+      }
+    }
+
+    span {
+      margin-left: 20px;
+    }
+  }
+  .image {
+    height: 98px;
+    input {
+      display: none;
+    }
+    img {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      left: 204px;
+    }
+  }
+
+  .link {
+    margin-top: 14px;
+    margin-left: 10px;
+  }
+
+  .link-selection {
+    margin-left: 20px;
+  }
+  .center {
+    margin-top: 14px;
+    text-align: center;
+    margin-left: 16px;
+  }
+
+  hr {
+    border: 1px solid #ddd;
+    margin-top: 16px;
   }
 }

@@ -59,6 +59,13 @@ main#recipes-show
       == f.hidden_field :commentable_id, value: @recipe.id
       == f.submit "Add Comment", class: "submit-btn btn"
 
+#markup-help [
+    data-css-path = asset_path("recipe.css")
+    data-blueprint-upload-path = url_for([@owner, @recipe, Attachment.new])
+    data-material-upload-path = url_for([@owner, @recipe, Material.new])
+    data-tool-upload-path = url_for([@owner, @recipe, Tool.new])
+  ]
+
   - content_for :bottom
     coffee:
       $ ->
@@ -80,11 +87,16 @@ main#recipes-show
             $(event.target).find("textarea:not(.not-cleared), input[type!=submit]:not(.not-cleared)").val ""
             $(event.target).css "display","none"
             if data.class == "way"
-              $(event.target).closest(".ways").find("ul").append data.html
+              $(event.target).closest(".ways").find(".list").append data.html
             else
               $("##{data.class}-list").append data.html
             $(event.target).siblings(".cancel-btn").hide()
             $(event.target).siblings(".add-btn").show()
+            $(this).trigger "tinymcize"
+
+
+        $(document).on "ajax:success", ".remove-way", ->
+          $(this).closest("form").remove()
 
         $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
           if data.class == "way"

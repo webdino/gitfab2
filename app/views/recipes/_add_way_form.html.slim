@@ -1,17 +1,8 @@
-- opts ||= {}
 div class="add-form-wrap"
-  == link_to "+ Add #{item.class.name.underscore}", "#", class: "add-btn btn"
+  == link_to "+ Add way", "#", class: "add-btn btn"
   == link_to "cancel", "#", class: "cancel-btn btn"
-  == form_for [@owner, @recipe, status, item], remote: true,
+  == form_for [@owner, @recipe, status, way], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
-    - item.class::UPDATABLE_COLUMNS.each do |field|
-      - case field
-      - when :photo
-        == f.file_field field, class: "add-photo"
-      - when :description
-        == f.text_area field
-      - when :status_id, :reassoc_token
-      - else
-        == f.text_field field
     == render "recipes/filesize_caution"
+    == render "way_form_fields", f: f, status: status, way: way
     == f.submit "create"
