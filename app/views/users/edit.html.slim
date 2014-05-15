@@ -1,5 +1,3 @@
-== render partial: "layouts/setting_links"
-
 main#users-edit
   h1
     'Public Profile
@@ -20,14 +18,14 @@ main#users-edit
       dd
         == image_tag @user.avatar, id: "user-avatar"
         == f.file_field :avatar, id: "user-avatar-form"
-        == link_to "Upload new picture", "#", id: "upload-button"
+        == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
 
       dt
         'Name
       dd
         == f.text_field :name, placeholder: "Please enter your name (It will be your repo name).", id: "user-name-form"
 
-    == f.submit "Save", id: "submit"
+    == f.submit "Save", id: "submit", class: "btn"
 
 content_for :bottom
   coffee:
