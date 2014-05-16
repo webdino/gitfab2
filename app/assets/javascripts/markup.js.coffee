@@ -103,8 +103,8 @@ $ ->
   for type in textareaTypes
     installTinyMCE type, type
 
-  $(document).on "tinymcize", ->
-    textarea = $(this).find ".description-field"
+  $(document).on "tinymcize", (e)->
+    textarea = $(e.target).find ".description-field"
     id = textarea.attr "id"
     for type in textareaTypes
       if textarea.hasClass type

@@ -1,4 +1,4 @@
-div class="add-form-wrap"
+.add-form-wrap
   == link_to "+ Add way", "#", class: "add-btn btn"
   == form_for [@owner, @recipe, status, way], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|

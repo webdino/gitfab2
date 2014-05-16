@@ -39,9 +39,9 @@ main#recipes-show
     h1
       'Usages
     ul#usage-list
-      - @recipe.usages.each do |item|
-        == render "usage", item: item
-    == render "add_form", item: @recipe.usages.build
+      - @recipe.usages.each do |usage|
+        == render "usage_form", usage: usage
+    == render "add_usage_form", usage: Usage.new
 
   section#comments
     #comments-meta
@@ -86,16 +86,21 @@ main#recipes-show
           if data.success
             $(event.target).find("textarea:not(.not-cleared), input[type!=submit]:not(.not-cleared)").val ""
             $(event.target).css "display","none"
+            self = this
             if data.class == "way"
               $(event.target).closest(".ways").find(".list").append data.html
-            else
-              $("##{data.class}-list").append data.html
+              self = $(event.target).closest(".ways").find(".list>:last-child")
+            else if data.class == "usage"
+              $("#usage-list").append data.html
+              self = $("#usage-list li:last-child")
+            else 
+              return
             $(event.target).siblings(".cancel-btn").hide()
             $(event.target).siblings(".add-btn").show()
-            $(this).trigger "tinymcize"
+            self.trigger "tinymcize"
 
 
-        $(document).on "ajax:success", ".remove-way", ->
+        $(document).on "ajax:success", ".remove-way, .remove-usage", ->
           $(this).closest("form").remove()
 
         $(document).on "ajax:success", ".delete-btn", (event, data, status) ->
