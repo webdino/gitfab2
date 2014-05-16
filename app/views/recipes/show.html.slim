@@ -182,3 +182,87 @@ main#recipes-show
           else
             $(this).siblings(".filesize-caution").css "display", "none"
             $(this).siblings("input").attr "disabled", false
+
+        # ----------- image and youtube --------------
+        w = window
+
+        YOUTUBE_URL_MIN_LENGTH   = 41
+        YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
+        YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:www\.)?youtube.com\/watch\?v=([^&]{11,})(&\S*)?$/
+        VIDEOID_MATCH_INDEX      = 1
+
+        $(document).on "click", ".photo-upload-btn", (event) ->
+          event.preventDefault()
+          $(this).siblings(".file-field").trigger "click"
+
+        $(document).on "change", ".file-field", (event) ->
+          target = event.target
+          imageField = $(this).closest ".image-field"
+          file = target.files[0]
+          reader = new FileReader
+          reader.onload = ->
+            imageField.css "background-image", "url('#{reader.result}')"
+            $(imageField).find("iframe").attr "src",""
+
+          reader.readAsDataURL file
+
+        $(document).on "click", ".input-video-url-btn", (event) ->
+          event.preventDefault()
+          w.targetImageField = $(this).parents ".image-field"
+          target = $(this).siblings ".video-form"
+          $.fancybox target
+
+        $(document).on "click", ".video-form-buttons .ok-btn", (event) ->
+          event.preventDefault()
+          if $(this).hasClass "disabled"
+            return false
+          else
+            imageField = w.targetImageField
+            if $(imageField).find("iframe").length < 1
+              $(imageField).prepend "<iframe/>"
+            embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
+            $(imageField).find("iframe").attr "src", embed_url
+            $(this).parents(".video-form").find(".video-id-field").val w.videoIdForItem
+            w.videoIdForItem = ""
+            w.targetImageField = ""
+            $.fancybox.close()
+
+        $(document).on "click", ".video-form-buttons .cancel-btn", (event) ->
+          event.preventDefault()
+          $.fancybox.close()
+
+        $(document).on "click", ".image-field .remove-image-btn", (event) ->
+          event.preventDefault()
+          imageField = $(this).parents ".image-field"
+          $(imageField).css "background-image", $(imageField).data("noImageUrl")
+          $(imageField).find("iframe").attr "src", ""
+          $(imageField).find(".file-field").val ""
+          $(imageField).find(".video-form .video-id-field").val ""
+
+        disableVideoSubmitButtonForItems = ->
+          $(".caution").css "display", "block"
+          $("iframe.video-form-preview").attr "src", ""
+          $(".ok-btn").addClass "disabled"
+
+        getVideoForItems = ->
+          url = $(this).val()
+          if w.previous_url != url
+            videoForm = $(this).closest ".video-form"
+            w.previous_url = url
+            if url.length > YOUTUBE_URL_MIN_LENGTH
+              if matched = url.match YOUTUBE_WATCH_URL_REGEXP
+                w.videoIdForItem = matched[VIDEOID_MATCH_INDEX]
+                embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
+                $(videoForm).find("iframe.video-form-preview").attr "src", embed_url
+                $(videoForm).find(".caution").css "display", "none"
+                $(videoForm).find(".ok-btn").removeClass "disabled"
+              else
+                $(videoForm).find(".caution").text "Invalid YouTube URL"
+                disableVideoSubmitButtonForItems()
+            else
+              $(videoForm).find("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+              disableVideoSubmitButtonForItems()
+
+        $(document).on "keyup", "input.youtube-url-input", getVideoForItems
+        $(document).on "change", "input.youtube-url-input", getVideoForItems 
+       
