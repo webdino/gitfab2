@@ -18,8 +18,11 @@ main#search
       ul.recipe-list
         - @recipes.each do |recipe|
           li.recipe-item
-            p.cover style="background-image: url('#{recipe.photo.url}')"
-              == link_to "", recipe_path(recipe, owner_name: recipe.owner.name)
+            .photo
+              - if recipe.video_id.present?
+                iframe src="#{recipe.youtube_embed_url}"
+              - else
+                == link_to "", recipe_path(recipe, owner_name: recipe.owner.name), class: "recipe-photo", style: "background-image: url('#{recipe.photo.url}')"
             span.summary
               span.title
                 == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)

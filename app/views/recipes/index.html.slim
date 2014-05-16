@@ -82,15 +82,18 @@ section#recipes-index
                   == link_to "+Project", [:new, current_user, :recipe]
             - else
               - if current_user.is_admin_of? @owner
-                span#create-group-project
+                span#create-group-project.btn
                   == link_to "+Group Project", [:new, @owner, :recipe]
 
           .recipes
             ul.recipe-list
               - @recipes.each do |recipe|
                 li.recipe-item
-                  p.cover style="background-image: url('#{recipe.photo.url}')"
-                    == link_to "", recipe_path(recipe, owner_name: @owner.name)
+                  .photo
+                    - if recipe.video_id.present?
+                      iframe src="#{recipe.youtube_embed_url}"
+                    - else
+                      == link_to "", recipe_path(recipe, owner_name: @owner.name), class: "recipe-photo", style: "background-image: url('#{recipe.photo.url}')"
                   span.summary
                     span.title
                       == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
@@ -109,7 +112,7 @@ section#recipes-index
               == form_tag [@owner, :recipes], method: :get do
                 == text_field_tag :q, (params[:q] if params[:type] == "having_posts"), placeholder: "Search project", class: "q-field"
                 == hidden_field_tag :type, :having_posts
-                == submit_tag "Search", class: "search-button"
+                == submit_tag "Search", class: ["search-btn", "btn"]
 
           .recipes
             ul.recipe-list
@@ -139,7 +142,7 @@ section#recipes-index
                 == form_tag [@owner, :recipes], method: :get do
                   == text_field_tag :q, (params[:q] if params[:type] == "contributed"), placeholder: "Search project", class: "q-field"
                   == hidden_field_tag :type, :contributed
-                  == submit_tag "Search", class: "search-button"
+                  == submit_tag "Search", class: ["search-btn", "btn"]
 
             .recipes
               ul.recipe-list
@@ -166,7 +169,7 @@ section#recipes-index
                 == form_tag [@owner, :recipes], method: :get do
                   == text_field_tag :q, (params[:q] if params[:type] == "starred"), placeholder: "Search project", class: "q-field"
                   == hidden_field_tag :type, :starred
-                  == submit_tag "Search", class: "search-button"
+                  == submit_tag "Search", class: ["search-btn", "btn"]
 
             .recipes
               ul.recipe-list
