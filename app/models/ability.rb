@@ -5,8 +5,8 @@ class Ability
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Tool
-    can :manage, Membership, Membership do |membership|
-      user.is_admin_of?(membership.group) && user != membership.user
+    can :manage, Membership do |membership|
+      user.is_admin_of?(membership.group) || user == membership.user
     end
     can :manage, Usage do
       user.persisted?
