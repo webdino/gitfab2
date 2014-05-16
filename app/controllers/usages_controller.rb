@@ -9,7 +9,6 @@ class UsagesController < ApplicationController
 
   def create
     @usage.save
-    render "recipes/create_item", locals: {item: @usage}
   end
 
   def update

@@ -1,0 +1,5 @@
+li
+  == form_for [@owner, @recipe, usage], remote: true, html: {class: "edit-form", multipart: true, :"data-type" => :json} do |f|
+    == render "recipes/usage_form_fields", f: f, usage: usage
+    - if can? :update, usage
+      == f.submit "update", class: "submit-btn"
