@@ -4,3 +4,21 @@
 main#recipes-new
   == render "form"
 #markup-help data-css-path = asset_path("recipe.css")
+
+- content_for :bottom
+  coffee:
+    $ ->
+      UPLOAD_LIMIT = 3 * 1000 * 1000
+
+      checkFileSizeLimit = ->
+        filesize = 0
+        thumb_files = $("#recipe_photo")[0].files
+        if thumb_files.length > 0
+          filesize += thumb_files[0].size
+        submitButton = $("main#recipes-new input").last()
+        if filesize > UPLOAD_LIMIT
+          $("#filesize-caution").css "display", "block"
+          submitButton.attr "disabled", true
+        else
+          $("#filesize-caution").css "display", "none"
+          submitButton.attr "disabled", false
