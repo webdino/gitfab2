@@ -13,7 +13,7 @@
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
-      section.visual style="background-image: url('#{@recipe.photo}')"
+      section.visual style="background-image: url('#{@recipe.photo}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
         - if @recipe.video_id.present?
           iframe src="#{@recipe.youtube_embed_url}"
         .video-form-wrapper
@@ -53,7 +53,7 @@
 
   #filesize-caution
     p
-      'File Size Limit Exceed on an upload(6MB).
+      'File Size Limit Exceed on an upload (3MB).
     p
       'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
 
@@ -164,7 +164,8 @@
 
       $(document).on "click", "#remove-image-btn", (event) ->
         event.preventDefault()
-        $("section.visual").css "background-image", $(imageField).data("noImageUrl")
+        noImageUrl = $("section.visual").attr("data-no-image-url")
+        $("section.visual").css "background-image", noImageUrl
         $("section.visual iframe").attr "src", ""
         $("input#recipe_photo").val ""
         $("input#video-id-field").val ""
@@ -215,7 +216,8 @@
       $(document).on "click", ".image-field .remove-image-btn", (event) ->
         event.preventDefault()
         imageField = $(this).parents ".image-field"
-        $(imageField).css "background-image", $(imageField).data("noImageUrl")
+        noImageUrl = $(imageField).attr("data-no-image-url")
+        $(imageField).css "background-image", noImageUrl
         $(imageField).find("iframe").attr "src", ""
         $(imageField).find(".file-field").val ""
         $(imageField).find(".video-form .video-id-field").val ""

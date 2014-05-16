@@ -2,7 +2,7 @@ h1
  = "Making"
 == f.fields_for :statuses do |sf|
   .item.status
-    .image-field style="background-image: url('#{sf.object.photo.thumb}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
+    .image-field style="background-image: url('#{sf.object.photo.thumb}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
       - if sf.object.video_id.present?
         iframe src="#{sf.object.youtube_embed_url}"
       .video-form-wrapper
@@ -35,7 +35,7 @@ h1
   .ways
     == sf.fields_for :ways do |wf|
       .item.way
-        .image-field style="background-image: url('#{wf.object.photo.thumb}')" data-noImageUrl="#{asset_path 'fallback/noimage_480x360.png'}"
+        .image-field style="background-image: url('#{wf.object.photo.thumb}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
           - if wf.object.video_id.present?
             iframe src="#{wf.object.youtube_embed_url}"
           .video-form-wrapper
