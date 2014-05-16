@@ -42,7 +42,7 @@ main#recipes-edit
       $(document).on "nested:fieldAdded", (e) ->
         setStatusReassocToken e.field
         makeSortableWay e.field.find(".ways")
-        $(this).trigger "tinymcize"
+        $(e.target).trigger "tinymcize"
 
       UPLOAD_LIMIT = 10 * 1000 * 1000
 
