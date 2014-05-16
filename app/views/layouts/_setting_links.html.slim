@@ -1,9 +1,9 @@
 #layouts-setting-links
   #user
     #user-name.name
-      == image_tag @user.avatar, class: "avatar"
+      == image_tag current_user.avatar, class: "avatar"
       p
-        == @user.name
+        == current_user.name
     ul
       li#user-account
         == link_to "Account", [:edit, current_user]
@@ -12,9 +12,9 @@
   - current_user.groups.each do |group|
     div id="#{group.name}"
       div id="#{group.name}-name" class="name"
-        == link_to image_tag(group.avatar, id: "#{group.name}-avatar", class: "avatar"), recipes_path(owner_name: group.name)
+        == image_tag group.avatar, id: "#{group.name}-avatar", class: "avatar"
         p
-          == link_to group.name, recipes_path(owner_name: group.name)
+          == group.name
       ul
         li id="#{group.name}-profile"
           == link_to "Group Profile & Members", [:edit, group]
