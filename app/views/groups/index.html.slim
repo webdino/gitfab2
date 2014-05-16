@@ -4,7 +4,7 @@
     h1
       'Groups
     ul#groups
-      - @groups.each do |group|
+      - current_user.groups.each do |group|
         == render "group", group: group
 
 
