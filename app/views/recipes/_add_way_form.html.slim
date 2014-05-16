@@ -1,5 +1,6 @@
 .add-form-wrap
-  == link_to "+ Add way", "#", class: "add-btn btn"
+  - if user_signed_in?
+    == link_to "+ Add way", "#", class: "add-btn btn"
   == form_for [@owner, @recipe, status, way], remote: true,
       html: {class: "add-form", multipart: true, :"data-type" => :json } do |f|
     == render "recipes/filesize_caution"
