@@ -103,20 +103,22 @@
     .tabs {
       li {
         float: left;
-        padding: 3px 0 0;
+        padding: 10px 0 3px;
         width: 140px;
         height: 20px;
-        font-size: 14px;
+        font-size: 18px;
         text-align: center;
         background: white;
       }
       li.active {
+        font-weight: 700;
         background: #eee;
       }
     }
     .search-bar {
       width: 100%;
       height: 60px;
+      padding: 10px 0;
       background: #eee;
       .search-box {
         float: left;
@@ -176,18 +178,26 @@
     .recipe-item {
       width: 320px;
       height: auto;
-      min-height: 260px;
+      min-height: 300px;
       float: left;
       margin: 40px 0 20px 20px;
       color: white;
-      .cover {
+      position: relative;
+      .photo {
         height: 240px;
-        background-size: cover;
-        background-position: center;
-        a {
+        iframe {
+          width: 320px;
+          height: 240px;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+        .recipe-photo {
           display: block;
           width: 320px;
           height: 240px;
+          background-size: cover;
+          background-position: center;
         }
       }
       .summary {
