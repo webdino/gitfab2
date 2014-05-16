@@ -60,8 +60,8 @@ describe "User ability" do
     describe "lets user manage the other member's membership of the group" do
       it{should be_able_to :manage, group.memberships.find_by(user_id: other.id)}
     end
-    describe "doesn't let user manage own memberships of the group" do
-      it{should_not be_able_to :manage, group.memberships.find_by(user_id: user.id)}
+    describe "lets user manage own membership of the group" do
+      it{should be_able_to :manage, group.memberships.find_by(user_id: user.id)}
     end
   end
   context "when is an editor of a group" do

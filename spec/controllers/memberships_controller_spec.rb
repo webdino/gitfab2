@@ -46,13 +46,26 @@ describe MembershipsController do
   end
 
   describe "DELETE destroy" do
-    before do
-      sign_in user
-      group = user.groups.create name: "foo"
-      membership = group.memberships.first
-      delete :destroy, group_id: group.id, user_id: user.id,
-        id: membership.id, format: :json
+    context "when a user destroyed own membership" do
+      before do
+        sign_in user
+        group = user.groups.create name: "foo"
+        membership = group.memberships.last
+        delete :destroy, group_id: group.id, user_id: user.id,
+          id: membership.id, format: :json
+      end
+      it_behaves_like "render template", "destroy"
     end
-    it_behaves_like "render template", "destroy"
+    context "when a user destroyed other member's membership" do
+      before do
+        sign_in user
+        group = user.groups.create name: "foo"
+        group.members << FactoryGirl.create(:user)
+        membership = group.memberships.last
+        delete :destroy, group_id: group.id, user_id: user.id,
+          id: membership.id, format: :json
+      end
+      it_behaves_like "render template", "destroy"
+    end
   end
 end
