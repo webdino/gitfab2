@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member
   end
 
+  def membership_in group
+    self.memberships.find_by group_id: group.id
+  end
+
   [:admin, :editor, :member].each do |role|
     define_method "is_#{role}_of?" do |group|
       return false unless group

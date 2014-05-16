@@ -3,4 +3,4 @@ li.group
   .name
     == link_to group.name, recipes_path(owner_name: group.name)
   / TODO: Task #14601　current_userがgroupから抜ける処理+rspec
-  == link_to "Leave group", "#", method: :delete, remote: true,  class: "leave-btn btn"
+  == link_to "Leave group", [group, current_user.membershipOf(group)], method: :delete, remote: true, class: "leave-btn btn"
