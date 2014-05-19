@@ -93,16 +93,16 @@ section#recipes-index
                     - if recipe.video_id.present?
                       iframe src="#{recipe.youtube_embed_url}"
                     - else
-                      == link_to "", recipe_path(recipe, owner_name: @owner.name), class: "recipe-photo", style: "background-image: url('#{recipe.photo.url}')"
+                      == link_to "", recipe_path(recipe, owner_name: recipe.owner.name), class: "recipe-photo", style: "background-image: url('#{recipe.photo.url}')"
                   span.summary
-                    span.title
-                      == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
+                    span.avatar-thumb
+                      == link_to image_tag(recipe.owner.avatar), recipe.owner, title: "#{recipe.owner.name}"
                     span.star
                       == toggle_star_link_for recipe
-                    span.avatar-thumb
-                      == link_to image_tag(@owner.avatar), @owner
+                    span.title
+                      == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
                     span.name
-                      == link_to recipe.owner.name, @owner
+                      == link_to recipe.owner.name, recipe.owner
                     span.description
                       == recipe.description
 
@@ -120,16 +120,16 @@ section#recipes-index
                 - if recipe.posts.length != 0
                   li.recipe-item
                     p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == link_to "", recipe_posts_path(owner_name: @owner.name, recipe_id: recipe.name)
+                      == link_to "", recipe_posts_path(owner_name: recipe.owner.name, recipe_id: recipe.name)
                     span.summary
                       span.title
-                        == link_to recipe.title, recipe_posts_path(owner_name: @owner.name, recipe_id: recipe.name)
+                        == link_to recipe.title, recipe_posts_path(owner_name: recipe.owner.name, recipe_id: recipe.name)
                       span.star
                         == toggle_star_link_for recipe
                       span.avatar-thumb
-                        == link_to image_tag(@owner.avatar), @owner
+                        == link_to image_tag(recipe.owner.avatar), recipe.owner, alt: "#{recipe.owner.name}"
                       span.name
-                        == link_to recipe.owner.name, @owner
+                        == link_to recipe.owner.name, recipe.owner
                       span.description
                         == recipe.description
 
@@ -149,14 +149,14 @@ section#recipes-index
                 - @owner.contributing_recipes.each do |recipe|
                   li.recipe-item
                     p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == link_to "", recipe_path(recipe, owner_name: @owner.name)
+                      == link_to "", recipe_path(recipe, owner_name: recipe.owner.name)
                     span.summary
                       span.title
-                        == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
+                        == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
                       span.star
                         == toggle_star_link_for recipe
                       span.avatar-thumb
-                        == link_to image_tag(recipe.owner.avatar), recipe.owner
+                        == link_to image_tag(recipe.owner.avatar), recipe.owner, alt: "#{recipe.owner.name}"
                       span.name
                         == link_to recipe.owner.name, recipe.owner
                       span.description
@@ -176,14 +176,14 @@ section#recipes-index
                 - @owner.get_voted(Recipe).each do |recipe|
                   li.recipe-item
                     p.cover style="background-image: url('#{recipe.photo.url}')"
-                      == link_to "", recipe_path(recipe, owner_name: @owner)
+                      == link_to "", recipe_path(recipe, owner_name: recipe.owner)
                     span.summary
                       span.title
-                        == link_to recipe.title, recipe_path(recipe, owner_name: @owner.name)
+                        == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
                       span.star
                         == toggle_star_link_for recipe
                       span.avatar-thumb
-                        == link_to image_tag(recipe.owner.avatar), recipe.owner
+                        == link_to image_tag(recipe.owner.avatar), recipe.owner, alt: "#{recipe.owner.name}"
                       span.name
                         == link_to recipe.owner.name, recipe.owner
                       span.description

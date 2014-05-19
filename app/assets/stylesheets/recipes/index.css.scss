@@ -140,6 +140,7 @@
         width: 80px;
         height: 40px;
         text-align: center;
+        font-family: helvetica, sans-serif;
         font-size: 18px;
         font-weight: 700;
       }
@@ -157,14 +158,13 @@
       span#create-group-project {
         @include border-box;
         float: right;
-        margin: 10px 20px;
+        margin: 10px 30px 10px 40px;
         padding: 10px;
-        width: 140px;
-        height: 20px;
+        width: 160px;
+        height: 40px;
         text-align: center;
         font-size: 18px;
         font-weight: 700;
-        background: #ccc;
       }
     }
 
@@ -207,12 +207,13 @@
         width: 320px;
         height: auto;
         min-height: 40px;
+        position: relative;
         a {
           text-decoration: none;
         }
         .title {
           margin: 20px 0 20px 0px;
-          width: 320px;
+          width: 240px;
           font-size: 32px;
           font-weight: 900;
         }
@@ -223,6 +224,8 @@
         .avatar-thumb {
           display: none;
           float: left;
+          margin-right: 14px;
+          margin-bottom: 10px;
           width: 32px;
           height: 32px;
           img {
