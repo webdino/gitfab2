@@ -52,14 +52,14 @@ $ ->
 
   installTinyMCE = (type, selector) ->
     if type is "status-textarea"
-      tools = "material blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment material blueprint link paste"
+      tools = "material tool blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment material tool blueprint link paste"
     else if type is "way-textarea"
-      tools = "tool blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment tool blueprint link paste"
+      tools = "material tool blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment material tool blueprint link paste"
     else if type is "attachment-textarea"
-      tools = "tool blueprint attachment unlink | bullist numlist"
-      plugins = "autolink attachment tool blueprint link paste"
+      tools = "material tool blueprint attachment unlink | bullist numlist"
+      plugins = "autolink attachment material tool blueprint link paste"
     else
       tools = "markup unlink | bullist numlist"
       plugins = "autolink link markup paste"
