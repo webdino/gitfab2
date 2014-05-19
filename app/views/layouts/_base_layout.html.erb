@@ -8,7 +8,6 @@
   </head>
   <body>
     <%= render "layouts/header" %>
-    <%= browserid_js_tag %>
     <%= content_for?(:content) ? yield(:content) : yield %>
     <%= content_for?(:bottom) ? yield(:bottom) : nil %>
     <hr>

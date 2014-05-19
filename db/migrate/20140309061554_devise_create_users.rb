@@ -35,10 +35,15 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.integer :group_id
       t.string :slug
 
+      # for OmniAuth
+      t.string :provider
+      t.string :uid
+
       t.timestamps
     end
 
     add_index :users, :name,                 :unique => true
+    add_index :users, [:provider, :uid],     :unique => true
     add_index :users, :email,                :unique => true
     add_index :users, :reset_password_token, :unique => true
     add_index :users, :slug, unique: true
