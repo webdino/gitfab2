@@ -4,6 +4,6 @@
  *= require_tree ./layouts
  *= require_tree ./recipes
  *= require_tree ./posts
- *= require_tree ./fancybox
+ *= require fancybox
  *= require jquery.ui.selectable
  */

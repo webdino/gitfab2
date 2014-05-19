@@ -18,7 +18,7 @@
 //= require turbolinks
 //= require jquery.turbolinks
 //= require tinymce
-//= require_tree ./fancybox
+//= require fancybox
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
 //= require ./markup
