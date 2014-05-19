@@ -20,17 +20,10 @@ class User < ActiveRecord::Base
   has_many :posts
   has_many :ways, as: :creator
 
-  after_save :ensure_dir_exist!
-
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true, if: ->{self.persisted?}
   validates :name, unique_owner_name: true,
     name_format: true, if: ->{self.name.present?}
-
-  def dir_path
-    return nil unless self.name.present?
-    "#{Settings.git.repo_dir}/#{self.name}"
-  end
 
   def is_owner_of? recipe
     self == recipe.owner
@@ -48,13 +41,6 @@ class User < ActiveRecord::Base
   def is_admin_of? group
     return false unless group
     group.admins.include? self
-  end
-
-  def can_manage? recipe
-    if recipe.owner_type == Group.name
-      is_member = is_member_of?(recipe.owner)
-    end
-    is_owner_of?(recipe) || is_collaborator_of?(recipe) || is_member
   end
 
   def membership_in group
@@ -92,11 +78,6 @@ class User < ActiveRecord::Base
   end
 
   private
-  def ensure_dir_exist!
-    return nil unless self.name.present?
-    ::FileUtils.mkdir_p dir_path
-  end
-
   def should_generate_new_friendly_id?
     name_changed?
   end

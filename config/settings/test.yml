@@ -1,2 +1,0 @@
-git:
-  repo_dir: <%= File.join Rails.root, "tmp", "repositories_test"  %>

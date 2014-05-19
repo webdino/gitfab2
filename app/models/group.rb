@@ -11,8 +11,6 @@ class Group < ActiveRecord::Base
   has_many :members, through: :memberships, source: :user
   has_many :recipes, as: :owner, dependent: :destroy
 
-  after_save :ensure_dir_exist!
-
   validates :name, presence: true, uniqueness: true,
     unique_owner_name: true, name_format: true
 
@@ -27,17 +25,7 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def dir_path
-    return nil unless self.name.present?
-    "#{Settings.git.repo_dir}/#{self.name}"
-  end
-
   private
-  def ensure_dir_exist!
-    return nil if self.name.blank?
-    ::FileUtils.mkdir_p dir_path
-  end
-
   def should_generate_new_friendly_id?
     name_changed?
   end
