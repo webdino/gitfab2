@@ -40,7 +40,7 @@ class Recipe < ActiveRecord::Base
   validates :name, presence: true, name_format: true
   validates :title, presence: true
 
-  paginates_per 10
+  paginates_per 12
 
   searchable do
     string :name, :title
