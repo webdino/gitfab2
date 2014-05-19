@@ -7,8 +7,10 @@
       ul
         - @recipe.errors.full_messages.each do |msg|
           li == msg
-  - if @owner.is_a?(User) && @owner.groups.any?
-    == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
+  - if @recipe.new_record? && @owner.is_a?(User) && @owner.groups.any?
+    #owner
+      'Project owner is
+      == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
@@ -58,10 +60,11 @@
       'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
 
   .buttons
-    == f.submit class: "btn"
-    - if @recipe.id.nil?
+    - if @recipe.new_record?
+      == f.submit value: "Create Project", class: "btn"
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
+      == f.submit value: "Update Project", class: "btn"
       == link_to "Cancel", [@owner, @recipe], class: "cancel-btn btn"
 
     / NOTE: temporary not shown

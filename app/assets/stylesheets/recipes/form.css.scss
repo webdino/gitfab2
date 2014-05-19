@@ -30,6 +30,18 @@
 }
 
 form.recipe-form {
+  #owner {
+    font-size: 18px;
+    select#recipe_group_id {
+      margin-bottom: 2px;
+      background: white;
+      font-family: helvetica, sans-serif;
+      font-size: 18px;
+      border: 1px solid black;
+      border-radius: 2px;
+    }
+  }
+
   input#recipe_title {
     width: 703px;
     font-size: 36px;
