@@ -43,7 +43,8 @@ class Recipe < ActiveRecord::Base
   paginates_per 12
 
   searchable do
-    string :name, :title
+    string :name, :title, :owner_type
+    integer :owner_id
     text :description
     ITEM_ASSOCS.each do |assoc|
       text assoc do
