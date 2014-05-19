@@ -11,18 +11,6 @@ module Gitfab::ActsAsItemInRecipe
 
     before_create ->{self.filename = "#{SecureRandom.uuid}.json" unless self.filename}
 
-    def to_path
-      File.join dir_path, self.filename
-    end
-
-    def photo_path
-      File.join dir_path, "photos", self.photo.file.filename
-    end
-
-    def dir_path
-      self.class.name.underscore.pluralize
-    end
-
     def dup_with_photo
       self.dup.tap{|item| item.photo = dup_photo if self.photo.present?}
     end

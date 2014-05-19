@@ -1,7 +1,6 @@
 class Recipe < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:name, :title, :description, :photo, :owner_id, :owner_type, :video_id]
-  COMMITABLE_ITEM_ASSOCS = [:statuses, :materials, :tools]
-  ITEM_ASSOCS = COMMITABLE_ITEM_ASSOCS + [:usages]
+  ITEM_ASSOCS = [:statuses, :materials, :tools, :usages]
 
   mount_uploader :photo, PhotoUploader
   include Gitfab::HasVideoOrPhoto
@@ -31,10 +30,7 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
-  before_update :rename_repo_name!, if: ->{self.name_changed?}
-  after_create :ensure_repo_exist!
   after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
-  after_destroy :destroy_repo!
 
   # TODO unique in owner
   validates :name, presence: true, name_format: true
@@ -72,25 +68,6 @@ class Recipe < ActiveRecord::Base
     self.owner_type = owner.class.name
   end
 
-  def repo
-    Rugged::Repository.new repo_path if File.exists? repo_path
-  end
-
-  def commit!
-    contents = [{file_path: "recipe.json", data: self.to_json}]
-    COMMITABLE_ITEM_ASSOCS.each do |dir|
-      items = self.send dir
-      items.each do |item|
-        contents << {file_path: item.to_path, data: item.to_json}
-        if item.photo.present?
-          contents << {file_path: item.photo_path, data: File.open(item.photo.path).read}
-        end
-      end
-    end
-    opts = {email: self.last_committer.try(:email), name: self.last_committer.try(:name)}
-    Gitfab::Shell.new.commit_to_repo! self.repo.path, contents, opts
-  end
-
   def dup_with_photo
     self.dup.tap{|item| item.photo = dup_photo if self.photo.present?}
   end
@@ -103,8 +80,11 @@ class Recipe < ActiveRecord::Base
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self
-        recipe.name = Gitfab::Shell.new
-          .copy_repo! self.repo.path, owner.dir_path, recipe.name
+
+        names = owner.recipes.pluck :name
+        _name = recipe.name.dup
+        _name << "_" while names.include? _name
+        recipe.name = _name
         recipe.save
       end
     end
@@ -140,24 +120,6 @@ class Recipe < ActiveRecord::Base
   end
 
   private
-  def ensure_repo_exist!
-    Gitfab::Shell.new.add_repo! repo_path
-  end
-
-  def repo_path
-    "#{self.owner.dir_path}/#{self.name}.git"
-  end
-
-  def destroy_repo!
-    Gitfab::Shell.new.destroy_repo! self.repo.path
-  end
-
-  def rename_repo_name!
-    old_name, new_name = self.name_change
-    old_path = "#{self.owner.dir_path}/#{old_name}.git"
-    Gitfab::Shell.new.move_repo! old_path, self.owner.dir_path, self.name
-  end
-
   def reassoc_ways
     Way.transaction do
       self.ways.where("ways.reassoc_token is not null")
@@ -180,5 +142,4 @@ class Recipe < ActiveRecord::Base
     ActionDispatch::Http::UploadedFile.new filename: self.photo.file.filename,
       type: self.photo.file.content_type, tempfile: File.open(self.photo.path)
   end
-
 end

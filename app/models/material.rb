@@ -3,7 +3,6 @@ class Material < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:id, :name, :url, :quantity, :size, :description, :photo, :_destroy]
 
   include Gitfab::ActsAsItemInRecipe
-
   
   belongs_to :status
 end

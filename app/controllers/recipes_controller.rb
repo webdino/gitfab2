@@ -5,7 +5,6 @@ class RecipesController < ApplicationController
   before_action :build_recipe, only: [:new, :create]
   before_action :load_recipe, only: [:show, :edit, :update, :destroy]
   before_action :set_last_committer, only: [:create, :update]
-  after_action :commit, only: [:create, :update], unless: ->{@recipe.errors.any? || params[:base_recipe_id]}
 
   authorize_resource
 
@@ -118,12 +117,7 @@ class RecipesController < ApplicationController
     [:id, :photo_cache]
   end
 
-  def commit
-    @recipe.commit!
-  end
-
   def set_last_committer
     @recipe.last_committer = current_user
   end
-
 end

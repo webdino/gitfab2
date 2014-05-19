@@ -5,11 +5,6 @@ describe Usage do
   let(:recipe){FactoryGirl.create :user_recipe}
   let(:usage){FactoryGirl.create :usage, recipe: recipe}
 
-  describe "#to_path" do
-    subject{usage.to_path}
-    it{should be_a String}
-  end
-
   describe "on after_update" do
     describe "clears video_id field when a photo was uploaded" do
       let(:usage_having_video_id) do

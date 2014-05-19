@@ -3,7 +3,6 @@ class Tool < ActiveRecord::Base
   UPDATABLE_COLUMNS = [:name, :url, :description, :photo]
 
   include Gitfab::ActsAsItemInRecipe
-
   
   belongs_to :way
 end

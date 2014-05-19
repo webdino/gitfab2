@@ -5,11 +5,6 @@ describe Status do
   let(:recipe){FactoryGirl.create :user_recipe}
   let(:status){FactoryGirl.create :status, recipe: recipe}
 
-  describe "#to_path" do
-    subject{status.to_path}
-    it{should be_a String}
-  end
-
   describe "on after_update" do
     describe "clears video_id field when a photo was uploaded" do
       let(:status_having_video_id) do
