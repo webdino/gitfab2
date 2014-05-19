@@ -39,7 +39,7 @@ section#recipes-utils
           'updated date
           == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
       #go-to-index
-        == link_to "#{@recipe.owner.name}'s Recipe List", recipes_path(owner_name: @owner.name), class: "btn"
+        == link_to "#{@recipe.owner.name}'s Project List", recipes_path(owner_name: @owner.name), class: "btn"
 
 
     / NOTE: now shown temporary

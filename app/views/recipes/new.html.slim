@@ -1,6 +1,3 @@
-- content_for :utils do
-  == render "recipes/utils", recipe: @recipe, owner: @owner, available_operations: [:save]
-
 main#recipes-new
   == render "form"
 #markup-help data-css-path = asset_path("recipe.css")
