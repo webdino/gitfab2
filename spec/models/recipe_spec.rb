@@ -210,7 +210,7 @@ describe Recipe do
         recipe.statuses.create
         recipe.run_callbacks :commit
       end
-      subject{recipe.statuses.last}
+      subject{recipe.statuses.sorted_by_position.last}
       it{should have(0).ways}
     end
     context "when the last status which has Way" do
@@ -221,7 +221,7 @@ describe Recipe do
         status2.ways.create
         recipe.run_callbacks :commit
       end
-      subject{recipe.statuses.last}
+      subject{recipe.statuses.sorted_by_position.last}
       it{should have(0).ways}
     end
   end
