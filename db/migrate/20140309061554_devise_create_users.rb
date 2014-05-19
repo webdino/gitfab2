@@ -31,6 +31,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       # t.datetime :locked_at
 
       t.string :name
+      t.string :fullname
       t.string :avatar
       t.integer :group_id
       t.string :slug
@@ -43,6 +44,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
     end
 
     add_index :users, :name,                 :unique => true
+    add_index :users, :fullname
     add_index :users, [:provider, :uid],     :unique => true
     add_index :users, :email,                :unique => true
     add_index :users, :reset_password_token, :unique => true

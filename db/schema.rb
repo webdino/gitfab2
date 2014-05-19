@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "name"
+    t.string   "fullname"
     t.string   "avatar"
     t.integer  "group_id"
     t.string   "slug"
@@ -259,6 +260,7 @@ ActiveRecord::Schema.define(version: 20140414013837) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["fullname"], name: "index_users_on_fullname", using: :btree
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
