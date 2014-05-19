@@ -208,18 +208,23 @@
         height: auto;
         min-height: 40px;
         position: relative;
-        a {
-          text-decoration: none;
-        }
-        .title {
+        span.title {
           margin: 20px 0 20px 0px;
           width: 240px;
           font-size: 32px;
           font-weight: 900;
+          a {
+            color: #4183C4;
+          }
+          &:hover{
+            color: #4183C4;
+            text-decoration: underline;
+          }
         }
         .star {
           float: right;
           font-size: 32px;
+          color: black;
         }
         .avatar-thumb {
           display: none;
