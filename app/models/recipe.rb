@@ -168,7 +168,7 @@ class Recipe < ActiveRecord::Base
   end
 
   def ensure_terminate_making_flow_with_a_status
-    self.statuses.create if self.statuses.last.ways.any?
+    self.statuses.create if self.statuses.sorted_by_position.last.ways.any?
   end
 
   def should_generate_new_friendly_id?
