@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  FULLTEXT_SEARCHABLE_COLUMNS = [:name]
+  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname]
   UPDATABLE_COLUMNS = [:name, :avatar]
 
   extend FriendlyId
@@ -84,7 +84,8 @@ class User < ActiveRecord::Base
         user.uid = auth.uid
         user.email = auth.info.email
         user.password = Devise.friendly_token[0, 20]
-        user.name = auth.info.name
+        user.name = auth.info.nickname
+        user.fullname = auth.info.name
         user.remote_avatar_url = auth.info.image
       end
     end
