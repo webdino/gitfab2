@@ -1,11 +1,11 @@
 @import "mixins/clearfix.css.scss";
 
 #home-index {
+  width: 1000px;
   margin-top:30px;
   font-family: helvetica, sans-serif;
 
   header {
-    
   }
   h1 {
     font-size: 2em;
@@ -19,6 +19,9 @@
     float: left;
     margin: 40px 0 20px 20px;
     color: #FFF;
+    &:nth-of-type(3n+1) {
+      margin-left: 0;
+    }
     .cover {
       height: 240px;
       background-size: cover;
