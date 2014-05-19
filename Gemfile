@@ -18,8 +18,8 @@ gem "capistrano", "~> 3.1.0"
 gem "capistrano-rvm"
 gem "capistrano-bundler"
 gem "capistrano-rails"
+gem "devise"
 gem "rugged"
-gem "devise_browserid_authenticatable"
 gem "therubyracer"
 gem "gitolite"
 gem "carrierwave"
@@ -42,6 +42,7 @@ gem "acts_as_commentable"
 gem "acts_as_votable", "~> 0.8.0"
 gem "paranoia", github: "radar/paranoia", branch: "rails4"
 gem "nokogiri"
+gem "omniauth-github"
 
 group :doc do
   gem "sdoc", require: false

@@ -1,10 +1,4 @@
 main#home-index
-  header
-    - if user_signed_in?
-      == link_to "Dashboard", [current_user]
-    - else
-      == link_to "Sign in", "#", class: "persona-login-button"
-
   ul.recipe-list
     - @recipes.each do |recipe|
       li.recipe-item

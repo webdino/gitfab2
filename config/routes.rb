@@ -1,4 +1,5 @@
 Gitfab2::Application.routes.draw do
+  root "home#index"
 
   concern :owner do
     resources :recipes do
@@ -18,8 +19,7 @@ Gitfab2::Application.routes.draw do
     match "su" => "home#su", via: :post
   end
 
-  devise_for :users, controllers: {sessions: "sessions"}
-  root "home#index"
+  devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}
   match "home" => "home#proxy_to_userhome", via: :get
   match "search" => "global_recipes#index", via: :get
 

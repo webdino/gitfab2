@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
   friendly_id :name, use: [:slugged, :finders]
   acts_as_voter
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  devise :omniauthable, omniauth_providers: [:github]
+  devise :database_authenticatable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
   has_many :recipes, as: :owner, dependent: :destroy
@@ -22,11 +22,10 @@ class User < ActiveRecord::Base
 
   after_save :ensure_dir_exist!
 
-  validates :email, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :name, presence: true, if: ->{self.persisted?}
   validates :name, unique_owner_name: true,
     name_format: true, if: ->{self.name.present?}
-  validates :email, uniqueness: true
 
   def dir_path
     return nil unless self.name.present?
@@ -66,6 +65,28 @@ class User < ActiveRecord::Base
     define_method "is_#{role}_of?" do |group|
       return false unless group
       group.send(role.to_s.pluralize).include? self
+    end
+  end
+
+  def self.new_with_session params, session
+    super.tap do |user|
+      data = session["devise.github_data"]
+      if data && data["extra"]["raw_info"] && user.email.blank?
+        user.email = data["email"]
+      end
+    end
+  end
+
+  class << self
+    def find_for_github_oauth auth
+      where(auth.slice :provider, :uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0, 20]
+        user.name = auth.info.name
+        user.remote_avatar_url = auth.info.image
+      end
     end
   end
 
