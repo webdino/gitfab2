@@ -31,7 +31,6 @@ class RecipesController < ApplicationController
   end
 
   def new
-    @recipe.fill_default_name_for! @owner
   end
 
   def edit
