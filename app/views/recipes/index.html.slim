@@ -6,10 +6,10 @@ section#recipes-index
       #name
         #screen-name
           == @owner.name
-      / TODO: userが@ownerをmanageできるときだけ #Edit 追加
-      #edit
-        #owner-edit-btn
-          == link_to "Edit #{@owner.class.name}", [:edit, @owner]
+      - if can? :manage, @owner
+        #edit
+          #owner-edit-btn
+            == link_to "Edit #{@owner.class.name}", [:edit, @owner]
 
       #joined-on
         #clock-icon
@@ -81,9 +81,9 @@ section#recipes-index
                 span#create-project.btn
                   == link_to "+Project", [:new, current_user, :recipe]
             - else
-              - if current_user.is_admin_of? @owner
-                span#create-group-project.btn
-                  == link_to "+Group Project", [:new, @owner, :recipe]
+              - if user_signed_in? && current_user.is_admin_of?(@owner)
+                  span#create-group-project.btn
+                    == link_to "+Group Project", [:new, @owner, :recipe]
 
           .recipes
             ul.recipe-list
