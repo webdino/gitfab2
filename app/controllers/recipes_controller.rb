@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
         end
       end.results
     else
-      @recipes = @owner.recipes
+      @recipes = @owner.recipes.order "id DESC"
     end
     render layout: "dashboard"
   end
