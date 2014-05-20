@@ -30,10 +30,11 @@ class Recipe < ActiveRecord::Base
 
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
+  after_initialize ->{self.name = SecureRandom.uuid}, if: ->{self.new_record?}
   after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
 
-  # TODO unique in owner
   validates :name, presence: true, name_format: true
+  validates :name, uniqueness: {scope: [:owner_id, :owner_type]}
   validates :title, presence: true
 
   paginates_per 12
@@ -88,15 +89,6 @@ class Recipe < ActiveRecord::Base
         recipe.save
       end
     end
-  end
-
-  def fill_default_name_for! user
-    suffix = 1
-    names = user.recipes.map &:name
-    while names.include? (candidate = "recipe#{suffix}") do
-      suffix += 1
-    end
-    self.name = candidate
   end
 
   def remove_unused_items!
