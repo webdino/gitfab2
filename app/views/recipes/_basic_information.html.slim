@@ -17,4 +17,4 @@ section#basic-information
       h1
         'Summary
       .text
-        == @recipe.description
+        == Sanitize.clean @recipe.description, Sanitize::Config::RELAXED
