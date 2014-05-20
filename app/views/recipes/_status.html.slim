@@ -8,7 +8,7 @@ li.status
     span.star
       == toggle_star_link_for item
     .description
-      == item.description
+      == Sanitize.clean item.description, Sanitize::Config::RELAXED
  
   .ways
     .arrow

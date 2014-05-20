@@ -7,5 +7,5 @@ li.usage
     p.star
       == toggle_star_link_for item
     p.description
-      == item.description
+      == Sanitize.clean item.description, Sanitize::Config::RELAXED
   == render "recipes/edit_usage_form", item: item
