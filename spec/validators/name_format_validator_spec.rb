@@ -16,7 +16,7 @@ describe NameFormatValidator do
     context "and starts with numeric" do
       let(:model){Validatable.new.tap{|v| v.name = "123_valid"}}
       subject{model.valid?}
-      it{should be_false}
+      it{should be_true}
     end
     context "and starts with underscore" do
       let(:model){Validatable.new.tap{|v| v.name = "_123valid"}}
