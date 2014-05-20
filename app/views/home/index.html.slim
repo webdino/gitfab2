@@ -2,14 +2,16 @@ main#home-index
   ul.recipe-list
     - @recipes.each do |recipe|
       li.recipe-item
-        article.recipe
-          == link_to recipe_path(recipe, owner_name: recipe.owner) do
-            p.cover style="background-image: url('#{recipe.photo.url}')"
-          span.summary
-            span.title
-              == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
-            span.description
-              == recipe.description
+        .photo
+          - if recipe.video_id.present?
+            iframe src="#{recipe.youtube_embed_url}"
+          - else
+            == link_to "", recipe_path(recipe, owner_name: recipe.owner.name), class: "recipe-photo", style: "background-image: url('#{recipe.photo.url}')"
+        span.summary
+          span.title
+            == link_to recipe.title, recipe_path(recipe, owner_name: recipe.owner.name)
+          span.description
+            == recipe.description
 
   footer
     == paginate @recipes

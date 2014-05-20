@@ -16,26 +16,39 @@
   }
   .recipe-item {
     width: 320px;
+    height: auto;
+    min-height: 300px;
     float: left;
     margin: 40px 0 20px 20px;
     color: #FFF;
     &:nth-of-type(3n+1) {
       margin-left: 0;
     }
-    .cover {
+    .photo {
       height: 240px;
-      background-size: cover;
-      background-position: center;
-      a {
+      iframe {
+        width: 320px;
+        height: 240px;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .recipe-photo {
         display: block;
+        width: 320px;
+        height: 240px;
         background-size: cover;
         background-position: center;
       }
     }
     .summary {
+      @include cf;
       display: block;
       padding-top: 8px;
       width: 320px;
+      height: auto;
+      min-height: 40px;
+      position: relative;
       a {
         color: #4183C4;
         text-decoration: none;
@@ -46,7 +59,7 @@
       }
       .title {
         margin: 20px 0 20px 0px;
-        width: 320px;
+        width: 240px;
         font-size:32px;
         font-weight: 900;
       }
@@ -54,7 +67,7 @@
         display: block;
         margin-top: 6px;
         font-size: 14px;
-        color: #000;
+        color: black;
       }
     }
   }
