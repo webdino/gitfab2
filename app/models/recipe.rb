@@ -32,6 +32,7 @@ class Recipe < ActiveRecord::Base
 
   after_initialize ->{self.name = SecureRandom.uuid}, if: ->{self.new_record?}
   after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
+  after_initialize :ensure_unique_name_in_owner!
 
   validates :name, presence: true, name_format: true
   validates :name, uniqueness: {scope: [:owner_id, :owner_type]}
@@ -81,11 +82,6 @@ class Recipe < ActiveRecord::Base
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self
-
-        names = owner.recipes.pluck :name
-        _name = recipe.name.dup
-        _name << "_" while names.include? _name
-        recipe.name = _name
         recipe.save
       end
     end
@@ -112,6 +108,11 @@ class Recipe < ActiveRecord::Base
   end
 
   private
+  def ensure_unique_name_in_owner!
+    names = self.owner.recipes.pluck :name
+    self.name << "_" while names.include? self.name
+  end
+
   def reassoc_ways
     Way.transaction do
       self.ways.where("ways.reassoc_token is not null")
