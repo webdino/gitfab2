@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   layout "home"
 
   def index
-    @recipes = Recipe.order("id DESC").page params[:page]
+    @recipes = Recipe.order("updated_at DESC").page params[:page]
   end
 
   def proxy_to_userhome
