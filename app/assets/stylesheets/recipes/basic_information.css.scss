@@ -59,9 +59,9 @@
     }
     .text {
       width: 210px;
-      height: 320px;
+      height: 312px;
       word-break: break-all;
-      overflow: hidden;
+      overflow-y: auto;
       p {
         width: 100%;
         margin-bottom: 4px;
