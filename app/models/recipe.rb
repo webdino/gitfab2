@@ -31,6 +31,7 @@ class Recipe < ActiveRecord::Base
   accepts_nested_attributes_for :materials, :tools, :statuses, allow_destroy: true
 
   after_commit ->{reassoc_ways; ensure_terminate_making_flow_with_a_status}
+  after_initialize :ensure_unique_name_in_owner!
 
   # TODO unique in owner
   validates :name, presence: true, name_format: true
@@ -80,11 +81,6 @@ class Recipe < ActiveRecord::Base
         recipe.materials = self.materials.collect{|material| material.dup_with_photo}
         recipe.tools = self.tools.collect{|tool| tool.dup_with_photo}
         recipe.orig_recipe = self
-
-        names = owner.recipes.pluck :name
-        _name = recipe.name.dup
-        _name << "_" while names.include? _name
-        recipe.name = _name
         recipe.save
       end
     end
@@ -120,6 +116,11 @@ class Recipe < ActiveRecord::Base
   end
 
   private
+  def ensure_unique_name_in_owner!
+    names = self.owner.recipes.pluck :name
+    self.name << "_" while names.include? self.name
+  end
+
   def reassoc_ways
     Way.transaction do
       self.ways.where("ways.reassoc_token is not null")
