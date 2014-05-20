@@ -7,6 +7,7 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <%= render "components/analytics" %>
     <%= render "layouts/header" %>
     <%= content_for?(:content) ? yield(:content) : yield %>
     <%= content_for?(:bottom) ? yield(:bottom) : nil %>
