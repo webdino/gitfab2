@@ -193,7 +193,7 @@
 
       $(document).on "click", ".input-video-url-btn", (event) ->
         event.preventDefault()
-        w.targetImageField = $(this).parents ".image-field"
+        $("main#recipes-edit").data "target-image-field", $(this).parents(".image-field")
         target = $(this).siblings ".video-form"
         $.fancybox target
 
@@ -202,14 +202,16 @@
         if $(this).hasClass "disabled"
           return false
         else
-          imageField = w.targetImageField
+          imageField = $("main#recipes-edit").data("target-image-field")
+          videoForm = $(imageField).find ".video-form"
+          video_id = $(videoForm).attr "data-video"
           if $(imageField).find("iframe").length < 1
             $(imageField).prepend "<iframe/>"
-          embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
+          embed_url = YOUTUBE_EMBED_URL_BASE + video_id
           $(imageField).find("iframe").attr "src", embed_url
-          $(this).parents(".video-form").find(".video-id-field").val w.videoIdForItem
-          w.videoIdForItem = ""
-          w.targetImageField = ""
+          $(this).parents(".video-form").find(".video-id-field").val video_id
+          $(videoForm).attr "data-video", ""
+          $("main#recipes-edit").data "target-image-field", ""
           $.fancybox.close()
 
       $(document).on "click", ".video-form-buttons .cancel-btn", (event) ->
@@ -232,22 +234,22 @@
 
       getVideoForItems = ->
         url = $(this).val()
-        if w.previous_url != url
-          videoForm = $(this).closest ".video-form"
-          w.previous_url = url
-          if url.length > YOUTUBE_URL_MIN_LENGTH
-            if matched = url.match YOUTUBE_WATCH_URL_REGEXP
-              w.videoIdForItem = matched[VIDEOID_MATCH_INDEX]
-              embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
-              $(videoForm).find("iframe.video-form-preview").attr "src", embed_url
-              $(videoForm).find(".caution").css "display", "none"
-              $(videoForm).find(".ok-btn").removeClass "disabled"
-            else
-              $(videoForm).find(".caution").text "Invalid YouTube URL"
-              disableVideoSubmitButtonForItems()
+        videoForm = $(this).closest ".video-form"
+        w.previous_url = url
+        if url.length > YOUTUBE_URL_MIN_LENGTH
+          if matched = url.match YOUTUBE_WATCH_URL_REGEXP
+            video_id = matched[VIDEOID_MATCH_INDEX]
+            $(videoForm).attr "data-video", video_id
+            embed_url = YOUTUBE_EMBED_URL_BASE + video_id
+            $(videoForm).find("iframe.video-form-preview").attr "src", embed_url
+            $(videoForm).find(".caution").css "display", "none"
+            $(videoForm).find(".ok-btn").removeClass "disabled"
           else
-            $(videoForm).find("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+            $(videoForm).find(".caution").text "Invalid YouTube URL"
             disableVideoSubmitButtonForItems()
+        else
+          $(videoForm).find("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+          disableVideoSubmitButtonForItems()
 
       $(document).on "keyup", "input.youtube-url-input", getVideoForItems
       $(document).on "change", "input.youtube-url-input", getVideoForItems
