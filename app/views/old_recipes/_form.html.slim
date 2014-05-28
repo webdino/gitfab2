@@ -1,0 +1,253 @@
+== nested_form_for [@owner, @recipe], html: {class: "recipe-form"} do |f|
+  - if @recipe.errors.any?
+    #error_explanation
+      h2
+        == pluralize(@recipe.errors.count, "error")
+        'prohibited this user from being saved:
+      ul
+        - @recipe.errors.full_messages.each do |msg|
+          li == msg
+  - if @recipe.new_record? && @owner.is_a?(User) && @owner.groups.any?
+    #owner
+      'Project owner is
+      == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
+  #basic-information
+    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
+    == f.text_field :name, placeholder: "Input_Repository_Name"
+    #project-summary
+      section.visual style="background-image: url('#{@recipe.photo}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
+        - if @recipe.video_id.present?
+          iframe src="#{@recipe.youtube_embed_url}"
+        .video-form-wrapper
+          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
+          == f.file_field :photo, title: "Upload Image", accept: "image", style: "display:none"
+          == f.hidden_field :photo_cache
+          == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox btn"
+          == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
+          #video-form
+            p
+              'Input a Youtube URL
+            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.video_id}", id: "youtube-url-input"
+            == f.hidden_field :video_id, id: "video-id-field"
+            #caution
+              'Invalid YouTube URL
+            #video-form-preview-wrapper
+              iframe.video-form-preview src: #{f.object.video_id}
+            #video-form-buttons
+              == link_to "OK", "#", class: "ok-btn btn"
+              == link_to "Cancel", "#", class: "cancel-btn btn"
+      section.description
+        h1
+          'Summary
+        == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
+
+  - if @recipe.persisted?
+    /#materials
+    /  == f.fields_for :materials do |mf|
+    /    .material
+    /      == mf.file_field :photo
+    /      == mf.text_area :description
+    /      == mf.link_to_remove "Remove Material"
+    /  == f.link_to_add "Add Material", :materials
+
+    #making
+      == render "status_form", f: f
+
+  #filesize-caution
+    p
+      'File Size Limit Exceed on an upload (3MB).
+    p
+      'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
+
+  .buttons
+    - if @recipe.new_record?
+      == f.submit value: "Create Project", class: "btn"
+      == link_to "Cancel", :back, class: "cancel-btn btn"
+    - else
+      == f.submit value: "Update Project", class: "btn"
+      == link_to "Cancel", [@owner, @recipe], class: "cancel-btn btn"
+
+    / NOTE: temporary not shown
+    /hr
+
+    /  #tools
+    /    == f.fields_for :tools do |tf|
+    /      .tool
+    /        == tf.file_field :photo
+    /        == tf.text_field :name
+    /        == tf.text_area :description
+    /        == tf.link_to_remove "Remove Tool"
+    /    == f.link_to_add "Add Tool", :tools
+
+
+- content_for :bottom do
+  coffee:
+    $(".fancybox").fancybox
+      openEffect: "none"
+      closeEffect: "none"
+      wrapCSS: ".fork-popup"
+      helpers:
+        overlay:
+          css:
+            "background":"rgba(0, 0, 0, 0.2)"
+
+    $ ->
+      w = window
+      $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
+
+      $(document).on "click", "#save-btn", (event, data) ->
+        $('form#new_recipe').submit()
+
+      $(document).on "change", "select#recipe_group_id", (event) ->
+        $("#new_recipe").attr "action", $(this).val()
+
+
+      # TODO: refactoring Task #14460
+      # working with .visual image&video upload
+
+      $(document).on "click", "#photo-upload-btn", (event, data) ->
+        event.preventDefault()
+        $("input#recipe_photo").trigger "click"
+
+      $(document).on "change", "input#recipe_photo", (event, data, status) ->
+        file = event.target.files[0]
+        reader = new FileReader()
+        reader.onload = ->
+          $("section.visual").css "background-image", "url('#{reader.result}')"
+          $("section.visual iframe").attr "src",""
+          $("#photo-upload-btn").css "color","black"
+          $("#input-video-url-btn").css "color","black"
+        reader.readAsDataURL file
+
+      disableVideoSubmitButton = ->
+        $("#caution").css "display", "block"
+        $("iframe.video-form-preview").attr "src", ""
+        $(".ok-btn").addClass "disabled"
+
+      YOUTUBE_URL_MIN_LENGTH   = 41
+      YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
+      # TODO: constantize '11'
+      YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:www\.)?youtube.com\/watch\?v=([^&]{11,})(&\S*)?$/
+      VIDEOID_MATCH_INDEX      = 1
+      getVideo = ->
+        url = $(this).val()
+        if w.previous_url != url
+          w.previous_url = url
+          if url.length > YOUTUBE_URL_MIN_LENGTH
+            if matched = url.match YOUTUBE_WATCH_URL_REGEXP
+              w.videoId = matched[VIDEOID_MATCH_INDEX]
+              embed_url = YOUTUBE_EMBED_URL_BASE + w.videoId
+              $("iframe.video-form-preview").attr "src", embed_url
+              $("#caution").css "display", "none"
+              $(".ok-btn").removeClass "disabled"
+            else
+              $("#caution").text "Invalid YouTube URL"
+              disableVideoSubmitButton()
+          else
+            $("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+            disableVideoSubmitButton()
+
+      $(document).on "keyup", "input#youtube-url-input", getVideo
+      $(document).on "change", "input#youtube-url-input", getVideo
+
+      $(document).on "click", "#video-form-buttons .ok-btn", (event) ->
+        event.preventDefault()
+        if $(this).hasClass "disabled"
+          return false
+        else
+          if $("section.visual iframe").length < 1
+            $("section.visual").prepend "<iframe/>"
+          $("section.visual iframe").attr "src", $("iframe.video-form-preview").attr("src")
+          $("input#video-id-field").val w.videoId
+          $.fancybox.close()
+
+      $(document).on "click", "#video-form-buttons .cancel-btn", (event) ->
+        event.preventDefault()
+        $.fancybox.close()
+
+      $(document).on "click", "#remove-image-btn", (event) ->
+        event.preventDefault()
+        noImageUrl = $("section.visual").attr("data-no-image-url")
+        $("section.visual").css "background-image", noImageUrl
+        $("section.visual iframe").attr "src", ""
+        $("input#recipe_photo").val ""
+        $("input#video-id-field").val ""
+
+      # TODO: refactoring Task #14460
+      # working with status form & way form image&video upload
+
+      $(document).on "click", ".photo-upload-btn", (event) ->
+        event.preventDefault()
+        $(this).siblings(".file-field").trigger "click"
+
+      $(document).on "change", ".file-field", (event) ->
+        target = event.target
+        imageField = $(this).closest ".image-field"
+        file = target.files[0]
+        reader = new FileReader
+        reader.onload = ->
+          imageField.css "background-image", "url('#{reader.result}')"
+          $(imageField).find("iframe").attr "src",""
+
+        reader.readAsDataURL file
+
+      $(document).on "click", ".input-video-url-btn", (event) ->
+        event.preventDefault()
+        w.targetImageField = $(this).parents ".image-field"
+        target = $(this).siblings ".video-form"
+        $.fancybox target
+
+      $(document).on "click", ".video-form-buttons .ok-btn", (event) ->
+        event.preventDefault()
+        if $(this).hasClass "disabled"
+          return false
+        else
+          imageField = w.targetImageField
+          if $(imageField).find("iframe").length < 1
+            $(imageField).prepend "<iframe/>"
+          embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
+          $(imageField).find("iframe").attr "src", embed_url
+          $(this).parents(".video-form").find(".video-id-field").val w.videoIdForItem
+          w.videoIdForItem = ""
+          w.targetImageField = ""
+          $.fancybox.close()
+
+      $(document).on "click", ".video-form-buttons .cancel-btn", (event) ->
+        event.preventDefault()
+        $.fancybox.close()
+
+      $(document).on "click", ".image-field .remove-image-btn", (event) ->
+        event.preventDefault()
+        imageField = $(this).parents ".image-field"
+        noImageUrl = $(imageField).attr("data-no-image-url")
+        $(imageField).css "background-image", noImageUrl
+        $(imageField).find("iframe").attr "src", ""
+        $(imageField).find(".file-field").val ""
+        $(imageField).find(".video-form .video-id-field").val ""
+
+      disableVideoSubmitButtonForItems = ->
+        $(".caution").css "display", "block"
+        $("iframe.video-form-preview").attr "src", ""
+        $(".ok-btn").addClass "disabled"
+
+      getVideoForItems = ->
+        url = $(this).val()
+        if w.previous_url != url
+          videoForm = $(this).closest ".video-form"
+          w.previous_url = url
+          if url.length > YOUTUBE_URL_MIN_LENGTH
+            if matched = url.match YOUTUBE_WATCH_URL_REGEXP
+              w.videoIdForItem = matched[VIDEOID_MATCH_INDEX]
+              embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
+              $(videoForm).find("iframe.video-form-preview").attr "src", embed_url
+              $(videoForm).find(".caution").css "display", "none"
+              $(videoForm).find(".ok-btn").removeClass "disabled"
+            else
+              $(videoForm).find(".caution").text "Invalid YouTube URL"
+              disableVideoSubmitButtonForItems()
+          else
+            $(videoForm).find("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
+            disableVideoSubmitButtonForItems()
+
+      $(document).on "keyup", "input.youtube-url-input", getVideoForItems
+      $(document).on "change", "input.youtube-url-input", getVideoForItems

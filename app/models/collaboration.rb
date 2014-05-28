@@ -1,7 +1,9 @@
-class Collaboration < ActiveRecord::Base
+class Collaboration
+  include Mongoid::Document
+  include Mongoid::Timestamps
   
-  belongs_to :user
-  belongs_to :recipe
+  embedded_in :user
+  belongs_to :project
 
-  validates :user, :recipe, presence: true
+  validates :project, presence: true
 end

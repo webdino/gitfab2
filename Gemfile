@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-gem "rails", "4.1.0"
+gem "rails", "4.0.0"
 gem "sass-rails", "~> 4.0.0"
 gem "uglifier", ">= 1.3.0"
 gem "coffee-rails", "~> 4.0.0"
@@ -12,7 +12,6 @@ gem "resque-pool"
 gem "rails_config"
 gem "sanitize"
 gem "mini_magick"
-gem "mysql2"
 gem "unicorn"
 gem "capistrano", "~> 3.1.0"
 gem "capistrano-rvm"
@@ -25,14 +24,13 @@ gem "gitolite"
 gem "carrierwave"
 gem "slim-rails"
 gem "rails-config"
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+gem "sunspot_rails"
+gem "sunspot_solr"
+gem "sunspot_mongoid2"
 gem "remotipart"
-gem "acts_as_list"
 gem "progress_bar"
 gem "cancancan"
 gem "nested_form"
-gem "friendly_id", "~> 5.0.0"
 gem "tinymce-rails"
 gem "tinymce-rails-imageupload", "~> 4.0.0.beta"
 gem "jquery-ui-rails"
@@ -44,6 +42,13 @@ gem "paranoia", github: "radar/paranoia", branch: "rails4"
 gem "nokogiri"
 gem "omniauth-github"
 
+gem "mongoid", "~> 4.0.0rc1"
+gem "mongoid_slug"
+gem "mongoid_orderable"
+gem "bson_ext"
+gem "friendly_id", "~> 5.0.0"
+gem "carrierwave-mongoid", require: "carrierwave/mongoid"
+
 group :doc do
   gem "sdoc", require: false
 end
@@ -51,8 +56,10 @@ end
 group :development, :test do
   gem "spring"
   gem "spring-commands-rspec"
-  gem "rspec-rails"
+  gem "rspec-rails", github: 'rspec/rspec-rails'
   gem "guard-rspec"
+  gem "rspec-collection_matchers"
+  gem "mongoid-rspec"
   gem "factory_girl_rails"
   gem "database_cleaner"
   gem "rb-fsevent"
@@ -60,6 +67,5 @@ group :development, :test do
   gem "pry-rails"
   gem "pry-debugger"
   gem "better_errors"
-  gem "rails-erd"
   gem "resque-web", require: "resque_web"
 end

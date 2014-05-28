@@ -1,18 +1,19 @@
-class Comment < ActiveRecord::Base
-  UPDATABLE_COLUMNS = [:title, :comment, :commentable_id, :commentable_type]
+class Comment
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Contributable
+  include Likable
 
-  include ActsAsCommentable::Comment
-
-  acts_as_votable
-  
-  belongs_to :commentable, polymorphic: true
+  belongs_to :user
+  embedded_in :commentable, polymorphic: true
 
   scope :created_at_desc, ->{order "created_at DESC"}
 
-  # NOTE: install the acts_as_votable plugin if you
-  # want user to vote on the quality of comments.
-  #acts_as_voteable
+  field :body
 
-  # NOTE: Comments belong to a user
-  belongs_to :user
+  class << self
+    def updatable_columns
+      [:body]
+    end
+  end
 end

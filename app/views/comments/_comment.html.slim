@@ -9,7 +9,7 @@ li.comment
     span.star
       == toggle_star_link_for comment
   .comment-body
-    == Sanitize.clean comment.comment, Sanitize::Config::RELAXED
+    == Sanitize.clean comment.body, Sanitize::Config::RELAXED
   - if can? :destroy, comment
     .comment-link
       == link_to "delete", comment, method: :delete, remote: true, class: "delete-btn"

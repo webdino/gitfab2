@@ -1,0 +1,7 @@
+div class="card #{card.type.underscore.split('/').last}"
+  .figures
+    ul
+      - card.figures.each do |figure|
+        == image_tag figure
+  .description
+    == card.description

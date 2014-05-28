@@ -1,0 +1,6 @@
+.fork-destination
+  p.dest-name
+    == owner.name
+  .fork-btn style="background-image: url('#{owner.avatar.small}')"
+    == form_for [owner, owner.recipes.build] do |f|
+      == hidden_field_tag :base_recipe_id, recipe.id

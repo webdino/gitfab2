@@ -1,4 +1,4 @@
-== nested_form_for [@owner, @recipe], html: {class: "recipe-form"} do |f|
+== nested_form_for @recipe, url: project_recipe_path(project_id: @project.id, owner_name: @owner.name), method: :patch, html: {class: "recipe-form"} do |f|
   - if @recipe.errors.any?
     #error_explanation
       h2
@@ -7,51 +7,10 @@
       ul
         - @recipe.errors.full_messages.each do |msg|
           li == msg
-  - if @recipe.new_record? && @owner.is_a?(User) && @owner.groups.any?
-    #owner
-      'Project owner is
-      == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @recipe])]}, selected: url_for([current_user,@recipe])
-  #basic-information
-    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
-    == f.text_field :name, placeholder: "Input_Repository_Name"
-    #project-summary
-      section.visual style="background-image: url('#{@recipe.photo}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
-        - if @recipe.video_id.present?
-          iframe src="#{@recipe.youtube_embed_url}"
-        .video-form-wrapper
-          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
-          == f.file_field :photo, title: "Upload Image", accept: "image", style: "display:none"
-          == f.hidden_field :photo_cache
-          == link_to "Input YouTube URL…", "#video-form", id: "input-video-url-btn", class: "fancybox btn"
-          == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
-          #video-form
-            p
-              'Input a Youtube URL
-            == text_field_tag :url_input, "http://www.youtube.com/watch?v=#{@recipe.video_id}", id: "youtube-url-input"
-            == f.hidden_field :video_id, id: "video-id-field"
-            #caution
-              'Invalid YouTube URL
-            #video-form-preview-wrapper
-              iframe.video-form-preview src: #{f.object.video_id}
-            #video-form-buttons
-              == link_to "OK", "#", class: "ok-btn btn"
-              == link_to "Cancel", "#", class: "cancel-btn btn"
-      section.description
-        h1
-          'Summary
-        == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
 
-  - if @recipe.persisted?
-    /#materials
-    /  == f.fields_for :materials do |mf|
-    /    .material
-    /      == mf.file_field :photo
-    /      == mf.text_area :description
-    /      == mf.link_to_remove "Remove Material"
-    /  == f.link_to_add "Add Material", :materials
-
-    #making
-      == render "status_form", f: f
+  == f.fields_for :states do |sf|
+    == sf.text_field :description
+  == f.link_to_add "Add a State", :states
 
   #filesize-caution
     p
@@ -60,12 +19,12 @@
       'You have to divide the file uploading or have to change the uploaded files on this session to less size ones.
 
   .buttons
-    - if @recipe.new_record?
+    - if @project.new_record?
       == f.submit value: "Create Project", class: "btn"
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
       == f.submit value: "Update Project", class: "btn"
-      == link_to "Cancel", [@owner, @recipe], class: "cancel-btn btn"
+      == link_to "Cancel", project_recipe_path(project_id: @project.id, owner_name: @owner.name), class: "cancel-btn btn"
 
     / NOTE: temporary not shown
     /hr

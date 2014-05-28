@@ -1,0 +1,51 @@
+#recipe-cards
+  ul
+    - @recipe.recipe_cards.ordered_by_position.each do |card|
+      li style="border: 2px solid #000"
+        == form_for Recipe.new.tap{|r| r.recipe_cards.build}, url: project_recipe_path(owner_name: @owner.name, project_id: @project.name), method: :patch, remote: true do |f|
+          == f.fields_for :recipe_cards, card do |cf|
+            == cf.fields_for :derivatives, cf.object.derivatives.build do |df|
+              == df.text_field :description
+          == f.submit :ok
+        dl
+          dt
+            'card description
+          dd
+            == card.description
+          dd
+            - card.figures.each do |figure|
+              == image_tag figure.content
+          dt
+            'card type
+          dd
+            == card.dc_type
+          dt
+            'annotations
+          dd
+            ul
+              - card.annotations.each do |ann|
+                li == ann.description
+          dd
+            ul
+              - card.derivatives.each do |d_card|
+                li == d_card.description
+                li
+
+  == form_for @recipe, url: project_recipe_path(owner_name: @owner.name, project_id: @project.name), method: :patch, remote: true do |f|
+    == f.fields_for :recipe_cards, f.object.recipe_cards do |cf|
+      == cf.hidden_field :position
+  hr
+  == nested_form_for Recipe.new.tap{|r| r.recipe_cards.build}, url: project_recipe_path(owner_name: @owner.name, project_id: @project.name), method: :patch, remote: true do |f|
+    == f.fields_for :recipe_cards, f.object.recipe_cards do |cf|
+      == cf.select :_type, [["State", Card::State.name], ["Transition", Card::Transition.name]]
+      == cf.text_field :description
+      == cf.fields_for :figures do |ff|
+        == ff.file_field :content
+        == ff.file_field :video_id
+      == cf.link_to_add "Add a figure", :figures
+      == cf.fields_for :annotations, cf.object.annotations do |af|
+        == af.text_field :description
+      == cf.link_to_add "Add an annotation", :annotations
+    == f.submit :ok
+
+

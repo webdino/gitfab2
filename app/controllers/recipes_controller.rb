@@ -1,122 +1,46 @@
 class RecipesController < ApplicationController
-  layout "recipe"
+  layout "project"
 
   before_action :load_owner
-  before_action :build_recipe, only: [:new, :create]
-  before_action :load_recipe, only: [:show, :edit, :update, :destroy]
-  before_action :set_last_committer, only: [:create, :update]
+  before_action :load_project
+  before_action :load_recipe
 
-  authorize_resource
-
-  def index
-    if q = params[:q]
-      @recipes = @owner.recipes.solr_search do
-        fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
-        case params[:type]
-        when "own"
-          with :owner_id, params[:user_id]
-        when "contributed"
-          # TODO: Implement
-        when "starred"
-          # TODO: Implement
-        end
-      end.results
-    else
-      @recipes = @owner.recipes.order "updated_at DESC"
-    end
-    render layout: "dashboard"
-  end
+  #authorize_resource
 
   def show
   end
 
-  def new
-  end
-
-  def edit
-  end
-
-  def create
-    if params[:base_recipe_id]
-      self.fork
-    else
-      if @recipe.save
-        redirect_to edit_recipe_path(@recipe, owner_name: @recipe.owner.name), notice: "Recipe was successfully created."
-        @recipe.remove_unused_items!
-      else
-        render action: :new
-      end
-    end
-  end
-
-  def fork
-    base_recipe = Recipe.find params[:base_recipe_id]
-    @recipe = base_recipe.fork_for! @owner
-    if @recipe.save
-      redirect_to recipe_path(id: @recipe.name, owner_name: @owner.name), notice: "Recipe was successfully forked."
-    else
-      raise "error"
-      render action: :new
-    end
-  end
-
   def update
     if @recipe.update recipe_params
-      redirect_to recipe_path(id: @recipe.name, owner_name: @owner.name), notice: "Recipe was successfully updated."
-      @recipe.remove_unused_items!
+      render :update
     else
-      render action: :edit
+      render "errors/failed", status: 400
     end
-  end
-
-  def destroy
-    @recipe.destroy
-    redirect_to recipes_path owner_name: @owner.name
   end
 
   private
-  def build_recipe
-    @recipe = @owner.recipes.build recipe_params
-  end
-
-  def load_recipe
-    recipe_id = params[:id] || params[:recipe_id]
-    @recipe = @owner.recipes.find recipe_id
+  def recipe_params
+    if params[:recipe]
+      w_list = Card::RecipeCard.updatable_columns
+      w_list << {derivatives_attributes: Card::RecipeCard.updatable_columns}
+      w_list << {annotations_attributes: Card::Annotation.updatable_columns}
+      params.require(:recipe)
+        .permit recipe_cards_attributes: w_list
+    end
   end
 
   def load_owner
     if params[:owner_name]
-      @owner ||= User.find_by slug: params[:owner_name]
-      @owner ||= Group.find_by slug: params[:owner_name]
-    elsif params[:user_id]
-      @owner = User.find params[:user_id]
-    elsif params[:group_id]
-      @owner = Group.find params[:group_id]
+      @owner ||= User.find params[:owner_name]
+      @owner ||= Group.find params[:owner_name]
     end
   end
 
-  def recipe_params
-    if params[:recipe]
-      params_for_tools     = Tool::UPDATABLE_COLUMNS   + [:id, :_destroy]
-      params_for_usages    = Usage::UPDATABLE_COLUMNS  + [:id, :_destroy]
-      params_for_materials = Tool::UPDATABLE_COLUMNS   + [:id, :_destroy]
-      params_for_ways      = Way::UPDATABLE_COLUMNS    + [:id, :_destroy]
-      params_for_statuses  = Status::UPDATABLE_COLUMNS + [:id, :_destroy, ways_attributes: params_for_ways]
-
-      params.require(:recipe)
-        .permit Recipe::UPDATABLE_COLUMNS + additional_params + [
-          tools_attributes: params_for_tools,
-          usages_attributes: params_for_usages,
-          statuses_attributes: params_for_statuses
-        ]
-    end
+  def load_project
+    @project = @owner.projects.find params[:project_id]
   end
 
-  def additional_params
-    [:id, :photo_cache]
-  end
-
-  def set_last_committer
-    @recipe.last_committer = current_user
+  def load_recipe
+    @recipe = @project.recipe
   end
 end

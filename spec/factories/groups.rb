@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :group do |group|
-    name {"group_#{SecureRandom.hex 10}"}
+    name {"group#{SecureRandom.hex 10}"}
   end
 end

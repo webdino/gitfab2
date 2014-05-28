@@ -6,7 +6,7 @@ development:
   pool: 5
   username: root
   password: root
-  socket: /var/lib/mysql/mysql.sock
+  socket: /var/run/mysqld/mysqld.sock
 
 redis:
   host: localhost
@@ -23,7 +23,7 @@ test:
   pool: 5
   username: root
   password: root
-  socket: /var/lib/mysql/mysql.sock
+  socket: /var/run/mysqld/mysqld.sock
 
 redis:
   host: localhost

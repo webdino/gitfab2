@@ -1,0 +1,59 @@
+section#recipes-utils
+  section#tooltips
+    / NOTE: now shown temporary
+    / - if can? :manage, @recipe
+    /   - if available_operations.include? :save
+    /     #save-btn
+    /       == link_to "Save Project", "", title: "Save button"
+    /   - if available_operations.include? :delete
+    /     #delete-btn
+    /       == link_to "Delete Project", [@owner, :recipes], title: "Delete Project"
+    /   - if available_operations.include? :post
+    /     #add-journal
+    /       == link_to "New Journal", [:new, current_user, @recipe, :post], id: "add-journal-btn"
+    - if available_operations.include? :slide
+      #slide-show-button
+        == link_to "", "#", id: "slideshow-btn"
+    - if available_operations.include? :fork
+      #fork-button
+        == link_to "", "#fork-destinations", class: "fancybox"
+      #fork-destinations
+        - if signed_in?
+          == render "fork_destination", owner: current_user, project: @project
+          - current_user.groups.each do |group|
+            - if can? :manage, group
+              == render "fork_destination", owner: group, project: @project
+
+  - if @recipe.persisted?
+    section#user-info
+      .owner
+        == link_to image_tag(@owner.avatar), projects_path(owner_name: @owner.name), class: "thumbnail"
+        == link_to @owner.name, projects_path(owner_name: @owner.name), class: "screen-name"
+      - if can? :manage, @recipe
+        == link_to "+ Add collaborator", project_collaborations_path(owner_name: @owner.name, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
+      .timestamps
+        time#created-datetime datetime = @project.created_at
+          'created date
+          == @project.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+        time#last-updated-datetime datetime = @project.updated_at
+          'updated date
+          == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+      #go-to-index
+        == link_to "#{@project.owner.name}'s Project List", projects_path(owner_name: @owner.name), class: "btn"
+
+
+    / NOTE: now shown temporary
+    / section#tool-options
+    /   h1
+    /     'Tool Options
+    / - if available_operations.include? :tag
+    /   section#tags
+    /     h1
+    /       'Tags
+    /     ul#tag-list.item-list
+    /       - @recipe.tags.each do |tag|
+    /         == render "tags/tag", tag: tag, recipe: @recipe
+    /     == render "recipes/tag_form", recipe: @recipe
+
+    / NOTE: now shown temporary
+    / section#related-projects

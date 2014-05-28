@@ -26,4 +26,7 @@ config/environments/*.local.yml
 
 /solr
 /log
+
+# Application files
 Session.vim
+_cho*

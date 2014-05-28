@@ -1,34 +1,30 @@
 require "spec_helper"
 
-describe GroupsController do
+describe GroupsController, type: :controller do
   disconnect_sunspot
   render_views
 
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
   let(:group){FactoryGirl.create :group}
-  let(:valid_attributes){{name: "group_#{SecureRandom.hex 10}"}}
 
-  before do
-
-  end
+  subject{response}
 
   describe "GET index" do
     before do
       sign_in user
       get :index
     end
-    it_behaves_like "success"
+    it{should render_template :index}
   end
 
   describe "GET show" do
     before do
       sign_in user
-      group.add_admin user
+      user.memberships.create group_id: group.id
       get :show, id: group.id
     end
-    it_behaves_like "success"
-    it_behaves_like "render template", "show"
+    it{should render_template :show}
   end
 
   describe "GET new" do
@@ -36,8 +32,7 @@ describe GroupsController do
       sign_in user
       get :new
     end
-    it_behaves_like "success"
-    it_behaves_like "render template", "new"
+    it{should render_template :new}
   end
 
   describe "POST create" do
@@ -46,46 +41,33 @@ describe GroupsController do
       post :create, group: group_params
     end
     context "with valid params" do
-      let(:group_params){valid_attributes}
-      it_behaves_like "redirected"
+      let(:group_params){FactoryGirl.build(:group).attributes}
+      it{should redirect_to [user, :memberships]}
     end
     context "with invalid params" do
       let(:group_params){{name: nil}}
-      it_behaves_like "success"
-      it_behaves_like "render template", "new"
+      it{should render_template :new}
     end
   end
 
   describe "GET edit" do
-    describe "as an admin" do
-      before do
-        sign_in user
-        group.add_admin user
-        get :edit, id: group.id
-      end
-      it_behaves_like "success"
-      it_behaves_like "render template", "edit"
+    before do
+      sign_in user
+      user.memberships.create group_id: group.id
+      get :edit, id: group.id
     end
-    describe "as an editor" do
-      before do
-        sign_in other
-        group.add_admin user
-        group.members << other
-        get :edit, id: group.id
-      end
-      it_behaves_like "unauthorized"
-    end
+    it{should render_template :edit}
   end
 
   describe "PATCH update" do
+    let(:group_params){FactoryGirl.build(:group).attributes}
     describe "as an admin" do
       before do
         sign_in user
-        group.add_admin user
+        user.memberships.create group_id: group.id
         patch :update, id: group.id, group: group_params
       end
       context "with valid params" do
-        let(:group_params){valid_attributes}
         it_behaves_like "redirected"
       end
       context "with invalid params" do
@@ -96,11 +78,11 @@ describe GroupsController do
     end
     describe "as an editor" do
       before do
-        group.add_admin user
+        user.memberships.create group_id: group.id
         @orig_group = group.dup
         sign_in other
-        group.members << other
-        patch :update, id: group.id, group: valid_attributes
+        other.memberships.create group_id: group.id
+        patch :update, id: group.id, group: group_params
       end
       it_behaves_like "unauthorized"
     end
@@ -110,7 +92,7 @@ describe GroupsController do
     describe "as an admin" do
       before do
         sign_in user
-        group.add_admin user
+        user.memberships.create group_id: group.id
         delete :destroy, id: group.id
       end
       it_behaves_like "redirected"
@@ -118,8 +100,8 @@ describe GroupsController do
     describe "as an editor" do
       before do
         sign_in other
-        group.add_admin user
-        group.members << other
+        user.memberships.create group_id: group.id
+        other.memberships.create group_id: group.id
         delete :destroy, id: group.id
       end
       it_behaves_like "unauthorized"

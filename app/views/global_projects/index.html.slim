@@ -1,0 +1,7 @@
+h1
+  'projects#index
+
+ul
+  - @projects.each do |project|
+    li
+      == link_to project.title, project_path(project, owner_name: project.owner.name)
