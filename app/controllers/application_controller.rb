@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Gitfab::ErrorHandling
+  include ErrorHandling
   handle_as_unauthorized CanCan::AccessDenied
 
   protect_from_forgery with: :exception

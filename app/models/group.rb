@@ -1,32 +1,30 @@
-class Group < ActiveRecord::Base
+class Group
   FULLTEXT_SEARCHABLE_COLUMNS = [:name]
   UPDATABLE_COLUMNS = [:name, :avatar]
 
-  extend FriendlyId
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Slug
+  include ProjectOwner
 
-  friendly_id :name, use: [:slugged, :finders]
   mount_uploader :avatar, AvatarUploader
 
-  has_many :memberships, foreign_key: :group_id
-  has_many :members, through: :memberships, source: :user
-  has_many :recipes, as: :owner, dependent: :destroy
+  field :name
+  field :avatar
+  slug :name
+
+  #has_many :recipes, as: :owner, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true,
     unique_owner_name: true, name_format: true
 
-  Membership::ROLE.keys.each do |role|
-    define_method role.to_s.pluralize do
-      self.members.joins(:memberships)
-        .where "memberships.role" => Membership::ROLE[role]
-    end
-
-    define_method "add_#{role}" do |user|
-      self.memberships.create user: user, role: Membership::ROLE[role]
-    end
+  def members
+    User.where "memberships.group_id" => id
   end
 
-  private
-  def should_generate_new_friendly_id?
-    name_changed?
+  Membership::ROLE.keys.each do |role|
+    define_method role.to_s.pluralize do
+      members.where("memberships.role" => Membership::ROLE[role])
+    end
   end
 end

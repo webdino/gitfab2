@@ -1,0 +1,25 @@
+section#usages
+  h1
+    'Usages
+  ul.usage-list
+    - @project.usages.each do |usage|
+      li.usage
+        == usage.description
+
+  == form_for @project, url: project_path(@project, owner_name: @owner.name), method: :patch, remote: true do |f|
+    == f.fields_for :usages do |cf|
+      == cf.hidden_field :position
+  hr
+  == nested_form_for Project.new.tap{|p| p.usages.build}, url: project_path(@project, owner_name: @owner.name), method: :patch, remote: true do |f|
+    == f.fields_for :usages do |uf|
+      == uf.text_field :description
+      == uf.fields_for :figures do |ff|
+        == ff.file_field :content
+        == ff.file_field :video_id
+      == uf.link_to_add "Add a figure", :figures
+      == uf.fields_for :annotations, uf.object.annotations do |af|
+        == af.text_field :description
+      == uf.link_to_add "Add an annotation", :annotations
+    == f.submit :ok
+
+

@@ -3,17 +3,11 @@
     'Show Group
   p == @group.name
   
-  - if can? :manage, @group
-    == form_for [@group, Membership.new], remote: true do |f|
-      == f.text_field :user_id
-      == f.select :role, Membership::ROLE 
-      == f.hidden_field :group_id, value: @group.id
-      == f.submit "add"
   p
     'members
   ul#members
-    - @group.memberships.each do |ms|
-      == render "membership", membership: ms
+    - @group.members.each do |member|
+      == render "membership", membership: member.membership_in(@group)
 
   == link_to "back", :groups
   - if can? :manage, @group

@@ -1,42 +1,32 @@
 Gitfab2::Application.routes.draw do
-  root "home#index"
+  root "global_projects#index"
 
-  concern :owner do
-    resources :recipes do
-      resources :statuses do
-        resources :ways
-      end
-      resources :materials
-      resources :tools
-      resources :usages
-      resources :posts
-      resources :attachments
-      resources :collaborations
-    end
-  end
-
-  if Rails.env.development?
-    match "su" => "home#su", via: :post
+  if Rails.env.development? || Rails.env.test?
+    match "su" => "development#su", via: :post
   end
 
   devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}
-  match "home" => "home#proxy_to_userhome", via: :get
-  match "search" => "global_recipes#index", via: :get
+  match "home" => "owner_projects#index", via: :get
+  match "search" => "global_projects#index", via: :get
 
-  resources :tags
-  resources :comments
-  resources :likes
-  resources :users, concerns: :owner
-  resources :groups, concerns: :owner do
+  resources :users do
+    resources :collaborations
     resources :memberships
   end
 
-  resources :recipes, path: "/:owner_name" do
-    resources :ways, constraints: {id: /.+/}
-    resources :tools, constraints: {id: /.+/}
+  resources :groups do
+    resources :members
+  end
+
+  resources :global_projects, only: :index
+  resources :projects, path: "/:owner_name" do
+    resource :note, only: :show do
+      resources :memos
+    end
+    resource :recipe, only: [:show, :update] do
+      resources :recipe_cards
+    end
     resources :usages, constraints: {id: /.+/}
-    resources :posts, constraints: {id: /.+/}
-    resources :attachments, constraints: {id: /.+/}
-    resources :collaborations, constraints: {id: /.+/}
   end          
+
 end

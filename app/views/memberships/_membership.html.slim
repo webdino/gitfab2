@@ -1,0 +1,5 @@
+li.group
+  == link_to image_tag(group.avatar, class: "avatar"), projects_path(owner_name: group.name)
+  .name
+    == link_to group.name, projects_path(owner_name: group.name)
+  == link_to "Leave group", [current_user, membership], remote: :true, class: "leave-btn btn", method: :delete

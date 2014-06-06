@@ -1,21 +1,15 @@
 class Tag
-  UPDATABLE_COLUMNS = [:name]
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Contributable
 
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
-  extend ActiveModel::Naming
+  embedded_in :taggable, polymorphic: true
 
-  attr_accessor :name
+  field :name
 
-  validates :name, presence: true
-
-  def initialize attributes = {}
-    attributes.each do |name, value|
-      send "#{name}=", value
+  class << self
+    def updatable_columns
+      [:name]
     end
-  end
-
-  def persisted?
-    false
   end
 end

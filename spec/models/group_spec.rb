@@ -26,14 +26,4 @@ describe Group do
     end
     it{should be true}
   end
-
-  describe "on after create" do
-    describe "#add_initial_member" do
-      let(:user1){FactoryGirl.create :user}
-      let(:new_group){user1.groups.create name: "foo"}
-      before{new_group.save}
-      subject{new_group.members}
-      it{should eq [user1]}
-    end
-  end
 end

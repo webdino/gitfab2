@@ -8,11 +8,11 @@
     h1
      'Members
     ul#members
-      - @group.memberships.each do |ms|
-        == render "membership", membership: ms
+      - @group.members.each do |member|
+        == render "membership", membership: member.membership_in(@group)
 
     - if can? :manage, @group
-      == form_for [@group, Membership.new], remote: true do |f|
+      == form_for group_members_path(group_id: @group.id), remote: true do |f|
         h2
           'Add memeber
         p

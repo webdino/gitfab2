@@ -1,55 +1,39 @@
 require "spec_helper"
 
-describe CollaborationsController do
+describe CollaborationsController, type: :controller do
   disconnect_sunspot
   render_views
 
   let(:user1){FactoryGirl.create :user}
   let(:user2){FactoryGirl.create :user}
   let(:group1){FactoryGirl.create :group, creator: user1}
-  let(:recipe){FactoryGirl.create :user_recipe}
-  let(:g_recipe){FactoryGirl.create :group_recipe}
-  let(:collaboration){FactoryGirl.create :collaboration, user: user1, recipe: recipe}
-  let(:g_collaboration){FactoryGirl.create :collaboration, group: group1, recipe: recipe}
-  let(:valid_attributes){{user_id: user2.id, recipe_id: recipe.id}}
-  let(:g_valid_attributes){{user_id: user1.id, recipe_id: g_recipe.id}}
+  let(:project){FactoryGirl.create :user_project}
+  let(:valid_attributes){{project_id: project.id}}
 
   describe "POST create" do
     before do
-      sign_in recipe.owner
-      xhr :post, :create, user_id: recipe.owner.id, recipe_id: recipe.id,
+      sign_in project.owner
+      xhr :post, :create, user_id: project.owner.id,
         collaboration: collaboration_params
     end
-    context "for user recipe" do
+    context "for user project" do
       context "with valid params" do
         let(:collaboration_params){valid_attributes}
         it_behaves_like "success"
         it_behaves_like "render template", "create"
       end
       context "with invalid params" do
-        let(:collaboration_params){{user_id: nil}}
-        it_behaves_like "success"
-        it_behaves_like "render template", "failed"
-      end
-    end
-    context "for group recipe" do
-      context "with valid params" do
-        let(:collaboration_params){g_valid_attributes}
-        it_behaves_like "success"
-        it_behaves_like "render template", "create"
-      end
-      context "with invalid params" do
-        let(:collaboration_params){{group_id: nil}}
-        it_behaves_like "success"
-        it_behaves_like "render template", "failed"
+        let(:collaboration_params){{}}
+        it_behaves_like "unauthorized"
       end
     end
   end
 
   describe "DELETE destroy" do
     before do
+      collaboration = user1.collaborations.create project_id: project.id
       sign_in user1
-      xhr :delete, :destroy, user_id: recipe.owner.id, recipe_id: recipe.id,
+      xhr :delete, :destroy, user_id: user1.id, project_id: project.id,
         id: collaboration.id
     end
     it_behaves_like "render template", "destroy"

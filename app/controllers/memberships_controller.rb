@@ -1,7 +1,11 @@
 class MembershipsController < ApplicationController
-  before_action :load_group
+  before_action :load_user
   before_action :build_membership, only: :create
   before_action :load_membership, only: [:update, :destroy]
+
+  def index
+    render layout: "user"
+  end
 
   def create
     if @membership.save
@@ -12,7 +16,7 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    if @membership.update_attributes membership_params
+    if @membership.update membership_params
       render "update"
     else
       render "failed"
@@ -26,22 +30,19 @@ class MembershipsController < ApplicationController
   private
   def membership_params
     if params[:membership]
-      if user = User.where(slug: params[:membership][:user_id]).first
-        params[:membership][:user_id] = user.id
-      end
-      params.require(:membership).permit Membership::UPDATABLE_COLUMNS
+      params.require(:membership).permit Membership.updatable_columns
     end
   end
 
-  def load_group
-    @group = Group.find params[:group_id]
+  def load_user
+    @user = User.find params[:user_id]
   end
 
   def build_membership
-    @membership = @group.memberships.build membership_params
+    @membership = @user.memberships.build membership_params
   end
   
   def load_membership
-    @membership = @group.memberships.find params[:id]
+    @membership = @user.memberships.find params[:id]
   end
 end

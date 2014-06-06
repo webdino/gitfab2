@@ -1,36 +1,64 @@
-class User < ActiveRecord::Base
+class User
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname]
-  UPDATABLE_COLUMNS = [:name, :avatar]
 
-  extend FriendlyId
-  friendly_id :name, use: [:slugged, :finders]
-  acts_as_voter
+  include Mongoid::Document
+  include Mongoid::Timestamps
+  include Mongoid::Slug
+  include ProjectOwner
+  include Liker
+
+  ## Database authenticatable
+  field :email
+  field :encrypted_password
+
+  ## Rememberable
+  field :remember_created_at, type: DateTime
+
+  ## Trackable
+  field :sign_in_count, default: 0, type: Integer
+  field :current_sign_in_at, type: DateTime
+  field :last_sign_in_at, type: DateTime
+  field :current_sign_in_ip
+  field :last_sign_in_ip
+
+  # OmniAuth
+  field :provider
+  field :uid
+
+  field :name
+  slug :name
+  field :fullname
+  field :avatar
 
   devise :omniauthable, omniauth_providers: [:github]
   devise :database_authenticatable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
-  has_many :recipes, as: :owner, dependent: :destroy
-  has_many :contributor_recipes, foreign_key: :contributor_id
-  has_many :contributing_recipes, through: :contributor_recipes, source: :recipe
-  has_many :memberships, foreign_key: :user_id, dependent: :destroy
-  has_many :groups, through: :memberships
-  has_many :collaborating_recipes, through: :collaborations, source: :recipe
-  has_many :collaborations, foreign_key: :user_id, dependent: :destroy
-  has_many :posts
-  has_many :ways, as: :creator
+  embeds_many :memberships
+  embeds_many :collaborations
+
+  #has_many :recipes, as: :owner, dependent: :destroy
+  #has_many :contributing_recipes, class_name: Recipe.name, inverse_of: :contributors, inverse_class_name: User.name
+  #scope :groups, ->{Group.find memberships.pluck(:group_id)}
+  #has_many :groups, through: :memberships
+  #has_many :collaborating_recipes, through: :collaborations, source: :recipe
+  #has_many :collaborations, foreign_key: :user_id, dependent: :destroy
+  #has_many :posts
+  #has_many :ways, as: :creator
+
+  accepts_nested_attributes_for :memberships, allow_destroy: true
 
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true, if: ->{self.persisted?}
   validates :name, unique_owner_name: true,
     name_format: true, if: ->{self.name.present?}
 
-  def is_owner_of? recipe
-    self == recipe.owner
+  def is_owner_of? project
+    self == project.owner
   end
 
-  def is_collaborator_of? recipe
-    recipe.collaborators.include? self
+  def is_collaborator_of? project
+    collaborations.where(project_id: project.id).exists?
   end
 
   def is_creator_of? record
@@ -44,7 +72,11 @@ class User < ActiveRecord::Base
   end
 
   def membership_in group
-    self.memberships.find_by group_id: group.id
+    memberships.find_by group_id: group.id
+  end
+
+  def collaborate! project
+    collaborations.create project: project
   end
 
   [:admin, :editor, :member].each do |role|
@@ -63,6 +95,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def groups
+    Group.find memberships.map(&:group_id)
+  end
+
+  def join_to group
+    memberships.find_or_create_by group_id: group.id
+  end
+
   class << self
     def find_for_github_oauth auth
       where(auth.slice :provider, :uid).first_or_create do |user|
@@ -75,10 +115,9 @@ class User < ActiveRecord::Base
         user.remote_avatar_url = auth.info.image
       end
     end
-  end
 
-  private
-  def should_generate_new_friendly_id?
-    name_changed?
+    def updatable_columns
+      [:name, :avatar, memberships_attributes: Membership.updatable_columns]
+    end
   end
 end

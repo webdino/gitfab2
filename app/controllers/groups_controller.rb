@@ -19,8 +19,8 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new group_params
     if @group.save
-      @group.add_admin current_user
-      redirect_to [:edit, @group]
+      membership = current_user.join_to @group
+      redirect_to [current_user, :memberships]
     else
       render :new
     end

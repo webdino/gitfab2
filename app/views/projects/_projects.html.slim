@@ -1,0 +1,5 @@
+ul#projects
+  - projects.all.each do |project|
+    li.project
+      p.title
+        == link_to project.title, project_path(project, owner_name: project.owner.name)

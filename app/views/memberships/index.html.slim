@@ -1,0 +1,14 @@
+#groups-index
+  == link_to "+ Create new group", [:new, :group], class: "btn"
+  #groups-list
+    h1
+      'Groups
+    ul#groups
+      - current_user.memberships.each do |ms|
+        == render "membership", membership: ms, group: ms.group
+
+
+- content_for :bottom do
+  coffee:
+    $(document).on "click", ".leave-btn", (event) ->
+      $(this).closest("li").hide()

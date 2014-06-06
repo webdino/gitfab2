@@ -24,8 +24,8 @@ before_exec do |server|
 end
 
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
+#  defined?(ActiveRecord::Base) and
+#    ActiveRecord::Base.connection.disconnect!
 
   old_pid = "#{server.config[:pid]}.oldbin"
   if old_pid != server.pid
@@ -40,6 +40,6 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+#  defined?(ActiveRecord::Base) and
+#    ActiveRecord::Base.establish_connection
 end

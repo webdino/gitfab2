@@ -13,10 +13,10 @@ section#layouts-header
         #tools
           .box
             #user
-              == link_to image_tag(current_user.avatar, class: "avator-thumb"), recipes_path(owner_name: current_user.name)
-              == link_to current_user.name, recipes_path(owner_name: current_user.name)
+              == link_to image_tag(current_user.avatar, class: "avator-thumb"), projects_path(owner_name: current_user.name)
+              == link_to current_user.name, projects_path(owner_name: current_user.name)
             #create-recipe
-              == link_to "+", new_recipe_path(owner_name: current_user.name)
+              == link_to "+", new_project_path(owner_name: current_user.name)
             #settings
               == link_to image_tag("settings.png"), edit_user_path(current_user)
             #logout

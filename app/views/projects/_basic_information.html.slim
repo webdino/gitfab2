@@ -1,0 +1,21 @@
+section#basic-information
+
+  - if original = @project.original
+    p.forked-from
+      == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.name)
+  #title
+    h1
+      == @project.title
+
+  #project-summary
+    .visual style="background-image: url('#{@project.figures.first.try :content}')"
+      - if @project.figures.first.is_a?(Figure::Video) && @project.figures.first.video_id.present?
+        iframe src="#{@project.figures.first.youtube_embed_url}"
+
+    .description
+      h1
+        'Summary
+      .text
+        == Sanitize.clean @project.description, Sanitize::Config::RELAXED
+
+  == render "projects/utils", project: @project, owner: @owner, available_operations: [:fork, :slide, :tag]

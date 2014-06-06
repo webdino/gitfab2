@@ -8,7 +8,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  version :figure do
+  version :small do
     process :resize_to_fit => [400, 400]
   end
 

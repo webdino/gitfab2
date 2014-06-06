@@ -1,0 +1,221 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/rows.css.scss";
+@import "mixins/box-sizing.css.scss";
+
+#basic-informations {
+  width: 100%;
+  height: 440px;
+  position: relative;
+  border: 1px solid #000;
+  @include cf;
+  p.forked-from {
+    line-height: 22px;
+    font-size: 16px;
+    position: absolute;
+    top: -22px;
+  }
+  #control-panel {
+    height: 100%;
+    margin-left: 720px;
+    border-left: 1px solid #000;
+    @include cf;
+
+    $popup-width: 360px;
+
+    #fork-destinations {
+      @include spacing-row($popup-width, 20px, 3);
+      width: $popup-width;
+      display: none;
+
+      min-height: 442px;
+      border: solid 1px black;
+      border-left: none;
+
+      .fork-destination {
+        .dest-name {
+          margin-top: 10px;
+          margin-bottom: 4px;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+        .fork-btn {
+          width: 100px;
+          height: 100px;
+          margin-bottom: 10px;
+          background-size: cover;
+          background-position: center;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+    #tooltips {
+      max-height: 118px;
+      #slide-show-button,
+      #fork-button {
+        display: inline-block;
+        width: 118px;
+        height: 118px;
+        cursor: pointer;
+        a {
+          display: block;
+          height: 100%;
+          width: 100%;
+        }
+      }
+      #slide-show-button {
+        background-image: asset-url("slideshow.png");
+        border-right: 1px solid #000;
+      }
+      #fork-button {
+        background-image: asset-url("fork.png");
+      }
+    }
+    #user-info {
+      @include cf;
+      border-top: 1px solid #000;
+      .inner {
+        margin: 20px;
+        .owner {
+          .thumbnail {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            img {
+              margin: 0;
+              max-width: 100%;
+              max-height: 100%;
+            }
+          }
+          .screen-name {
+            display: inline-block;
+            vertical-align: top;
+            margin: 12px 10px;
+            font-size: 18px;
+          }
+        }
+        #add-collaborator-btn {
+          display: inline-block;
+          margin: 0 0 20px 0;
+        }
+        .timestamps {
+          width: 240px;
+          #created-datetime {
+            display: block;
+            width: 100%;
+            height: 24px;
+            font-size: 12px;
+          }
+          #last-updated-datetime {
+            display: block;
+            width: 100%;
+            height: 24px;
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    #tool-options {
+      padding: 20px;
+      width: 100%;
+      height: auto;
+      min-height: 40px;
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+    #tags {
+      padding: 20px;
+      width: 100%;
+      height: auto;
+      min-height: 40px;
+      #tag-list {
+        margin: 10px 0;
+        .tag {
+          border-radius: 10px;
+          background-color: #ccc;
+          display: inline-block;
+          padding: 2px 4px;
+          margin: 0 4px;
+        }
+        .tag-delete-btn {
+          background: #fff;
+          border-radius: 50%;
+          padding: 0 4px;
+          margin-right: 4px;
+        }
+      }
+      h1 {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  }
+  #project-summary {
+    width: 720px;
+    float: left;
+    .title-box {
+      width: 100%;
+      font-size: 36px;
+      font-weight: bold;
+      height: 80px;
+      border-bottom: 1px solid #000;
+      h1 {
+        float: left;
+        margin: 15px 0 0 15px;
+        height: 40px;
+      }
+      a.toggle-star-btn {
+        float: right;
+        height: 40px;
+        margin: 25px 10px 15px;
+      }
+    }
+    .description-box {
+      @include cf;
+      height: 360px;
+      .visual {
+        width: 480px;
+        height: 360px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        float: left;
+        iframe {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .description {
+        width: 240px;
+        height: 100%;
+        font-size: 14px;
+        float: left;
+        word-break: break-all;
+        overflow-y: auto;
+        h1 {
+          margin: 0 12px;
+          margin-top: 10px;
+          font-size: 24px;
+          font-weight: bold;
+        }
+        .text {
+          margin: 0 12px;
+          p {
+            width: 100%;
+            margin-bottom: 4px;
+            overflow: hidden;
+            white-space: normal;
+            -o-text-overflow: ellipsis;
+            text-overflow:    ellipsis;
+          }
+          &:after {
+            content: "...";
+          }
+        }
+      }
+    }
+  }
+}

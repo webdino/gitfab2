@@ -6,51 +6,62 @@ GIT
     paranoia (2.0.2)
       activerecord (~> 4.0)
 
+GIT
+  remote: git://github.com/rspec/rspec-rails.git
+  revision: 2347e7c54c6fd08ec739acf899bcc7e5b6cf8517
+  specs:
+    rspec-rails (3.0.1)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+      rspec-support (~> 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (4.1.0)
-      actionpack (= 4.1.0)
-      actionview (= 4.1.0)
-      mail (~> 2.5.4)
-    actionpack (4.1.0)
-      actionview (= 4.1.0)
-      activesupport (= 4.1.0)
+    actionmailer (4.0.0)
+      actionpack (= 4.0.0)
+      mail (~> 2.5.3)
+    actionpack (4.0.0)
+      activesupport (= 4.0.0)
+      builder (~> 3.1.0)
+      erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionview (4.1.0)
-      activesupport (= 4.1.0)
-      builder (~> 3.1)
-      erubis (~> 2.7.0)
-    activemodel (4.1.0)
-      activesupport (= 4.1.0)
-      builder (~> 3.1)
-    activerecord (4.1.0)
-      activemodel (= 4.1.0)
-      activesupport (= 4.1.0)
-      arel (~> 5.0.0)
-    activesupport (4.1.0)
-      i18n (~> 0.6, >= 0.6.9)
-      json (~> 1.7, >= 1.7.7)
-      minitest (~> 5.1)
+    activemodel (4.0.0)
+      activesupport (= 4.0.0)
+      builder (~> 3.1.0)
+    activerecord (4.0.0)
+      activemodel (= 4.0.0)
+      activerecord-deprecated_finders (~> 1.0.2)
+      activesupport (= 4.0.0)
+      arel (~> 4.0.0)
+    activerecord-deprecated_finders (1.0.3)
+    activesupport (4.0.0)
+      i18n (~> 0.6, >= 0.6.4)
+      minitest (~> 4.2)
+      multi_json (~> 1.3)
       thread_safe (~> 0.1)
-      tzinfo (~> 1.1)
+      tzinfo (~> 0.3.37)
     acts-as-taggable-on (3.1.1)
       actionpack (>= 3, < 5)
       activerecord (>= 3, < 5)
       activesupport (>= 3, < 5)
     acts_as_commentable (4.0.1)
-    acts_as_list (0.4.0)
-      activerecord (>= 3.0)
     acts_as_votable (0.8.0)
-    arel (5.0.0)
+    arel (4.0.2)
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     blankslate (3.1.2)
-    builder (3.2.2)
-    cancancan (1.7.1)
+    bson (2.3.0)
+    bson_ext (1.5.1)
+    builder (3.1.4)
+    cancancan (1.8.1)
     capistrano (3.1.0)
       i18n
       rake (>= 10.0.0)
@@ -69,12 +80,15 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    carrierwave-mongoid (0.7.1)
+      carrierwave (>= 0.8.0, < 0.11.0)
+      mongoid (>= 3.0, < 5.0)
+      mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     celluloid-io (0.15.0)
       celluloid (>= 0.15.0)
       nio4r (>= 0.5.0)
-    choice (0.1.6)
     coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -83,14 +97,16 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.7.0)
-    columnize (0.3.6)
-    database_cleaner (1.2.0)
-    debugger (1.6.6)
+    colorize (0.7.3)
+    columnize (0.8.9)
+    connection_pool (2.0.0)
+    database_cleaner (1.3.0)
+    debugger (1.6.8)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.2)
+      debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.2)
+    debugger-ruby_core_source (1.3.5)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -99,7 +115,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
-    execjs (2.0.2)
+    execjs (2.1.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -109,7 +125,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
     formatador (0.2.4)
-    friendly_id (5.0.3)
+    friendly_id (5.0.4)
       activerecord (>= 4.0.0)
     gitolite (1.1.0)
       gratr19 (~> 0.4.4.1)
@@ -145,11 +161,10 @@ GEM
     jquery-turbolinks (2.0.2)
       railties (>= 3.1.0)
       turbolinks
-    jquery-ui-rails (4.2.0)
+    jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.1)
-    jwt (0.1.13)
-      multi_json (>= 1.5)
+    jwt (1.0.0)
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -168,23 +183,43 @@ GEM
     mime-types (1.25.1)
     mini_magick (3.7.0)
       subexec (~> 0.2.1)
-    mini_portile (0.5.3)
-    minitest (5.3.2)
+    mini_portile (0.6.0)
+    minitest (4.7.5)
+    mongoid (4.0.0.rc1)
+      activemodel (~> 4.0.0)
+      moped (~> 2.0.0.rc1)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
+    mongoid-grid_fs (2.1.0)
+      mime-types (>= 1.0, < 3.0)
+      mongoid (>= 3.0, < 5.0)
+    mongoid-rspec (1.10.0)
+      mongoid (>= 3.0.1)
+      rake
+      rspec (>= 2.14)
+    mongoid_orderable (4.1.0)
+      mongoid
+    mongoid_slug (3.2.1)
+      mongoid (> 3.0)
+      stringex (~> 2.0)
     mono_logger (1.1.0)
-    multi_json (1.9.2)
+    moped (2.0.0.rc1)
+      bson (~> 2.2)
+      connection_pool (~> 2.0)
+      optionable (~> 0.2.0)
+    multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mysql2 (0.3.15)
     nested_form (0.3.2)
-    net-scp (1.2.0)
+    net-scp (1.2.1)
       net-ssh (>= 2.6.5)
-    net-ssh (2.8.0)
+    net-ssh (2.9.1)
     nio4r (1.0.0)
-    nokogiri (1.6.1)
-      mini_portile (~> 0.5.0)
-    oauth2 (0.9.3)
+    nokogiri (1.6.2.1)
+      mini_portile (= 0.6.0)
+    oauth2 (0.9.4)
       faraday (>= 0.8, < 0.10)
-      jwt (~> 0.1.8)
+      jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (~> 1.2)
@@ -199,9 +234,11 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
+    optionable (0.2.0)
     options (2.3.2)
+    origin (2.1.1)
     orm_adapter (0.5.0)
-    polyglot (0.3.4)
+    polyglot (0.3.5)
     posix-spawn (0.3.8)
     pr_geohash (1.0.0)
     progress_bar (1.0.0)
@@ -221,31 +258,24 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (4.1.0)
-      actionmailer (= 4.1.0)
-      actionpack (= 4.1.0)
-      actionview (= 4.1.0)
-      activemodel (= 4.1.0)
-      activerecord (= 4.1.0)
-      activesupport (= 4.1.0)
+    rails (4.0.0)
+      actionmailer (= 4.0.0)
+      actionpack (= 4.0.0)
+      activerecord (= 4.0.0)
+      activesupport (= 4.0.0)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.1.0)
-      sprockets-rails (~> 2.0)
+      railties (= 4.0.0)
+      sprockets-rails (~> 2.0.0)
     rails-config (0.0.3)
-    rails-erd (1.1.0)
-      activerecord (>= 3.0)
+    rails_config (0.4.2)
       activesupport (>= 3.0)
-      choice (~> 0.1.6)
-      ruby-graphviz (~> 1.0.4)
-    rails_config (0.3.3)
-      activesupport (>= 3.0)
-    railties (4.1.0)
-      actionpack (= 4.1.0)
-      activesupport (= 4.1.0)
+    railties (4.0.0)
+      actionpack (= 4.0.0)
+      activesupport (= 4.0.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
-    rake (10.2.2)
+    rake (10.3.2)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.3)
       ffi (>= 0.5.0)
@@ -266,7 +296,7 @@ GEM
       rake
       resque (~> 1.20)
       trollop (~> 1.16)
-    resque-web (0.0.5)
+    resque-web (0.0.6)
       coffee-rails
       jquery-rails
       resque
@@ -274,23 +304,20 @@ GEM
       twitter-bootstrap-rails
     rsolr (1.0.10)
       builder (>= 2.1.2)
-    rspec (2.14.1)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    rspec-core (2.14.8)
-    rspec-expectations (2.14.5)
-      diff-lcs (>= 1.1.3, < 2.0)
-    rspec-mocks (2.14.6)
-    rspec-rails (2.14.2)
-      actionpack (>= 3.0)
-      activemodel (>= 3.0)
-      activesupport (>= 3.0)
-      railties (>= 3.0)
-      rspec-core (~> 2.14.0)
-      rspec-expectations (~> 2.14.0)
-      rspec-mocks (~> 2.14.0)
-    ruby-graphviz (1.0.9)
+    rspec (3.0.0)
+      rspec-core (~> 3.0.0)
+      rspec-expectations (~> 3.0.0)
+      rspec-mocks (~> 3.0.0)
+    rspec-collection_matchers (0.0.4)
+      rspec-expectations (>= 2.99.0.beta1)
+    rspec-core (3.0.0)
+      rspec-support (~> 3.0.0)
+    rspec-expectations (3.0.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.0.0)
+    rspec-mocks (3.0.0)
+      rspec-support (~> 3.0.0)
+    rspec-support (3.0.0)
     rugged (0.19.0)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
@@ -316,7 +343,7 @@ GEM
       railties (>= 3.0, < 4.2)
       slim (~> 2.0)
     slop (3.5.0)
-    spring (1.1.2)
+    spring (1.1.3)
     spring-commands-rspec (1.0.1)
       spring (>= 0.9.1)
     sprockets (2.11.0)
@@ -324,35 +351,37 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.1.3)
+    sprockets-rails (2.0.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sshkit (1.3.0)
+    sshkit (1.5.1)
+      colorize
       net-scp (>= 1.1.2)
-      net-ssh
-      term-ansicolor
+      net-ssh (>= 2.8.0)
+    stringex (2.5.2)
     subexec (0.2.3)
-    sunspot (2.1.0)
+    sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_rails (2.1.0)
+    sunspot_mongoid2 (0.5.1.7)
+      mongoid (>= 2)
+      sunspot (>= 2)
+      sunspot_rails (>= 2)
+    sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
-      sunspot (= 2.1.0)
-    sunspot_solr (2.1.0)
+      sunspot (= 2.1.1)
+    sunspot_solr (2.1.1)
     temple (0.6.7)
-    term-ansicolor (1.3.0)
-      tins (~> 1.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.19.1)
-    thread_safe (0.3.3)
+    thread_safe (0.3.4)
     tilt (1.4.1)
     timers (1.1.0)
-    tins (1.1.0)
-    tinymce-rails (4.0.19)
+    tinymce-rails (4.0.28)
       railties (>= 3.1.1)
     tinymce-rails-imageupload (4.0.16.beta)
       railties (>= 3.2, < 5)
@@ -368,12 +397,11 @@ GEM
       execjs
       rails (>= 3.1)
       railties (>= 3.1)
-    tzinfo (1.1.0)
-      thread_safe (~> 0.1)
+    tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (4.8.2)
+    unicorn (4.8.3)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -388,15 +416,16 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
-  acts_as_list
   acts_as_votable (~> 0.8.0)
   better_errors
+  bson_ext
   cancancan
   capistrano (~> 3.1.0)
   capistrano-bundler
   capistrano-rails
   capistrano-rvm
   carrierwave
+  carrierwave-mongoid
   coffee-rails (~> 4.0.0)
   database_cleaner
   devise
@@ -411,7 +440,10 @@ DEPENDENCIES
   jquery-ui-rails
   kaminari
   mini_magick
-  mysql2
+  mongoid (~> 4.0.0rc1)
+  mongoid-rspec
+  mongoid_orderable
+  mongoid_slug
   nested_form
   nokogiri
   omniauth-github
@@ -419,16 +451,16 @@ DEPENDENCIES
   progress_bar
   pry-debugger
   pry-rails
-  rails (= 4.1.0)
+  rails (= 4.0.0)
   rails-config
-  rails-erd
   rails_config
   rb-fsevent
   remotipart
   resque
   resque-pool
   resque-web
-  rspec-rails
+  rspec-collection_matchers
+  rspec-rails!
   rugged
   sanitize
   sass-rails (~> 4.0.0)
@@ -436,6 +468,7 @@ DEPENDENCIES
   slim-rails
   spring
   spring-commands-rspec
+  sunspot_mongoid2
   sunspot_rails
   sunspot_solr
   therubyracer
