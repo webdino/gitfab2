@@ -75,6 +75,10 @@ class User
     memberships.find_by group_id: group.id
   end
 
+  def collaboration_in project
+    collaborations.find_by project_id: project.id
+  end
+
   def collaborate! project
     collaborations.create project: project
   end

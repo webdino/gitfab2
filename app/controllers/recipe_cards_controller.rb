@@ -48,12 +48,8 @@ class RecipeCardsController < ApplicationController
   def recipe_card_params
     if params[:card_recipe_card]
       w_list = Card::RecipeCard.updatable_columns + additional_params
-      case params[:card_recipe_card][:_type]
-      when Card::State.name
-      when Card::Transition.name
-        w_list << {derivatives_attributes: Card::RecipeCard.updatable_columns}
-        w_list << {annotations_attributes: Card::Annotation.updatable_columns}
-      end
+      w_list << {derivatives_attributes: Card::RecipeCard.updatable_columns}
+      w_list << {annotations_attributes: Card::Annotation.updatable_columns}
       params.require(:card_recipe_card).permit w_list
     end
   end

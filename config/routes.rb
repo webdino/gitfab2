@@ -9,17 +9,22 @@ Gitfab2::Application.routes.draw do
   match "home" => "owner_projects#index", via: :get
   match "search" => "global_projects#index", via: :get
 
-  resources :users do
+  concern :owner do
+    resources :projects, only: [:create, :update]
+  end
+
+  resources :users, concerns: :owner do
     resources :collaborations
     resources :memberships
   end
 
-  resources :groups do
+  resources :groups, concerns: :owner do
     resources :members
   end
 
   resources :global_projects, only: :index
   resources :projects, path: "/:owner_name" do
+    resources :collaborators
     resource :note, only: :show do
       resources :memos
     end

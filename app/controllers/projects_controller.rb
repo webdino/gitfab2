@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   layout "project"
 
   before_action :load_owner
-  before_action :load_project, only: [:show, :update, :destroy]
+  before_action :load_project, only: [:show, :edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
 
   def index
@@ -68,9 +68,7 @@ class ProjectsController < ApplicationController
   end
 
   def load_owner
-    if params[:owner_name]
-      @owner ||= User.find params[:owner_name]
-      @owner ||= Group.find params[:owner_name]
-    end
+    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = User.find(owner_id) || Group.find(owner_id)
   end
 end

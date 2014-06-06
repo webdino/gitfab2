@@ -67,10 +67,15 @@ class Project
     end
   end
 
+  def collaborators
+    User.where("collaborations.project_id" => id)
+  end
+
   class << self
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type,
-       usages_attributes: Card::Usage.updatable_columns
+       usages_attributes: Card::Usage.updatable_columns,
+       figures_attributes: Figure.updatable_columns
       ]
     end
   end

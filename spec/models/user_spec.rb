@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe User do
+  disconnect_sunspot
+
   let(:user){FactoryGirl.create :user}
   let(:project){FactoryGirl.create :user_project}
   let(:group){FactoryGirl.create :group}
