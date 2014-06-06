@@ -29,10 +29,10 @@
   }
 }
 
-form.recipe-form {
+form.project-form {
   #owner {
     font-size: 18px;
-    select#recipe_group_id {
+    select#project_group_id {
       margin-bottom: 2px;
       background: white;
       font-family: helvetica, sans-serif;
@@ -42,17 +42,17 @@ form.recipe-form {
     }
   }
 
-  input#recipe_title {
+  input#project_title {
     width: 703px;
     font-size: 36px;
     font-weight: bold;
     padding: 16px 0 21px 15px;
     border: solid 1px #000;
   }
-  input#recipe_name {
+  input#project_name {
     display: none;
   }
-  input#recipe_video_id {
+  input#project_video_id {
     width: 580px;
     font-size: 12px;
   }

@@ -1,0 +1,24 @@
+h1
+  'collaborations
+
+#collaborations-index
+  - if can? :manage, @project
+    == form_for project_collaborators_path(owner_name: @project.owner.name, project_id: @project), remote: true do |f|
+      == text_field_tag :user_id
+      == f.submit "add"
+
+  ul#collaborations
+    - @project.collaborators.each do |collaborator|
+      == render "collaboration", collaboration: collaborator.collaboration_in(@project)
+
+  == link_to "back", project_path(@project, owner_name: @project.owner.name)
+  
+- content_for :bottom do
+  coffee:
+    $(document).on "ajax:success", "#new_collaboration", (event, data) ->
+      $("#collaborations").append data.html
+      $("input#collaboration_user_id").val ""
+
+    $(document).on "click", ".remove-collaboration-btn", (event) ->
+      event.preventDefault
+      $(this).closest("li").remove()

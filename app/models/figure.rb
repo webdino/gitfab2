@@ -17,7 +17,7 @@ class Figure
 
   class << self
     def updatable_columns
-      [:id, :content, :link]
+      [:id, :link, :content]
     end
   end
 
