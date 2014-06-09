@@ -16,6 +16,11 @@ Gitfab2::Application.routes.draw do
   resources :users, concerns: :owner do
     resources :collaborations
     resources :memberships
+    resources :projects, only: [] do
+      resource :note, only: [] do
+        resources :note_cards
+      end
+    end
   end
 
   resources :groups, concerns: :owner do
@@ -26,7 +31,7 @@ Gitfab2::Application.routes.draw do
   resources :projects, path: "/:owner_name" do
     resources :collaborators
     resource :note, only: :show do
-      resources :memos
+      resources :note_cards
     end
     resource :recipe, only: [:show, :update] do
       resources :recipe_cards
