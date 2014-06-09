@@ -27,7 +27,7 @@ set :deploy_to, "/usr/local/rails_apps/gitfab2"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml}
+#set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{log public/uploads}
