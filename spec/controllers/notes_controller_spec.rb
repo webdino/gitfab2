@@ -10,7 +10,7 @@ describe NotesController, type: :controller do
 
   describe "GET show" do
     before do
-      get :show, owner_name: project.owner.name, project_id: project.name
+      xhr :get, :show, owner_name: project.owner.name, project_id: project.name
     end
     it{should render_template :show}
   end
