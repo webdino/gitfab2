@@ -69,3 +69,23 @@ test:
         retry_interval: 0
   options:
     raise_not_found_error: false
+
+staging:
+  sessions:
+    default:
+      database: gitfab2_staging
+      hosts:
+        - localhost:27017
+      options:
+  options:
+    raise_not_found_error: false
+
+production:
+  sessions:
+    default:
+      database: gitfab2_production
+      hosts:
+        - localhost:27017
+      options:
+  options:
+    raise_not_found_error: false
