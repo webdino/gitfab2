@@ -17,6 +17,9 @@ Gitfab2::Application.routes.draw do
     resources :collaborations
     resources :memberships
     resources :projects, only: [] do
+      resource :recipe, only: [:update] do
+        resources :recipe_cards
+      end
       resource :note, only: [] do
         resources :note_cards
       end

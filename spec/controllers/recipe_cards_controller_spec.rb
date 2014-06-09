@@ -8,6 +8,24 @@ describe RecipeCardsController, type: :controller do
 
   subject{response}
 
+  describe "GET new" do
+    before do
+      xhr :get, :new, owner_name: project.owner.name,
+        project_id: project.name
+    end
+    it{should render_template :new}
+  end
+
+  describe "GET edit" do
+    before do
+      card = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      xhr :get, :edit, owner_name: project.owner.name,
+        project_id: project.name, id: card.id
+    end
+    it{should render_template :edit}
+  end
+
+
   describe "POST create" do
     before do
       xhr :post, :create, owner_name: project.owner.name,

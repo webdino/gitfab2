@@ -21,19 +21,13 @@ class RecipesController < ApplicationController
   private
   def recipe_params
     if params[:recipe]
-      w_list = Card::RecipeCard.updatable_columns
-      w_list << {derivatives_attributes: Card::RecipeCard.updatable_columns}
-      w_list << {annotations_attributes: Card::Annotation.updatable_columns}
-      params.require(:recipe)
-        .permit recipe_cards_attributes: w_list
+      params.require(:recipe).permit recipe_cards_attributes: [:id, :position]
     end
   end
 
   def load_owner
-    if params[:owner_name]
-      @owner ||= User.find params[:owner_name]
-      @owner ||= Group.find params[:owner_name]
-    end
+    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = User.find(owner_id) || Group.find(owner_id)
   end
 
   def load_project

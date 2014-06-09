@@ -13,8 +13,14 @@ describe ProjectsController, type: :controller do
     let(:project){send "#{owner_type}_project"}
     context "with a project owned by a #{owner_type}" do
       describe "GET index" do
-        before{get :index, owner_name: project.owner.name}
-        it{should render_template :index}
+        context "with no query" do
+          before{get :index, owner_name: project.owner.name}
+          it{should render_template :index}
+        end
+        context "with queries" do
+          before{get :index, owner_name: project.owner.name, q: "foo"}
+          it{should render_template :index}
+        end
       end
       describe "GET new" do
         before{get :new, owner_name: project.owner.name, id: project.id}
