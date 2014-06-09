@@ -65,7 +65,7 @@ Gitfab2::Application.configure do
     groups.js    groups.css
     dashboard.js dashboard.css
     posts.js     posts.css
-    recipe.js    recipe.css
+    project.css  project.js
     user.js      user.css
   )
 
