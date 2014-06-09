@@ -2,7 +2,7 @@ class Note
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  embeds_many :memos, class_name: Card::Memo.name, cascade_callbacks: true
+  embeds_many :note_cards, class_name: Card::NoteCard.name, cascade_callbacks: true
   embedded_in :project
 
   def dup_document
