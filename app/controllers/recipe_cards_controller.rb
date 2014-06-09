@@ -5,6 +5,12 @@ class RecipeCardsController < ApplicationController
   before_action :build_recipe_card, only: :create
   before_action :load_recipe_card, only: [:edit, :update, :destroy]
 
+  def new
+  end
+
+  def edit
+  end
+
   def create
     if @recipe_card.save
       render :create

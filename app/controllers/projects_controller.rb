@@ -6,6 +6,21 @@ class ProjectsController < ApplicationController
   before_action :build_project, only: [:new, :create]
 
   def index
+    if q = params[:q]
+      @projects = @owner.projects.solr_search do
+        fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
+        case params[:type]
+        when "own"
+          with :owner_id, params[:user_id]
+        when "contributed"
+          # TODO: Implement
+        when "starred"
+          # TODO: Implement
+        end
+      end.results
+    else
+      @projects = Project.order "updated_at DESC"
+    end
     render layout: "dashboard"
   end
 
