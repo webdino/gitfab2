@@ -6,11 +6,11 @@ describe GlobalProjectsController, type: :controller do
 
   describe "GET index" do
     context "without queries" do
-      before{get :index}
+      before{xhr :get, :index}
       it{expect(response).to render_template :index}
     end
     context "with queries" do
-      before{get :index, q: "foo"}
+      before{xhr :get, :index, q: "foo"}
       it{expect(response).to render_template :index}
     end
   end
