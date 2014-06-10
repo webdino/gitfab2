@@ -3,7 +3,7 @@ class NoteCardsController < ApplicationController
   before_action :load_project
   before_action :load_note
   before_action :load_note_card, only: [:edit, :update, :destroy]
-  before_action :build_note_card, only: :create
+  before_action :build_note_card, only: [:new, :create]
 
   def new
   end
