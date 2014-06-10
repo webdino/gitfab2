@@ -25,5 +25,9 @@ class Card
        figures_attributes: Figure.updatable_columns,
        attachments_attributes: Attachment.updatable_columns]
     end
+
+    def use_relative_model_naming?
+      true
+    end
   end
 end
