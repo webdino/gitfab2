@@ -1,1 +1,1 @@
-json.success true
+json.html (render "components/card", card: @note_card)

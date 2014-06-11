@@ -22,3 +22,4 @@
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
 //= require ./markup
+//= require ./card

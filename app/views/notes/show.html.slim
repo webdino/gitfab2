@@ -1,3 +1,13 @@
 main#recipes-show
   == render "projects/basic_informations"
-  == render "notes/note_cards"
+  br
+  h1
+   | note
+
+  ul#note-cards
+    - @note.note_cards.each do |card|
+      li.card
+        == render "components/card", card: card
+
+  a class="btn new-card-link" href="#" data-action="#{url_for([:new, @owner, @project, :note, :note_card])}" data-container="#note-cards"
+   | + Add

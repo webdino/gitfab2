@@ -33,3 +33,7 @@
           == link_to "#{@project.owner.name}'s Project List", projects_path(owner_name: @owner.name), class: "btn"
 
   == link_to "Edit project", edit_project_path(@project, owner_name: @owner.name)
+  '| 
+  == link_to "Recipe", project_recipe_path(@project, owner_name: @owner.name)
+  '| 
+  == link_to "Note", project_note_path(@project, owner_name: @owner.name)
