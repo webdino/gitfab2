@@ -37,18 +37,14 @@ describe RecipeCardsController, type: :controller do
   end
 
   describe "PATCH update" do
-    context "when adding a new derivative card" do
+    context "when updating the card itself" do
       before do
         card = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
         xhr :patch, :update, owner_name: project.owner.name,
-          project_id: project.name, id: card.id,
-          recipe_card: {derivatives_attributes: [{_type: Card::State.name, description: "hoge"}]}
-        project.reload
+          project_id: project.name, id: card.id, recipe_card: state.attributes
       end
       it{should render_template :update}
-      it{expect(project.recipe.recipe_cards.first).to have(1).derivative}
     end
-
     context "when replacing a state with a derivative state" do
       before do
         card = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
