@@ -10,13 +10,7 @@ Gitfab2::Application.routes.draw do
   match "search" => "global_projects#index", via: :get
 
   concern :owner do
-    resources :projects, only: [:create, :update]
-  end
-
-  resources :users, concerns: :owner do
-    resources :collaborations
-    resources :memberships
-    resources :projects, only: [] do
+    resources :projects, only: [:create, :update] do
       resource :recipe, only: [:update] do
         resources :recipe_cards do
           resources :annotations
@@ -27,6 +21,11 @@ Gitfab2::Application.routes.draw do
         resources :note_cards
       end
     end
+  end
+
+  resources :users, concerns: :owner do
+    resources :collaborations
+    resources :memberships
   end
 
   resources :groups, concerns: :owner do
