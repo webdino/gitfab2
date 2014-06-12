@@ -3,8 +3,6 @@ class Card::RecipeCard < Card
   embedded_in :recipe
   orderable column: :position
 
-  validates :_type, :description, presence: true
-
   scope :ordered_by_position, ->{order("position ASC")}
 
   class << self

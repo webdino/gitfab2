@@ -29,10 +29,8 @@ class RecipeCardsController < ApplicationController
 
   private
   def load_owner
-    if params[:owner_name]
-      @owner ||= User.find params[:owner_name]
-      @owner ||= Group.find params[:owner_name]
-    end
+    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = User.find(owner_id) || Group.find(owner_id)
   end
 
   def load_project
@@ -52,15 +50,10 @@ class RecipeCardsController < ApplicationController
   end
 
   def recipe_card_params
-    if params[:card_recipe_card]
-      w_list = Card::RecipeCard.updatable_columns + additional_params
+    if params[:recipe_card]
+      w_list = Card::RecipeCard.updatable_columns
       w_list << {derivatives_attributes: Card::RecipeCard.updatable_columns}
-      w_list << {annotations_attributes: Card::Annotation.updatable_columns}
-      params.require(:card_recipe_card).permit w_list
+      params.require(:recipe_card).permit w_list
     end
-  end
-
-  def additional_params
-    [:id, :_type]
   end
 end
