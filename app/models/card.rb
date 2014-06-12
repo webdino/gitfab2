@@ -10,6 +10,11 @@ class Card
   include CardDecorator
   include Searchable
 
+  field :title
+  field :description
+
+  validates :_type, :description, presence: true
+
   searchable_field :description
 
   def dup_document
@@ -21,7 +26,7 @@ class Card
 
   class << self
     def updatable_columns
-      [:id, :description, :_type,
+      [:id, :title, :description, :_type,
        figures_attributes: Figure.updatable_columns,
        attachments_attributes: Attachment.updatable_columns]
     end

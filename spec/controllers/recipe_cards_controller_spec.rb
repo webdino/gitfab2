@@ -29,7 +29,7 @@ describe RecipeCardsController, type: :controller do
   describe "POST create" do
     before do
       xhr :post, :create, owner_name: project.owner.name,
-        project_id: project.name, card_recipe_card: state.attributes
+        project_id: project.name, recipe_card: state.attributes
       project.reload
     end
     it{should render_template :create}
@@ -42,7 +42,7 @@ describe RecipeCardsController, type: :controller do
         card = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
         xhr :patch, :update, owner_name: project.owner.name,
           project_id: project.name, id: card.id,
-          card_recipe_card: {derivatives_attributes: [{_type: Card::State.name, description: "hoge"}]}
+          recipe_card: {derivatives_attributes: [{_type: Card::State.name, description: "hoge"}]}
         project.reload
       end
       it{should render_template :update}
@@ -56,7 +56,7 @@ describe RecipeCardsController, type: :controller do
         derivative = card.derivatives.create _type: Card::State.name, id: "foo123", description: "baz"
         xhr :patch, :update, owner_name: project.owner.name,
           project_id: project.name, id: card.id,
-          card_recipe_card: {id: derivative.id, derivatives_attributes: [{_type: Card::State.name, description: "hoge"}]}
+          recipe_card: {id: derivative.id, derivatives_attributes: [{_type: Card::State.name, description: "hoge"}]}
         project.reload
       end
       it{should render_template :update}
