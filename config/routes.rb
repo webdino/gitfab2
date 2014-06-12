@@ -20,6 +20,7 @@ Gitfab2::Application.routes.draw do
       resource :recipe, only: [:update] do
         resources :recipe_cards do
           resources :annotations
+          resources :derivative_cards
         end
       end
       resource :note, only: [] do
@@ -38,6 +39,7 @@ Gitfab2::Application.routes.draw do
     resource :note, only: :show do
       resources :note_cards do
         resources :annotations
+        resources :derivative_cards
       end
     end
     resource :recipe, only: [:show, :update] do

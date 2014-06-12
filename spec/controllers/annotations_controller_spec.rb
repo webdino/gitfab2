@@ -20,8 +20,7 @@ describe AnnotationsController, type: :controller do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
       annotation = transition.annotations.create description: "ann"
       xhr :get, :edit, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id, id: annotation.id,
-        annotation: {}
+        recipe_card_id: transition.id, id: annotation.id
     end
     it{should render_template :edit}
   end
