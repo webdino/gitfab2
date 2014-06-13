@@ -9,5 +9,4 @@ main#recipes-show
       li.card
         == render "components/card", card: card
 
-  a class="btn new-card-link" href="#" data-action="#{url_for([:new, @owner, @project, :note, :note_card])}" data-container="#note-cards"
-   | + Add
+  == link_to "+ Add", new_project_note_note_card_path(owner_name: @owner.name, project_id: @project.name), {remote: true, class: "btn new-card", "data-list" => "#note-cards"}

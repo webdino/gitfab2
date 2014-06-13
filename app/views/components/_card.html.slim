@@ -1,9 +1,13 @@
-div.card
-  .title
+article.card
+  h1.title
     == card.title
-  .figures
+  figure
     ul
       - card.figures.each do |figure|
-        == image_tag figure
+        li
+          == image_tag figure
   .description
     == card.description
+  footer
+    == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id), {remote: true, class: "btn edit-card", "data-container" => ".card"}  
+    == link_to "delete", project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id), {remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"}
