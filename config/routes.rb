@@ -20,6 +20,7 @@ Gitfab2::Application.routes.draw do
       resource :note, only: [] do
         resources :note_cards
       end
+      resources :usages
     end
   end
 

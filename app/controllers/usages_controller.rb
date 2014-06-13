@@ -1,59 +1,62 @@
 class UsagesController < ApplicationController
   before_action :load_owner
-  before_action :load_recipe
+  before_action :load_project
   before_action :build_usage, only: [:create]
-  before_action :load_usage, only: [:update, :destroy]
-  after_action  :update_and_commit_recipe, only: [:create, :update, :destroy]
+  before_action :load_usage, only: [:edit, :update, :destroy]
 
-  authorize_resource
+  authorize_resource class: Card::Usage.name
+
+  def new
+  end
+
+  def edit
+  end
 
   def create
-    @usage.save
+    if @usage.save
+      render :create
+    else
+      render "errors/failed", status: 400
+    end
   end
 
   def update
-    @usage.update_attributes usage_params
-    render "recipes/update_item", locals: {item: @usage}
+    if @usage.update usage_params
+      render :update
+    else
+      render "errors/failed", status: 400
+    end
   end
 
   def destroy
-    @usage.destroy
-    render "recipes/destroy_item"
+    if @usage.destroy
+      render :destroy
+    else
+      render "errors/failed", status: 400
+    end
   end
 
   private
-  def usage_params
-    if params[:usage]
-      params.require(:usage)
-        .permit (Usage::UPDATABLE_COLUMNS + additional_params)
-    end
+  def load_owner
+    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = User.find(owner_id) || Group.find(owner_id)
   end
 
-  def additional_params
-    [:id, :remove_photo, :_destroy]
-  end
-
-  def build_usage
-    @usage = @recipe.usages.build usage_params
+  def load_project
+    @project = @owner.projects.find params[:project_id]
   end
 
   def load_usage
-    @usage = @recipe.usages.find params[:id]
+    @usage = @project.usages.find params[:id]
   end
 
-  def load_recipe
-    @recipe = @owner.recipes.find params[:recipe_id]
+  def build_usage
+    @usage = @project.usages.build usage_params
   end
 
-  def load_owner
-    if params[:user_id]
-      @owner = User.find params[:user_id]
-    else
-      @owner = Group.find params[:group_id]
+  def usage_params
+    if params[:usage]
+      params.require(:usage).permit Card::Usage.updatable_columns
     end
-  end
-
-  def update_and_commit_recipe
-    @usage.recipe.update_attributes last_committer: current_user
   end
 end

@@ -27,6 +27,14 @@ class RecipeCardsController < ApplicationController
     end
   end
 
+  def destroy
+    if @recipe_card.destroy
+      render :destroy
+    else
+      render "errors/failed", status: 400
+    end
+  end
+
   private
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]

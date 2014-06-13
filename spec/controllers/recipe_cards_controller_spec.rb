@@ -59,4 +59,13 @@ describe RecipeCardsController, type: :controller do
       it{expect(project.recipe.recipe_cards.first.id).to eq "foo123"}
     end
   end
+
+  describe "DELETE destroy" do
+    before do
+      card = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      xhr :delete, :destroy, owner_name: project.owner.name,
+        project_id: project.name, id: card.id
+    end
+    it{should render_template :destroy}
+  end
 end
