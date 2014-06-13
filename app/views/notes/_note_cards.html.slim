@@ -1,0 +1,8 @@
+section#note-cards
+  h1
+   'Note
+  ul#note-card-list
+    - @note.note_cards.each do |card|
+      li
+        == render "components/card", card: card, resources: [@owner, @project, :note, card]
+    == link_to "+ Add", url_for([:new, @owner, @project, :note, :note_card]), remote: true, class: "btn new-card", "data-list" => "#note-card-list"

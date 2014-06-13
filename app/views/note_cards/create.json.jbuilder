@@ -1,1 +1,1 @@
-json.html (render "components/card", card: @note_card)
+json.html (render "components/card", card: @note_card, resources: [@owner, @project, :note, @note_card])
