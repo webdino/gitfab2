@@ -1,12 +1,3 @@
 main#recipes-show
   == render "projects/basic_informations"
-  br
-  h1
-   | note
-
-  ul#note-cards
-    - @note.note_cards.each do |card|
-      li.card
-        == render "components/card", card: card
-
-  == link_to "+ Add", new_project_note_note_card_path(owner_name: @owner.name, project_id: @project.name), {remote: true, class: "btn new-card", "data-list" => "#note-cards"}
+  == render "notes/note_cards"

@@ -9,5 +9,5 @@ article.card
   .description
     == card.description
   footer
-    == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id), {remote: true, class: "btn edit-card", "data-container" => ".card"}  
-    == link_to "delete", project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id), {remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"}
+    == link_to "delete", resources, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+    == link_to "edit", resources.unshift(:edit), remote: true, class: "btn edit-card", "data-container" => ".card"
