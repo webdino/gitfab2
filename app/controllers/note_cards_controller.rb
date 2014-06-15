@@ -28,7 +28,11 @@ class NoteCardsController < ApplicationController
   end
 
   def destroy
-    @note_card.destroy
+    if @note_card.destroy
+      render :destroy
+    else
+      render "errors/failed", status: 400
+    end
   end
 
   private

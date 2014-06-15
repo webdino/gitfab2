@@ -1,3 +1,15 @@
+window.createCardWrapper = (list, card) ->
+  if list.get(0).tagName.toLowerCase() is "ul"
+    li = $(document.createElement("li"))
+    li.append card
+  li
+
+window.getCardWrapper = (card) -> 
+  parent = card.parent()
+  if parent.get(0).tagName.toLowerCase() is "li"
+    return parent
+  card
+
 $ ->
   formContainer = $(document.createElement("div"))
   formContainer.attr "id", "card-form-container"
@@ -23,12 +35,9 @@ $ ->
     formContainer.html data.html
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
-      if list.get(0).nodeName is "ul"
-        li = $(document.createElement("li"))
-        li.html data.html
-        list.append li
-      else 
-        list.append $(data.html)
+      wrapper = createCardWrapper list, $(data.html)
+      list.append wrapper
+      list.trigger "card-order-changed"
      .bind "ajax:complete", (xhr, data) -> 
         hideFormContainer()
      .bind "ajax:error", (xhr, status, error) -> 
@@ -36,11 +45,11 @@ $ ->
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
     link = $(this)
-    container = link.parents(link.attr "data-container")
+    card = link.closest(link.attr "data-container")
     formContainer.html data.html
-    formContainer.find "form"    
+    formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
-      container.replaceWith data.html
+      card.replaceWith data.html
     .bind "ajax:complete", (xhr, data) -> 
        hideFormContainer()
     .bind "ajax:error", (xhr, status, error) -> 
@@ -48,6 +57,9 @@ $ ->
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $(this)
-    container = link.parents(link.attr "data-container")
-    container.remove()
+    card = link.closest(link.attr "data-container")
+    wrapper = getCardWrapper card
+    list = wrapper.parent()
+    wrapper.remove()
+    list.trigger "card-order-changed"
     hideFormContainer()

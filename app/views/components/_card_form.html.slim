@@ -1,7 +1,6 @@
 == nested_form_for resources, html: {class: "card-form"}, remote: true do |f|
-  'Title
+  == f.hidden_field :_type
   == f.text_field :title
-  'Description
   == f.text_field :description
   == f.fields_for :figures do |ff|
     == ff.file_field :content

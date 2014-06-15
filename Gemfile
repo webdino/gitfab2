@@ -45,7 +45,7 @@ gem "select2-rails"
 
 gem "mongoid", "~> 4.0.0rc1"
 gem "mongoid_slug"
-gem "mongoid_orderable"
+gem "mongoid_orderable", github: "johnny-miyake/mongoid_orderable"
 gem "bson_ext"
 gem "friendly_id", "~> 5.0.0"
 gem "carrierwave-mongoid", require: "carrierwave/mongoid"

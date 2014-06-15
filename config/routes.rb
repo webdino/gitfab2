@@ -9,18 +9,26 @@ Gitfab2::Application.routes.draw do
   match "home" => "owner_projects#index", via: :get
   match "search" => "global_projects#index", via: :get
 
+  concern :card_features_for_form do
+    resources :annotations, only: [:create, :update]
+    resources :derivative_cards, only: [:create, :update]
+  end
+
+  concern :card_features_for_link do
+    resources :annotations, except: [:create, :update]
+    resources :derivative_cards, except: [:create, :update]
+  end
+
   concern :owner do
     resources :projects, only: [:create, :update] do
-      resource :recipe, only: [:update] do
-        resources :recipe_cards do
-          resources :annotations
-          resources :derivative_cards
-        end
+      resource :recipe, only: :update do
+        resources :states, only: [:create, :update], concerns: :card_features_for_form
+        resources :transitions, only: [:create, :update], concerns: :card_features_for_form
       end
-      resource :note, only: [] do
-        resources :note_cards
+      resource :note, only: :update do
+        resources :note_cards, only: [:create, :update]
       end
-      resources :usages
+      resources :usages, only: [:create, :update]
     end
   end
 
@@ -34,17 +42,15 @@ Gitfab2::Application.routes.draw do
   end
 
   resources :global_projects, only: :index
-  resources :projects, path: "/:owner_name" do
-    resources :collaborators
+  resources :projects, path: "/:owner_name", except: [:create, :update] do
+    resources :collaborators, except: [:create, :update]
     resource :note, only: :show do
-      resources :note_cards do
-        resources :annotations
-        resources :derivative_cards
-      end
+      resources :note_cards, except: [:create, :update]
     end
-    resource :recipe, only: [:show, :update] do
-      resources :recipe_cards
+    resource :recipe, only: :show do
+      resources :states, except: [:create, :update], concerns: :card_features_for_link
+      resources :transitions, except: [:create, :update], concerns: :card_features_for_link
     end
-    resources :usages, constraints: {id: /.+/}
+    resources :usages, constraints: {id: /.+/}, except: [:create, :update]
   end          
 end

@@ -1,1 +1,1 @@
-json.success true
+json.html (render "annotations/annotation", card: @annotation, owner: @owner.name, project: @project, recipe_card: @recipe_card, annotation: @annotation)

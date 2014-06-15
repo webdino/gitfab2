@@ -4,7 +4,7 @@ class AnnotationsController < ApplicationController
   before_action :load_recipe
   before_action :load_recipe_card
   before_action :load_annotation, only: [:edit, :update, :destroy]
-  before_action :build_annotation, only: :create
+  before_action :build_annotation, only: [:new, :create]
 
   def new
   end
@@ -14,7 +14,7 @@ class AnnotationsController < ApplicationController
 
   def create
     if @annotation.save
-      render :create
+      render result_view
     else
       render "errors/failed", status: 400
     end
@@ -22,7 +22,7 @@ class AnnotationsController < ApplicationController
 
   def update
     if @annotation.update annotation_params
-      render :update
+      render result_view
     else
       render "errors/failed", status: 400
     end
@@ -37,6 +37,11 @@ class AnnotationsController < ApplicationController
   end
 
   private
+  def result_view
+    klass = @recipe_card.class
+    view_name = "#{parametize(klass)}_annotation"
+  end
+
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)
@@ -51,7 +56,13 @@ class AnnotationsController < ApplicationController
   end
 
   def load_recipe_card
-    @recipe_card = @recipe.recipe_cards.find params[:recipe_card_id]
+    Card::RecipeCard.subclasses.each do |klass|
+      parameter_name = "#{parametize(klass)}_id"
+      if params[parameter_name]
+        @recipe_card = @recipe.recipe_cards.find params[parameter_name]
+        break
+      end
+    end
   end
 
   def load_annotation
@@ -66,5 +77,9 @@ class AnnotationsController < ApplicationController
     if params[:annotation]
       params.require(:annotation).permit Card::Annotation.updatable_columns
     end
+  end
+
+  def parametize klass
+    klass.to_s.split(/::/).last.downcase
   end
 end

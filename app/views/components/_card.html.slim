@@ -1,6 +1,12 @@
-article.card
-  h1.title
+article class="card #{card._type.split(/::/).last.downcase}" data-position="#{card.try(:position)}"
+  h1.title 
     == card.title
+  .type
+    'type:
+    == card._type
+  .position
+    'position:
+    == card.try(:position)
   figure
     ul
       - card.figures.each do |figure|
@@ -8,6 +14,6 @@ article.card
           == image_tag figure
   .description
     == card.description
-  footer
-    == link_to "delete", resources, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-    == link_to "edit", resources.unshift(:edit), remote: true, class: "btn edit-card", "data-container" => ".card"
+  footer  
+  == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+  == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"

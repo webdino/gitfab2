@@ -7,7 +7,7 @@ class Card::RecipeCard < Card
 
   class << self
     def updatable_columns
-      super + [:position]
+      super + [:position, :move_to]
     end
   end
 end
