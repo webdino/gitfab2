@@ -1,4 +1,13 @@
-== form_for resources, html: {class: "card-form"}, remote: true do |f|
+== nested_form_for resources, html: {class: "card-form"}, remote: true do |f|
   == f.text_field :title
   == f.text_field :description
+  == f.fields_for :figures do |ff|
+    == ff.file_field :content
+    == ff.text_field :link
+  == f.link_to_add "Add a figure", :figures
+  == f.fields_for :attachments do |af|
+    == af.file_field :content
+    == af.text_field :link
+  == f.link_to_add "Add a Attachments", :attachments
   == f.submit "Submit", class: "submit"
+  == link_to "Cancel", "#", class: "cancel-btn"
