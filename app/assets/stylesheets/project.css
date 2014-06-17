@@ -6,4 +6,5 @@
  *= require_tree ./fancybox
  *= require jquery.ui.selectable
  *= require ./card
+ *= require select2
  */

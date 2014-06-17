@@ -41,6 +41,7 @@ gem "acts_as_votable", "~> 0.8.0"
 gem "paranoia", github: "radar/paranoia", branch: "rails4"
 gem "nokogiri"
 gem "omniauth-github"
+gem "select2-rails"
 
 gem "mongoid", "~> 4.0.0rc1"
 gem "mongoid_slug"
