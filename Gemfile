@@ -56,7 +56,7 @@ end
 group :development, :test do
   gem "spring"
   gem "spring-commands-rspec"
-  gem "rspec-rails", github: 'rspec/rspec-rails'
+  gem "rspec-rails", github: "rspec/rspec-rails"
   gem "guard-rspec"
   gem "rspec-collection_matchers"
   gem "mongoid-rspec"
