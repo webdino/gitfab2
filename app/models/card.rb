@@ -24,6 +24,10 @@ class Card
     end
   end
 
+  def is_taggable?
+    self.is_a? Taggable
+  end
+
   class << self
     def updatable_columns
       [:id, :title, :description, :_type,
