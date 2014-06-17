@@ -23,3 +23,4 @@
 //= require_tree ./tinymce-plugins
 //= require ./markup
 //= require ./card
+//= require select2

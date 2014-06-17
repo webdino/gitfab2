@@ -3,4 +3,5 @@
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./groups
+ *= require select2
  */
