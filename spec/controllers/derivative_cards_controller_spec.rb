@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe DerivativeCardsController, type: :controller do
+  disconnect_sunspot
+  render_views
+
   let(:project){FactoryGirl.create :user_project}
   let(:user){project.owner}
   let(:state){project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"}
