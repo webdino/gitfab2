@@ -1,0 +1,37 @@
+- if can? :manage, project
+  == form_for project_collaborators_path(owner_name: project.owner.name, project_id: project), remote: true, html: {id: "new_collaboration"} do |f|
+    == hidden_field_tag :user_id
+    == f.submit "add", class: "btn"
+
+- content_for :bottom do
+
+  coffee:
+    $ ->
+      $("#user_id").select2 {
+        width: "40%",
+        placeholder: "Choose a collaborator",
+        allowClear: true,
+        ajax: {
+          url: "/users.json",
+          dataType: "json",
+          cache: false,
+          results: (data, page) ->
+            usersList = []
+            ownerName = $("#owner > span:nth-child(2)").text()
+            usersList.push ownerName
+            $(".collaboration > span.name").each (index, element) ->
+              usersList.push $(element).text()
+            return {
+              results: $.map(data, (user, i) ->
+                # TODO: 正規表現でuser名の取得、もしくはuser.nameでアクセスできるようにjson変更
+                userName = user.url.split("/").pop().split(".").shift()
+                if $.inArray(userName, usersList) == -1
+                  return {id: userName, text: userName}
+              )
+            }
+          }
+      }
+
+    window.clearSelect2Value = () ->
+      $("#s2id_user_id").select2 "val",""
+      $("input#collaboration_user_id").val ""

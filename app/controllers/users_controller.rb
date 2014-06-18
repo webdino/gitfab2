@@ -7,9 +7,9 @@ class UsersController < ApplicationController
 #  authorize_resource
 
   def index
-    @users = User.all
+    @users = User.asc(:name).all
   end
-  
+
   def edit
     @user = current_user
   end
