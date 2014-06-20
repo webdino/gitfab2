@@ -10,7 +10,7 @@ describe MembersController, type: :controller do
 
   describe "POST create" do
     before do
-      xhr :post, :create, group_id: group.id, member: {name: user.name}
+      xhr :post, :create, group_id: group.id, member_name: user.name
       user.reload
     end
     it{should render_template :create}

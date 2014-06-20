@@ -3,12 +3,11 @@ li.membership
   .name
     == link_to membership.user.name, projects_path(owner_name: membership.user.name)
   - if can?(:manage, membership) && membership.user != current_user
-    == link_to "remove", [@group, membership], method: :delete, remote: true, class: "remove-member-btn btn"
-    == form_for [@group, membership], remote: true do |f|
-      == f.hidden_field :user_id, value: membership.user.id
+    == link_to "remove", [membership.user, membership], method: :delete, remote: true, class: "remove-member-btn btn"
+    == form_for [membership.user, membership], remote: true do |f|
+      == f.hidden_field :user_id, value: membership.user.name
       == f.select :role, Membership::ROLE, {}, class: "membership-role", "data-persisted-role" => membership.role
       == f.submit "apply"
-
   - else
     .role
       == membership.role
