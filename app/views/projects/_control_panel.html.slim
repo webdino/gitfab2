@@ -20,8 +20,15 @@
         .owner
           == link_to image_tag(@owner.avatar), projects_path(owner_name: @owner.name), class: "thumbnail"
           == link_to @owner.name, projects_path(owner_name: @owner.name), class: "screen-name"
+        - unless @project.collaborators.empty?
+          ul.collaborators
+            - @project.collaborators.each do |collaborator|
+              li.collaborator
+                == link_to image_tag(collaborator.avatar), projects_path(owner_name: collaborator.name), class: "thumbnail"
+                == link_to collaborator.name, projects_path(owner_name: collaborator.name), class: "screen-name"
         - if can? :manage, @project
           == link_to "+ Add collaborator", project_collaborators_path(owner_name: @owner.name, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
+
         .timestamps
           time#created-datetime datetime = @project.created_at
             'created date

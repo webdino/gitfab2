@@ -4,3 +4,4 @@
 //= require turbolinks
 //= require_tree ./helpers
 //= require_tree ../../../vendor/assets/javascripts/tabby
+//= require select2
