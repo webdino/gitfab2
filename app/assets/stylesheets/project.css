@@ -7,4 +7,5 @@
  *= require jquery.ui.selectable
  *= require ./card
  *= require select2
+ *= require parsley
  */
