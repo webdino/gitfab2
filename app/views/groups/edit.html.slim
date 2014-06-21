@@ -11,16 +11,7 @@
       - @group.members.each do |member|
         == render "membership", membership: member.membership_in(@group)
 
-    - if can? :manage, @group
-      == form_for group_members_path(group_id: @group.id), remote: true do |f|
-        h2
-          'Add memeber
-        p
-          'user name
-        == f.text_field :user_id
-        == f.select :role, Membership::ROLE
-        == f.hidden_field :group_id, value: @group.id
-        == f.submit "Add Member", id: "add-btn", class: "btn"
+    == render "add_member", group: @group
 
 - content_for :bottom
   coffee:
@@ -48,6 +39,6 @@
       event.preventDefault
       $(this).closest("li").remove()
 
-    $(document).on "ajax:success", "#new_membership", (event, data) ->
+    $(document).on "ajax:success", "#new_member", (event, data) ->
       $("#members").append data.html
-      $("input#membership_user_id").val ""
+      clearSelect2Value()
