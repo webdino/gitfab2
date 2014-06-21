@@ -1,0 +1,2 @@
+class TransitionsController < RecipeCardsController
+end

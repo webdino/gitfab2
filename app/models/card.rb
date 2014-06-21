@@ -13,7 +13,7 @@ class Card
   field :title
   field :description
 
-  validates :_type, :description, presence: true
+  validates :_type, presence: true
 
   searchable_field :description
 
