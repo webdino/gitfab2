@@ -24,3 +24,5 @@
 //= require ./markup
 //= require ./card
 //= require select2
+//= require parsley
+//= require parsley.remote

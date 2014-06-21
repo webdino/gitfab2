@@ -238,6 +238,8 @@ GEM
     options (2.3.2)
     origin (2.1.1)
     orm_adapter (0.5.0)
+    parsley-rails (2.0.2.0)
+      railties (>= 3.0.0)
     polyglot (0.3.5)
     posix-spawn (0.3.8)
     pr_geohash (1.0.0)
@@ -450,6 +452,7 @@ DEPENDENCIES
   nokogiri
   omniauth-github
   paranoia!
+  parsley-rails
   progress_bar
   pry-debugger
   pry-rails
