@@ -3,8 +3,6 @@ class Card::Usage < Card
   embedded_in :project
   orderable column: :position
 
-  field :title
-
   class << self
     def updatable_columns
       super + [:position]

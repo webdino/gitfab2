@@ -54,10 +54,11 @@ $ ->
     .bind "ajax:success", (xhr, data) ->
       wrapper = createCardWrapper list, $(data.html)
       list.append wrapper
+      markup()
       list.trigger "card-order-changed"
-    .bind "ajax:complete", (xhr, data) ->
+    .bind "ajax:complete", (xhr, data) -> 
       hideFormContainer()
-    .bind "ajax:error", (event, xhr, status, error) ->
+    .bind "ajax:error", (xhr, status, error) -> 
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
@@ -68,7 +69,8 @@ $ ->
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
-    .bind "ajax:complete", (xhr, data) ->
+      markup()
+    .bind "ajax:complete", (xhr, data) -> 
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
@@ -85,8 +87,20 @@ $ ->
     list = wrapper.parent()
     wrapper.remove()
     list.trigger "card-order-changed"
+    markup()
     hideFormContainer()
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
     $.fancybox.close()
+
+  markup = ->
+    attachments = $(".attachment")
+    for attachment in attachments
+      markupid = attachment.getAttribute "data-markupid"
+      title = attachment.getAttribute "data-title"
+      content = attachment.getAttribute "data-content"
+      link = attachment.getAttribute "data-link"
+      url = content ? content : link
+      $("a#" + markupid).attr "href", url
+  markup()

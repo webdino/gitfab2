@@ -20,8 +20,8 @@
 //= require tinymce
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
-//= require ./markup
 //= require ./card
+//= require ./card_markup
 //= require select2
 //= require parsley
 //= require parsley.remote

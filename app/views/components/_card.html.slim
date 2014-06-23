@@ -8,6 +8,10 @@ article class="card #{card._type.split(/::/).last.downcase}" data-position="#{ca
           == image_tag figure.content
   .description
     == card.description
+  .attachments
+    - card.attachments.each do |attachment|
+      .attachment data-title="#{attachment.title}" data-link="#{attachment.link}" data-markupid="#{attachment.markup_id}" data-content="#{attachment.content}"
+
   footer
   == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
   == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
