@@ -60,6 +60,8 @@ GEM
     acts_as_commentable (4.0.1)
     acts_as_votable (0.8.0)
     arel (4.0.2)
+    autoprefixer-rails (1.3.1.20140619)
+      execjs
     bcrypt (3.1.7)
     better_errors (1.1.0)
       coderay (>= 1.0.0)
@@ -426,6 +428,7 @@ DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
   acts_as_votable (~> 0.8.0)
+  autoprefixer-rails
   better_errors
   bson_ext
   cancancan
