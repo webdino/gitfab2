@@ -1,4 +1,4 @@
-== nested_form_for resources, html: {class: "card-form", data: {"parsley-validate" => ""}}, remote: true do |f|
+== nested_form_for resources, html: {class: "card-form", "data-type" => "json", data: {"parsley-validate" => ""}}, remote: true do |f|
   == f.hidden_field :_type
   == f.text_field :title, class: "validate", data: {"parsely-trigger" => "keyup", "parsely-range" => "[1, 30]"}
   == f.text_area :description, class: "validate", data: {"parsley-trigger" => "keyup", "parsley-range" => "[1, 140]"}

@@ -32,11 +32,6 @@ $ ->
     formContainer.show()
 
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
-    #TODO: #421 fix parser error when creating card with image file
-    # console.log event
-    # console.log xhr
-    # console.log status
-    # console.log error
     alert error.message
     event.preventDefault()
     hideFormContainer()
@@ -54,18 +49,12 @@ $ ->
     $("form:first-child").parsley()
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
-      console.log data
       wrapper = createCardWrapper list, $(data.html)
       list.append wrapper
       list.trigger "card-order-changed"
     .bind "ajax:complete", (xhr, data) ->
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
-      #TODO: #421 fix parser error when creating a card with image file
-      # console.log event
-      # console.log xhr
-      # console.log status
-      # console.log error
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
