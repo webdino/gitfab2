@@ -1,5 +1,4 @@
 @import "mixins/clearfix.css.scss";
-@import "mixins/box-sizing.css.scss";
 
 #recipes-index {
   @include cf;
@@ -145,7 +144,7 @@
         font-weight: 700;
       }
       span#create-project {
-        @include border-box;
+        box-sizing: border-box;
         float: right;
         margin: 10px 40px;
         padding: 10px;
@@ -156,7 +155,7 @@
         font-weight: 700;
       }
       span#create-group-project {
-        @include border-box;
+        box-sizing: border-box;
         float: right;
         margin: 10px 30px 10px 40px;
         padding: 10px;

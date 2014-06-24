@@ -1,6 +1,5 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
-@import "mixins/box-sizing.css.scss";
 
 $popup-width: 360px;
 
@@ -35,11 +34,11 @@ $popup-width: 360px;
   min-height: 442px;
   border: solid 1px black;
   border-left: none;
-  @include border-box;
+  box-sizing: border-box;
 
   #tooltips {
     max-height: 118px;
-    @include border-box;
+    box-sizing: border-box;
     #slide-show-button,
     #fork-button {
       display: inline-block;
