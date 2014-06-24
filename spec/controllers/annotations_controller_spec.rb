@@ -12,8 +12,7 @@ describe AnnotationsController, type: :controller do
   describe "GET new" do
     before do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
-      xhr :get, :new, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id
+      xhr :get, :new, owner_name: user.id, project_id: project.id, transition_id: transition.id
     end
     it{should render_template :new}
   end
@@ -22,8 +21,8 @@ describe AnnotationsController, type: :controller do
     before do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
       annotation = transition.annotations.create description: "ann"
-      xhr :get, :edit, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id, id: annotation.id
+      xhr :get, :edit, owner_name: user.id, project_id: project.id,
+        transition_id: transition.id, id: annotation.id
     end
     it{should render_template :edit}
   end
@@ -32,9 +31,9 @@ describe AnnotationsController, type: :controller do
     before do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
       xhr :post, :create, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id, annotation: {description: "ann"}
+        transition_id: transition.id, annotation: {description: "ann"}
     end
-    it{should render_template :create}
+    it{should render_template :transition_annotation}
   end
 
   describe "PATCH update" do
@@ -42,17 +41,17 @@ describe AnnotationsController, type: :controller do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
       annotation = transition.annotations.create description: "ann"
       xhr :patch, :update, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id, id: annotation.id, annotation: {description: "_ann"}
+        transition_id: transition.id, id: annotation.id, annotation: {description: "_ann"}
     end
-    it{should render_template :update}
+    it{should render_template :transition_annotation}
   end
 
   describe "DELETE destroy" do
     before do
       transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
       annotation = transition.annotations.create description: "ann"
-      xhr :delete, :destroy, user_id: user.id, project_id: project.id,
-        recipe_card_id: transition.id, id: annotation.id
+      xhr :delete, :destroy, owner_name: user.id, project_id: project.id,
+        transition_id: transition.id, id: annotation.id
     end
     it{should render_template :destroy}
   end

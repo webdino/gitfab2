@@ -13,7 +13,7 @@ describe UsagesController, type: :controller do
   describe "GET new" do
     before do
       sign_in owner
-      xhr :get, :new, user_id: owner.id, project_id: project.id
+      xhr :get, :new, owner_name: owner.id, project_id: project.id
     end
     it{should render_template :new}
   end
@@ -22,17 +22,16 @@ describe UsagesController, type: :controller do
     before do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project
-      xhr :get, :edit, user_id: owner.id, project_id: project.id,
+      xhr :get, :edit, owner_name: owner.id, project_id: project.id,
         id: usage.id
     end
     it{should render_template :edit}
   end
 
-
   describe "POST create" do
     before do
       sign_in owner
-      xhr :post, :create, owner_name: owner.name,
+      xhr :post, :create, user_id: owner.name,
         project_id: project.name, usage: new_usage.attributes
       project.reload
     end
@@ -56,7 +55,7 @@ describe UsagesController, type: :controller do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project,
         title: "foo", description: "bar"
-      xhr :delete, :destroy, user_id: owner.id,
+      xhr :delete, :destroy, owner_name: owner.id,
         project_id: project.id, id: usage.id
     end
     it{should render_template :destroy}

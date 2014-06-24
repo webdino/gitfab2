@@ -46,7 +46,7 @@ gem "parsley-rails"
 gem "autoprefixer-rails"
 gem "fancybox2-rails"
 
-gem "mongoid", "~> 4.0.0rc1"
+gem "mongoid"
 gem "mongoid_slug"
 gem "mongoid_orderable", github: "johnny-miyake/mongoid_orderable"
 gem "bson_ext"

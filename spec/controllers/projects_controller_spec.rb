@@ -35,14 +35,14 @@ describe ProjectsController, type: :controller do
           let(:user){FactoryGirl.create :user}
           let(:new_project){FactoryGirl.build(:user_project)}
           before do
-            post :create, owner_name: user.name, project: new_project.attributes
+            post :create, user_id: user.name, project: new_project.attributes
           end
           it{should redirect_to project_path(id: new_project.name, owner_name: user.name)}
         end
         context "when forking" do
           let(:forker){FactoryGirl.create :user}
           before do
-            post :create, owner_name: forker.name, original_project_id: user_project.id
+            post :create, user_id: forker.name, original_project_id: user_project.id
           end
           it{should redirect_to project_path(id: user_project.name, owner_name: forker.name)}
         end
