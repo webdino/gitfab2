@@ -1,12 +1,11 @@
 @import "mixins/clearfix.css.scss";
-@import "mixins/box-sizing.css.scss";
 main#recipes-show {
   #making {
     width: 960px;
     padding: 10px 0px;
     min-height: 100px;
     border-bottom: solid 1px black;
-    @include content-box;
+    box-sizing: content-box;
     li.status {
       .photo {
         float: left;

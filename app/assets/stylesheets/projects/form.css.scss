@@ -1,5 +1,4 @@
 @import "mixins/clearfix.css.scss";
-@import "mixins/box-sizing.css.scss";
 
 #video-form, .video-form {
   display: none;
@@ -59,7 +58,7 @@ form.project-form {
   .buttons {
     margin-top: 30px;
     input[type=submit] {
-      @include content-box;
+      box-sizing: content-box;
       font-family: helvetica, sans-serif;
       font-size: 24px;
     }

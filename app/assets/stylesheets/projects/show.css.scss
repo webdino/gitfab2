@@ -1,7 +1,6 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
-@import "mixins/box-sizing.css.scss";
 main {
   ul#tabs {
     @include cf;
@@ -41,7 +40,7 @@ main {
   #tools,
   #materials {
     @include cf;
-    @include content-box;
+    box-sizing: content-box;
     border-bottom: solid 1px black;
     ul {
       @include spacing-row($recipe_main_width, 40px, 2);

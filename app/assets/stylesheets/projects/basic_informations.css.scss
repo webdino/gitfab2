@@ -1,6 +1,5 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
-@import "mixins/box-sizing.css.scss";
 
 #basic-informations {
   width: 100%;
@@ -208,7 +207,6 @@
             margin-bottom: 4px;
             overflow: hidden;
             white-space: normal;
-            -o-text-overflow: ellipsis;
             text-overflow:    ellipsis;
           }
           &:after {
