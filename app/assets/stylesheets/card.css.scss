@@ -2,10 +2,7 @@
 
 #card-form-container {
   display: none;
-  position: fixed;
   width: $recipe_main_width;
-  top: 0%;
-  left: 0%;
   background-color: #FFF;
   border: 1px solid #000;
   border-radius: 4px;
@@ -29,6 +26,7 @@
     color: #AAA;
     text-align: center;
     font-size: 24px;
+    line-height: 0.5em;
     
     &:hover {
       color: #BBB;
@@ -36,7 +34,7 @@
     }
   }
 
-  #note_card_title {
+  .card_title {
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -44,7 +42,7 @@
     font-size: 18px;
   }
   
-  #note_card_description {
+  textarea {
     display: block;
     width: 100%;
     height: 280px;
