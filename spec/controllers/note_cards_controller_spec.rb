@@ -13,14 +13,14 @@ describe NoteCardsController, type: :controller do
 
   describe "GET new" do
     before do
-      xhr :get, :new, user_id: user.id, project_id: project.id
+      xhr :get, :new, owner_name: user.id, project_id: project.id
     end
     it{should render_template :new}
   end
 
   describe "GET edit" do
     before do
-      xhr :get, :edit, user_id: user.id, project_id: project.id,
+      xhr :get, :edit, owner_name: user.id, project_id: project.id,
         id: note_card.id
     end
     it{should render_template :edit}
@@ -62,7 +62,7 @@ describe NoteCardsController, type: :controller do
 
   describe "DELETE destroy" do
     before do
-      xhr :delete, :destroy, user_id: user.id, project_id: project.id,
+      xhr :delete, :destroy, owner_name: user.id, project_id: project.id,
         id: note_card.id
       project.reload
     end

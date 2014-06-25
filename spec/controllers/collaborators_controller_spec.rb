@@ -13,12 +13,5 @@ describe CollaboratorsController, type: :controller do
     before{get :index, owner_name: project.owner.name, project_id: project.name}
     it{should render_template :index}
   end
-
-  describe "POST create" do
-    before do
-      xhr :post, :create, owner_name: project.owner.name,
-        project_id: project.name, user_id: user.id
-    end
-    it{should render_template :create}
-  end
+  
 end
