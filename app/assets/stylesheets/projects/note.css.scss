@@ -1,0 +1,47 @@
+@import "projects/_project_variables.css.scss";
+
+$card_list_width: $visual_width + $summary_width;
+
+#note-cards {
+  margin-top: 12px;
+  width: $card_list_width + 1;
+}
+
+#note-card-list {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  > li {
+    margin-bottom: 12px;
+    padding: 18px 18px 24px 18px;
+    box-sizing: border-box;
+    border: solid 1px #000;
+  }
+}
+
+.notecard {
+  .title {
+    font-size: 24px;
+    margin-bottom: 18px;
+    &:before {
+      content: "■ ";
+      color: gray;
+      font-size: 24px;
+    }
+  }
+  
+  figure {
+    margin-bottom: 18px;
+  }
+
+  .description {
+    margin-bottom: 12px;
+    padding-bottom: 24px;
+    border-bottom: solid 1px #AAA;
+    line-height: 1.65;
+  }
+  
+  .btn + .btn {
+    margin-left: 4px;
+  }
+}
+

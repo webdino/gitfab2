@@ -1,4 +1,5 @@
 @import "mixins/clearfix.css.scss";
+@import "_project_variables.css.scss";
 
 #recipes-index {
   @include cf;
@@ -203,7 +204,7 @@
         @include cf;
         display: block;
         padding-top: 8px;
-        width: 320px;
+        width: $summary_width;
         height: auto;
         min-height: 240px;
         position: relative;

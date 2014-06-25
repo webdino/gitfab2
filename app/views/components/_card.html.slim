@@ -1,12 +1,6 @@
 article class="card #{card._type.split(/::/).last.downcase}" data-position="#{card.try(:position)}"
-  h1.title
+  h2.title
     == card.title
-  .type
-    'type:
-    == card._type
-  .position
-    'position:
-    == card.try(:position)
   figure
     ul
       - card.figures.each do |figure|
