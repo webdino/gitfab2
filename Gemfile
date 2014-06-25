@@ -44,6 +44,7 @@ gem "omniauth-github"
 gem "select2-rails"
 gem "parsley-rails"
 gem "autoprefixer-rails"
+gem "fancybox2-rails"
 
 gem "mongoid", "~> 4.0.0rc1"
 gem "mongoid_slug"

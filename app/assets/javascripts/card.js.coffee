@@ -1,21 +1,23 @@
-window.createCardWrapper = (list, card) ->
+#= require fancybox
+
+createCardWrapper = (list, card) ->
   if list.get(0).tagName.toLowerCase() is "ul"
     li = $(document.createElement("li"))
     li.append card
   li
 
-window.getCardWrapper = (card) ->
+getCardWrapper = (card) ->
   parent = card.parent()
   if parent.get(0).tagName.toLowerCase() is "li"
     return parent
   card
 
-window.validateForm = (event) ->
+validateForm = (event) ->
   validated = false
   $(".card-form:first-child .validate").each (index, element) ->
     if $(element).val() != ""
       validated = true
-  if validated == false
+  unless validated
     alert "You cannot make empty card."
     event.preventDefault()
 
@@ -28,9 +30,6 @@ $ ->
     formContainer.empty()
     formContainer.hide()
 
-  $(document).on "click", ".new-card, .edit-card, .delete-card", () ->
-    formContainer.show()
-
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
     event.preventDefault()
@@ -41,6 +40,9 @@ $ ->
 
   $(document).on "submit", ".card-form", ->
     $(this).find(".submit").hide()
+
+  $(document).on "ajax:beforeSend", ".new-card", (xhr, data) ->
+    $.fancybox.showLoading()
 
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
     link = $(this)
@@ -56,6 +58,11 @@ $ ->
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
+    $.fancybox.open
+      padding: 0
+      href: "#card-form-container"
+      afterClose: () ->
+        console.log "Card closed."
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
     link = $(this)
@@ -78,3 +85,7 @@ $ ->
     wrapper.remove()
     list.trigger "card-order-changed"
     hideFormContainer()
+
+  $(document).on "click", ".cancel-btn", (event) ->
+    event.preventDefault()
+    $.fancybox.close()

@@ -3,8 +3,8 @@
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./projects
- *= require_tree ./fancybox
  *= require jquery.ui.selectable
+ *= require fancybox
  *= require ./card
  *= require select2
  *= require parsley
