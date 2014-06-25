@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "_project_variables.css.scss";
 
 #basic-informations {
   width: 100%;
@@ -177,7 +178,7 @@
       @include cf;
       height: 360px;
       .visual {
-        width: 480px;
+        width: $visual_width;
         height: 360px;
         background-size: contain;
         background-repeat: no-repeat;

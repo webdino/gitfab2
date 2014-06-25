@@ -42,7 +42,7 @@ $ ->
     $(this).find(".submit").hide()
     $.fancybox.close()
 
-  $(document).on "ajax:beforeSend", ".new-card", (xhr, data) ->
+  $(document).on "ajax:beforeSend", ".new-card, .edit-card", (xhr, data) ->
     $.fancybox.showLoading()
 
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
@@ -59,11 +59,6 @@ $ ->
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
-    $.fancybox.open
-      padding: 0
-      href: "#card-form-container"
-      afterClose: ->
-        console.log "Card closed."
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
     link = $(this)
@@ -77,6 +72,11 @@ $ ->
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
+  
+  $(document).on "ajax:success", ".new-card, .edit-card", ->
+    $.fancybox.open
+      padding: 0
+      href: "#card-form-container"
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $(this)
