@@ -35,11 +35,12 @@ $ ->
     event.preventDefault()
     hideFormContainer()
 
-  $(document).on "click", ".card-form > .submit", (event) ->
+  $(document).on "click", ".card-form .submit", (event) ->
     validateForm event
 
   $(document).on "submit", ".card-form", ->
     $(this).find(".submit").hide()
+    $.fancybox.close()
 
   $(document).on "ajax:beforeSend", ".new-card", (xhr, data) ->
     $.fancybox.showLoading()
@@ -61,7 +62,7 @@ $ ->
     $.fancybox.open
       padding: 0
       href: "#card-form-container"
-      afterClose: () ->
+      afterClose: ->
         console.log "Card closed."
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
