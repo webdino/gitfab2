@@ -2,10 +2,13 @@
 @import "mixins/rows.css.scss";
 @import "_project_variables.css.scss";
 
+$basic_info_bottom_margin: 12px;
+
 #basic-informations {
+  position: relative;
   width: 100%;
   height: 440px;
-  position: relative;
+  margin-bottom: $basic_info_bottom_margin;
   border: 1px solid #000;
   @include cf;
   p.forked-from {
@@ -117,6 +120,20 @@
         }
       }
     }
+    #edit-menu {
+      margin-top: $basic_info_bottom_margin;
+      a {
+        display: inline-block;
+        padding: 0 8px 0 8px;
+        border-right: 1px solid lightgray;
+        &:last-child {
+          border-right: none;
+        }
+        &:hover {
+          color: gray;
+        }
+      }
+    }
     #tool-options {
       padding: 20px;
       width: 100%;
@@ -180,8 +197,9 @@
       .visual {
         width: $visual_width;
         height: 360px;
-        background-size: contain;
+        background-size: cover;
         background-repeat: no-repeat;
+        background-position: top center;
         float: left;
         iframe {
           width: 100%;
