@@ -1,0 +1,7 @@
+#reciped-project-wrapper
+  h2
+    'Reciped Projects
+  ul#reciped-projects
+    / TODO: #450 Select representative project for reciped_projects
+    - @projects.each do |project|
+      == render "reciped_project", project: project

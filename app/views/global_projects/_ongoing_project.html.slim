@@ -1,0 +1,21 @@
+li.project
+  == link_to project_note_path(project.owner, project) do
+    .uppper
+      == link_to project.owner do
+        .user
+          span.avatar
+            == image_tag project.owner.avatar.thumb
+          span.name
+            == project.owner.name
+      .starred
+        == "#{project.likes.length} starred"
+      .meta
+        .notes
+          == "#{project.note.note_cards.length} note"
+        .since
+          == "since #{project.created_at}"
+    .bottom
+      .title
+        == link_to project.title.truncate(160), project_note_path(project.owner, project)
+      .description
+        == project.description.truncate 140

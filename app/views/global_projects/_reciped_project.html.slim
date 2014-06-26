@@ -1,0 +1,21 @@
+li.project
+  == link_to [project.owner, project] do
+    .uppper
+      == link_to project.owner do
+        .user
+          span.avatar
+            == image_tag project.owner.avatar.thumb
+          span.name
+            == project.owner.name
+      .starred
+        == "#{project.likes.length} starred"
+      .meta
+        .steps
+          == "#{project.recipe.recipe_cards.length} steps"
+        .since
+          == "since #{project.created_at}"
+    .bottom
+      .title
+        == link_to project.title.truncate(160), [project.owner, project]
+      .description
+        == project.description.truncate 140

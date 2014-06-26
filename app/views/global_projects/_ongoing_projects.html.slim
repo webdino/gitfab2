@@ -1,0 +1,7 @@
+#ongoing-project-wrapper
+  h2
+    'Ongoing Projects
+  ul#ongoing-projects
+    / TODO: #449 Select representative project for ongoing_projects
+    - @projects.each do |project|
+      == render "ongoing_project", project: project

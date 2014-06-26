@@ -19,10 +19,10 @@ section#recipes-utils
         == link_to "", "#fork-destinations", class: "fancybox"
       #fork-destinations
         - if signed_in?
-          == render "fork_destination", owner: current_user, project: @project
+          == render "recipes/fork_destination", owner: current_user, project: @project
           - current_user.groups.each do |group|
             - if can? :manage, group
-              == render "fork_destination", owner: group, project: @project
+              == render "recipes/fork_destination", owner: group, project: @project
 
   - if @recipe.persisted?
     section#user-info

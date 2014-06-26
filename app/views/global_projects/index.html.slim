@@ -1,7 +1,23 @@
-h1
-  'projects#index
+#index
+  #splash-wrapper
+    .container
+      .text
+        h1
+          'Making stories of Making something
+        p
+          'GitFAB は「文脈やストーリーと深く紐づいたモノづくり (FAB)」プロジェクトのための、共有ウェブサービスです。
+        p
+          '主にソフトウェア開発プロジェクトのための共有ウェブサービスである「GitHub」、ソーシャルネットワーキングサービスである「Facebook」とも部分的に連動し、モノづくりのプロジェクト全体の進行を管理、さらに、モノづくりの知識を適切に記述・保存・蓄積・伝達していくことを支援します。
+      .login
+        .sign-up
+        .sign-in
 
-ul
-  - @projects.each do |project|
-    li
-      == link_to project.title, project_path(project, owner_name: project.owner.name)
+
+  == render "features"
+  == render "ongoing_projects"
+  == render "reciped_projects"
+
+  ul
+    - @projects.each do |project|
+      li
+        == link_to project.title, project_path(project, owner_name: project.owner.name)

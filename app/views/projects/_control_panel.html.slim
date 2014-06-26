@@ -12,7 +12,7 @@
           == render "projects/fork_destination", owner: current_user, project: @project
           - current_user.groups.each do |group|
             - if can? :manage, group
-              == render "fork_destination", owner: group, project: @project
+              == render "projects/fork_destination", owner: group, project: @project
 
   - if @project.persisted?
     section#user-info
