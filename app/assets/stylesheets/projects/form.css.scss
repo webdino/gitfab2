@@ -1,5 +1,7 @@
 @import "mixins/clearfix.css.scss";
 
+$project_form_width: 703px;
+
 #video-form, .video-form {
   display: none;
   width: 340px;
@@ -42,10 +44,12 @@ form.project-form {
   }
 
   input#project_title {
-    width: 703px;
-    font-size: 36px;
+    width: $project_form_width;
+    font-size: 28px;
     font-weight: bold;
-    padding: 16px 0 21px 15px;
+    margin-bottom: 12px;
+    padding: 12px 0 14px 12px;
+    box-sizing: border-box;
     border: solid 1px #000;
   }
   input#project_name {
@@ -69,14 +73,15 @@ form.project-form {
   }
   #project-summary {
     @include cf;
+    width: $project_form_width;
     .description {
       float: left;
-      width: 240px;
+      width: 100%;
       h1 {
         width: 100%;
         font-size: 24px;
         height: auto;
-        margin: 0;
+        margin: 0 0 8px 0;
       }
       textarea {
         width: 100%;
@@ -87,14 +92,19 @@ form.project-form {
       }
     }
     .visual {
-      float: left;
+      position: relative;
+      width: $project_form_width;
       height: 360px;
+      margin-bottom: 12px;
+      padding: 24px;
+      box-sizing: border-box;
       font-size: 24px;
       text-align: center;
       background-size: contain;
-      background-repeat: no-repeat;
-      position: relative;
-
+      background: no-repeat top center;
+      &[style*="''"] {
+        border: 1px solid black;
+      }
       iframe {
         width: 480px;
         height: 360px;
@@ -107,13 +117,16 @@ form.project-form {
         #photo-upload-btn,
         #input-video-url-btn {
           display: none;
-          font-size: 24px;
-          font-weight: 700;
           position: absolute;
           z-index: 999;
-          top: 20%;
-          left: 26%;
+          top: 50%;
+          left: 50%;
+          width: 12em;
+          margin-left: -6em;
+          margin-top: -1.5em;
           padding: 20px;
+          font-size: 24px;
+          font-weight: 700;
         }
         #input-video-url-btn {
           top: 62%;

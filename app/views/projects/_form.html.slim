@@ -79,9 +79,9 @@
         reader = new FileReader()
         reader.onload = ->
           $("section.visual").css "background-image", "url('#{reader.result}')"
-          $("section.visual iframe").attr "src",""
-          $("#photo-upload-btn").css "color","black"
-          $("#input-video-url-btn").css "color","black"
+          $("section.visual iframe").attr "src", ""
+          $("#photo-upload-btn").css "color", "black"
+          $("#input-video-url-btn").css "color", "black"
         reader.readAsDataURL file
 
       disableVideoSubmitButton = ->
