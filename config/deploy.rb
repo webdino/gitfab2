@@ -5,7 +5,7 @@ lock "3.1.0"
 set :application, "gitfab2"
 set :repo_url, "https://github.com/mozilla-japan/gitfab2.git"
 set :rvm_type, :system
-set :rvm_ruby_version, "2.1.2-p95"
+set :rvm_ruby_version, "2.1.2"
 set :assets_roles, [:web, :app]
 
 # Default branch is :master
