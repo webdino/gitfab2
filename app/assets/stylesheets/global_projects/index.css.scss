@@ -1,0 +1,255 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
+
+#index {
+  margin-top: -40px;
+  width: 100%;
+  #splash-wrapper {
+    background: #00FF00;
+    .container {
+      @include cf;
+      padding: 120px 0 60px;
+      width: 960px;
+      height: 515px;
+      margin: 0 auto;
+      .text {
+        margin-left: 90px;
+        width: 540px;
+        height: 515px;
+        float: left;
+        h1 {
+          padding: 20px 0 5px;
+          width: 340px;
+          line-height: 63px;
+          font-size: 73px;
+          font-weight: 300;
+          font-family: Helvetica, sans-serif;
+          color: white;
+        }
+        .horizontal-border {
+          width: 210px;
+          height: 0px;
+          border-bottom: 1px solid #808080;
+        }
+        p {
+          width: 540px;
+          height: auto;
+          margin-top: 20px;
+          line-height: 22px;
+          font-size: 13px;
+          font-weight: 700;
+          font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+        }
+      }
+      .scaffold {
+        float: left;
+        width: 320px;
+        h2 {
+          padding-top: 10px;
+          width: 211px;
+          color: #808080;
+          line-height: 33px;
+          font-size: 30px;
+          font-weight: 700;
+          font-family: Helvetica, sans-serif;
+        }
+        .sign-up {
+          @include cf;
+          margin-left: -60px;
+          width: 380px;
+          .arrow {
+            float:left;
+            margin-top: 30px;
+            width: 60px;
+            height: 60px;
+          }
+          .inner {
+            float: left;
+            border-left: 1px solid white;
+            padding-left: 15px;
+            margin: 30px 20px;
+            p {
+              margin-top: 5px;
+              width: 240px;
+              height: auto;
+              line-height: 22px;
+              font-size: 12px;
+              font-weight: 500;
+              font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+            }
+          }
+        }
+        .search-project {
+          @include cf;
+          margin-left: -60px;
+          width: 400px;
+          .arrow {
+            float:left;
+            width: 60px;
+            height: 60px;
+          }
+          .inner {
+            float: left;
+            border-left: 1px solid white;
+            padding-left: 15px;
+            margin: 0px 0px 30px 20px;
+            #search-box {
+              #search-form {
+                margin: 5px 0 2px;
+                width: 285px;
+                height: 26px;
+                font-size: 12px;
+                font-family: 'Verdana', sans-serif;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  #ongoing {
+    background: #E6E6E6;
+    padding-bottom: 75px;
+  }
+  #reciped {
+    background: white;
+    padding-bottom: 75px;
+  }
+  .projects-wrapper {
+    width: 100%;
+    .horizontal-border {
+      width: 60px;
+      height: 0px;
+      border-bottom: 1px solid;
+    }
+    .white {
+      border-color: white;
+    }
+    .green {
+      border-color: #00FF00;
+    }
+    .f-right{
+      float: right;
+    }
+    .m-b-5 {
+      margin-bottom: 5px;
+    }
+    .m-b-10 {
+      margin-bottom: 10px;
+    }
+    .container {
+      @include cf;
+      width: 960px;
+      margin: 0 auto;
+      padding-top: 50px;
+      .left {
+        @include cf;
+        float: left;
+        width: 150px;
+        text-align: right;
+        h2 {
+          margin-bottom: 40px;
+          line-height: 40px;
+          font-size: 35px;
+          font-weight: 700;
+          font-family: Helvetica, sans-serif;
+          color: black;
+        }
+      }
+      .right {
+        @include cf;
+        float: left;
+        margin-left: 20px;
+        width: 780px;
+        #ongoing-projects, #reciped-projects {
+          .project {
+            width: 220px;
+            background: #F2F2F2;
+            .inner {
+              margin: 5px 5px 20px;
+              .image {
+                display: block;
+                margin-bottom: 10px;
+                width: 210px;
+                height: 158px;
+                background-size: contain;
+                background: no-repeat top center;
+              }
+              .title {
+                margin-bottom: 5px;
+                line-height: 24px;
+                font-size: 17px;
+                font-weight: 500px;
+                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+              }
+              .description {
+                margin-bottom: 5px;
+                line-height: 28px;
+                font-size: 12px;
+                font-weight: 500px;
+                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+              }
+              .status {
+                margin-bottom: 5px;
+                font-size: 10px;
+                font-weight: 500;
+                font-family: 'Verdana', sans-serif;
+                .user {
+                  display: inline-block;
+                  margin : 5px;
+                  border-right: 1px solid #808080;
+                  .icon {
+                    display: inline-block;
+                    vertical-align: middle;
+                    max-width: 20px;
+                    max-height: 20px;
+                  }
+                  .name {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin: 0 5px;
+                  }
+                }
+                .starred {
+                  display: inline-block;
+                  margin : 5px;
+                  .icon {
+                    display: inline-block;
+                    vertical-align: middle;
+                    max-width: 20px;
+                    max-height: 20px;
+                  }
+                  .count {
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 5px;
+                  }
+                }
+              }
+              .meta {
+                line-height: 18px;
+                font-size: 12px;
+                font-weight: 500;
+                font-family: 'Verdana', sans-serif;
+                .notes {
+                  margin-bottom: 5px;
+                }
+              }
+            }
+          }
+        }
+        .more {
+          @include cf;
+          float: right;
+          margin-top: -80px;
+          bottom: 75px;
+          width: 80px;
+          text-align: right;
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
