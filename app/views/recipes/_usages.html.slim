@@ -1,7 +1,7 @@
 section#usages
   h1
     'Usages
-  ul#usage-list
+  ul#usage-list.card-list
     - @project.usages.each do |usage|
       li
         == render "components/card", card: usage, delete_url: project_usage_path(owner_name: @owner.name, project_id: @project.name, id: usage.id), edit_url: edit_project_usage_path(owner_name: @owner.name, project_id: @project.name, id: usage.id)
