@@ -69,7 +69,7 @@ group :development, :test do
   gem "rb-fsevent"
   gem "growl"
   gem "pry-rails"
-  gem "pry-debugger"
+  gem "pry-byebug"
   gem "better_errors"
   gem "resque-web", require: "resque_web"
 end

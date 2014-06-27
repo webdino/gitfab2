@@ -70,6 +70,9 @@ GEM
     bson (2.3.0)
     bson_ext (1.5.1)
     builder (3.1.4)
+    byebug (2.7.0)
+      columnize (~> 0.3)
+      debugger-linecache (~> 1.2)
     cancancan (1.8.1)
     capistrano (3.1.0)
       i18n
@@ -110,12 +113,7 @@ GEM
     columnize (0.8.9)
     connection_pool (2.0.0)
     database_cleaner (1.3.0)
-    debugger (1.6.8)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.3.5)
     debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.3.5)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -259,9 +257,9 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pry-debugger (0.2.2)
-      debugger (~> 1.3)
-      pry (~> 0.9.10)
+    pry-byebug (1.3.2)
+      byebug (~> 2.7)
+      pry (~> 0.9.12)
     pry-rails (0.3.2)
       pry (>= 0.9.10)
     rack (1.5.2)
@@ -465,7 +463,7 @@ DEPENDENCIES
   paranoia!
   parsley-rails
   progress_bar
-  pry-debugger
+  pry-byebug
   pry-rails
   rails (= 4.0.0)
   rails-config
