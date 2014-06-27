@@ -6,7 +6,10 @@ class Attachment
   
   embedded_in :attachable, polymorphic: true
 
+  field :markup_id
   field :link
+  field :title
+  field :description
 
   def dup_document
     dup.tap do |doc|
@@ -17,7 +20,7 @@ class Attachment
 
   class << self
     def updatable_columns
-      [:id, :content, :link]
+      [:id, :content, :link, :_type, :title, :description, :markup_id]
     end
   end
 

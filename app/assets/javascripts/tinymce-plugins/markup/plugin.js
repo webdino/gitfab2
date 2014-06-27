@@ -27,7 +27,7 @@ var MarkupPluginFactory = {
         return containerElement;
       }
 
-      function createFileForm(label, name) {
+      function createFileForm(label, name, value) {
         var containerElement = $(document.createElement("div"));
         containerElement.addClass("container");
         containerElement.addClass(name);
@@ -38,39 +38,12 @@ var MarkupPluginFactory = {
         inputElement.attr("name", name);
         containerElement.append(labelElement);
         containerElement.append(inputElement);
-        return containerElement;
-      }
-
-      function createImageForm(label, name, src) {
-        var containerElement = $(document.createElement("div"));
-        containerElement.addClass("container");
-        containerElement.addClass(name);
-        var labelElement = $(document.createElement("label"));
-        labelElement.text(label);
-        var inputElement = $(document.createElement("input"));
-        inputElement.attr("type", "file");
-        inputElement.attr("name", name);
-        var imageElement = $(document.createElement("img"));
-        if (!src || src.length == 0) {
-          src = "/assets/fallback/noimage_240x180.png"
+        if (value) {
+          var valueElement = $(document.createElement("div"));
+          valueElement.text(value);
+          containerElement.addClass("value");
+          containerElement.append(valueElement);
         }
-        imageElement.attr("src", src);
-        containerElement.append(labelElement);
-        containerElement.append(inputElement);
-        containerElement.append(imageElement);
-
-        imageElement.click(function(e) {
-          inputElement.trigger("click");
-        });
-        inputElement.change(function(e) {
-          var target = e.target;
-          var file = target.files[0];
-          var reader = new FileReader();
-          reader.onload = function() {
-            imageElement.attr("src", reader.result);
-          }
-          reader.readAsDataURL(file);
-        });
         return containerElement;
       }
 
@@ -88,41 +61,36 @@ var MarkupPluginFactory = {
         return containerElement;
       }
 
-      function createForm(data, tools) {
+      function createForm(id, data, tools) {
         var formElement = $(document.createElement("form"));
-        formElement.attr("id", "markup-form");
-        var linkElement = $(document.createElement("div")).text("link");
-        linkElement.addClass("link");
-        linkElement.addClass("form-field");
-        var urlElement = createTextForm("url", "url", data.url);
-        urlElement.addClass("link-selection");
-        linkElement.append(urlElement);
-        var orElement = $(document.createElement("div")).text("OR").addClass("center");
-        linkElement.append(orElement);
-        var attachmentElement = createFileForm("attachment", "attachment");
-        attachmentElement.addClass("link-selection");
-        linkElement.append(attachmentElement);
-        linkElement.addClass("form-field");
-        formElement.append(linkElement);
-        if (tools.indexOf("link") < 0) {
-          linkElement.css("display", "none");
-        }
-        if (tools.indexOf("attachment") < 0) {
-          orElement.css("display", "none");
-          attachmentElement.css("display", "none");
-        }
-        var textElement = createTextForm("text", "text", data.text);
+        formElement.attr("id", id);
+        formElement.attr("class", "markup-form");
+
+        var textElement = createTextForm("name", "name", data.name);
         textElement.addClass("form-field");
         formElement.append(textElement);
-        if (tools.indexOf("text") < 0) {
+        if (tools.indexOf("name") < 0) {
           textElement.css("display", "none");
         }
-        var imageElement = createImageForm("image", "image", data.image);
-        imageElement.addClass("form-field");
-        formElement.append(imageElement);
-        if (tools.indexOf("image") < 0) {
-          imageElement.css("display", "none");
+
+        var attachmentElement = createFileForm("attachment", "attachment", data.attachment);
+        attachmentElement.addClass("form-field");
+        formElement.append(attachmentElement);
+        if (tools.indexOf("attachment") < 0) {
+          attachmentElement.css("display", "none");
         }
+
+        if (tools.indexOf("link") >= 0 && tools.indexOf("attachment") >= 0) {
+          var orElement = $(document.createElement("div")).text("OR").addClass("center");
+          formElement.append(orElement);
+        }
+
+        var urlElement = createTextForm("url", "url", data.url);
+        formElement.append(urlElement);
+        if (tools.indexOf("link") < 0) {
+          urlElement.css("display", "none");
+        }
+
         var descriptionElement = createTextAreaForm("description", "description", data.description);
         descriptionElement.addClass("form-field");
         formElement.append(descriptionElement);
@@ -142,32 +110,32 @@ var MarkupPluginFactory = {
         return null;
       }
 
-      function upload(action, type, data) {
-        var formData = new FormData();
-        formData.append("file", data.file);
-        formData.append("text", data.text);
-        formData.append("utf8", "✓");
-        formData.append("authenticity_token", getMetaContents("csrf-token"));
-        formData.append("hint", editor.getParam("uploadimage_hint", ""));
-        var deferred = new $.Deferred();
-        $.ajax({
-          url: action,
-          type: "post",
-          data: formData,
-          processData: false,
-          contentType: false,
-          dataType: "json",
-          complete: function(){},
-          error: function(request, status, error) {
-            var message = request.status + "\n" + status +"\n" + error.message;
-            deferred.reject(message);
-          },
-          success: function(response) {
-            response.type = type;
-            deferred.resolve(response);
-          }
-        });
-        return deferred.promise();
+      function applyToDocument(editor, originalData, result) { 
+        var anchor = originalData.anchor || document.createElement("a");
+        anchor = $(anchor);
+        anchor.attr("id", result.id);
+        anchor.text(result.name);
+        anchor.attr("href", result.url == "" ? "#" : result.url);
+        anchor.attr("class", result.kind);
+        if (result.attachment) {
+          anchor.attr("data-attachment", result.attachment.name);
+        }
+        anchor.attr("data-description", result.description);
+        if (!originalData.anchor) {
+          editor.execCommand("mceInsertContent", false, anchor.get(0).outerHTML);
+        }
+      }
+
+      function uuid() {
+        var s = [];
+        var hexDigits = "0123456789abcdef";
+        for (var i = 0; i < 36; i++) {
+          s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+        }
+        s[14] = "4";
+        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);
+        s[8] = s[13] = s[18] = s[23] = "-";
+        return s.join("");
       }
 
       function showDialog() {
@@ -176,20 +144,20 @@ var MarkupPluginFactory = {
         var anchorElement = editor.dom.getParent(selectedElement, "a");
         if (anchorElement) {
           data.anchor = anchorElement;
-          data.text = $(anchorElement).text();
+          data.id = editor.dom.getAttrib(anchorElement, "id");;
+          data.name = $(anchorElement).text();
           data.url = editor.dom.getAttrib(anchorElement, "href");
-          data.image = editor.dom.getAttrib(anchorElement, "data-image");
           data.kind = anchorElement.getAttribute("class");
+          data.attachment = editor.dom.getAttrib(anchorElement, "data-attachment");
           data.description = editor.dom.getAttrib(anchorElement, "data-description");
-          data.itemId = editor.dom.getAttrib(anchorElement, "data-item-id");
-          data.itemType = editor.dom.getAttrib(anchorElement, "data-item-type");
         } else {
-          data.text = editor.selection.getContent({format: "text"});
+          data.name = editor.selection.getContent({format: "text"});
           data.url = "";
           data.kind = options.kind;
           data.description = "";
         }
-        var form = createForm(data, options.tools);
+        var formid = "markup-form-" + (new Date()).getTime();
+        var form = createForm(formid, data, options.tools);
         var dialog = editor.windowManager.open({
           title: editor.translate(options.tooltip),
           width:  options.width,
@@ -198,71 +166,21 @@ var MarkupPluginFactory = {
             {
               text: editor.translate("Markup"),
               onclick: function() {
+                var id = data.id || uuid();
                 var kind = options.kind;
-                var url = $("#markup-form input[name=url]").val();
-                var text = $("#markup-form input[name=text]").val();
-                var description = $("#markup-form textarea").val();
-                var attachmentElement = $("#markup-form input[name=attachment]").get(0);
-                var imageElement = $("#markup-form input[name=image]").get(0);
-                var promises = []
-                var uploadURL = $("#markup-help").attr("data-" + kind + "-upload-path");
-                if (attachmentElement.files && attachmentElement.files.length != 0) {
-                    promises.push(upload(uploadURL, "attachment", {file: attachmentElement.files[0], text: text}));
-                }
-                if (imageElement.files && imageElement.files.length != 0) {
-                    promises.push(upload(uploadURL, "image", {file: imageElement.files[0], text: text}));
-                }
-                $.when.apply($, promises).done(function() {
-                  var image = data.image || "";
-                  var itemId = null;
-                  var itemType = null;
-                  if (url == data.url) {
-                    itemId = data.itemId;
-                    itemType = data.itemType;
-                  }
-                  for (var i = 0, n = arguments.length; i < n; i++) {
-                    var updata = arguments[i];
-                    if (updata.type == "image") {
-                      image = updata.image.url;
-                    } else if (updata.type == "attachment") {
-                      //attachment is stronger than url
-                      url = updata.image.url;
-                    }
-                    if (updata.item) {
-                      itemId = updata.item.id
-                    }
-                    itemType = updata.klass;
-                  }
-                  if (text.length == 0) {
-                    if (url.length == 0) {
-                      editor.windowManager.close();
-                      return;
-                    }
-                    text = url;
-                  }
-                  if (url.length < 1) {
-                    url = image
-                  }
-                  var anchor = data.anchor || document.createElement("a");
-                  anchor = $(anchor);
-                  anchor.text(text);
-                  anchor.attr("href", url);
-                  anchor.attr("class", kind);
-                  anchor.attr("data-image", image);
-                  anchor.attr("data-description", description);
-                  if (itemId) {
-                    anchor.attr("data-item-id", itemId);
-                  }
-                  if (itemType) {
-                    anchor.attr("data-item-type", itemType);
-                  }
-                  if (!data.anchor) {
-                    editor.execCommand("mceInsertContent", false, anchor.get(0).outerHTML);
-                  }
+                var url = $("#" + formid + " input[name=url]").val();
+                var name = $("#" + formid + " input[name=name]").val();
+                var description = $("#" + formid + " textarea").val();
+                var attachmentElement = $("#" + formid + " input[name=attachment]").get(0);
+                var attachment = (attachmentElement.files && attachmentElement.files.length != 0) ? attachmentElement.files[0] : null;
+                if (name == "" && url == "" && !attachment) {
                   editor.windowManager.close();
-                }).fail(function(e) {
-                  alert(e);
-                });
+                  return;
+                }
+                var result = {id: id, kind: kind, url: url, name: name, description: description, attachment: attachment, attachmentElement: attachmentElement};
+                applyToDocument(editor, data, result);
+                $(form).trigger("card-attached", result);
+                editor.windowManager.close();
               },
               subtype: "primary"
             },
