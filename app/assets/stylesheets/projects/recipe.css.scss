@@ -1,0 +1,81 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
+
+#recipe-card-list {
+  width: 100%;
+  > li {
+    width: 100%;
+    float: left;
+  }
+  figure {
+    float: left;
+    margin-right: 24px;
+    overflow: hidden;
+    img {
+      width: 280px;
+    }
+  }
+  .card-content {
+    float: left;
+    width: 100%;
+    margin-bottom: 24px;
+    .description {
+      float: left;
+    }
+    .attachments {
+      @include cf;
+      float: left;
+    }
+  }
+  
+  .transition-wrapper {
+    border: none;
+    .transition-content {
+      float: left;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    figure {
+      width: 15%;
+      margin: 0;
+      padding-left: 36px;
+      padding-right: 48px;
+      box-sizing: border-box;
+      img {
+        width: auto;
+      }
+    }
+    .annotation-list {
+      float: left;
+      width: 85%;
+      li {
+        width: 100%;
+        overflow: auto;
+        padding-bottom: 16px;
+      }
+      h2 {
+        font-size: 20px;
+        font-weight: normal;
+        margin-bottom: 4px;
+      }
+    }
+    .card-content {
+      float: left;
+      width: 100%;
+      margin-bottom: 8px;
+      padding-bottom: 0;
+      border: none;
+      .description {
+        float: left;
+      }
+      .attachments {
+        @include cf;
+        float: left;
+      }
+    }
+    footer {
+      width: 100%;
+      float: left;
+    }
+  }
+}

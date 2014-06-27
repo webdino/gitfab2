@@ -8,21 +8,8 @@ $card_list_width: $visual_width + $summary_width;
   width: $card_list_width + 1;
 }
 
-#note-card-list {
-  margin-bottom: 24px;
-  padding-top: 8px;
-  > li {
-    margin-bottom: 12px;
-    padding: 18px 18px 24px 18px;
-    box-sizing: border-box;
-    border: $common-border;
-  }
-}
-
 .notecard {
   .title {
-    font-size: $article_font_size;
-    margin-bottom: 18px;
     &:before {
       content: "■ ";
       color: gray;
@@ -33,17 +20,4 @@ $card_list_width: $visual_width + $summary_width;
   figure {
     margin-bottom: 18px;
   }
-
-  .description {
-    margin-bottom: 12px;
-    padding-bottom: 24px;
-    border-bottom: $common-border;
-    border-color: #AAA;
-    line-height: 1.65;
-  }
-  
-  .btn + .btn {
-    margin-left: 4px;
-  }
 }
-

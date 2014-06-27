@@ -1,4 +1,6 @@
 - if card.instance_of?(Card::Transition)
-  == render "recipe_cards/transition", card: card, delete_url: project_recipe_transition_path(owner_name: @owner.name, project_id: @project.name, id: card.id), edit_url: edit_project_recipe_transition_path(owner_name: @owner.name, project_id: @project.name, id: card.id)
+  li.transition-wrapper
+    == render "recipe_cards/transition", card: card, delete_url: project_recipe_transition_path(owner_name: @owner.name, project_id: @project.name, id: card.id), edit_url: edit_project_recipe_transition_path(owner_name: @owner.name, project_id: @project.name, id: card.id)
 - else
-  == render "components/card", card: card, delete_url: project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, id: card.id), edit_url: edit_project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, id: card.id)
+  li
+    == render "components/card", card: card, delete_url: project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, id: card.id), edit_url: edit_project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, id: card.id)

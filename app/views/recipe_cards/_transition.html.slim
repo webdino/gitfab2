@@ -1,11 +1,12 @@
 - cardid = card._id
-article class="card transition" data-position="#{card.try(:position)}" id="#{cardid}"
+.transition-content
   figure
     == image_tag asset_path("arrow.png")
-  ul.annotation-list
-    - card.annotations.each do |annotation|
-      li
-        == render "components/card", card: annotation, delete_url: project_recipe_transition_annotation_path(owner_name: @owner.name, project_id: @project.name, transition_id: card.id, id: annotation.id), edit_url: edit_project_recipe_transition_annotation_path(owner_name: @owner.name, project_id: @project.name, transition_id: card.id, id: annotation.id)
+  article class="card transition" data-position="#{card.try(:position)}" id="#{cardid}"
+    ul.annotation-list
+      - card.annotations.each do |annotation|
+        li
+          == render "components/card", card: annotation, delete_url: project_recipe_transition_annotation_path(owner_name: @owner.name, project_id: @project.name, transition_id: card.id, id: annotation.id), edit_url: edit_project_recipe_transition_annotation_path(owner_name: @owner.name, project_id: @project.name, transition_id: card.id, id: annotation.id)
+footer
   == link_to "+ Add Annotation", new_project_recipe_transition_annotation_path(owner_name: @owner.name, project_id: @project.name, transition_id: card.id), remote: true, class: "btn new-card", "data-list" => "#" + cardid + " .annotation-list"
-  
   == link_to "DELETE", project_recipe_transition_path(owner_name: @owner.name, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
