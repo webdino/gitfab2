@@ -1,4 +1,5 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
 
 #groups-index {
   display: inline-block;
@@ -8,47 +9,44 @@
     display: inline-block;
     width: 700px;
     margin: 20px 20px 0 0;
-    border: 1px solid black;
+    border: $common-border;
     border-bottom: none;
 
     h1 {
       background-color: #eee;
       padding: 10px 0 10px 10px;
       font-size: 21px;
-      border-bottom: 1px solid black;
+      border-bottom: $common-border;
     }
 
-    ul#groups{
-      li.group {
-        @include cf;
-        height: 50px;
-        border-bottom: 1px solid black;
-        .avatar {
-          display: inline-block;
-          margin: 5px 10px;
-          width: 40px;
-          height: 40px;
-        }
-        .name {
-          display: inline-block;
-          vertical-align: top;
-          margin: 19px 0 0 10px;
-          font-size: 18px;
-        }
-        .leave-btn {
-          float: right;
-          margin: 10px 10px 0 0;
-          padding: 5px;
-          font-size: 18px;
-          color: white;
-          background: gray;
-          &:hover {
-            background: red;
-          }
+    ul#groups li.group {
+      @include cf;
+      height: 50px;
+      border-bottom: $common-border;
+      .avatar {
+        display: inline-block;
+        margin: 5px 10px;
+        width: 40px;
+        height: 40px;
+      }
+      .name {
+        display: inline-block;
+        vertical-align: top;
+        margin: 19px 0 0 10px;
+        font-size: 18px;
+      }
+      .leave-btn {
+        float: right;
+        margin: 10px 10px 0 0;
+        padding: 5px;
+        font-size: 18px;
+        color: white;
+        background: gray;
+        &:hover {
+          background: red;
         }
       }
     }
-
   }
 
 }

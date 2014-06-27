@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
 
 $basic_info_bottom_margin: 12px;
@@ -9,7 +10,7 @@ $basic_info_bottom_margin: 12px;
   width: 100%;
   height: 440px;
   margin-bottom: $basic_info_bottom_margin;
-  border: 1px solid #000;
+  border: $common-border;
   @include cf;
   p.forked-from {
     line-height: 22px;
@@ -20,7 +21,7 @@ $basic_info_bottom_margin: 12px;
   #control-panel {
     height: 100%;
     margin-left: 720px;
-    border-left: 1px solid #000;
+    border-left: $common-border;
     @include cf;
 
     $popup-width: 360px;
@@ -31,7 +32,7 @@ $basic_info_bottom_margin: 12px;
       display: none;
 
       min-height: 442px;
-      border: solid 1px black;
+      border: $common-border;
       border-left: none;
 
       .fork-destination {
@@ -70,7 +71,7 @@ $basic_info_bottom_margin: 12px;
       }
       #slide-show-button {
         background-image: asset-url("slideshow.png");
-        border-right: 1px solid #000;
+        border-right: $common-border;
       }
       #fork-button {
         background-image: asset-url("fork.png");
@@ -78,7 +79,7 @@ $basic_info_bottom_margin: 12px;
     }
     #user-info {
       @include cf;
-      border-top: 1px solid #000;
+      border-top: $common-border;
       .inner {
         margin: 20px;
         .owner, .collaborator {
@@ -179,7 +180,7 @@ $basic_info_bottom_margin: 12px;
       font-size: 36px;
       font-weight: bold;
       height: 80px;
-      border-bottom: 1px solid #000;
+      border-bottom: $common-border;
       h1 {
         float: left;
         margin: 15px 0 0 15px;
@@ -226,7 +227,7 @@ $basic_info_bottom_margin: 12px;
             margin-bottom: 4px;
             overflow: hidden;
             white-space: normal;
-            text-overflow:    ellipsis;
+            text-overflow: ellipsis;
           }
           &:after {
             content: "...";
