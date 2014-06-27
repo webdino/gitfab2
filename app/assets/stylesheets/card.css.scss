@@ -4,7 +4,7 @@
   display: none;
   width: $recipe_main_width;
   background-color: #FFF;
-  border: 1px solid #000;
+  border: $common-border;
   border-radius: 4px;
   
   $content_width: $recipe_main_width - 24px;

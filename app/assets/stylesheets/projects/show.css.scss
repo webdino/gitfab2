@@ -5,7 +5,7 @@ main {
   ul#tabs {
     @include cf;
     font-size: 18px;
-    border-bottom: solid 1px black;
+    border-bottom: $common-border;
     li.selected {
       margin-bottom: -1px;
       border-bottom: solid 1px white;
@@ -19,13 +19,13 @@ main {
       font-weight: 500;
     }
     li.tab:first-child {
-      border-left: 1px solid black;
-      border-top: 1px solid black;
-      border-right: 1px solid black;
+      border-left: $common-border;
+      border-top: $common-border;
+      border-right: $common-border;
     }
     li.tab:nth-of-type(2) {
-      border-top: 1px solid black;
-      border-right: 1px solid black;
+      border-top: $common-border;
+      border-right: $common-border;
     }
 
     li.links {
@@ -41,7 +41,7 @@ main {
   #materials {
     @include cf;
     box-sizing: content-box;
-    border-bottom: solid 1px black;
+    border-bottom: $common-border;
     ul {
       @include spacing-row($recipe_main_width, 40px, 2);
     }
@@ -83,7 +83,7 @@ main {
           @include cf;
           position: relative;
           background: #efefef;
-          border: 1px solid #000;
+          border: $common-border;
           width: 487px;
           .image-field {
             float: left;
@@ -172,7 +172,7 @@ main {
       display: inline-block;
       width: 100%;
       padding-bottom: 6px;
-      border-bottom : solid 1px black;
+      border-bottom : $common-border;
       .how-many {
         display: inline-block;
         font-size: 18px;

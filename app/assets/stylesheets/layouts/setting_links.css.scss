@@ -1,3 +1,5 @@
+@import "mixins/variables.css.scss";
+
 #layouts-setting-links {
   display: inline-block;
   vertical-align: top;
@@ -5,14 +7,14 @@
   height: auto;
   margin: 20px 20px 20px 0;
   font-size: 16px;
-  border: 1px solid black;
+  border: $common-border;
   border-bottom: none;
   .name {
     padding: 5px;
     height: 40px;
     font-weight: 700;
     background-color: #CCC;
-    border-bottom: 1px solid black;
+    border-bottom: $common-border;
     img.avatar {
       margin: auto;
       max-width: 40px;
@@ -26,7 +28,7 @@
   }
   li {
     height: 40px;
-    border-bottom: 1px solid black;
+    border-bottom: $common-border;
     overflow: hidden;
     a {
       display: inline-block;

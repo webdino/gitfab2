@@ -5,7 +5,7 @@
   section#usages {
     width: $content-width;
     padding: 10px 0;
-    border-bottom: solid 1px black;
+    border-bottom: $common-border;
     box-sizing: content-box;
     @include cf;
     margin-top: 16px;
@@ -34,7 +34,7 @@
       @include cf;
       position: relative;
       background: #efefef;
-      border: 1px solid #000;
+      border: $common-border;
       width: 487px;
       .image-field {
         float: left;

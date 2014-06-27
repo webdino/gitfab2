@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/variables.css.scss";
 
 $popup-width: 360px;
 
@@ -32,7 +33,7 @@ $popup-width: 360px;
   float: left;
   width: 240px;
   min-height: 442px;
-  border: solid 1px black;
+  border: $common-border;
   border-left: none;
   box-sizing: border-box;
 
@@ -52,13 +53,13 @@ $popup-width: 360px;
     }
     #slide-show-button {
       background-image: asset-url("slideshow.png");
-      border-right: 1px solid #000;
-      border-bottom: 1px solid #000;
+      border-right: $common-border;
+      border-bottom: $common-border;
       cursor: pointer;
     }
     #fork-button {
       background-image: asset-url("fork.png");
-      border-bottom: 1px solid #000;
+      border-bottom: $common-border;
     }
   }
   #user-info {
