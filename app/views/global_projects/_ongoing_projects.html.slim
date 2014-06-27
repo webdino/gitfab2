@@ -1,7 +1,28 @@
-#ongoing-project-wrapper
-  h2
-    'Ongoing Projects
-  ul#ongoing-projects
-    / TODO: #449 Select representative project for ongoing_projects
-    - @projects.each do |project|
-      == render "ongoing_project", project: project
+#ongoing.projects-wrapper
+  .container
+    .left
+      .horizontal-border.white.f-right.m-b-10
+      h2
+        'Ongoing Projects
+      .horizontal-border.white.f-right.m-b-10
+      /TODO: #470 add some links wrote on pdf
+    .right
+      ul#ongoing-projects
+        / TODO: #449 Select representative project for ongoing_projects
+        - @projects.each do |project|
+          == render "ongoing_project", project: project
+      .more
+        / FIXME: #469 Create a link to project without recipe
+        == link_to image_tag("index-arrow.png"), "#"
+        .horizontal-border.white.f-right.m-b-5
+        p
+          'more projects
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $ongoings = $("ul#ongoing-projects")
+      $ongoings.packery({
+        itemSelector: ".project",
+        gutter: 20
+      })

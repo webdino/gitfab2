@@ -59,6 +59,7 @@ Gitfab2::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
+  config.assets.paths += %w("/vendor/assets/javascripts")
   config.assets.precompile += %w(
     application.js
     home.css
@@ -67,6 +68,7 @@ Gitfab2::Application.configure do
     posts.js     posts.css
     project.css  project.js
     user.js      user.css
+    packery.pkgd.min.js
   )
 
   # Ignore bad email addresses and do not raise email delivery errors.

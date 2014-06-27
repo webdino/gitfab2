@@ -1,21 +1,41 @@
 li.project
-  == link_to project_note_path(project.owner, project) do
-    .uppper
-      == link_to project.owner do
+  .inner
+    - if project.figures.any?
+      - if project.figures.first.link.present?
+        / TODO: #466 create embed_url function in figure.rb
+        / iframe src="#{recipe.youtube_embed_url}"
+      - else
+        == link_to "", project_note_path(project.owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
+    - else
+      == link_to "", project_note_path(project.owner, project), class: "image", style: "background-image: url('images/fallback/noise-7ms-a.gif')"
+    == link_to project_note_path(project.owner, project) do
+      .title
+        == link_to project.title.truncate(40), project_note_path(project.owner, project)
+    .horizontal-border.green.m-b-5
+    - if project.description.present?
+      .description
+        == project.description
+      .horizontal-border.green.m-b-5
+    .status
+      == link_to projects_path(project.owner) do
         .user
-          span.avatar
-            == image_tag project.owner.avatar.thumb
+          == image_tag project.owner.avatar.thumb, class: "icon"
           span.name
             == project.owner.name
       .starred
-        == "#{project.likes.length} starred"
-      .meta
-        .notes
-          == "#{project.note.note_cards.length} note"
-        .since
-          == "since #{project.created_at}"
-    .bottom
-      .title
-        == link_to project.title.truncate(160), project_note_path(project.owner, project)
-      .description
-        == project.description.truncate 140
+        span.icon
+          == image_tag "starred.png"
+        span.count
+          == "#{project.likes.length}"
+      / TODO: #474 Count  how many times the project were shared
+      / .shared
+      /   span.icon
+      /   span.count
+    .horizontal-border.green.m-b-5
+    .meta
+      .notes
+        / TODO: #472 pluralize/singularize the last word
+        == "#{project.note.note_cards.length} notes"
+      .since
+        / TODO: #473 implete time calculation on project.rb
+        == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago"
