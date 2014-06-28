@@ -10,3 +10,32 @@
     background: #ddd;
   }
 }
+
+
+.horizontal-border {
+  width: 60px;
+  height: 0px;
+  border-bottom: 1px solid;
+  &.black {
+    border-color: black;
+  }
+  &.white {
+    border-color: white;
+  }
+  &.green {
+    border-color: #00FF00;
+  }
+  &.f-left{
+    float: left;
+  }
+  &.f-right{
+    float: right;
+  }
+  &.m-b-5 {
+    margin-bottom: 5px;
+  }
+  &.m-b-10 {
+    margin-bottom: 10px;
+  }
+
+}

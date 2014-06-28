@@ -107,6 +107,10 @@ class User
     memberships.find_or_create_by group_id: group.id
   end
 
+  def liked_projects
+    Project.where "likes.liker_id" => self.id
+  end
+
   class << self
     def find_for_github_oauth auth
       where(auth.slice :provider, :uid).first_or_create do |user|

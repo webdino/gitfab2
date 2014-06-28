@@ -10,7 +10,7 @@
   - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
     #owner
       'Project owner is
-      == f.select :group_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @project])]}, selected: url_for([current_user,@project])
+      == f.select :owner_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @project])]}, selected: url_for([current_user,@project])
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"

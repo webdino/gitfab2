@@ -29,6 +29,9 @@ class Project
   validates :name, uniqueness: {scope: [:owner_id, :owner_type]}
   validates :title, presence: true
 
+  index "note.num_cards" => 1
+  scope :noted, ->{where :"note.num_cards".gt => 0}
+
   accepts_nested_attributes_for :usages
 
   paginates_per 12

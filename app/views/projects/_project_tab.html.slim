@@ -1,0 +1,43 @@
+#project-tab.tabs-pane.active
+  ul.project-list
+    - @owner.projects.each do |project|
+      li.project
+        .image-container
+          == link_to project_path(@owner, project) do
+            - if project.figures.any?
+              - if project.figures.first.link.present?
+                / TODO: #466 create embed_url function in figure.rb
+                / iframe src="#{recipe.youtube_embed_url}"
+              - else
+                == link_to "", project_path(@owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
+            - else
+              == link_to "", project_path(project.owner, project), class: "image", style: "background-image: url('images/fallback/noise-7ms-a.gif')"
+          .horizontal-border.green.m-b-5
+          .meta
+            .created
+              span
+                'created date:
+              span
+                == "#{project.created_at.strftime '%Y-%M-%d'}"
+            .updated
+              span
+                'updated date:
+              span
+                == "#{project.updated_at.strftime '%Y-%M-%d'}"
+        .text-container
+          .title
+            == link_to project.title, project_path(@owner, project)
+          .summary
+            == "#{project.description}"
+          .horizontal-border.green.m-b-5
+          .tags
+            - if project.tags.any?
+              span
+                'tags=
+              - projects.tags.each do |tag|
+                span
+                  / TODO: create link to showign projects tagged by tag.name
+                  == link_to tag.name, "#"
+            - else
+              span
+                'no tags

@@ -30,7 +30,7 @@ describe User do
     end
     it{should eq project}
   end
-  
+
   describe "#is_collaborator_of?" do
     before do
       user.collaborate! project
@@ -41,5 +41,15 @@ describe User do
       collaboration.project
     end
     it{should eq project}
+  end
+
+  describe "#liked_projects" do
+    before do
+      user.projects.create! title: "title2"
+      user.projects.create! title: "title3"
+      project.likes.create liker: user.id
+    end
+    subject{user.liked_projects}
+    it{should eq [project]}
   end
 end
