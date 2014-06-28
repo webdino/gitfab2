@@ -1,6 +1,80 @@
 @import "mixins/clearfix.css.scss";
 @import "_project_variables.css.scss";
 
+#projects-index {
+  @include cf;
+  .left {
+    @include cf;
+    float: left;
+    margin-left: 10px;
+    width: 300px;
+    .wrapper {
+      display: block;
+      float: right;
+      width: 220px;
+      font-weight: 500;
+      font-family: 'Verdana', sans-serif;
+      .owner-avatar {
+        margin-bottom: 20px;
+        max-width: 100%;
+      }
+      .owner-name {
+        width: 100%;
+        line-height: 22px;
+        font-size: 18px;
+      }
+      .joined-on {
+        width: 100%;
+        line-height: 15px;
+        font-size: 12px
+      }
+      .makes {
+        margin-bottom: 20px;
+        width: 100%;
+        line-height: 18px;
+        font-size: 12px;
+        .count {
+          font-weight: 700;
+          font-style: italic;
+        }
+      }
+      h2 {
+        width: 100%;
+        font-weight: 700;
+        font-family: Helvetica, sans-serif;
+        font-size: 22px;
+        line-height: 33px;
+        color: #808080;
+      }
+      .members, .groups {
+        margin-bottom: 20px;
+        .member-avatar, .group-avatar {
+          display: inline-block;
+          max-width: 20px;
+          max-height: 20px;
+          margin-right: 5px;
+          &:nth-child(9n) {
+            margin-right: 0;
+          }
+        }
+      }
+      .serch-box {
+        width: 220px;
+        height: 26px;
+        line-height: 21px;
+        font-size: 12px;
+        font-weight: 500px;
+        font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+      }
+    }
+  }
+  .right {
+    float: left;
+    margin-left: 20px;
+    width: 630px;
+  }
+}
+
 #recipes-index {
   @include cf;
   margin-top: 30px;
