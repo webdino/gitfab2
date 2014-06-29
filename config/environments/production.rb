@@ -68,6 +68,7 @@ Gitfab2::Application.configure do
     posts.js     posts.css
     project.css  project.js
     user.js      user.css
+    global_projects.css
     packery.pkgd.min.js
   )
 
