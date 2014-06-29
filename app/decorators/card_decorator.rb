@@ -1,8 +1,8 @@
 module CardDecorator
   extend ActiveSupport::Concern
   included do
-    def dc_type
-      _type.split(/::/).last
+    def to_htmlclass
+      _type.split(/::/).last.underscore
     end
   end
 end
