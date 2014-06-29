@@ -1,6 +1,8 @@
 section#recipe-cards
   h1 Recipe
   ul#recipe-card-list.card-list
+    == link_to "Change Order", "#", class: "order-change-btn btn"
+    == link_to "Commit Order", "#", class: "order-commit-btn btn"
     - @recipe.recipe_cards.ordered_by_position.each do |card|
       == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
 
@@ -10,38 +12,8 @@ section#recipe-cards
      == f.hidden_field :_type, value: Card::Transition.name 
      == f.hidden_field :move_to, value: 0
 
-- content_for :bottom
-  coffee:
-    $ ->
-      getCards = ->  
-        $(".card.state, .card.transition")
-
-      numbering = ->
-        cards = getCards()
-        for card, index in cards
-          $(card).attr "data-position", index + 1
-          $(card).find(".position").text index + 1
-
-      $(document).on "card-order-changed", "#recipe-card-list", (event) ->
-        cards = getCards()
-        previous = null
-        position = 0
-        for card in cards
-          position += 1        
-          card = $(card)
-          if previous and card.hasClass("state") and previous.hasClass("state") 
-            $("#transition_move_to").val position
-            $("#new_transition").submit()
-            position += 1
-          previous = card
-        numbering()
-
-      $(document).on "ajax:success", "#new_transition", (xhr, data) ->
-        card = $(data.html)
-        position = parseInt card.attr("data-position")
-        cards = getCards()
-        wrapper = window.createCardWrapper $("#recipe-card-list"), card
-        target = window.getCardWrapper $(cards[position-1])
-        wrapper.insertBefore target 
-        numbering()
- 
+  == nested_form_for [@owner, @project, @recipe], remote: true do |f|
+    == f.fields_for :recipe_cards do |ff|
+      == ff.text_field :position, class: "position", "data-id" => ff.object.id
+    == f.link_to_add "Add Card Order", :recipe_cards, id: "add-card-order"
+    == f.submit "submit", id: "submit-card-order"

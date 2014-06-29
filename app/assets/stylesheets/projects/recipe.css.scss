@@ -78,4 +78,36 @@
       float: left;
     }
   }
+
+  .order-up-btn {
+    display: none;
+  }
+  .order-down-btn {
+    display: none;
+  }
+  .order-change-btn {
+    display: inline-block;
+  }
+  .order-commit-btn {
+    display: none;
+  }
+}
+
+.edit_recipe {
+  display: none;
+}
+
+#recipe-card-list.order-changing {
+  .order-up-btn {
+    display: inline-block;
+  }
+  .order-down-btn {
+    display: inline-block;
+  }
+  .order-change-btn {
+    display: none;
+  }
+  .order-commit-btn {
+    display: inline-block;
+  }
 }

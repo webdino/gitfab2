@@ -1,4 +1,4 @@
-article class="card #{card._type.split(/::/).last.downcase}" data-position="#{card.try(:position)}"
+article class="card #{card.to_htmlclass}" data-position="#{card.try(:position)}" id="#{card.id}"
   h2.title
     == card.title
   .card-content
