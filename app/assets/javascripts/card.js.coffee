@@ -9,14 +9,36 @@ validateForm = (event) ->
     alert "You cannot make empty card."
     event.preventDefault()
 
+setupEditor = ->
+  tinymce.init
+    selector: ".markup-area"
+    theme: "modern"
+    menubar: false
+    convert_urls: false
+    image_advtab: true
+    statusbar: false
+    toolbar_items_size: "small"
+    content_css: $("#markup-help").attr "data-css-path"
+    toolbar1: "bold italic forecolor backcolor fontsizeselect | bullist numlist | alignleft aligncenter alignright | hr | material tool blueprint attachment"
+    plugins: [
+      "attachment material tool blueprint autolink lists charmap hr anchor pagebreak searchreplace wordcount visualblocks visualchars code media nonbreaking contextmenu directionality paste textcolor uploadimage"
+    ]
+    setup: (editor) ->
+      editor.on "init", ->
+        editor.setContent $("#" + editor.id).text()
+
 $ ->
-  formContainer = $(document.createElement("div"))
-  formContainer.attr "id", "card-form-container"
-  document.body.appendChild formContainer.get(0)
+  formContainer = null
+
+  createFormContainer = ->
+    formContainer = $ document.createElement("div")
+    formContainer.attr "id", "card-form-container"
+    document.body.appendChild formContainer.get(0)
+  createFormContainer()
 
   hideFormContainer = ->
-    formContainer.empty()
-    formContainer.hide()
+    formContainer.remove()
+    createFormContainer()
 
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
@@ -24,6 +46,8 @@ $ ->
     hideFormContainer()
 
   $(document).on "click", ".card-form .submit", (event) ->
+    editorContent = tinymce.editors[0].getContent()
+    $(".markup-area").text editorContent
     validateForm event
 
   $(document).on "submit", ".card-form", ->
@@ -34,7 +58,7 @@ $ ->
     $.fancybox.showLoading()
 
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
-    link = $(this)
+    link = $ this
     list = $(link.attr "data-list")
     formContainer.html data.html
     $("form:first-child").parsley()
@@ -49,7 +73,7 @@ $ ->
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
-    link = $(this)
+    link = $ this
     card = link.closest "li"
     formContainer.html data.html
     $("form:first-child").parsley()
@@ -66,9 +90,13 @@ $ ->
     $.fancybox.open
       padding: 0
       href: "#card-form-container"
+      afterLoad: ->
+        setTimeout setupEditor, 4
+      beforeClose: ->
+        tinymce.remove()
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
-    link = $(this)
+    link = $ this
     card = link.closest "li"
     list = card.parent()
     card.remove()
@@ -81,12 +109,16 @@ $ ->
     $.fancybox.close()
 
   markup = ->
-    attachments = $(".attachment")
+    attachments = $ ".attachment"
     for attachment in attachments
       markupid = attachment.getAttribute "data-markupid"
       title = attachment.getAttribute "data-title"
       content = attachment.getAttribute "data-content"
-      link = attachment.getAttribute "data-link"
+      url = ""
+      if content
+        url = content
+      else
+        url = attachment.getAttribute "data-link"
       url = content ? content : link
       $("a#" + markupid).attr "href", url
   markup()
@@ -110,10 +142,9 @@ $ ->
   $(document).on "click", ".order-down-btn", (event) ->
     event.preventDefault()
     state = $(this).closest ".state-wrapper"
-    nextState = state.nextAll ".state-wrapper:first"
-    if nextState.length == 0
-      return
-    up nextState
+    nextStates = state.nextAll ".state-wrapper:first"
+    if nextStates.length > 0
+      up nextStates
 
   $(document).on "click", ".order-change-btn", (event) ->
     event.preventDefault()
@@ -124,27 +155,27 @@ $ ->
     cards = getCards()
     forms = $(".fields .position")
     for form in forms
-      form = $(form)
+      form = $ form
       id = form.attr "data-id"
-      if $("#"+id).length == 0
+      if $("#"+id).length is 0
         form.remove()
 
     numbering()
     for card in cards
-      card = $(card)
+      card = $ card
       id = card.attr "id"
-      position = parseInt card.attr("data-position")
-      form = $(".position[data-id="+id+"]")
+      position = parseInt card.attr "data-position"
+      form = $(".position[data-id=" + id + "]")
       if form.length == 0
         $("#add-card-order").click()
-        form = $(".fields .position:last")
+        form = $ ".fields .position:last"
       form.val position
 
     $("#submit-card-order").click()
     $("#recipe-card-list").trigger "card-order-changed"
 
   getCards = ->
-    $(".card.state, .card.transition")
+    $ ".card.state, .card.transition"
 
   numbering = ->
     cards = getCards()
@@ -158,7 +189,7 @@ $ ->
     new_transitions = []
     for card in cards
       position += 1
-      card = $(card)
+      card = $ card
       if previous and card.hasClass("state") and previous.hasClass("state")
         new_transitions.push position
         position += 1
@@ -169,9 +200,9 @@ $ ->
       $("#new_transition").submit()
 
   $(document).on "ajax:success", "#new_transition", (xhr, data) ->
-    wrapper = $(data.html)
+    wrapper = $ data.html
     card = wrapper.find ".card"
-    position = parseInt card.attr("data-position")
+    position = parseInt card.attr "data-position"
     cards = getCards()
     target = $(cards[position - 1]).closest "li"
     wrapper.insertBefore target

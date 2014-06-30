@@ -22,22 +22,3 @@
     .invalid-form-error-message
     == f.submit "Submit", class: "submit btn"
     == link_to "Cancel", "", class: "cancel-btn btn"
-
-coffee:
-  tinymce.remove()
-  tinymce.init
-    selector: ".markup-area"
-    theme: "modern"
-    menubar: false
-    convert_urls: false
-    image_advtab: true
-    statusbar: false
-    toolbar_items_size: "small"
-    content_css: $("#markup-help").attr("data-css-path")
-    toolbar1: "bold italic forecolor backcolor fontsizeselect | bullist numlist | alignleft aligncenter alignright | hr | material tool blueprint attachment"
-    plugins: [
-      "attachment material tool blueprint autolink lists charmap hr anchor pagebreak searchreplace wordcount visualblocks visualchars code media nonbreaking contextmenu directionality paste textcolor uploadimage"
-    ]
-    setup: (editor) ->
-      editor.on "init", ->
-        editor.setContent $("#" + editor.id).text()
