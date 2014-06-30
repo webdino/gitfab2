@@ -5,7 +5,7 @@
   margin-top: -40px;
   width: 100%;
   #splash-wrapper {
-    background: #00FF00;
+    background: $common-lime;
     .container {
       @include cf;
       padding: 120px 0 60px;
@@ -38,7 +38,7 @@
           line-height: 22px;
           font-size: 13px;
           font-weight: 700;
-          font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+          font-family: $common-sans-serif;
         }
       }
       .scaffold {
@@ -75,7 +75,7 @@
               line-height: 22px;
               font-size: 12px;
               font-weight: 500;
-              font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;
+              font-family: $common-sans-serif;
             }
           }
         }
@@ -99,7 +99,7 @@
                 width: 285px;
                 height: 26px;
                 font-size: 12px;
-                font-family: 'Verdana', sans-serif;
+                font-family: Verdana, sans-serif;
               }
             }
           }
@@ -126,12 +126,12 @@
       border-color: white;
     }
     .green {
-      border-color: #00FF00;
+      border-color: $common-lime;
     }
-    .f-left{
+    .f-left {
       float: left;
     }
-    .f-right{
+    .f-right {
       float: right;
     }
     .m-b-5 {
@@ -183,14 +183,14 @@
                 line-height: 24px;
                 font-size: 17px;
                 font-weight: 500px;
-                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+                font-family: $common-sans-serif;
               }
               .description {
                 margin-bottom: 5px;
                 line-height: 28px;
                 font-size: 12px;
                 font-weight: 500px;
-                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+                font-family: $common-sans-serif;
               }
               .status {
                 margin-bottom: 5px;
