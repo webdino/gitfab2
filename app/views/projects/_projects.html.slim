@@ -1,12 +1,13 @@
 #projects
   ul.tabs.tab-hotizontal
     li.active
-      == link_to "Project", "#", data: {tab: "project-tab"}
+      == link_to "Project", "#", data: {tab: "#project-tab"}
     li
       == link_to "Note", "#", data: {tab: "#note-tab"}
     - if @owner.is_a? User
-      li
-        == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
+      / TODO: #486 Implement user.contributed_projects method in user.rb
+      / li
+      /   == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
       li
         == link_to "Starred", "#", data: {tab: "#starred-tab"}
 
@@ -14,6 +15,16 @@
     == render "project_tab"
     == render "note_tab"
     - if @owner.is_a? User
-      / TODO: Implement user.contributed_projects method in user.rb
+      / TODO: #486 Implement user.contributed_projects method in user.rb
       / == render "contribution_tab"
       == render "starred_tab"
+
+content_for :bottom
+  coffee:
+    tabby.init {
+      toggleActiveClass: 'active',
+      contentActiveClass: 'active',
+      initClass: 'js-tabby',
+      callbackBefore: (toggle, tabID ) -> {},
+      callbackAfter: ( toggle, tabID ) -> {}
+    }

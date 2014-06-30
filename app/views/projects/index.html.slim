@@ -18,13 +18,9 @@
         .notes
           span
             'notes:
-          / TODO: indexing with mongoid index
           span.count
-            - sum = 0
-            - @owner.projects.each do |project|
-              - sum += 1 unless project.note.note_cards.empty?
-            == "#{sum}"
-        / TODO: Implement this function
+            == @owner.projects.noted.length
+        / TODO: #487 Implement user.contributions method in user.rb
         / .contributions
         /   == @owner.contributions.length
     .horizontal-border.black.f-left

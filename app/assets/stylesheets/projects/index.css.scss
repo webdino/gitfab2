@@ -41,7 +41,7 @@
       h2 {
         width: 100%;
         font-weight: 700;
-        font-family: Helvetica, sans-serif;
+        font-family: Helvetica, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
         font-size: 22px;
         line-height: 33px;
         color: #808080;
@@ -63,7 +63,7 @@
         height: 26px;
         line-height: 21px;
         font-size: 12px;
-        font-weight: 500px;
+        font-weight: 500;
         font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
       }
     }
@@ -72,259 +72,108 @@
     float: left;
     margin-left: 20px;
     width: 630px;
-  }
-}
-
-#recipes-index {
-  @include cf;
-  margin-top: 30px;
-  font-family: helvetica, sans-serif;
-
-  #user-pane {
-    float: left;
-    .inner {
-      margin: 0;
-      width: 240px;
-      height: auto;
-      min-height: 480px;
-    }
-    #avatar {
-      width: 240px;
-      height: 240px;
-      margin: 0;
-      img {
-        max-width: 100%;
-        max-height: 100%;
-        margin: 0;
-      }
-    }
-    #name {
-      width: 240px;
-      height: auto;
-      min-height: 40px;
-      #screen-name {
-        padding-top: 20px;
-        height: 40px;
-        font-size: 24px;
-        font-weight: 300;
-      }
-    }
-    #joined-on {
-      border-top: solid 1px;
-      width: 240px;
-      height: 45px;
-      #clock-icon {
-        float: left;
-        margin: 5px;
-        width: 30px;
-        height: 30px;
-      }
-      #date {
-        padding: 15px 0px;
-        width: auto;
-        max-width: 200px;
-        height: 20px;
-        font-size: 14px;
-      }
-    }
-    .stats {
-      display: none;
-      border-top: solid 1px;
-      width: 240px;
-      height: 60px;
-      .card {
-        float: left;
-        margin: 0;
-        width: 80px;
-        height: 80px;
-        .count {
-          margin: 12px 0 6px;
-          width: 80px;
-          text-align: center;
-          font-size: 24px;
-        }
-        p {
-          margin: 0 auto;
-          text-align: center;
-          font-size: 11px;
-        }
-      }
-    }
-    #members, #groups {
-      border-top: solid 1px;
-      width: 220px;
-      height: auto;
-      min-height: 60px;
-      font-size: 14px;
-      padding: 10px 10px;
-
-      .groups-member-avatar, .users-group-avatar {
-        margin: 10px 10px 0 0;
-        max-width: 40px;
-        max-height: 40px;
-      }
-    }
-  }
-
-  #project-pane {
-    float: left;
-    .inner {
-      margin-left: 20px;
-      width: 700px;
-      height: auto;
-      min-height: 480px;
-    }
     .tabs {
       li {
-        float: left;
-        padding: 10px 0 3px;
+        display: inline-block;
+        margin-right: 10px;
+        padding-left: 10px;
         width: 140px;
-        height: 20px;
-        font-size: 18px;
-        text-align: center;
-        background: white;
-      }
-      li.active {
-        font-weight: 700;
-        background: #eee;
-      }
-    }
-    .search-bar {
-      width: 100%;
-      height: 60px;
-      padding: 10px 0;
-      background: #eee;
-      .search-box {
-        float: left;
-        margin: 8px 10px 12px 40px;
-        width: 420px;
-        height: 40px;
-      }
-      .q-field {
-        float: left;
-        margin: 0;
-        width: 320px;
-        height: 36px;
-        font-size: 16px;
-      }
-      .search-btn {
-        display: inline;
-        float: left;
-        margin: 1px 4px;
-        width: 80px;
-        height: 40px;
-        text-align: center;
-        font-family: helvetica, sans-serif;
-        font-size: 18px;
-        font-weight: 700;
-      }
-      span#create-project {
-        box-sizing: border-box;
-        float: right;
-        margin: 10px 40px;
-        padding: 10px;
-        width: 100px;
-        height: 40px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-      }
-      span#create-group-project {
-        box-sizing: border-box;
-        float: right;
-        margin: 10px 30px 10px 40px;
-        padding: 10px;
-        width: 160px;
-        height: 40px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-      }
-    }
-
-    h1 {
-      font-size: 2em;
-      margin: 20px auto;
-    }
-    .recipes {
-      @include cf;
-    }
-    .recipe-item {
-      width: 320px;
-      height: auto;
-      min-height: 300px;
-      float: left;
-      margin: 40px 0 20px 20px;
-      color: white;
-      position: relative;
-      .photo {
-        height: 240px;
-        iframe {
-          width: 320px;
-          height: 240px;
-          position: absolute;
-          top: 0;
-          left: 0;
+        height: 28px;
+        background: #F2F2F2;
+        line-height: 25px;
+        font-size: 14px;
+        font-weight: 500;
+        font-family: 'Verdana', sans-serif;
+        &.active {
+          background: white;
         }
-        .recipe-photo {
-          display: block;
-          width: 320px;
-          height: 240px;
-          background-size: cover;
-          background-position: center;
+        &:last-child {
+          margin-right: 0;
         }
       }
-      .summary {
-        @include cf;
-        display: block;
-        padding-top: 8px;
-        width: $summary_width;
-        height: auto;
-        min-height: 240px;
-        position: relative;
-        span.title {
-          margin: 20px 0 20px 0px;
-          width: 240px;
-          font-size: 32px;
-          font-weight: 900;
-          a {
-            color: #4183C4;
-          }
-          &:hover{
-            color: #4183C4;
-            text-decoration: underline;
-          }
+    }
+    .tabs-content {
+      padding: 20px 10px 125px;
+      width: 610px;
+      background: white;
+      .tabs-pane {
+        width: 100%;
+        h2 {
+          width: 100%;
+          font-weight: 700;
+          font-family: Helvetica, sans-serif;
+          font-size: 22px;
+          line-height: 39px;
+          border-top: 1px solid black;
         }
-        .star {
-          float: right;
-          font-size: 32px;
-          color: black;
-        }
-        .avatar-thumb {
-          display: none;
-          float: left;
-          margin-right: 14px;
-          margin-bottom: 10px;
-          width: 32px;
-          height: 32px;
-          img {
+        .project-list {
+          margin-top: 15px;
+          .project {
+            margin-bottom: 30px;
+            padding-top: 10px;
             width: 100%;
-            height: 100%;
-            margin: 0;
+            border-top: 1px solid #808080;
+            .image-container {
+              display: inline-block;
+              max-width: 130px;
+              .image {
+                display: block;
+                margin-bottom: 10px;
+                img {
+                  max-width: 100%;
+                }
+              }
+              .meta {
+                width: 100%;
+                margin-bottom: 5px;
+                span {
+                  line-height: 14px;
+                  font-size: 9px;
+                  font-weight: 500;
+                  font-family: 'Verdana', sans-serif;
+                  &.date {
+                    font-weight: 700;
+                  }
+                }
+              }
+            }
+            .text-container {
+              display: inline-block;
+              vertical-align: top;
+              margin-top: -10px;
+              margin-left: 20px;
+              width: 460px;
+              .title {
+                margin-bottom: 10px;
+                line-height: 40px;
+                font-size: 18px;
+                font-weight: 500;
+                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+              }
+              .summary {
+                margin-bottom: 5px;
+                line-height: 18px;
+                font-size: 12px;
+                font-weight: 500;
+                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+                color: #808080;
+              }
+              .tags {
+                line-height: 18px;
+                font-size: 10px;
+                font-weight: 500;
+                font-family: 'Verdana', sans-serif;
+                :first-child {
+                  font-weight: 700;
+                }
+                .tag {
+                  :not(:last-child):after {
+                    content: ",";
+                  }
+                }
+              }
+            }
           }
-        }
-        .name {
-          display:none;
-          float: left;
-          padding: 12px;
-          font-size: 24px;
-          font-weight: 500;
-        }
-        .description {
-          display: block;
-          margin-top: 6px;
-          font-size: 14px;
-          color: black;
         }
       }
     }

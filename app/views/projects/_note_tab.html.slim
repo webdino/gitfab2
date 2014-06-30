@@ -1,4 +1,6 @@
 #note-tab.tabs-pane
+  h2
+    'Noted Projects
   ul.project-list
     - @owner.projects.noted.each do |project|
       li.project
@@ -9,9 +11,9 @@
                 / TODO: #466 create embed_url function in figure.rb
                 / iframe src="#{recipe.youtube_embed_url}"
               - else
-                == link_to "", project_note_path(@owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
+                == link_to image_tag(project.figures.first.content), project_note_path(project.owner, project), class: "image"
             - else
-              == link_to "", project_note_path(project.owner, project), class: "image", style: "background-image: url('images/fallback/noise-7ms-a.gif')"
+              == link_to image_tag("fallback/noise-7ms-a.gif"), project_note_path(project.owner, project), class: "image"
           .horizontal-border.green.m-b-5
           .meta
             .created
@@ -25,10 +27,14 @@
               span
                 == "#{project.updated_at.strftime '%Y-%M-%d'}"
         .text-container
-          .title
-            == link_to project.title, project_note_path(@owner, project)
-          .summary
-            == "#{project.description}"
+          - if project.title.present?
+            == link_to project.title, project_path(project.owner, project), class: "title"
+          - else
+            p.title
+              'no title
+          - if project.description.present?
+            .summary
+              == "#{project.description}"
           .horizontal-border.green.m-b-5
           .tags
             - if project.tags.any?
@@ -36,7 +42,7 @@
                 'tags=
               - projects.tags.each do |tag|
                 span
-                  / TODO: create link to showign projects tagged by tag.name
+                  / TODO: #485 create link to projects tagged by tag.name
                   == link_to tag.name, "#"
             - else
               span
