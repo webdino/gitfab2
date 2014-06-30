@@ -43,9 +43,9 @@ $ ->
       list.append $(data.html)
       markup()
       list.trigger "card-order-changed"
-    .bind "ajax:complete", (xhr, data) -> 
+    .bind "ajax:complete", (xhr, data) ->
       hideFormContainer()
-    .bind "ajax:error", (xhr, status, error) -> 
+    .bind "ajax:error", (xhr, status, error) ->
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
@@ -57,11 +57,11 @@ $ ->
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
       markup()
-    .bind "ajax:complete", (xhr, data) -> 
+    .bind "ajax:complete", (xhr, data) ->
       hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
-  
+
   $(document).on "ajax:success", ".new-card, .edit-card", ->
     $.fancybox.open
       padding: 0
@@ -99,7 +99,7 @@ $ ->
     if transition.length != 0
       previousState.before transition
       transition.before state
-    else 
+    else
       previousState.before state
 
   $(document).on "click", ".order-up-btn", (event) ->
@@ -143,7 +143,7 @@ $ ->
     $("#submit-card-order").click()
     $("#recipe-card-list").trigger "card-order-changed"
 
-  getCards = ->  
+  getCards = ->
     $(".card.state, .card.transition")
 
   numbering = ->
@@ -157,9 +157,9 @@ $ ->
     position = 0
     new_transitions = []
     for card in cards
-      position += 1        
+      position += 1
       card = $(card)
-      if previous and card.hasClass("state") and previous.hasClass("state") 
+      if previous and card.hasClass("state") and previous.hasClass("state")
         new_transitions.push position
         position += 1
       previous = card
@@ -174,5 +174,5 @@ $ ->
     position = parseInt card.attr("data-position")
     cards = getCards()
     target = $(cards[position - 1]).closest "li"
-    wrapper.insertBefore target 
+    wrapper.insertBefore target
     numbering()

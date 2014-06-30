@@ -6,7 +6,7 @@
       == ff.file_field :content, class: "validate"
       == ff.text_field :link, type: "url", class: "validate"
     == f.link_to_add "Add a figure", :figures
-    == f.text_area :description, class: "markup-area validate", data: {"parsley-trigger" => "keyup", "parsley-length" => "[1, 140]"}, placeholder: "Description (1 - 140 characters)"
+    == f.text_area :description, class: "markup-area"
     #attachments
       == f.fields_for :attachments do |af|
         == af.text_field :title, class: :title
