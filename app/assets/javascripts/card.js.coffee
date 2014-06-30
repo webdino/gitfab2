@@ -62,9 +62,14 @@ $ ->
     list = $(link.attr "data-list")
     formContainer.html data.html
     $("form:first-child").parsley()
+    classname  = $(link.attr "data-classname").selector
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
-      list.append $(data.html)
+      li = $ document.createElement("li")
+      li.addClass "card-wrapper"
+      li.addClass classname
+      list.append li
+      li.append $(data.html)
       markup()
       list.trigger "card-order-changed"
     .bind "ajax:complete", (xhr, data) ->
@@ -74,7 +79,7 @@ $ ->
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
     link = $ this
-    card = link.closest "li"
+    card = link.closest("li").children().first()
     formContainer.html data.html
     $("form:first-child").parsley()
     formContainer.find "form"
@@ -205,5 +210,9 @@ $ ->
     position = parseInt card.attr "data-position"
     cards = getCards()
     target = $(cards[position - 1]).closest "li"
-    wrapper.insertBefore target
+    li = $ document.createElement("li")
+    li.addClass "card-wrapper"
+    li.addClass "transition-wrapper"
+    li.append wrapper
+    li.insertBefore target
     numbering()
