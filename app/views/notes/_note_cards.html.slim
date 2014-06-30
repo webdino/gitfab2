@@ -5,4 +5,4 @@ section#note-cards
     - @note.note_cards.each do |card|
       li
         == render "components/card", card: card, delete_url: project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: @owner.name, project_id: @project.name, id: card.id)
-  == link_to "+ Add Card", new_project_note_note_card_path(owner_name: @owner, project_id: @project), remote: true, class: "btn new-card", "data-list" => "#note-card-list"
+  == link_to "+ Add Card", new_project_note_note_card_path(owner_name: @owner, project_id: @project), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper"

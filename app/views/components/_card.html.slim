@@ -1,4 +1,4 @@
-article class="card #{card.to_htmlclass}" data-position="#{card.try(:position)}" id="#{card.id}"
+article class="card #{card.htmlclass}" data-position="#{card.try(:position)}" id="#{card.id}"
   h2.title
     == card.title
   .card-content
@@ -16,3 +16,6 @@ article class="card #{card.to_htmlclass}" data-position="#{card.try(:position)}"
   footer
     == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
     == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+    - if card.instance_of?(Card::State)
+      == link_to "up", "#", class: "order-up-btn btn"
+      == link_to "down", "#", class: "order-down-btn btn"

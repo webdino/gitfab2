@@ -4,12 +4,13 @@ section#recipe-cards
     == link_to "Change Order", "#", class: "order-change-btn btn"
     == link_to "Commit Order", "#", class: "order-commit-btn btn"
     - @recipe.recipe_cards.ordered_by_position.each do |card|
-      == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
+      li class="card-wrapper #{card.htmlclass}-wrapper"
+        == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
 
-  == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list"
+  == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.name, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper"
 
   == form_for [@owner, @project, :recipe, Card::Transition.new], method: :post, remote: true do |f|
-     == f.hidden_field :_type, value: Card::Transition.name 
+     == f.hidden_field :_type, value: Card::Transition.name
      == f.hidden_field :move_to, value: 0
 
   == nested_form_for [@owner, @project, @recipe], remote: true do |f|
