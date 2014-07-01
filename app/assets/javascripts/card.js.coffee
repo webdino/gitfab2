@@ -33,22 +33,13 @@ setupEditor = ->
   tinymce.init tinymceSetting
 
 $ ->
-  formContainer = null
-
-  createFormContainer = ->
-    formContainer = $ document.createElement("div")
-    formContainer.attr "id", "card-form-container"
-    document.body.appendChild formContainer.get(0)
-  createFormContainer()
-
-  hideFormContainer = ->
-    formContainer.remove()
-    createFormContainer()
+  formContainer = $ document.createElement("div")
+  formContainer.attr "id", "card-form-container"
+  formContainer.appendTo document.body
 
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
     event.preventDefault()
-    hideFormContainer()
 
   $(document).on "click", ".card-form .submit", (event) ->
     {selector} = tinymceSetting
@@ -57,12 +48,11 @@ $ ->
 
   $(document).on "submit", ".card-form", ->
     submitButton = $(this).find ".submit"
-    submitButton.off()
-    submitButton.fadeTo 80, 0.01
+    .off()
+    .fadeTo 80, 0.01
     $.fancybox.close()
 
-  $(document).on "ajax:beforeSend", ".new-card, .edit-card", (xhr, data) ->
-    $.fancybox.showLoading()
+  $(document).on "ajax:beforeSend", ".new-card, .edit-card", $.fancybox.showLoading
 
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
     link = $ this
@@ -77,24 +67,17 @@ $ ->
       li.addClass className
       list.append li
       li.append $(data.html)
-      markup()
       list.trigger "card-order-changed"
-    .bind "ajax:complete", (xhr, data) ->
-      hideFormContainer()
     .bind "ajax:error", (xhr, status, error) ->
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
-    link = $ this
-    card = link.closest("li").children().first()
+    card = $(this).closest("li").children().first()
     formContainer.html data.html
     $("form:first-child").parsley()
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
-      markup()
-    .bind "ajax:complete", (xhr, data) ->
-      hideFormContainer()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
 
@@ -113,26 +96,26 @@ $ ->
     list = card.parent()
     card.remove()
     list.trigger "card-order-changed"
-    markup()
-    hideFormContainer()
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
     $.fancybox.close()
 
+  $(document).on "ajax:success", ".delete-card .new-card, .edit-card", (event) ->
+    event.preventDefault()
+    markup()
+
   markup = ->
     attachments = $ ".attachment"
     for attachment in attachments
       markupid = attachment.getAttribute "data-markupid"
-      title = attachment.getAttribute "data-title"
       content = attachment.getAttribute "data-content"
       url = ""
       if content
         url = content
       else
         url = attachment.getAttribute "data-link"
-      url = content ? content : link
-      $("a#" + markupid).attr "href", url
+      $("#" + markupid).attr "href", url
   markup()
 
   up = (state) ->
@@ -165,18 +148,18 @@ $ ->
   $(document).on "click", ".order-commit-btn", (event) ->
     event.preventDefault()
     cards = getCards()
-    forms = $(".fields .position")
+    forms = $ ".fields .position"
     for form in forms
       form = $ form
       id = form.attr "data-id"
-      if $("#"+id).length is 0
+      if $("#" + id).length is 0
         form.remove()
 
     numbering()
     for card in cards
       card = $ card
       id = card.attr "id"
-      position = parseInt card.attr "data-position"
+      position = parseInt card.attr("data-position"), 10
       form = $(".position[data-id=" + id + "]")
       if form.length is 0
         $("#add-card-order").click()
@@ -198,16 +181,16 @@ $ ->
     cards = getCards()
     previous = null
     position = 0
-    new_transitions = []
+    newTransitions = []
     for card in cards
       position += 1
       card = $ card
       if previous and card.hasClass("state") and previous.hasClass("state")
-        new_transitions.push position
+        newTransitions.push position
         position += 1
       previous = card
     numbering()
-    for position in new_transitions
+    for position in newTransitions
       $("#transition_move_to").val position
       $("#new_transition").submit()
 
