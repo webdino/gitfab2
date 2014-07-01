@@ -15,7 +15,7 @@
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
-      section.visual style="background-image: url('#{@project.figures.first.try :content}')" data-no-image-url="url(#{asset_path 'fallback/noimage_480x360.png'})"
+      section.visual style="background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'})"
         .video-form-wrapper
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
           == f.fields_for :figures do |ff|
@@ -44,7 +44,7 @@
     - else
       == f.submit value: "Update Project", class: "btn"
       == link_to "Cancel", project_path(owner_name: @owner.name, id: @project.id), class: "btn"
-      == link_to "Remove Project", project_path(owner_name: @owner.name, id: @project.id), method: :delete, class: "btn"
+      == link_to "Delete Project", project_path(owner_name: @owner.name, id: @project.id), method: :delete, class: "btn"
 
 - content_for :bottom do
   coffee:
