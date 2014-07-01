@@ -1,0 +1,13 @@
+#fb-root
+.fb-like data-href="#{request.url}", data-width="400", data-show-faces="true" data-send="true"
+.fb-comments data-href="#{request.url}", data-width="400"
+
+- content_for :bottom do
+  javascript:
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=311212725722776&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
