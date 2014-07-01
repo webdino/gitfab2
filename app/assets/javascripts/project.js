@@ -22,6 +22,7 @@
 //= require_tree ./tinymce-plugins
 //= require ./card
 //= require ./card_markup
+//= require ./slideshow
 //= require select2
 //= require parsley
 //= require parsley.remote

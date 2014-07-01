@@ -9,23 +9,28 @@ validateForm = (event) ->
     alert "You cannot make empty card."
     event.preventDefault()
 
+editor = null
+
+tinymceSetting =
+  selector: ".markup-area"
+  theme: "modern"
+  menubar: false
+  convert_urls: false
+  image_advtab: true
+  statusbar: false
+  toolbar_items_size: "small"
+  content_css: $("#markup-help").attr "data-css-path"
+  toolbar1: "bold italic forecolor backcolor fontsizeselect | bullist numlist | alignleft aligncenter alignright | hr | material tool blueprint attachment"
+  plugins: [
+    "attachment material tool blueprint autolink lists charmap hr anchor pagebreak searchreplace wordcount visualblocks visualchars code media nonbreaking contextmenu directionality paste textcolor uploadimage"
+  ]
+  setup: (currentEditor) ->
+    editor = currentEditor
+    editor.on "init", ->
+      editor.setContent $("#" + editor.id).text()
+
 setupEditor = ->
-  tinymce.init
-    selector: ".markup-area"
-    theme: "modern"
-    menubar: false
-    convert_urls: false
-    image_advtab: true
-    statusbar: false
-    toolbar_items_size: "small"
-    content_css: $("#markup-help").attr "data-css-path"
-    toolbar1: "bold italic forecolor backcolor fontsizeselect | bullist numlist | alignleft aligncenter alignright | hr | material tool blueprint attachment"
-    plugins: [
-      "attachment material tool blueprint autolink lists charmap hr anchor pagebreak searchreplace wordcount visualblocks visualchars code media nonbreaking contextmenu directionality paste textcolor uploadimage"
-    ]
-    setup: (editor) ->
-      editor.on "init", ->
-        editor.setContent $("#" + editor.id).text()
+  tinymce.init tinymceSetting
 
 $ ->
   formContainer = null
@@ -46,12 +51,14 @@ $ ->
     hideFormContainer()
 
   $(document).on "click", ".card-form .submit", (event) ->
-    editorContent = tinymce.editors[0].getContent()
-    $(".markup-area").text editorContent
+    {selector} = tinymceSetting
+    $(selector).text editor.getContent()
     validateForm event
 
   $(document).on "submit", ".card-form", ->
-    $(this).find(".submit").hide()
+    submitButton = $(this).find ".submit"
+    submitButton.off()
+    submitButton.fadeTo 80, 0.01
     $.fancybox.close()
 
   $(document).on "ajax:beforeSend", ".new-card, .edit-card", (xhr, data) ->
@@ -62,12 +69,12 @@ $ ->
     list = $(link.attr "data-list")
     formContainer.html data.html
     $("form:first-child").parsley()
-    classname  = $(link.attr "data-classname").selector
+    className  = $(link.attr "data-classname").selector
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
       li = $ document.createElement("li")
       li.addClass "card-wrapper"
-      li.addClass classname
+      li.addClass className
       list.append li
       li.append $(data.html)
       markup()
@@ -130,10 +137,10 @@ $ ->
 
   up = (state) ->
     previousState = state.prevAll ".state-wrapper:last"
-    if previousState.length == 0
+    if previousState.length is 0
       return
     transition = state.next ".transition-wrapper"
-    if transition.length != 0
+    if transition.length > 0
       previousState.before transition
       transition.before state
     else
@@ -171,7 +178,7 @@ $ ->
       id = card.attr "id"
       position = parseInt card.attr "data-position"
       form = $(".position[data-id=" + id + "]")
-      if form.length == 0
+      if form.length is 0
         $("#add-card-order").click()
         form = $ ".fields .position:last"
       form.val position
