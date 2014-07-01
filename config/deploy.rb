@@ -8,8 +8,11 @@ set :rvm_type, :system
 set :rvm_ruby_version, "2.1.2"
 set :assets_roles, [:web, :app]
 
-# Default branch is :master
-ask :branch, proc {`git rev-parse --abbrev-ref HEAD`.chomp}
+if ENV["DEPLOY_BRANCH"]
+  set :branch, ENV["DEPLOY_BRANCH"]
+else
+  ask :branch, proc {`git rev-parse --abbrev-ref HEAD`.chomp}.call
+end
 
 # Default deploy_to directory is /var/www/my_app
 set :deploy_to, "/usr/local/rails_apps/gitfab2"
