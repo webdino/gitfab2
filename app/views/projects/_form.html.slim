@@ -10,7 +10,11 @@
   - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
     #owner
       'Project owner is
-      == f.select :owner_id, @owner.groups.to_a.push(@owner).map{|o| [o.name, url_for([o, @project])]}, selected: url_for([current_user,@project])
+      - options = []
+      - @owner.groups.to_a.push(@owner).each do |o|
+        - action = o.instance_of?(Group) ? group_projects_path(group_id: o.name) : user_projects_path(user_id: o.name)
+        - options.push [o.name, action]
+      == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.name)
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
@@ -58,6 +62,11 @@
 
     $ ->
       w = window
+
+      $(document).on "submit", ".project-form", (event) ->
+        action = $("#project_owner_id").val()
+        $(".project-form").attr "action", action
+
       $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
 
       $(document).on "click", "#save-btn", (event, data) ->
