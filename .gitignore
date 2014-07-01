@@ -17,7 +17,7 @@
 /config/database.yml
 .DS_Store
 erd.pdf
-/public/assets
+/public/assets/*
 /public/uploads
 *.swp
 
