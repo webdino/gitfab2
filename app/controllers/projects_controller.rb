@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
 
   def fork
     original_project = Project.find params[:original_project_id]
-    if (@project = original_project.fork_for @owner).save
+    if @project = original_project.fork_for!(@owner)
       redirect_to project_path(id: @project.name, owner_name: @owner.name)
     else
       redirect_to request.referer

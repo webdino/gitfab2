@@ -16,14 +16,19 @@ describe Project do
     it{should eq [user1, user2]}
   end
 
-  describe "#fork_for" do
-    let(:derivative_project){project.fork_for user1}
+  describe "#fork_for!" do
+    let(:forker){FactoryGirl.create :user}
+    let(:derivative_project){project.fork_for! forker}
     before do
       project.recipe.recipe_cards.create _type: Card::State,
         title: "a state", description: "desc"
       project.recipe.recipe_cards.create _type: Card::Transition,
         title: "a transition", description: "desc"
+      project.reload
     end
+    it{expect(project.recipe).to have(2).recipe_cards}
+    it{expect(derivative_project.owner).to eq forker}
     it{expect(derivative_project.recipe).to have(2).recipe_cards}
+    it{expect(derivative_project.id).not_to eq project.id}
   end
 end
