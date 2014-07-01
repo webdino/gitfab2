@@ -43,7 +43,8 @@
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
       == f.submit value: "Update Project", class: "btn"
-      == link_to "Cancel", [@owner, @project], class: "cancel-btn btn"
+      == link_to "Cancel", project_path(owner_name: @owner.name, id: @project.id), class: "btn"
+      == link_to "Remove Project", project_path(owner_name: @owner.name, id: @project.id), method: :delete, class: "btn"
 
 - content_for :bottom do
   coffee:
