@@ -15,4 +15,15 @@ describe Project do
     subject{project.collaborators}
     it{should eq [user1, user2]}
   end
+
+  describe "#fork_for" do
+    let(:derivative_project){project.fork_for user1}
+    before do
+      project.recipe.recipe_cards.create _type: Card::State,
+        title: "a state", description: "desc"
+      project.recipe.recipe_cards.create _type: Card::Transition,
+        title: "a transition", description: "desc"
+    end
+    it{expect(derivative_project.recipe).to have(2).recipe_cards}
+  end
 end
