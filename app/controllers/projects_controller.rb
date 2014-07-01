@@ -49,6 +49,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def destroy
+    @project.destroy project_params
+    redirect_to projects_path(owner_name: @project.owner.name)
+  end
+
   def edit
   end
 
