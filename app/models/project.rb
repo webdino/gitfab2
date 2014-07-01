@@ -56,10 +56,16 @@ class Project
     end
   end
 
-  def fork_for owner
-    dup_document.tap do |project|
+  def fork_for! owner
+    dup.tap do |project|
+      project.id = BSON::ObjectId.new
       project.owner = owner
       project.original = self
+      project.save!
+      project.recipe = recipe.dup_document
+      project.note = note.dup_document
+      project.usages = usages.map{|u| u.dup_content}
+      project.figures = figures.map{|a| a.dup_document}
       names = owner.projects.pluck :name
       _name = name.dup
       if names.include? _name
@@ -67,6 +73,12 @@ class Project
         _name.sub!(/(\d+)$/, "#{$1.to_i + 1}") while names.include? _name
       end
       project.name = _name
+      begin
+        project.save!
+      rescue Exception => e
+        project.destroy
+        raise
+      end
     end
   end
 
@@ -84,16 +96,6 @@ class Project
   end
 
   private
-  def dup_document
-    dup.tap do |doc|
-      doc.id = BSON::ObjectId.new
-      doc.recipe = recipe.dup_document
-      doc.note = note.dup_document
-      doc.usages = usages.map{|u| u.dup_content}
-      doc.figures = figures.map{|a| a.dup_document}
-    end
-  end
-
   def ensure_a_figure_exists
     figures.create if figures.none?
   end

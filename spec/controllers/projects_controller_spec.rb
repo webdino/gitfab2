@@ -42,9 +42,14 @@ describe ProjectsController, type: :controller do
         context "when forking" do
           let(:forker){FactoryGirl.create :user}
           before do
+            user_project.recipe.recipe_cards.create _type: "Card::Transition", title: "tra1", description: "desc1"
+            user_project.recipe.recipe_cards.first.annotations.create title: "ann1", description: "anndesc1"
+            user_project.reload
             post :create, user_id: forker.name, original_project_id: user_project.id
           end
-          it{should redirect_to project_path(id: user_project.name, owner_name: forker.name)}
+          it{should redirect_to project_path(id: Project.last.name, owner_name: forker.name)}
+          it{expect(Project.last.recipe).to have(1).recipe_card}
+          it{expect(Project.last.recipe.recipe_cards.first).to have(1).annotation}
         end
       end
     end
