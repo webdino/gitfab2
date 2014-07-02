@@ -17,14 +17,12 @@
     #project-summary
       section.visual style="background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'})"
         .video-form-wrapper
-          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
           == f.fields_for :figures do |ff|
             == ff.select :_type, [["Photo", Figure::Photo.name], ["Video", Figure::Video.name]]
             == ff.file_field :content
-            == ff.text_field :link
+            == ff.text_field :link, placeholder: "Youtube link"
             == ff.hidden_field :content_cache
           == f.link_to_add "Add a figure", :figures
-          == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
 
       section.description
         h1
