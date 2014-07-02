@@ -9,7 +9,7 @@
     .right
       ul#ongoing-projects
         / TODO: #449 Select representative project for ongoing_projects
-        - @projects.each do |project|
+        - @projects.noted.each do |project|
           == render "ongoing_project", project: project
       .more
         / FIXME: #469 Create a link to project without recipe
