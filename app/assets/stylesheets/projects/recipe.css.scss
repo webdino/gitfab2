@@ -40,11 +40,11 @@
         width: 85%;
         margin-left: 15%;
         .new-card {
-          background-color: #00FF00;
+          background-color: $common-lime;
           width: 100%;
           text-align: center;
         }
-        .delete-transition{
+        .delete-transition {
           margin-right: -12px;
         }
       }
