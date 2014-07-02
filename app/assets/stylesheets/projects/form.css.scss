@@ -31,6 +31,11 @@ $project_form_width: 703px;
   }
 }
 
+#recipes-new, #recipes-edit {
+  width: 960px;
+  background: white;
+}
+
 form.project-form {
   #owner {
     font-size: 18px;
@@ -48,7 +53,8 @@ form.project-form {
     width: $project_form_width;
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 12px;
+    font-family: Verdana, sans-serif;
+    margin: 20px 130px 0;
     padding: 12px 0 14px 12px;
     box-sizing: border-box;
     border: $common-border;
@@ -60,29 +66,23 @@ form.project-form {
     width: 580px;
     font-size: 12px;
   }
-  .buttons {
-    margin-top: 30px;
-    input[type=submit] {
-      box-sizing: content-box;
-      font-family: helvetica, sans-serif;
-      font-size: 24px;
-    }
-    .cancel-btn {
-      margin-left: 20px;
-      font-size: 24px;
-    }
-  }
+
   #project-summary {
     @include cf;
+    margin: 10px auto;
     width: $project_form_width;
     .description {
-      float: left;
-      width: 100%;
       h1 {
+        margin-bottom: 5px;
+        height: 30px;
+        font-size: 22px;
+      }
+      #project_description {
+        font-family: Verdana, sans-serif;
+        float: left;
         width: 100%;
-        font-size: 24px;
-        height: auto;
-        margin: 0 0 8px 0;
+        height: 140px;
+        line-height: 1.7em;
       }
     }
     .visual {
@@ -94,7 +94,7 @@ form.project-form {
       box-sizing: border-box;
       font-size: 24px;
       text-align: center;
-      background-size: contain;
+      background-size: cover;
       background: no-repeat top center;
       &[style*="''"] {
         border: $common-border;
@@ -145,141 +145,19 @@ form.project-form {
       }
     }
   }
-
-  #making {
-    h1 {
-      font-size: 36px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      margin-top: 20px;
-    }
-
-    .add_nested_fields {
-      font-size: 24px;
-      font-weight: bold;
-      padding-top: 10px;
-      display: block;
-      margin-left: 50px;
-    }
-
-    & > .fields {
-      @include cf;
-      min-height: 256px;
-      cursor: all-scroll;
-      /** common **/
-      .file-field {
-        display: none;
-      }
-      .description_container {
-        float: left;
-        width: 240px;
-        height: 170px;
-        padding: 3px;
-        .description-field {
-          width: 100%;
-          height: 100%;
-          margin-left: 2px;
-        }
-      }
-      .arrow {
-        float: left;
-        position: center;
-        width: 148px;
-        height: 50px;
-        margin-right: 40px;
-        background-image: asset-url("arrow.png");
-        background-repeat: no-repeat;
-        background-size: 45px 200px;
-        background-position: 102px -150px;
-      }
-      .item {
-        @include cf;
-        position: relative;
-        width: 487px;
-        margin-bottom: 12px;
-        background: #efefef;
-        border: $common-border;
-        input,
-        a {
-          float: left;
-          margin-left: 10px;
-        }
-        .image-field {
-          float: left;
-          width: 240px;
-          height: 180px;
-          background-size: cover;
-          background-position: center;
-
-          iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 240px;
-            height: 180px;
-          }
-          .video-form-wrapper {
-            height: 100%;
-            .photo-upload-btn,
-            .input-video-url-btn {
-              display: none;
-              position: absolute;
-              top: 20%;
-              left: 6%;
-              padding: 10px;
-              z-index: 999;
-              font-size: 16px;
-              font-weight: 700;
-            }
-            .input-video-url-btn {
-              top: 62%;
-              left: 6%;
-            }
-            .remove-image-btn {
-              display: none;
-              position: absolute;
-              top: 8%;
-              left: 42%;
-              width: 10px;
-              z-index: 999;
-              font-size: 16px;
-            }
-          }
-
-        }
-        .image-field:hover {
-          .photo-upload-btn,
-          .input-video-url-btn,
-          .remove-image-btn {
-            display: block;
-          }
-        }
-        .remove_nested_fields {
-          position: absolute;
-          top: -10px;
-          right: -10px;
-          width: 20px;
-          height: 20px;
-          color: white;
-          background-color: gray;
-          border-radius: 10px;
-          line-height: 22px;
-          text-align: center;
-        }
-      }
-
-      .ways {
-        margin-left: 220px;
-        margin-top: 16px;
-        margin-bottom: 16px;
-      }
-    }
-  }
-
   #filesize-caution {
     display: none;
     margin-top: 40px;
     color: red;
     font-size: 21px;
   }
+  .buttons {
+    width: $project_form_width;
+    margin: 20px auto;
+    input[type=submit] {
+      font-family: helvetica, sans-serif;
+      font-size: 14px;
+    }
+  }
+
 }
