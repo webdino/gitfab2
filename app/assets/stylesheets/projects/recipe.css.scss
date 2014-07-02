@@ -12,7 +12,7 @@
     margin-right: 24px;
     overflow: hidden;
     img {
-      width: 280px;
+      height: 200px;
     }
   }
   .card-content {
@@ -30,34 +30,47 @@
 
   .transition-wrapper {
     border: none;
+    padding-top: 0px;
+    margin-bottom: 0px;
     .transition-content {
       float: left;
       width: 100%;
-      margin-bottom: 24px;
+      .transition-footer {
+        text-align: right;
+        width: 85%;
+        margin-left: 15%;
+        .new-card {
+          background-color: #00FF00;
+          width: 100%;
+          text-align: center;
+        }
+        .delete-transition{
+          margin-right: -12px;
+        }
+      }
     }
     figure {
-      width: 15%;
       margin: 0;
-      padding-left: 36px;
-      padding-right: 48px;
+      padding-right: 24px;
       box-sizing: border-box;
-      img {
-        width: auto;
-      }
     }
     .annotation-list {
       float: left;
       width: 85%;
-      li {
+      margin-left: 15%;
+      >li {
         width: 100%;
         overflow: auto;
-        padding-bottom: 16px;
+        padding: 14px 3px 14px 14px;
+        margin-bottom: 12px;
+        border: 1px solid black;
       }
       h2 {
         font-size: 20px;
         font-weight: normal;
         margin-bottom: 4px;
       }
+
     }
     .card-content {
       float: left;
