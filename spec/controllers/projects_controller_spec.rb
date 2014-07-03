@@ -33,7 +33,7 @@ describe ProjectsController, type: :controller do
       describe "POST create" do
         context "when newly creating" do
           let(:user){FactoryGirl.create :user}
-          let(:new_project){FactoryGirl.build(:user_project)}
+          let(:new_project){FactoryGirl.build(:user_project, original: nil)}
           before do
             post :create, user_id: user.name, project: new_project.attributes
           end
