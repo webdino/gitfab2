@@ -12,11 +12,11 @@ li.project
     == link_to project_path(project.owner, project) do
       .title
         == link_to project.title.truncate(40), project_path(project.owner, project)
-    .horizontal-border.green.m-b-5
+    .horizontal-border.basic-color.m-b-5
     - if project.description.present?
       .description
         == project.description
-      .horizontal-border.green.m-b-5
+      .horizontal-border.basic-color.m-b-5
     .status
       == link_to projects_path(project.owner) do
         .user
@@ -32,7 +32,7 @@ li.project
       / .shared
       /   span.icon
       /   span.count
-    .horizontal-border.green.m-b-5
+    .horizontal-border.basic-color.m-b-5
     .meta
       .notes
         / FIXME: #472 pluralize/singularize the last word
