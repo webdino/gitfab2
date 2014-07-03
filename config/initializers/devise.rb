@@ -4,8 +4,9 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  config.secret_key = ENV["DEVISE_SECRET_KEY"]
-  config.omniauth :github, ENV["GITHUB_APP_ID"], ENV["GITHUB_APP_SECRET"], scope: "public_repo, user:email, user:follow"
+  config.secret_key = KEYS["devise_secret_key"]
+  config.omniauth :github, KEYS["github_app_id"], KEYS["github_app_secret"],
+    scope: "public_repo, user:email, user:follow"
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

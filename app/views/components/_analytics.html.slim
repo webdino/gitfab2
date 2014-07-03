@@ -4,5 +4,5 @@
     (g[f].q=g[f].q||[]).push(arguments)}),g[f].l=+new Date,a=i.createElement(t),
     b=i.getElementsByTagName(t)[0],a.src="//www.google-analytics.com/analytics.js",
     b.parentNode.insertBefore(a,b)}(this,document,"script","ga");
-    ga('create', '#{ENV["ANALYTICS_ID"]}', '#{ENV["ANALYTICS_HOST"]}');
+    ga('create', '#{KEYS["analytics_id"]}', '#{KEYS["analytics_host"]}');
     ga('send', 'pageview');
