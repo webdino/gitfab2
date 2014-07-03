@@ -9,14 +9,23 @@
     .right
       ul#ongoing-projects
         / TODO: #449 Select representative project for ongoing_projects
-        - @projects.noted.each do |project|
-          == render "ongoing_project", project: project
-      .more
-        / FIXME: #469 Create a link to project without recipe
-        == link_to image_tag("index-arrow.png"), "#"
-        .horizontal-border.white.f-right.m-b-5
-        p
-          'more projects
+        - noted_exist = false
+        - if params[:q]
+          - @projects.each do |project|
+            - if project.note.num_cards > 0
+              - noted_exist = true
+              == render "ongoing_project", project: project
+        - else
+          - @projects.noted.each do |project|
+            - noted_exist = true
+            == render "ongoing_project", project: project
+      - if noted_exist
+        .more
+          / FIXME: #469 Create a link to project without recipe
+          == link_to image_tag("index-arrow.png"), "#"
+          .horizontal-border.white.f-right.m-b-5
+          p
+            'more projects
 
 - content_for :bottom do
   coffee:

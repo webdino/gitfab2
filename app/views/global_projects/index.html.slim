@@ -1,31 +1,31 @@
 #index
-  #splash-wrapper
-    .container
-      .text
-        h1
-          'Making stories of Making something
-        .horizontal-border
-        p
-          'gitFAB2: A Web service for developing “physical things” in the manner of open source software development.
+  - unless user_signed_in?
+    #splash-wrapper
+      .container
+        .text
+          h1
+            'Making stories of Making something
+          .horizontal-border
+          p
+            'gitFAB2: A Web service for developing “physical things” in the manner of open source software development.
 
-
-      .scaffold
-        .sign-up
-          .arrow
-            == image_tag "index-arrow.png"
-          .inner
-            h2
-              'Sign up for GitFAB
-            p
-              'gitFAB Sign up with GitHub account 
-        .search-project
-          .arrow
-            == image_tag "index-arrow.png"
-          .inner
-            h2
-              'Search Project
-            #search-box
-              == form_tag :search, method: :get do |f|
-                == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
+        .scaffold
+          .sign-up
+            .arrow
+              == image_tag "index-arrow.png"
+            .inner
+              h2
+                'Sign up for GitFAB
+              p
+                'gitFAB Sign up with GitHub account
+          .search-project
+            .arrow
+              == image_tag "index-arrow.png"
+            .inner
+              h2
+                'Search Project
+              #search-box
+                == form_tag :search, method: :get do |f|
+                  == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
   == render "ongoing_projects"
   == render "reciped_projects"
