@@ -10,8 +10,8 @@ section#basic-informations
 
     .description-box
       .visual style="background-image: url('#{@project.figures.first.try :content}')"
-        - if @project.figures.first.is_a?(Figure::Video) && @project.figures.first.video_id.present?
-          iframe src="#{@project.figures.first.youtube_embed_url}"
+        - if @project.figures.first.link.length >= 0
+          iframe src="#{@project.figures.first.link}"
 
       .description
         h1
