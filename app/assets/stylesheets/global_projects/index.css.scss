@@ -5,7 +5,7 @@
   margin-top: -40px;
   width: 100%;
   #splash-wrapper {
-    background: url(fab9_back_sheets.png) no-repeat;
+    background: asset-url("fab9_back_sheets.png") no-repeat;
     backgtound-color: $common-basic-color;
     .container {
       @include cf;
