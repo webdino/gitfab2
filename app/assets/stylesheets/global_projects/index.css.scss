@@ -5,17 +5,18 @@
   margin-top: -40px;
   width: 100%;
   #splash-wrapper {
-    background: $common-basic-color;
+    background: url(fab9_back_sheets.png) no-repeat;
+    backgtound-color: $common-basic-color;
     .container {
       @include cf;
       padding: 120px 0 60px;
       width: 960px;
-      height: 515px;
+      height: 420px;
       margin: 0 auto;
       .text {
         margin-left: 90px;
         width: 540px;
-        height: 515px;
+        height: 420px;
         float: left;
         h1 {
           padding: 20px 0 5px;
