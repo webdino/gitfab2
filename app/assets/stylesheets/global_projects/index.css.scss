@@ -6,6 +6,7 @@
   width: 100%;
   #splash-wrapper {
     background: asset-url("fab9_back_sheets.png") no-repeat;
+    background-size: cover;
     backgtound-color: $common-basic-color;
     .container {
       @include cf;
