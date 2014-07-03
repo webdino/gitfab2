@@ -40,9 +40,10 @@
         width: 85%;
         margin-left: 15%;
         .new-card {
-          background-color: $common-lime;
+          background-color: $common-basic-color;
           width: 100%;
           text-align: center;
+          color: white;
         }
         .delete-transition {
           margin-right: -12px;
