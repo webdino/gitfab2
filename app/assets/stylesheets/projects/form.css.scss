@@ -88,7 +88,8 @@ form.project-form {
     .visual {
       position: relative;
       width: $project_form_width;
-      height: 360px;
+      height: auto;
+      min-height: 360px;
       margin-bottom: 12px;
       padding: 24px;
       box-sizing: border-box;
@@ -106,8 +107,14 @@ form.project-form {
         top: 0;
         left: 0;
       }
-      .video-form-wrapper {
+      .figure-form-wrapper {
         height: 100%;
+        .fields {
+          display: none;
+        }
+        .add_nested_fields {
+          display: none;
+        }
         #photo-upload-btn,
         #input-video-url-btn {
           display: none;
