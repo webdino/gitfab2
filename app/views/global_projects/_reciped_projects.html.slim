@@ -11,12 +11,13 @@
         / TODO: #450 Select representative project for reciped_projects
         - @projects.each do |project|
           == render "reciped_project", project: project
-      .more
-        / FIXME: #471 Create a link to project with recipe
-        == link_to image_tag("index-arrow-gray.png"), "#"
-        .horizontal-border.green.f-right.m-b-5
-        p
-          'more projects
+      - if @projects.present?
+        .more
+          / FIXME: #471 Create a link to project with recipe
+          == link_to image_tag("index-arrow-gray.png"), "#"
+          .horizontal-border.green.f-right.m-b-5
+          p
+            'more projects
 
 - content_for :bottom do
   coffee:
