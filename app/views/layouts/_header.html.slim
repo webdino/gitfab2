@@ -11,12 +11,14 @@ section#layouts-header
           == link_to "Sign in with Github", user_omniauth_authorize_path(:github)
       - if user_signed_in? && current_user.name
         #tools
-          .box
-            #user
+          .user
+            .avatar
               == link_to image_tag(current_user.avatar, class: "avator-thumb"), projects_path(owner_name: current_user.name)
+            .name
               == link_to current_user.name, projects_path(owner_name: current_user.name)
+          .box
             #create-recipe
-              == link_to "+", new_project_path(owner_name: current_user.name)
+              == link_to image_tag("add.png"), new_project_path(owner_name: current_user.name)
             #settings
               == link_to image_tag("settings.png"), edit_user_path(current_user)
             #logout
