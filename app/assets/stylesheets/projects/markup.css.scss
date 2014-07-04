@@ -1,21 +1,10 @@
 #recipes-show,
 #recipes-edit,
 #tinymce {
-  .material {
-    color: pink;
+  .material, .tool, .blueprint {
+    color: #52C3F1;
     font-weight: bold;
   }
-
-  .tool {
-    color: green;
-    font-weight: bold;
-  }
-
-  .blueprint {
-    color: orange;
-    font-weight: bold;
-  }
-
   .mce-edit-area iframe {
     background-color: white;
   }
