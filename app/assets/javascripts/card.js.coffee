@@ -65,9 +65,10 @@ $ ->
       li = $ document.createElement("li")
       li.addClass "card-wrapper"
       li.addClass className
-      list.append li
       li.append $(data.html)
-      list.trigger "card-order-changed"
+      list.trigger "card-will-append", [li]
+      list.append li
+      list.trigger "card-appended", [li]
     .bind "ajax:error", (xhr, status, error) ->
       alert error.message
 
@@ -86,16 +87,17 @@ $ ->
       padding: 0
       href: "#card-form-container"
       afterLoad: ->
-        setTimeout setupEditor, 4
+        setTimeout setupEditor, 50
       beforeClose: ->
         tinymce.remove()
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $ this
-    card = link.closest "li"
-    list = card.parent()
-    card.remove()
-    list.trigger "card-order-changed"
+    li = link.closest "li"
+    list = li.parent()
+    list.trigger "card-will-delete", [li]
+    li.remove()
+    list.trigger "card-deleted", [li]
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
@@ -119,9 +121,10 @@ $ ->
   markup()
 
   up = (state) ->
-    previousState = state.prevAll ".state-wrapper:last"
-    if previousState.length is 0
+    previousTransition = state.prev ".transition-wrapper"
+    if previousTransition.length is 0
       return
+    previousState = previousTransition.prev()
     transition = state.next ".transition-wrapper"
     if transition.length > 0
       previousState.before transition
@@ -154,7 +157,6 @@ $ ->
       id = form.attr "data-id"
       if $("#" + id).length is 0
         form.remove()
-
     numbering()
     for card in cards
       card = $ card
@@ -167,7 +169,6 @@ $ ->
       form.val position
 
     $("#submit-card-order").click()
-    $("#recipe-card-list").trigger "card-order-changed"
 
   getCards = ->
     $ ".card.state, .card.transition"
@@ -177,32 +178,23 @@ $ ->
     for card, index in cards
       $(card).attr "data-position", index + 1
 
-  $(document).on "card-order-changed", "#recipe-card-list", (event) ->
-    cards = getCards()
-    previous = null
-    position = 0
-    newTransitions = []
-    for card in cards
-      position += 1
-      card = $ card
-      if previous and card.hasClass("state") and previous.hasClass("state")
-        newTransitions.push position
-        position += 1
-      previous = card
-    numbering()
-    for position in newTransitions
-      $("#transition_move_to").val position
+  $(document).on "card-appended", "#recipe-card-list", (event, li) ->
+    if li.hasClass "state-wrapper"
       $("#new_transition").submit()
+
+  $(document).on "card-will-delete", "#recipe-card-list", (event, li) -> 
+    transition = li.next ".transition-wrapper"
+    if transition.length is 1
+      transition.find(".delete-transition").click()
 
   $(document).on "ajax:success", "#new_transition", (xhr, data) ->
     wrapper = $ data.html
     card = wrapper.find ".card"
-    position = parseInt card.attr "data-position"
-    cards = getCards()
-    target = $(cards[position - 1]).closest "li"
     li = $ document.createElement("li")
     li.addClass "card-wrapper"
     li.addClass "transition-wrapper"
     li.append wrapper
-    li.insertBefore target
-    numbering()
+    $("#recipe-card-list").append li
+
+  $(document).on "ajax:success", ".edit_recipe", () ->
+    $("#recipe-card-list").removeClass "order-changing"
