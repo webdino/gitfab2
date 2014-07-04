@@ -20,6 +20,7 @@
 //= require tinymce
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
+//= require ./recipe
 //= require ./card
 //= require ./card_markup
 //= require ./slideshow

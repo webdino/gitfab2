@@ -69,6 +69,7 @@ $ ->
       list.trigger "card-will-append", [li]
       list.append li
       list.trigger "card-appended", [li]
+      markup()
     .bind "ajax:error", (xhr, status, error) ->
       alert error.message
 
@@ -79,6 +80,7 @@ $ ->
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
+      markup()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
 
@@ -98,14 +100,11 @@ $ ->
     list.trigger "card-will-delete", [li]
     li.remove()
     list.trigger "card-deleted", [li]
+    markup()
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
     $.fancybox.close()
-
-  $(document).on "ajax:success", ".delete-card .new-card, .edit-card", (event) ->
-    event.preventDefault()
-    markup()
 
   markup = ->
     attachments = $ ".attachment"
@@ -118,6 +117,7 @@ $ ->
       else
         url = attachment.getAttribute "data-link"
       $("#" + markupid).attr "href", url
+    $(document.body).trigger "attachment-markuped"
   markup()
 
   up = (state) ->

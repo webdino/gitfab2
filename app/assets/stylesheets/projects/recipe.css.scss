@@ -125,3 +125,45 @@
     display: inline-block;
   }
 }
+
+#material-list, #tool-list, #blueprint-list {
+  border-top: $common-border;
+  padding-top: 5px;
+  margin-bottom: 20px;
+  h2 {
+    line-height: 30px;
+    width: 40%;
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  ul {
+    width: 60%;
+    display: inline-block;
+    > li {
+      list-style-type: decimal;
+      line-height: 30px;
+      width: 50%;
+      float: left;
+      a {
+        cursor: pointer;
+      }
+    }
+    @include cf;
+  }
+}
+
+#making-list {
+  border-top: $common-border;
+  padding-top: 5px;
+  h2 {
+    line-height: 30px;
+    width: 40%;
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  #card-order-tools {
+    text-align: right;
+  }
+}
