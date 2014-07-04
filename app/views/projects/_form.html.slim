@@ -20,11 +20,11 @@
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
       section.visual style="background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'})"
-        .video-form-wrapper
+        .figure-form-wrapper
           == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
           == f.fields_for :figures do |ff|
             == ff.select :_type, [["Photo", Figure::Photo.name], ["Video", Figure::Video.name]]
-            == ff.file_field :content
+            == ff.file_field :content, accept: 'image/png, image/gif, image/jpeg, image/jpg'
             == ff.text_field :link
             == ff.hidden_field :content_cache
           == f.link_to_add "Add a figure", :figures
@@ -80,18 +80,23 @@
       # TODO: refactoring Task #14460
       # working with .visual image&video upload
 
-      $(document).on "click", "#photo-upload-btn", (event, data) ->
+      $(document).on "click", "#photo-upload-btn", (event) ->
         event.preventDefault()
-        $("input#project_photo").trigger "click"
+        if($("input[type='file']").length is 0)
+          $(".add_nested_fields:first").trigger "click"
+        $("input[type='file']:first").trigger "click"
 
-      $(document).on "change", "input#project_photo", (event, data, status) ->
+      $(document).on "change", "input[type='file']", (event) ->
         file = event.target.files[0]
         reader = new FileReader()
         reader.onload = ->
+          tmp_img = new Image
+          tmp_img.src = reader.result
           $("section.visual").css "background-image", "url('#{reader.result}')"
           $("section.visual iframe").attr "src", ""
           $("#photo-upload-btn").css "color", "black"
           $("#input-video-url-btn").css "color", "black"
+          $("section.visual").css "height", "#{703.0 / tmp_img.naturalWidth * tmp_img.naturalHeight}px"
         reader.readAsDataURL file
 
       disableVideoSubmitButton = ->
