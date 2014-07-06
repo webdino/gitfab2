@@ -21,6 +21,7 @@ Gitfab2::Application.routes.draw do
 
   concern :owner do
     resources :projects, only: [:create, :update] do
+      resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: :card_features_for_form
         resources :transitions, only: [:create, :update], concerns: :card_features_for_form
@@ -52,5 +53,5 @@ Gitfab2::Application.routes.draw do
       resources :transitions, except: [:create, :update], concerns: :card_features_for_link
     end
     resources :usages, constraints: {id: /.+/}, except: [:create, :update]
-  end          
+  end
 end
