@@ -43,3 +43,17 @@
       == link_to "Edit project", edit_project_path(@project, owner_name: @owner.name)
     == link_to "Recipe", project_recipe_path(@project, owner_name: @owner.name)
     == link_to "Note", project_note_path(@project, owner_name: @owner.name)
+
+- content_for :bottom do
+  coffee:
+    $(".fancybox").fancybox
+      openEffect: "none"
+      closeEffect: "none"
+      wrapCSS: ".fork-popup"
+      helpers:
+        overlay:
+          css:
+            "background":"rgba(0, 0, 0, 0.2)"
+
+    $(document).on "click", ".fork-btn", ->
+      $(this).find("form").submit()
