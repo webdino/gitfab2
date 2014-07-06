@@ -31,5 +31,6 @@ section#recipe-cards
     == nested_form_for [@owner, @project, @recipe], remote: true do |f|
       == f.fields_for :recipe_cards do |ff|
         == ff.text_field :position, class: "position", "data-id" => ff.object.id
+        == ff.hidden_field :id, class: "id"
       == f.link_to_add "Add Card Order", :recipe_cards, id: "add-card-order"
       == f.submit "submit", id: "submit-card-order"
