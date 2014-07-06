@@ -150,24 +150,20 @@ $ ->
 
   $(document).on "click", ".order-commit-btn", (event) ->
     event.preventDefault()
-    cards = getCards()
-    forms = $ ".fields .position"
-    for form in forms
-      form = $ form
-      id = form.attr "data-id"
-      if $("#" + id).length is 0
-        form.remove()
     numbering()
+    cards = getCards()
+    forms = $ ".edit_recipe .fields"
+    forms.remove()
     for card in cards
       card = $ card
       id = card.attr "id"
       position = parseInt card.attr("data-position"), 10
-      form = $(".position[data-id=" + id + "]")
-      if form.length is 0
-        $("#add-card-order").click()
-        form = $ ".fields .position:last"
-      form.val position
-
+      $("#add-card-order").click()
+      field = $ ".edit_recipe .fields:last"
+      positionForm = field.find ".position"
+      positionForm.val position
+      idForm = field.find ".id"
+      idForm.val id
     $("#submit-card-order").click()
 
   getCards = ->
