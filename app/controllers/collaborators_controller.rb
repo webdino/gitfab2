@@ -25,7 +25,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def load_user
-    @user = User.find params[:user_id]
+    @user = User.find params[:user_name]
   end
 
   def build_collaboration
