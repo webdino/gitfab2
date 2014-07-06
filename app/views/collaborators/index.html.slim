@@ -15,7 +15,7 @@
     - @project.collaborators.each do |collaborator|
       == render "collaboration", collaboration: collaborator.collaboration_in(@project)
 
-  == link_to "back", project_path(@project, owner_name: @project.owner.name)
+  == link_to "back", project_path(@project, owner_name: @project.owner.slug)
 
 - content_for :bottom do
 
