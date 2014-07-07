@@ -13,7 +13,7 @@ h1
     - @recipe.collaborations.each do |collaboration|
       == render "collaboration", collaboration: collaboration
 
-  == link_to "back", recipe_path(@recipe, owner_name: @recipe.owner.name)
+  == link_to "back", recipe_path(@recipe, owner_name: @recipe.owner.slug)
   
 - content_for :bottom do
   coffee:

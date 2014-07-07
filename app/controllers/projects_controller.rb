@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    redirect_to project_recipe_path(project_id: @project.id, owner_name: @project.owner.name)
+    redirect_to project_recipe_path(project_id: @project.id, owner_name: @project.owner.slug)
   end
 
   def new
@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
   def create
     return fork if params[:original_project_id]
     if @project.save
-      redirect_to project_path(id: @project.name, owner_name: @owner.name)
+      redirect_to project_path(id: @project.name, owner_name: @owner.slug)
     else
       render :new
     end
@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
   def fork
     original_project = Project.find params[:original_project_id]
     if @project = original_project.fork_for!(@owner)
-      redirect_to project_path(id: @project.name, owner_name: @owner.name)
+      redirect_to project_path(id: @project.name, owner_name: @owner.slug)
     else
       redirect_to request.referer
     end
@@ -51,7 +51,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.destroy project_params
-    redirect_to projects_path(owner_name: @project.owner.name)
+    redirect_to projects_path(owner_name: @project.owner.slug)
   end
 
   def edit
@@ -61,7 +61,7 @@ class ProjectsController < ApplicationController
     if @project.update project_params
       respond_to do |format|
         format.json {render :update}
-        format.html {redirect_to project_path(@project, owner_name: @owner.name)}
+        format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
       end
     else
       respond_to do |format|

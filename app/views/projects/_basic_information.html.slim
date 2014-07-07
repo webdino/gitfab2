@@ -2,7 +2,7 @@ section#basic-information
 
   - if original = @project.original
     p.forked-from
-      == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.name)
+      == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.slug)
   #title
     h1
       == @project.title

@@ -12,9 +12,9 @@
       'Project owner is
       - options = []
       - @owner.groups.to_a.push(@owner).each do |o|
-        - action = o.instance_of?(Group) ? group_projects_path(group_id: o.name) : user_projects_path(user_id: o.name)
+        - action = o.instance_of?(Group) ? group_projects_path(group_id: o.slug) : user_projects_path(user_id: o.slug)
         - options.push [o.name, action]
-      == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.name)
+      == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
@@ -47,8 +47,8 @@
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
       == f.submit value: "Update Project", class: "btn"
-      == link_to "Cancel", project_path(owner_name: @owner.name, id: @project.id), class: "btn"
-      == link_to "Delete Project", project_path(owner_name: @owner.name, id: @project.id), method: :delete, class: "btn"
+      == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "btn"
+      == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn"
 
 - content_for :bottom do
   coffee:
