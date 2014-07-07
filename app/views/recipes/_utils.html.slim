@@ -27,10 +27,10 @@ section#recipes-utils
   - if @recipe.persisted?
     section#user-info
       .owner
-        == link_to image_tag(@owner.avatar), recipes_path(owner_name: @owner.name), class: "thumbnail"
-        == link_to @owner.name, recipes_path(owner_name: @owner.name), class: "screen-name"
+        == link_to image_tag(@owner.avatar), recipes_path(owner_name: @owner.slug), class: "thumbnail"
+        == link_to @owner.name, recipes_path(owner_name: @owner.slug), class: "screen-name"
       - if can? :manage, @recipe
-        == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.name, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
+        == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.slug, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
       .timestamps
         time#created-datetime datetime = @recipe.created_at
           'created date
@@ -39,7 +39,7 @@ section#recipes-utils
           'updated date
           == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
       #go-to-index
-        == link_to "#{@recipe.owner.name}'s Project List", recipes_path(owner_name: @owner.name), class: "btn"
+        == link_to "#{@recipe.owner.name}'s Project List", recipes_path(owner_name: @owner.slug), class: "btn"
 
 
     / NOTE: now shown temporary

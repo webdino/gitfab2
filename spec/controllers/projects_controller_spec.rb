@@ -14,20 +14,20 @@ describe ProjectsController, type: :controller do
     context "with a project owned by a #{owner_type}" do
       describe "GET index" do
         context "with no query" do
-          before{get :index, owner_name: project.owner.name}
+          before{get :index, owner_name: project.owner.slug}
           it{should render_template :index}
         end
         context "with queries" do
-          before{get :index, owner_name: project.owner.name, q: "foo"}
+          before{get :index, owner_name: project.owner.slug, q: "foo"}
           it{should render_template :index}
         end
       end
       describe "GET new" do
-        before{get :new, owner_name: project.owner.name, id: project.id}
+        before{get :new, owner_name: project.owner.slug, id: project.id}
         it{should render_template :new}
       end
       describe "GET edit" do
-        before{get :edit, owner_name: project.owner.name, id: project.id}
+        before{get :edit, owner_name: project.owner.slug, id: project.id}
         it{should render_template :edit}
       end
       describe "POST create" do
@@ -35,9 +35,9 @@ describe ProjectsController, type: :controller do
           let(:user){FactoryGirl.create :user}
           let(:new_project){FactoryGirl.build(:user_project, original: nil)}
           before do
-            post :create, user_id: user.name, project: new_project.attributes
+            post :create, user_id: user.slug, project: new_project.attributes
           end
-          it{should redirect_to project_path(id: new_project.name, owner_name: user.name)}
+          it{should redirect_to project_path(id: new_project.name, owner_name: user.slug)}
         end
         context "when forking" do
           let(:forker){FactoryGirl.create :user}
@@ -45,9 +45,9 @@ describe ProjectsController, type: :controller do
             user_project.recipe.recipe_cards.create _type: "Card::Transition", title: "tra1", description: "desc1"
             user_project.recipe.recipe_cards.first.annotations.create title: "ann1", description: "anndesc1"
             user_project.reload
-            post :create, user_id: forker.name, original_project_id: user_project.id
+            post :create, user_id: forker.slug, original_project_id: user_project.id
           end
-          it{should redirect_to project_path(id: Project.last.name, owner_name: forker.name)}
+          it{should redirect_to project_path(id: Project.last.name, owner_name: forker.slug)}
           it{expect(Project.last.recipe).to have(1).recipe_card}
           it{expect(Project.last.recipe.recipe_cards.first).to have(1).annotation}
         end
