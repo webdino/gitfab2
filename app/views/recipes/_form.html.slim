@@ -1,4 +1,4 @@
-== nested_form_for @recipe, url: project_recipe_path(project_id: @project.id, owner_name: @owner.name), method: :patch, html: {class: "recipe-form"} do |f|
+== nested_form_for @recipe, url: project_recipe_path(project_id: @project.id, owner_name: @owner.slug), method: :patch, html: {class: "recipe-form"} do |f|
   - if @recipe.errors.any?
     #error_explanation
       h2
@@ -24,7 +24,7 @@
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
       == f.submit value: "Update Project", class: "btn"
-      == link_to "Cancel", project_recipe_path(project_id: @project.id, owner_name: @owner.name), class: "cancel-btn btn"
+      == link_to "Cancel", project_recipe_path(project_id: @project.id, owner_name: @owner.slug), class: "cancel-btn btn"
 
     / NOTE: temporary not shown
     /hr
