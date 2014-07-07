@@ -41,15 +41,6 @@
 
 - content_for :bottom do
   coffee:
-    $(".fancybox").fancybox
-      openEffect: "none"
-      closeEffect: "none"
-      wrapCSS: ".fork-popup"
-      helpers:
-        overlay:
-          css:
-            "background":"rgba(0, 0, 0, 0.2)"
-
     $ ->
       w = window
       $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
