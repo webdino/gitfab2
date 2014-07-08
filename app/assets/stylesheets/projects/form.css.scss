@@ -3,7 +3,7 @@
 
 $project_form_width: 703px;
 
-#video-form, .video-form {
+#project-video-form, .video-form {
   display: none;
   width: 340px;
   p {
@@ -120,7 +120,7 @@ form.project-form {
           display: none;
           position: absolute;
           z-index: 999;
-          top: 50%;
+          top: 38%;
           left: 50%;
           width: 12em;
           margin-left: -6em;
@@ -131,7 +131,6 @@ form.project-form {
         }
         #input-video-url-btn {
           top: 62%;
-          left: 26%;
         }
         #remove-image-btn {
           display: none;
