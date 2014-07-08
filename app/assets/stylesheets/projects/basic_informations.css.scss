@@ -236,4 +236,25 @@ $basic_info_bottom_margin: 12px;
       }
     }
   }
+  #like-form-container {
+    #like-form {
+      display: none;
+    }
+    @include cf;
+    #like-button {
+      width: 30px;
+      height: 20px;
+      background: asset-url("star.png") no-repeat;
+      padding-left: 20px;
+      padding-top: 3px;
+      margin-top: 30px;
+      cursor: pointer;
+      float: right;
+      font-size: 20px;
+      font-weight: initial;
+    }
+    #like-button.liked {
+      background: asset-url("starred.png") no-repeat;
+    }
+  }
 }
