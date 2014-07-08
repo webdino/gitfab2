@@ -19,37 +19,37 @@
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
-      section.visual style="background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'})"
-        - if @project.figures.first.present? && @project.figures.first.link.present?
+      - if page == "edit"
+        section.visual style="height: 528px; background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'});"
+          - if @project.figures.first.present? && @project.figures.first.link.present?
+            iframe src="#{@project.figures.first.link}" style = "width: 703px; height: 528px;"
+          .figure-form-wrapper
+            == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
+            == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
+            == link_to "Input YouTube URL…", "#project-video-form", id: "input-video-url-btn", class: "fancybox btn"
+            / TODO: 複数個のfigureを指定できるようにする
+            / == f.link_to_add "Add a figure", :figures
+            == f.fields_for :figures do |ff|
+              == ff.select :_type, [["Photo", Figure::Photo.name], ["Video", Figure::Video.name]]
+              == ff.file_field :content, accept: 'image/png, image/gif, image/jpeg, image/jpg'
+              == ff.hidden_field :content_cache
+              #project-video-form.video-form
+                p
+                  'Input a Youtube URL
+                == text_field_tag :url_input, "#{@project.figures.first.link}", class: "link-input"
+                == ff.hidden_field :link, id: "link-field"
+                .caution
+                  'Invalid URL.
+                .video-form-preview-wrapper
+                  iframe.video-form-preview src: #{ff.object.link}
+                .video-form-buttons
+                  == link_to "OK", "#", class: "ok-btn btn"
+                  == link_to "Cancel", "#", class: "cancel-btn btn"
 
-          iframe src="#{@project.figures.first.link}"
-        .figure-form-wrapper
-          == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
-          == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
-          == link_to "Input YouTube URL…", "#project-video-form", id: "input-video-url-btn", class: "fancybox btn"
-          / TODO: 複数個のfigureを指定できるようにする
-          / == f.link_to_add "Add a figure", :figures
-          == f.fields_for :figures do |ff|
-            == ff.select :_type, [["Photo", Figure::Photo.name], ["Video", Figure::Video.name]]
-            == ff.file_field :content, accept: 'image/png, image/gif, image/jpeg, image/jpg'
-            == ff.hidden_field :content_cache
-            #project-video-form.video-form
-              p
-                'Input a Youtube URL
-              == text_field_tag :url_input, "#{@project.figures.first.link}", class: "link-input"
-              == ff.hidden_field :link, id: "link-field"
-              .caution
-                'Invalid URL.
-              .video-form-preview-wrapper
-                iframe.video-form-preview src: #{ff.object.link}
-              .video-form-buttons
-                == link_to "OK", "#", class: "ok-btn btn"
-                == link_to "Cancel", "#", class: "cancel-btn btn"
-
-      section.description
-        h1
-          'Summary
-        == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
+        section.description
+          h1
+            'Summary
+          == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
 
   #filesize-caution
     p
@@ -136,7 +136,9 @@
           tmp_img.src = reader.result
           $("section.visual").css "height", "#{703.0 / tmp_img.naturalWidth * tmp_img.naturalHeight}px"
           $("section.visual").css "background-image", "url('#{reader.result}')"
+          $("#project_figures_attributes_0__type").val "Figure::Photo"
           $("section.visual iframe").attr "src", ""
+          $("#link-field").val ""
           $("#photo-upload-btn").css "color", "black"
           $("#input-video-url-btn").css "color", "black"
         reader.readAsDataURL file
@@ -160,6 +162,7 @@
           $(imageField).siblings("iframe").css "height", "528px"
           embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
           $(imageField).siblings("iframe").attr "src", embed_url
+          $("#project_figures_attributes_0__type").val "Figure::Video"
           $(this).parents(".video-form").find("#link-field").val embed_url
           w.videoIdForItem = ""
           w.targetImageField = ""
@@ -177,3 +180,4 @@
         $(imageField).find("iframe").attr "src", ""
         $(imageField).find(".file-field").val ""
         $(imageField).find(".video-form .video-id-field").val ""
+        $("#project_figures_attributes_0__type").val "Figure::Photo"

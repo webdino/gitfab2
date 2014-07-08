@@ -14,7 +14,7 @@ section#basic-informations
           == f.fields_for :likes do |ff|
             == ff.hidden_field :liker_id, class: "liker_id"
             == ff.hidden_field :_destroy, class: "delete-like #{ff.object.liker_id}"
-            - if ff.object.liker_id 
+            - if ff.object.liker_id
               - count += 1
             - if current_user && ff.object.liker_id == current_user.slug
               - exists = true
@@ -25,8 +25,8 @@ section#basic-informations
 
     .description-box
       .visual style="background-image: url('#{@project.figures.first.try :content}')"
-        - if @project.figures.first.is_a?(Figure::Video) && @project.figures.first.video_id.present?
-          iframe src="#{@project.figures.first.youtube_embed_url}"
+        - if @project.figures.first.present? && @project.figures.first.link.present?
+          iframe src="#{@project.figures.first.link}"
 
       .description
         h1
@@ -57,9 +57,9 @@ section#basic-informations
       button = $ "#like-button"
       number = parseInt button.text()
       if button.hasClass "liked"
-        button.removeClass "liked" 
+        button.removeClass "liked"
         number -= 1
       else
-        button.addClass "liked" 
+        button.addClass "liked"
         number += 1
       button.text number
