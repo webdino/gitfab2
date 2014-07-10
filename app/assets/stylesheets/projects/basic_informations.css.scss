@@ -3,90 +3,134 @@
 @import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
 
-$basic_info_bottom_margin: 12px;
-
 #basic-informations {
-  position: relative;
-  width: 100%;
-  height: 440px;
-  margin-bottom: $basic_info_bottom_margin;
-  border: $common-border;
-  @include cf;
-  p.forked-from {
-    line-height: 22px;
-    font-size: 16px;
-    position: absolute;
-    top: -22px;
+  $margin_width: 70px;
+  .margin {
+    float: left;
+    margin-right: $first_column_width - $margin_width;
+    width: $margin_width;
+    border-top: $common-border;
   }
-  #control-panel {
-    height: 100%;
-    margin-left: 720px;
-    border-left: $common-border;
+  .header {
+    margin-bottom: 20px;
+    $height: 40px;
+    height: $height; 
     @include cf;
+    .title {
+      float: left;
+      margin: 0;
+      width: $second_column_width;
+      line-height: $height;
+    }
+    .like {
+      float: left; 
+      line-height: $height + 4px;
+      vertical-align: middle;
+   }
+  }
 
-    $popup-width: 360px;
-
-    #fork-destinations {
-      @include spacing-row($popup-width, 20px, 3);
-      width: $popup-width;
-      display: none;
-
-      min-height: 442px;
-      border: $common-border;
-      border-left: none;
-
-      .fork-destination {
-        .dest-name {
-          margin-top: 10px;
-          margin-bottom: 4px;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-        .fork-btn {
-          width: 100px;
-          height: 100px;
-          margin-bottom: 10px;
-          background-size: cover;
-          background-position: center;
-          cursor: pointer;
-          &:hover {
-            opacity: 0.5;
+  .body {
+    $visual_width: 380px;
+    $tools_width: $second_column_width - $visual_width;
+    $height: $visual_width / 4 * 3;
+    height: $height;
+    @include cf;
+    .visual {
+      float: left;
+      width: $visual_width;
+      height: $height;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: top center;
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .tools {
+      float: left;
+      $tool_size: 130px;
+      width: $tools_width;
+      $margin_left: ($tools_width - $tool_size) / 2;
+      #slideshow-btn,
+      #fork-btn {
+        display: inline-block;
+        margin-left: $margin_left;
+        width: $tool_size;
+        height: $tool_size;
+        cursor: pointer;
+        background-size: cover;
+      }
+      #slideshow-btn {
+        margin-bottom: ($height - $tool_size * 2) / 2;
+        background-image: asset-url("slideshow.png");
+      }
+      #fork-btn {
+        background-image: asset-url("fork.png");
+      }
+      #fork-destinations {
+        $popup-width: 360px;
+        @include spacing-row($popup-width, 20px, 3);
+        width: $popup-width;
+        display: none;
+        min-height: 442px;
+        border: $common-border;
+        border-left: none;
+        .fork-destination {
+          .dest-name {
+            margin-top: 10px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          .fork-btn {
+            margin-bottom: 10px;
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            &:hover {
+              opacity: 0.5;
+            }
           }
         }
       }
     }
-    #tooltips {
-      max-height: 118px;
-      #slide-show-button,
-      #fork-button {
-        display: inline-block;
-        width: 118px;
-        height: 118px;
-        cursor: pointer;
-        a {
-          display: block;
-          height: 100%;
-          width: 100%;
-        }
-      }
-      #slide-show-button {
-        background-image: asset-url("slideshow.png");
-        border-right: $common-border;
-      }
-      #fork-button {
-        background-image: asset-url("fork.png");
-      }
-    }
-    #user-info {
-      @include cf;
+
+    .description {
+      float: left;
+      $padding_top: 12px;
+      $padding_bottom: 8px;
+      padding-top: $padding_top;
+      padding-bottom: $padding_bottom;
+      width: $third_column_width;
+      height: $height / 2 - $padding_top - $padding_bottom;
       border-top: $common-border;
-      .inner {
-        margin: 20px;
+      border-bottom: $common-border;
+    }
+    .meta {
+      font-size: 12px;
+      @include cf;
+      .left {
+        float: left;
+        padding-top: 5px;
+        width: ($third_column_width) / 2;
+      }
+      .right {
+        float: left;
+        padding-top: 5px;
+        width: ($third_column_width) / 2;
+      }
+      .timestamps {
+        margin-bottom: 6px;
+      }
+      .collaborators {
         .owner, .collaborator {
           .thumbnail {
             display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             img {
               margin: 0;
               max-width: 100%;
@@ -95,166 +139,31 @@ $basic_info_bottom_margin: 12px;
           }
           .screen-name {
             display: inline-block;
-            vertical-align: top;
-            margin: 12px 10px;
-            font-size: 18px;
+            vertical-align: middle;
+            height: 30px;
           }
         }
         #add-collaborator-btn {
           display: inline-block;
           margin: 0 0 20px 0;
         }
-        .timestamps {
-          width: 240px;
-          #created-datetime {
-            display: block;
-            width: 100%;
-            height: 24px;
-            font-size: 12px;
-          }
-          #last-updated-datetime {
-            display: block;
-            width: 100%;
-            height: 24px;
-            font-size: 12px;
-          }
-        }
-      }
-    }
-    #edit-menu {
-      margin-top: $basic_info_bottom_margin;
-      a {
-        display: inline-block;
-        padding: 0 8px 0 8px;
-        border-right: 1px solid lightgray;
-        &:last-child {
-          border-right: none;
-        }
-        &:hover {
-          color: gray;
-        }
-      }
-    }
-    #tool-options {
-      padding: 20px;
-      width: 100%;
-      height: auto;
-      min-height: 40px;
-      h1 {
-        font-size: 24px;
-        font-weight: bold;
-      }
-    }
-    #tags {
-      padding: 20px;
-      width: 100%;
-      height: auto;
-      min-height: 40px;
-      #tag-list {
-        margin: 10px 0;
-        .tag {
-          border-radius: 10px;
-          background-color: #ccc;
-          display: inline-block;
-          padding: 2px 4px;
-          margin: 0 4px;
-        }
-        .tag-delete-btn {
-          background: #fff;
-          border-radius: 50%;
-          padding: 0 4px;
-          margin-right: 4px;
-        }
-      }
-      h1 {
-        font-size: 24px;
-        font-weight: bold;
       }
     }
   }
-  #project-summary {
-    width: 720px;
-    float: left;
-    .title-box {
-      width: 100%;
-      font-size: 36px;
-      font-weight: bold;
-      height: 80px;
-      border-bottom: $common-border;
-      h1 {
-        float: left;
-        margin: 15px 0 0 15px;
-        height: 40px;
+  #edit-menu {
+    margin-top: 10px;
+    text-align: right;
+    font-size: 20px;
+    a {
+      display: inline-block;
+      padding: 0 8px 0 8px;
+      border-right: 1px solid lightgray;
+      &:last-child {
+        border-right: none;
       }
-      a.toggle-star-btn {
-        float: right;
-        height: 40px;
-        margin: 25px 10px 15px;
+      &:hover {
+        color: gray;
       }
     }
-    .description-box {
-      @include cf;
-      height: 360px;
-      .visual {
-        width: $visual_width;
-        height: 360px;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: top center;
-        float: left;
-        iframe {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .description {
-        width: 240px;
-        height: 100%;
-        font-size: 14px;
-        float: left;
-        word-break: break-all;
-        overflow-y: auto;
-        h1 {
-          margin: 0 12px;
-          margin-top: 10px;
-          font-size: 24px;
-          font-weight: bold;
-        }
-        .text {
-          margin: 0 12px;
-          p {
-            width: 100%;
-            margin-bottom: 4px;
-            overflow: hidden;
-            white-space: normal;
-            text-overflow: ellipsis;
-          }
-          &:after {
-            content: "...";
-          }
-        }
-      }
-    }
-  }
-  #like-form-container {
-    #like-form {
-      display: none;
-    }
-    @include cf;
-    #like-button {
-      width: 30px;
-      height: 20px;
-      background: asset-url("star.png") no-repeat;
-      padding-left: 20px;
-      padding-top: 3px;
-      margin-top: 30px;
-      cursor: pointer;
-      float: right;
-      font-size: 20px;
-      font-weight: initial;
-    }
-    #like-button.liked {
-      background: asset-url("starred.png") no-repeat;
-    }
-  }
+  }  
 }

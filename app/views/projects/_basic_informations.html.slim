@@ -1,65 +1,75 @@
 section#basic-informations
-
-  #project-summary
-    - if original = @project.original
-      p.forked-from
-        == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.slug)
-    .title-box
-      h1
-        == @project.title
-      #like-form-container
-        - exists = false
-        - count = 0
-        == nested_form_for [@owner, @project], html: {id: "like-form"}, remote: true do |f|
-          == f.fields_for :likes do |ff|
-            == ff.hidden_field :liker_id, class: "liker_id"
-            == ff.hidden_field :_destroy, class: "delete-like #{ff.object.liker_id}"
-            - if ff.object.liker_id
-              - count += 1
-            - if current_user && ff.object.liker_id == current_user.slug
-              - exists = true
-          - if exists == false
-            == f.link_to_add "Like", :likes, id: "add-like"
-        #like-button class="#{exists == true ? 'liked' : ''}" data-user="#{current_user ? current_user.slug : ''}"
-          == count
-
-    .description-box
-      .visual style="background-image: url('#{@project.figures.first.try :content}')"
-        - if @project.figures.first.present? && @project.figures.first.link.present?
-          iframe src="#{@project.figures.first.link}"
-
-      .description
-        h1
-          'Summary
-        .text
-          == Sanitize.clean @project.description, Sanitize::Config::RELAXED
-
-  == render "projects/control_panel", project: @project, owner: @owner, available_operations: [:fork, :slide, :tag]
+  - if original = @project.original
+    p.forked-from
+      == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.slug)
+  section.header
+    .margin
+    h1.title
+      == @project.title
+    == render "components/like", resources: [@owner, @project]
+  section.body
+    .margin
+    figure.visual style="background-image: url('#{@project.figures.first.try :content}')"
+      - if @project.figures.first.present? && @project.figures.first.link.present?
+        iframe src="#{@project.figures.first.link}"
+    section.tools
+      == link_to "", "#", id: "slideshow-btn"
+      == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
+      #fork-destinations
+        - if signed_in?
+          == render "projects/fork_destination", owner: current_user, project: @project
+          - current_user.groups.each do |group|
+            - if can? :manage, group
+              == render "projects/fork_destination", owner: group, project: @project
+    section.description
+      == Sanitize.clean @project.description, Sanitize::Config::RELAXED
+    section.meta
+      .left
+        section.timestamps
+          .created-timestamp
+            h2
+              == "created"
+            .date
+              == @project.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+          .updated-timestamp
+            h2
+              == "last updated"
+            .date
+              == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+        section.tags
+          h2
+            == "tags"
+          - @project.tags.each do |tag|
+            - link_to tag, "#{search_path()}?q=#{tag}}"
+      .right
+        section.collaborators
+          .owner
+            == link_to image_tag(@owner.avatar), projects_path(owner_name: @owner.slug), class: "thumbnail"
+            == link_to @owner.name, projects_path(owner_name: @owner.slug), class: "screen-name"
+          - if @project.collaborators.present?
+            ul.collaborators
+              - @project.collaborators.each do |collaborator|
+                li.collaborator
+                  == link_to image_tag(collaborator.avatar), projects_path(owner_name: collaborator.slug), class: "thumbnail"
+                  == link_to collaborator.name, projects_path(owner_name: collaborator.slug), class: "screen-name"
+          - if can? :manage, @project
+            == link_to "+ collaborator", project_collaborators_path(owner_name: @owner.slug, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
+  #edit-menu
+    - if can? :manage, @project
+      == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug)
+    == link_to "Recipe", project_recipe_path(@project, owner_name: @owner.slug)
+    == link_to "Note", project_note_path(@project, owner_name: @owner.slug)
 
 - content_for :bottom do
   coffee:
-    $(document).on "click", "#like-button", ->
-      $(".delete-like").val false
-      button = $ "#like-button"
-      user = button.attr "data-user"
-      if button.hasClass "liked"
-        $(".delete-like."+user).val 1
-      else
-        if $("."+user).length > 0
-          $("."+user).parent(".fields").remove()
-        $("#add-like").click()
-        liker_id_form = $ "#like-form .liker_id:last"
-        liker_id_form.val user
-        liker_id_form.nextAll(".delete-like").addClass user
-      $("#like-form").submit()
+    $(".fancybox").fancybox
+      openEffect: "none"
+      closeEffect: "none"
+      wrapCSS: ".fork-popup"
+      helpers:
+        overlay:
+          css:
+            "background":"rgba(0, 0, 0, 0.2)"
 
-    $(document).on "ajax:success", "#like-form", ->
-      button = $ "#like-button"
-      number = parseInt button.text()
-      if button.hasClass "liked"
-        button.removeClass "liked"
-        number -= 1
-      else
-        button.addClass "liked"
-        number += 1
-      button.text number
+    $(document).on "click", ".fork-btn", ->
+      $(this).find("form").submit()

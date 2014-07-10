@@ -1,0 +1,15 @@
+aside.like
+  - exists = false
+  - count = 0
+  == nested_form_for resources, html: {class: "like-form"}, remote: true do |f|
+    == f.fields_for :likes do |ff|
+      == ff.hidden_field :liker_id, class: "liker_id"
+      == ff.hidden_field :_destroy, class: "delete-like #{ff.object.liker_id}"
+      - if ff.object.liker_id
+        - count += 1
+      - if current_user && ff.object.liker_id == current_user.slug
+        - exists = true
+    - if exists == false
+      == f.link_to_add "Like", :likes, class: "add-like"
+  .like-button class="#{exists == true ? 'liked' : ''}" data-user="#{current_user ? current_user.slug : ''}"
+    == count
