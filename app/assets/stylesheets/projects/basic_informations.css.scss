@@ -4,9 +4,10 @@
 @import "_project_variables.css.scss";
 
 #basic-informations {
-  $margin_width: 70px;
+  $margin_width: 60px;
   .margin {
     float: left;
+    margin-left: 10px;
     margin-right: $first_column_width - $margin_width;
     width: $margin_width;
     border-top: $common-border;
@@ -14,7 +15,7 @@
   .header {
     margin-bottom: 20px;
     $height: 40px;
-    height: $height; 
+    height: $height;
     @include cf;
     .title {
       float: left;
@@ -23,10 +24,10 @@
       line-height: $height;
     }
     .like {
-      float: left; 
+      float: left;
       line-height: $height + 4px;
       vertical-align: middle;
-   }
+    }
   }
 
   .body {
@@ -62,7 +63,7 @@
         background-size: cover;
       }
       #slideshow-btn {
-        margin-bottom: ($height - $tool_size * 2) / 2;
+        margin-bottom: ($height - $tool_size * 2) - 4px;
         background-image: asset-url("slideshow.png");
       }
       #fork-btn {
@@ -100,30 +101,52 @@
 
     .description {
       float: left;
+      margin-right: 10px;
       $padding_top: 12px;
       $padding_bottom: 8px;
       padding-top: $padding_top;
       padding-bottom: $padding_bottom;
-      width: $third_column_width;
+      width: $third_column_width - 10px;
       height: $height / 2 - $padding_top - $padding_bottom;
       border-top: $common-border;
       border-bottom: $common-border;
+      font-family: $common-sans-serif;
+      font-size: 12px;
+      line-height: $common-line-height;
     }
     .meta {
+      margin-right: 10px;
       font-size: 12px;
       @include cf;
       .left {
         float: left;
         padding-top: 5px;
-        width: ($third_column_width) / 2;
+        width: ($third_column_width - 10px) / 2;
       }
       .right {
         float: left;
         padding-top: 5px;
-        width: ($third_column_width) / 2;
+        width: ($third_column_width - 10px) / 2;
       }
       .timestamps {
         margin-bottom: 6px;
+        font-family: $common-verdana;
+        font-size: 9px;
+        line-height: 16px;
+        h2 {
+          font-weight: 500;
+        }
+        .date {
+          font-weight: 700;
+        }
+      }
+      .tags {
+        h2 {
+          font-family: $common-helvetica;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 18px;
+        }
       }
       .collaborators {
         .owner, .collaborator {
@@ -165,5 +188,5 @@
         color: gray;
       }
     }
-  }  
+  }
 }

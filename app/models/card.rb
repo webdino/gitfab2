@@ -4,6 +4,7 @@ class Card
   include Attachable
   include Figurable
   include Contributable
+  include Likable
   include Commentable
   include Forkable
   include Annotatable

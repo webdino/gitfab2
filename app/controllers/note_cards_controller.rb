@@ -4,6 +4,7 @@ class NoteCardsController < ApplicationController
   before_action :load_note
   before_action :load_note_card, only: [:edit, :update, :destroy]
   before_action :build_note_card, only: [:new, :create]
+  before_action :create_contribution, only: [:create, :update]
 
   def new
   end
@@ -55,6 +56,10 @@ class NoteCardsController < ApplicationController
 
   def build_note_card
     @note_card = @note.note_cards.build note_card_params
+  end
+
+  def create_contribution
+    #TODO: create contibution for @note_card
   end
 
   def note_card_params

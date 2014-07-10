@@ -1,23 +1,119 @@
+@import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
 @import "projects/_project_variables.css.scss";
 
-$card_list_width: $visual_width + $summary_width;
-
 #note-cards {
-  margin-top: 12px;
-  width: $card_list_width + 1;
-}
-
-.notecard {
-  .title {
-    &:before {
-      content: "■ ";
-      color: gray;
-      font-size: 24px;
+  width: $content_width;
+  #top {
+    margin-left: $first_column_width + 10px;
+    padding-top: 1px;
+    width: $article_column_width;
+    background: white;
+    .inner {
+      @include cf;
+      $margin: 10px;
+      width: $article_column_width - $margin * 2;
+      margin: 34px $margin 0;
+      padding-bottom: 50px;
+      border-top: $common-border;
+      h1 {
+        font-family: $common-helvetica;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: $common-line-height;
+      }
+      .new-card {
+        float: right;
+        margin-top: -20px;
+      }
     }
   }
-  
-  figure {
-    margin-bottom: 18px;
+  .note-card-wrapper {
+    @include cf;
+    height: auto;
+    .first-column {
+      display: block;
+      min-height: 10px;
+    }
+    .article-column {
+      display: block;
+      padding-bottom: 50px;
+      background: white;
+      .card-content {
+        @include cf;
+        figure {
+          float: left;
+          margin-left: 10px;
+          width: 368px;
+          height: auto;
+          li:first-child > img{
+            max-width: 100%;
+          }
+        }
+        .title {
+          float: left;
+          margin: 0 10px 0px 20px;
+          width: 460px;
+          font-family: $common-sans-serif;
+          font-size: 22px;
+          line-height: $common-line-height;
+        }
+        .meta {
+          float: left;
+          margin: 0 10px 0px 20px;
+          width: 460px;
+          font-family: $common-verdana;
+          font-size: 14px;
+          line-height: $common-line-height;
+          .date {
+            font-weight: 700;
+          }
+          .control {
+            margin-top: 5px;
+            .starred {
+              height: 26px;
+              padding-right: 10px;
+              margin-right: 10px;
+              border-right: 1px solid black;
+              .icon {
+                display: inline-block;
+                vertical-align: top;
+                margin-top: 1px;
+                width: 20px;
+                height: 20px;
+              }
+              .count {
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 5px;
+                height: 20px;
+              }
+            }
+          }
+        }
+        .description {
+          float: left;
+          margin: 0 10px 0 20px;
+          width: 460px;
+          font-family: $common-sans-serif;
+          font-size: 14px;
+          line-height: 24px;
+        }
+      }
+    }
+  }
+  footer {
+    display:block;
+    margin-left: $first_column_width + 10px;
+    padding-top: 150px;
+    width: $article_column_width;
+    background: white;
+    .inner {
+      $margin: 10px;
+      width: $article_column_width - $margin * 2;
+      margin: 0px $margin 0;
+      height: 60px;
+      border-top: $common-border;
+    }
   }
 }

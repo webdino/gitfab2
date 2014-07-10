@@ -1,10 +1,11 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
+@import "projects/_project_variables.css.scss";
 
 #content, main {
   @include cf;
 }
-main { 
+main {
   float: left;
   width: 100%;
   section {
@@ -21,22 +22,10 @@ article.card .title {
   font-size: 24px;
   margin-bottom: 18px;
 }
-.card-list {
-  margin-bottom: 24px;
-  padding-top: 8px;
-  > li {
-    margin-bottom: 12px;
-    padding: 18px 18px 24px 18px;
-    box-sizing: border-box;
-    border: $common-border;
-  }
-}
 
 .card-content {
   margin-bottom: 12px;
   padding-bottom: 24px;
-  border-bottom: $common-border;
-  border-color: #AAA;
   figure {
     overflow: hidden;
   }
@@ -47,4 +36,22 @@ article.card .title {
 
 .btn + .btn {
   margin-left: 4px;
+}
+
+.first-column {
+  float: left;
+  margin-left: 10px;
+  width: $first_column_width;
+}
+.second-column {
+  float: left;
+  width: $second_column_width;
+}
+.third-column {
+  float: left;
+  width: $third_column_width;
+}
+.article-column {
+  float: left;
+  width: $article_column_width;
 }
