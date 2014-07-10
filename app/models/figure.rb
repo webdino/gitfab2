@@ -1,6 +1,7 @@
 class Figure
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Attributes::Dynamic
 
   mount_uploader :content, FigureUploader
   

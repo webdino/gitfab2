@@ -18,8 +18,9 @@ class Card
   searchable_field :description
 
   def dup_document
-    dup.tap do |doc|
+    dup.tap do |doc| 
       doc.id = BSON::ObjectId.new
+      doc.figures = figures.map{|f| f.dup_document}
       doc.attachments = attachments.map{|a| a.dup_document}
     end
   end

@@ -61,11 +61,6 @@ class Project
       project.id = BSON::ObjectId.new
       project.owner = owner
       project.original = self
-      project.save!
-      project.recipe = recipe.dup_document
-      project.note = note.dup_document
-      project.usages = usages.map{|u| u.dup_content}
-      project.figures = figures.map{|a| a.dup_document}
       names = owner.projects.pluck :name
       _name = name.dup
       if names.include? _name
@@ -73,6 +68,10 @@ class Project
         _name.sub!(/(\d+)$/, "#{$1.to_i + 1}") while names.include? _name
       end
       project.name = _name
+      project.save!
+      project.recipe = recipe.dup_document
+      project.usages = usages.map{|u| u.dup_document}
+      project.figures = figures.map{|a| a.dup_document}
       begin
         project.save!
       rescue Exception => e
