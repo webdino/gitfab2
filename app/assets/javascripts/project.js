@@ -24,6 +24,7 @@
 //= require ./card
 //= require ./card_markup
 //= require ./slideshow
+//= require ./like
 //= require select2
 //= require parsley
 //= require parsley.remote

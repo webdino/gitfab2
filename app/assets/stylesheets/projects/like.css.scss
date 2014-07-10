@@ -1,0 +1,20 @@
+aside.like {
+  .like-form {
+    display: none;
+  }
+  .like-button {
+    $star_size: 20px;
+    min-width: 100px;
+    height: $star_size;
+    background: asset-url("star.png") no-repeat;
+    padding-left: $star_size;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: initial;
+    line-height: $star_size + 5px;
+    display: inline-block;
+  }
+  .like-button.liked {
+    background: asset-url("starred.png") no-repeat;
+  }
+}
