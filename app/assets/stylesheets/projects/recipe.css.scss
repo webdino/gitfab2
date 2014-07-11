@@ -1,5 +1,93 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "projects/_project_variables.css.scss";
+
+#recipe-cards {
+  width: $content_width;
+  #top {
+    margin-left: $first_column_width + 10px;
+    padding-top: 1px;
+    width: $article_column_width;
+    background: white;
+    .inner {
+      @include cf;
+      $margin: 10px;
+      width: $article_column_width - $margin * 2;
+      margin: 34px $margin 0;
+      border-top: $common-border;
+      h1 {
+        font-family: $common-helvetica;
+        font-weight: 700;
+        font-size: 22px;
+        line-height: $common-line-height;
+      }
+    }
+  }
+  #making-list {
+    width: $content_width;
+    #top {
+      .inner {
+        $margin: 10px;
+        width: $article_column_width - $margin * 2;
+        margin: 34px $margin 0;
+        h2 {
+          display: inline-block;
+          vertical-align: top;
+          width: 40%;
+          font-family: $common-helvetica;
+          font-weight: 700;
+          font-size: 22px;
+          line-height: $common-line-height;
+        }
+      }
+    }
+    #recipe-card-list {
+      @include cf;
+      width: $content_width;
+      #card-order-tools {
+        margin-top: -20px;
+        margin-left: $first_column_width + 10px;
+        width: $article_column_width;
+        text-align: right;
+        background: white;
+        .order-change-btn {
+          display: inline-block;
+          margin-right: 10px;
+        }
+      }
+      li.state-wrapper {
+        width: $content_width;
+        article {
+          @include cf;
+          .article-column {
+            background: white;
+          }
+        }
+      }
+      li.transition-wrapper {
+
+      }
+      .article-column.sp {
+        background: white;
+        margin-left: 10px + $first_column_width;
+        .new-card {
+          $margin: 10px;
+          margin-top: 20px;
+          margin-left: $margin;
+          padding: 11px 0 11px 0;
+          width: $article_column_width - $margin * 2;
+          background-color: $common-basic-color;
+          font-family: $common-verdana;
+          font-size: 14px;
+          line-height: $common-line-height;
+          text-align: center;
+          color: white;
+        }
+      }
+
+    }
+  }
+}
 
 #recipe-card-list {
   width: 100%;
@@ -16,11 +104,24 @@
     }
   }
   .card-content {
+    $margin: 10px;
     float: left;
-    width: 100%;
-    margin-bottom: 24px;
+    margin-left: $margin;
+    margin-bottom: 8px;
+    padding-bottom: 0;
+    width: $article_column_width - $margin * 2;
+    border: none;
+    h2.title {
+      font-family: $common-sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: $common-line-height;
+    }
     .description {
       float: left;
+      font-family: $common-sans-serif;
+      font-size: 14px;
+      line-height: 24px;
     }
     .attachments {
       @include cf;
@@ -29,19 +130,28 @@
   }
 
   .transition-wrapper {
-    border: none;
-    padding-top: 0px;
+    margin-left: $first_column_width + 10px;
     margin-bottom: 0px;
+    padding-top: 0px;
+    width: $article_column_width;
+    background: white;
+    border: none;
     .transition-content {
       float: left;
       width: 100%;
       .transition-footer {
         text-align: right;
-        width: 85%;
-        margin-left: 15%;
+        width: 780px;
+        margin-left: 80px;
         .new-card {
           background-color: $common-basic-color;
-          width: 100%;
+          $margin: 10px;
+          margin-top: 20px;
+          padding: 11px 0 11px 0;
+          width: 780px;
+          font-family: $common-verdana;
+          font-size: 14px;
+          line-height: $common-line-height;
           text-align: center;
           color: white;
         }
@@ -57,30 +167,39 @@
     }
     .annotation-list {
       float: left;
-      width: 85%;
-      margin-left: 15%;
+      width: 780px;
+      margin-left: 80px;
       >li {
         width: 100%;
         overflow: auto;
-        padding: 14px 3px 14px 14px;
+        padding: 14px 0;
         margin-bottom: 12px;
-        border: 1px solid black;
       }
       h2 {
         font-size: 20px;
         font-weight: normal;
         margin-bottom: 4px;
       }
-
     }
     .card-content {
+      $margin: 10px;
       float: left;
-      width: 100%;
+      margin-left: 0;
       margin-bottom: 8px;
       padding-bottom: 0;
+      width: 780px;
       border: none;
+      h2.title {
+        font-family: $common-sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: $common-line-height;
+      }
       .description {
         float: left;
+        font-family: $common-sans-serif;
+        font-size: 14px;
+        line-height: 24px;
       }
       .attachments {
         @include cf;
@@ -98,9 +217,6 @@
   }
   .order-down-btn {
     display: none;
-  }
-  .order-change-btn {
-    display: inline-block;
   }
   .order-commit-btn {
     display: none;
@@ -150,20 +266,5 @@
       }
     }
     @include cf;
-  }
-}
-
-#making-list {
-  border-top: $common-border;
-  padding-top: 5px;
-  h2 {
-    line-height: 30px;
-    width: 40%;
-    font-size: 20px;
-    display: inline-block;
-    vertical-align: top;
-  }
-  #card-order-tools {
-    text-align: right;
   }
 }
