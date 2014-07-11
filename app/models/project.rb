@@ -70,8 +70,9 @@ class Project
       project.name = _name
       project.save!
       project.recipe = recipe.dup_document
-      project.usages = usages.map{|u| u.dup_document}
       project.figures = figures.map{|a| a.dup_document}
+      project.usages = []
+      project.note.note_cards = []
       begin
         project.save!
       rescue Exception => e

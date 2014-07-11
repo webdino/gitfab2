@@ -20,6 +20,7 @@ class Card
   def dup_document
     dup.tap do |doc| 
       doc.id = BSON::ObjectId.new
+      doc.annotations = annotations.map{|a| a.dup_document}
       doc.figures = figures.map{|f| f.dup_document}
       doc.attachments = attachments.map{|a| a.dup_document}
     end
