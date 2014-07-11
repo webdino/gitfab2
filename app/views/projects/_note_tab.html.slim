@@ -19,13 +19,13 @@
             .created
               span
                 'created date:
-              span
-                == "#{project.created_at.strftime '%Y-%M-%d'}"
+              span.date
+                == "#{project.created_at.strftime '%Y-%m-%d'}"
             .updated
               span
                 'updated date:
-              span
-                == "#{project.updated_at.strftime '%Y-%M-%d'}"
+              span.date
+                == "#{project.updated_at.strftime '%Y-%m-%d'}"
         .text-container
           - if project.title.present?
             == link_to project.title, project_path(project.owner, project), class: "title"
@@ -41,7 +41,7 @@
               span
                 'tags=
               - projects.tags.each do |tag|
-                span
+                span.tag
                   / TODO: #485 create link to projects tagged by tag.name
                   == link_to tag.name, "#"
             - else

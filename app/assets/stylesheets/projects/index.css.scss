@@ -1,4 +1,5 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
 
 #projects-index {
@@ -13,7 +14,7 @@
       float: right;
       width: 220px;
       font-weight: 500;
-      font-family: 'Verdana', sans-serif;
+      font-family: $common-verdana;
       .owner-avatar {
         margin-bottom: 20px;
         max-width: 100%;
@@ -41,7 +42,7 @@
       h2 {
         width: 100%;
         font-weight: 700;
-        font-family: Helvetica, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+        font-family: $common-sans-serif;
         font-size: 22px;
         line-height: 33px;
         color: #808080;
@@ -61,10 +62,10 @@
       .serch-box {
         width: 220px;
         height: 26px;
-        line-height: 21px;
         font-size: 12px;
         font-weight: 500;
-        font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
+        font-family: $common-sans-serif;
+        line-height: $common-line-height;
       }
     }
   }
@@ -80,10 +81,10 @@
         width: 140px;
         height: 28px;
         background: #F2F2F2;
-        line-height: 25px;
+        font-family: $common-verdana;
         font-size: 14px;
+        line-height: $common-line-height;
         font-weight: 500;
-        font-family: 'Verdana', sans-serif;
         &.active {
           background: white;
         }
@@ -101,9 +102,9 @@
         h2 {
           width: 100%;
           font-weight: 700;
-          font-family: Helvetica, sans-serif;
+          font-family: $common-helvetica;
           font-size: 22px;
-          line-height: 39px;
+          line-height: $common-line-height;
           border-top: 1px solid black;
         }
         .project-list {
@@ -127,10 +128,10 @@
                 width: 100%;
                 margin-bottom: 5px;
                 span {
-                  line-height: 14px;
+                  font-family: $common-verdana;
                   font-size: 9px;
+                  line-height: 14px;
                   font-weight: 500;
-                  font-family: 'Verdana', sans-serif;
                   &.date {
                     font-weight: 700;
                   }
@@ -145,24 +146,24 @@
               width: 460px;
               .title {
                 margin-bottom: 10px;
-                line-height: 40px;
+                font-family: $common-sans-serif;
                 font-size: 18px;
+                line-height: 40px;
                 font-weight: 500;
-                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
               }
               .summary {
                 margin-bottom: 5px;
-                line-height: 18px;
+                font-family: $common-sans-serif;
                 font-size: 12px;
+                line-height: 18px;
                 font-weight: 500;
-                font-family: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
                 color: #808080;
               }
               .tags {
                 line-height: 18px;
                 font-size: 10px;
                 font-weight: 500;
-                font-family: 'Verdana', sans-serif;
+                font-family: $common-verdana;
                 :first-child {
                   font-weight: 700;
                 }

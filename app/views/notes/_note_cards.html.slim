@@ -1,8 +1,17 @@
 section#note-cards
-  h1
-   'Note
+  #top
+    .inner
+      h1
+        'Note
+      == link_to "+ add Note", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper"
+
   ul#note-card-list.card-list
     - @note.note_cards.each do |card|
-      li
-        == render "components/card", card: card, delete_url: project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-  == link_to "+ Add Card", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper"
+      li.note-card-wrapper
+        .first-column
+          .horizontal-border.black.f-left
+        .article-column
+          == render "components/card", card: card, delete_url: project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+    footer
+      .inner
+        / TODO: implement pager

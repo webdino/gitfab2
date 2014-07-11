@@ -1,12 +1,12 @@
+@import "mixins/variables.css.scss";
 .btn {
   display: inline-block;
-  padding: 4px 6px;
-  background: white;
-  border: 1px solid #111;
-  border-radius: 5px;
+  padding: 0px 10px;
+  background: #F2F2F2;
+  font-family: $common-verdana;
+  font-size: 14px;
+  line-height: $common-line-height;
   cursor: pointer;
-  font-family: helvetica,sans-serif;
-  font-size: 20px;
   &:hover {
     background: #ddd;
   }
