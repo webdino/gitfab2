@@ -41,57 +41,46 @@
         }
       }
     }
-    #recipe-card-list {
-      @include cf;
-      width: $content_width;
-      #card-order-tools {
-        margin-top: -20px;
-        margin-left: $first_column_width + 10px;
-        width: $article_column_width;
-        text-align: right;
-        background: white;
-        .order-change-btn {
-          display: inline-block;
-          margin-right: 10px;
-        }
+    #card-order-tools {
+      margin-top: -20px;
+      margin-left: $first_column_width + 10px;
+      padding-right: 10px;
+      text-align: right;
+      background: white;
+    }
+    .article-column.sp {
+      background: white;
+      margin-left: 10px + $first_column_width;
+      .new-card {
+        $margin: 10px;
+        margin-top: 20px;
+        margin-left: $margin;
+        padding: 11px 0 11px 0;
+        width: $article_column_width - $margin * 2;
+        background-color: $common-basic-color;
+        font-family: $common-verdana;
+        font-size: 14px;
+        line-height: $common-line-height;
+        text-align: center;
+        color: white;
       }
-      li.state-wrapper {
-        width: $content_width;
-        article {
-          @include cf;
-          .article-column {
-            background: white;
-            padding-top: 50px;
-          }
-        }
-      }
-      li.transition-wrapper {
-
-      }
-      .article-column.sp {
-        background: white;
-        margin-left: 10px + $first_column_width;
-        .new-card {
-          $margin: 10px;
-          margin-top: 20px;
-          margin-left: $margin;
-          padding: 11px 0 11px 0;
-          width: $article_column_width - $margin * 2;
-          background-color: $common-basic-color;
-          font-family: $common-verdana;
-          font-size: 14px;
-          line-height: $common-line-height;
-          text-align: center;
-          color: white;
-        }
-      }
-
     }
   }
 }
 
 #recipe-card-list {
-  width: 100%;
+  @include cf;
+  width: $content_width;
+  li.state-wrapper {
+    width: $content_width;
+    article {
+      @include cf;
+      .article-column {
+        background: white;
+        padding-top: 50px;
+      }
+    }
+  }
   > li {
     width: 100%;
     float: left;
@@ -218,6 +207,9 @@
   }
   .order-down-btn {
     display: none;
+  }
+  .order-change-btn {
+    display: inline-block;
   }
   .order-commit-btn {
     display: none;
