@@ -1,20 +1,24 @@
 section#recipe-cards
-  h1 Recipe
+  #top
+   .inner
+      h1 Recipe
 
-  section#material-list
-    h2 Matrials
-    ul
+      section#material-list
+        h2 Matrials
+        ul
 
-  section#tool-list
-    h2 Tools
-    ul
+      section#tool-list
+        h2 Tools
+        ul
 
-  section#blueprint-list
-    h2 Blueprints
-    ul
+      section#blueprint-list
+        h2 Blueprints
+        ul
 
   section#making-list
-    h2 Making
+    #top
+      .inner
+        h2 Making
     ul#recipe-card-list.card-list
       #card-order-tools
         == link_to "Change Order", "#", class: "order-change-btn btn"
@@ -22,8 +26,8 @@ section#recipe-cards
       - @recipe.recipe_cards.ordered_by_position.each do |card|
         li class="card-wrapper #{card.htmlclass}-wrapper"
           == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
-
-    == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper"
+      .article-column.sp
+        == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper"
 
     == form_for [@owner, @project, :recipe, Card::Transition.new], method: :post, remote: true do |f|
       == f.hidden_field :_type, value: Card::Transition.name

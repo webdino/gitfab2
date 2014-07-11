@@ -1,19 +1,34 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
-#recipes-show {
-  section#usages {
-    width: $content-width;
-    padding: 10px 0;
-    border-bottom: $common-border;
-    box-sizing: content-box;
+@import "projects/_project_variables.css.scss";
+
+section#usages {
+  margin-left: $first_column_width + 10px;
+  margin-bottom: 50px;
+  padding-top: 1px;
+  width: $article_column_width;
+  background: white;
+
+  .inner {
     @include cf;
-    margin-top: 16px;
-    margin-bottom: 16px;
+    $margin: 10px;
+    width: $article_column_width - $margin * 2;
+    margin: 34px $margin 0;
+    padding-bottom: 50px;
     min-height: 256px;
+    border-top: $common-border;
+
+    h1 {
+      font-family: $common-helvetica;
+      font-weight: 700;
+      font-size: 22px;
+      line-height: $common-line-height;
+    }
+
     .file-field {
       display: none;
-    } 
+    }
 
     .add-form-wrap {
       margin-top: 20px;
@@ -30,17 +45,25 @@
       margin-left: 430px;
     }
 
-    .item {
+    .card-content {
       @include cf;
       position: relative;
-      background: #efefef;
-      border: $common-border;
+      background: white;
       width: 487px;
+
+      figure {
+        float: left;
+        margin-right: 24px;
+        overflow: hidden;
+        img {
+          height: 200px;
+        }
+      }
       .image-field {
         float: left;
         width: 240px;
         height: 180px;
-        background-size: cover;
+        background-size: contain;
         background-position: center;
         iframe {
           width: 240px;

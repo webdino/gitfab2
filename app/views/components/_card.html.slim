@@ -1,38 +1,79 @@
 article class="card #{card.htmlclass}" data-position="#{card.try(:position)}" id="#{card.id}"
-  .card-content
-    figure
-      ul
-        - card.figures.each do |figure|
-          li
-            == image_tag figure.content
-    h2.title
-      / TODO: should link_to card#show
-      == card.title
-    - if card.instance_of?(Card::NoteCard)
-      .meta
-        .date
-          / TODO: create note_card.contribution when creating or updating the card
-          == "posted by #{@project.owner.name}, Date #{card.created_at.strftime('%B %d, %Y')}"
-        .control
-          span.starred
-            span.icon
-              == image_tag "starred.png"
-            span.count
-              == "#{card.likes.length}"
-          span.edit
-            == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
-            == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+  - if card.instance_of?(Card::State)
+    .first-column
+      h1
+    .article-column
+      .card-content
+        figure
+          ul
+            - card.figures.each do |figure|
+              li
+                == image_tag figure.content
+        h2.title
+          / TODO: should link_to card#show
+          == card.title
+        - if card.instance_of?(Card::NoteCard)
+          .meta
+            .date
+              / TODO: create note_card.contribution when creating or updating the card
+              == "posted by #{@project.owner.name}, Date #{card.created_at.strftime('%B %d, %Y')}"
+            .control
+              span.starred
+                span.icon
+                  == image_tag "starred.png"
+                span.count
+                  == "#{card.likes.length}"
+              span.edit
+                == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+                == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
 
-    .description
-      == card.description
-    .attachments
-      - card.attachments.each do |attachment|
-        .attachment data-title="#{attachment.title}" data-link="#{attachment.link}" data-markupid="#{attachment.markup_id}" data-content="#{attachment.content}"
+        .description
+          == card.description
+        .attachments
+          - card.attachments.each do |attachment|
+            .attachment data-title="#{attachment.title}" data-link="#{attachment.link}" data-markupid="#{attachment.markup_id}" data-content="#{attachment.content}"
 
-    - unless card.instance_of?(Card::NoteCard)
-      footer
-        == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-        == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
-        - if card.instance_of?(Card::State)
-          == link_to "up", "#", class: "order-up-btn btn"
-          == link_to "down", "#", class: "order-down-btn btn"
+        footer
+          == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+          == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+          - if card.instance_of?(Card::State)
+            == link_to "up", "#", class: "order-up-btn btn"
+            == link_to "down", "#", class: "order-down-btn btn"
+  - else
+    .card-content
+      figure
+        ul
+          - card.figures.each do |figure|
+            li
+              == image_tag figure.content
+      h2.title
+        / TODO: should link_to card#show
+        == card.title
+      - if card.instance_of?(Card::NoteCard)
+        .meta
+          .date
+            / TODO: create note_card.contribution when creating or updating the card
+            == "posted by #{@project.owner.name}, Date #{card.created_at.strftime('%B %d, %Y')}"
+          .control
+            span.starred
+              span.icon
+                == image_tag "starred.png"
+              span.count
+                == "#{card.likes.length}"
+            span.edit
+              == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+              == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+
+      .description
+        == card.description
+      .attachments
+        - card.attachments.each do |attachment|
+          .attachment data-title="#{attachment.title}" data-link="#{attachment.link}" data-markupid="#{attachment.markup_id}" data-content="#{attachment.content}"
+
+      - unless card.instance_of?(Card::NoteCard)
+        footer
+          == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+          == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+          - if card.instance_of?(Card::State)
+            == link_to "up", "#", class: "order-up-btn btn"
+            == link_to "down", "#", class: "order-down-btn btn"
