@@ -26,8 +26,8 @@ section#recipe-cards
       - @recipe.recipe_cards.ordered_by_position.each do |card|
         li class="card-wrapper #{card.htmlclass}-wrapper"
           == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
-      .article-column.sp
-        == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper"
+    .article-column.sp
+      == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper"
 
     == form_for [@owner, @project, :recipe, Card::Transition.new], method: :post, remote: true do |f|
       == f.hidden_field :_type, value: Card::Transition.name
