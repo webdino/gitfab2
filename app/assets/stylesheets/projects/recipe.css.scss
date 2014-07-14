@@ -5,15 +5,14 @@
 #recipe-cards {
   width: $content_width;
   #top {
-    margin-left: $first_column_width + 10px;
+    margin-left: $first_column_width + $common-margin;
     padding-top: 1px;
     width: $article_column_width;
     background: white;
     .inner {
       @include cf;
-      $margin: 10px;
-      width: $article_column_width - $margin * 2;
-      margin: 34px $margin 0;
+      width: $article_column_width - $common-margin * 2;
+      margin: 34px $common-margin 0;
       border-top: $common-border;
       h1 {
         font-family: $common-helvetica;
@@ -27,9 +26,8 @@
     width: $content_width;
     #top {
       .inner {
-        $margin: 10px;
-        width: $article_column_width - $margin * 2;
-        margin: 34px $margin 0;
+        width: $article_column_width - $common-margin * 2;
+        margin: 34px $common-margin 0;
         h2 {
           display: inline-block;
           vertical-align: top;
@@ -43,20 +41,19 @@
     }
     #card-order-tools {
       margin-top: -20px;
-      margin-left: $first_column_width + 10px;
+      margin-left: $first_column_width + $common-margin;
       padding-right: 10px;
       text-align: right;
       background: white;
     }
     .article-column.sp {
       background: white;
-      margin-left: 10px + $first_column_width;
+      margin-left: $first_column_width + $common-margin;
       .new-card {
-        $margin: 10px;
         margin-top: 20px;
-        margin-left: $margin;
-        padding: 11px 0 11px 0;
-        width: $article_column_width - $margin * 2;
+        margin-left: $common-margin;
+        padding: 11px 0;
+        width: $article_column_width - $common-margin * 2;
         background-color: $common-basic-color;
         font-family: $common-verdana;
         font-size: 14px;
@@ -71,6 +68,10 @@
 #recipe-card-list {
   @include cf;
   width: $content_width;
+  > li {
+    width: 100%;
+    float: left;
+  }
   li.state-wrapper {
     width: $content_width;
     article {
@@ -78,67 +79,77 @@
       .article-column {
         background: white;
         padding-top: 50px;
+        &:first-of-type {
+          padding-top: 0px;
+        }
+        .card-content {
+          @include cf;
+          $card-content-width: $article_column_width - $common-margin * 2;
+          $figure-width: 368px;
+          $figure-margin-right: 20px;
+          margin-left: $common-margin;
+          margin-bottom: $common-margin * 2;
+          padding-bottom: 0;
+          width: $card-content-width;
+          border: none;
+          figure {
+            float: left;
+            max-width: $figure-width;
+            margin-right: $figure-margin-right;
+            overflow: hidden;
+            img {
+              width: 100%;
+            }
+          }
+          h2.title {
+            float: left;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+            font-family: $common-sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: $common-line-height;
+          }
+          .description {
+            float: left;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+            font-family: $common-sans-serif;
+            font-size: 14px;
+            line-height: 24px;
+          }
+          .attachments {
+            @include cf;
+            float: left;
+          }
+          footer {
+            float: left;
+            margin-top: $common-margin * 2;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+          }
+        }
       }
     }
   }
-  > li {
-    width: 100%;
-    float: left;
-  }
-  figure {
-    float: left;
-    margin-right: 24px;
-    overflow: hidden;
-    img {
-      height: 200px;
-    }
-  }
-  .card-content {
-    $margin: 10px;
-    float: left;
-    margin-left: $margin;
-    margin-bottom: 8px;
-    padding-bottom: 0;
-    width: $article_column_width - $margin * 2;
-    border: none;
-    h2.title {
-      font-family: $common-sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      line-height: $common-line-height;
-    }
-    .description {
-      float: left;
-      font-family: $common-sans-serif;
-      font-size: 14px;
-      line-height: 24px;
-    }
-    .attachments {
-      @include cf;
-      float: left;
-    }
-  }
-
   .transition-wrapper {
-    margin-left: $first_column_width + 10px;
+    $card-content-margin-left: $common-margin + 70px;
+    $card-content-width: $article_column_width - $card-content-margin-left - $common-margin;
+    $figure-width: 298px;
+    $figure-margin-right: $common-margin * 2;
+    margin-left: $first_column_width + $common-margin;
     margin-bottom: 0px;
     padding-top: 0px;
     width: $article_column_width;
     background: white;
     border: none;
     .transition-content {
-      float: left;
       width: 100%;
       .transition-footer {
         text-align: right;
-        width: 780px;
-        margin-left: 80px;
+        width: $card-content-width;
+        margin-left: $card-content-margin-left;
         .new-card {
           background-color: $common-basic-color;
-          $margin: 10px;
-          margin-top: 20px;
-          padding: 11px 0 11px 0;
-          width: 780px;
+          padding: 11px 0;
+          width: $card-content-width;
           font-family: $common-verdana;
           font-size: 14px;
           line-height: $common-line-height;
@@ -150,50 +161,53 @@
         }
       }
     }
-    figure {
-      margin: 0;
-      padding-right: 24px;
-      box-sizing: border-box;
-    }
     .annotation-list {
-      float: left;
-      width: 780px;
-      margin-left: 80px;
+      width: $card-content-width;
+      margin-left: $card-content-margin-left;
       >li {
         width: 100%;
         overflow: auto;
-        padding: 14px 0;
-        margin-bottom: 12px;
-      }
-      h2 {
-        font-size: 20px;
-        font-weight: normal;
-        margin-bottom: 4px;
-      }
-    }
-    .card-content {
-      $margin: 10px;
-      float: left;
-      margin-left: 0;
-      margin-bottom: 8px;
-      padding-bottom: 0;
-      width: 780px;
-      border: none;
-      h2.title {
-        font-family: $common-sans-serif;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: $common-line-height;
-      }
-      .description {
-        float: left;
-        font-family: $common-sans-serif;
-        font-size: 14px;
-        line-height: 24px;
-      }
-      .attachments {
-        @include cf;
-        float: left;
+        .annotation>.card-content {
+          @include cf;
+          margin-left: 0;
+          margin-bottom: $common-margin;
+          padding-bottom: 0;
+          width: $card-content-width;
+          border: none;
+          figure {
+            float: left;
+            max-width: $figure-width;
+            margin-right: $figure-margin-right;
+            overflow: hidden;
+            img {
+              width: 100%;
+            }
+          }
+          h2.title {
+            float: left;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+            font-family: $common-sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: $common-line-height;
+          }
+          .description {
+            float: left;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+            font-family: $common-sans-serif;
+            font-size: 14px;
+            line-height: 24px;
+          }
+          .attachments {
+            @include cf;
+            float: left;
+          }
+          footer {
+            float: left;
+            margin-top: $common-margin * 2;
+            width: $card-content-width - $figure-width - $figure-margin-right;
+          }
+        }
       }
     }
     footer {
