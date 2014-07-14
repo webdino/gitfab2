@@ -8,10 +8,8 @@ section#note-cards
   ul#note-card-list.card-list
     - @note.note_cards.each do |card|
       li.note-card-wrapper
-        .first-column
-          .horizontal-border.black.f-left
-        .article-column
-          == render "components/card", card: card, delete_url: project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-    footer
-      .inner
-        / TODO: implement pager
+        == render "note_cards/note_card", card: card, owner: @owner, project: @project
+
+  footer
+    .inner
+      / TODO: implement pager

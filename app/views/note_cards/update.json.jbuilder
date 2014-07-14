@@ -1,1 +1,1 @@
-json.html (render "components/card", card: @note_card, delete_url: project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: @note_card.id), edit_url: edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: @note_card.id))
+json.html (render "note_cards/note_card", card: @note_card, owner: @owner, project: @project)
