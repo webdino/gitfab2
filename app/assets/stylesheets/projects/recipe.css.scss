@@ -23,6 +23,7 @@
     }
   }
   #making-list {
+    @include cf;
     width: $content_width;
     #top {
       .inner {
