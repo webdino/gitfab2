@@ -1,10 +1,16 @@
 - cardid = card._id
 .transition-content
   article class="card transition" data-position="#{card.try(:position)}" id="#{cardid}"
-    ul.annotation-list
-      - card.annotations.each do |annotation|
-        li
-          == render "components/card", card: annotation, delete_url: project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id, id: annotation.id), edit_url: edit_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id, id: annotation.id)
-    footer.transition-footer
-      == link_to "+ Add Annotation", new_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id), remote: true, class: "btn new-card", "data-list" => "##{card.id} .annotation-list", "data-classname" => "annotation-wrapper"
-      == link_to "- Delete Transition", project_recipe_transition_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card delete-transition", "data-container" => ".card"
+    .first-column
+      .arrow
+        .body
+        .head
+
+    .article-column
+      ul.annotation-list
+        - card.annotations.each do |annotation|
+          li
+            == render "components/card", card: annotation, delete_url: project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id, id: annotation.id), edit_url: edit_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id, id: annotation.id)
+      footer.transition-footer
+        == link_to "+ Add Annotation", new_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id), remote: true, class: "btn new-card", "data-list" => "##{card.id} .annotation-list", "data-classname" => "annotation-wrapper"
+        == link_to "- Delete Transition", project_recipe_transition_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card delete-transition", "data-container" => ".card"

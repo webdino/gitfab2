@@ -37,6 +37,46 @@ $ ->
   formContainer.attr "id", "card-form-container"
   formContainer.appendTo document.body
 
+  setStateIndex = ->
+    $(".state-wrapper").each (index, element) ->
+      $(element).find("h1.number").text index + 1
+
+  setStateIndex()
+
+  adjustArrowHeight = (li, type) ->
+    articleColumn = $(li).find ".article-column"
+    firstColumn = $(li).find ".first-column"
+    arrowBody = $(firstColumn).find ".arrow .body"
+    height = articleColumn.css "height"
+    if type is "state"
+      firstColumn.css "height", height
+      arrowBody.css "height", height
+    else if type is "transition"
+      height = (height.split("px")[0] - 18) + "px"
+      firstColumn.css "height", height
+      arrowBody.css "height", height
+    image = articleColumn.find("figure").find("img").first()
+    image.bind "load", () ->
+      height = articleColumn.css "height"
+      if type is "state"
+        firstColumn.css "height", height
+        arrowBody.css "height", height
+      else if type is "transition"
+        height = (height.split("px")[0] - 18) + "px"
+        firstColumn.css "height", height
+        arrowBody.css "height", height
+
+  adjustStateArrowHeight = ->
+    $(".state-wrapper").each (index, element) ->
+      adjustArrowHeight element, "state"
+
+  adjustTransitionArrowHeight = ->
+    $(".transition-wrapper").each (index, element) ->
+      adjustArrowHeight element, "transition"
+
+  adjustStateArrowHeight()
+  adjustTransitionArrowHeight()
+
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
     event.preventDefault()
@@ -69,17 +109,23 @@ $ ->
       list.trigger "card-will-append", [li]
       list.append li
       list.trigger "card-appended", [li]
+      adjustTransitionArrowHeight()
       markup()
     .bind "ajax:error", (xhr, status, error) ->
       alert error.message
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
-    card = $(this).closest("li").children().first()
+    link = $ this
+    list = $(link.attr "data-list")
+    li = $(this).closest "li"
+    card = $(li).children().first()
     formContainer.html data.html
     $("form:first-child").parsley()
     formContainer.find "form"
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
+      list.trigger "card-edited", [li]
+      adjustTransitionArrowHeight()
       markup()
     .bind "ajax:error", (event, xhr, status, error) ->
       alert error.message
@@ -100,6 +146,7 @@ $ ->
     list.trigger "card-will-delete", [li]
     li.remove()
     list.trigger "card-deleted", [li]
+    adjustTransitionArrowHeight()
     markup()
 
   $(document).on "click", ".cancel-btn", (event) ->
@@ -175,13 +222,20 @@ $ ->
       $(card).attr "data-position", index + 1
 
   $(document).on "card-appended", "#recipe-card-list", (event, li) ->
+    adjustArrowHeight li, "state"
+    setStateIndex()
     if li.hasClass "state-wrapper"
       $("#new_transition").submit()
 
-  $(document).on "card-will-delete", "#recipe-card-list", (event, li) -> 
+  $(document).on "card-edited", "#recipe-card-list", (event, li) ->
+    adjustArrowHeight li, "state"
+    setStateIndex()
+
+  $(document).on "card-will-delete", "#recipe-card-list", (event, li) ->
     transition = li.next ".transition-wrapper"
     if transition.length is 1
       transition.find(".delete-transition").click()
+    setStateIndex()
 
   $(document).on "ajax:success", "#new_transition", (xhr, data) ->
     wrapper = $ data.html

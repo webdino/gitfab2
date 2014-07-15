@@ -76,9 +76,35 @@
     width: $content_width;
     article {
       @include cf;
+      .first-column {
+        padding-top: 50px;
+        position: relative;
+        h1.number {
+          position: relative;
+          top: 0;
+          left: 0;
+          font-size: 45px;
+          color: white;
+          line-height: 1em;
+        }
+        .arrow {
+          position: relative;
+          top: -60px;
+          left: 38px;
+          width: 22px;
+          .body {
+            margin: 0;
+            width: 22px;
+            min-height: 24px;
+            background: asset-url("arrow-body.png");
+            background-repeat: true;
+          }
+        }
+      }
       .article-column {
         background: white;
         padding-top: 50px;
+        height: auto;
         &:first-of-type {
           padding-top: 0px;
         }
@@ -134,85 +160,108 @@
     $card-content-width: $article_column_width - $card-content-margin-left - $common-margin;
     $figure-width: 298px;
     $figure-margin-right: $common-margin * 2;
-    margin-left: $first_column_width + $common-margin;
     margin-bottom: 0px;
     padding-top: 0px;
-    width: $article_column_width;
-    background: white;
+    width: $content-width;
     border: none;
     .transition-content {
       width: 100%;
-      .transition-footer {
-        text-align: right;
-        width: $card-content-width;
-        margin-left: $card-content-margin-left;
-        .new-card {
-          background-color: $common-basic-color;
-          padding: 11px 0;
-          width: $card-content-width;
-          font-family: $common-verdana;
-          font-size: 14px;
-          line-height: $common-line-height;
-          text-align: center;
-          color: white;
-        }
-        .delete-transition {
-          display: none;
+      .first-column {
+        min-height: 46px;
+        .arrow {
+          float: right;
+          margin-right: $common-margin * 2;
+          width: 22px;
+          .body {
+            margin-top: -1px;
+            width: 22px;
+            min-height: 26px;
+            background: asset-url("arrow-body.png");
+            background-repeat: true;
+          }
+          .head {
+            margin-top: -1px;
+            width: 22px;
+            min-height: 20px;
+            background: asset-url("arrow-head.png");
+          }
         }
       }
-    }
-    .annotation-list {
-      width: $card-content-width;
-      margin-left: $card-content-margin-left;
-      >li {
-        width: 100%;
-        overflow: auto;
-        .annotation>.card-content {
-          @include cf;
-          margin-left: 0;
-          margin-bottom: $common-margin;
-          padding-bottom: 0;
+      .article-column {
+        background: white;
+        height: auto;
+        .transition-footer {
+          text-align: right;
           width: $card-content-width;
-          border: none;
-          figure {
-            float: left;
-            max-width: $figure-width;
-            margin-right: $figure-margin-right;
-            overflow: hidden;
-            img {
-              width: 100%;
-            }
-          }
-          h2.title {
-            float: left;
-            width: $card-content-width - $figure-width - $figure-margin-right;
-            font-family: $common-sans-serif;
-            font-weight: 700;
+          margin-left: $card-content-margin-left;
+          .new-card {
+            background-color: $common-basic-color;
+            padding: 11px 0;
+            width: $card-content-width;
+            font-family: $common-verdana;
             font-size: 14px;
             line-height: $common-line-height;
+            text-align: center;
+            color: white;
           }
-          .description {
-            float: left;
-            width: $card-content-width - $figure-width - $figure-margin-right;
-            font-family: $common-sans-serif;
-            font-size: 14px;
-            line-height: 24px;
-          }
-          .attachments {
-            @include cf;
-            float: left;
-          }
-          footer {
-            float: left;
-            margin-top: $common-margin * 2;
-            width: $card-content-width - $figure-width - $figure-margin-right;
+          .delete-transition {
+            display: none;
           }
         }
+        .annotation-list {
+          width: $card-content-width;
+          margin-left: $card-content-margin-left;
+          >li {
+            width: 100%;
+            overflow: auto;
+            .annotation>.card-content {
+              @include cf;
+              margin-left: 0;
+              margin-bottom: $common-margin;
+              padding-bottom: 0;
+              width: $card-content-width;
+              border: none;
+              figure {
+                float: left;
+                max-width: $figure-width;
+                margin-right: $figure-margin-right;
+                overflow: hidden;
+                img {
+                  width: 100%;
+                }
+              }
+              h2.title {
+                float: left;
+                width: $card-content-width - $figure-width - $figure-margin-right;
+                font-family: $common-sans-serif;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: $common-line-height;
+              }
+              .description {
+                float: left;
+                width: $card-content-width - $figure-width - $figure-margin-right;
+                font-family: $common-sans-serif;
+                font-size: 14px;
+                line-height: 24px;
+              }
+              .attachments {
+                @include cf;
+                float: left;
+              }
+              footer {
+                float: left;
+                margin-top: $common-margin * 2;
+                width: $card-content-width - $figure-width - $figure-margin-right;
+              }
+            }
+          }
+        }
+        footer {
+          width: 100%;
+          float: left;
+        }
       }
-    }
-    footer {
-      width: 100%;
-      float: left;
     }
   }
 
