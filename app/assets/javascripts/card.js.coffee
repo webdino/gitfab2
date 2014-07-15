@@ -211,6 +211,7 @@ $ ->
       positionForm.val position
       idForm = field.find ".id"
       idForm.val id
+    setStateIndex()
     $("#submit-card-order").click()
 
   getCards = ->
