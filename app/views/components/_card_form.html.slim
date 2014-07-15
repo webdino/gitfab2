@@ -1,12 +1,12 @@
 == nested_form_for resources, html: {class: "card-form", "data-type" => "json", data: {"parsley-validate" => ""}}, remote: true do |f|
   #inner_content class="#{f.object.id}"
     == f.hidden_field :_type
-    == f.text_field :title, class: "validate card_title", data: {"parsely-trigger" => "keyup", "parsely-range" => "[1, 30]"}, placeholder: "Title"
+    == f.text_field :title, class: "validate card-title", data: {"parsely-trigger" => "keyup", "parsely-range" => "[1, 30]"}, placeholder: "Title"
     == f.fields_for :figures do |ff|
-      == ff.file_field :content, class: "validate"
-      == ff.text_field :link, type: "url", class: "validate"
+      == ff.file_field :content, class: "validate card-figure-content"
+      == ff.text_field :link, type: "url", class: "validate card-figure-link"
     == f.link_to_add "Add a figure", :figures
-    == f.text_area :description, class: "markup-area"
+    == f.text_area :description, class: "markup-area card-description"
     #attachments
       == f.fields_for :attachments do |af|
         == af.text_field :title, class: :title

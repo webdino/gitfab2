@@ -14,15 +14,16 @@
 //= require jquery.ui.sortable
 //= require jquery_ujs
 //= require jquery_nested_form
-//= require jquery.remotipart
 //= require turbolinks
 //= require jquery.turbolinks
 //= require tinymce
 //= require_tree ./helpers
 //= require_tree ./tinymce-plugins
+//= require_tree ./jquery
 //= require ./recipe
 //= require ./card
 //= require ./card_markup
+//= require ./card_order
 //= require ./slideshow
 //= require ./like
 //= require select2

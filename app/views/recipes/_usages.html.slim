@@ -2,7 +2,7 @@ section#usages
   .inner
     h1
       'Usages
-    == link_to "+ Add Usage", new_project_usage_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#usage-list"
+    == link_to "+ Add Usage", new_project_usage_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#usage-list", "data-template" => "#usage-template"
 
     ul#usage-list.card-list
       - @project.usages.each do |usage|

@@ -106,7 +106,6 @@
     display:block;
     margin-left: $first_column_width + 10px;
     padding-top: 150px;
-    width: $article_column_width;
     background: white;
     .inner {
       $margin: 10px;
@@ -116,4 +115,8 @@
       border-top: $common-border;
     }
   }
+}
+
+#templates {
+  display: none;
 }
