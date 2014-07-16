@@ -236,11 +236,7 @@ $ ->
     for attachment in attachments
       markupid = attachment.getAttribute "data-markupid"
       content = attachment.getAttribute "data-content"
-      url = ""
-      if content
-        url = content
-      else
-        url = attachment.getAttribute "data-link"
-      $("#" + markupid).attr "href", url
+      if content && content.length > 0
+        $("#" + markupid).attr "href", content
     $(document.body).trigger "attachment-markuped"
   markup()
