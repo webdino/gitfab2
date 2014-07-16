@@ -122,6 +122,7 @@
           figure {
             float: left;
             max-width: $figure-width;
+            width: $figure-width;
             margin-right: $figure-margin-right;
             overflow: hidden;
             img {
@@ -225,6 +226,7 @@
               figure {
                 float: left;
                 max-width: $figure-width;
+                width: $figure-width;
                 margin-right: $figure-margin-right;
                 overflow: hidden;
                 img {
@@ -259,8 +261,8 @@
           }
         }
         footer {
-          width: 100%;
           float: left;
+          width: 100%;
         }
       }
     }
