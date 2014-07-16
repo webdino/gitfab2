@@ -195,101 +195,104 @@
     border: none;
     .transition-content {
       width: 100%;
-      .first-column {
-        min-height: 46px;
-        .arrow {
-          float: right;
-          margin-right: $common-margin * 2;
-          width: 22px;
-          .body {
-            margin-top: -1px;
+      article {
+        @include cf;
+        .first-column {
+          min-height: 46px;
+          .arrow {
+            float: right;
+            margin-right: $common-margin * 2;
             width: 22px;
-            min-height: 26px;
-            background: asset-url("arrow-body.png");
-            background-repeat: true;
-          }
-          .head {
-            margin-top: -1px;
-            width: 22px;
-            min-height: 20px;
-            background: asset-url("arrow-head.png");
-          }
-        }
-      }
-      .article-column {
-        background: white;
-        height: auto;
-        .transition-footer {
-          text-align: right;
-          width: $card-content-width;
-          margin-left: $card-content-margin-left;
-          .new-card {
-            background-color: $common-basic-color;
-            padding: 11px 0;
-            width: $card-content-width;
-            font-family: $common-verdana;
-            font-size: 14px;
-            line-height: $common-line-height;
-            text-align: center;
-            color: white;
-          }
-          .delete-transition {
-            display: none;
-          }
-        }
-        .annotation-list {
-          width: $card-content-width;
-          margin-left: $card-content-margin-left;
-          >li {
-            width: 100%;
-            overflow: auto;
-            .annotation>.card-content {
-              @include cf;
-              margin-left: 0;
-              margin-bottom: $common-margin;
-              padding-bottom: 0;
-              width: $card-content-width;
-              border: none;
-              figure {
-                float: left;
-                max-width: $figure-width;
-                width: $figure-width;
-                margin-right: $figure-margin-right;
-                overflow: hidden;
-                img {
-                  width: 100%;
-                }
-              }
-              h2.title {
-                float: left;
-                width: $card-content-width - $figure-width - $figure-margin-right;
-                font-family: $common-sans-serif;
-                font-weight: 700;
-                font-size: 14px;
-                line-height: $common-line-height;
-              }
-              .description {
-                float: left;
-                width: $card-content-width - $figure-width - $figure-margin-right;
-                font-family: $common-sans-serif;
-                font-size: 14px;
-                line-height: 24px;
-              }
-              .attachments {
-                @include cf;
-                float: left;
-              }
-              footer {
-                float: left;
-                margin-top: $common-margin * 2;
-                width: $card-content-width - $figure-width - $figure-margin-right;
-              }
+            .body {
+              margin-top: -1px;
+              width: 22px;
+              min-height: 26px;
+              background: asset-url("arrow-body.png");
+              background-repeat: true;
+            }
+            .head {
+              margin-top: -1px;
+              width: 22px;
+              min-height: 20px;
+              background: asset-url("arrow-head.png");
             }
           }
         }
-        footer {
-          float: left;
-          width: 100%;
+        .article-column {
+          background: white;
+          height: auto;
+          .transition-footer {
+            text-align: right;
+            width: $card-content-width;
+            margin-left: $card-content-margin-left;
+            .new-card {
+              background-color: $common-basic-color;
+              padding: 11px 0;
+              width: $card-content-width;
+              font-family: $common-verdana;
+              font-size: 14px;
+              line-height: $common-line-height;
+              text-align: center;
+              color: white;
+            }
+            .delete-transition {
+              display: none;
+            }
+          }
+          .annotation-list {
+            width: $card-content-width;
+            margin-left: $card-content-margin-left;
+            >li {
+              width: 100%;
+              overflow: auto;
+              .annotation>.card-content {
+                @include cf;
+                margin-left: 0;
+                margin-bottom: $common-margin;
+                padding-bottom: 0;
+                width: $card-content-width;
+                border: none;
+                figure {
+                  float: left;
+                  max-width: $figure-width;
+                  width: $figure-width;
+                  margin-right: $figure-margin-right;
+                  overflow: hidden;
+                  img {
+                    width: 100%;
+                  }
+                }
+                h2.title {
+                  float: left;
+                  width: $card-content-width - $figure-width - $figure-margin-right;
+                  font-family: $common-sans-serif;
+                  font-weight: 700;
+                  font-size: 14px;
+                  line-height: $common-line-height;
+                }
+                .description {
+                  float: left;
+                  width: $card-content-width - $figure-width - $figure-margin-right;
+                  font-family: $common-sans-serif;
+                  font-size: 14px;
+                  line-height: 24px;
+                }
+                .attachments {
+                  @include cf;
+                  float: left;
+                }
+                footer {
+                  float: left;
+                  margin-top: $common-margin * 2;
+                  width: $card-content-width - $figure-width - $figure-margin-right;
+                }
+              }
+            }
+          }
+          footer {
+            float: left;
+            width: 100%;
+          }
         }
       }
     }
