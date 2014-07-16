@@ -33,6 +33,16 @@ setupEditor = ->
   tinymce.init tinymceSetting
 
 $ ->
+  $.rails.ajax = (option) ->
+    option.xhr =  ->
+      xhr = $.ajaxSettings.xhr();
+      form = $("form[action='" + option.url + "']")
+      if form and xhr.upload
+        xhr.upload.addEventListener "progress", (e) ->
+          form.trigger "ajax:progress", [e]
+      xhr
+    $.ajax(option)
+
   formContainer = $ document.createElement("div")
   formContainer.attr "id", "card-form-container"
   formContainer.appendTo document.body
@@ -97,22 +107,29 @@ $ ->
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
     link = $ this
     list = $(link.attr "data-list")
+    template = $(link.attr("data-template") + " > :first")
+    className  = link.attr "data-classname"
+    li = $ document.createElement("li")
+    li.addClass "card-wrapper"
+    li.addClass className
+    card = null
     formContainer.html data.html
     $("form:first-child").parsley()
-    className  = $(link.attr "data-classname").selector
     formContainer.find "form"
-    .bind "ajax:success", (xhr, data) ->
-      li = $ document.createElement("li")
-      li.addClass "card-wrapper"
-      li.addClass className
-      li.append $(data.html)
-      list.trigger "card-will-append", [li]
+    .bind "submit", (e) ->
+      card = template.clone()
+      wait4save $(this), card
+      li.append card
       list.append li
+    .bind "ajax:success", (xhr, data) ->
+      list.trigger "card-will-append", [li]
+      card.replaceWith data.html
       list.trigger "card-appended", [li]
       adjustTransitionArrowHeight()
       markup()
     .bind "ajax:error", (xhr, status, error) ->
-      alert error.message
+      li.remove()
+      alert status
 
   $(document).on "ajax:success", ".edit-card", (xhr, data) ->
     link = $ this
@@ -122,20 +139,50 @@ $ ->
     formContainer.html data.html
     $("form:first-child").parsley()
     formContainer.find "form"
+    .bind "submit", (e) ->
+      wait4save $(this), card
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
       list.trigger "card-edited", [li]
       adjustTransitionArrowHeight()
       markup()
-    .bind "ajax:error", (event, xhr, status, error) ->
-      alert error.message
+    .bind "ajax:error", (e, xhr, status, error) ->
+      alert status
+
+  $(document).on "card-will-delete", "#recipe-card-list", (event, li) -> 
+    transition = li.next ".transition-wrapper"
+    if transition.length is 1
+      transition.find(".delete-transition").click()
+    setStateIndex()
+
+  $(document).on "card-appended", "#recipe-card-list", (event, li) -> 
+    adjustArrowHeight li, "state"
+    setStateIndex()
+    if li.hasClass "state-wrapper"
+      $("#new_transition").submit()
+
+  $(document).on "card-edited", "#recipe-card-list", (event, li) ->
+    adjustArrowHeight li, "state"
+    setStateIndex()
+
+  $(document).on "click", "#submit-card-order", (event) ->
+    setStateIndex()
+
+  $(document).on "ajax:success", "#new_transition", (xhr, data) ->
+    wrapper = $ data.html
+    card = wrapper.find ".card"
+    li = $ document.createElement("li")
+    li.addClass "card-wrapper"
+    li.addClass "transition-wrapper"
+    li.append wrapper
+    $("#recipe-card-list").append li
 
   $(document).on "ajax:success", ".new-card, .edit-card", ->
     $.fancybox.open
       padding: 0
       href: "#card-form-container"
       afterLoad: ->
-        setTimeout setupEditor, 50
+        setTimeout setupEditor, 100
       beforeClose: ->
         tinymce.remove()
 
@@ -153,6 +200,37 @@ $ ->
     event.preventDefault()
     $.fancybox.close()
 
+  wait4save = (form, card) ->
+    card.addClass "wait4save"
+    title = form.find(".card-title").val()
+    card.find(".title").text title
+    link = form.find ".card-figure-link:first"
+    if link.length is 1
+      li = $ document.createElement("li")
+      if link.val().length > 0
+        #TODO youtube
+        figure = link.val()
+      else
+        content = form.find ".card-figure-content:first"
+        if content.get(0).files.length > 0
+          figure = window.URL.createObjectURL content.get(0).files[0]
+        else if content.val().length > 0
+          figure = content.val()
+        img = $ document.createElement("img")
+        img.attr "src", figure
+        li.append img
+      ul = card.find "figure ul"
+      ul.empty()
+      ul.append li
+    description = form.find(".card-description").val()
+    card.find(".description").html description
+    progress = $(document.createElement "progress")
+    progress.attr "max", 1.0
+    progress.attr "form", form.attr("id")
+    card.find(".card-content").append progress
+    form.bind "ajax:progress", (e, progressEvent) ->
+      progress.attr "value", progressEvent.loaded / progressEvent.total
+
   markup = ->
     attachments = $ ".attachment"
     for attachment in attachments
@@ -166,86 +244,3 @@ $ ->
       $("#" + markupid).attr "href", url
     $(document.body).trigger "attachment-markuped"
   markup()
-
-  up = (state) ->
-    previousTransition = state.prev ".transition-wrapper"
-    if previousTransition.length is 0
-      return
-    previousState = previousTransition.prev()
-    transition = state.next ".transition-wrapper"
-    if transition.length > 0
-      previousState.before transition
-      transition.before state
-    else
-      previousState.before state
-
-  $(document).on "click", ".order-up-btn", (event) ->
-    event.preventDefault()
-    state = $(this).closest ".state-wrapper"
-    up state
-
-  $(document).on "click", ".order-down-btn", (event) ->
-    event.preventDefault()
-    state = $(this).closest ".state-wrapper"
-    nextStates = state.nextAll ".state-wrapper:first"
-    if nextStates.length > 0
-      up nextStates
-
-  $(document).on "click", ".order-change-btn", (event) ->
-    event.preventDefault()
-    $("#recipe-card-list").addClass "order-changing"
-
-  $(document).on "click", ".order-commit-btn", (event) ->
-    event.preventDefault()
-    numbering()
-    cards = getCards()
-    forms = $ ".edit_recipe .fields"
-    forms.remove()
-    for card in cards
-      card = $ card
-      id = card.attr "id"
-      position = parseInt card.attr("data-position"), 10
-      $("#add-card-order").click()
-      field = $ ".edit_recipe .fields:last"
-      positionForm = field.find ".position"
-      positionForm.val position
-      idForm = field.find ".id"
-      idForm.val id
-    setStateIndex()
-    $("#submit-card-order").click()
-
-  getCards = ->
-    $ ".card.state, .card.transition"
-
-  numbering = ->
-    cards = getCards()
-    for card, index in cards
-      $(card).attr "data-position", index + 1
-
-  $(document).on "card-appended", "#recipe-card-list", (event, li) ->
-    adjustArrowHeight li, "state"
-    setStateIndex()
-    if li.hasClass "state-wrapper"
-      $("#new_transition").submit()
-
-  $(document).on "card-edited", "#recipe-card-list", (event, li) ->
-    adjustArrowHeight li, "state"
-    setStateIndex()
-
-  $(document).on "card-will-delete", "#recipe-card-list", (event, li) ->
-    transition = li.next ".transition-wrapper"
-    if transition.length is 1
-      transition.find(".delete-transition").click()
-    setStateIndex()
-
-  $(document).on "ajax:success", "#new_transition", (xhr, data) ->
-    wrapper = $ data.html
-    card = wrapper.find ".card"
-    li = $ document.createElement("li")
-    li.addClass "card-wrapper"
-    li.addClass "transition-wrapper"
-    li.append wrapper
-    $("#recipe-card-list").append li
-
-  $(document).on "ajax:success", ".edit_recipe", () ->
-    $("#recipe-card-list").removeClass "order-changing"

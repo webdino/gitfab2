@@ -1,1 +1,1 @@
-json.html (render "components/card", card: @usage, delete_url: project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: @usage.id), edit_url: edit_project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: @usage.id))
+json.html (render "usages/usage", usage: @usage)
