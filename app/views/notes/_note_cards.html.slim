@@ -1,3 +1,11 @@
+#tabs
+  == link_to project_recipe_path(@project, owner_name: @owner.slug) do
+    .tab
+      'Recipe
+  == link_to project_note_path(@project, owner_name: @owner.slug) do
+    .tab.active
+      'Note
+      
 section#note-cards
   #top
     .inner
