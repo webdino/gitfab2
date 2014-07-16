@@ -1,4 +1,9 @@
 main#recipes-show
   == render "projects/basic_informations"
   == render "notes/note_cards"
-  == render "notes/templates"  
+  == render "notes/templates"
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $("#facebook-wrapper").css "display", "none"

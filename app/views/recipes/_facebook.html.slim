@@ -1,6 +1,14 @@
-#fb-root
-.fb-like data-href="#{request.url}", data-width="400", data-show-faces="true" data-send="true"
-.fb-comments data-href="#{request.url}", data-width="400"
+#facebook-wrapper
+  .inner
+    .left-column
+      .horizontal-border.white.m-b-5
+      h1
+        'facebook
+    .right-column
+      #fb-root
+
+      .fb-like data-href="#{request.url}", data-width="400", data-show-faces="true" data-send="true"
+      .fb-comments data-href="#{request.url}", data-width="400"
 
 - content_for :bottom do
   javascript:

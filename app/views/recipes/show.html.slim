@@ -3,4 +3,8 @@ main#recipes-show
   == render "recipes/recipe_cards"
   == render "recipes/usages"
   == render "recipes/templates"
-  == render "recipes/facebook"
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $("#facebook-wrapper").css "display", "block"
