@@ -56,7 +56,9 @@ section#basic-informations
             == link_to "+ collaborator", project_collaborators_path(owner_name: @owner.slug, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
   #edit-menu
     - if can? :manage, @project
-      == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug), class: "btn"
+      == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug)
+    == link_to "Recipe", project_recipe_path(@project, owner_name: @owner.slug)
+    == link_to "Note", project_note_path(@project, owner_name: @owner.slug)
 
 - content_for :bottom do
   coffee:

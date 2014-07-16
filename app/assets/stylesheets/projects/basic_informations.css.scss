@@ -176,36 +176,17 @@
   #edit-menu {
     margin-top: 10px;
     text-align: right;
-    font-family: $common-verdana;
-    font-size: 14px;
-    line-height: 16px;
-  }
-}
-
-#tabs {
-  margin-top: $common-margin * 4;
-  margin-left: $first_column_width + $common-margin;
-  height: 28px;
-  a:nth-child(2) {
-    margin-left: $common-margin;
-  }
-  .tab {
-    display: inline-block;
-    margin-top: 1px;
-    padding-top: 7px;
-    padding-left: $common-margin;
-    width: 270px;
-    height: 20px;
-    background: #F2F2F2;
-    &.active {
-      margin-top: 0;
-      height: 21px;
-      background: white;
-    }
-    p {
-      font-family: $common-verdana;
-      font-size: 14px;
-      line-height: 16px;
+    font-size: 20px;
+    a {
+      display: inline-block;
+      padding: 0 8px 0 8px;
+      border-right: 1px solid lightgray;
+      &:last-child {
+        border-right: none;
+      }
+      &:hover {
+        color: gray;
+      }
     }
   }
 }
