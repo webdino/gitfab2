@@ -1,51 +1,8 @@
-#recipes-show,
-#recipes-edit,
-#tinymce {
-  .material, .tool, .blueprint {
+#recipes-show, #notes-show {
+  .material, .tool, .blueprint, .link {
     color: #52C3F1;
     font-weight: bold;
   }
-  .mce-edit-area iframe {
-    background-color: white;
-  }
-}
-
-#tinymce {
-  padding-top: 5px;
-}
-
-#project-summary,
-#recipes-show,
-#recipes-edit {
-  .mce-tinymce {
-    position: relative;
-    top: -27px;
-  }
-  .mce-panel {
-    border: none;
-    background-image: none;
-    background-color: rgba(0, 0, 0, 0);
-  }
-  .mce-toolbar-grp {
-    visibility: hidden;
-  }
-}
-
-#recipes-show .description,
-#tinymce {
-  font-family: helvetica, sans-serif;
-  font-size: 16px;
-
-  ul {
-    list-style-type: disc;
-    padding: 0px 0px 0px 22px;
-  }
-
-  ol {
-    list-style-type: decimal;
-    padding: 0px 0px 0px 25px;
-  }
-
 }
 
 .markup-form {
