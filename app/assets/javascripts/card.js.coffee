@@ -158,7 +158,8 @@ $ ->
   $(document).on "card-appended", "#recipe-card-list", (event, li) -> 
     adjustArrowHeight li, "state"
     setStateIndex()
-    if li.hasClass "state-wrapper"
+    if li.hasClass("state-wrapper") and false is li.hasClass "transition-appended" 
+      li.addClass "transition-appended"
       $("#new_transition").submit()
 
   $(document).on "card-edited", "#recipe-card-list", (event, li) ->
