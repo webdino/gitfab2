@@ -1,7 +1,14 @@
 $ ->
-  makeAttachmentsList = (attachments, ul) ->
+  makeAttachmentsList = (attachments, container) ->
+    ul = container.find "ul"
     ul.empty()
     attachments.attr "target", "_blank"
+    if attachments.length is 0
+      container.removeClass "has-data"
+      $("#making-list .inner").removeClass "has-data"
+      return
+    container.addClass "has-data"
+    $("#making-list .inner").addClass "has-data"
     for attachment in attachments
       href = attachment.getAttribute "href"
       description = attachment.getAttribute "data-description"
@@ -17,6 +24,6 @@ $ ->
       ul.append li
 
   $(document).on "attachment-markuped", "", () ->
-    makeAttachmentsList $("a.material"), $("#material-list ul")
-    makeAttachmentsList $("a.tool"), $("#tool-list ul")
-    makeAttachmentsList $("a.blueprint"), $("#blueprint-list ul")
+    makeAttachmentsList $("a.material"), $("#material-list")
+    makeAttachmentsList $("a.tool"), $("#tool-list")
+    makeAttachmentsList $("a.blueprint"), $("#blueprint-list")
