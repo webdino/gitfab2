@@ -12,24 +12,20 @@
     .inner {
       @include cf;
       width: $article_column_width - $common-margin * 2;
-      margin: 34px $common-margin 0;
-      border-top: $common-border;
-      h1 {
-        font-family: $common-helvetica;
-        font-weight: 700;
-        font-size: 22px;
-        line-height: $common-line-height;
-      }
+      margin: 20px $common-margin 0;
     }
   }
+
   #making-list {
     @include cf;
     width: $content_width;
     #top {
       .inner {
         width: $article_column_width - $common-margin * 2;
-        margin: 34px $common-margin 0;
+        margin: $common-margin $common-margin 0;
+        border-top: $common-border;
         h2 {
+          margin-top: 5px;
           display: inline-block;
           vertical-align: top;
           width: 40%;
@@ -332,9 +328,10 @@
 }
 
 #material-list, #tool-list, #blueprint-list {
+  display: none;
   border-top: $common-border;
-  padding-top: 5px;
-  margin-bottom: 20px;
+  padding: 10px 0;
+  &.has-data { display: block; }
   h2 {
     line-height: 30px;
     width: 40%;
