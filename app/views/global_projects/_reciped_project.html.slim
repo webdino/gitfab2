@@ -2,8 +2,7 @@ li.project
   .inner
     - if project.figures.any?
       - if project.figures.first.link.present?
-        / TODO: #466 create embed_url function in figure.rb
-        / iframe src="#{recipe.youtube_embed_url}"
+        iframe.image src="#{project.figures.first.link}"
       - else
         == link_to "", project_path(project.owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
     - else
@@ -28,6 +27,7 @@ li.project
           == image_tag "starred.png"
         span.count
           == "#{project.likes.length}"
+
       / TODO: #474 Count  how many times the project were shared
       / .shared
       /   span.icon
