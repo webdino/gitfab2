@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "layouts/setting_links.css.scss";
 
 #groups-new {
   display: inline-block;
@@ -7,7 +8,7 @@
   width: 700px;
   border: $common-border;
   h1 {
-    background-color: #eee;
+    background-color: $header_background;
     padding: 10px 0 10px 10px;
     font-size: 21px;
     border-bottom: $common-border;
@@ -37,8 +38,6 @@
   #upload-button {
     margin-top: 10px;
     border: $common-border;
-    padding: 5px;
-    cursor: default;
   }
 
   #group-name-form {
@@ -52,15 +51,11 @@
     margin: 20px 0 10px 20px;
     border: $common-border;
     padding: 5px;
-    font-family: helvetica, sans-serif;
-    font-size: 18px;
   }
   .cancel-btn {
     vertical-align: top;
     margin: 20px 0 10px 20px;
     padding: 6px;
-    font-family: helvetica, sans-serif;
-    font-size: 18px;
   }
 
 }

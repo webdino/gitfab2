@@ -160,7 +160,6 @@
           .description {
             float: left;
             width: $card-content-width - $figure-width - $figure-margin-right;
-            font-family: $common-sans-serif;
             font-size: 14px;
             line-height: 24px;
           }
@@ -269,7 +268,6 @@
                 .description {
                   float: left;
                   width: $card-content-width - $figure-width - $figure-margin-right;
-                  font-family: $common-sans-serif;
                   font-size: 14px;
                   line-height: 24px;
                 }

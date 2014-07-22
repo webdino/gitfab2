@@ -12,7 +12,7 @@
     margin: 0px auto;
     width: 960px;
     height: 35px;
-    font-family: Helvetica, sans-serif;
+    font-family: $common-helvetica;
   }
   #logo {
     float: left;
@@ -33,7 +33,7 @@
     #search-form {
       width: 195px;
       height: 16px;
-      font-family: Verdana,sans-serif;
+      font-family: $common-verdana;
       font-size: 12px;
     }
   }

@@ -1,7 +1,7 @@
 #recipes-show, #notes-show {
   .material, .tool, .blueprint, .link {
     color: #52C3F1;
-    font-weight: bold;
+    font-weight: 700;
   }
 }
 
@@ -22,7 +22,7 @@
     height: 70px;
   }
 
-  input[type=text] {      
+  input[type=text] {
     border: 1px solid gray;
     border-radius: 10px;
     width: 300px;

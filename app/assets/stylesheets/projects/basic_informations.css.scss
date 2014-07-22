@@ -133,7 +133,6 @@
       height: $height / 2 - $padding_top - $padding_bottom;
       border-top: $common-border;
       border-bottom: $common-border;
-      font-family: $common-sans-serif;
       font-size: 12px;
       line-height: $common-line-height;
     }
@@ -219,11 +218,11 @@
     padding-left: $common-margin;
     width: 270px;
     height: 20px;
-    background: #F2F2F2;
+    background-color: $inactive_tab_background;
     &.active {
       margin-top: 0;
       height: 21px;
-      background: white;
+      background-color: $active_tab_background;
     }
     p {
       font-family: $common-verdana;
