@@ -33,11 +33,12 @@
             == link_to image_tag(member.avatar, class: "member-avatar" , name: "#{member.name}"), projects_path(member)
       - elsif @owner.groups.any?
         h2
-          'Group
+          'Groups
         ul.groups
           - @owner.groups.each do |group|
             == link_to image_tag(group.avatar, class: "group-avatar" , name: "#{group.name}"), projects_path(group)
-    .horizontal-border.black.f-left
+    - if @owner.is_a? Group or  @owner.groups.any?
+      .horizontal-border.black.f-left
     .wrapper
       .search
         h2
