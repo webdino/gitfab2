@@ -1,4 +1,5 @@
 @import "mixins/variables.css.scss";
+@import "layouts/settings.css.scss";
 
 #layouts-setting-links {
   display: inline-block;
@@ -6,6 +7,8 @@
   width: 200px;
   height: auto;
   margin: 20px 20px 20px 0;
+  background-color: white;
+  font-family: $common-helvetica;
   font-size: 16px;
   border: $common-border;
   border-bottom: none;
@@ -13,7 +16,7 @@
     padding: 5px;
     height: 40px;
     font-weight: 700;
-    background-color: #CCC;
+    background-color: $header_background;
     border-bottom: $common-border;
     img.avatar {
       margin: auto;

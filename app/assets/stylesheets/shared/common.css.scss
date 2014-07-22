@@ -1,7 +1,7 @@
 @import "mixins/variables.css.scss";
 body {
-  background: #E6E6E6;
-  font-family: helvetica, sans-serif;
+  background-color: #E6E6E6;
+  font-family: $common-sans-serif;
   a {
     color: #000;
     text-decoration: none;

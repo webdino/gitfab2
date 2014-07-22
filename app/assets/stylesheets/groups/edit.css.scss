@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "layouts/settings.css.scss";
 
 #groups-edit {
   display: inline-block;
@@ -9,9 +10,10 @@
   #edit-profile {
     display: block;
     margin: 20px 20px 0 0;
+    background: white;
     border: $common-border;
     h1 {
-      background-color: #eee;
+      background-color: $header_background;
       padding: 10px 0 10px 10px;
       font-size: 21px;
       border-bottom: $common-border;
@@ -41,8 +43,6 @@
     #upload-button {
       margin-top: 10px;
       border: $common-border;
-      padding: 5px;
-      cursor: default;
     }
 
     #group-name-form {
@@ -55,16 +55,11 @@
     #submit {
       margin: 20px 0 10px 20px;
       border: $common-border;
-      padding: 5px;
-      font-family: helvetica, sans-serif;
-      font-size: 18px;
     }
     .cancel-btn {
       vertical-align: top;
       margin: 20px 0 10px 20px;
-      padding: 6px;
-      font-family: helvetica, sans-serif;
-      font-size: 18px;
+      border: $common-border;
     }
 
   }
@@ -75,7 +70,7 @@
     border: $common-border;
 
     h1 {
-      background-color: #eee;
+      background-color: $header_background;
       padding: 10px 0 10px 10px;
       font-size: 21px;
       border-bottom: $common-border;
@@ -95,12 +90,14 @@
           display: inline-block;
           vertical-align: top;
           margin: 19px 0 0 10px;
+          font-family: $common-helvetica;
           font-size: 18px;
         }
         .role {
           float: right;
           margin: 10px 10px 0 0 ;
           padding: 5px;
+          font-family: $common-helvetica;
           font-size: 18px;
           border: $common-border;
           border-radius: 2px;
@@ -111,7 +108,7 @@
           .membership-role {
             margin-top: 4px;
             background: white;
-            font-family: helvetica, sans-serif;
+            font-family: $common-helvetica;
             font-size: 18px;
             border: $common-border;
             border-radius: 2px;
@@ -137,7 +134,7 @@
     #new_membership {
       h2 {
         padding: 10px;
-        background-color: #eee;
+        background-color: $header_background;
         font-size: 18px;
         border-bottom: $common-border;
       }
@@ -151,7 +148,7 @@
       #membership_role {
         margin: 2px 10px;
         background: white;
-        font-family: helvetica, sans-serif;
+        font-family: $common-helvetica;
         font-size: 18px;
         border: $common-border;
         border-radius: 2px;

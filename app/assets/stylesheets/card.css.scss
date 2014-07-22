@@ -3,18 +3,18 @@
 #card-form-container {
   display: none;
   width: $recipe_main_width;
-  background-color: #FFF;
+  background-color: white;
   border: $common-border;
   border-radius: 4px;
-  
+
   $content_width: $recipe_main_width - 24px;
-  
+
   #inner_content {
     width: 100%;
     padding: 24px;
     box-sizing: border-box;
   }
-  
+
   .add_nested_fields[data-association="figures"] {
     display: block;
     width: 100%;
@@ -27,7 +27,7 @@
     text-align: center;
     font-size: 24px;
     line-height: 0.5em;
-    
+
     &:hover {
       color: #BBB;
       border-color: #888;
@@ -41,7 +41,7 @@
     margin-bottom: 12px;
     font-size: 18px;
   }
-  
+
   textarea {
     display: block;
     width: 100%;

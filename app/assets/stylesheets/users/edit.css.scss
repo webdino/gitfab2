@@ -1,14 +1,18 @@
 @import "mixins/variables.css.scss";
+@import "layouts/settings.css.scss";
 
 #users-edit {
   display: inline-block;
+  float: none;
   width: 700px;
   margin: 20px 20px 0 0;
   border: $common-border;
+  background-color: white;
+  font-family: $common-helvetica;
 
   h1 {
-    background-color: #eee;
     padding: 10px 0 10px 20px;
+    background-color: $header_background;
     border-bottom: $common-border;
   }
 
@@ -39,8 +43,6 @@
   #upload-button {
     margin-top: 10px;
     border: $common-border;
-    padding: 5px;
-    cursor: default;
   }
 
   #user-name-form {
@@ -48,14 +50,12 @@
     padding: 5px 5px;
     border: $common-border;
     background-color: white;
+    font-family: $common-verdana;
     font-size: 14px;
   }
 
   #submit {
     margin: 20px 0 10px 20px;
     border: $common-border;
-    padding: 5px;
-    font-family: helvetica, sans-serif;
-    font-size: 18px;
   }
 }

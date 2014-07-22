@@ -3,6 +3,7 @@
 @import "_project_variables.css.scss";
 
 #projects-index {
+  $quiet_font_color: $common-dark-gray;
   @include cf;
   .left {
     @include cf;
@@ -13,7 +14,6 @@
       display: block;
       float: right;
       width: 220px;
-      font-weight: 500;
       font-family: $common-verdana;
       .owner-avatar {
         margin-bottom: 20px;
@@ -45,7 +45,7 @@
         font-family: $common-sans-serif;
         font-size: 22px;
         line-height: 33px;
-        color: #808080;
+        color: $quiet_font_color;
       }
       .members, .groups {
         margin-bottom: 20px;
@@ -63,8 +63,6 @@
         width: 220px;
         height: 26px;
         font-size: 12px;
-        font-weight: 500;
-        font-family: $common-sans-serif;
         line-height: $common-line-height;
       }
     }
@@ -80,13 +78,12 @@
         padding-left: 10px;
         width: 140px;
         height: 28px;
-        background: #F2F2F2;
+        background-color: $inactive_tab_background;
         font-family: $common-verdana;
         font-size: 14px;
         line-height: $common-line-height;
-        font-weight: 500;
         &.active {
-          background: white;
+          background-color: $active_tab_background;
         }
         &:last-child {
           margin-right: 0;
@@ -105,7 +102,7 @@
           font-family: $common-helvetica;
           font-size: 22px;
           line-height: $common-line-height;
-          border-top: 1px solid black;
+          border-top: $common-border;
         }
         .project-list {
           margin-top: 15px;
@@ -113,7 +110,7 @@
             margin-bottom: 30px;
             padding-top: 10px;
             width: 100%;
-            border-top: 1px solid #808080;
+            border-top: $gray_border;
             .image-container {
               display: inline-block;
               max-width: 130px;
@@ -131,7 +128,6 @@
                   font-family: $common-verdana;
                   font-size: 9px;
                   line-height: 14px;
-                  font-weight: 500;
                   &.date {
                     font-weight: 700;
                   }
@@ -146,24 +142,21 @@
               width: 460px;
               .title {
                 margin-bottom: 10px;
-                font-family: $common-sans-serif;
                 font-size: 18px;
                 line-height: 40px;
                 font-weight: 500;
               }
               .summary {
                 margin-bottom: 5px;
-                font-family: $common-sans-serif;
                 font-size: 12px;
                 line-height: 18px;
-                font-weight: 500;
-                color: #808080;
+                color: $quiet_font_color;
               }
               .tags {
                 line-height: 18px;
+                font-family: $common-verdana;
                 font-size: 10px;
                 font-weight: 500;
-                font-family: $common-verdana;
                 :first-child {
                   font-weight: 700;
                 }
