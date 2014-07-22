@@ -4,29 +4,52 @@
 @import "_project_variables.css.scss";
 
 #basic-informations {
+  @include cf;
   $margin_width: 60px;
   .margin {
     float: left;
-    margin-left: 10px;
+    margin-left: $common-margin;
     margin-right: $first_column_width - $margin_width;
     width: $margin_width;
     border-top: $common-border;
   }
   .header {
-    margin-bottom: 20px;
     $height: 40px;
-    height: $height;
+    margin-bottom: $common-margin;
+    min-height: $height;
     @include cf;
     .title {
       float: left;
       margin: 0;
       width: $second_column_width;
-      line-height: $height;
+      height: auto;
+      min-height: $height;
+      font-size: 22px;
+      line-height: 40px;
+      word-wrap: break-word;
     }
     .like {
+      $star_size: 26px;
       float: left;
-      line-height: $height + 4px;
-      vertical-align: middle;
+      line-height: $star_size;
+      vertical-align: top;
+      .like-button {
+        min-width: 100px;
+        height: $star_size;
+        background: asset-url("star.png") no-repeat;
+        background-size: contain;
+        padding-left: $star_size + 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: $common-verdana;
+        line-height: $star_size + 4px;
+        display: inline-block;
+      }
+      .like-button.liked {
+        background: asset-url("starred.png") no-repeat;
+        background-size: contain;
+      }
+
     }
   }
 
@@ -79,13 +102,13 @@
         border-left: none;
         .fork-destination {
           .dest-name {
-            margin-top: 10px;
+            margin-top: $common-margin;
             margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
           }
           .fork-btn {
-            margin-bottom: 10px;
+            margin-bottom: $common-margin;
             width: 100px;
             height: 100px;
             background-size: cover;
@@ -101,12 +124,12 @@
 
     .description {
       float: left;
-      margin-right: 10px;
+      margin-right: $common-margin;
       $padding_top: 5px;
       $padding_bottom: 5px;
       padding-top: $padding_top;
       padding-bottom: $padding_bottom;
-      width: $third_column_width - 10px;
+      width: $third_column_width - $common-margin;
       height: $height / 2 - $padding_top - $padding_bottom;
       border-top: $common-border;
       border-bottom: $common-border;
@@ -115,18 +138,18 @@
       line-height: $common-line-height;
     }
     .meta {
-      margin-right: 10px;
+      margin-right: $common-margin;
       font-size: 12px;
       @include cf;
       .left {
         float: left;
         padding-top: 5px;
-        width: ($third_column_width - 10px) / 2;
+        width: ($third_column_width - $common-margin) / 2;
       }
       .right {
         float: left;
         padding-top: 5px;
-        width: ($third_column_width - 10px) / 2;
+        width: ($third_column_width - $common-margin) / 2;
       }
       .timestamps {
         margin-bottom: 6px;
@@ -174,7 +197,7 @@
     }
   }
   #edit-menu {
-    margin-top: 10px;
+    margin-top: $common-margin;
     text-align: right;
     font-family: $common-verdana;
     font-size: 14px;
