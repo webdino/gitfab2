@@ -61,9 +61,13 @@ class User
     collaborations.where(project_id: project.id).exists?
   end
 
-  def is_creator_of? record
-    return false unless record.respond_to? :creator
-    self == record.creator
+  def is_contributor_of? target
+    target.contributions.each do |contribution|
+      if contribution.contributor_id == self.slug
+        return true
+      end
+    end
+    return false
   end
 
   def is_admin_of? group

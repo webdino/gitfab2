@@ -11,6 +11,9 @@
         - card.annotations.each do |annotation|
           li
             == render "annotations/annotation", annotation: annotation, transition: card
+
       footer.transition-footer
-        == link_to "+ Add Annotation", new_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id), remote: true, class: "btn new-card", "data-list" => "##{card.id} .annotation-list", "data-classname" => "annotation-wrapper", "data-template" => "#annotation-template"
-        == link_to "- Delete Transition", project_recipe_transition_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card delete-transition", "data-container" => ".card"
+        - if signed_in?
+          == link_to "+ Add Annotation", new_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: card.id), remote: true, class: "btn new-card", "data-list" => "##{card.id} .annotation-list", "data-classname" => "annotation-wrapper", "data-template" => "#annotation-template"
+        - if can? :manage, @project
+          == link_to "- Delete Transition", project_recipe_transition_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card delete-transition", "data-container" => ".card"

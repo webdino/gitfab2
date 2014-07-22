@@ -7,16 +7,29 @@ class Ability
     can :manage, Membership do |membership|
       user.is_admin_of?(membership.group) || user == membership.user
     end
-    can :manage, Card::Usage do
+    can :create, Card::Usage do |card|
       user.persisted?
     end
+    can :manage, Card::Usage do |card|
+      card.project && (user.is_contributor_of?(card) || is_project_editor?(card.project, user))
+    end
+    can :create, Card::Annotation do |card|
+      user.persisted?
+    end
+    can :manage, Card::Annotation do |card|
+      user.is_contributor_of?(card) || can?(:manage, card.annotatable)
+    end
+    can :manage, Card::RecipeCard do |card|
+      card.recipe && is_project_editor?(card.recipe.project, user)
+    end
+    can :manage, Card::NoteCard do |card|
+      card.note && is_project_editor?(card.note.project, user)
+    end
     can :manage, Project do |project|
-      if project.owner_type == Group.name
-        is_admin = user.is_admin_of? project.owner
-      end
-      user.is_owner_of?(project) ||
-        user.is_collaborator_of?(project) ||
-        is_admin
+      is_project_manager?(project, user)
+    end
+    can :edit, Project do |project|
+      is_project_editor?(project, user)
     end
     can :update, Recipe do |recipe|
       if recipe.owner_type == Group.name
@@ -49,4 +62,21 @@ class Ability
     end
     can :read, :all
   end
+
+  private
+  def is_project_manager? project, user
+    if project.owner_type == Group.name
+      is_admin_of = user.is_admin_of? project.owner
+    end   
+    is_admin_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
+  end
+
+  def is_project_editor? project, user
+    if project.owner_type == Group.name
+      is_member_of = user.is_member_of? project.owner
+    end   
+    is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
+  end
+
+
 end

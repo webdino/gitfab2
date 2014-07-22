@@ -5,6 +5,9 @@ class AnnotationsController < ApplicationController
   before_action :load_recipe_card
   before_action :load_annotation, only: [:edit, :update, :destroy]
   before_action :build_annotation, only: [:new, :create]
+  before_action :update_contribution, only: [:create, :update]
+
+  authorize_resource class: Card::Annotation.name
 
   def new
   end
@@ -81,5 +84,21 @@ class AnnotationsController < ApplicationController
 
   def parametize klass
     klass.to_s.split(/::/).last.downcase
+  end
+
+  def update_contribution
+    unless current_user
+      return
+    end
+    @annotation.contributions.each do |contribution|
+      if contribution.contributor_id == current_user.slug
+        contribution.updated_at = DateTime.now
+        return
+      end
+    end
+    contribution = @annotation.contributions.new
+    contribution.contributor_id = current_user.slug
+    contribution.created_at = DateTime.now
+    contribution.updated_at = DateTime.now
   end
 end
