@@ -4,6 +4,7 @@ class RecipeCardsController < ApplicationController
   before_action :load_recipe
   before_action :build_recipe_card, only: [:new, :create]
   before_action :load_recipe_card, only: [:edit, :update, :destroy]
+  before_action :update_contribution, only: [:create, :update]
 
   def new
   end
@@ -67,4 +68,19 @@ class RecipeCardsController < ApplicationController
     end
   end
 
+  def update_contribution
+    unless current_user
+      return
+    end
+    @recipe_card.contributions.each do |contribution|
+      if contribution.contributor_id == current_user.slug
+        contribution.updated_at = DateTime.now
+        return
+      end
+    end
+    contribution = @recipe_card.contributions.new
+    contribution.contributor_id = current_user.slug
+    contribution.created_at = DateTime.now
+    contribution.updated_at = DateTime.now
+  end
 end

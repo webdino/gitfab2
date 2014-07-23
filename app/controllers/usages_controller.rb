@@ -3,6 +3,7 @@ class UsagesController < ApplicationController
   before_action :load_project
   before_action :build_usage, only: [:new, :create]
   before_action :load_usage, only: [:edit, :update, :destroy]
+  before_action :update_contribution, only: [:create, :update]
 
   authorize_resource class: Card::Usage.name
 
@@ -59,4 +60,21 @@ class UsagesController < ApplicationController
       params.require(:usage).permit Card::Usage.updatable_columns
     end
   end
+
+  def update_contribution
+    unless current_user
+      return
+    end
+    @usage.contributions.each do |contribution|
+      if contribution.contributor_id == current_user.slug
+        contribution.updated_at = DateTime.now
+        return
+      end
+    end
+    contribution = @usage.contributions.new
+    contribution.contributor_id = current_user.slug
+    contribution.created_at = DateTime.now
+    contribution.updated_at = DateTime.now
+  end
+
 end

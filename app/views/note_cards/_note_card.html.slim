@@ -1,2 +1,2 @@
 .note-card
-  == render "components/card", card: card, delete_url: project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id)
+  == render "components/card", project: project, card: card, delete_url: project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id)

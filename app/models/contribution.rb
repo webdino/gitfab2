@@ -1,9 +1,9 @@
 class Contribution
+
   include Mongoid::Document
   include Mongoid::Timestamps
-  
-  embedded_in :user
-  belongs_to :contributable, polymorphic: true
+  include Contributable
 
-  validates :user, :contributable, presence: true
+  belongs_to :contributor, class_name: User.name
+  embedded_in :contributable, polymorphic: true
 end
