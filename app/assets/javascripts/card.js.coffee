@@ -171,6 +171,9 @@ $ ->
 
   $(document).on "ajax:success", "#new_transition", (xhr, data) ->
     wrapper = $ data.html
+    id = wrapper.find(".transition").attr "id"
+    if $("#" + id).length > 0
+      return;
     card = wrapper.find ".card"
     li = $ document.createElement("li")
     li.addClass "card-wrapper"
