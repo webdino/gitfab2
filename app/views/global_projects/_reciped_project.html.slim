@@ -7,6 +7,7 @@ li.project
         == link_to "", project_path(project.owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
     - else
       == link_to "", project_path(project.owner, project), class: "image", style: "background-image: url('images/fallback/noise-7ms-a.gif')"
+
     / TODO: #475
     == link_to project_path(project.owner, project) do
       .title
