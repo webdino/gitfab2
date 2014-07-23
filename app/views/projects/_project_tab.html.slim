@@ -5,15 +5,14 @@
     - @owner.projects.each do |project|
       li.project
         .image-container
-          == link_to project_path(@owner, project) do
-            - if project.figures.any?
-              - if project.figures.first.link.present?
-                / TODO: #466 create embed_url function in figure.rb
-                / iframe src="#{recipe.youtube_embed_url}"
-              - else
-                == link_to image_tag(project.figures.first.content), project_path(project.owner, project), class: "image"
+          - if project.figures.any?
+            - if project.figures.first.link.present?
+              / TODO: #619
+              iframe.image src="#{project.figures.first.link}"
             - else
-              == link_to image_tag("fallback/noise-7ms-a.gif"), project_path(project.owner, project), class: "image"
+              == link_to image_tag(project.figures.first.content), project_path(project.owner, project), class: "image"
+          - else
+            == link_to image_tag("fallback/noise-7ms-a.gif"), project_path(project.owner, project), class: "image"
           .horizontal-border.basic-color.m-b-5
           .meta
             .created
