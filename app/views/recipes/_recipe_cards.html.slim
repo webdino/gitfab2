@@ -25,7 +25,7 @@ section#recipe-cards
     #top
       .inner
         h2 Making
-    ul#recipe-card-list.card-list
+    ul#recipe-card-list.card-list 
       - if can? :edit, @project
         #card-order-tools
           == link_to "Change Order", "#", class: "order-change-btn btn"

@@ -47,46 +47,6 @@ $ ->
   formContainer.attr "id", "card-form-container"
   formContainer.appendTo document.body
 
-  setStateIndex = ->
-    $(".state-wrapper").each (index, element) ->
-      $(element).find("h1.number").text index + 1
-
-  setStateIndex()
-
-  adjustArrowHeight = (li, type) ->
-    articleColumn = $(li).find ".article-column"
-    firstColumn = $(li).find ".first-column"
-    arrowBody = $(firstColumn).find ".arrow .body"
-    height = articleColumn.css "height"
-    if type is "state"
-      firstColumn.css "height", height
-      arrowBody.css "height", height
-    else if type is "transition"
-      height = (height.split("px")[0] - 18) + "px"
-      firstColumn.css "height", height
-      arrowBody.css "height", height
-    image = articleColumn.find("figure").find("img").first()
-    image.bind "load", () ->
-      height = articleColumn.css "height"
-      if type is "state"
-        firstColumn.css "height", height
-        arrowBody.css "height", height
-      else if type is "transition"
-        height = (height.split("px")[0] - 18) + "px"
-        firstColumn.css "height", height
-        arrowBody.css "height", height
-
-  adjustStateArrowHeight = ->
-    $(".state-wrapper").each (index, element) ->
-      adjustArrowHeight element, "state"
-
-  adjustTransitionArrowHeight = ->
-    $(".transition-wrapper").each (index, element) ->
-      adjustArrowHeight element, "transition"
-
-  adjustStateArrowHeight()
-  adjustTransitionArrowHeight()
-
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
     event.preventDefault()
@@ -122,10 +82,8 @@ $ ->
       li.append card
       list.append li
     .bind "ajax:success", (xhr, data) ->
-      list.trigger "card-will-append", [li]
       card.replaceWith data.html
-      list.trigger "card-appended", [li]
-      adjustTransitionArrowHeight()
+      setStateIndex()
       markup()
     .bind "ajax:error", (xhr, status, error) ->
       li.remove()
@@ -143,43 +101,10 @@ $ ->
       wait4save $(this), card
     .bind "ajax:success", (xhr, data) ->
       card.replaceWith data.html
-      list.trigger "card-edited", [li]
-      adjustTransitionArrowHeight()
+      setStateIndex()
       markup()
     .bind "ajax:error", (e, xhr, status, error) ->
       alert status
-
-  $(document).on "card-will-delete", "#recipe-card-list", (event, li) -> 
-    transition = li.next ".transition-wrapper"
-    if transition.length is 1
-      transition.find(".delete-transition").click()
-    setStateIndex()
-
-  $(document).on "card-appended", "#recipe-card-list", (event, li) -> 
-    adjustArrowHeight li, "state"
-    setStateIndex()
-    if li.hasClass("state-wrapper") and false is li.hasClass "transition-appended" 
-      li.addClass "transition-appended"
-      $("#new_transition").submit()
-
-  $(document).on "card-edited", "#recipe-card-list", (event, li) ->
-    adjustArrowHeight li, "state"
-    setStateIndex()
-
-  $(document).on "click", "#submit-card-order", (event) ->
-    setStateIndex()
-
-  $(document).on "ajax:success", "#new_transition", (xhr, data) ->
-    wrapper = $ data.html
-    id = wrapper.find(".transition").attr "id"
-    if $("#" + id).length > 0
-      return;
-    card = wrapper.find ".card"
-    li = $ document.createElement("li")
-    li.addClass "card-wrapper"
-    li.addClass "transition-wrapper"
-    li.append wrapper
-    $("#recipe-card-list").append li
 
   $(document).on "ajax:success", ".new-card, .edit-card", ->
     $.fancybox.open
@@ -194,44 +119,42 @@ $ ->
     link = $ this
     li = link.closest "li"
     list = li.parent()
-    list.trigger "card-will-delete", [li]
     li.remove()
-    list.trigger "card-deleted", [li]
-    adjustTransitionArrowHeight()
+    setStateIndex()
     markup()
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
     $.fancybox.close()
 
+  $(document).on "card-order-changed", "#recipe-card-list", (event) ->
+    setStateIndex()
+
   wait4save = (form, card) ->
     card.addClass "wait4save"
+    card_content = card.find ".card-content:first"
     title = form.find(".card-title").val()
-    card.find(".title").text title
-    link = form.find ".card-figure-link:first"
-    if link.length is 1
-      li = $ document.createElement("li")
-      if link.val().length > 0
-        #TODO youtube
-        figure = link.val()
+    card_content.find(".title").text title
+
+    ul = card_content.find "figure ul"
+    ul.empty()
+    figures = form.find ".card-figure-content"
+    for figure in figures
+      if figure.files.length > 0
+        src = window.URL.createObjectURL figure.files[0]
       else
-        content = form.find ".card-figure-content:first"
-        if content.get(0).files.length > 0
-          figure = window.URL.createObjectURL content.get(0).files[0]
-        else if content.val().length > 0
-          figure = content.val()
-        img = $ document.createElement("img")
-        img.attr "src", figure
-        li.append img
-      ul = card.find "figure ul"
-      ul.empty()
+        src = $(figure).val()
+      img = $ document.createElement("img")
+      img.attr "src", src
+      li = $ document.createElement("li")
+      li.append img
       ul.append li
     description = form.find(".card-description").val()
-    card.find(".description").html description
+    card_content.find(".description").html description
     progress = $(document.createElement "progress")
     progress.attr "max", 1.0
     progress.attr "form", form.attr("id")
-    card.find(".card-content").append progress
+    card_content.append progress
     form.bind "ajax:progress", (e, progressEvent) ->
       progress.attr "value", progressEvent.loaded / progressEvent.total
 
@@ -244,3 +167,8 @@ $ ->
         $("#" + markupid).attr "href", content
     $(document.body).trigger "attachment-markuped"
   markup()
+
+  setStateIndex = ->
+    $(".state-wrapper").each (index, element) ->
+      $(element).find("h1.number").text index + 1
+  setStateIndex()
