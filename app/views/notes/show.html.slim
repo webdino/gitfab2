@@ -1,3 +1,6 @@
+- content_for :title do
+  - @project.owner.name + "/" + @project.title +  " : Note"
+
 main#notes-show
   == render "projects/basic_informations"
   == render "notes/note_cards"

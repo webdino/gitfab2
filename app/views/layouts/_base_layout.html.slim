@@ -2,7 +2,7 @@ doctype html
 html
   head
     title
-      'gitFAB
+      == content_for?(:title) ? yield(:title) : "gitFAB"
     == content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all", "data-turbolinks-track" => true)
     == content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application", "data-turbolinks-track" => true)
     == csrf_meta_tags

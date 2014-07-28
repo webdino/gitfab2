@@ -2,7 +2,7 @@
   h1
     'Show Group
   p == @group.name
-  
+
   p
     'members
   ul#members
@@ -13,7 +13,7 @@
   - if can? :manage, @group
     == link_to "edit", [:edit, @group]
     == link_to "destroy", @group, method: :delete
-  
+
 - content_for :bottom do
   coffee:
     $(document).on "ajax:success", "#new_membership", (event, data) ->

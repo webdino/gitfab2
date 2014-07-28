@@ -1,3 +1,6 @@
+- content_for :title do
+  - @project.owner.name + "/" + @project.title + " : Recipe"
+
 main#recipes-show
   == render "projects/basic_informations"
   == render "recipes/recipe_cards"
