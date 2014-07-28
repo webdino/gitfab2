@@ -1,3 +1,6 @@
+- content_for :title do
+  - @project.owner.name + "/" + @project.title + " : Edit"
+
 main#recipes-edit
   == render "form", page: "edit"
 #markup-help data-css-path = asset_path("recipe.css")

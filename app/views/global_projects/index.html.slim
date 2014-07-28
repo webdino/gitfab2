@@ -1,3 +1,7 @@
+- if request.url.include? "search?"
+  - content_for :title do
+    - "Search : " + request.url.split("q=").last
+
 #index
   - unless user_signed_in?
     #splash-wrapper

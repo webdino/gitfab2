@@ -1,3 +1,6 @@
+- content_for :title do
+  - current_user.slug + " (" + current_user.name + ")'s group list"
+
 #groups-index
   == link_to "+ Create new group", [:new, :group], class: "btn"
   #groups-list

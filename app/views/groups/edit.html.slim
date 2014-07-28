@@ -1,3 +1,9 @@
+- content_for :title do
+  - if @group.name.present?
+    - "Edit " + @group.name
+  - else
+    - "Edit Group"
+
 #groups-edit
   #edit-profile
     h1
