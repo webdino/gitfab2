@@ -18,8 +18,10 @@ section#layouts-header
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box
             #create-recipe
-              == link_to image_tag("add.png"), new_project_path(owner_name: current_user.slug)
+              == link_to image_tag("add.png"), new_project_path(owner_name: current_user.slug), title: "Create Project"
+
             #settings
-              == link_to image_tag("settings.png"), edit_user_path(current_user)
+              == link_to image_tag("settings.png"), edit_user_path(current_user), title: "Setting"
+
             #logout
-              == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete
+              == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete, title: "Logout"
