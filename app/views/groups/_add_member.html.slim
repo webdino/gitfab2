@@ -26,8 +26,9 @@
             return {
               results: $.map(data, (user, i) ->
                 userName = user.name
+                userSlug = user.slug
                 if $.inArray(userName, usersList) == -1
-                  return {id: userName, text: userName}
+                  return {id: userSlug, text: userName}
               )
             }
           }
