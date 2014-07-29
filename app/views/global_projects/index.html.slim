@@ -17,11 +17,12 @@
           .sign-up
             .arrow
               == image_tag "index-arrow.png"
-            .inner
-              h2
-                'Sign up for GitFAB
-              p
-                'gitFAB Sign up with GitHub account
+            == link_to user_omniauth_authorize_path(:github) do
+              .inner
+                h2
+                  'Sign up for GitFAB
+                p
+                  'gitFAB Sign up with GitHub account
           .search-project
             .arrow
               == image_tag "index-arrow.png"
