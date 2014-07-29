@@ -245,20 +245,20 @@
     margin-left: $first_column_width + $common-margin;    
     text-align: right;
     background: white;
-    .order-up-btn {
-      display: none;
-    }
-    .order-down-btn {
-      display: none;
-    }
-    .order-change-btn {
-      display: inline-block;
-      margin-right: 10px;
-    }
-    .order-commit-btn {
-      display: none;
-      margin-right: 10px;
-    }
+  }
+  .order-up-btn {
+    display: none;
+  }
+  .order-down-btn {
+    display: none;
+  }
+  .order-change-btn {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .order-commit-btn {
+    display: none;
+    margin-right: 10px;
   }
   .wait4save {
     .btn {
@@ -268,19 +268,17 @@
 }
 
 #recipe-card-list.order-changing {
-  #card-order-tools {
-    .order-up-btn {
-      display: inline-block;
-    }
-    .order-down-btn {
-      display: inline-block;
-    }
-    .order-change-btn {
-      display: none;
-    }
-    .order-commit-btn {
-      display: inline-block;
-    }
+  .order-up-btn {
+    display: inline-block;
+  }
+  .order-down-btn {
+    display: inline-block;
+  }
+  .order-change-btn {
+    display: none;
+  }
+  .order-commit-btn {
+    display: inline-block;
   }
 }
 
