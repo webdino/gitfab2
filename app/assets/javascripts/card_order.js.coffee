@@ -1,15 +1,9 @@
 $ ->
   up = (state) ->
-    previousTransition = state.prev ".transition-wrapper"
-    if previousTransition.length is 0
+    previousState = state.prev ".state-wrapper"
+    if previousState.length is 0
       return
-    previousState = previousTransition.prev()
-    transition = state.next ".transition-wrapper"
-    if transition.length > 0
-      previousState.before transition
-      transition.before state
-    else
-      previousState.before state
+    previousState.before state
 
   $(document).on "click", ".order-up-btn", (event) ->
     event.preventDefault()
@@ -47,4 +41,4 @@ $ ->
 
   $(document).on "ajax:success", ".edit_recipe", () ->
     $("#recipe-card-list").removeClass "order-changing"
-
+    $("#recipe-card-list").trigger "card-order-changed"

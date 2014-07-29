@@ -27,7 +27,7 @@ describe StatesController, type: :controller do
 
   describe "POST create" do
     before do
-      xhr :post, :create, user_id: project.owner.name, project_id: project.name
+      xhr :post, :create, user_id: project.owner.name, project_id: project.name, state: {_type: Card::State.name, description: "foo"}
       project.reload
     end
     it{should render_template :create}

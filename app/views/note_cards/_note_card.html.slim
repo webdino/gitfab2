@@ -1,2 +1,29 @@
-.note-card
-  == render "components/card", project: project, card: card, delete_url: project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id), edit_url: edit_project_note_note_card_path(owner_name: owner.slug, project_id: project.name, id: card.id)
+article class="card note_card" id="#{card.id}"
+  .first-column
+    .horizontal-border.black.f-left
+  .article-column
+    .card-content
+      == render "components/card_figures", card: card
+      == render "components/card_title", card: card
+      .meta
+        .date
+          - author = nil
+          - if card.contributions.length > 0
+            -  author = User.find(card.contributions[0].contributor_id)
+          - else
+            -  author = @project.owner
+          - link = link_to author.name, projects_path(owner_name: author.slug)
+          - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
+          == "posted by #{link}, Date #{datetime}"
+        .control
+          span.starred
+            span.icon
+              == image_tag "starred.png"
+            span.count
+              == "#{card.likes.length}"
+            - if can? :manage, card
+              span.edit
+                == link_to "delete", project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+                == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, class: "btn edit-card", "data-container" => ".card"
+      == render "components/card_description", card: card
+      == render "components/card_attachments", card: card

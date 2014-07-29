@@ -4,7 +4,7 @@ class NoteCardsController < ApplicationController
   before_action :load_note
   before_action :load_note_card, only: [:edit, :update, :destroy]
   before_action :build_note_card, only: [:new, :create]
-  before_action :create_contribution, only: [:create, :update]
+  before_action :update_contribution, only: [:create, :update]
 
   def new
   end
@@ -58,13 +58,25 @@ class NoteCardsController < ApplicationController
     @note_card = @note.note_cards.build note_card_params
   end
 
-  def create_contribution
-    #TODO: create contibution for @note_card
-  end
-
   def note_card_params
     if params[:note_card]
       params.require(:note_card).permit Card::NoteCard.updatable_columns
     end
+  end
+
+  def update_contribution
+    unless current_user
+      return
+    end
+    @note_card.contributions.each do |contribution|
+      if contribution.contributor_id == current_user.slug
+        contribution.updated_at = DateTime.now
+        return
+      end
+    end
+    contribution = @note_card.contributions.new
+    contribution.contributor_id = current_user.slug
+    contribution.created_at = DateTime.now
+    contribution.updated_at = DateTime.now
   end
 end

@@ -38,7 +38,7 @@ article.card .title {
 
 .first-column {
   float: left;
-  margin-left: 10px;
+  padding-left: $first_column_padding_left;
   width: $first_column_width;
 }
 .second-column {

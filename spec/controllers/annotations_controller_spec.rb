@@ -12,8 +12,8 @@ describe AnnotationsController, type: :controller do
   describe "GET new" do
     before do
       sign_in user
-      transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
-      xhr :get, :new, owner_name: user.id, project_id: project.id, transition_id: transition.id
+      state = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      xhr :get, :new, owner_name: user.id, project_id: project.id, state_id: state.id
     end
     it{should render_template :new}
   end
@@ -21,10 +21,10 @@ describe AnnotationsController, type: :controller do
   describe "GET edit" do
     before do
       sign_in user
-      transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
-      annotation = transition.annotations.create description: "ann"
+      state = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      annotation = state.annotations.create description: "ann"
       xhr :get, :edit, owner_name: user.id, project_id: project.id,
-        transition_id: transition.id, id: annotation.id
+        state_id: state.id, id: annotation.id
     end
     it{should render_template :edit}
   end
@@ -32,31 +32,31 @@ describe AnnotationsController, type: :controller do
   describe "POST create" do
     before do
       sign_in user
-      transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
+      state = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
       xhr :post, :create, user_id: user.id, project_id: project.id,
-        transition_id: transition.id, annotation: {description: "ann"}
+        state_id: state.id, annotation: {description: "ann"}
     end
-    it{should render_template :transition_annotation}
+    it{should render_template :state_annotation}
   end
 
   describe "PATCH update" do
     before do
       sign_in user
-      transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
-      annotation = transition.annotations.create description: "ann"
+      state = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      annotation = state.annotations.create description: "ann"
       xhr :patch, :update, user_id: user.id, project_id: project.id,
-        transition_id: transition.id, id: annotation.id, annotation: {description: "_ann"}
+        state_id: state.id, id: annotation.id, annotation: {description: "_ann"}
     end
-    it{should render_template :transition_annotation}
+    it{should render_template :state_annotation}
   end
 
   describe "DELETE destroy" do
     before do
       sign_in user
-      transition = project.recipe.recipe_cards.create _type: Card::Transition.name, description: "foo"
-      annotation = transition.annotations.create description: "ann"
+      state = project.recipe.recipe_cards.create _type: Card::State.name, description: "foo"
+      annotation = state.annotations.create description: "ann"
       xhr :delete, :destroy, owner_name: user.id, project_id: project.id,
-        transition_id: transition.id, id: annotation.id
+        state_id: state.id, id: annotation.id
     end
     it{should render_template :destroy}
   end

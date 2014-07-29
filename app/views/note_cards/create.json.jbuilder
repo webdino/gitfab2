@@ -1,1 +1,1 @@
-json.html (render "note_cards/note_card", card: @note_card, owner: @owner, project: @project)
+json.html (render "note_cards/note_card", card: @note_card)
