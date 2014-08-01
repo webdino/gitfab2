@@ -149,6 +149,7 @@
           }
           .description {
             float: left;
+            word-wrap: break-word;
             width: $card-content-width - $figure-width - $figure-margin-right;
             font-size: 14px;
             line-height: 24px;
@@ -201,6 +202,7 @@
               }
               .description {
                 float: left;
+                word-wrap: break-word;
                 width: $annotation_width - $figure-width - $figure-margin-right;
                 font-size: 14px;
                 line-height: 24px;

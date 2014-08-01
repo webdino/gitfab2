@@ -1,5 +1,9 @@
 figure
   ul
-    - card.figures.each do |figure|
+    - if card.figures.present?
+      - card.figures.each do |figure|
+        li
+          == image_tag figure.content
+    - else
       li
-        == image_tag figure.content
+        == image_tag("fallback/blank.png")

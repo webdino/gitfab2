@@ -17,6 +17,6 @@ class FigureUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    ActionController::Base.helpers.asset_path("fallback/noise-7ms-a.gif")
+    ActionController::Base.helpers.asset_path("fallback/blank.png")
   end
 end
