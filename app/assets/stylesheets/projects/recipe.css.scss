@@ -80,11 +80,11 @@
           width: 100%;
           height: 100%;
           .margin {
-            display: table-row; 
+            display: table-row;
             height: $state_margin_top;
           }
           h1.number {
-            display: table-row; 
+            display: table-row;
             width: 100%;
             font-size: 45px;
             line-height: 1em;
@@ -93,8 +93,8 @@
           }
           .arrow-body {
             display: table-row;
-            background-image: asset-url("arrow-body.png"); 
-            background-size: 22px 100%;           
+            background-image: asset-url("arrow-body.png");
+            background-size: 22px 100%;
             background-repeat: no-repeat;
             background-position: 50% 16px;
           }
@@ -112,16 +112,13 @@
           .arrow-head:before {
             content: "\0000a0";
           }
-       } 
+       }
       }
       .article-column {
         display: table-cell;
         float: none;
         background: white;
         padding-top: $state_margin_top;
-        &:first-of-type {
-          padding-top: 0px;
-        }
         .card-content {
           @include cf;
           $card-content-width: $article_column_width - $common-margin * 2;
@@ -233,16 +230,21 @@
         }
       }
     }
+    &:first-of-type {
+      .article-column {
+        padding-top: 0px;
+      }
+    }
     progress {
       width: 100%;
     }
   }
 }
 
-#recipe-card-list { 
+#recipe-card-list {
   #card-order-tools {
     margin-top: -20px;
-    margin-left: $first_column_width + $common-margin;    
+    margin-left: $first_column_width + $common-margin;
     text-align: right;
     background: white;
   }
@@ -289,27 +291,29 @@
 #material-list, #tool-list, #blueprint-list {
   display: none;
   border-top: $common-border;
-  padding: 10px 0;
+  padding: 3px 0 70px;
   &.has-data { display: block; }
   h2 {
-    line-height: 30px;
-    width: 40%;
-    font-size: 20px;
     display: inline-block;
     vertical-align: top;
+    width: 240px;
+    font-family: $common-helvetica;
+    font-size: 22px;
+    line-height: $common-line-height;
   }
   ul {
-    width: 60%;
     display: inline-block;
+    padding-top: 7px;
+    width: 610px;
     > li {
       list-style-type: decimal;
-      line-height: 30px;
-      width: 50%;
-      float: left;
+      word-wrap: break-word;
+      width: 100%;
+      font-size: 14px;
+      line-height: $common-line-height;
       a {
         cursor: pointer;
       }
     }
-    @include cf;
   }
 }

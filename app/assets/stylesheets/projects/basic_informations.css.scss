@@ -73,7 +73,7 @@
     }
     .tools {
       float: left;
-      $tool_size: 130px;
+      $tool_size: 140px;
       width: $tools_width;
       $margin_left: ($tools_width - $tool_size) / 2;
       #slideshow-btn,
@@ -216,7 +216,7 @@
     margin-top: 1px;
     padding-top: 7px;
     padding-left: $common-margin;
-    width: 270px;
+    width: 380px;
     height: 20px;
     background-color: $inactive_tab_background;
     &.active {
