@@ -6,7 +6,7 @@
       == ff.file_field :content, class: "validate card-figure-content"
       == ff.text_field :link, type: "url", class: "validate card-figure-link"
     == f.link_to_add "Add a figure", :figures
-    == f.text_area :description, class: "markup-area card-description"
+    == f.text_area :description, id: "markup-area", class: "markup-area card-description"
     #attachments
       == f.fields_for :attachments do |af|
         == af.text_field :title, class: :title

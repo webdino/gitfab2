@@ -11,26 +11,11 @@ validateForm = (event) ->
 
 editor = null
 
-tinymceSetting =
-  selector: ".markup-area"
-  theme: "modern"
-  menubar: false
-  convert_urls: false
-  image_advtab: true
-  statusbar: false
-  toolbar_items_size: "small"
-  content_css: $("#markup-help").attr "data-css-path"
-  toolbar1: "bold italic forecolor backcolor fontsizeselect | bullist numlist | alignleft aligncenter alignright | hr | material tool blueprint attachment"
-  plugins: [
-    "attachment material tool blueprint autolink lists charmap hr anchor pagebreak searchreplace wordcount visualblocks visualchars code media nonbreaking contextmenu directionality paste textcolor uploadimage"
-  ]
-  setup: (currentEditor) ->
-    editor = currentEditor
-    editor.on "init", ->
-      editor.setContent $("#" + editor.id).text()
-
 setupEditor = ->
-  tinymce.init tinymceSetting
+  editor = new nicEditor {
+    buttonList: ["material", "tool", "blueprint", "attachment", "ol", "ul", "bold", "italic", "underline"]
+  }
+  editor.panelInstance "markup-area"
 
 $ ->
   $.rails.ajax = (option) ->
@@ -52,8 +37,6 @@ $ ->
     event.preventDefault()
 
   $(document).on "click", ".card-form .submit", (event) ->
-    {selector} = tinymceSetting
-    $(selector).text editor.getContent()
     validateForm event
 
   $(document).on "submit", ".card-form", ->
@@ -74,6 +57,7 @@ $ ->
     li.addClass className
     card = null
     formContainer.html data.html
+    setupEditor()
     $("form:first-child").parsley()
     formContainer.find "form"
     .bind "submit", (e) ->
@@ -82,6 +66,7 @@ $ ->
       li.append card
       list.append li
     .bind "ajax:success", (xhr, data) ->
+      formContainer.empty()
       card.replaceWith data.html
       setStateIndex()
       markup()
@@ -95,11 +80,13 @@ $ ->
     li = $(this).closest "li"
     card = $(li).children().first()
     formContainer.html data.html
+    setupEditor()
     $("form:first-child").parsley()
     formContainer.find "form"
     .bind "submit", (e) ->
       wait4save $(this), card
     .bind "ajax:success", (xhr, data) ->
+      formContainer.empty()
       card.replaceWith data.html
       setStateIndex()
       markup()
@@ -110,10 +97,6 @@ $ ->
     $.fancybox.open
       padding: 0
       href: "#card-form-container"
-      afterLoad: ->
-        setTimeout setupEditor, 100
-      beforeClose: ->
-        tinymce.remove()
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $ this

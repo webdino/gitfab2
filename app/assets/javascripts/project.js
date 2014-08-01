@@ -16,9 +16,9 @@
 //= require jquery_nested_form
 //= require turbolinks
 //= require jquery.turbolinks
-//= require tinymce
+//= require_tree ../../../vendor/assets/javascripts/jquery
+//= require_tree ../../../vendor/assets/javascripts/nicedit
 //= require_tree ./helpers
-//= require_tree ./tinymce-plugins
 //= require_tree ./jquery
 //= require ./recipe
 //= require ./card
