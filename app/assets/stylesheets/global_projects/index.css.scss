@@ -155,6 +155,11 @@
                 background-size: contain;
                 background: no-repeat top center;
               }
+              .spacer {
+                display: block;
+                width: 100%;
+                height: 5px;
+              }
               .title {
                 margin-bottom: 5px;
                 line-height: 24px;

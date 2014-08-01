@@ -20,7 +20,7 @@
     == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
       - if page == "edit"
-        section.visual style="height: 528px; background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/noise-7ms-a.gif'});"
+        section.visual style="height: 528px; background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/blank.png'});"
           - if @project.figures.first.present? && @project.figures.first.link.present?
             iframe src="#{@project.figures.first.link}" style = "width: 703px; height: 528px;"
           .figure-form-wrapper

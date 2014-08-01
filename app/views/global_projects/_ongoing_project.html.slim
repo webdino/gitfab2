@@ -3,10 +3,13 @@ li.project
     - if project.figures.any?
       - if project.figures.first.link.present?
         iframe.image src="#{project.figures.first.link}"
-      - else
+      - elsif project.figures.first.content.present?
         == link_to "", project_note_path(project.owner, project), class: "image", style: "background-image: url('#{project.figures.first.try :content}')"
+      - else
+        .spacer
     - else
-      == link_to "", project_note_path(project.owner, project), class: "image", style: "background-image: url('images/fallback/noise-7ms-a.gif')"
+      .spacer
+
     == link_to project_note_path(project.owner, project) do
       .title
         == link_to project.title.truncate(40), project_note_path(project.owner, project)

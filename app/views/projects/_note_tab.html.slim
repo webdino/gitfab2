@@ -13,7 +13,7 @@
               - else
                 == link_to image_tag(project.figures.first.content), project_note_path(project.owner, project), class: "image"
             - else
-              == link_to image_tag("fallback/noise-7ms-a.gif"), project_note_path(project.owner, project), class: "image"
+              == link_to image_tag("fallback/blank.png"), project_note_path(project.owner, project), class: "image"
           .horizontal-border.basic-color.m-b-5
           .meta
             .created
