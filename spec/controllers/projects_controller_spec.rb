@@ -37,7 +37,7 @@ describe ProjectsController, type: :controller do
           before do
             post :create, user_id: user.slug, project: new_project.attributes
           end
-          it{should redirect_to project_path(id: new_project.name, owner_name: user.slug)}
+          it{should render_template :edit}
         end
         context "when forking" do
           let(:forker){FactoryGirl.create :user}
