@@ -34,7 +34,7 @@ class ProjectsController < ApplicationController
   def create
     return fork if params[:original_project_id]
     if @project.save
-      redirect_to project_path(id: @project.name, owner_name: @owner.slug)
+      render :edit
     else
       render :new
     end
