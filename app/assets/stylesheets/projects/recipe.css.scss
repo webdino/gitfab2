@@ -140,8 +140,8 @@
             }
           }
           h2.title {
-            float: left;
-            width: $card-content-width - $figure-width - $figure-margin-right;
+            float: left; 
+            max-width: $card-content-width - $figure-width - $figure-margin-right;
             font-family: $common-sans-serif;
             font-weight: 700;
             font-size: 14px;
@@ -194,7 +194,7 @@
               }
               h2.title {
                 float: left;
-                width: $annotation_width - $figure-width - $figure-margin-right;
+                max-width: $annotation_width - $figure-width - $figure-margin-right;
                 font-family: $common-sans-serif;
                 font-weight: 700;
                 font-size: 14px;
