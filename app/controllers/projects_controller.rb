@@ -25,7 +25,8 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    redirect_to project_recipe_path(project_id: @project.id, owner_name: @project.owner.slug)
+    @recipe = @project.recipe
+    render "recipes/show"
   end
 
   def new
