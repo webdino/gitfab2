@@ -30,6 +30,15 @@ article.card .title {
   .description {
     line-height: 1.65;
   }
+  .contributors {
+    float: right;
+    .contributor {
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 }
 
 .btn + .btn {

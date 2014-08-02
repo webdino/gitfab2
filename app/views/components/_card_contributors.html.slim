@@ -1,0 +1,4 @@
+.contributors
+  - card.contributions.each do |contribution|
+    - contributor = User.find(contribution.contributor_id)
+    == link_to image_tag(contributor.avatar), projects_path(owner_name: contributor.slug), class: "contributor", title: contributor.name
