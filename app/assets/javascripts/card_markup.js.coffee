@@ -221,10 +221,10 @@ $ ->
       "attachment" : {name : "Attachment or Link", type: "nicAttachmentButton", tags : ["A"]},
     },
     iconFiles : {
-      "material" : "/assets/material.png",
-      "tool" : "/assets/tool.png",
-      "blueprint" : "/assets/blueprint.png",
-      "attachment" : "/assets/attachment.png"
+      "material" : "/images/material.png",
+      "tool" : "/images/tool.png",
+      "blueprint" : "/images/blueprint.png",
+      "attachment" : "/images/attachment.png"
     }
   }
   nicEditors.registerPlugin nicPlugin, nicOptions
