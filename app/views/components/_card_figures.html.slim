@@ -1,9 +1,15 @@
-figure
-  ul
+figure.flexslider
+  ul.slides
     - if card.figures.present?
-      - card.figures.each do |figure|
+      - if card.figures.first.content.present?
+        - card.figures.each do |figure|
+          li
+            == image_tag figure.content
+      - elsif card.figure.first.link.present?
+        /add youtube movie here
+      - else
         li
-          == image_tag figure.content
+          == image_tag("fallback/blank.png")
     - else
       li
         == image_tag("fallback/blank.png")
