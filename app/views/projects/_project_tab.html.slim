@@ -3,6 +3,8 @@
     'Projects
   ul.project-list
     - @owner.projects.each do |project|
+      - unless can? :read, project
+        - next
       li.project
         .image-container
           - if project.figures.any?
@@ -26,6 +28,9 @@
               span.date
                 == " #{project.updated_at.strftime '%Y-%m-%d'}"
         .text-container
+          - if project.is_private?
+            .private-project
+              ' private project
           - if project.title.present?
             == link_to project.title, project_path(project.owner, project), class: "title"
           - else

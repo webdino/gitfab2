@@ -23,11 +23,20 @@ describe ProjectsController, type: :controller do
         end
       end
       describe "GET new" do
-        before{get :new, owner_name: project.owner.slug, id: project.id}
+        before do
+          user_project.owner.memberships.create group_id: group_project.owner.id
+          sign_in user_project.owner
+          get :new, owner_name: project.owner.slug, id: project.id
+        end
         it{should render_template :new}
       end
       describe "GET edit" do
-        before{get :edit, owner_name: project.owner.slug, id: project.id}
+        before do
+          user_project.owner.memberships.create group_id: group_project.owner.id
+          sign_in user_project.owner
+          get :edit, owner_name: project.owner.slug, id: project.id
+        end
+        #before{get :edit, owner_name: project.owner.slug, id: project.id}
         it{should render_template :edit}
       end
       describe "POST create" do
@@ -35,6 +44,7 @@ describe ProjectsController, type: :controller do
           let(:user){FactoryGirl.create :user}
           let(:new_project){FactoryGirl.build(:user_project, original: nil)}
           before do
+            sign_in user            
             post :create, user_id: user.slug, project: new_project.attributes
           end
           it{should render_template :edit}
@@ -42,7 +52,8 @@ describe ProjectsController, type: :controller do
         context "when forking" do
           let(:forker){FactoryGirl.create :user}
           before do
-            user_project.recipe.recipe_cards.create _type: "Card::Transition", title: "tra1", description: "desc1"
+            sign_in forker
+            user_project.recipe.recipe_cards.create _type: "Card::State", title: "sta1", description: "desc1"
             user_project.recipe.recipe_cards.first.annotations.create title: "ann1", description: "anndesc1"
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: user_project.id

@@ -25,6 +25,9 @@ section#basic-informations
       == Sanitize.clean @project.description, Sanitize::Config::RELAXED
     section.meta
       .left
+        - if @project.is_private?
+          section.private-project
+            ' private project
         section.timestamps
           .created-timestamp
             h2
@@ -41,6 +44,7 @@ section#basic-informations
             == "tags"
           - @project.tags.each do |tag|
             - link_to tag, "#{search_path()}?q=#{tag}}"
+
       .right
         section.collaborators
           .owner

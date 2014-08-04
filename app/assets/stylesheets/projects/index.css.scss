@@ -141,7 +141,17 @@
               margin-top: -10px;
               margin-left: 20px;
               width: 460px;
+              .private-project {
+                display: inline-block;
+                padding: 5px;
+                margin: 5px 0 -5px -2px; 
+                border-radius: 5px;
+                background-color: red;
+                color: white;
+                text-align: center;
+              }
               .title {
+                display: block;
                 margin-bottom: 10px;
                 font-size: 18px;
                 line-height: 40px;

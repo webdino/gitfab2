@@ -13,6 +13,7 @@ class Project
   searchable_field :title
   searchable_field :description
   slug :name, scope: :owner_id
+  field :is_private, type: :boolean
 
   has_many :derivatives, class_name: Project.name, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
@@ -88,9 +89,9 @@ class Project
 
   class << self
     def updatable_columns
-      [:name, :title, :description, :owner_id, :owner_type,
+      [:name, :title, :description, :owner_id, :owner_type, :is_private,
        usages_attributes: Card::Usage.updatable_columns,
-       figures_attributes: Figure.updatable_columns
+       figures_attributes: Figure.updatable_columns,
       ]
     end
   end

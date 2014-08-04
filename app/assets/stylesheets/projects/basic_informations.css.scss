@@ -150,6 +150,15 @@
         padding-top: 5px;
         width: ($third_column_width - $common-margin) / 2;
       }
+      .private-project {
+        display: inline-block;
+        padding: 5px;
+        margin: 5px 0 5px -2px; 
+        border-radius: 5px;
+        background-color: red;
+        color: white;
+        text-align: center;
+      }
       .timestamps {
         margin-bottom: 6px;
         font-family: $common-verdana;
