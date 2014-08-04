@@ -69,51 +69,48 @@
       @include cf;
       display: table;
       width: 100%;
-      .first-column {
+      h1.number {
         display: table-cell;
-        float: none;
-        height: 100%;
-        .sign {
-          display: table;
-          position: relative;
-          top: -$state_margin_top;
-          width: 100%;
-          height: 100%;
-          .margin {
-            display: table-row;
-            height: $state_margin_top;
-          }
-          h1.number {
-            display: table-row;
-            width: 100%;
-            font-size: 45px;
-            line-height: 1em;
-            text-align: center;
-            color: white;
-          }
-          .arrow-body {
-            display: table-row;
-            background-image: asset-url("arrow-body.png");
-            background-size: 22px 100%;
-            background-repeat: no-repeat;
-            background-position: 50% 16px;
-          }
-          .arrow-body:before {
-            content: "\0000a0";
-          }
-          .arrow-head {
-            display: table-row;
-            height: 20px;
-            background-image: asset-url("arrow-head.png");
-            background-size: 22px 100%;
-            background-repeat: no-repeat;
-            background-position: 50% 0px;
-          }
-          .arrow-head:before {
-            content: "\0000a0";
-          }
-       }
+        vertical-align: top;
+        padding-left: 10px;
+        z-index: 2;
+        -webkit-padding-start: 13px;
+        width: 38px;
+        max-width: 38px;
+        font-family: $common-helvetica;
+        font-size: 45px;
+        line-height: 140px;
+        color: white;
       }
+      .arrow-column {
+        display: table-cell;
+        padding-right: 20px;
+        position: relative;
+        width: 22px;
+        background-image: asset-url("arrow-body.png");
+        background-size: 22px 100%;
+        background-repeat: no-repeat;
+        background-position: 50% 50px;
+        &:before {
+          content: "\0000a0";
+        }
+        .arrow-head {
+          margin-left: 10px;
+          -webkit-margin-start: 9px;
+          position: absolute;
+          bottom: 0;
+          width: 22px;
+          height: 20px;
+          background-image: asset-url("arrow-head.png");
+          background-size: 22px 20px;
+          background-repeat: no-repeat;
+          background-position: 50% 0;
+          &:before {
+            content: "\0000a0";
+          }
+        }
+      }
+
       .article-column {
         display: table-cell;
         float: none;
@@ -140,7 +137,7 @@
             }
           }
           h2.title {
-            float: left; 
+            float: left;
             max-width: $card-content-width - $figure-width - $figure-margin-right;
             font-family: $common-sans-serif;
             font-weight: 700;
@@ -233,8 +230,15 @@
       }
     }
     &:first-of-type {
+      h1.number {
+        line-height: 70px;
+      }
+      .arrow-column {
+        background-position: 50% 15px;
+      }
       .article-column {
         padding-top: 0px;
+        -webkit-padding-before: 15px;
       }
     }
     progress {

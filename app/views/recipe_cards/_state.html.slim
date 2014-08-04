@@ -1,10 +1,7 @@
 article class="card state" data-position="#{card.try(:position)}" id="#{card.id}"
-  .first-column
-    .sign 
-      .margin
-      h1.number
-      .arrow-body
-      .arrow-head
+  h1.number
+  .arrow-column
+    .arrow-head
   .article-column
     .card-content
       == render "components/card_figures", card: card
