@@ -43,6 +43,7 @@ gem "select2-rails"
 gem "parsley-rails"
 gem "autoprefixer-rails"
 gem "fancybox2-rails"
+gem 'flexslider'
 
 gem "mongoid"
 gem "mongoid_slug"

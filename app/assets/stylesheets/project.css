@@ -1,5 +1,6 @@
 /*
  *= require_self
+ *= require flexslider
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./projects

@@ -66,10 +66,7 @@ $ ->
       li.append card
       list.append li
     .bind "ajax:success", (xhr, data) ->
-      formContainer.empty()
-      card.replaceWith data.html
-      setStateIndex()
-      markup()
+      updateCard card, data
     .bind "ajax:error", (xhr, status, error) ->
       li.remove()
       alert status
@@ -86,10 +83,7 @@ $ ->
     .bind "submit", (e) ->
       wait4save $(this), card
     .bind "ajax:success", (xhr, data) ->
-      formContainer.empty()
-      card.replaceWith data.html
-      setStateIndex()
-      markup()
+      updateCard card, data
     .bind "ajax:error", (e, xhr, status, error) ->
       alert status
 
@@ -155,3 +149,18 @@ $ ->
     $(".state-wrapper").each (index, element) ->
       $(element).find("h1.number").text index + 1
   setStateIndex()
+
+  setupFigureSlider = ->
+    $('.flexslider').flexslider({
+      animation: "slider",
+      controlNav: true,
+      smoothHeight: true,
+      slideshow: false,
+    })
+
+  updateCard = (card, data) ->
+    formContainer.empty()
+    card.replaceWith data.html
+    setStateIndex()
+    markup()
+    setupFigureSlider()

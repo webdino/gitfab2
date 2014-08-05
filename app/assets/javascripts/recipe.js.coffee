@@ -27,3 +27,10 @@ $ ->
     makeAttachmentsList $("a.material"), $("#material-list")
     makeAttachmentsList $("a.tool"), $("#tool-list")
     makeAttachmentsList $("a.blueprint"), $("#blueprint-list")
+
+  $('.flexslider').flexslider({
+    animation: "slider",
+    controlNav: true,
+    smoothHeight: true,
+    slideshow: false,
+  })
