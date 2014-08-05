@@ -3,15 +3,13 @@
     .left
       .horizontal-border.basic-color.f-right.m-b-10
       h2
-        'Reciped Projects
+        'Recent Updated Projects
       .horizontal-border.basic-color.f-right.m-b-10
       /TODO: #470 add some links wrote on pdf
     .right
       ul#reciped-projects
         / TODO: #450 Select representative project for reciped_projects
         - @projects.each do |project|
-          - if project.is_private?
-            - next
           == render "reciped_project", project: project
       - if @projects.present?
         .more
