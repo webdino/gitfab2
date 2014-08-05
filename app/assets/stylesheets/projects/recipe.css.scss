@@ -126,6 +126,21 @@
           padding-bottom: 0;
           width: $card_content_width;
           border: none;
+          figure {
+            float: left;
+            max-width: $figure_width;
+            width: $figure_width;
+            margin: 0 $figure_margin_right 0 0;
+            overflow: hidden;
+            border: none;
+            box-shadow: none;
+            img {
+              width: 100%;
+            }
+            iframe {
+              width: 100%;
+            }
+          }
           figure.flexslider {
             float: left;
             max-width: $figure_width;
@@ -205,6 +220,21 @@
               padding-bottom: 0;
               width: $annotation_width;
               border: none;
+              figure {
+                float: left;
+                max-width: $figure_width;
+                width: $figure_width;
+                margin: 0 $figure_margin_right 0 0;
+                overflow: hidden;
+                border: none;
+                box-shadow: none;
+                img {
+                  width: 100%;
+                }
+                iframe {
+                  width: 100%;
+                }
+              }
               figure.flexslider {
                 float: left;
                 max-width: $figure_width;

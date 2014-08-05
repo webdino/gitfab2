@@ -15,22 +15,43 @@
     box-sizing: border-box;
   }
 
-  .add_nested_fields[data-association="figures"] {
-    display: block;
-    width: 100%;
-    height: 100px;
-    padding: 80px 0;
-    margin-bottom: 12px;
-    box-sizing: border-box;
-    border: 4px solid #BBB;
-    color: #AAA;
-    text-align: center;
-    font-size: 24px;
-    line-height: 0.5em;
-
-    &:hover {
-      color: #BBB;
-      border-color: #888;
+  ul.figures {
+    li.figure {
+      width: 100%;
+       img {
+         max-width: 300px;
+       }
+       iframe {
+         max-width: 100%;
+       }
+       img + iframe {
+         display: none;
+       }
+       .caution {
+         display: inline-block;
+         width: 40%;
+         font-size: 14px;
+         color: red;
+       }
+       .btn {
+         margin-left: 5px;
+       }
+       .card-figure-link {
+         width: 80%;
+       }
+    }
+    .btn {
+      margin-top: 5px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+    }
+    .card-figure-content, .carad-figure-link {
+      display: none;
+    }
+    &.hide-add-buttons {
+      a.add-image, .add-video {
+        display: none;
+      }
     }
   }
 

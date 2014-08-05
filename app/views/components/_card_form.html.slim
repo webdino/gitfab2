@@ -2,10 +2,39 @@
   #inner_content class="#{f.object.id}"
     == f.hidden_field :_type
     == f.text_field :title, class: "validate card-title", data: {"parsely-trigger" => "keyup", "parsely-range" => "[1, 30]"}, placeholder: "Title"
-    == f.fields_for :figures do |ff|
-      == ff.file_field :content, class: "validate card-figure-content"
-      == ff.text_field :link, type: "url", class: "validate card-figure-link"
-    == f.link_to_add "Add a figure", :figures
+
+    ul.figures
+      == f.fields_for :figures do |ff|
+        - figure = ff.object
+        li.figure
+          - if figure.content.present?
+            == image_tag figure.content
+            .edit.btn
+              'edit
+            .delete.btn
+              == ff.link_to_remove "Delete"
+          - elsif figure.link.present?
+            iframe src="#{figure.link}"
+            .delete.btn
+              == ff.link_to_remove "Delete"
+            .caution
+          - else
+            == image_tag "fallback/blank.png"
+            iframe src="#{figure.link}"
+            .edit.btn
+              'edit
+            .delete.btn
+              == ff.link_to_remove "Delete"
+            .caution
+
+          == ff.file_field :content, class: "validate card-figure-content"
+          == ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
+
+      == f.link_to_add "Add an Image", :figures, class: "add-image btn"
+      == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
+      .remove-all-figures.btn
+        'Remove all figures
+
     == f.text_area :description, id: "markup-area", class: "markup-area card-description"
     #attachments
       == f.fields_for :attachments do |af|

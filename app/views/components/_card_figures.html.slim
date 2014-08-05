@@ -1,15 +1,19 @@
-figure.flexslider
-  ul.slides
-    - if card.figures.present?
-      - if card.figures.first.content.present?
+- if card.figures.present?
+  - if card.figures.first.content.present?
+    figure.flexslider
+      ul.slides
         - card.figures.each do |figure|
           li
             == image_tag figure.content
-      - elsif card.figure.first.link.present?
-        /add youtube movie here
-      - else
-        li
-          == image_tag("fallback/blank.png")
-    - else
-      li
-        == image_tag("fallback/blank.png")
+
+  - elsif card.figures.first.link.present?
+    figure
+      iframe src="#{card.figures.first.link}"
+
+  - else
+    figure
+      == image_tag("fallback/blank.png")
+
+- else
+  figure
+    == image_tag("fallback/blank.png")
