@@ -4,6 +4,7 @@ class UsagesController < ApplicationController
   before_action :build_usage, only: [:new, :create]
   before_action :load_usage, only: [:edit, :update, :destroy]
   before_action :update_contribution, only: [:create, :update]
+  after_action :update_project, only: [:create, :update, :destroy]
 
   authorize_resource class: Card::Usage.name
 
@@ -15,6 +16,8 @@ class UsagesController < ApplicationController
 
   def create
     if @usage.save
+      @project.updated_at = DateTime.now
+      @project.update
       render :create
     else
       render "errors/failed", status: 400
@@ -23,6 +26,8 @@ class UsagesController < ApplicationController
 
   def update
     if @usage.update usage_params
+      @project.updated_at = DateTime.now
+      @project.update
       render :update
     else
       render "errors/failed", status: 400
@@ -75,6 +80,13 @@ class UsagesController < ApplicationController
     contribution.contributor_id = current_user.slug
     contribution.created_at = DateTime.now
     contribution.updated_at = DateTime.now
+  end
+
+  def update_project
+    if @_response.response_code == 200
+      @project.updated_at = DateTime.now
+      @project.update
+    end
   end
 
 end

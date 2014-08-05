@@ -61,6 +61,7 @@ class ProjectsController < ApplicationController
   end
 
   def update
+    @project.updated_at = DateTime.now
     if @project.update project_params
       respond_to do |format|
         format.json {render :update}

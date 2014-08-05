@@ -5,6 +5,7 @@ class RecipeCardsController < ApplicationController
   before_action :build_recipe_card, only: [:new, :create]
   before_action :load_recipe_card, only: [:edit, :update, :destroy]
   before_action :update_contribution, only: [:create, :update]
+  after_action :update_project, only: [:create, :update, :destroy]
 
   def new
   end
@@ -82,5 +83,12 @@ class RecipeCardsController < ApplicationController
     contribution.contributor_id = current_user.slug
     contribution.created_at = DateTime.now
     contribution.updated_at = DateTime.now
+  end
+
+  def update_project
+    if @_response.response_code == 200
+      @project.updated_at = DateTime.now
+      @project.update
+    end
   end
 end

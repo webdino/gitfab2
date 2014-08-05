@@ -4,6 +4,7 @@ class RecipesController < ApplicationController
   before_action :load_owner
   before_action :load_project
   before_action :load_recipe
+  after_action :update_project, only: [:update]
 
   authorize_resource parent: Project.name
 
@@ -36,5 +37,12 @@ class RecipesController < ApplicationController
 
   def load_recipe
     @recipe = @project.recipe
+  end
+
+  def update_project
+    if @_response.response_code == 200
+      @project.updated_at = DateTime.now
+      @project.update
+    end
   end
 end
