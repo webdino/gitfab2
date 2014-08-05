@@ -12,8 +12,8 @@ class Project
   searchable_field :name
   searchable_field :title
   searchable_field :description
+  searchable_field :is_private, type: :boolean
   slug :name, scope: :owner_id
-  field :is_private, type: :boolean
 
   has_many :derivatives, class_name: Project.name, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
@@ -41,6 +41,7 @@ class Project
     string :name, :title, :owner_type
     string :owner_id
     text :description
+    boolean :is_private
 
     text :recipe do
       self.recipe.recipe_cards.map do |card|
