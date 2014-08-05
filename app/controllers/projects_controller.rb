@@ -5,6 +5,8 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:show, :edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
 
+  authorize_resource
+
   def index
     if q = params[:q]
       @projects = @owner.projects.solr_search do

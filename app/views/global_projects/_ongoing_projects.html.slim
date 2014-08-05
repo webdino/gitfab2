@@ -12,11 +12,15 @@
         - noted_exist = false
         - if params[:q]
           - @projects.each do |project|
+            - if project.is_private?
+              - next
             - if project.note.num_cards > 0
               - noted_exist = true
               == render "ongoing_project", project: project
         - else
           - @projects.noted.each do |project|
+            - if project.is_private?
+              - next
             - noted_exist = true
             == render "ongoing_project", project: project
       - if noted_exist

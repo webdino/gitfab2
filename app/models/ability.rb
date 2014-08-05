@@ -31,10 +31,19 @@ class Ability
     can :edit, Project do |project|
       is_project_editor?(project, user)
     end
+    can :read, Project do |project|
+      !project.is_private? ? true : is_project_editor?(project, user)
+    end
+    can :read, Note do |note|
+      can? :read, note.project
+    end
     can :update, Recipe do |recipe|
       if recipe.owner_type == Group.name
         user.is_member_of? recipe.owner
       end
+    end
+    can :read, Recipe do |recipe|
+      can? :read, recipe.project
     end
     can :manage, Attachment do |pa|
       can? :update, pa.recipe
@@ -60,7 +69,6 @@ class Ability
     can :create, Group do |group|
       user.persisted?
     end
-    can :read, :all
   end
 
   private

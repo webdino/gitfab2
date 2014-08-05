@@ -51,6 +51,12 @@
             'Summary
           == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
 
+        section.access-level
+          h1
+            'Access level
+          == f.check_box :is_private
+          == f.label :is_private, "This is a private project"
+
   #filesize-caution
     p
       'File Size Limit Exceed on an upload (3MB).

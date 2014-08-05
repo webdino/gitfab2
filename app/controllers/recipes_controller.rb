@@ -5,6 +5,8 @@ class RecipesController < ApplicationController
   before_action :load_project
   before_action :load_recipe
 
+  authorize_resource parent: Project.name
+
   def show
   end
 
