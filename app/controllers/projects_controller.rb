@@ -21,7 +21,7 @@ class ProjectsController < ApplicationController
         end
       end.results
     else
-      @projects = Project.order "updated_at DESC"
+      @projects = @owner.projects.order "updated_at DESC"
     end
     render layout: "dashboard"
   end

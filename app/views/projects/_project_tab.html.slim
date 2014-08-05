@@ -2,7 +2,7 @@
   h2
     'Projects
   ul.project-list
-    - @owner.projects.each do |project|
+    - @projects.each do |project|
       - unless can? :read, project
         - next
       li.project
