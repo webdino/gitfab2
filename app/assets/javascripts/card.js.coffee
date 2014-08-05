@@ -32,6 +32,9 @@ $ ->
   formContainer.attr "id", "card-form-container"
   formContainer.appendTo document.body
 
+  $(document).on "ajax:beforeSend", ".delete-card", ->
+    confirm "Are you sure to remove this item?"
+
   $(document).on "ajax:error", ".new-card, .edit-card, .delete-card", (event, xhr, status, error) ->
     alert error.message
     event.preventDefault()
