@@ -32,5 +32,4 @@
               #search-box
                 == form_tag :search, method: :get do |f|
                   == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
-  == render "ongoing_projects"
   == render "reciped_projects"

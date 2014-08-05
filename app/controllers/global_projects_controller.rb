@@ -7,7 +7,7 @@ class GlobalProjectsController < ApplicationController
         fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
       end.results
     else
-      @projects = Project.order "updated_at DESC"
-    end
+      @projects = Project.all().in(is_private: [false, nil]).order("updated_at DESC")
+    end      
   end
 end
