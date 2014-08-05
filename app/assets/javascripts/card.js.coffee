@@ -153,6 +153,7 @@ $ ->
   setupFigureSlider = ->
     $('.flexslider').flexslider({
       animation: "slider",
+      animationSpeed: 300,
       controlNav: true,
       smoothHeight: true,
       slideshow: false,
