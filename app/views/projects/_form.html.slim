@@ -70,7 +70,7 @@
     - else
       == f.submit value: "Update Project", class: "btn"
       == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "btn"
-      == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn"
+      == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn", id: "delete-btn"
 
 - content_for :bottom do
   coffee:
@@ -187,3 +187,6 @@
         $(imageField).find(".file-field").val ""
         $(imageField).find(".video-form .video-id-field").val ""
         $("#project_figures_attributes_0__type").val "Figure::Photo"
+
+      $("#delete-btn").click ->
+        confirm "Are you sure to remove this project?"
