@@ -149,8 +149,13 @@ $ ->
   markup()
 
   setStateIndex = ->
-    $(".state-wrapper").each (index, element) ->
+    states = $(".state-wrapper")
+    states.each (index, element) ->
       $(element).find("h1.number").text index + 1
+    if states.length > 1
+      $(".order-change-btn").show()
+    else
+      $(".order-change-btn").hide()
   setStateIndex()
 
   setupFigureSlider = ->
