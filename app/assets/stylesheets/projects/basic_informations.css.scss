@@ -131,11 +131,14 @@
       padding-bottom: $padding_bottom;
       width: $third_column_width - $common-margin;
       height: $height / 2 - $padding_top - $padding_bottom;
+      max-height: $height / 2 - $padding_top - $padding_bottom; 
       border-top: $common-border;
       border-bottom: $common-border;
       font-size: 12px;
       line-height: $common-line-height;
+      overflow: hidden;
     }
+
     .meta {
       margin-right: $common-margin;
       font-size: 12px;
