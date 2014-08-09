@@ -35,7 +35,9 @@ class Card
     def updatable_columns
       [:id, :title, :description, :_type,
        figures_attributes: Figure.updatable_columns,
-       attachments_attributes: Attachment.updatable_columns]
+       attachments_attributes: Attachment.updatable_columns,
+       likes_attributes: Like.updatable_columns, 
+      ]
     end
 
     def use_relative_model_naming?
