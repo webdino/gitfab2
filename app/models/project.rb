@@ -38,8 +38,8 @@ class Project
   paginates_per 12
 
   searchable do
-    string :name, :title, :owner_type
-    string :owner_id
+    text :name, :title, :owner_type
+    text :owner_id
     text :description
     boolean :is_private
 
