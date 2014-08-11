@@ -4,7 +4,7 @@ class Figure
   include Mongoid::Attributes::Dynamic
 
   mount_uploader :content, FigureUploader
-  
+
   embedded_in :figurable, polymorphic: true
 
   field :link
@@ -18,7 +18,7 @@ class Figure
 
   class << self
     def updatable_columns
-      [:id, :link, :content]
+      [:id, :link, :content, :_destroy]
     end
   end
 
