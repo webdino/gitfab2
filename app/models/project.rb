@@ -13,6 +13,7 @@ class Project
   searchable_field :title
   searchable_field :description
   searchable_field :is_private, type: :boolean
+  searchable_field :owner_id
   slug :name, scope: :owner_id
 
   has_many :derivatives, class_name: Project.name, inverse_of: :original
@@ -38,9 +39,11 @@ class Project
   paginates_per 12
 
   searchable do
-    text :name, :title, :owner_type
-    text :owner_id
+    text :name
+    text :title
     text :description
+    string :owner_type
+    string :owner_id
     boolean :is_private
 
     text :recipe do
