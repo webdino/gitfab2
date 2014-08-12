@@ -9,11 +9,12 @@ class ProjectsController < ApplicationController
 
   def index
     if q = params[:q]
-      @projects = @owner.projects.solr_search do
-        fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
+      owner_id = @owner.id
+      @projects = Project.solr_search do |s|
+        s.fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
         case params[:type]
         when "own"
-          with :owner_id, params[:user_id]
+          s.with :owner_id, owner_id
         when "contributed"
           # TODO: Implement
         when "starred"
