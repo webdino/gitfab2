@@ -3,7 +3,7 @@
 validateForm = (event) ->
   validated = false
   $(".card-form:first-child .validate").each (index, element) ->
-    if $(element).val() != ""
+    if $(element).val() != "" || $(element).text() != ""
       validated = true
   unless validated
     alert "You cannot make empty card."
@@ -16,6 +16,7 @@ setupEditor = ->
     buttonList: ["material", "tool", "blueprint", "attachment", "ol", "ul", "bold", "italic", "underline"]
   }
   editor.panelInstance "markup-area"
+  $(".nicEdit-main").addClass "validate"
 
 $ ->
   $.rails.ajax = (option) ->
