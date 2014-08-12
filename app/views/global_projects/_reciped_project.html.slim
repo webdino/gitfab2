@@ -17,7 +17,7 @@ li.project
     .horizontal-border.basic-color.m-b-5
     - if project.description.present?
       .description
-        == project.description
+        == project.description.truncate(200)
       .horizontal-border.basic-color.m-b-5
     .status
       == link_to projects_path(project.owner) do
