@@ -17,7 +17,6 @@
       == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
-    == f.text_field :name, placeholder: "Input_Repository_Name"
     #project-summary
       - if page == "edit"
         section.visual style="height: 528px; background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/blank.png'});"
@@ -56,6 +55,13 @@
             'Access level
           == f.check_box :is_private
           == f.label :is_private, "This is a private project"
+
+        section.permalink
+          h1
+            'Permalink
+          #permalink-label
+            '#{request.protocol}#{request.host_with_port}/#{@project.owner.slug}/
+          == f.text_field :name, placeholder: "Input_Repository_Name"
 
   #filesize-caution
     p
