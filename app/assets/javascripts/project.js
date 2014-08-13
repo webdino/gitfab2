@@ -14,8 +14,6 @@
 //= require jquery.ui.sortable
 //= require jquery_ujs
 //= require jquery_nested_form
-//= require turbolinks
-//= require jquery.turbolinks
 //= require jquery.flexslider-min
 //= require_tree ../../../vendor/assets/javascripts/jquery
 //= require_tree ../../../vendor/assets/javascripts/nicedit
