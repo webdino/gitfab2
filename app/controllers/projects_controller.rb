@@ -37,6 +37,9 @@ class ProjectsController < ApplicationController
 
   def create
     return fork if params[:original_project_id]
+    slug = project_params[:title]
+    slug = slug.gsub(/\W|\s/,"x")
+    @project.name = slug
     if @project.save
       render :edit
     else
@@ -61,7 +64,7 @@ class ProjectsController < ApplicationController
   def edit
   end
 
-  def update
+  def update 
     @project.updated_at = DateTime.now
     if @project.update project_params
       respond_to do |format|
@@ -70,8 +73,8 @@ class ProjectsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.json "error/failed", status: 400
-        format.html :edit
+        format.json {render "error/failed", status: 400}
+        format.html {render :edit, status: 400}
       end
     end
   end

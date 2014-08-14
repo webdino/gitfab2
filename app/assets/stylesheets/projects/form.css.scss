@@ -59,9 +59,7 @@ form.project-form {
     box-sizing: border-box;
     border: $common-border;
   }
-  input#project_name {
-    display: none;
-  }
+
   input#project_video_id {
     width: 580px;
     font-size: 12px;
@@ -90,6 +88,24 @@ form.project-form {
         margin-bottom: 5px;
         margin-top: 20px;
         font-size: 22px;
+      }
+    }
+
+    .permalink {
+      @include cf;
+      h1 {
+        margin-bottom: 5px;
+        margin-top: 20px;
+        font-size: 22px;
+      }
+      #permalink-label {
+        float: left;
+        height: 14px;
+        line-height: 22px;
+      }
+      #project_name {
+        height: 14px;
+        width: 300px;
       }
     }
 
