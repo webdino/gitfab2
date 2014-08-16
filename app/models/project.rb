@@ -96,6 +96,7 @@ class Project
       [:name, :title, :description, :owner_id, :owner_type, :is_private,
        usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns,
+       likes_attributes: Like.updatable_columns,
       ]
     end
   end

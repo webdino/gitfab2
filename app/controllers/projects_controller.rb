@@ -82,8 +82,7 @@ class ProjectsController < ApplicationController
   private
   def project_params
     if params[:project]
-      params.require(:project)
-        .permit(Project.updatable_columns + [likes_attributes: [:_destroy, :id, :liker_id]])
+      params.require(:project).permit(Project.updatable_columns)
     end
   end
 
