@@ -1,0 +1,19 @@
+#featured.projects-wrapper
+  .container
+    .left
+      .horizontal-border.white.f-right.m-b-10
+      h2
+        'Featured Projects
+      .horizontal-border.white.f-right.m-b-10
+    .right
+      ul#featured-projects
+        - @featured_projects.each do |project|
+          == render "project", project: project
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $("ul#featured-projects").packery({
+        itemSelector: ".project",
+        gutter: 20
+      })

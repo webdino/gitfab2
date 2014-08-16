@@ -1,4 +1,4 @@
-- if request.url.include? "search?"
+- if @is_searching
   - content_for :title do
     - "Search : " + request.url.split("q=").last
 
@@ -32,4 +32,8 @@
               #search-box
                 == form_tag :search, method: :get do |f|
                   == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
-  == render "reciped_projects"
+  - if @is_searching
+    == render "searched_projects"
+  - else
+    == render "featured_projects"
+    == render "reciped_projects"
