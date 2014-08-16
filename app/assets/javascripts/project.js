@@ -25,6 +25,7 @@
 //= require ./card_order
 //= require ./slideshow
 //= require ./like
+//= require ./helpers/time_offset
 //= require select2
 //= require parsley
 //= require parsley.remote
