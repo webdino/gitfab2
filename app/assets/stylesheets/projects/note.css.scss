@@ -64,8 +64,12 @@
           font-family: $common-verdana;
           font-size: 14px;
           line-height: $common-line-height;
-          .date {
+          .postedby {
             font-weight: 700;
+            img {
+              width: 16px;
+              height: 16px;
+            }
           }
           .control {
             margin-top: 5px;
