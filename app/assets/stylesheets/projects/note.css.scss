@@ -4,6 +4,12 @@
 
 #note-cards {
   width: $content_width;
+  a:not(.btn) {
+    color: $common-basic-color;
+  }
+  aside.like {
+    display: inline;
+  }
   #top {
     margin-left: $first_column_width + 10px;
     padding-top: 1px;
@@ -67,8 +73,8 @@
           .postedby {
             font-weight: 700;
             img {
-              width: 16px;
-              height: 16px;
+              width: 12px;
+              height: 12px;
             }
           }
           .control {

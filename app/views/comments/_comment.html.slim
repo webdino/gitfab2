@@ -1,15 +1,14 @@
 li.comment
-  .comment-meta
-    .avatar-wrapper
-      == image_tag comment.user.avatar, class: "avatar"
-    .user-name
-      == comment.user.name
+  - user = User.find(comment.user_id)
+  - link = projects_path(owner_name: user.slug)
+  .left
+    - image = image_tag user.avatar
+    == link_to image, link
+  .right
+    == link_to user.name, link, class: "user-name"
+    == Sanitize.clean comment.body, Sanitize::Config::RELAXED
     .created-at
       == comment.created_at
-    span.star
-      == toggle_star_link_for comment
-  .comment-body
-    == Sanitize.clean comment.body, Sanitize::Config::RELAXED
   - if can? :destroy, comment
     .comment-link
-      == link_to "delete", comment, method: :delete, remote: true, class: "delete-btn"
+      == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"

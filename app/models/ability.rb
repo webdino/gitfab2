@@ -54,8 +54,8 @@ class Ability
     can :create, Comment do
       user.persisted?
     end
-    can [:update, :destroy], Comment do |comment|
-      comment.user == user || (can? :manage, comment.commentable)
+    can :destroy, Comment do |comment|
+      comment.user_id == user.slug || (can? :manage, comment.commentable)
     end
     can :create, Like do |like|
       user.persisted?

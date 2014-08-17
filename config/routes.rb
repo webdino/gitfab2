@@ -19,15 +19,18 @@ Gitfab2::Application.routes.draw do
     resources :derivative_cards, except: [:create, :update]
   end
 
+  concern :comments do
+    resources :comments, only: [:create, :destroy]
+  end
+
   concern :owner do
     resources :projects, only: [:create, :update] do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: :card_features_for_form
-        resources :transitions, only: [:create, :update], concerns: :card_features_for_form
       end
       resource :note, only: :update do
-        resources :note_cards, only: [:create, :update]
+        resources :note_cards, only: [:create, :update], concerns: :comments
       end
       resources :usages, only: [:create, :update]
     end
@@ -50,7 +53,6 @@ Gitfab2::Application.routes.draw do
     end
     resource :recipe, only: :show do
       resources :states, except: [:create, :update], concerns: :card_features_for_link
-      resources :transitions, except: [:create, :update], concerns: :card_features_for_link
     end
     resources :usages, constraints: {id: /.+/}, except: [:create, :update]
   end
