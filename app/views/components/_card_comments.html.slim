@@ -1,0 +1,12 @@
+ul.comments
+  - resources.last.comments.each do |comment|
+    - resources << comment
+    == render "comments/comment", comment: comment, resources: resources
+    - resources.delete(comment)
+- resources << Comment.new
+- if signed_in?
+  == form_for resources, html: {class: "comment-form"}, remote: true do |f| 
+    == image_tag current_user.avatar
+    == f.hidden_field :user_id, value: current_user.slug
+    == f.text_area :body, maxlength: 140
+    == f.submit "comment", class: "btn"

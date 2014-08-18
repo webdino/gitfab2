@@ -4,7 +4,6 @@ aside.like {
   }
   .like-button {
     $star_size: 20px;
-    min-width: 100px;
     height: $star_size;
     background: asset-url("star.png") no-repeat;
     padding-left: $star_size + 5px;

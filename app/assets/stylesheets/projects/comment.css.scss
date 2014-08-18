@@ -1,0 +1,60 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
+
+ul.comments {
+  border-top: 1px solid gray;
+  margin: 10px; 
+  padding-top: 10px; 
+  li.comment {
+    @include cf;
+    margin-bottom: 10px;
+    .left {
+      float: left;
+      margin-right: 10px;
+      img {
+        width: 40px;
+        height: 40px;
+        margin: 0 5px 5px 5px;
+      }
+    }
+    .right {
+      float: left;
+      width: 400px;
+      .user-name {
+        display: block;
+        margin-right: 5px;
+        margin-bottom: 5px;
+      }
+      .created-at {
+        margin-top: 5px;
+      }
+    }
+  }
+}
+
+.comment-form {
+  margin: 10px; 
+  background-color: #eee;
+  display: inline-block;
+  img {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+  }
+  textarea {
+    width: 400px;
+    margin-bottom: 5px;
+    height: 40px;
+  }
+  .btn {
+    height: 40px;
+    margin-top: 7px;
+    margin-right: 5px;
+    margin-left: 5px;
+    vertical-align: top;
+    border: none;
+    background-color: $common-basic-color;
+    color: white;
+  }
+
+}

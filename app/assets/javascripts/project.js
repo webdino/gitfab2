@@ -27,6 +27,7 @@
 //= require ./slideshow
 //= require ./like
 //= require ./helpers/time_offset
+//= require ./comment
 //= require select2
 //= require parsley
 //= require parsley.remote

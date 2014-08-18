@@ -6,13 +6,13 @@ article class="card note_card" id="#{card.id}"
       == render "components/card_figures", card: card
       == render "components/card_title", card: card
       .meta
-        .date
+        .postedby
           - author = nil
           - if card.contributions.length > 0
             -  author = User.find(card.contributions[0].contributor_id)
           - else
             -  author = @project.owner
-          - link = link_to author.name, projects_path(owner_name: author.slug)
+          - link = link_to image_tag(author.avatar) + author.name, projects_path(owner_name: author.slug)
           - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
           == "posted by #{link} on #{datetime}"
         .control
@@ -24,3 +24,5 @@ article class="card note_card" id="#{card.id}"
               == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, class: "btn edit-card", "data-container" => ".card"
       == render "components/card_description", card: card
       == render "components/card_attachments", card: card
+    - unless defined?(is_template)
+      == render "components/card_comments", resources: [@owner, @project, :note, card]

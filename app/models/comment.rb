@@ -13,7 +13,7 @@ class Comment
 
   class << self
     def updatable_columns
-      [:body]
+      [:_destroy, :body, :user_id]
     end
   end
 end
