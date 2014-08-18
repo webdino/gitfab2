@@ -222,14 +222,6 @@
           font-weight: 700;
         }
       }
-      .tags {
-        h2 {
-          font-family: $common-helvetica;
-          font-weight: 500;
-          font-size: 12px;
-          line-height: 18px;
-        }
-      }
       .collaborators {
         .owner, .collaborator {
           .thumbnail {
@@ -252,6 +244,49 @@
           display: inline-block;
           margin: 0 0 20px 0;
         }
+      }
+    }
+  }
+  .footer {
+    margin-top: 10px;
+    margin-left: $common-margin + $first_column_width;
+    .line {
+      label {
+        display: inline-block;
+        padding-left: 6px;
+      }
+      .tags {
+        display: inline-block;
+        .tag {
+          display: inline-block;
+          height: 25px;
+          margin-left: 10px;
+          a {
+            color: $common-basic-color;
+          }
+          .delete-tag {
+            position: relative;
+            top: -5px;
+            margin-left: 0px;
+            color: red;
+          } 
+          .delete-tag:not(.mine) {
+            display: none;
+          }
+        }
+      }
+    }
+    #tag-form {
+      display: none;
+      .btn {
+        border: none;
+        background-color: $common-basic-color;
+        color: white;        
+      }
+    }
+    #show-tag-form {
+      .textfield {
+        width: 120px;
       }
     }
   }

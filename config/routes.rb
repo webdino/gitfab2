@@ -23,8 +23,12 @@ Gitfab2::Application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
+  concern :tags do
+    resources :tags, only: [:create, :destroy]
+  end
+
   concern :owner do
-    resources :projects, only: [:create, :update] do
+    resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: :card_features_for_form
