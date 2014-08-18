@@ -5,6 +5,8 @@ class MembersController < ApplicationController
   def create
     if membership = @user.join_to(@group)
       @member = membership.user
+      membership.role = params[:role]
+      membership.save
       render :create
     else
       render "errors/failed"
