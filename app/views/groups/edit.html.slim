@@ -20,6 +20,7 @@
     == render "add_member", group: @group
 
 - content_for :bottom
+
   coffee:
     $(document).on "click", "#group-avatar", (event) ->
       event.preventDefault()
