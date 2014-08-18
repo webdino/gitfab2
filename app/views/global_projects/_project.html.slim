@@ -10,7 +10,6 @@ li.project
     - else
       .spacer
 
-    / TODO: #475
     == link_to project_path(project.owner, project) do
       .title
         == link_to project.title.truncate(40), project_path(project.owner, project)
@@ -31,15 +30,9 @@ li.project
         span.count
           == "#{project.likes.length}"
 
-      / TODO: #474 Count  how many times the project were shared
-      / .shared
-      /   span.icon
-      /   span.count
     .horizontal-border.basic-color.m-b-5
     .meta
       .notes
-        / FIXME: #472 pluralize/singularize the last word
         == "#{project.note.note_cards.length} notes"
       .since
-        / TODO: #473 implete time calculation on project.rb
         == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago"

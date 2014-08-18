@@ -10,7 +10,7 @@
       ul#reciped-projects
         / TODO: #450 Select representative project for reciped_projects
         - @projects.each do |project|
-          == render "reciped_project", project: project
+          == render "project", project: project
       - if @projects.present?
         .more
           / FIXME: #471 Create a link to project with recipe
@@ -22,8 +22,7 @@
 - content_for :bottom do
   coffee:
     $ ->
-      $recipeds = $("ul#reciped-projects")
-      $recipeds.packery({
+      $("ul#reciped-projects").packery({
         itemSelector: ".project",
         gutter: 20
       })

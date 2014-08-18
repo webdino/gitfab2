@@ -108,11 +108,12 @@
       }
     }
   }
-  #ongoing {
+  #featured-projects {
     padding-bottom: 75px;
   }
   #reciped {
     padding-bottom: 75px;
+    background-color: white;
   }
   .projects-wrapper {
     width: 100%;
@@ -140,7 +141,7 @@
         float: left;
         margin-left: $common-margin * 2;
         width: 780px;
-        #ongoing-projects, #reciped-projects {
+        #searched-projects, #featured-projects, #reciped-projects {
           .project {
             width: 220px;
             background: $common-light-gray;

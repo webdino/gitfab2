@@ -1,0 +1,19 @@
+#searched.projects-wrapper
+  .container
+    .left
+      .horizontal-border.basic-color.f-right.m-b-10
+      h2
+        'Searched Projects
+      .horizontal-border.basic-color.f-right.m-b-10
+    .right
+      ul#searched-projects
+        - @projects.each do |project|
+          == render "project", project: project
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $("ul#searched-projects").packery({
+        itemSelector: ".project",
+        gutter: 20
+      })
