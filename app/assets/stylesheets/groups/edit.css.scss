@@ -97,7 +97,7 @@
           float: right;
           margin: 10px 10px 0 0 ;
           padding: 5px;
-          font-family: $common-helvetica;
+          font-family: $common-verdana;
           font-size: 18px;
           border: $common-border;
           border-radius: 2px;
@@ -108,7 +108,7 @@
           .membership-role {
             margin-top: 4px;
             background: white;
-            font-family: $common-helvetica;
+            font-family: $common-verdana;
             font-size: 18px;
             border: $common-border;
             border-radius: 2px;
@@ -120,7 +120,7 @@
         .remove-member-btn {
           float: right;
           margin: 10px 10px 0 0;
-          padding: 5px;
+          font-family: $common-verdana;
           font-size: 18px;
           color: white;
           background: gray;
@@ -131,24 +131,21 @@
       }
     }
 
-    #new_membership {
+    #new-membership {
       h2 {
         padding: 10px;
         background-color: $header_background;
         font-size: 18px;
         border-bottom: $common-border;
       }
-      p {
-        margin: 10px 0 0 10px;
-      }
-      #membership_user_id {
-        margin: 5px 5px 10px 10px;
+      #s2id_member_name {
+        margin: 20px 0px 20px 10px;
         font-size: 18px;
       }
-      #membership_role {
+      #role {
         margin: 2px 10px;
         background: white;
-        font-family: $common-helvetica;
+        font-family: $common-verdana;
         font-size: 18px;
         border: $common-border;
         border-radius: 2px;
