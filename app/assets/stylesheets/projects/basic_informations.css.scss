@@ -59,16 +59,64 @@
     $height: $visual_width / 4 * 3;
     height: $height;
     @include cf;
-    .visual {
+    figure.visual {
       float: left;
+      margin: 0;
       width: $visual_width;
       height: $height;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: top center;
+      background-color: #E6E6E6;
+      overflow: hidden;
+      border: none;
+      border-radius: 0px;
+      box-shadow: none;
       iframe {
         width: 100%;
         height: 100%;
+      }
+      ol.flex-control-paging {
+        top: 10px;
+        li>a {
+          background: $common-basic-color;
+          opacity: 0.5;
+          &:hover {
+            background: $common-basic-color;
+            opacity: 0.7;
+          }
+          &.flex-active {
+            background: $common-basic-color;
+            opacity: 0.9;
+          }
+        }
+      }
+
+      .flex-direction-nav a:before {
+        color: $common-basic-color;
+      }
+      .flex-prev, .flex-next {
+        font-size: 0;
+      }
+      ol.flex-control-paging {
+        li>a {
+          background: $common-basic-color;
+          opacity: 0.5;
+          &:hover {
+            background: $common-basic-color;
+            opacity: 0.7;
+          }
+          &.flex-active {
+            background: $common-basic-color;
+            opacity: 0.9;
+          }
+        }
+      }
+
+      .flex-direction-nav a:before {
+        color: $common-basic-color;
+      }
+      .flex-prev, .flex-next {
+        top: 20px;
+        height: 100%;
+        font-size: 0;
       }
     }
     .tools {
@@ -131,7 +179,7 @@
       padding-bottom: $padding_bottom;
       width: $third_column_width - $common-margin;
       height: $height / 2 - $padding_top - $padding_bottom;
-      max-height: $height / 2 - $padding_top - $padding_bottom; 
+      max-height: $height / 2 - $padding_top - $padding_bottom;
       border-top: $common-border;
       border-bottom: $common-border;
       font-size: 12px;
@@ -156,7 +204,7 @@
       .private-project {
         display: inline-block;
         padding: 5px;
-        margin: 5px 0 5px -2px; 
+        margin: 5px 0 5px -2px;
         border-radius: 5px;
         background-color: red;
         color: white;

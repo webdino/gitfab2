@@ -15,35 +15,44 @@
         - action = o.instance_of?(Group) ? group_projects_path(group_id: o.slug) : user_projects_path(user_id: o.slug)
         - options.push [o.name, action]
       == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
+
   #basic-information
     == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
     #project-summary
       - if page == "edit"
-        section.visual style="height: 528px; background-image: url('#{@project.figures.first.try :content}'); background-size: cover;" data-no-image-url="url(#{asset_path 'fallback/blank.png'});"
-          - if @project.figures.first.present? && @project.figures.first.link.present?
-            iframe src="#{@project.figures.first.link}" style = "width: 703px; height: 528px;"
-          .figure-form-wrapper
-            == link_to "Upload Image File…", "", title: "upload-image", id: "photo-upload-btn", class: "btn"
-            == link_to "×", "", title: "remove-image", id: "remove-image-btn", class: "btn"
-            == link_to "Input YouTube URL…", "#project-video-form", id: "input-video-url-btn", class: "fancybox btn"
-            / TODO: 複数個のfigureを指定できるようにする
-            / == f.link_to_add "Add a figure", :figures
-            == f.fields_for :figures do |ff|
-              == ff.select :_type, [["Photo", Figure::Photo.name], ["Video", Figure::Video.name]]
-              == ff.file_field :content, accept: 'image/png, image/gif, image/jpeg, image/jpg'
-              == ff.hidden_field :content_cache
-              #project-video-form.video-form
-                p
-                  'Input a Youtube URL
-                == text_field_tag :url_input, "#{@project.figures.first.link}", class: "link-input"
-                == ff.hidden_field :link, id: "link-field"
+      
+        ul.figures
+          == f.fields_for :figures do |ff|
+            - figure = ff.object
+            li.figure
+              - if figure.content.present?
+                == image_tag figure.content
+                .edit.btn
+                  'edit
+                .delete.btn
+                  == ff.link_to_remove "Delete"
+              - elsif figure.link.present?
+                iframe src="#{figure.link}"
+                .delete.btn
+                  == ff.link_to_remove "Delete"
                 .caution
-                  'Invalid URL.
-                .video-form-preview-wrapper
-                  iframe.video-form-preview src: #{ff.object.link}
-                .video-form-buttons
-                  == link_to "OK", "#", class: "ok-btn btn"
-                  == link_to "Cancel", "#", class: "cancel-btn btn"
+              - else
+                == image_tag "fallback/blank.png"
+                iframe src="#{figure.link}"
+                .edit.btn
+                  'edit
+                .delete.btn
+                  == ff.link_to_remove "Delete"
+                .caution
+
+              == ff.file_field :content, class: "validate card-figure-content"
+              == ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
+
+          == f.link_to_add "Add an Image", :figures, class: "add-image btn"
+          == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
+
+          .remove-all-figures.btn
+            'Remove all figures
 
         section.description
           h1
@@ -71,128 +80,9 @@
 
   .buttons
     - if @project.new_record?
-      == f.submit value: "Create Project", class: "btn"
+      == f.submit value: "Create Project", class: "submit btn"
       == link_to "Cancel", :back, class: "cancel-btn btn"
     - else
-      == f.submit value: "Update Project", class: "btn"
+      == f.submit value: "Update Project", class: "submit btn"
       == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "btn"
       == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn", id: "delete-btn"
-
-- content_for :bottom do
-  coffee:
-    $(".fancybox").fancybox
-      openEffect: "none"
-      closeEffect: "none"
-      wrapCSS: ".fork-popup"
-      helpers:
-        overlay:
-          css:
-            "background":"rgba(0, 0, 0, 0.2)"
-
-    $ ->
-      w = window
-
-      disableVideoSubmitButtonForItems = ->
-        $(".caution").css "display", "block"
-        $("iframe.video-form-preview").attr "src", ""
-        $(".ok-btn").addClass "disabled"
-
-      YOUTUBE_URL_MIN_LENGTH   = 41
-      YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
-      # TODO: constantize '11'
-      YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:www\.)?youtube.com\/watch\?v=([^&]{11,})(&\S*)?$/
-      VIDEOID_MATCH_INDEX      = 1
-
-      getVideoForItems = ->
-        url = $(this).val()
-        if w.previous_url != url
-          videoForm = $(this).closest ".video-form"
-          w.previous_url = url
-          if url.length > YOUTUBE_URL_MIN_LENGTH
-            if matched = url.match YOUTUBE_WATCH_URL_REGEXP
-              w.videoIdForItem = matched[VIDEOID_MATCH_INDEX]
-              embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
-              $(videoForm).find("iframe.video-form-preview").attr "src", embed_url
-              $(videoForm).find(".caution").css "display", "none"
-              $(videoForm).find(".ok-btn").removeClass "disabled"
-            else
-              $(videoForm).find(".caution").text "Invalid YouTube URL"
-              disableVideoSubmitButtonForItems()
-          else
-            $(videoForm).find("#caution").text "URL is too short. URL length #{url.length}. Min length = 42."
-            disableVideoSubmitButtonForItems()
-
-      $(document).on "submit", ".project-form", ->
-        action = $("#project_owner_id").val()
-        $(".project-form").attr "action", action
-
-      $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
-
-      $(document).on "click", "#save-btn", ->
-        $('form#new_project').submit()
-
-      $(document).on "change", "select#project_group_id", ->
-        $("#new_project").attr "action", $(this).val()
-
-      $(document).on "click", "#photo-upload-btn", (event) ->
-        event.preventDefault()
-        if($("input[type='file']").length is 0)
-          $(".add_nested_fields:first").trigger "click"
-        $("input[type='file']:first").trigger "click"
-
-      $(document).on "change", "input[type='file']", (event) ->
-        file = event.target.files[0]
-        reader = new FileReader()
-        reader.onload = ->
-          tmp_img = new Image
-          tmp_img.src = reader.result
-          $("section.visual").css "height", "#{703.0 / tmp_img.naturalWidth * tmp_img.naturalHeight}px"
-          $("section.visual").css "background-image", "url('#{reader.result}')"
-          $("#project_figures_attributes_0__type").val "Figure::Photo"
-          $("section.visual iframe").attr "src", ""
-          $("#link-field").val ""
-          $("#photo-upload-btn").css "color", "black"
-          $("#input-video-url-btn").css "color", "black"
-        reader.readAsDataURL file
-
-      $(document).on "click", "#input-video-url-btn", ->
-        w.targetImageField = $(this).parents ".figure-form-wrapper"
-
-      $(document).on "keyup", "input.link-input", getVideoForItems
-      $(document).on "change", "input.link-input", getVideoForItems
-
-      $(document).on "click", ".video-form-buttons .ok-btn", (event) ->
-        event.preventDefault()
-        if $(this).hasClass "disabled"
-          return false
-        else
-          imageField = w.targetImageField
-          $(imageField).parents("section.visual").css "height", "528px"
-          if $(imageField).siblings("iframe").length < 1
-            $(imageField).parents("section.visual").prepend "<iframe/>"
-          $(imageField).siblings("iframe").css "width", "703px"
-          $(imageField).siblings("iframe").css "height", "528px"
-          embed_url = YOUTUBE_EMBED_URL_BASE + w.videoIdForItem
-          $(imageField).siblings("iframe").attr "src", embed_url
-          $("#project_figures_attributes_0__type").val "Figure::Video"
-          $(this).parents(".video-form").find("#link-field").val embed_url
-          w.videoIdForItem = ""
-          w.targetImageField = ""
-          $.fancybox.close()
-
-      $(document).on "click", ".video-form-buttons .cancel-btn", (event) ->
-        event.preventDefault()
-        $.fancybox.close()
-
-      $(document).on "click", ".image-field .remove-image-btn", (event) ->
-        event.preventDefault()
-        imageField = $(this).parents ".image-field"
-        noImageUrl = $(imageField).attr("data-no-image-url")
-        $(imageField).css "background-image", noImageUrl
-        $(imageField).find("iframe").attr "src", ""
-        $(imageField).find(".file-field").val ""
-        $(imageField).find(".video-form .video-id-field").val ""
-        $("#project_figures_attributes_0__type").val "Figure::Photo"
-
-      $("#delete-btn").click ->
-        confirm "Are you sure to remove this project?"

@@ -116,11 +116,13 @@ $ ->
     figures = figure_list.find ".figure"
     figures_length = figures.length
     last_figure = $(figures).last()
-    is_image_list = figures.first().find("iframe").length == 0 or figures.first().find("iframe").attr("src") == ""
-    if is_image_list or confirm "When you add an image, the youtube movie on this card will be removed. Are you sure?"
-      if !is_image_list
-        removeAllFigures figures, figures_length
-        last_figure.find(".card-figure-link").hide()
+    iframe = figures.first().find "iframe"
+    is_image_list = iframe.length == 0 or iframe.is ":hidden"
+    if is_image_list
+      last_figure.find(".card-figure-content").trigger "click"
+    else if confirm "When you add an image, the youtube movie on this card will be removed. Are you sure?"
+      removeAllFigures figures, figures_length
+      last_figure.find(".card-figure-link").hide()
       last_figure.find(".card-figure-content").trigger "click"
     else
       event.preventDefault()
@@ -207,8 +209,8 @@ $ ->
       $(".card-figure-link").last().val embed_url
       $(event.target).submit()
 
-  $(document).on "keyup", ".card-figure-link", getVideoForCard
-  $(document).on "change", ".card-figure-link", getVideoForCard
+  $(document).on "keyup", "#inner_content .card-figure-link", getVideoForCard
+  $(document).on "change", "#inner_content .card-figure-link", getVideoForCard
 
   wait4save = (form, card) ->
     card.addClass "wait4save"

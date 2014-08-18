@@ -20,6 +20,7 @@
 //= require_tree ./helpers
 //= require_tree ./jquery
 //= require ./recipe
+//= require ./project_form
 //= require ./card
 //= require ./card_markup
 //= require ./card_order

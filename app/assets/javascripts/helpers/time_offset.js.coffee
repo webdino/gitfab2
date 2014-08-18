@@ -1,6 +1,8 @@
 $ ->
   calculate_local_time = (date_object, time_offset_in_hours) ->
     date_text = date_object.text().split ", "
+    if date_text[1] == undefined
+      return
     date = date_text[0].split "-"
     time = date_text[1].split ":"
     new_date = new Date date[0] - 0, date[1] - 0, date[2] - 0, time[0] - 0, time[1] - 0, time[2] - 0
