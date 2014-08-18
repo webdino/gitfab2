@@ -3,34 +3,6 @@
 
 $project_form_width: 703px;
 
-#project-video-form, .video-form {
-  display: none;
-  width: 340px;
-  p {
-    font-size: 24px;
-    font-weight: 900;
-  }
-  input {
-    margin: 10px 0;
-    width: 320px;
-    font-size: 12px;
-  }
-  #caution, .caution {
-    display: none;
-    font-size: 14px;
-    color: red;
-  }
-  .btn {
-    margin: 20px 10px 0px 0px;
-  }
-  .ok-btn.disabled {
-    background-color: #ddd;
-    &:hover {
-      cursor: default;
-    }
-  }
-}
-
 #recipes-new, #recipes-edit {
   width: 960px;
   background: white;
@@ -109,71 +81,47 @@ form.project-form {
       }
     }
 
-    .visual {
-      position: relative;
-      width: $project_form_width;
-      height: auto;
-      min-height: 360px;
-      margin-bottom: 12px;
-      padding: 24px;
-      box-sizing: border-box;
-      font-size: 24px;
-      text-align: center;
-      background-size: cover;
-      background: no-repeat top center;
-      &[style*="''"] {
-        border: $common-border;
+    ul.figures {
+      li.figure {
+        width: 100%;
+         img {
+           max-width: 380px;
+         }
+         iframe {
+           max-width: 380px;
+         }
+         img + iframe {
+           display: none;
+         }
+         .caution {
+           display: inline-block;
+           width: 40%;
+           font-size: 14px;
+           color: red;
+         }
+         .btn {
+           margin-left: 5px;
+         }
+         .card-figure-link {
+           width: 80%;
+         }
       }
-      iframe {
-        width: 480px;
-        height: 360px;
-        position: absolute;
-        top: 0;
-        left: 0;
+      .btn {
+        margin-top: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
       }
-      .figure-form-wrapper {
-        height: 100%;
-        .fields {
+      .card-figure-content, .card-figure-link {
+        display: none;
+      }
+      &.hide-add-buttons {
+        a.add-image, .add-video {
           display: none;
-        }
-        .add_nested_fields {
-          display: none;
-        }
-        #photo-upload-btn,
-        #input-video-url-btn {
-          display: none;
-          position: absolute;
-          z-index: 999;
-          top: 38%;
-          left: 50%;
-          width: 12em;
-          margin-left: -6em;
-          margin-top: -1.5em;
-          padding: 20px;
-          font-size: 24px;
-          font-weight: 700;
-        }
-        #input-video-url-btn {
-          top: 62%;
-        }
-        #remove-image-btn {
-          display: none;
-          position: absolute;
-          z-index: 999;
-          top: 8%;
-          left: 92%;
-          width: 21px;
-          font-size: 24px;
         }
       }
     }
-    .visual:hover {
-      #photo-upload-btn,
-      #input-video-url-btn,
-      #remove-image-btn {
-        display: block;
-      }
-    }
+
+
   }
   #filesize-caution {
     display: none;

@@ -9,9 +9,23 @@ section#basic-informations
     == render "components/like", resources: [@owner, @project]
   section.body
     .margin
-    figure.visual style="background-image: url('#{@project.figures.first.try :content}')"
-      - if @project.figures.first.present? && @project.figures.first.link.present?
-        iframe src="#{@project.figures.first.link}"
+    - if @project.figures.present?
+      - if @project.figures.first.content.present?
+        figure.visual.flexslider
+          ul.slides
+            - @project.figures.each do |figure|
+              li
+                == image_tag figure.content
+      - elsif @project.figures.first.link.present?
+        figure.visual
+          iframe src="#{card.figures.first.link}"
+      - else
+        figure.visual
+          == image_tag("fallback/blank.png")
+    - else
+      figure
+        == image_tag("fallback/blank.png")
+
     section.tools
       == link_to "", "#", id: "slideshow-btn"
       == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
