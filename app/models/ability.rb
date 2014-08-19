@@ -69,6 +69,12 @@ class Ability
     can :create, Group do |group|
       user.persisted?
     end
+    can :create, Tag do |tag|
+      user.persisted?
+    end
+    can :destroy, Tag do |tag|
+      user.persisted?
+    end
   end
 
   private

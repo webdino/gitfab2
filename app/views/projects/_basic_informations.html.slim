@@ -53,12 +53,6 @@ section#basic-informations
               == "last updated"
             .date
               == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
-        section.tags
-          h2
-            == "tags"
-          - @project.tags.each do |tag|
-            - link_to tag, "#{search_path()}?q=#{tag}}"
-
       .right
         section.collaborators
           .owner
@@ -72,6 +66,20 @@ section#basic-informations
                   == link_to collaborator.name, projects_path(owner_name: collaborator.slug), class: "screen-name"
           - if can? :manage, @project
             == link_to "+ collaborator", project_collaborators_path(owner_name: @owner.slug, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
+  section.footer
+    .line 
+      label
+        == "tags:"
+      ul.tags
+        - @project.tags.each do |tag|
+          == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
+    - if signed_in?
+      == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
+        == f.hidden_field :user_id, value: current_user.slug
+        == f.text_field :name, class: "textfield"
+        == f.submit "Add", class: "btn"
+      == link_to "Edit", "#", class: "btn", id: "show-tag-form"
+
   #edit-menu
     - if can? :manage, @project
       == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug), class: "btn"
