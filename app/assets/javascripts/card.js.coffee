@@ -260,18 +260,20 @@ $ ->
       $(".order-change-btn").hide()
   setStateIndex()
 
-  setupFigureSlider = ->
-    $('.flexslider').flexslider({
+  setupFigureSlider = (selector) ->
+    $(selector).flexslider {
       animation: "slider",
       animationSpeed: 300,
       controlNav: true,
       smoothHeight: true,
       slideshow: false,
-    })
+    }
 
   updateCard = (card, data) ->
     formContainer.empty()
+    article_id = $(data.html).find(".flexslider").closest("article").attr "id"
+    selector = "#" + article_id + " .flexslider"
     card.replaceWith data.html
     setStateIndex()
     markup()
-    setupFigureSlider()
+    setupFigureSlider selector
