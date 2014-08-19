@@ -139,6 +139,7 @@
             }
             iframe {
               width: 100%;
+              height: $figure_width * 3 / 4;
             }
           }
           figure.flexslider {
@@ -234,6 +235,7 @@
                 }
                 iframe {
                   width: 100%;
+                  height: $figure_width * 3 / 4;
                 }
               }
               figure.flexslider {
