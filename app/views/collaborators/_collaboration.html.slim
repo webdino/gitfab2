@@ -3,6 +3,5 @@ li.collaboration
     == image_tag collaboration.user.avatar
   span.name
     == collaboration.user.name
-  '|
   - if can? :manage, collaboration
-    == link_to "remove", [collaboration.user, collaboration], method: :delete, remote: true, class: "remove-collaboration-btn"
+    == link_to "remove", [collaboration.user, collaboration], method: :delete, remote: true, class: "remove-collaboration-btn btn"

@@ -31,8 +31,9 @@
     .like {
       $star_size: 26px;
       float: left;
-      line-height: $star_size;
       vertical-align: top;
+      margin-top: 5px;
+      line-height: $star_size;
       .like-button {
         min-width: 100px;
         height: $star_size;
@@ -234,6 +235,7 @@
       }
       .collaborators {
         .owner, .collaborator {
+          margin-bottom: 5px;
           .thumbnail {
             display: inline-block;
             width: 30px;
@@ -246,8 +248,10 @@
           }
           .screen-name {
             display: inline-block;
-            vertical-align: middle;
-            height: 30px;
+            vertical-align: top;
+            margin-top: 10px;
+            margin-left: 5px;
+            height: 20px;
           }
         }
         #add-collaborator-btn {
