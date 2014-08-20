@@ -1,3 +1,2 @@
 h2.title
-  / TODO: should link_to card#show
-  == card.title
+  == link_to card.title, project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)

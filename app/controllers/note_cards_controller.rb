@@ -1,8 +1,10 @@
 class NoteCardsController < ApplicationController
+  layout "project"
+
   before_action :load_owner
   before_action :load_project
   before_action :load_note
-  before_action :load_note_card, only: [:edit, :update, :destroy]
+  before_action :load_note_card, only: [:show, :edit, :update, :destroy]
   before_action :build_note_card, only: [:new, :create]
   before_action :update_contribution, only: [:create, :update]
   after_action :update_project, only: [:create, :update, :destroy]
@@ -19,6 +21,9 @@ class NoteCardsController < ApplicationController
     else
       render "errors/failed", status: 400
     end
+  end
+
+  def show
   end
 
   def update

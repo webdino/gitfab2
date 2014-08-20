@@ -277,3 +277,5 @@ $ ->
     setStateIndex()
     markup()
     setupFigureSlider selector
+    if card.length is 0
+      location.reload()

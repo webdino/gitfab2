@@ -1,0 +1,70 @@
+- content_for :title do
+  - @project.owner.name + "/" + @project.title +  " : Note/" + @note_card.title
+
+main#note-cards-show
+  == render "projects/basic_informations"
+
+  #tabs
+    == link_to project_path(@project, owner_name: @owner.slug) do
+      .tab
+        'Recipe
+    == link_to project_note_path(@project, owner_name: @owner.slug) do
+      .tab.active
+        'Note
+
+  section#note-card
+    #top
+      .inner
+        h1
+          'Note
+        - if can? :edit, @project
+          == link_to "+ add Note", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+
+    - card = @note_card
+
+    .note-card-wrapper
+      article class="card note_card" id="#{card.id}"
+        .first-column
+        .article-column
+          .card-content
+            h2.title
+              == card.title
+            .meta
+              .postedby
+                - author = nil
+                - if card.contributions.length > 0
+                  -  author = User.find(card.contributions[0].contributor_id)
+                - else
+                  -  author = @project.owner
+                - link = link_to image_tag(author.avatar) + author.name, projects_path(owner_name: author.slug)
+                - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
+                == "posted by #{link} on #{datetime}"
+
+              .control
+                span.starred
+                  == render "components/like", resources: [@owner, @project, :note, card]
+                - if can? :manage, card
+                  span.edit
+                    == link_to "delete", project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+                    == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, class: "btn edit-card", "data-container" => ".card"
+
+        .first-column
+          .horizontal-border.black.f-left
+        .article-column
+          .card-content
+            == render "components/card_figures", card: card
+            == render "components/card_description", card: card
+            == render "components/card_attachments", card: card
+          - unless defined?(is_template)
+            == render "components/card_comments", resources: [@owner, @project, :note, card]
+
+    footer
+      .inner
+        / TODO: implement pager
+
+  == render "notes/templates"
+
+- content_for :bottom do
+  coffee:
+    $ ->
+      $("#facebook-wrapper").css "display", "none"
