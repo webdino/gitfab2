@@ -11,8 +11,8 @@ class GlobalProjectsController < ApplicationController
     else
       @projects = Project.all().in(is_private: [false, nil]).order("updated_at DESC")
       @featured_projects = []
-      config = YAML.load_file("#{Rails.root}/config/featured-projects.yml")
-      if config 
+      config = YAML.load_file("#{Rails.root}/config/sample-projects.yml")
+      if config
         config.each do |id|
           @featured_projects << Project.find(id)
         end
