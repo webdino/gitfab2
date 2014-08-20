@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
   def create
     return fork if params[:original_project_id]
     slug = project_params[:title]
-    slug = slug.gsub(/\W|\s/,"x")
+    slug = slug.gsub(/\W|\s/,"x").downcase
     @project.name = slug
     if @project.save
       render :edit
@@ -66,7 +66,9 @@ class ProjectsController < ApplicationController
 
   def update 
     @project.updated_at = DateTime.now
-    if @project.update project_params
+    parameters = project_params
+    parameters[:name] = parameters[:name].downcase
+    if @project.update parameters
       respond_to do |format|
         format.json {render :update}
         format.html {redirect_to project_path(@project, owner_name: @owner.slug)}

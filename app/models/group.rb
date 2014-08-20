@@ -13,8 +13,6 @@ class Group
   field :avatar
   slug :name
 
-  #has_many :recipes, as: :owner, dependent: :destroy
-
   validates :name, presence: true, uniqueness: true,
     unique_owner_name: true, name_format: true
 
