@@ -18,7 +18,7 @@ section#basic-informations
                 == image_tag figure.content
       - elsif @project.figures.first.link.present?
         figure.visual
-          iframe src="#{card.figures.first.link}"
+          iframe src="#{@project.figures.first.link}"
       - else
         figure.visual
           == image_tag("fallback/blank.png")
@@ -67,7 +67,7 @@ section#basic-informations
           - if can? :manage, @project
             == link_to "+ collaborator", project_collaborators_path(owner_name: @owner.slug, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
   section.footer
-    .line 
+    .line
       label
         == "tags:"
       ul.tags
