@@ -2,11 +2,8 @@
 @import "mixins/variables.css.scss";
 @import "projects/_project_variables.css.scss";
 
-#note-cards {
+#note-cards-show {
   width: $content_width;
-  a:not(.btn) {
-    color: $common-basic-color;
-  }
   aside.like {
     display: inline;
   }
@@ -42,52 +39,39 @@
     }
     .article-column {
       display: block;
-      padding-bottom: 50px;
+      padding-bottom: 40px;
       background: white;
       .card-content {
+        $note_card_width: 850px;
         @include cf;
-        figure {
-          float: left;
-          margin-left: 10px;
-          width: 368px;
-          height: auto;
-          border: 0;
-          border-radius: 0;
-          box-shadow: none;
-          li:first-child > img{
-            max-width: 100%;
-          }
-        }
-        figure>img {
-          width: 100%;
-        }
-        figure>iframe {
-          width: 100%;
-          height: 276px;
-        }
         .title {
-          float: left;
-          margin: 0 10px 0px 20px;
-          width: 460px;
+          margin: 0 10px;
+          width: $note_card_width;
           font-size: 22px;
           line-height: $common-line-height;
         }
         .meta {
-          float: left;
-          margin: 0 10px 0px 20px;
-          width: 460px;
+          margin: 0 10px;
+          width: $note_card_width;
           font-family: $common-verdana;
           font-size: 14px;
           line-height: $common-line-height;
           .postedby {
+            display: inline-block;
+            width: 60%;
             font-weight: 700;
             img {
-              width: 12px;
-              height: 12px;
+              margin-right: 5px;
+              margin-bottom: -3px;
+              width: 16px;
+              height: 16px;
             }
           }
           .control {
+            display: inline-block;
             margin-top: 5px;
+            width: 40%;
+            text-align: right;
             .starred {
               height: 26px;
               padding-right: 10px;
@@ -109,12 +93,67 @@
             }
           }
         }
+
+        figure {
+          margin-left: 10px;
+          width: $note_card_width;
+          height: auto;
+          overflow: hidden;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          img {
+            width: 100%;
+          }
+          iframe {
+            width: 100%;
+            height: $note_card_width * 3 / 4;
+          }
+        }
+        figure.flexslider {
+          margin-left: 10px;
+          width: $note_card_width;
+          height: auto;
+          overflow: hidden;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          img {
+            width: 100%;
+          }
+          li:first-child > img{
+            max-width: 100%;
+          }
+          ol.flex-control-paging {
+            top: 10px;
+            li>a {
+              background: $common-basic-color;
+              opacity: 0.5;
+              &:hover {
+                background: $common-basic-color;
+                opacity: 0.7;
+              }
+              &.flex-active {
+                background: $common-basic-color;
+                opacity: 0.9;
+              }
+            }
+          }
+          .flex-direction-nav a:before {
+            color: $common-basic-color;
+          }
+          .flex-prev, .flex-next {
+            top: 20px;
+            height: 100%;
+            font-size: 0;
+          }
+        }
+
         .description {
-          float: left;
-          margin: 10px 10px 0 20px;
-          width: 460px;
-          font-size: 14px;
-          line-height: 24px;
+          margin: 10px;
+          width: $note_card_width;
+          font-size: 16px;
+          line-height: 32px;
         }
       }
     }

@@ -15,6 +15,7 @@ article class="card note_card" id="#{card.id}"
           - link = link_to image_tag(author.avatar) + author.name, projects_path(owner_name: author.slug)
           - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
           == "posted by #{link} on #{datetime}"
+
         .control
           span.starred
             == render "components/like", resources: [@owner, @project, :note, card]
@@ -22,7 +23,6 @@ article class="card note_card" id="#{card.id}"
             span.edit
               == link_to "delete", project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
               == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, class: "btn edit-card", "data-container" => ".card"
-      == render "components/card_description", card: card
+      .description
+        == truncate Sanitize.clean(card.description, Sanitize::Config::RESTRICTED), length: 220, omission: "…"
       == render "components/card_attachments", card: card
-    - unless defined?(is_template)
-      == render "components/card_comments", resources: [@owner, @project, :note, card]
