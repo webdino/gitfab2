@@ -13,8 +13,7 @@ class Group
   field :avatar
   slug :name
 
-  validates :name, presence: true, uniqueness: true,
-    unique_owner_name: true, name_format: true
+  validates :name, presence: true, uniqueness: true, unique_owner_name: true, name_format: true
 
   def members
     User.where "memberships.group_id" => id
