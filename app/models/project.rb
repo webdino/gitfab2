@@ -46,6 +46,8 @@ class Project
     string :owner_id
     boolean :is_private
 
+    text :tags
+
     text :recipe do
       self.recipe.recipe_cards.map do |card|
         Card.searchable_fields.map do |col|

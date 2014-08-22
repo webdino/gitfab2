@@ -40,14 +40,4 @@
             .summary
               == "#{project.description}"
           .horizontal-border.basic-color.m-b-5
-          .tags
-            - if project.tags.any?
-              span
-                'tags=
-              - projects.tags.each do |tag|
-                span.tag
-                  / TODO: #485 create link to projects tagged by tag.name
-                  == link_to tag.name, "#"
-            - else
-              span
-                'no tags
+          == render "projects/tags", project: project
