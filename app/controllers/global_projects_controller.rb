@@ -14,7 +14,10 @@ class GlobalProjectsController < ApplicationController
       config = YAML.load_file("#{Rails.root}/config/sample-projects.yml")
       if config
         config.each do |id|
-          @featured_projects << Project.find(id)
+          project = Project.find(id)
+          if project
+            @featured_projects << project
+          end
         end
       end
       @is_searching = false

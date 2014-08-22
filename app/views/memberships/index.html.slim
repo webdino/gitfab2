@@ -13,5 +13,8 @@
 
 - content_for :bottom do
   coffee:
-    $(document).on "click", ".leave-btn", (event) ->
-      $(this).closest("li").hide()
+    $(document).on "ajax:success", ".leave-btn", (xhr, data) ->
+      if data.success == false
+        alert data.message
+      else
+        $(this).closest("li").hide()
