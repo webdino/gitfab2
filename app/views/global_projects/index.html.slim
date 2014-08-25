@@ -4,6 +4,13 @@
 
 #index
   - unless user_signed_in?
+    - if session["auth.faild.error"].present?
+      #error_explanation
+        h2
+          'Login error:
+          == session["auth.faild.error"]
+          - session.delete("auth.faild.error")
+
     #splash-wrapper
       .container
         .text

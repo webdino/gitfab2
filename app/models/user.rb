@@ -37,15 +37,6 @@ class User
   embeds_many :memberships
   embeds_many :collaborations
 
-  #has_many :recipes, as: :owner, dependent: :destroy
-  #has_many :contributing_recipes, class_name: Recipe.name, inverse_of: :contributors, inverse_class_name: User.name
-  #scope :groups, ->{Group.find memberships.pluck(:group_id)}
-  #has_many :groups, through: :memberships
-  #has_many :collaborating_recipes, through: :collaborations, source: :recipe
-  #has_many :collaborations, foreign_key: :user_id, dependent: :destroy
-  #has_many :posts
-  #has_many :ways, as: :creator
-
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
   validates :email, presence: true, uniqueness: true
