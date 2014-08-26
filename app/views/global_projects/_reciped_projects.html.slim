@@ -18,11 +18,3 @@
           .horizontal-border.basic-color.f-right.m-b-5
           p
             'more projects
-
-- content_for :bottom do
-  coffee:
-    $ ->
-      $("ul#reciped-projects").packery({
-        itemSelector: ".project",
-        gutter: 20
-      })
