@@ -15,5 +15,6 @@
       == image_tag("fallback/blank.png")
 
 - else
-  figure
-    == image_tag("fallback/blank.png")
+  - unless defined? note_card_show
+    figure class = "#{card.class.to_s.underscore}"
+      == image_tag("fallback/blank.png")

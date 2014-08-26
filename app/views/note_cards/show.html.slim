@@ -52,7 +52,7 @@ main#note-cards-show
           .horizontal-border.black.f-left
         .article-column
           .card-content
-            == render "components/card_figures", card: card
+            == render "components/card_figures", card: card, note_card_show: true
             == render "components/card_description", card: card
             == render "components/card_attachments", card: card
           - unless defined?(is_template)
