@@ -147,6 +147,12 @@
             height: 100%;
             font-size: 0;
           }
+          .flex-prev:before {
+            content: '<';
+          }
+          .flex-next:before {
+            content: '>';
+          }
         }
 
         .description {
