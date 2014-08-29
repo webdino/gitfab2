@@ -54,7 +54,7 @@ section#basic-informations
             .date
               == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
         section.license
-          - index = @project.license.nil? ? 5 : @project.license
+          - index = @project.license.nil? ? 3 : @project.license
           - license = @project.licenses[index]
           - image = "cc/" + license + ".png"
           - url = "http://creativecommons.org/licenses/" + license + "/4.0"

@@ -63,7 +63,7 @@
           h1
             'License
           == f.hidden_field :license
-          - licenseindex = f.object.license.nil? ? 5 : f.object.license
+          - licenseindex = f.object.license.nil? ? 3 : f.object.license
           - @project.licenses.each_with_index do |license, index|
             - clazz = index == licenseindex ? "selected" : ""
             - image = "cc/" + license + ".png"
