@@ -96,7 +96,7 @@ class Project
   end
 
   def licenses
-    ["by", "by-sa", "by-nd", "by-nc", "by-nc-sa", "by-nc-nd"]
+    ["by", "by-sa", "by-nc", "by-nc-sa"]
   end
 
   class << self
