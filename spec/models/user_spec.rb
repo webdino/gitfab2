@@ -46,8 +46,8 @@ describe User do
 
   describe "#liked_projects" do
     before do
-      user.projects.create! title: "title2"
-      user.projects.create! title: "title3"
+      user.projects.create! title: "title2", name: "title2"
+      user.projects.create! title: "title3", name: "title3"
       project.likes.create liker: user.id
     end
     subject{user.liked_projects}

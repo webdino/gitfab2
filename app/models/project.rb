@@ -16,6 +16,8 @@ class Project
   searchable_field :owner_id
   slug :name, scope: :owner_id
 
+  field :license, type: :integer
+
   has_many :derivatives, class_name: Project.name, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
   belongs_to :owner, polymorphic: true
@@ -23,7 +25,7 @@ class Project
   embeds_one :recipe, autobuild: true, cascade_callbacks: true
   embeds_one :note, autobuild: true, cascade_callbacks: true
 
-  after_initialize ->{self.name = SecureRandom.uuid}, if: ->{new_record? && name.blank?}
+  after_initialize ->{self.name = SecureRandom.uuid, self.license = 0}, if: ->{new_record? && name.blank?}
   after_create :ensure_a_figure_exists
   after_create :create_recipe_and_note
 
@@ -93,9 +95,13 @@ class Project
     User.where("collaborations.project_id" => id)
   end
 
+  def licenses
+    ["by", "by-sa", "by-nd", "by-nc", "by-nc-sa", "by-nc-nd"]
+  end
+
   class << self
     def updatable_columns
-      [:name, :title, :description, :owner_id, :owner_type, :is_private,
+      [:name, :title, :description, :owner_id, :owner_type, :is_private, :license, 
        usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns,
        likes_attributes: Like.updatable_columns,
