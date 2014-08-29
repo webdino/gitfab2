@@ -52,3 +52,11 @@ $ ->
 
   $(document).on "keyup", "main#recipes-edit .card-figure-link", getVideoForProject
   $(document).on "change", "main#recipes-edit .card-figure-link", getVideoForProject
+
+  $(document).on "click", ".license img", (event) ->
+    $(".license img").removeClass "selected"  
+    target = $ this
+    target.addClass "selected"
+    value = target.attr("id").substring "license-".length
+    $("#project_license").val value
+
