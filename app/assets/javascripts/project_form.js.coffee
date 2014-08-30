@@ -3,8 +3,6 @@ $ ->
     action = $("#project_owner_id").val()
     $(".project-form").attr "action", action
 
-  $(document).on "keypress", "input:not(.allow_submit)", (event) -> event.which != 13
-
   $(document).on "change", "select#project_group_id", ->
     $("#new_project").attr "action", $(this).val()
 
@@ -54,9 +52,8 @@ $ ->
   $(document).on "change", "main#recipes-edit .card-figure-link", getVideoForProject
 
   $(document).on "click", ".license img", (event) ->
-    $(".license img").removeClass "selected"  
+    $(".license img").removeClass "selected"
     target = $ this
     target.addClass "selected"
     value = target.attr("id").substring "license-".length
     $("#project_license").val value
-

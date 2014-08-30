@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
   def edit
   end
 
-  def update 
+  def update
     @project.updated_at = DateTime.now
     parameters = project_params
     parameters[:name] = parameters[:name].downcase

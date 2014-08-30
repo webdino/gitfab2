@@ -9,6 +9,7 @@
       ul#searched-projects
         - @projects.each do |project|
           == render "project", project: project
+      == paginate @projects
 
 - content_for :bottom do
   coffee:
