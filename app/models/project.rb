@@ -48,7 +48,9 @@ class Project
     string :owner_id
     boolean :is_private
 
-    text :tags
+    text :tags do
+      tags.map { |tag| tag.name }.flatten
+    end
 
     text :recipe do
       self.recipe.recipe_cards.map do |card|
