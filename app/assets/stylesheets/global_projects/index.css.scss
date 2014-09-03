@@ -141,6 +141,12 @@
         float: left;
         margin-left: $common-margin * 2;
         width: 780px;
+        .pagination {
+          padding: 20px 0;
+          a {
+            color: $common-basic-color;
+          }
+        }
         #searched-projects, #featured-projects, #reciped-projects {
           .project {
             width: 220px;
@@ -267,6 +273,7 @@
             }
           }
         }
+
         .more {
           @include cf;
           float: right;
@@ -274,9 +281,17 @@
           bottom: 75px;
           width: 80px;
           text-align: right;
-          p {
+          img {
+            width: 60px;
+            height: 60px;
+          }
+          a {
             font-family: $common-helvetica;
             font-size: 12px;
+            &:first-child {
+              display: block;
+              height: 60px;
+            }
           }
         }
       }

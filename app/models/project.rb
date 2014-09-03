@@ -103,7 +103,7 @@ class Project
 
   class << self
     def updatable_columns
-      [:name, :title, :description, :owner_id, :owner_type, :is_private, :license, 
+      [:name, :title, :description, :owner_id, :owner_type, :is_private, :license,
        usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns,
        likes_attributes: Like.updatable_columns,

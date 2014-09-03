@@ -8,13 +8,10 @@
       /TODO: #470 add some links wrote on pdf
     .right
       ul#reciped-projects
-        / TODO: #450 Select representative project for reciped_projects
         - @projects.each do |project|
           == render "project", project: project
       - if @projects.present?
         .more
-          / FIXME: #471 Create a link to project with recipe
-          == link_to image_tag("index-arrow-gray.png"), "#"
+          == link_to image_tag("index-arrow-gray.png"), "/search?q="
           .horizontal-border.basic-color.f-right.m-b-5
-          p
-            'more projects
+          == link_to "more projects", "/search?q="
