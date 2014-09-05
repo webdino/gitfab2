@@ -17,10 +17,10 @@
       == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
 
   #basic-information
-    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1
+    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1, maxlength: "30"
     #project-summary
       - if page == "edit"
-      
+
         ul.figures
           == f.fields_for :figures do |ff|
             - figure = ff.object
@@ -57,7 +57,7 @@
         section.description
           h1
             'Summary
-          == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea"
+          == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea", maxlength: "140"
 
         section.license
           h1

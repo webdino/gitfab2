@@ -1,4 +1,6 @@
 $ ->
+  $(".project-form").validate()
+
   $(document).on "submit", ".project-form", ->
     action = $("#project_owner_id").val()
     $(".project-form").attr "action", action

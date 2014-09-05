@@ -1,7 +1,7 @@
-== nested_form_for resources, html: {class: "card-form", "data-type" => "json", data: {"parsley-validate" => ""}}, remote: true do |f|
+== nested_form_for resources, html: {class: "card-form", "data-type" => "json"}, remote: true do |f|
   #inner_content class="#{f.object.id}"
     == f.hidden_field :_type
-    == f.text_field :title, class: "validate card-title", data: {"parsely-trigger" => "keyup", "parsely-range" => "[1, 30]"}, placeholder: "Title"
+    == f.text_field :title, class: "validate card-title", placeholder: "Title", maxlength: "30"
 
     ul.figures
       == f.fields_for :figures do |ff|
@@ -34,8 +34,8 @@
       == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
       .remove-all-figures.btn
         'Remove all figures
+    == f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength:"140"
 
-    == f.text_area :description, id: "markup-area", class: "markup-area card-description"
     #attachments
       == f.fields_for :attachments do |af|
         == af.text_field :title, class: :title

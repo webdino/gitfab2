@@ -1,14 +1,5 @@
 #= require fancybox
 
-validateForm = (event) ->
-  validated = false
-  $(".card-form:first-child .validate").each (index, element) ->
-    if $(element).val() != "" || $(element).text() != ""
-      validated = true
-  unless validated
-    alert "You cannot make empty card."
-    event.preventDefault()
-
 editor = null
 
 setupEditor = ->
@@ -17,6 +8,22 @@ setupEditor = ->
   }
   editor.panelInstance "markup-area"
   $(".nicEdit-main").addClass "validate"
+
+validateForm = (event) ->
+  for instance in editor.nicInstances
+    html_text =  instance.getContent()
+    plain_text = html_text.replace /<("[^"]*"|'[^']*'|[^'">])*>/g,''
+    if plain_text.length > 140
+      alert "Description text should be less than 140."
+      event.preventDefault()
+
+  validated = false
+  $(".card-form:first-child .validate").each (index, element) ->
+    if $(element).val() != "" || $(element).text() != ""
+      validated = true
+  unless validated
+    alert "You cannot make empty card."
+    event.preventDefault()
 
 $ ->
   $.rails.ajax = (option) ->
@@ -62,7 +69,6 @@ $ ->
     card = null
     formContainer.html data.html
     setupEditor()
-    $("form:first-child").parsley()
     formContainer.find "form"
     .bind "submit", (e) ->
       card = template.clone()
@@ -82,7 +88,6 @@ $ ->
     card = $(li).children().first()
     formContainer.html data.html
     setupEditor()
-    $("form:first-child").parsley()
     formContainer.find "form"
     .bind "submit", (e) ->
       wait4save $(this), card
