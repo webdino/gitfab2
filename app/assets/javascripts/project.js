@@ -15,6 +15,8 @@
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require jquery.flexslider-min
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 //= require_tree ../../../vendor/assets/javascripts/jquery
 //= require_tree ../../../vendor/assets/javascripts/nicedit
 //= require_tree ./helpers
@@ -30,5 +32,3 @@
 //= require ./comment
 //= require ./tag
 //= require select2
-//= require parsley
-//= require parsley.remote

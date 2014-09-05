@@ -40,10 +40,10 @@ gem "paranoia", github: "radar/paranoia", branch: "rails4"
 gem "nokogiri"
 gem "omniauth-github"
 gem "select2-rails"
-gem "parsley-rails"
 gem "autoprefixer-rails"
 gem "fancybox2-rails"
 gem 'flexslider'
+gem 'jquery-validation-rails'
 
 gem "mongoid"
 gem "mongoid_slug"

@@ -14,4 +14,6 @@
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require jquery.remotipart
+//= require jquery.validate
+//= require jquery.validate.additional-methods
 //= require_tree .
