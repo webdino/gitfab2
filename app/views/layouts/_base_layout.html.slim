@@ -10,6 +10,7 @@ html
     == render "components/analytics"
     == render "layouts/header"
     == content_for?(:content) ? yield(:content) : yield
+    == render "layouts/footer"
     == content_for?(:bottom) ? yield(:bottom) : nil
     - if Rails.env.development?
       hr
