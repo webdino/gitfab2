@@ -67,7 +67,9 @@ class ProjectsController < ApplicationController
   def update
     @project.updated_at = DateTime.now
     parameters = project_params
-    parameters[:name] = parameters[:name].downcase
+    if parameters.present? and parameters[:name].present?
+      parameters[:name] = parameters[:name].downcase
+    end
     if @project.update parameters
       respond_to do |format|
         format.json {render :update}
