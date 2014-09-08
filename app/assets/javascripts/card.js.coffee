@@ -9,13 +9,14 @@ setupEditor = ->
   editor.panelInstance "markup-area"
   $(".nicEdit-main").addClass "validate"
 
-validateForm = (event) ->
-  for instance in editor.nicInstances
-    html_text =  instance.getContent()
-    plain_text = html_text.replace /<("[^"]*"|'[^']*'|[^'">])*>/g,''
-    if plain_text.length > 140
-      alert "Description text should be less than 140."
-      event.preventDefault()
+validateForm = (event, is_note_card_form) ->
+  unless is_note_card_form
+    for instance in editor.nicInstances
+      html_text =  instance.getContent()
+      plain_text = html_text.replace /<("[^"]*"|'[^']*'|[^'">])*>/g,''
+      if plain_text.length > 140
+        alert "Description text should be less than 140."
+        event.preventDefault()
 
   validated = false
   $(".card-form:first-child .validate").each (index, element) ->
@@ -48,7 +49,8 @@ $ ->
     event.preventDefault()
 
   $(document).on "click", ".card-form .submit", (event) ->
-    validateForm event
+    is_note_card_form = $(this).closest("form").attr("id").match new RegExp("note_card", "g")
+    validateForm event, is_note_card_form
 
   $(document).on "submit", ".card-form", ->
     submitButton = $(this).find ".submit"
