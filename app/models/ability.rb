@@ -1,7 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  def initialize user
+  def initialize user, params
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Membership do |membership|
@@ -27,6 +27,13 @@ class Ability
     end
     can :manage, Project do |project|
       is_project_manager?(project, user)
+    end
+    can :update, Project do |project|
+      if params[:project].present? and params[:project][:likes_attributes]
+        true
+      else
+        is_project_manager?(project, user)
+      end
     end
     can :edit, Project do |project|
       is_project_editor?(project, user)
