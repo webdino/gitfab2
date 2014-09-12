@@ -82,6 +82,7 @@ class Project
       project.save!
       project.recipe = recipe.dup_document
       project.figures = figures.map{|a| a.dup_document}
+      project.likes = []
       project.usages = []
       project.note.note_cards = []
       begin
