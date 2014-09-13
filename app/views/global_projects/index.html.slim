@@ -15,10 +15,10 @@
       .container
         .text
           h1
-            'Making stories of Making something
+            'Teaching with your ideas
           .horizontal-border
           p
-            'New Platform to Share Fab Projects all over the world
+            'New Platform to Share teaching ideas all over the world
 
         .scaffold
           .sign-up
@@ -27,15 +27,15 @@
             == link_to user_omniauth_authorize_path(:github) do
               .inner
                 h2
-                  'Sign up for GitFAB
+                  'Sign up for Class-recipe
                 p
-                  'gitFAB Sign up with GitHub account
+                  'Class-reipe Sign up with GitHub account
           .search-project
             .arrow
               == image_tag "index-arrow.png"
             .inner
               h2
-                'Search Project
+                'Search Recipe
               #search-box
                 == form_tag :search, method: :get do |f|
                   == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
