@@ -7,11 +7,7 @@
         .image-container
           == link_to project_note_path(@owner, project) do
             - if project.figures.any?
-              - if project.figures.first.link.present?
-                / TODO: #466 create embed_url function in figure.rb
-                / iframe src="#{recipe.youtube_embed_url}"
-              - else
-                == link_to image_tag(project.figures.first.content), project_note_path(project.owner, project), class: "image"
+              == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
             - else
               == link_to image_tag("fallback/blank.png"), project_note_path(project.owner, project), class: "image"
           .horizontal-border.basic-color.m-b-5

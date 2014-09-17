@@ -1,12 +1,9 @@
 li.project
   .inner
     - if project.figures.present?
-      - if project.figures.first.content.present?
+      - if project.figures.first.content.present? or project.figures.first.link.present?
         figure.visual
-          == image_tag project.figures.first.content
-      - elsif project.figures.first.link.present?
-        figure.visual
-          iframe src="#{project.figures.first.link}"
+          == link_to image_tag(project.thumbnail), project_path(project.owner, project)
       - else
         .spacer
     - else
