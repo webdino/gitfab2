@@ -94,6 +94,14 @@ class Project
     end
   end
 
+  def thumbnail
+    if figures.first.link.present?
+      "http://img.youtube.com/vi/" + figures.first.link.split("/").last + "/mqdefault.jpg"
+    elsif figures.first.content.present?
+      figures.first.content
+    end
+  end
+
   def collaborators
     User.where("collaborations.project_id" => id)
   end

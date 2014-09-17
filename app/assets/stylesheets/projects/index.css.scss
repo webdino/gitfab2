@@ -5,6 +5,7 @@
 #projects-index {
   $quiet_font_color: $common-dark-gray;
   @include cf;
+  margin-bottom: 60px;
   .left {
     @include cf;
     float: left;
@@ -144,7 +145,7 @@
               .private-project {
                 display: inline-block;
                 padding: 5px;
-                margin: 5px 0 -5px -2px; 
+                margin: 5px 0 -5px -2px;
                 border-radius: 5px;
                 background-color: red;
                 color: white;
