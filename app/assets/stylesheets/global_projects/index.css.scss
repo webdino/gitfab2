@@ -153,7 +153,7 @@
             background: $common-light-gray;
             .inner {
               $figure_width: 210px;
-              margin: 5px 5px 20px;
+              padding: 5px 5px 20px;
               figure {
                 max-width: $figure_width;
                 width: $figure_width;
@@ -167,47 +167,6 @@
                 iframe {
                   width: 100%;
                   height: $figure_width * 3 / 4;
-                }
-              }
-              figure.flexslider {
-                max-width: $figure_width;
-                width: $figure_width;
-                overflow: hidden;
-                border: none;
-                border-radius: 0;
-                box-shadow: none;
-                img {
-                  width: 100%;
-                }
-                ol.flex-control-paging {
-                  top: 10px;
-                  li>a {
-                    background: $common-basic-color;
-                    opacity: 0.5;
-                    &:hover {
-                      background: $common-basic-color;
-                      opacity: 0.7;
-                    }
-                    &.flex-active {
-                      background: $common-basic-color;
-                      opacity: 0.9;
-                    }
-                  }
-                }
-
-                .flex-direction-nav a:before {
-                  color: $common-basic-color;
-                }
-                .flex-prev, .flex-next {
-                  top: 20px;
-                  height: 100%;
-                  font-size: 0;
-                }
-                .flex-prev:before {
-                  content: '<';
-                }
-                .flex-next:before {
-                  content: '>';
                 }
               }
               .spacer {
