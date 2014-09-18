@@ -70,6 +70,8 @@ Gitfab2::Application.configure do
     user.js      user.css
     global_projects.css
     packery.pkgd.min.js
+    static_pages.js
+    static_pages.css
   )
 
   # Ignore bad email addresses and do not raise email delivery errors.
