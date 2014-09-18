@@ -67,6 +67,7 @@ Gitfab2::Application.configure do
     posts.js     posts.css
     project.css  project.js
     user.js      user.css
+    static_pages.js static_pages.css
   )
 
   # Ignore bad email addresses and do not raise email delivery errors.
