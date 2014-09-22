@@ -1,10 +1,14 @@
 - if card.figures.present?
   - if card.figures.first.content.present?
-    figure.flexslider
-      ul.slides
-        - card.figures.each do |figure|
-          li
-            == image_tag figure.content
+    - if card.figures.length > 1
+      figure.flexslider
+        ul.slides
+          - card.figures.each do |figure|
+            li
+              == image_tag figure.content
+    - else
+      figure
+        == image_tag card.figures.first.content
 
   - elsif card.figures.first.link.present?
     figure
