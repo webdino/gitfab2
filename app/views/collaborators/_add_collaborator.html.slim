@@ -12,6 +12,7 @@
 
   coffee:
     $ ->
+      search_term = null
       $("#user_name").select2 {
         width: "40%",
         placeholder: "Choose a collaborator",
@@ -20,6 +21,8 @@
           url: "/users.json",
           dataType: "json",
           cache: false,
+          data: (term, page) ->
+            search_term = term
           results: (data, page) ->
             usersList = []
             ownerName = $("#owner > span:nth-child(2)").text()
@@ -30,11 +33,11 @@
               results: $.map(data, (user, i) ->
                 userName = user.name
                 userSlug = user.slug
-                if $.inArray(userName, usersList) == -1
+                if $.inArray(userName, usersList) == -1 and userName.indexOf(search_term) != -1
                   return {id: userSlug, text: userName}
               )
             }
-          }
+        }
       }
 
     window.clearSelect2Value = () ->
