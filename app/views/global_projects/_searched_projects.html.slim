@@ -6,15 +6,7 @@
         'Searched Projects
       .horizontal-border.basic-color.f-right.m-b-10
     .right
-      ul#searched-projects
+      ul#searched-projects.projects
         - @projects.each do |project|
           == render "project", project: project
       == paginate @projects
-
-- content_for :bottom do
-  coffee:
-    $ ->
-      $("ul#searched-projects").packery({
-        itemSelector: ".project",
-        gutter: 20
-      })

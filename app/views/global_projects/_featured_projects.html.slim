@@ -6,6 +6,6 @@
         'Featured Projects
       .horizontal-border.white.f-right.m-b-10
     .right
-      ul#featured-projects
+      ul#featured-projects.projects
         - @featured_projects.each do |project|
-          == render "project", project: project      
+          == render "project", project: project

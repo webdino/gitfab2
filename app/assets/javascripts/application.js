@@ -16,4 +16,5 @@
 //= require jquery.remotipart
 //= require jquery.validate
 //= require jquery.validate.additional-methods
+//= require ../../../vendor/assets/javascripts/packery.pkgd.min
 //= require_tree .
