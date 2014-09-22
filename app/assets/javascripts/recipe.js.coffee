@@ -28,6 +28,7 @@ $ ->
     makeAttachmentsList $("a.tool"), $("#tool-list")
     makeAttachmentsList $("a.blueprint"), $("#blueprint-list")
 
+$(window).on "load" , ->
   $('.flexslider').flexslider({
     animation: "slider",
     animationSpeed: 300,
