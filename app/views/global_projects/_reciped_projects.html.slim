@@ -7,7 +7,7 @@
       .horizontal-border.basic-color.f-right.m-b-10
       /TODO: #470 add some links wrote on pdf
     .right
-      ul#reciped-projects
+      ul#reciped-projects.projects
         - @projects.each do |project|
           == render "project", project: project
       - if @projects.present?

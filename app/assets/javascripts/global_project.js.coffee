@@ -1,7 +1,4 @@
-$ ->
-  $("#featured-projects").packery
-    itemSelector: ".project",
-    gutter: 20
-  $("#reciped-projects").packery
+$(window).on "load" , ->
+  $(".projects").packery
     itemSelector: ".project",
     gutter: 20
