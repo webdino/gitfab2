@@ -187,9 +187,19 @@
           }
           h2.title {
             float: left;
+            margin-bottom: initial;
             max-width: $card_content_width - $figure_width - $figure_margin_right;
             font-family: $common-sans-serif;
             font-weight: 700;
+            font-size: 14px;
+            line-height: $common-line-height;
+          }
+          .options {
+            float: left;
+            margin-bottom: 18px;
+            width: $card_content_width - $figure_width - $figure_margin_right;
+            font-family: $common-sans-serif;
+            font-weight: 500;
             font-size: 14px;
             line-height: $common-line-height;
           }
@@ -288,9 +298,19 @@
               }
               h2.title {
                 float: left;
+                margin-bottom: initial;
                 max-width: $annotation_width - $figure_width - $figure_margin_right;
                 font-family: $common-sans-serif;
                 font-weight: 700;
+                font-size: 14px;
+                line-height: $common-line-height;
+              }
+              .options {
+                float: left;
+                margin-bottom: 18px;
+                width: $annotation_width - $figure_width - $figure_margin_right;
+                font-family: $common-sans-serif;
+                font-weight: 500;
                 font-size: 14px;
                 line-height: $common-line-height;
               }
