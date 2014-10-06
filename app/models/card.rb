@@ -13,13 +13,15 @@ class Card
 
   field :title
   field :description
+  field :goal
+  field :requirement
 
   validates :_type, presence: true
 
   searchable_field :description
 
   def dup_document
-    dup.tap do |doc| 
+    dup.tap do |doc|
       doc.id = BSON::ObjectId.new
       doc.annotations = annotations.map{|a| a.dup_document}
       doc.figures = figures.map{|f| f.dup_document}
@@ -33,7 +35,7 @@ class Card
 
   class << self
     def updatable_columns
-      [:id, :title, :description, :_type,
+      [:id, :title, :goal, :requirement, :description, :_type,
        figures_attributes: Figure.updatable_columns,
        attachments_attributes: Attachment.updatable_columns,
        likes_attributes: Like.updatable_columns

@@ -1,0 +1,7 @@
+.options
+  - if card.goal.present?
+    .goal
+      == "Goal: #{card.goal}"
+  - if card.requirement.present?
+    .requirement
+      == "Requirements: #{card.requirement}"

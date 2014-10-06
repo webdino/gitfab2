@@ -3,6 +3,11 @@
     == f.hidden_field :_type
     == f.text_field :title, class: "validate card-title", placeholder: "Title", maxlength: "30"
 
+    - class_name = f.object.class.name.downcase.split("::").last
+    - if class_name == "state" or class_name == "annotation"
+      == f.text_field :goal, class: "card-goal", placeholder: "Goal"
+      == f.text_field :requirement, class: "card-requirement", placeholder: "Requirement"
+
     ul.figures
       == f.fields_for :figures do |ff|
         - figure = ff.object

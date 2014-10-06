@@ -3,6 +3,7 @@ article class="card #{card.htmlclass}" data-position="#{card.try(:position)}" id
     == render "components/card_figures", card: card
     == render "components/card_title", card: card
     == render "components/card_contributors", card: card
+    == render "components/card_options", card:card
     == render "components/card_description", card: card
     == render "components/card_attachments", card: card
     - if can? :manage, card
