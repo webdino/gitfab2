@@ -10,8 +10,8 @@
       ul#reciped-projects.projects
         - @projects.each do |project|
           == render "project", project: project
-      - if @projects.present?
+      - if @projects.present? and @projects.length > 12
         .more
           == link_to image_tag("index-arrow-gray.png"), "/search?q="
           .horizontal-border.basic-color.f-right.m-b-5
-          == link_to "more projects", "/search?q="
+          == link_to "more projects", "/?page=2&q="
