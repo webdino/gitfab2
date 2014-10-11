@@ -6,6 +6,7 @@ $project_form_width: 703px;
 #recipes-new, #recipes-edit {
   width: 960px;
   background: white;
+  margin-bottom: $common-margin-for-footer;
 }
 
 form.project-form {

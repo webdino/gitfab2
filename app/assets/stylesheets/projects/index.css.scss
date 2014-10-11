@@ -5,7 +5,7 @@
 #projects-index {
   $quiet_font_color: $common-dark-gray;
   @include cf;
-  margin-bottom: 60px;
+  margin-bottom: $common-margin-for-footer;
   .left {
     @include cf;
     float: left;
