@@ -4,9 +4,14 @@
 
 #groups-new {
   display: inline-block;
-  margin: 20px 20px 0 0;
+  margin: 20px 20px $common-margin-for-footer 0;
   width: 700px;
   border: $common-border;
+
+  #new_group {
+    background: white;
+  }
+
   h1 {
     background-color: $header_background;
     padding: 10px 0 10px 10px;

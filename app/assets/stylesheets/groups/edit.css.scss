@@ -9,7 +9,7 @@
 
   #edit-profile {
     display: block;
-    margin: 20px 20px 0 0;
+    margin: 20px 20px $common-margin-for-footer 0;
     background: white;
     border: $common-border;
     h1 {
@@ -66,7 +66,7 @@
 
   #edit-members {
     display: block;
-    margin: 20px 20px 0 0;
+    margin: 20px 20px $common-margin-for-footer 0;
     border: $common-border;
 
     h1 {
@@ -79,6 +79,7 @@
       li.membership {
         @include cf;
         height: 50px;
+        background: white;
         border-bottom: $common-border;
         .avatar {
           display: inline-block;
@@ -101,6 +102,7 @@
           font-size: 18px;
           border: $common-border;
           border-radius: 2px;
+          background: #E6E6E6
         }
         .edit_membership {
           float: right;
@@ -132,6 +134,7 @@
     }
 
     #new-membership {
+      background: white;
       h2 {
         padding: 10px;
         background-color: $header_background;
