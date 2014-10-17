@@ -3,7 +3,7 @@
     .tab.active
       'Recipe
       .count
-        == "(#{@project.recipe.recipe_cards.length})"
+        == "(#{@project.recipe.states.length})"
   == link_to project_note_path(@project, owner_name: @owner.slug) do
     .tab
       'Note
@@ -34,16 +34,16 @@ section#recipe-cards
         #card-order-tools
           == link_to "Change Order", "#", class: "order-change-btn btn"
           == link_to "Commit Order", "#", class: "order-commit-btn btn"
-      - @recipe.recipe_cards.ordered_by_position.each do |card|
+      - @recipe.states.ordered_by_position.each do |card|
         li class="card-wrapper #{card.htmlclass}-wrapper"
-          == render "recipe_cards/recipe_card", card: card, owner: @owner, project: @project
+          == render "recipe_cards/state", card: card, owner: @owner, project: @project
     - if can? :edit, @project
       .article-column.sp
         == link_to "+ Add State", new_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name), remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper", "data-template" => "#state-template"
 
     == nested_form_for [@owner, @project, @recipe], remote: true do |f|
-      == f.fields_for :recipe_cards do |ff|
+      == f.fields_for :states do |ff|
         == ff.text_field :position, class: "position", "data-id" => ff.object.id
         == ff.hidden_field :id, class: "id"
-      == f.link_to_add "Add Card Order", :recipe_cards, id: "add-card-order"
+      == f.link_to_add "Add Card Order", :states, id: "add-card-order"
       == f.submit "submit", id: "submit-card-order"

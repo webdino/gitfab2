@@ -1,2 +1,13 @@
-class Card::State < Card::RecipeCard
+class Card::State < Card
+  include Mongoid::Orderable
+  embedded_in :recipe
+  orderable column: :position
+
+  scope :ordered_by_position, ->{order("position ASC")}
+
+  class << self
+    def updatable_columns
+      super + [:position, :move_to]
+    end
+  end
 end

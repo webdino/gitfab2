@@ -2,8 +2,8 @@ class AnnotationsController < ApplicationController
   before_action :load_owner
   before_action :load_project
   before_action :load_recipe
-  before_action :load_recipe_card
-  before_action :load_annotation, only: [:edit, :update, :destroy]
+  before_action :load_state
+  before_action :load_annotation, only: [:edit, :show, :update, :destroy]
   before_action :build_annotation, only: [:new, :create]
   before_action :update_contribution, only: [:create, :update]
   after_action :update_project, only: [:create, :update, :destroy]
@@ -14,6 +14,10 @@ class AnnotationsController < ApplicationController
   end
 
   def edit
+  end
+
+  def show
+    render :show, formats: :json
   end
 
   def create
@@ -40,9 +44,23 @@ class AnnotationsController < ApplicationController
     end
   end
 
+  def to_state
+    annotation = @state.annotations.find params[:annotation_id]
+    annotation._type = "Card::State"
+    state = annotation.dup_document
+    annotation.destroy
+    @recipe.states << state
+    @recipe.states.each.with_index(1) do |_state, index|
+      _state.position = index
+      _state.save
+    end
+    @recipe.save
+    render json: state.id
+  end
+
   private
   def result_view
-    klass = @recipe_card.class
+    klass = @state.class
     view_name = "#{parametize(klass)}_annotation"
   end
 
@@ -59,22 +77,18 @@ class AnnotationsController < ApplicationController
     @recipe = @project.recipe
   end
 
-  def load_recipe_card
-    Card::RecipeCard.subclasses.each do |klass|
-      parameter_name = "#{parametize(klass)}_id"
-      if params[parameter_name]
-        @recipe_card = @recipe.recipe_cards.find params[parameter_name]
-        break
-      end
+  def load_state
+    if params["state_id"]
+      @state = @recipe.states.find params["state_id"]
     end
   end
 
   def load_annotation
-    @annotation = @recipe_card.annotations.find params[:id]
+    @annotation = @state.annotations.find params[:id]
   end
 
   def build_annotation
-    @annotation = @recipe_card.annotations.build annotation_params
+    @annotation = @state.annotations.build annotation_params
   end
 
   def annotation_params

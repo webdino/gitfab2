@@ -1,4 +1,4 @@
 - if parent.instance_of?(Card::State)
   - delete_url = project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
   - edit_url = edit_project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
-== render "components/card", card: annotation, delete_url: delete_url, edit_url: edit_url
+== render "components/card", card: annotation, parent: parent, delete_url: delete_url, edit_url: edit_url

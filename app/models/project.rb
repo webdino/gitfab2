@@ -53,7 +53,7 @@ class Project
     end
 
     text :recipe do
-      self.recipe.recipe_cards.map do |card|
+      self.recipe.states.map do |card|
         Card.searchable_fields.map do |col|
           card.send col
         end

@@ -19,7 +19,7 @@ class Ability
     can :manage, Card::Annotation do |card|
       user.is_contributor_of?(card) || can?(:manage, card.annotatable)
     end
-    can :manage, Card::RecipeCard do |card|
+    can :manage, Card::State do |card|
       card.recipe && is_project_editor?(card.recipe.project, user)
     end
     can :manage, Card::NoteCard do |card|
@@ -88,14 +88,14 @@ class Ability
   def is_project_manager? project, user
     if project.owner_type == Group.name
       is_admin_of = user.is_admin_of? project.owner
-    end   
+    end
     is_admin_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
   end
 
   def is_project_editor? project, user
     if project.owner_type == Group.name
       is_member_of = user.is_member_of? project.owner
-    end   
+    end
     is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
   end
 
