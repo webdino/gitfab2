@@ -2,9 +2,13 @@
   == link_to project_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Recipe
+      .count
+        == "(#{@project.recipe.recipe_cards.length})"
   == link_to project_note_path(@project, owner_name: @owner.slug) do
     .tab
       'Note
+      .count
+        == "(#{@project.note.note_cards.length})"
 
 section#recipe-cards
   #top
@@ -25,7 +29,7 @@ section#recipe-cards
     #top
       .inner
         h2 Making
-    ul#recipe-card-list.card-list 
+    ul#recipe-card-list.card-list
       - if can? :edit, @project
         #card-order-tools
           == link_to "Change Order", "#", class: "order-change-btn btn"

@@ -320,6 +320,7 @@
     margin-left: $common-margin;
   }
   .tab {
+    @include cf;
     display: inline-block;
     margin-top: 1px;
     padding-top: 7px;
@@ -327,6 +328,15 @@
     width: 380px;
     height: 20px;
     background-color: $inactive_tab_background;
+    .count {
+      display: inline-block;
+      margin-top: -2px;
+      margin-right: 10px;
+      float: right;
+      height: 20px;
+      vertical-align: top;
+      font-family: $common-verdana;
+    }
     &.active {
       margin-top: 0;
       height: 21px;
