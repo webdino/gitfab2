@@ -2,10 +2,14 @@
   == link_to project_path(@project, owner_name: @owner.slug) do
     .tab
       'Recipe
+      .count
+        == "(#{@project.recipe.recipe_cards.length})"
   == link_to project_note_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Note
-      
+      .count
+        == "(#{@project.note.note_cards.length})"
+
 section#note-cards
   #top
     .inner
