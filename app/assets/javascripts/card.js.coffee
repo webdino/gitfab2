@@ -163,6 +163,137 @@ $ ->
       $(element).find(".delete.btn").find("a").trigger "click"
     figure_list.removeClass "hide-add-buttons"
 
+  $(document).on "click", ".convert-card", (event) ->
+    event.preventDefault()
+    state = $(this).closest ".state"
+    src_data_position = state.data "position"
+    state_id = state.attr "id"
+    if $(".state").length > 2
+      $("#state-convert-dialog .src").text src_data_position
+      $("#state-convert-dialog").attr "data-target", state_id
+
+      select = $ "#target_state"
+      select.empty()
+      states = $ ".state"
+      states.each (index, element) ->
+        position = $(element).data "position"
+
+        if position isnt src_data_position
+          select.append $("<option>").html(position).val position
+
+      $.fancybox.open
+        href: "#state-convert-dialog"
+
+    else
+      alert "First, make 2 or more state."
+
+
+  $(document).on "click", "#state-convert-dialog .ok-btn", (event) ->
+    event.preventDefault()
+    src_data_position = $("#state-convert-daialog .src").text()
+    dst_data_position = $("#target_state").val()
+    dst_state = $(".state[data-position=" + dst_data_position + "]")
+    dst_state_id = dst_state.attr "id"
+
+    recipe_url = $("#recipes-show").data "url"
+    state_id = $("#state-convert-dialog").data "target"
+    annotations_url = recipe_url + "/states/" + state_id + "/annotations/"
+    convert_url = recipe_url + "/states/" + state_id + "/to_annotation"
+
+    $.ajax
+      url: convert_url,
+      type: "GET",
+      data: {
+              dst_position: dst_data_position,
+              dst_state_id: dst_state_id
+            },
+      dataType: "json",
+      success: (data) ->
+        new_annotation_id = data.$oid
+        new_annotation_url = recipe_url + "/states/" + dst_state_id + "/annotations/" + new_annotation_id
+        $.fancybox.close()
+        loading = $ "#loading"
+        img = loading.find "img"
+        left = (loading.width() - img.width()) / 2
+        top = (loading.height() - img.height()) / 2
+        $(img).css("left", left + "px").css("top", top + "px")
+        loading.show()
+
+        $.ajax
+          url: new_annotation_url,
+          type: "GET",
+          dataType: "json",
+          success: (data) ->
+            #TODO: refactoring: make card append function
+            annotation_template = $("#annotation-template > :first")
+            card = annotation_template.clone()
+            li = $ document.createElement("li")
+            li.addClass "card-wrapper"
+            li.addClass "annotation-wrapper"
+            li.append card
+            $("#" + dst_state_id + " .annotation-list").append li
+
+            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
+            selector = "#" + article_id + " .flexslider"
+            card.replaceWith data.html
+            $("#loading").hide()
+            $("#" + state_id).remove()
+            setStateIndex()
+            markup()
+          error: (data) ->
+            alert data.message
+
+      error: (data) ->
+        alert data.message
+
+
+  $(document).on "click", ".to-state", (event) ->
+    event.preventDefault()
+    convert_url = $(this).attr "href"
+    recipe_url = $("#recipes-show").data "url"
+    annotation_id = $(this).closest(".annotation").attr "id"
+
+    $.ajax
+      url: convert_url,
+      type: "GET",
+      dataType: "json",
+      success: (data) ->
+        new_state_id = data.$oid
+        new_state_url = recipe_url + "/states/" + new_state_id
+        loading = $ "#loading"
+        img = loading.find "img"
+        left = (loading.width() - img.width()) / 2
+        top = (loading.height() - img.height()) / 2
+        $(img).css("left", left + "px").css("top", top + "px")
+        loading.show()
+
+        $.ajax
+          url: new_state_url,
+          type: "GET",
+          dataType: "json",
+          success: (data) ->
+            #TODO: refactoring: make card append function
+            state_template = $ "#state-template > :first"
+            card = state_template.clone()
+            li = $ document.createElement("li")
+            li.addClass "card-wrapper"
+            li.addClass "state-wrapper"
+            li.append card
+            $("#recipe-card-list").append li
+
+            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
+            selector = "#" + article_id + " .flexslider"
+            card.replaceWith data.html
+            $("#loading").hide()
+            $("#" + annotation_id).remove()
+            setStateIndex()
+            markup()
+          error: (data) ->
+            alert data.message
+      error: (data) ->
+        alert data.message
+
+
   $(document).on "change", "input[type='file']", (event) ->
     file = event.target.files[0]
     reader = new FileReader()

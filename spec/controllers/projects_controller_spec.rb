@@ -44,7 +44,7 @@ describe ProjectsController, type: :controller do
           let(:user){FactoryGirl.create :user}
           let(:new_project){FactoryGirl.build(:user_project, original: nil)}
           before do
-            sign_in user            
+            sign_in user
             post :create, user_id: user.slug, project: new_project.attributes
           end
           it{should render_template :edit}
@@ -53,14 +53,14 @@ describe ProjectsController, type: :controller do
           let(:forker){FactoryGirl.create :user}
           before do
             sign_in forker
-            user_project.recipe.recipe_cards.create _type: "Card::State", title: "sta1", description: "desc1"
-            user_project.recipe.recipe_cards.first.annotations.create title: "ann1", description: "anndesc1"
+            user_project.recipe.states.create _type: "Card::State", title: "sta1", description: "desc1"
+            user_project.recipe.states.first.annotations.create title: "ann1", description: "anndesc1"
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: user_project.id
           end
           it{should redirect_to project_path(id: Project.last.name, owner_name: forker.slug)}
-          it{expect(Project.last.recipe).to have(1).recipe_card}
-          it{expect(Project.last.recipe.recipe_cards.first).to have(1).annotation}
+          it{expect(Project.last.recipe).to have(1).state}
+          it{expect(Project.last.recipe.states.first).to have(1).annotation}
         end
       end
     end

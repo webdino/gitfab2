@@ -1,1 +1,1 @@
-json.html (render "annotations/annotation", annotation: @annotation, parent: @recipe_card, owner: @owner, project: @project)
+json.html (render "annotations/annotation", annotation: @annotation, parent: @state, owner: @owner, project: @project)

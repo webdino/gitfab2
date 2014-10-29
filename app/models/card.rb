@@ -1,6 +1,7 @@
 class Card
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Attributes::Dynamic
   include Attachable
   include Figurable
   include Contributable
@@ -19,7 +20,7 @@ class Card
   searchable_field :description
 
   def dup_document
-    dup.tap do |doc| 
+    dup.tap do |doc|
       doc.id = BSON::ObjectId.new
       doc.annotations = annotations.map{|a| a.dup_document}
       doc.figures = figures.map{|f| f.dup_document}

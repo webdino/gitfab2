@@ -22,7 +22,7 @@ class RecipesController < ApplicationController
   private
   def recipe_params
     if params[:recipe]
-      params.require(:recipe).permit recipe_cards_attributes: [:id, :position]
+      params.require(:recipe).permit states_attributes: [:id, :position]
     end
   end
 

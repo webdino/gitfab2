@@ -20,6 +20,9 @@ Gitfab2::Application.routes.draw do
 
   concern :card_features_for_link do
     resources :annotations, except: [:create, :update]
+    resources :annotations do
+      get "to_state"
+    end
     resources :derivative_cards, except: [:create, :update]
   end
 
@@ -61,6 +64,9 @@ Gitfab2::Application.routes.draw do
     end
     resource :recipe, only: :show do
       resources :states, except: [:create, :update], concerns: :card_features_for_link
+      resources :states do
+        get "to_annotation"
+      end
     end
     resources :usages, constraints: {id: /.+/}, except: [:create, :update]
   end
