@@ -108,6 +108,7 @@ $ ->
     li = link.closest "li"
     list = li.parent()
     li.remove()
+    checkStateConvertiblity()
     setStateIndex()
     markup()
 
@@ -170,7 +171,7 @@ $ ->
     state_id = state.attr "id"
     if $(".state").length > 2
       $("#state-convert-dialog .src").text src_data_position
-      $("#state-convert-dialog").attr "data-target", state_id
+      $("#state-convert-dialog").data "target", state_id
 
       select = $ "#target_state"
       select.empty()
@@ -237,7 +238,8 @@ $ ->
             selector = "#" + article_id + " .flexslider"
             card.replaceWith data.html
             $("#loading").hide()
-            $("#" + state_id).remove()
+            $("#" + state_id).closest(".state-wrapper").remove()
+            checkStateConvertiblity()
             setStateIndex()
             markup()
           error: (data) ->
@@ -285,7 +287,8 @@ $ ->
             selector = "#" + article_id + " .flexslider"
             card.replaceWith data.html
             $("#loading").hide()
-            $("#" + annotation_id).remove()
+            $("#" + annotation_id).closest("li").remove()
+            checkStateConvertiblity()
             setStateIndex()
             markup()
           error: (data) ->
@@ -388,10 +391,20 @@ $ ->
     $(document.body).trigger "attachment-markuped"
   markup()
 
+  checkStateConvertiblity = ->
+    states = $ ".state"
+    states.each (index, element) ->
+      if $(element).find(".annotation").length is 0
+        $(element).find(".convert-card").show()
+      else
+        $(element).find(".convert-card").hide()
+  checkStateConvertiblity()
+
   setStateIndex = ->
-    states = $(".state-wrapper")
+    states = $ ".state-wrapper"
     states.each (index, element) ->
       $(element).find("h1.number").text index + 1
+      $(element).find(".state").data "position", index + 1
     if states.length > 1
       $(".order-change-btn").show()
     else
@@ -412,6 +425,7 @@ $ ->
     article_id = $(data.html).find(".flexslider").closest("article").attr "id"
     selector = "#" + article_id + " .flexslider"
     card.replaceWith data.html
+    checkStateConvertiblity()
     setStateIndex()
     markup()
     setupFigureSlider selector
