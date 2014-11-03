@@ -1,9 +1,11 @@
 class Attachment
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Attributes::Dynamic
+
 
   mount_uploader :content, AttachmentUploader
-  
+
   embedded_in :attachable, polymorphic: true
 
   field :markup_id

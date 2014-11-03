@@ -19,6 +19,7 @@
 erd.pdf
 /public/assets
 /public/uploads
+/public/dump
 *.swp
 
 config/settings.local.yml
