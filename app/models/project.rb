@@ -98,7 +98,7 @@ class Project
     if figures.first.link.present?
       "http://img.youtube.com/vi/" + figures.first.link.split("/").last + "/mqdefault.jpg"
     elsif figures.first.content.present?
-      figures.first.content
+      figures.first.content.small
     else
       "fallback/blank.png"
     end
