@@ -5,10 +5,17 @@
         ul.slides
           - card.figures.each do |figure|
             li
-              == image_tag figure.content
+              - if defined? note_card_show
+                == image_tag figure.content, data: {src: figure.content.url}
+              - else
+                == image_tag figure.content.small, data: {src: figure.content.url}
     - else
       figure
-        == image_tag card.figures.first.content
+        - if defined? note_card_show
+          == image_tag card.figures.first.content, data: {src: card.figures.first.content.url}
+        - else
+          == image_tag card.figures.first.content.small, data: {src: card.figures.first.content.url}
+
 
   - elsif card.figures.first.link.present?
     figure

@@ -28,6 +28,15 @@ $ ->
     makeAttachmentsList $("a.tool"), $("#tool-list")
     makeAttachmentsList $("a.blueprint"), $("#blueprint-list")
 
+  $(document).on "click", "figure img", () ->
+    $.fancybox.open $(this).data("src"),
+      openEffect: "none"
+      closeEffect: "none"
+      helpers:
+        overlay:
+          css:
+            "background": "rgba(0, 0, 0, 0.2)"
+
 $(window).on "load" , ->
   $('.flexslider').flexslider({
     animation: "slider",

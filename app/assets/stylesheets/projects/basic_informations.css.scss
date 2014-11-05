@@ -76,6 +76,7 @@
       }
       ol.flex-control-paging {
         top: 10px;
+        height: 10px;
         li>a {
           background: $common-basic-color;
           opacity: 0.5;
@@ -116,6 +117,12 @@
         top: 20px;
         height: 100%;
         font-size: 0;
+      }
+      .flex-prev:before {
+        content: "<";
+      }
+      .flex-next:before {
+        content: ">";
       }
     }
     figure.visual>img {
