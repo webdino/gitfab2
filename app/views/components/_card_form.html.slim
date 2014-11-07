@@ -8,7 +8,7 @@
         - figure = ff.object
         li.figure
           - if figure.content.present?
-            == image_tag figure.content
+            == image_tag figure.content.small
             .edit.btn
               'edit
             .delete.btn
