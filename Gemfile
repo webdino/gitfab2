@@ -52,6 +52,8 @@ gem "bson_ext"
 gem "friendly_id", "~> 5.0.0"
 gem "carrierwave-mongoid", require: "carrierwave/mongoid"
 
+gem "truncate_html"
+
 group :doc do
   gem "sdoc", require: false
 end
