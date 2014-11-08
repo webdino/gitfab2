@@ -31,4 +31,5 @@
 //= require ./helpers/time_offset
 //= require ./comment
 //= require ./tag
+//= require ./collaborator
 //= require select2

@@ -71,7 +71,9 @@ section#basic-informations
                   == link_to image_tag(collaborator.avatar), projects_path(owner_name: collaborator.slug), class: "thumbnail"
                   == link_to collaborator.name, projects_path(owner_name: collaborator.slug), class: "screen-name"
           - if can? :manage, @project
-            == link_to "+ collaborator", project_collaborators_path(owner_name: @owner.slug, project_id: @project.name), id: "add-collaborator-btn", class: "btn"
+            == link_to "+ collaborator", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
+        == render "collaborators/list"
+
   section.footer
     .line
       label
@@ -99,7 +101,17 @@ section#basic-informations
       helpers:
         overlay:
           css:
-            "background":"rgba(0, 0, 0, 0.2)"
+            "background": "rgba(0, 0, 0, 0.2)"
+
+    $("#add-collaborator-btn").fancybox
+      openEffect: "none"
+      closeEffect: "none"
+      wrapCSS: ".fork-popup"
+      helpers:
+        overlay:
+          css:
+            "background": "rgba(0, 0, 0, 0.2)"
+      #TODO: add the function to reload the .collabortors when close the fancybox
 
     $(document).on "click", ".fork-btn", ->
       $(this).find("form").submit()
