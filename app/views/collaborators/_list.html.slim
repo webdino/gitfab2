@@ -1,0 +1,20 @@
+#collaborators-index
+  .inner
+    h1
+      'Collaborators
+    == render "collaborators/add_collaborator", project: @project
+
+    h2
+      'owner
+    #owner
+      span.avatar
+        == image_tag @project.owner.avatar
+      span.name
+        == @project.owner.name
+    h2
+      'collaborator
+    ul#collaborations
+      - @project.collaborators.each do |collaborator|
+        == render "collaborators/collaboration", collaboration: collaborator.collaboration_in(@project)
+
+    == link_to "back", project_path(@project, owner_name: @project.owner.slug), class: "btn"

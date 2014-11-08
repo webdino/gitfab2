@@ -319,6 +319,54 @@
   }
 }
 
+#collaborators-index {
+  display: none;
+  background: white;
+  width: 960px;
+  .inner {
+    margin: 20px;
+    padding: 20px 0;
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+    h2 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    #new_collaboration {
+      margin-bottom: 20px;
+      #s2id_user_name {
+        margin-right: 10px;
+      }
+    }
+    #owner, .collaboration {
+      margin-bottom: 10px;
+      .avatar {
+        img {
+          width: 30px;
+        }
+      }
+      .name {
+        position: relative;
+        vertical-align: top;
+        margin-left: 5px;
+        top: 6px;
+        height: 24px
+      }
+      .remove-collaboration-btn {
+        vertical-align: top;
+        margin-top: 3px;
+        margin-left: 5px;
+      }
+    }
+    #collaborations {
+      margin-bottom: 20px;
+    }
+  }
+}
+
 #tabs {
   margin-top: $common-margin * 4;
   margin-left: $first_column_width + $common-margin;
