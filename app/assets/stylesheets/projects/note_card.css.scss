@@ -3,6 +3,7 @@
 @import "projects/_project_variables.css.scss";
 
 #note-cards-show {
+  margin-bottom: $common-margin-for-footer;
   width: $content_width;
   aside.like {
     display: inline;

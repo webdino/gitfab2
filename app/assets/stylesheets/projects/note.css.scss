@@ -165,6 +165,7 @@
   }
   footer {
     display:block;
+    margin-bottom: $common-margin-for-footer;
     margin-left: $first_column_width + 10px;
     padding-top: 150px;
     background: white;
