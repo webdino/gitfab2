@@ -160,6 +160,13 @@
           width: $note_card_width;
           font-size: 16px;
           line-height: 32px;
+          ul {
+            margin-left: 20px;
+            list-style-type: disc;
+          }
+          ol {
+            margin-left: 20px;
+          }
         }
       }
     }
