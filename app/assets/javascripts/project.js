@@ -32,4 +32,6 @@
 //= require ./comment
 //= require ./tag
 //= require ./collaborator
+//= require ./change_owner
+//= require ./basic_informations
 //= require select2
