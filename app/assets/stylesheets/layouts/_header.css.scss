@@ -3,38 +3,39 @@
 
 #layouts-header{
   margin-bottom: 35px;
+  background: white;
   .inner {
     width: 100%;
-    background: white;
   }
   .container {
     @include cf;
-    margin: 0px auto;
+    margin: 0 auto;
+    padding: 18px 0 20px;
     width: 960px;
-    height: 35px;
-    font-family: $common-helvetica;
+    height: 42px;
+    font-family: "novelsans-semibold";
   }
   #logo {
     float: left;
-    padding: 7px 20px 0 10px;
-    width: 60px;
-    height: 23px;
-    font-weight: 900;
-    font-size: 32px;
-    border-right: $common-border;
+    margin-left: 10px;
+    padding-top: 7px;
+    a {
+      display: block;
+    }
   }
   #search-box {
     float: left;
     margin-left: 80px;
-    padding: 5px 0 0 10px;
-    width: 320px;
-    height: 25px;
-    border-left: $common-border;
+    width: 240px;
+    height: 30px;
     #search-form {
-      width: 195px;
-      height: 16px;
-      font-family: $common-verdana;
-      font-size: 12px;
+      padding-left: 10px;
+      width: 240px;
+      height: 30px;
+      font-family: "novelsans-semibold";
+      font-size: 15px;
+      border: solid 1px $common-dark-gray;
+      border-radius: 5px;
     }
   }
   #tools {
@@ -47,15 +48,15 @@
       width: auto;
       min-width: 140px;
       height: 25px;
-      border-left: $common-border;
       .avatar {
         display: inline-block;
         vertical-align: bottom;
-        margin-top: 5px;
         .avator-thumb {
-          margin: 0px 5px 0 0;
-          width: 20px;
-          height: 20px;
+          width: 35px;
+          height: 35px;
+          border-radius: 35px;
+          border: solid 5px $common-gray;
+          margin: -5px;
           img {
             max-width: 100%;
             height: auto;
@@ -64,37 +65,26 @@
       }
       .name {
         display: inline-block;
-        vertical-align: bottom;
-        margin-bottom: 2px;
-        font-size: 12px;
+        vertical-align: top;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-size: 15px;
         line-height: 21px;
       }
     }
     .box {
       display: inline-block;
-      padding: 18px 0 0 10px;
-      width: 150px;
+      padding: 18px 0px 12px 10px;
+      text-align: right;
+      width: 130px;
       height: 12px;
-      border-left: $common-border;
-      #create-recipe {
+      border-left: solid 1px $common-basic-color;
+      .icon {
         display: inline-block;
         margin-top: -12px;
-        margin-right: 5px;
-        width: 25px;
-        height: 25px;
-      }
-      #settings {
-        display: inline-block;
-        margin-top: -12px;
-        margin-right: 5px;
-        width: 25px;
-        height: 25px;
-      }
-      #logout {
-        display: inline-block;
-        margin-top: -12px;
-        width: 25px;
-        height: 25px;
+        margin-right: 10px;
+        width: 32px;
+        height: 32px;
       }
     }
   }

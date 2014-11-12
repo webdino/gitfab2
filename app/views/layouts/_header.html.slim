@@ -5,7 +5,10 @@ section#layouts-header
         == link_to image_tag("logo.png"), root_path
       #search-box
         == form_tag :search, method: :get do |f|
-          == text_field_tag :q, nil, placeholder: "Search Project…", id: "search-form"
+          == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
+
+          / TODO: add clear btn
+          
       - unless user_signed_in?
         #sign-in
           == link_to "Sign in with Github", user_omniauth_authorize_path(:github)
@@ -17,11 +20,6 @@ section#layouts-header
             .name
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box
-            #create-recipe
-              == link_to image_tag("add.png"), new_project_path(owner_name: current_user.slug), title: "Create Project"
-
-            #settings
-              == link_to image_tag("settings.png"), edit_user_path(current_user), title: "Setting"
-
-            #logout
-              == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete, title: "Logout"
+            == link_to image_tag("create_project.png"), new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-recipe"
+            == link_to image_tag("settings.png"), edit_user_path(current_user), title: "Setting", class: "icon settings"
+            == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete, title: "Logout", class: "icon logout"
