@@ -8,11 +8,12 @@
 }
 
 .main {
+  border-radius: 10px;
   margin: $common-margin-for-footer 0px;
   background: #ebf8ff;
   padding: 60px 100px 60px 100px;
   line-height: 1.75em;
-  font-family: "unitot-light";
+  font-family: $common-verdana;
 
   hr {
     width: 100px;

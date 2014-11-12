@@ -1,0 +1,59 @@
+@import "mixins/variables.css.scss";
+
+body {
+  background-color: $common-basic-color;
+}
+#about {
+  .headers{
+    text-align: center;
+    font-family: $common-novelsans;
+    h1 {
+      margin: 45px 0 20px;
+      line-height: 1.75;
+      font-size: 50px;
+      color: white;
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: normal;
+      color: black;
+    }
+  }
+  .main{
+    font-family: $common-verdana;
+    padding: 30px 25px;
+    width: 910px;
+
+    #abstract, #functions, #features {
+      padding: 25px 0;
+    }
+    #abstract, #functions {
+      border-bottom: 1px solid $common-basic-color;
+    }
+
+    .left, .right {
+      display: inline-block;
+      position: relative;
+      vertical-align: top;
+    }
+    .left {
+      width: 360px;
+      h2 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 20px;
+      }
+      .abstract {
+        position: absolute;
+        top: 20px;
+        right: 15px;
+      }
+    }
+    .right {
+      margin-left: 25px;
+      width: 525px;
+      font-size: 14px;
+    }
+  }
+}
