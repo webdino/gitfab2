@@ -94,6 +94,36 @@ class Project
     end
   end
 
+  def change_owner! owner
+    self.owner = owner
+    self.save!
+    #   if project.collaborators.include?(new_owner)
+    #     old_collaboration = new_owner.collaboration_in project
+    #     old_collaboration.destroy
+    #   end
+    # else
+    #   return false
+    # end
+  end
+
+  def potential_owners
+    owner_list = []
+    owner = self.owner
+    if owner.instance_of?(User)
+      owner.memberships.each do |membership|
+        owner_list.push membership.group
+      end
+    else
+      owner.members.each do |member|
+        owner_list.push member
+      end
+    end
+    self.collaborators.each do |collaborator|
+      owner_list.push collaborator
+    end
+    return owner_list
+  end
+
   def thumbnail
     if figures.first.link.present?
       "http://img.youtube.com/vi/" + figures.first.link.split("/").last + "/mqdefault.jpg"

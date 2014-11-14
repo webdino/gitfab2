@@ -91,27 +91,5 @@ section#basic-informations
   #edit-menu
     - if can? :manage, @project
       == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug), class: "btn"
-
-- content_for :bottom do
-  coffee:
-    $(".fancybox").fancybox
-      openEffect: "none"
-      closeEffect: "none"
-      wrapCSS: ".fork-popup"
-      helpers:
-        overlay:
-          css:
-            "background": "rgba(0, 0, 0, 0.2)"
-
-    $("#add-collaborator-btn").fancybox
-      openEffect: "none"
-      closeEffect: "none"
-      wrapCSS: ".fork-popup"
-      helpers:
-        overlay:
-          css:
-            "background": "rgba(0, 0, 0, 0.2)"
-      #TODO: add the function to reload the .collabortors when close the fancybox
-
-    $(document).on "click", ".fork-btn", ->
-      $(this).find("form").submit()
+      == link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
+      == render "projects/change_owner", project: @project

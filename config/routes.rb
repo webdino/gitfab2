@@ -35,6 +35,9 @@ Gitfab2::Application.routes.draw do
   end
 
   concern :owner do
+    resources :projects do
+      get "potential_owners"
+    end
     resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do

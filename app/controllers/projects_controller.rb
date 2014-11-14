@@ -65,22 +65,53 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    @project.updated_at = DateTime.now
-    parameters = project_params
-    if parameters.present? and parameters[:name].present?
-      parameters[:name] = parameters[:name].downcase
+    owner_name = params[:owner_name]
+    if owner_name.present?
+      self.change_owner
+    else
+      @project.updated_at = DateTime.now
+      parameters = project_params
+      if parameters.present? and parameters[:name].present?
+        parameters[:name] = parameters[:name].downcase
+      end
+      if @project.update parameters
+        respond_to do |format|
+          format.json {render :update}
+          format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+        end
+      else
+        respond_to do |format|
+          format.json {render "error/failed", status: 400}
+          format.html {render :edit, status: 400}
+        end
+      end
     end
-    if @project.update parameters
+  end
+
+  def change_owner
+    project = Project.find params[:id]
+    new_owner = User.find(params[:owner_name]) || Group.find(params[:owner_name])
+    if project.change_owner! new_owner
+      if project.collaborators.include?(new_owner)
+        old_collaboration = new_owner.collaboration_in project
+        old_collaboration.destroy
+      end
+      new_owner_projects_path = "http://" + request.raw_host_with_port + "/" + new_owner.slug
       respond_to do |format|
-        format.json {render :update}
-        format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+        format.html {redirect_to projects_path(new_owner.slug)}
+        format.js {render :js => "window.location.replace('" + new_owner_projects_path +"')"}
       end
     else
       respond_to do |format|
         format.json {render "error/failed", status: 400}
-        format.html {render :edit, status: 400}
+        format.html {render "error/failed", status: 400}
       end
     end
+  end
+
+  def potential_owners
+    @project = @owner.projects.find params[:project_id]
+    render "potential_owners", format: "json"
   end
 
   private
