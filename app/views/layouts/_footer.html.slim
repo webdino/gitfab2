@@ -1,9 +1,13 @@
 footer#layouts-footer
+  #logos.container
+    == link_to image_tag("sfc_logo.png"), "http://sfc.sfc.keio.ac.jp/", class: "logo"
+    == link_to image_tag("mozilla_wordmark.png"), "http://www.mozilla.jp/", class: "logo"
+
   nav.container
-    == link_to "About", "/about"
-    == mail_to "support@gitfab.org", "Contact"
-    == link_to "Terms of Service", "/terms"
-    == link_to "Privacy Policy", "/privacy"
+    == link_to "About", "/about", class: "navi"
+    == mail_to "support@gitfab.org", "Contact", class: "navi"
+    == link_to "Terms of Service", "/terms", class: "navi"
+    == link_to "Privacy Policy", "/privacy", class: "navi"
 
     .copyright
       'Copyright © 2014
