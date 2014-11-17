@@ -7,17 +7,30 @@
       ul
         - @project.errors.full_messages.each do |msg|
           li == msg
-  - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
-    #owner
-      'Project owner is
-      - options = []
-      - @owner.groups.to_a.push(@owner).each do |o|
-        - action = o.instance_of?(Group) ? group_projects_path(group_id: o.slug) : user_projects_path(user_id: o.slug)
-        - options.push [o.name, action]
-      == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
 
   #basic-information
-    == f.text_field :title, placeholder: "Input Project Title", tabindex: 1, maxlength: "30"
+    h1.page-title Create Project
+    .title
+      .left
+        'Step 1
+      .right
+        .form-title
+          'Project Title
+        == f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "30"
+
+    - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
+      #owner
+        .left
+          'Step 2
+        .right
+          .form-title
+            'Project Owner
+          - options = []
+          - @owner.groups.to_a.push(@owner).each do |o|
+            - action = o.instance_of?(Group) ? group_projects_path(group_id: o.slug) : user_projects_path(user_id: o.slug)
+            - options.push [o.name, action]
+          == f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
+
     #project-summary
       - if page == "edit"
 
@@ -92,9 +105,11 @@
 
   .buttons
     - if @project.new_record?
-      == f.submit value: "Create Project", class: "submit btn"
-      == link_to "Cancel", :back, class: "cancel-btn btn"
+      == link_to "Create Project", "#", class: "submit btn"
+      == f.submit value: "", id: "submit-btn"
+      == link_to "Cancel", :back, class: "cancel btn"
     - else
-      == f.submit value: "Update Project", class: "submit btn"
-      == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "btn"
+      == link_to "Update Project", "#", class: "submit btn"
+      == f.submit value: "Update Project", id: "submit-btn"
+      == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "cancel btn"
       == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn", id: "delete-btn"

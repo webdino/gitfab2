@@ -40,6 +40,10 @@ $ ->
         $("main#recipes-edit .caution").text "URL is too short. URL length = #{url.length}. Min length = 42."
         disableSubmitButtonForItems()
 
+  $(document).on "click", "#recipes-new .submit", (event) ->
+    event.preventDefault()
+    $("form.project-form").submit()
+
   $(document).on "click", "main#recipes-edit .submit", (event) ->
     url = $(".card-figure-link:visible").last().val()
     if url
