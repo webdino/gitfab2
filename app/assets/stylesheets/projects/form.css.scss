@@ -6,32 +6,64 @@ $project_form_width: 703px;
 #recipes-new, #recipes-edit {
   width: 960px;
   background: white;
+  border-radius: 5px;
   margin-bottom: $common-margin-for-footer;
 }
 
 form.project-form {
-  #owner {
-    font-size: 18px;
-    select#project_group_id {
-      margin-bottom: 2px;
+  font-family: $common-novelsans;
+  .page-title {
+    margin: 50px 0 30px 90px;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .left {
+    display: inline-block;
+    margin-left: 10px;
+    width: 60px;
+    font-family: $common-novelsans;
+    color: $common-gray;
+    text-align: right;
+  }
+  .right {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    margin-left: 20px;
+    width: 860px;
+    .form-title {
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    #project_title {
+      width: 540px;
+      font-family: $common-verdana;
+      font-size: 22px;
+      font-weight: 500;
+      margin: 10px 0 50px;
+      padding: 8px 0 10px 12px;
+      box-sizing: border-box;
+      border: solid 1px $common-basic-color;
+      border-radius: 5px;
+    }
+
+    #project_owner_id {
+      width: 220px;
+      height: 28px;
+      padding-left: 10px;
       background: white;
-      font-family: $common-helvetica;
-      font-size: 18px;
-      border: $common-border;
+      font-family: $common-verdana;
+      font-size: 14px;
+      border: solid 1px $common-basic-color;
       border-radius: 2px;
     }
   }
 
-  input#project_title {
-    width: $project_form_width;
-    font-size: 28px;
-    font-weight: 700;
-    font-family: $common-verdana;
-    margin: 20px 130px 0;
-    padding: 12px 0 14px 12px;
-    box-sizing: border-box;
-    border: $common-border;
-  }
+
+
+
 
   input#project_video_id {
     width: 580px;
@@ -144,8 +176,6 @@ form.project-form {
         }
       }
     }
-
-
   }
   #filesize-caution {
     display: none;
@@ -154,11 +184,43 @@ form.project-form {
     font-size: 21px;
   }
   .buttons {
-    width: $project_form_width;
-    margin: 40px auto 20px;
-    input[type=submit] {
-      font-family: $common-helvetica;
-      font-size: 14px;
+    margin: 55px 90px;
+    #submit-btn {
+      display: none;
+    }
+    .submit {
+      width: 180px;
+      height: 40px;
+      padding: 5px 0 0 15px;
+      background: $common-basic-color;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-family: $common-novelsans;
+      font-size: 18px;
+      &:before {
+        content: url("project/submit.png");
+        position: relative;
+        top: 6px;
+        left: 2px;
+        padding-right: 20px;
+      };
+    }
+    .cancel {
+      vertical-align: bottom;
+      margin-left: 10px;
+      width: 60px;
+      height: 25px;
+      padding: 5px 0px 0px 3px;
+      font-family: $common-novelsans;
+      font-size: 12px;
+      border-radius: 5px;
+      &:before {
+        content: url("project/cancel.png");
+        position: relative;
+        top: 3px;
+        padding-right: 3px;
+      };
     }
   }
 
