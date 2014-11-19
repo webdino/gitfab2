@@ -9,7 +9,11 @@
           li == msg
 
   #basic-information
-    h1.page-title Create Project
+    - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
+      h1.page-title Create Project
+    - else
+      h1.page-title Update Project
+
     .title
       .left
         'Step 1
@@ -19,6 +23,7 @@
         == f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "30"
 
     - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
+      / TODO: make changing project owner enabled via project/update
       #owner
         .left
           'Step 2
@@ -34,68 +39,91 @@
     #project-summary
       - if page == "edit"
 
-        ul.figures
-          == f.fields_for :figures do |ff|
-            - figure = ff.object
-            li.figure
-              - if figure.content.present?
-                == image_tag figure.content.small
-                .edit.btn
-                  'edit
-                .delete.btn
-                  == ff.link_to_remove "Delete"
-              - elsif figure.link.present?
-                iframe src="#{figure.link}"
-                .delete.btn
-                  == ff.link_to_remove "Delete"
-                .caution
-              - else
-                == image_tag "fallback/blank.png"
-                iframe src="#{figure.link}"
-                .edit.btn
-                  'edit
-                .delete.btn
-                  == ff.link_to_remove "Delete"
-                .caution
+        section.images
+          .left
+            'Step 2
+          .right
+            .form-title
+              'Project Images
+            ul.figures
+              == f.fields_for :figures do |ff|
+                - figure = ff.object
+                li.figure
+                  - if figure.content.present?
+                    == image_tag figure.content.small
+                    .btns
+                      .edit.btn
+                        'edit
+                      .delete.btn
+                        == ff.link_to_remove "delete"
+                  - elsif figure.link.present?
+                    iframe src="#{figure.link}"
+                    .btns
+                      .delete.btn
+                        == ff.link_to_remove "delete"
+                    .caution
+                  - else
+                    == image_tag "fallback/blank.png"
+                    iframe src="#{figure.link}"
+                    .btns
+                      .edit.btn
+                        'edit
+                      .delete.btn
+                        == ff.link_to_remove "delete"
+                    .caution
 
-              == ff.file_field :content, class: "validate card-figure-content"
-              == ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
+                  == ff.file_field :content, class: "validate card-figure-content"
+                  == ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
 
-          == f.link_to_add "Add an Image", :figures, class: "add-image btn"
-          == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
+              == f.link_to_add "add an Image", :figures, class: "add-image btn"
+              == f.link_to_add "add a Youtube Video", :figures, class: "add-video btn"
 
-          .remove-all-figures.btn
-            'Remove all figures
+              .remove-all-figures.btn
+                'remove all figures
 
         section.description
-          h1
-            'Summary
-          == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea", maxlength: "140"
+          .left
+            'Step 3
+          .right
+            .form-title
+              'Summary
+            == f.text_area :description, placeholder: "Add Summary", tabindex: 3, class: "link-textarea", maxlength: "140"
+
+        / TODO: Add Launched Date field to Project
 
         section.license
-          h1
-            'License
-          == f.hidden_field :license
-          - licenseindex = f.object.license.nil? ? 3 : f.object.license
-          - @project.licenses.each_with_index do |license, index|
-            - clazz = index == licenseindex ? "selected" : ""
-            - image = "cc/" + license + ".png"
-            == image_tag(image, class: "#{clazz}", id: "license-#{index}")
-          .about-license
-            == link_to "* about creative commons license", "http://creativecommons.org/licenses/", {target: "_blank"}
+          .left
+            'Step 4
+          .right
+            .form-title
+              'License
+            == f.hidden_field :license
+            - licenseindex = f.object.license.nil? ? 3 : f.object.license
+            - @project.licenses.each_with_index do |license, index|
+              - clazz = index == licenseindex ? "selected" : ""
+              - image = "cc/" + license + ".png"
+              == image_tag(image, class: "#{clazz}", id: "license-#{index}")
+            .about-license
+              == link_to "* about creative commons license", "http://creativecommons.org/licenses/", {target: "_blank"}
 
         section.access-level
-          h1
-            'Access level
-          == f.check_box :is_private
-          == f.label :is_private, "This is a private project"
+          .left
+            'Step 5
+          .right
+            .form-title
+              'Access level
+            == f.check_box :is_private
+            == f.label :is_private, "This is a private project.", class: "checkbox"
 
         section.permalink
-          h1
-            'Permalink
-          #permalink-label
-            '#{request.protocol}#{request.host_with_port}/#{@project.owner.slug}/
-          == f.text_field :name, placeholder: "Input_Repository_Name"
+          .left
+            'Step 6
+          .right
+            .form-title
+              'Permalink
+            #permalink-label
+              '#{request.protocol}#{request.host_with_port}/#{@project.owner.slug}/
+            == f.text_field :name, placeholder: "Input_Repository_Name"
 
   #filesize-caution
     p
@@ -109,7 +137,7 @@
       == f.submit value: "", id: "submit-btn"
       == link_to "Cancel", :back, class: "cancel btn"
     - else
-      == link_to "Update Project", "#", class: "submit btn"
+      == link_to "Update Project", "#", class: "submit btn update"
       == f.submit value: "Update Project", id: "submit-btn"
       == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project.id), class: "cancel btn"
       == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project.id), method: :delete, class: "btn", id: "delete-btn"

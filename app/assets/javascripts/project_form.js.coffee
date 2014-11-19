@@ -54,6 +54,9 @@ $ ->
       $(".card-figure-link").last().val embed_url
       $("form.project-form").submit()
 
+  $(document).on "click", "#project-summary .edit.btn", (event) ->
+    $(event.target).parents(".btns").siblings(".card-figure-content").trigger "click"
+
   $(document).on "keyup", "main#recipes-edit .card-figure-link", getVideoForProject
   $(document).on "change", "main#recipes-edit .card-figure-link", getVideoForProject
 
