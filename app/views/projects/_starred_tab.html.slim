@@ -1,6 +1,4 @@
 #starred-tab.tabs-pane
-  h2
-    'Starred Projects
   ul.project-list
     - @owner.liked_projects.each do |project|
       li.project
@@ -10,6 +8,14 @@
               == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
             - else
               == link_to image_tag("fallback/blank.png"), project_path(project.owner, project), class: "image"
+
+        .text-container
+          - if project.title.present?
+            == link_to project.title, project_path(project.owner, project), class: "title"
+          - else
+            p.title
+              'no title
+
           .horizontal-border.basic-color.m-b-5
           .meta
             .created
@@ -22,12 +28,16 @@
                 'updated date:
               span
                 == "#{project.updated_at.strftime('%Y-%m-%d')}"
-        .text-container
-          - if project.title.present?
-            == link_to project.title, project_path(project.owner, project), class: "title"
-          - else
-            p.title
-              'no title
+            .recipe
+              span.title Recipe:
+              span
+                == project.recipe.states.length
+            .note
+              span.title Note:
+              span
+                == project.note.note_cards.length
+
+          .horizontal-border.basic-color.m-b-5
           - if project.description.present?
             .summary
               == "#{project.description}"

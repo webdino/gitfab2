@@ -42,6 +42,7 @@ section#basic-informations
         - if @project.is_private?
           section.private-project
             ' private project
+
         section.timestamps
           .created-timestamp
             h2
@@ -53,12 +54,14 @@ section#basic-informations
               == "last updated"
             .date
               == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+
         section.license
           - index = @project.license.nil? ? 3 : @project.license
           - license = @project.licenses[index]
           - image = "cc/" + license + ".png"
           - url = "http://creativecommons.org/licenses/" + license + "/4.0"
           == link_to image_tag(image), url, { target: "_blank" }
+
       .right
         section.collaborators
           .owner
