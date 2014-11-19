@@ -1,15 +1,16 @@
 #projects
   ul.tabs.tab-hotizontal
     li.active
-      == link_to "Project", "#", data: {tab: "#project-tab"}
+      == link_to "Project (#{@owner.projects.length})", "#", data: {tab: "#project-tab"}
     li
       == link_to "Note", "#", data: {tab: "#note-tab"}
     - if @owner.is_a? User
+
       / TODO: #486 Implement user.contributed_projects method in user.rb
       / li
       /   == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
       li
-        == link_to "Starred", "#", data: {tab: "#starred-tab"}
+        == link_to "Favorite (#{@owner.liked_projects.length})", "#", data: {tab: "#starred-tab"}
 
   .tabs-content
     == render "project_tab"

@@ -7,114 +7,162 @@
   @include cf;
   margin-bottom: $common-margin-for-footer;
   .left {
-    @include cf;
+    $left_pane_width: 220px;
+    $border_margin: 7px;
     float: left;
     margin-left: 10px;
-    width: 300px;
-    .wrapper {
+    width: $left_pane_width;
+    font-family: $common-novelsans;
+    .image-wrapper {
       display: block;
-      float: right;
-      width: 220px;
-      font-family: $common-verdana;
+      margin-left: $border_margin;
+      width: $left_pane_width - $border_margin * 2;
       .owner-avatar {
         margin-bottom: 20px;
         max-width: 100%;
+        border-radius: $left_pane_width - $border_margin * 2;
+        border: $border_margin solid white;
+        margin: -$border_margin;
+        z-index: 11111;
       }
+    }
+    $inner_width: 198px;
+    .wrapper {
+      display: block;
+      margin-top: -($left_pane_width - $border_margin * 2)/2;
+      padding-top: ($left_pane_width - $border_margin * 2)/2;
+      padding-bottom: 1px;
+      width: $left_pane_width;
+      background: white;
+      font-size: 14px;
+      line-height: 18px;
+      border-radius: 5px;
       .owner-name {
-        width: 100%;
-        line-height: 22px;
-        font-size: 18px;
+        margin: 15px auto 10px;
+        width: $inner_width;
+        font-size: 20px;
+        line-height: 1.2;
       }
       .joined-on {
-        width: 100%;
-        line-height: 15px;
-        font-size: 12px
+        margin: 0 auto;
+        width: $inner_width;
+        span {
+          color: $common-gray;
+        }
       }
       .makes {
-        margin-bottom: 20px;
-        width: 100%;
-        line-height: 18px;
-        font-size: 12px;
+        margin: 0 auto;
+        width: $inner_width;
+        color: $common-gray;
         .count {
-          font-weight: 700;
-          font-style: italic;
+          color: black;
         }
       }
-      h2 {
-        width: 100%;
-        font-weight: 700;
-        font-family: $common-sans-serif;
-        font-size: 22px;
-        line-height: 33px;
-        color: $quiet_font_color;
-      }
-      .members, .groups {
-        margin-bottom: 20px;
-        .member-avatar, .group-avatar {
-          display: inline-block;
-          max-width: 20px;
-          max-height: 20px;
-          margin-right: 5px;
-          &:nth-child(9n) {
-            margin-right: 0;
+      .relation-wrapper {
+        display: block;
+        margin: 25px auto 15px;
+        padding-bottom: 5px;
+        width: $inner_width;
+        background: $common-basic-color;
+        border-radius: 5px;
+        h2 {
+          padding: 15px 10px 10px;
+          width: 100%;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 1.2;
+          color: white;
+        }
+        .members, .groups {
+          margin: 0 auto 20px;
+          width: 179px;
+          font-size: 12px;
+          line-height: 16px;
+          border-radius: 5px;
+          color: black;
+          background: white;
+          .member, .group {
+            margin: 5px;
+            padding: 10px 0px;
+            width: 169px;
+            border-bottom: 1px solid $common-gray;
+            .name {
+              display: inline-block;
+              position: relative;
+              vertical-align: top;
+              top: 10px;
+              margin-left: 15px;
+              padding-bottom: 10px;
+              max-width: 120px;
+              word-break: break-all;
+            }
+          }
+          .member-avatar, .group-avatar {
+            display: inline-block;
+            max-width: 30px;
+            max-height: 30px;
+            border-radius: 30px;
+            border: 1px solid white;
+            margin: -1px;
+          }
+          a:last-child {
+            .member, .group {
+              border: none;
+            }
           }
         }
-      }
-      .serch-box {
-        width: 220px;
-        height: 26px;
-        font-size: 12px;
-        line-height: $common-line-height;
       }
     }
   }
   .right {
     float: left;
     margin-left: 20px;
-    width: 630px;
+    width: 710px;
+    font-family: $common-novelsans;
     .tabs {
       li {
         display: inline-block;
         margin-right: 10px;
         padding-left: 10px;
-        width: 140px;
+        width: 220px;
         height: 28px;
         background-color: $inactive_tab_background;
-        font-family: $common-verdana;
         font-size: 14px;
         line-height: $common-line-height;
+        border-radius: 5px 5px 0 0;
         &.active {
           background-color: $active_tab_background;
         }
         &:last-child {
           margin-right: 0;
         }
+        a {
+          position: relative;
+          top: 3px;
+        }
       }
     }
     .tabs-content {
       padding: 20px 10px 125px;
-      width: 610px;
+      width: 690px;
       background: white;
+      border-radius: 0 0 5px 5px;
       .tabs-pane {
         width: 100%;
-        h2 {
-          width: 100%;
-          font-weight: 700;
-          font-family: $common-helvetica;
-          font-size: 22px;
-          line-height: $common-line-height;
-          border-top: $common-border;
-        }
         .project-list {
           margin-top: 15px;
           .project {
             margin-bottom: 30px;
             padding-top: 10px;
             width: 100%;
-            border-top: $gray_border;
+            border-top: 1px solid #555555;
+            &:last-of-type {
+              padding-bottom: 30px;
+              border-bottom: 1px solid #555555;
+            }
             .image-container {
               display: inline-block;
-              max-width: 130px;
+              max-width: 200px;
               .image {
                 display: block;
                 margin-bottom: 10px;
@@ -123,18 +171,29 @@
                   max-width: 100%;
                 }
               }
-              .meta {
-                width: 100%;
-                margin-bottom: 5px;
-                span {
-                  font-family: $common-verdana;
-                  font-size: 9px;
-                  line-height: 14px;
-                  &.date {
-                    font-weight: 700;
-                  }
-                }
+              .btn {
+                padding: 2px 0px 0px 3px;
+                width: 77px;
+                height: 23px;
+                font-size: 12px;
+                color: white;
+                background: $common-gray;
               }
+              .edit:before {
+                  content: url("project/edit_image.png");
+                  position: relative;
+                  top: 2px;
+                  padding-right: 5px;
+                  padding-left: 5px;
+              }
+              .delete:before {
+                  content: url("project/delete_image.png");
+                  position: relative;
+                  top: 2px;
+                  padding-right: 5px;
+                  padding-left: 5px;
+              }
+
             }
             .text-container {
               display: inline-block;
@@ -153,20 +212,35 @@
               }
               .title {
                 display: block;
-                margin-bottom: 10px;
-                font-size: 18px;
-                line-height: 40px;
-                font-weight: 500;
+                margin-top: 10px;
+                margin-bottom: 5px;
+                font-family: $common-verdana;
+                font-size: 20px;
+                line-height: 1.2;
+                font-weight: normal;
+              }
+              .meta {
+                width: 100%;
+                margin-bottom: 5px;
+                font-size: 12px;
+                line-height: 1.2;
+                color: black;
+                .dates {
+                  margin-bottom: 5px;
+                }
+                .index {
+                  color: $common-gray;
+                }
               }
               .summary {
                 margin-bottom: 5px;
-                font-size: 12px;
-                line-height: 18px;
-                color: $quiet_font_color;
+                font-family: $common-verdana;
+                font-size: 14px;
+                line-height: 22px;
+                color: black;
               }
               .tags {
                 line-height: 18px;
-                font-family: $common-verdana;
                 font-size: 10px;
                 font-weight: 500;
                 .tag {

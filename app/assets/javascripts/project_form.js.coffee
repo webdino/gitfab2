@@ -53,6 +53,9 @@ $ ->
       embed_url = YOUTUBE_EMBED_URL_BASE + video_id_for_card
       $(".card-figure-link").last().val embed_url
       $("form.project-form").submit()
+    else
+      event.preventDefault()
+      $("form.project-form").submit()
 
   $(document).on "click", "#project-summary .edit.btn", (event) ->
     $(event.target).parents(".btns").siblings(".card-figure-content").trigger "click"

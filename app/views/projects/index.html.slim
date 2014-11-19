@@ -3,53 +3,57 @@
 
 #projects-index
   .left
-    .wrapper
+    .image-wrapper
       == image_tag @owner.avatar, class: "owner-avatar"
-    .horizontal-border.black.f-left
+
     .wrapper
       .owner-name
         == @owner.name
+
       .joined-on
+        span
+          'joined on:
         == @owner.created_at.strftime "%b %d, %Y"
-      .horizontal-border.white.m-b-5
+
       .makes
         .projects
           span
             'project:
           span.count
             == "#{@owner.projects.length}"
-        .notes
-          span
-            'notes:
-          span.count
-            == @owner.projects.noted.length
+
         / TODO: #487 Implement user.contributions method in user.rb
         / .contributions
         /   == @owner.contributions.length
-    .horizontal-border.black.f-left
-    .wrapper
-      - if @owner.is_a? Group
-        h2
-          'Members
-        ul.members
-          - @owner.members.each do |member|
-            == link_to image_tag(member.avatar, class: "member-avatar" , name: "#{member.name}"), projects_path(member)
-      - elsif @owner.groups.any?
-        h2
-          'Groups
-        ul.groups
-          - @owner.groups.each do |group|
-            == link_to image_tag(group.avatar, class: "group-avatar" , name: "#{group.name}"), projects_path(group)
-    - if @owner.is_a? Group or  @owner.groups.any?
-      .horizontal-border.black.f-left
-    .wrapper
-      .search
-        h2
-          'Search Project
-        .search-box
-          == form_tag projects_path(@owner), method: :get do
-            == text_field_tag :q, (params[:q] if params[:type] == "own"), placeholder: "keyword input", class: "q-field"
-            == hidden_field_tag :type, :own
-    .horizontal-border.black.f-left
+
+      / TODO: implement user's information
+      / .website
+      /   span
+      /     'Website
+      /   == @owner.website
+      / .place
+      /   == @owner.place
+
+      .relation-wrapper
+        - if @owner.is_a? Group
+          h2 Members
+          ul.members
+            - @owner.members.each do |member|
+              == link_to projects_path(member) do
+                li.member
+                  == image_tag member.avatar, class: "member-avatar" , name: "#{member.name}"
+                  .name
+                    == member.name
+
+        - elsif @owner.groups.any?
+          h2 Groups
+          ul.groups
+            - @owner.groups.each do |group|
+              == link_to projects_path(group) do
+                li.group
+                  == image_tag group.avatar, class: "group-avatar" , name: "#{group.name}"
+                  .name
+                    == group.name
+
   .right
     == render "projects/projects"
