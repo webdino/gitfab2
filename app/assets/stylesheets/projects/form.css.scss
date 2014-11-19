@@ -1,8 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
 
-$project_form_width: 703px;
-
 #recipes-new, #recipes-edit {
   width: 960px;
   background: white;
@@ -61,10 +59,6 @@ form.project-form {
     }
   }
 
-
-
-
-
   input#project_video_id {
     width: 580px;
     font-size: 12px;
@@ -72,68 +66,133 @@ form.project-form {
 
   #project-summary {
     @include cf;
-    margin: 10px auto;
-    width: $project_form_width;
     .description {
-      h1 {
-        margin-bottom: 0;
-        margin-top: 10px;
-        font-size: 22px;
-      }
+      margin-top: 30px;
       #project_description {
         font-family: $common-verdana;
-        width: 100%;
-        height: 140px;
+        font-size: 14px;
+        padding: 5px 10px;
+        width: 690px;
+        height: 120px;
         line-height: 1.7em;
+        border: 1px solid $common-basic-color;
+        border-radius: 5px;
       }
     }
 
     .license {
-      h1 {
-        margin-bottom: 5px;
-        margin-top: 20px;
-        font-size: 22px;
-      }
+      margin-top: 30px;
       img {
         width: 100px;
-        margin-left: 5px;
-        border: 3px solid rgba(0, 0, 0, 0);
+        border: 5px solid rgba(0, 0, 0, 0);
       }
       img.selected {
-        border: 3px solid orange;
+        border: 5px solid $common-basic-color;
+        background: $common-basic-color;
       }
       .about-license {
         margin-top: 10px;
+        font-family: $common-verdana;
         font-size: 12px;
         a {
-          color: $common-basic-color;
+          color: $common-gray;
+          text-decoration: underline;
         }
       }
     }
 
     .access-level {
-      h1 {
-        margin-bottom: 5px;
-        margin-top: 20px;
-        font-size: 22px;
+      margin-top: 30px;
+      .right {
+        font-size: 15px;
+
+        label {
+          margin-left: 10px;
+          vertical-align: bottom;
+        }
+
+        input[type=checkbox] {
+          display: none;
+        }
+        .checkbox {
+          box-sizing: border-box;
+          transition: background-color 0.2s linear;
+          position: relative;
+          display: inline-block;
+          margin: 0 20px 8px -15px;
+          padding: 12px 12px 12px 42px;
+          border-radius: 8px;
+          vertical-align: middle;
+          cursor: pointer;
+
+          &:hover {
+            &:after {
+              border-color: $common-basic-color;
+            }
+          }
+
+          &:before {
+            transition: opacity 0.2s linear;
+            position: absolute;
+            top: 50%;
+            left: 21px;
+            display: block;
+            margin-top: -7px;
+            width: 5px;
+            height: 9px;
+            border-right: 3px solid $common-basic-color;
+            border-bottom: 3px solid $common-basic-color;
+            content: '';
+            opacity: 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+
+          &:after {
+            transition: border-color 0.2s linear;
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            display: block;
+            margin-top: -10px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid $common-basic-color;
+            border-radius: 5px;
+            content: '';
+          }
+        }
+
+        input[type=checkbox]:checked + .checkbox {
+          &:before {
+            opacity: 1;
+          }
+        }
       }
     }
 
     .permalink {
       @include cf;
-      h1 {
-        margin-bottom: 5px;
-        margin-top: 20px;
-        font-size: 22px;
-      }
+      margin-top: 30px;
+      font-size: 15px;
       #permalink-label {
         float: left;
         height: 14px;
         line-height: 22px;
       }
       #project_name {
-        height: 14px;
-        width: 300px;
+        position: relative;
+        vertical-align: bottom;
+        bottom: 5px;
+        margin-left: 5px;
+        padding: 0 10px;
+        width: 250px;
+        height: 24px;
+        font-family: $common-verdana;
+        font-size: 12px;
+        border: 1px solid $common-basic-color;
+        border-radius: 5px;
       }
     }
 
@@ -141,10 +200,10 @@ form.project-form {
       li.figure {
         width: 100%;
          img {
-           max-width: 380px;
+           max-width: 300px;
          }
          iframe {
-           max-width: 380px;
+           max-width: 300px;
          }
          img + iframe {
            display: none;
@@ -155,21 +214,85 @@ form.project-form {
            font-size: 14px;
            color: red;
          }
-         .btn {
-           margin-left: 5px;
-         }
          .card-figure-link {
            width: 80%;
          }
       }
-      .btn {
-        margin-top: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
+      .btns {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 20px;
+        .btn {
+          display: block;
+          margin: 0 0 5px 0;
+          padding: 2px 10px 0;
+          width: 60px;
+          height: 23px;
+          color: white;
+          background-color: $common-gray;
+          a {
+            color: white;
+          }
+        }
+        .edit {
+          &:before {
+            content: url("project/edit_image.png");
+            position: relative;
+            top: 3px;
+            padding-right: 5px;
+          };
+        }
+        .delete {
+          &:before {
+            content: url("project/delete_image.png");
+            position: relative;
+            top: 3px;
+            padding-right: 5px;
+          };
+        }
       }
       .card-figure-content, .card-figure-link {
         display: none;
       }
+
+      .add-image, .add-video, .remove-all-figures {
+        vertical-align: top;
+        margin-top: 20px;
+        padding: 2px 10px 0;
+        width: 140px;
+        height: 23px;
+        color: $common-gray;
+        background-color: white;
+        border: 1px solid $common-gray;
+      }
+      .add-image {
+        &:before {
+          content: url("project/add.png");
+          position: relative;
+          top: 3px;
+          padding-right: 5px;
+        };
+      }
+      .add-video {
+        padding-top: 3px;
+        &:before {
+          content: url("project/add_movie.png");
+          position: relative;
+          top: 2px;
+          padding-right: 5px;
+        };
+      }
+      .remove-all-figures {
+        padding-top: 0;
+        height: 25px;
+        &:before {
+          content: url("project/remove_all_images.png");
+          position: relative;
+          top: 4px;
+          padding-right: 5px;
+        };
+      }
+
       &.hide-add-buttons {
         a.add-image, .add-video {
           display: none;
@@ -194,9 +317,7 @@ form.project-form {
       padding: 5px 0 0 15px;
       background: $common-basic-color;
       border: none;
-      border-radius: 5px;
       color: white;
-      font-family: $common-novelsans;
       font-size: 18px;
       &:before {
         content: url("project/submit.png");
@@ -206,15 +327,21 @@ form.project-form {
         padding-right: 20px;
       };
     }
+    .update:before {
+      content: url("project/update_project.png");
+      position: relative;
+      top: 6px;
+      left: 2px;
+      padding-right: 10px;
+    }
+
     .cancel {
       vertical-align: bottom;
-      margin-left: 10px;
+      margin-left: 15px;
       width: 66px;
       height: 25px;
       padding: 5px 0px 0px 3px;
-      font-family: $common-novelsans;
       font-size: 12px;
-      border-radius: 5px;
       &:before {
         content: url("project/cancel.png");
         position: relative;
@@ -223,6 +350,20 @@ form.project-form {
         padding-left: 3px;
       };
     }
+    #delete-btn {
+      vertical-align: bottom;
+      margin-left: 15px;
+      padding: 5px 0px 0px 3px;
+      width: 112px;
+      height: 25px;
+      font-size: 12px;
+      &:before {
+        content: url("project/delete_project.png");
+        position: relative;
+        top: 2px;
+        padding-right: 5px;
+        padding-left: 5px;
+      };
+    }
   }
-
 }
