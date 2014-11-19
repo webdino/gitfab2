@@ -1,7 +1,7 @@
 == content_for :stylesheet do
   == stylesheet_link_tag "global_projects", media: "all", "data-turbolinks-track" => true
 == content_for :javascript do
-  == javascript_include_tag "application", "data-turbolinks-track" => true
+  == javascript_include_tag "global_projects", "data-turbolinks-track" => true
 - content_for :content do
   == yield
   == yield :utils
