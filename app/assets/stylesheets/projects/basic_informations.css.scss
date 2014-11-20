@@ -3,68 +3,158 @@
 @import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
 
+
+
 #basic-informations {
   @include cf;
-  $margin_width: 60px;
-  .margin {
-    float: left;
-    margin-left: $common-margin;
-    margin-right: $first_column_width - $margin_width;
-    width: $margin_width;
-    border-top: $common-border;
+  $margin_width: 70px;
+  margin: 0 $margin-width 60px;
+  width: 960px - $margin-width * 2;
+  position: relative;
+
+  .private-project {
+    position: absolute;
+    top: 5px;
+    left: -60px;
+    padding: 5px;
+    height: 10px;
+    color: white;
+    font-family: $common-novelsans;
+    font-size: 12px;
+    background: $common-basic-color;
+    border-radius: 5px;
   }
+
   .header {
     $height: 40px;
-    margin-bottom: $common-margin;
     min-height: $height;
-    @include cf;
     .title {
-      float: left;
       margin: 0;
-      width: $second_column_width;
+      width: 100%;
       height: auto;
       min-height: $height;
-      font-size: 22px;
-      line-height: 40px;
+      font-family: $common-verdana;
+      font-size: 25px;
+      font-weight: normal;
+      line-height: 1.2;
       word-wrap: break-word;
     }
-    .like {
-      $star_size: 26px;
-      float: left;
-      vertical-align: top;
-      margin-top: 5px;
-      line-height: $star_size;
-      .like-button {
-        min-width: 100px;
-        height: $star_size;
-        background: asset-url("star.png") no-repeat;
-        background-size: contain;
-        padding-left: $star_size + 5px;
-        cursor: pointer;
-        font-size: 14px;
-        font-family: $common-verdana;
-        line-height: $star_size + 4px;
-        display: inline-block;
-      }
-      .like-button.liked {
-        background: asset-url("starred.png") no-repeat;
-        background-size: contain;
-      }
+    .meta {
+      font-family: $common-novelsans;
+      font-size: 14px;
+      line-height: 1.2;
+      color: black;
 
+      .left {
+        display: inline-block;
+        width: 630px;
+        height: 70px;
+        .dates {
+          margin-bottom: 5px;
+          .index {
+            color: $common-gray;
+          }
+        }
+
+        .line {
+          margin-bottom: 5px;
+          label {
+            display: inline-block;
+            color: $common-gray;
+          }
+          .tags {
+            display: inline-block;
+            .tag {
+              display: inline-block;
+              height: 25px;
+              margin-left: 10px;
+              a {
+                color: black;
+              }
+              .delete-tag {
+                display: inline-block;
+                position: relative;
+                top: -5px;
+                margin-left: 0px;
+                width: 9px;
+                height: 9px;
+                background: asset-url("delete_tag.png") no-repeat;
+                background-size: contain;
+                cursor: pointer;
+              }
+              .delete-tag:not(.mine) {
+                display: none;
+              }
+            }
+          }
+          #tag-form {
+            display: none;
+            .btn {
+              border: none;
+              background-color: $common-basic-color;
+              color: white;
+            }
+          }
+          #show-tag-form {
+            display: inline-block;
+            margin-left: 10px;
+            background: $common-gray;
+            color: white;
+            .textfield {
+              width: 120px;
+            }
+          }
+        }
+      }
+      .right {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        width: 190px;
+        height: 70px;
+
+        .license {
+          display: inline-block;
+          margin-top: 5px;
+          img {
+            width: 96px;
+          }
+        }
+        .like {
+          $star_size: 26px;
+          display: inline-block;
+          vertical-align: top;
+          margin-top: 5px;
+          position: absolute;
+          right: 0;
+          top: 5px;
+          .like-button {
+            display: inline-block;
+            min-width: 25px;
+            height: $star_size;
+            background: asset-url("star.png") no-repeat;
+            background-size: contain;
+            padding-left: $star_size + 5px;
+            cursor: pointer;
+            font-size: 14px;
+            line-height: 35px;
+            text-align: right;
+          }
+          .like-button.liked {
+            background: asset-url("starred.png") no-repeat;
+            background-size: contain;
+          }
+        }
+      }
     }
   }
 
   .body {
-    $visual_width: 380px;
-    $tools_width: $second_column_width - $visual_width;
-    $height: $visual_width / 4 * 3;
-    height: $height;
-    @include cf;
+    width: 100%;
     figure.visual {
-      float: left;
       margin: 0;
-      width: $visual_width;
-      height: $height;
+      width: 100%;
+      height: 460px;
       background-color: #E6E6E6;
       overflow: hidden;
       border: none;
@@ -129,193 +219,67 @@
       width: 100%;
     }
 
-    .tools {
-      float: left;
-      $tool_size: 140px;
-      width: $tools_width;
-      $margin_left: ($tools_width - $tool_size) / 2;
-      #slideshow-btn,
-      #fork-btn {
+    .members {
+      display: inline-block;
+      margin-top: 30px;
+      width: 100%;
+      .title {
+        font-family: $common-novelsans;
+        font-size: 14px;
+        color: $common-gray;
+        text-decoration: underline;
+      }
+      .collaborators {
         display: inline-block;
-        margin-left: $margin_left;
-        width: $tool_size;
-        height: $tool_size;
-        cursor: pointer;
-        background-size: cover;
+        margin-top: 20px;
       }
-      #slideshow-btn {
-        margin-bottom: ($height - $tool_size * 2) - 4px;
-        background-image: asset-url("slideshow.png");
-      }
-      #fork-btn {
-        background-image: asset-url("fork.png");
-      }
-      #fork-destinations {
-        $popup-width: 360px;
-        @include spacing-row($popup-width, 20px, 3);
-        width: $popup-width;
-        display: none;
-        min-height: 442px;
-        border: $common-border;
-        border-left: none;
-        .fork-destination {
-          .dest-name {
-            margin-top: $common-margin;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-          }
-          .fork-btn {
-            margin-bottom: $common-margin;
-            width: 100px;
-            height: 100px;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            &:hover {
-              opacity: 0.5;
-            }
+      .owner, .collaborator {
+        display: inline-block;
+        margin-right: 20px;
+        .thumbnail {
+          display: inline-block;
+          width: 64px;
+          height: 64px;
+          img {
+            border-radius: 64px;
+            border: 4px solid white;
+            margin: -4px;
+            max-width: 100%;
+            max-height: 100%;
           }
         }
+      }
+      #add-collaborator-btn {
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        margin: 0;
+        padding: 0;
+        width: 72px;
+        height: 72px;
+        border-radius: 72px;
+        background: asset-url("add-member.png") no-repeat;
+        background-size: contain;
       }
     }
 
     .description {
-      float: left;
-      margin-right: $common-margin;
-      $padding_top: 5px;
-      $padding_bottom: 5px;
-      padding-top: $padding_top;
-      padding-bottom: $padding_bottom;
-      width: $third_column_width - $common-margin;
-      height: $height / 2 - $padding_top - $padding_bottom;
-      max-height: $height / 2 - $padding_top - $padding_bottom;
-      border-top: $common-border;
-      border-bottom: $common-border;
-      font-size: 12px;
-      line-height: $common-line-height;
-      overflow: hidden;
-    }
-
-    .meta {
-      margin-right: $common-margin;
-      font-size: 12px;
-      @include cf;
-      .left {
-        float: left;
-        padding-top: 5px;
-        width: ($third_column_width - $common-margin) / 2;
+      margin-top: 30px;
+      width: 100%;
+      .title {
+        font-family: $common-novelsans;
+        font-size: 14px;
+        color: $common-gray;
+        text-decoration: underline;
       }
-      .right {
-        float: left;
-        padding-top: 5px;
-        width: ($third_column_width - $common-margin) / 2;
-      }
-      .private-project {
-        display: inline-block;
-        padding: 5px;
-        margin: 5px 0 5px -2px;
-        border-radius: 5px;
-        background-color: red;
-        color: white;
-        text-align: center;
-      }
-      .timestamps {
-        margin-bottom: 6px;
-        font-family: $common-verdana;
-        font-size: 9px;
-        line-height: 16px;
-        h2 {
-          font-weight: 500;
-        }
-        .date {
-          font-weight: 700;
-        }
-      }
-      .license {
-        margin-top: 15px;
-        img {
-          width: 100px;
-        }
-      }
-      .collaborators {
-        .owner, .collaborator {
-          margin-bottom: 5px;
-          .thumbnail {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            img {
-              margin: 0;
-              max-width: 100%;
-              max-height: 100%;
-            }
-          }
-          .screen-name {
-            display: inline-block;
-            vertical-align: top;
-            margin-top: 10px;
-            margin-left: 5px;
-            height: 20px;
-          }
-        }
-        #add-collaborator-btn {
-          display: inline-block;
-          margin: 0 0 20px 0;
-        }
+      .text {
+        margin-top: 20px;
+        width: 100%;
+        font-size: 18px;
+        line-height: 29px;
+        word-break: break-all;
       }
     }
-  }
-  .footer {
-    margin-top: 10px;
-    margin-left: $common-margin + $first_column_width;
-    .line {
-      margin-bottom: 5px;
-      label {
-        display: inline-block;
-        padding-left: 6px;
-      }
-      .tags {
-        display: inline-block;
-        .tag {
-          display: inline-block;
-          height: 25px;
-          margin-left: 10px;
-          a {
-            color: $common-basic-color;
-          }
-          .delete-tag {
-            position: relative;
-            top: -5px;
-            margin-left: 0px;
-            color: red;
-          }
-          .delete-tag:not(.mine) {
-            display: none;
-          }
-        }
-      }
-    }
-    #tag-form {
-      display: none;
-      .btn {
-        border: none;
-        background-color: $common-basic-color;
-        color: white;
-      }
-    }
-    #show-tag-form {
-      .textfield {
-        width: 120px;
-      }
-    }
-  }
-  #edit-menu {
-    margin-top: $common-margin;
-    text-align: right;
-    font-family: $common-verdana;
-    font-size: 14px;
-    line-height: 16px;
   }
 }
 
@@ -364,15 +328,87 @@
     #collaborations {
       margin-bottom: 20px;
     }
+
   }
 }
 
+
+$tool_size: 75px;
+
+#project-edit-btn {
+  position: absolute;
+  top: 110px;
+  right: 0;
+  padding: 4px 8px 4px 0;
+  width: $tool_size;
+  height: $tool_size;
+  border-radius: 5px 0 0 5px;
+  background-repeat: no-repeat;
+  background-color: $common-gray;
+  background-image: asset-url("edit-project.png");
+  background-position: 5px;
+}
+
+.tools {
+  position: fixed;
+  top: 215px;
+  right: 0;
+  padding-left: 8px;
+  width: $tool_size;
+  border-radius: 5px 0 0 5px;
+  background: white;
+  #slideshow-btn,
+  #fork-btn {
+    display: block;
+    width: $tool_size;
+    height: $tool_size + 10px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid $common-basic-color;
+  }
+  #slideshow-btn {
+    background-image: asset-url("slideshow.png");
+  }
+  #fork-btn {
+    background-image: asset-url("fork.png");
+  }
+  #fork-destinations {
+    $popup_width: 360px;
+    @include spacing-row($popup_width, 20px, 3);
+    display: none;
+    width: $popup_width;
+    min-height: 442px;
+    border: $common-border;
+    border-left: none;
+    .fork-destination {
+      .dest-name {
+        margin-top: $common-margin;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .fork-btn {
+        margin-bottom: $common-margin;
+        width: 100px;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+
+
 #tabs {
   margin-top: $common-margin * 4;
-  margin-left: $first_column_width + $common-margin;
+  margin-left: $first_column_width;
   height: 28px;
   a:nth-child(2) {
-    margin-left: $common-margin;
+    margin-left: $common-margin * 2;
   }
   .tab {
     @include cf;
@@ -380,9 +416,11 @@
     margin-top: 1px;
     padding-top: 7px;
     padding-left: $common-margin;
-    width: 380px;
+    width: 390px;
     height: 20px;
     background-color: $inactive_tab_background;
+    font-family: $common-novelsans;
+    border-radius: 5px 5px 0 0;
     .count {
       display: inline-block;
       margin-top: -2px;
@@ -390,7 +428,6 @@
       float: right;
       height: 20px;
       vertical-align: top;
-      font-family: $common-verdana;
     }
     &.active {
       margin-top: 0;
@@ -398,7 +435,6 @@
       background-color: $active_tab_background;
     }
     p {
-      font-family: $common-verdana;
       font-size: 14px;
       line-height: 16px;
     }

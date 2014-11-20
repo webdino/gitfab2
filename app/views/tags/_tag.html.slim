@@ -2,4 +2,4 @@ li.tag
   == link_to tag.name, "#{search_path()}?q=#{tag.name}"
   - if can? :destroy, tag
     - clazz = tag.user_id == current_user.slug ? "mine" : ""
-    == link_to "x", resources, method: :delete, remote: true, class: "delete-tag #{clazz}"
+    == link_to "", resources, method: :delete, remote: true, class: "delete-tag #{clazz}"

@@ -3,9 +3,10 @@
 @import "projects/_project_variables.css.scss";
 
 #recipe-cards {
-  width: $content_width;
-  #top {
-    margin-left: $first_column_width + $common-margin;
+  width: $first_column_width + $article_column_width;
+  margin-right: $first_column_width;
+  .top {
+    margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
     background: white;
@@ -18,8 +19,9 @@
 
   #making-list {
     @include cf;
-    width: $content_width;
-    #top {
+    width: $first_column_width + $article_column_width;
+    margin-right: $first_column_width;
+    .top {
       .inner {
         width: $article_column_width - $common-margin * 2;
         margin: $common-margin $common-margin 0;
@@ -29,8 +31,7 @@
           display: inline-block;
           vertical-align: top;
           width: 40%;
-          font-family: $common-helvetica;
-          font-weight: 700;
+          font-family: $common-novelsans;
           font-size: 22px;
           line-height: $common-line-height;
         }
@@ -38,7 +39,8 @@
     }
     .article-column.sp {
       background: white;
-      margin-left: $first_column_width + $common-margin;
+      margin-top: -2px;
+      margin-left: $first_column_width;
       .new-card {
         margin-top: 20px;
         margin-left: $common-margin;
@@ -58,13 +60,15 @@
 #recipe-card-list {
   @include cf;
   width: $content_width;
+  font-family: $common-verdana;
   > li {
     width: 100%;
     float: left;
   }
   li.state-wrapper {
     $state_margin_top: 50px;
-    width: $content_width;
+    margin-top: -2px;
+    width: $first_column_width + $article_column_width;
     article {
       @include cf;
       display: table;
@@ -72,19 +76,18 @@
       h1.number {
         display: table-cell;
         vertical-align: top;
-        padding-left: 10px;
         z-index: 2;
         -webkit-padding-start: 13px;
-        width: 38px;
-        max-width: 38px;
-        font-family: $common-helvetica;
+        width: 30px;
+        max-width: 30px;
+        font-family: $common-novelsans;
         font-size: 45px;
         line-height: 140px;
         color: white;
       }
       .arrow-column {
         display: table-cell;
-        padding-right: 20px;
+        padding-right: 18px;
         position: relative;
         width: 22px;
         background-image: asset-url("arrow-body.png");
@@ -95,7 +98,7 @@
           content: "\0000a0";
         }
         .arrow-head {
-          margin-left: 10px;
+          margin-left: 9px;
           -webkit-margin-start: 9px;
           position: absolute;
           bottom: 0;
@@ -113,7 +116,6 @@
 
       .article-column {
         display: table-cell;
-        float: none;
         background: white;
         padding-top: $state_margin_top;
         .card-content {
@@ -189,7 +191,7 @@
           h2.title {
             float: left;
             max-width: $card_content_width - $figure_width - $figure_margin_right;
-            font-family: $common-sans-serif;
+            font-family: $common-verdana;
             font-weight: 700;
             font-size: 14px;
             line-height: $common-line-height;
@@ -290,7 +292,7 @@
               h2.title {
                 float: left;
                 max-width: $annotation_width - $figure_width - $figure_margin_right;
-                font-family: $common-sans-serif;
+                font-family: $common-verdana;
                 font-weight: 700;
                 font-size: 14px;
                 line-height: $common-line-height;
@@ -319,7 +321,7 @@
           background-color: $common-basic-color;
           padding: 11px 0;
           width: $annotation_width;
-          font-family: $common-verdana;
+          font-family: $common-novelsans;
           font-size: 14px;
           line-height: $common-line-height;
           text-align: center;
@@ -332,7 +334,7 @@
         line-height: 70px;
       }
       .arrow-column {
-        background-position: 50% 15px;
+        background-position: 50% 0;
       }
       .article-column {
         padding-top: 0px;
@@ -348,7 +350,9 @@
 #recipe-card-list {
   #card-order-tools {
     margin-top: -20px;
-    margin-left: $first_column_width + $common-margin;
+    margin-left: $first_column_width;
+    padding-bottom: 20px;
+    width: $article_column_width;
     text-align: right;
     background: white;
   }
@@ -396,18 +400,20 @@
   display: none;
   border-top: $common-border;
   padding: 3px 0 70px;
+  font-family: $common-verdana;
   &.has-data { display: block; }
   h2 {
     display: inline-block;
     vertical-align: top;
     width: 240px;
-    font-family: $common-helvetica;
+    font-family: $common-novelsans;
     font-size: 22px;
     line-height: $common-line-height;
   }
   ul {
     display: inline-block;
     padding-top: 7px;
+    padding-left: 20px;
     width: 610px;
     > li {
       list-style-type: decimal;
