@@ -180,14 +180,14 @@
                 background: $common-gray;
               }
               .edit:before {
-                  content: url("project/edit_image.png");
+                  content: url("/images/project/edit_image.png");
                   position: relative;
                   top: 2px;
                   padding-right: 5px;
                   padding-left: 5px;
               }
               .delete:before {
-                  content: url("project/delete_image.png");
+                  content: url("/images/project/delete_image.png");
                   position: relative;
                   top: 2px;
                   padding-right: 5px;
