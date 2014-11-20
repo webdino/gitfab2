@@ -7,11 +7,11 @@
       ul
         - @project.errors.full_messages.each do |msg|
           li == msg
-
   #basic-information
     - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
       h1.page-title Create Project
     - else
+
       h1.page-title Update Project
 
     .title

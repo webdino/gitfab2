@@ -6,7 +6,7 @@ $ ->
 
   $(document).on "ajax:success", "#tag-form", (xhr, data) ->
     form = $ this
-    ul = form.siblings(".line").find ".tags"
+    ul = form.siblings ".tags"
     ul.append data.html
     list = ul.find "li"
     if list.length > 10

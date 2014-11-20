@@ -1,21 +1,60 @@
+
 section#basic-informations
-  - if original = @project.original
-    p.forked-from
-      == link_to "(Forked from #{original.owner.name}'s \"#{original.title}\")", project_path(original, owner_name: original.owner.slug)
+  - if @project.is_private?
+    section.private-project
+      'Private
+
   section.header
-    .margin
     h1.title
       == @project.title
-    == render "components/like", resources: [@owner, @project]
+
+    section.meta
+      .left
+        section.dates
+          span.created
+            span.index
+              'created date:
+            span.value
+              == " #{@project.created_at.strftime '%Y-%m-%d, %H:%M:%S'} / "
+
+          span.updated
+            span.index
+              'updated date:
+            span.value
+              == " #{@project.updated_at.strftime '%Y-%m-%d, %H:%M:%S'}"
+
+        .line
+          label
+            == "Tags:"
+
+          ul.tags
+            - @project.tags.each do |tag|
+              == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
+          - if signed_in?
+            == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
+              == f.hidden_field :user_id, value: current_user.slug
+              == f.text_field :name, class: "textfield"
+              == f.submit "Add", class: "btn"
+            == link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
+
+      .right
+        section.license
+          - index = @project.license.nil? ? 3 : @project.license
+          - license = @project.licenses[index]
+          - image = "cc/" + license + ".png"
+          - url = "http://creativecommons.org/licenses/" + license + "/4.0"
+          == link_to image_tag(image), url, { target: "_blank" }
+
+        == render "components/like", resources: [@owner, @project]
+
   section.body
-    .margin
     - if @project.figures.present?
       - if @project.figures.first.content.present?
         figure.visual.flexslider
           ul.slides
             - @project.figures.each do |figure|
               li
-                == image_tag figure.content.small, data: {src: figure.content.url}
+                == image_tag figure.content, data: {src: figure.content.url}
       - elsif @project.figures.first.link.present?
         figure.visual
           iframe src="#{@project.figures.first.link}"
@@ -26,73 +65,41 @@ section#basic-informations
       figure.visual
         == image_tag("fallback/blank.png")
 
-    section.tools
-      == link_to "", "#", id: "slideshow-btn"
-      == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
-      #fork-destinations
-        - if signed_in?
-          == render "projects/fork_destination", owner: current_user, project: @project
-          - current_user.groups.each do |group|
-            - if can? :manage, group
-              == render "projects/fork_destination", owner: group, project: @project
+    section.members
+      .title Members
+      .owner
+        == link_to image_tag(@owner.avatar), projects_path(owner_name: @owner.slug), alt: @owner.name, class: "thumbnail"
+      - if @project.collaborators.present?
+        ul.collaborators
+          - @project.collaborators.each do |collaborator|
+            li.collaborator
+              == link_to image_tag(collaborator.avatar), projects_path(owner_name: collaborator.slug), alt: collaborator.name, class: "thumbnail"
+      - if can? :manage, @project
+        == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
+    == render "collaborators/list"
+
     section.description
-      == Sanitize.clean @project.description, Sanitize::Config::RELAXED
-    section.meta
-      .left
-        - if @project.is_private?
-          section.private-project
-            ' private project
+      .title Summary
+      .text
+        == Sanitize.clean @project.description, Sanitize::Config::RELAXED
 
-        section.timestamps
-          .created-timestamp
-            h2
-              == "created"
-            .date
-              == @project.created_at.strftime "%Y-%m-%d, %H:%M:%S"
-          .updated-timestamp
-            h2
-              == "last updated"
-            .date
-              == @project.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
 
-        section.license
-          - index = @project.license.nil? ? 3 : @project.license
-          - license = @project.licenses[index]
-          - image = "cc/" + license + ".png"
-          - url = "http://creativecommons.org/licenses/" + license + "/4.0"
-          == link_to image_tag(image), url, { target: "_blank" }
+- if can? :manage, @project
+  == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn", id: "project-edit-btn"
 
-      .right
-        section.collaborators
-          .owner
-            == link_to image_tag(@owner.avatar), projects_path(owner_name: @owner.slug), class: "thumbnail"
-            == link_to @owner.name, projects_path(owner_name: @owner.slug), class: "screen-name"
-          - if @project.collaborators.present?
-            ul.collaborators
-              - @project.collaborators.each do |collaborator|
-                li.collaborator
-                  == link_to image_tag(collaborator.avatar), projects_path(owner_name: collaborator.slug), class: "thumbnail"
-                  == link_to collaborator.name, projects_path(owner_name: collaborator.slug), class: "screen-name"
-          - if can? :manage, @project
-            == link_to "+ collaborator", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
-        == render "collaborators/list"
+section.tools
+  == link_to "", "#", id: "slideshow-btn"
+  == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
 
-  section.footer
-    .line
-      label
-        == "tags:"
-      ul.tags
-        - @project.tags.each do |tag|
-          == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
+  #fork-destinations
     - if signed_in?
-      == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
-        == f.hidden_field :user_id, value: current_user.slug
-        == f.text_field :name, class: "textfield"
-        == f.submit "Add", class: "btn"
-      == link_to "Edit", "#", class: "btn", id: "show-tag-form"
+      == render "projects/fork_destination", owner: current_user, project: @project
+      - current_user.groups.each do |group|
+        - if can? :manage, group
+          == render "projects/fork_destination", owner: group, project: @project
 
-  #edit-menu
-    - if can? :manage, @project
-      == link_to "Edit project", edit_project_path(@project, owner_name: @owner.slug), class: "btn"
-      == link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
-      == render "projects/change_owner", project: @project
+  #pointer
+
+
+      / == link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
+      / == render "projects/change_owner", project: @project
