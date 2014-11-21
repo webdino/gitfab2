@@ -3,8 +3,8 @@
 
 ul.comments {
   border-top: 1px solid gray;
-  margin: 10px; 
-  padding-top: 10px; 
+  margin: 10px;
+  padding-top: 10px;
   li.comment {
     @include cf;
     margin-bottom: 10px;
@@ -12,39 +12,47 @@ ul.comments {
       float: left;
       margin-right: 10px;
       img {
+        margin: 0 5px 5px 5px;
         width: 40px;
         height: 40px;
-        margin: 0 5px 5px 5px;
+        border-radius: 40px;
+        border: 3px solid $common-gray;
       }
     }
     .right {
       float: left;
       width: 400px;
+      font-family: $common-verdana;
       .user-name {
         display: block;
         margin-right: 5px;
         margin-bottom: 5px;
+        font-family: $common-novelsans;
       }
       .created-at {
-        margin-top: 5px;
+        margin-top: 10px;
+        font-family: $common-novelsans;
+        font-size: 12px;
       }
     }
   }
 }
 
 .comment-form {
-  margin: 10px; 
+  margin: 10px;
   background-color: #eee;
   display: inline-block;
   img {
     width: 40px;
     height: 40px;
     margin: 5px;
+    border-radius: 40px;
+    border: 3px solid $common-gray;
   }
   textarea {
     width: 400px;
-    margin-bottom: 5px;
-    height: 40px;
+    margin-bottom: 6px;
+    height: 44px;
   }
   .btn {
     height: 40px;

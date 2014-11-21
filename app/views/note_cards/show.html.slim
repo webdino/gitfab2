@@ -8,12 +8,14 @@ main#note-cards-show
     == link_to project_path(@project, owner_name: @owner.slug) do
       .tab
         'Recipe
+        == "(#{@project.recipe.states.length})"
     == link_to project_note_path(@project, owner_name: @owner.slug) do
       .tab.active
         'Note
+        == "(#{@project.note.note_cards.length})"
 
   section#note-card
-    #top
+    .top
       .inner
         h1
           'Note
