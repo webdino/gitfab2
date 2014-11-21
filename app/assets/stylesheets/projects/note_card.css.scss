@@ -7,8 +7,8 @@
   aside.like {
     display: inline;
   }
-  #top {
-    margin-left: $first_column_width + 10px;
+  .top {
+    margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
     background: white;
@@ -19,7 +19,7 @@
       margin: 34px $margin 0;
       border-top: $common-border;
       h1 {
-        font-family: $common-helvetica;
+        font-family: $common-novelsans;
         font-weight: 700;
         font-size: 22px;
         line-height: $common-line-height;
@@ -39,27 +39,29 @@
     }
     .article-column {
       display: block;
+      margin-right: 70px;
       padding-bottom: 40px;
       background: white;
       .card-content {
-        $note_card_width: 850px;
+        $note_card_width: 820px;
         @include cf;
         .title {
           margin: 0 10px;
-          width: $note_card_width;
+          width: $note_card_width - 20px;
+          font-family: $common-verdana;
           font-size: 22px;
           line-height: $common-line-height;
         }
         .meta {
           margin: 0 10px;
-          width: $note_card_width;
-          font-family: $common-verdana;
+          width: $note_card_width - 20px;
+          font-family: $common-novelsans;
           font-size: 14px;
           line-height: $common-line-height;
           .postedby {
             display: inline-block;
             width: 60%;
-            font-weight: 700;
+            font-weight: normal;
             img {
               margin-right: 5px;
               margin-bottom: -3px;
@@ -96,7 +98,7 @@
 
         figure {
           margin-left: 10px;
-          width: $note_card_width;
+          width: $note_card_width - 20px;
           height: auto;
           overflow: hidden;
           border: none;
@@ -107,12 +109,12 @@
           }
           iframe {
             width: 100%;
-            height: $note_card_width * 3 / 4;
+            height: ($note_card_width - 20px) * 3 / 4;
           }
         }
         figure.flexslider {
           margin-left: 10px;
-          width: $note_card_width;
+          width: $note_card_width - 20px;
           height: auto;
           overflow: hidden;
           border: none;
@@ -158,6 +160,7 @@
         .description {
           margin: 10px;
           width: $note_card_width;
+          font-family: $common-verdana;
           font-size: 16px;
           line-height: 32px;
           ul {
@@ -173,8 +176,11 @@
   }
   footer {
     display:block;
-    margin-left: $first_column_width + 10px;
+    margin-right: 70px;
+    margin-bottom: 60px;
+    margin-left: $first_column_width;
     padding-top: 150px;
+    width: $article_column_width;
     background: white;
     .inner {
       $margin: 10px;

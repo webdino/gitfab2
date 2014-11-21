@@ -9,9 +9,12 @@
   }
   aside.like {
     display: inline;
+    .like-button {
+      font-size: 16px;
+    }
   }
-  #top {
-    margin-left: $first_column_width + 10px;
+  .top {
+    margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
     background: white;
@@ -22,7 +25,7 @@
       margin: 34px $margin 0;
       border-top: $common-border;
       h1 {
-        font-family: $common-helvetica;
+        font-family: $common-novelsans;
         font-weight: 700;
         font-size: 22px;
         line-height: $common-line-height;
@@ -112,19 +115,20 @@
         .title {
           float: left;
           margin: 0 10px 0px 20px;
-          width: 460px;
+          width: 410px;
+          font-family: $common-verdana;
           font-size: 22px;
           line-height: $common-line-height;
         }
         .meta {
           float: left;
           margin: 0 10px 0px 20px;
-          width: 460px;
-          font-family: $common-verdana;
+          width: 410px;
+          font-family: $common-novelsans;
           font-size: 14px;
           line-height: $common-line-height;
           .postedby {
-            font-weight: 700;
+            font-weight: normal;
             img {
               width: 12px;
               height: 12px;
@@ -156,7 +160,8 @@
         .description {
           float: left;
           margin: 10px 10px 0 20px;
-          width: 460px;
+          width: 410px;
+          font-family: $common-verdana;
           font-size: 14px;
           line-height: 24px;
         }
@@ -165,7 +170,9 @@
   }
   footer {
     display:block;
-    margin-left: $first_column_width + 10px;
+    margin-bottom: 60px;
+    margin-left: $first_column_width;
+    width: 820px;
     padding-top: 150px;
     background: white;
     .inner {
