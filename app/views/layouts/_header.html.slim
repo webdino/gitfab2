@@ -8,7 +8,7 @@ section#layouts-header
           == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
 
           / TODO: add clear btn
-          
+
       - unless user_signed_in?
         #sign-in
           == link_to "Sign in with Github", user_omniauth_authorize_path(:github)
@@ -16,7 +16,7 @@ section#layouts-header
         #tools
           .user
             .avatar
-              == link_to image_tag(current_user.avatar, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
+              == link_to image_tag(current_user.avatar.thumb, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
             .name
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box

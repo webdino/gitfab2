@@ -2,7 +2,7 @@ li.comment
   - user = User.find(comment.user_id)
   - link = projects_path(owner_name: user.slug)
   .left
-    - image = image_tag user.avatar
+    - image = image_tag user.avatar.thumb
     == link_to image, link
   .right
     == link_to user.name, link, class: "user-name"

@@ -27,7 +27,7 @@ section#recipes-utils
   - if @recipe.persisted?
     section#user-info
       .owner
-        == link_to image_tag(@owner.avatar), recipes_path(owner_name: @owner.slug), class: "thumbnail"
+        == link_to image_tag(@owner.avatar.small), recipes_path(owner_name: @owner.slug), class: "thumbnail"
         == link_to @owner.name, recipes_path(owner_name: @owner.slug), class: "screen-name"
       - if can? :manage, @recipe
         == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.slug, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"

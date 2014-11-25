@@ -1,7 +1,7 @@
 #layouts-setting-links
   #user
     #user-name.name
-      == image_tag current_user.avatar, class: "avatar"
+      == image_tag current_user.avatar.thumb, class: "avatar"
       p
         == current_user.name
     ul
@@ -12,7 +12,7 @@
   - current_user.groups.each do |group|
     div id="#{group.name}"
       div id="#{group.name}-name" class="name"
-        == image_tag group.avatar, id: "#{group.name}-avatar", class: "avatar"
+        == image_tag group.avatar.thumb, id: "#{group.name}-avatar", class: "avatar"
         p
           == group.name
       ul
