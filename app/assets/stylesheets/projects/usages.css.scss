@@ -9,19 +9,19 @@ section#usages {
   padding-top: 1px;
   width: $article_column_width;
   background: white;
+  border-radius: 5px;
 
   .inner {
     @include cf;
-    $margin: 10px;
+    $margin: 20px;
     width: $article_column_width - $margin * 2;
-    margin: 34px $margin 0;
+    margin: 20px $margin 0;
     padding-bottom: 50px;
     min-height: 256px;
-    border-top: $common-border;
 
     h1 {
       font-family: $common-novelsans;
-      font-weight: 700;
+      font-weight: normal;
       font-size: 22px;
       line-height: $common-line-height;
     }
@@ -46,7 +46,7 @@ section#usages {
     .new-card {
       margin-top: 20px;
       padding: 11px 0 11px 0;
-      width: $article_column_width - $common-margin * 2;
+      width: $article_column_width - $margin * 2;
       background-color: $common-basic-color;
       font-family: $common-novelsans;
       font-size: 14px;
@@ -57,8 +57,8 @@ section#usages {
 
     .card-content {
       @include cf;
-      $card_content_width: $article_column_width - $common-margin * 2;
-      $figure_width: 368px;
+      $card_content_width: $article_column_width - $margin * 2;
+      $figure_width: 380px;
       $figure_margin_right: 20px;
       position: relative;
       background: white;
@@ -138,6 +138,7 @@ section#usages {
         float: left;
         word-wrap: break-word;
         width: $card_content_width - $figure_width - $figure_margin_right;
+        font-family: $common-verdana;
         font-size: 14px;
         line-height: 24px;
       }

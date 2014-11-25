@@ -33,7 +33,10 @@ article.card .title {
   .contributors {
     float: right;
     .contributor {
+      margin-left: 10px;
       img {
+        border-radius: 20px;
+        border: 2px solid $common-gray;
         width: 20px;
         height: 20px;
       }

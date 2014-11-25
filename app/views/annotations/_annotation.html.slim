@@ -1,4 +1,20 @@
 - if parent.instance_of?(Card::State)
   - delete_url = project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
   - edit_url = edit_project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
-== render "components/card", card: annotation, parent: parent, delete_url: delete_url, edit_url: edit_url
+  - convert_url = project_recipe_state_annotation_to_state_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, annotation_id: annotation.id)
+/ == render "components/card", card: annotation, parent: parent, delete_url: delete_url, edit_url: edit_url
+
+article class="card annotation" data-position="#{annotation.try(:position)}" id="#{annotation.id}"
+  .card-content
+    .header
+      == render "components/card_title", card: annotation
+      .control
+        - if can? :manage, annotation
+          == link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
+          == link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+          == link_to "Convert to State", convert_url, class: "to-state btn"
+        == render "components/card_contributors", card: annotation
+    .body
+      == render "components/card_figures", card: annotation
+      == render "components/card_description", card: annotation
+      == render "components/card_attachments", card: annotation
