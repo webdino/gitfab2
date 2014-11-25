@@ -54,7 +54,7 @@ section#basic-informations
           ul.slides
             - @project.figures.each do |figure|
               li
-                == image_tag figure.content, data: {src: figure.content.url}
+                == image_tag figure.content.medium, data: {src: figure.content.url}
       - elsif @project.figures.first.link.present?
         figure.visual
           iframe src="#{@project.figures.first.link}"

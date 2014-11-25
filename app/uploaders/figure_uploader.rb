@@ -12,6 +12,10 @@ class FigureUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [400, 400]
   end
 
+  version :medium do
+    process :resize_to_fit => [820, 10000]
+  end
+
   def extension_white_list
     %w(jpg jpeg gif png)
   end
