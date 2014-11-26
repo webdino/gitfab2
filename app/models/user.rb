@@ -29,6 +29,8 @@ class User
   slug :name
   field :fullname
   field :avatar
+  field :url
+  field :location
 
   devise :omniauthable, omniauth_providers: [:github]
   devise :database_authenticatable, :rememberable, :trackable, :validatable

@@ -1,20 +1,22 @@
 #layouts-setting-links
-  #user
-    #user-name.name
-      == image_tag current_user.avatar.thumb, class: "avatar"
-      p
-        == current_user.name
-    ul
-      li#user-account
-        == link_to "Account", [:edit, current_user]
-      li#user-groups
-        == link_to "Groups", [current_user, :memberships]
-  - current_user.groups.each do |group|
-    div id="#{group.name}"
-      div id="#{group.name}-name" class="name"
-        == image_tag group.avatar.thumb, id: "#{group.name}-avatar", class: "avatar"
-        p
-          == group.name
-      ul
-        li id="#{group.name}-profile"
-          == link_to "Group Profile & Members", [:edit, group]
+  .user-account.account
+    h1.title ACCOUNT
+    .user
+      == link_to [:edit, current_user] do
+        .inner
+          == image_tag current_user.avatar.thumb, class: "avatar"
+          .name
+            == current_user.name
+
+  .groups-account.account
+    h1.title GROUPS
+    == link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
+
+    ul.groups
+      - current_user.groups.each do |group|
+        == link_to [:edit, group] do
+          li.group
+            .inner
+              == image_tag group.avatar.thumb, class: "avatar"
+              .name
+                == group.name
