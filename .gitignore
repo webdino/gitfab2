@@ -32,3 +32,6 @@ config/environments/*.local.yml
 # Application files
 Session.vim
 _cho*
+
+# Ignore featured-projects list
+config/sample-projects.yml
