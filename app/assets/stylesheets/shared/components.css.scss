@@ -1,10 +1,11 @@
 @import "mixins/variables.css.scss";
 .btn {
   display: inline-block;
-  padding: 0px 10px;
-  background: $common-light-gray;
+  padding: 2px 10px 0;
+  background: $common-gray;
   font-family: $common-novelsans;
-  font-size: 12px;
+  font-size: 11px;
+  color: white;
   line-height: $common-line-height;
   border-radius: 5px;
   cursor: pointer;
