@@ -4,58 +4,81 @@
 #users-edit {
   display: inline-block;
   float: none;
-  width: 700px;
-  margin: 20px 20px $common-margin-for-footer 0;
-  border: $common-border;
+  width: 690px;
+  padding: 20px;
+  margin: 20px 0px $common-margin-for-footer 0;
+  font-family: $common-novelsans;
+  border-radius: 5px;
   background-color: white;
-  font-family: $common-helvetica;
-
-  h1 {
-    padding: 10px 0 10px 20px;
-    background-color: $header_background;
-    border-bottom: $common-border;
-  }
 
   #notice {
     color: green;
-  }
-
-  dt {
-    display: block;
-    padding: 15px 0 5px 20px;
-    font-size: 18px;
-  }
-
-  dd {
-    display: block;
     margin-bottom: 20px;
-    padding: 0 0 0 20px;
-    max-width: 240px;
+  }
+
+  h1 {
+    padding: 20px 0;
+    font-weight: normal;
+    font-size: 30px;
+  }
+
+  .left {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+  }
+  .right {
+    display: inline-block;
+    margin-left: 40px;
+    width: 350px;
+    height: 300px;
+    vertical-align: top;
   }
 
   #user-avatar {
-    width: 240px;
-    height: 240px;
+    width: 300px;
+    height: 300px;
+    border-radius: 300px;
+    border: 10px solid #D8D8D8;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
   }
   #user-avatar-form {
     display: none;
   }
   #upload-button {
-    margin-top: 10px;
-    border: $common-border;
+    margin: 20px 0 15px;
+    padding: 5px 10px;
+    color: $common-gray;
+    background: white;
+    border: 1px solid $common-gray;
+    &:before {
+      content: url("/images/project/edit_image_gray.png");
+      position: relative;
+      top: 3px;
+      padding-right: 5px;
+    };
   }
 
-  #user-name-form {
-    width: 250px;
-    padding: 5px 5px;
-    border: $common-border;
+  .text-form {
+    width: 330px;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid $common-basic-color;
+    border-radius: 5px;
     background-color: white;
     font-family: $common-verdana;
-    font-size: 14px;
+    font-size: 22px;
   }
 
   #submit {
-    margin: 20px 0 10px 20px;
-    border: $common-border;
+    margin: 60px 0 20px;
+    padding: 5px 68px;
+    font-size: 18px;
+    color: white;
+    background: $common-basic-color;
+    border: none;
   }
 }

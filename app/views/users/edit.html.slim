@@ -15,22 +15,21 @@ main#users-edit
         ul
           - @user.errors.full_messages.each do |msg|
             li == msg
-    dl
-      dt
-        'Profile Picture
-      dd
-        == image_tag @user.avatar, id: "user-avatar"
-        == f.file_field :avatar, id: "user-avatar-form"
-        == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
 
-      dt
-        'Name
-      dd
-        == f.text_field :name, placeholder: "Please enter your name (It will be your repo name).", id: "user-name-form"
+    .left
+      == image_tag @user.avatar, id: "user-avatar"
+
+    .right
+      == f.file_field :avatar, id: "user-avatar-form"
+      == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+      == f.text_field :name, placeholder: "Name", id: "user-name-form", class: "text-form"
+      == f.url_field :url, placeholder: "URL", class: "text-form"
+      == f.text_field :location, placeholder: "Location", class: "text-form"
 
     == f.submit "Save", id: "submit", class: "btn"
 
 - content_for :bottom
+
   coffee:
     $(document).on "click", "#user-avatar", (event, data) ->
       event.preventDefault()
