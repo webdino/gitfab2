@@ -11,13 +11,14 @@
     == render "form"
 
   #edit-members
-    h1
-     'Members
-    ul#members
-      - @group.members.each do |member|
-        == render "membership", membership: member.membership_in(@group)
+    .inner
+      h1.title
+       'Members
+      ul#members
+        - @group.members.each do |member|
+          == render "membership", membership: member.membership_in(@group)
 
-    == render "add_member", group: @group
+      == render "add_member", group: @group
 
 - content_for :bottom
 

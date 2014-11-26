@@ -12,6 +12,8 @@ class Group
   field :name
   field :avatar
   slug :name
+  field :url
+  field :location
 
   validates :name, presence: true, uniqueness: true, unique_owner_name: true, name_format: true
 

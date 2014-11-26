@@ -55,11 +55,11 @@
     background: white;
     border: 1px solid $common-gray;
     &:before {
-      content: url("/images/project/edit_image_gray.png");
+      content: asset-url("edit_image_gray.png");
       position: relative;
       top: 3px;
       padding-right: 5px;
-    };
+    }
   }
 
   .text-form {
@@ -80,5 +80,8 @@
     color: white;
     background: $common-basic-color;
     border: none;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 }

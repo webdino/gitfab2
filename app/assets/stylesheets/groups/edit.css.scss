@@ -8,112 +8,147 @@
   margin: 0px 20px 0 0;
 
   #edit-profile {
-    display: block;
-    margin: 20px 20px $common-margin-for-footer 0;
-    background: white;
-    border: $common-border;
-    h1 {
-      background-color: $header_background;
-      padding: 10px 0 10px 10px;
-      font-size: 21px;
-      border-bottom: $common-border;
-    }
+    display: inline-block;
+    float: none;
+    width: 690px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: $common-novelsans;
+    border-radius: 5px;
+    background-color: white;
+
     #notice {
       color: green;
-    }
-    dt {
-      display: block;
-      padding: 15px 0 5px 20px;
-      font-size: 18px;
-    }
-    dd {
-      display: block;
       margin-bottom: 20px;
-      padding: 0 0 0 20px;
-      max-width: 240px;
     }
+
+    h1 {
+      padding: 20px 0;
+      font-weight: normal;
+      font-size: 30px;
+    }
+
+    .left {
+      display: inline-block;
+      width: 300px;
+      height: 300px;
+    }
+    .right {
+      display: inline-block;
+      margin-left: 40px;
+      width: 350px;
+      height: 300px;
+      vertical-align: top;
+    }
+
     #group-avatar {
-      width: 240px;
-      height: 240px;
-      border: $common-border;
+      width: 300px;
+      height: 300px;
+      border-radius: 300px;
+      border: 10px solid #D8D8D8;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
     }
     #group-avatar-form {
       display: none;
     }
     #upload-button {
-      margin-top: 10px;
-      border: $common-border;
+      margin: 20px 0 15px;
+      padding: 5px 10px;
+      color: $common-gray;
+      background: white;
+      border: 1px solid $common-gray;
+      &:before {
+        content: asset-url("edit_image_gray.png");
+        position: relative;
+        top: 3px;
+        padding-right: 5px;
+      }
     }
 
-    #group-name-form {
-      width: 250px;
-      padding: 5px 5px;
-      border: $common-border;
+    .text-form {
+      width: 330px;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid $common-basic-color;
+      border-radius: 5px;
       background-color: white;
-      font-size: 14px;
+      font-family: $common-verdana;
+      font-size: 22px;
     }
+
     #submit {
-      margin: 20px 0 10px 20px;
-      border: $common-border;
-    }
-    .cancel-btn {
-      vertical-align: top;
-      margin: 20px 0 10px 20px;
-      border: $common-border;
+      margin: 60px 0 20px;
+      padding: 5px 68px;
+      font-size: 18px;
+      color: white;
+      background: $common-basic-color;
+      border: none;
+      &:hover {
+        opacity: 0.8;
+      }
     }
 
   }
 
   #edit-members {
     display: block;
-    margin: 20px 20px $common-margin-for-footer 0;
-    border: $common-border;
-
-    h1 {
-      background-color: $header_background;
-      padding: 10px 0 10px 10px;
-      font-size: 21px;
-      border-bottom: $common-border;
+    margin-bottom: $common-margin-for-footer;
+    padding: 20px 0;
+    width: 730px;
+    font-family: $common-novelsans;
+    background: white;
+    border-radius: 5px;
+    .inner {
+      padding: 30px 20px 20px;
+    }
+    .title{
+      padding: 10px 0;
+      font-size: 30px;
+      border-bottom: 1px solid $common-gray;
     }
     ul#members{
       li.membership {
         @include cf;
-        height: 50px;
+        height: 70px;
         background: white;
-        border-bottom: $common-border;
+        border-bottom: 1px solid $common-gray;
         .avatar {
           display: inline-block;
-          margin: 5px 10px;
-          width: 40px;
-          height: 40px;
+          margin: 10px 0;
+          width: 50px;
+          height: 50px;
+          border-radius: 50px;
+          border: 2px solid #D8D8D8;
         }
         .name {
           display: inline-block;
           vertical-align: top;
-          margin: 19px 0 0 10px;
-          font-family: $common-helvetica;
-          font-size: 18px;
+          margin: 29px 0 0 110px;
+          font-size: 20px;
         }
         .role {
           float: right;
-          margin: 10px 10px 0 0 ;
-          padding: 5px;
-          font-family: $common-verdana;
-          font-size: 18px;
-          border: $common-border;
-          border-radius: 2px;
-          background: #E6E6E6
+          margin: 25px 10px 0 0;
+          padding: 8px 10px 5px;
+          font-size: 12px;
+          color: white;
+          border-radius: 5px;
+          background: $common-basic-color;
         }
         .edit_membership {
           float: right;
-          margin: 10px 10px 0 0;
+          margin: 20px 10px 0 0;
           .membership-role {
-            margin-top: 4px;
+            margin-top: 5px;
+            padding: 3px 5px;
             background: white;
-            font-family: $common-verdana;
-            font-size: 18px;
-            border: $common-border;
-            border-radius: 2px;
+            font-family: $common-novelsans;
+            font-size: 12px;
+            border: 1px solid $common-gray;
+            border-radius: 5px;
           }
           input {
             display: none;
@@ -121,42 +156,50 @@
         }
         .remove-member-btn {
           float: right;
-          margin: 10px 10px 0 0;
-          font-family: $common-verdana;
-          font-size: 18px;
-          color: white;
-          background: gray;
+          margin: 25px 10px 0 0;
+          font-size: 12px;
+          color: $common-gray;
+          background: white;
+          border: 1px solid $common-gray;
           &:hover {
-            background: red;
+            color: white;
+            background: $common-gray;
           }
         }
       }
     }
 
     #new-membership {
-      background: white;
-      h2 {
-        padding: 10px;
-        background-color: $header_background;
-        font-size: 18px;
-        border-bottom: $common-border;
-      }
+      margin-top: 55px;
       #s2id_member_name {
-        margin: 20px 0px 20px 10px;
-        font-size: 18px;
+        margin: 20px 0px;
+        font-family: $common-novelsans;
+        font-size: 12px;
+        .select2-choice {
+          background: white;
+        }
       }
       #role {
         margin: 2px 10px;
+        padding: 3px 5px;
         background: white;
-        font-family: $common-verdana;
-        font-size: 18px;
-        border: $common-border;
-        border-radius: 2px;
+        font-family: $common-novelsans;
+        font-size: 12px;
+        border: 1px solid $common-gray;
+        border-radius: 5px;
       }
       #add-btn {
-        margin-left: 20px;
-        font-size: 16px;
+        font-size: 12px;
+        background: $common-basic-color;
+        border: none;
+        &:hover {
+          opacity: 0.8;
+        }
       }
     }
   }
+}
+
+.select2-searching, .select2-result-label {
+  font-family: $common-novelsans;
 }
