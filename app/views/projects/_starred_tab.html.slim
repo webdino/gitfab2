@@ -3,13 +3,21 @@
     - @owner.liked_projects.each do |project|
       li.project
         .image-container
-          == link_to project_path(@owner, project) do
-            - if project.figures.any?
-              == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
-            - else
-              == link_to image_tag("fallback/blank.png"), project_path(project.owner, project), class: "image"
+          - if project.figures.any?
+            == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
+          - else
+            == link_to image_tag("fallback/blank.png"), project_path(project.owner, project), class: "image"
+
+          - if can? :manage, project
+            .btns
+              == link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
+              == link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
 
         .text-container
+          - if project.is_private?
+            .private-project
+              ' private project
+
           - if project.title.present?
             == link_to project.title, project_path(project.owner, project), class: "title"
           - else
@@ -18,38 +26,34 @@
 
           .horizontal-border.basic-color.m-b-5
           .meta
-            .created
-              span
-                'created date:
-              span
-                == "#{project.created_at.strftime('%Y-%m-%d')}"
-            .updated
-              span
-                'updated date:
-              span
-                == "#{project.updated_at.strftime('%Y-%m-%d')}"
-            .recipe
-              span.title Recipe:
-              span
-                == project.recipe.states.length
-            .note
-              span.title Note:
-              span
-                == project.note.note_cards.length
+            .dates
+              span.created
+                span.index
+                  'created date:
+                span.value
+                  == " #{project.created_at.strftime '%Y-%m-%d'} / "
 
-          .horizontal-border.basic-color.m-b-5
+              span.updated
+                span.index
+                  'updated date:
+                span.value
+                  == " #{project.updated_at.strftime '%Y-%m-%d'}"
+
+            .numbers
+              span.recipe
+                span.index Recipe:
+                span.value
+                  == " #{project.recipe.states.length} / "
+
+              span.note
+                span.index Note:
+                span.value
+                  == " #{project.note.note_cards.length}"
+
           - if project.description.present?
+            .horizontal-border.basic-color.m-b-5
             .summary
               == "#{project.description}"
+
           .horizontal-border.basic-color.m-b-5
-          .tags
-            - if project.tags.any?
-              span
-                'tags=
-              - projects.tags.each do |tag|
-                span
-                  / TODO: #485 create link to projects tagged by tag.name
-                  == link_to tag.name, "#"
-            - else
-              span
-                'no tags
+          == render "projects/tags", project: project
