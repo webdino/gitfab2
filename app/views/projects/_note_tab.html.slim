@@ -1,15 +1,25 @@
 #note-tab.tabs-pane
   ul.project-list
-    - @owner.projects.noted.each do |project|
+    - @owner.projects.noted.order("updated_at DESC").each do |project|
+      - unless can? :read, project
+        - next
+
       li.project
         .image-container
-          == link_to project_note_path(@owner, project) do
-            - if project.figures.any?
-              == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
-            - else
-              == link_to image_tag("fallback/blank.png"), project_note_path(project.owner, project), class: "image"
+          - if project.figures.any?
+            == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
+          - else
+            == link_to image_tag("fallback/blank.png"), project_note_path(project.owner, project), class: "image"
+
+          - if can? :manage, project
+            .btns
+              == link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
+              == link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
 
         .text-container
+          - if project.is_private?
+            .private-project
+              ' private project
           - if project.title.present?
             == link_to project.title, project_path(project.owner, project), class: "title"
           - else
@@ -44,8 +54,8 @@
 
           - if project.description.present?
             .horizontal-border.basic-color.m-b-5
-              .summary
-                == "#{project.description}"
+            .summary
+              == "#{project.description}"
 
           .horizontal-border.basic-color.m-b-5
           == render "projects/tags", project: project
