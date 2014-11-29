@@ -105,7 +105,7 @@ class User
   end
 
   def liked_projects
-    Project.where "likes.liker_id" => self.id
+    Project.where "likes.liker_id" => self.slug
   end
 
   class << self
