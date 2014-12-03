@@ -102,9 +102,6 @@ $ ->
     $.fancybox.open
       padding: 0
       href: "#card-form-container"
-      helpers:
-        overlay:
-          closeClick: false
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $ this
@@ -118,12 +115,6 @@ $ ->
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
     $.fancybox.close()
-
-
-  $(document).on "click", ".fancybox-overlay", (event) ->
-    event.preventDefault()
-    if confirm "Are you sure to discard all changes on this dialog?"
-      $.fancybox.close()
 
   $(document).on "card-order-changed", "#recipe-card-list", (event) ->
     setStateIndex()
