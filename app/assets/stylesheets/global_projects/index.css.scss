@@ -4,256 +4,384 @@
 #index {
   $white_border: 1px solid white;
   $gray_border: 1px solid $common-dark-gray;
+  $featured_projects_color: #63c5fb;
+  $reciped_projects_color: #e6f9ff;
+
+  font-family: $common-novelsans;
   margin-top: -35px;
   width: 100%;
+  background-color: $featured_projects_color;
+
   #splash-wrapper {
-    background: asset-url("fab9_back_sheets.png") no-repeat;
+    background: asset-url("background.jpg") no-repeat;
     background-size: cover;
     background-color: $common-basic-color;
+    border-bottom: 2px solid white;
     .container {
-      @include cf;
-      padding: 120px 0 60px;
-      width: $content_width;
-      height: 420px;
       margin: 0 auto;
+      width: $content_width;
+      height: 310px;
+      padding: 230px 0 60px;
       .text {
-        margin-left: 90px;
-        width: 540px;
-        height: 420px;
-        float: left;
-        h1 {
-          padding: 20px 0 5px;
-          width: 340px;
-          line-height: 63px;
-          font-family: $common-helvetica;
-          font-size: 73px;
-          font-weight: 300;
-          color: white;
+        margin: 0 auto;
+        width: 830px;
+        height: 100px;
+        color: white;
+        line-height: 1.2;
+        .main-copy {
+          width: 830px;
+          font-size: 50px;
+          font-weight: normal;
         }
-        .horizontal-border {
-          width: 210px;
-          height: 0px;
-          border-bottom: $gray_border;
-        }
-        p {
-          width: 540px;
+        .sub-copy {
+          margin: 20px auto;
+          width: 490px;
           height: auto;
-          margin-top: 20px;
-          line-height: 22px;
-          font-size: 13px;
-          font-weight: 700;
+          font-size: 20px;
         }
       }
-      .scaffold {
-        float: left;
-        width: 320px;
-        h2 {
-          padding-top: 10px;
-          width: 211px;
-          color: $common-dark-gray;
-          line-height: 33px;
-          font-family: $common-helvetica;
-          font-size: 30px;
-          font-weight: 700;
-        }
-        .sign-up {
-          @include cf;
-          margin-left: -60px;
-          width: 380px;
-          .arrow {
-            float: left;
-            margin-top: 30px;
-            width: 60px;
-            height: 60px;
-          }
-          .inner {
-            float: left;
-            border-left: $white_border;
-            padding-left: 15px;
-            margin: 30px 20px;
-            p {
-              margin-top: 5px;
-              width: 240px;
-              height: auto;
-              line-height: 22px;
-              font-size: 12px;
-            }
-          }
-        }
-        .search-project {
-          @include cf;
-          margin-left: -60px;
-          width: 400px;
-          .arrow {
-            float: left;
-            width: 60px;
-            height: 60px;
-          }
-          .inner {
-            float: left;
-            border-left: $white_border;
-            padding-left: 15px;
-            margin: 0px 0px 30px 20px;
-            #search-box {
-              #search-form {
-                margin: 5px 0 2px;
-                width: 285px;
-                height: 26px;
-                font-size: 12px;
-                font-family: $common-verdana;
-              }
-            }
-          }
-        }
+      .sign-up {
+        margin: 10px auto;
+        width: 830px;
+        text-align: right;
       }
     }
   }
-  #featured-projects {
-    padding-bottom: 75px;
-  }
-  #reciped {
-    padding-bottom: 75px;
-    background-color: white;
-  }
-  #searched {
-    padding-bottom: 75px;
-  }
+
   .projects-wrapper {
     width: 100%;
+
     .container {
       @include cf;
       width: 960px;
       margin: 0 auto;
       padding-top: 50px;
-      .left {
-        @include cf;
-        float: left;
-        width: 150px;
-        text-align: right;
-        h2 {
-          margin-bottom: 40px;
-          line-height: 40px;
-          font-family: $common-helvetica;
-          font-size: 35px;
-          font-weight: 700;
-          color: black;
-        }
+
+      .title {
+        margin: 0px auto 30px;
+        width: 440px;
+        font-size: 30px;
+        font-weight: normal;
+        line-height: 1.2;
       }
-      .right {
-        @include cf;
-        float: left;
-        margin-left: $common-margin * 2;
-        width: 780px;
-        .pagination {
-          padding: 20px 0;
-          a {
-            color: $common-basic-color;
+
+      #featured-projects {
+        width: 100%;
+        .project {
+          $figure_width: 280px;
+          margin-top: 10px;
+          width: $figure_width;
+          height: 400px;
+          padding-left: 15px;
+          border-left: 2px solid white;
+          .header {
+            position: relative;
+            .thumb-wrapper {
+              max-width: $figure_width;
+              width: $figure_width;
+              margin: 0;
+              overflow: hidden;
+              .thumb {
+                width: 100%;
+                border-radius: 5px 5px 0 0;
+              }
+            }
+            .user {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              .icon {
+                max-width: 40px;
+                max-height: 40px;
+                border-radius: 40px;
+                border: 2px solid white;
+              }
+            }
+            .title-large {
+              position: relative;
+              margin: 0px 10px 5px;
+              width: $figure_width - 20px;
+              padding-top: 10px;
+              font-family: $common-helvetica;
+              font-size: 45px;
+              line-height: 50px;
+              .block {
+                display: block;
+                word-wrap: break-word;
+              }
+            }
+          }
+
+          .inner {
+            $inner_padding: 10px;
+            width: $figure_width - $inner_padding * 2;
+            padding: $inner_padding;
+            .title-small {
+              min-height: 55px;
+              font-size: 18px;
+              line-height: 1.5;
+            }
+            .spacer {
+              display: block;
+              width: 100%;
+              height: 65px;
+            }
+            .description {
+              margin-bottom: 5px;
+              font-size: 14px;
+              line-height: 22px;
+              color: $common-dark-gray;
+            }
+            .status {
+              display: none;
+            }
           }
         }
-        #searched-projects, #featured-projects, #reciped-projects {
-          width: 720px;
-          .project {
-            width: 220px;
-            background: $common-light-gray;
-            .inner {
-              $figure_width: 210px;
-              padding: 5px 5px 20px;
-              figure {
-                max-width: $figure_width;
-                width: $figure_width;
-                margin: 0;
-                overflow: hidden;
-                border: none;
-                box-shadow: none;
-                img {
-                  width: 100%;
-                }
-              }
-              .spacer {
-                display: block;
+      }
+
+
+      #searched-projects, #reciped-projects {
+        width: 100%;
+        .project {
+          $figure_width: 300px;
+          width: $figure_width;
+          background: white;
+          border-radius: 5px;
+          .header {
+            position: relative;
+            .thumb-wrapper {
+              max-width: $figure_width;
+              width: $figure_width;
+              margin: 0;
+              overflow: hidden;
+              .thumb {
                 width: 100%;
-                height: 5px;
+                border-radius: 5px 5px 0 0;
               }
-              .title {
-                margin-bottom: 5px;
-                line-height: 24px;
-                font-size: 17px;
+            }
+            .user {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              .icon {
+                max-width: 40px;
+                max-height: 40px;
+                border-radius: 40px;
+                border: 2px solid white;
               }
-              .description {
-                margin-bottom: 5px;
-                line-height: 18px;
-                font-size: 12px;
-                color: $common-dark-gray;
+            }
+            .title-large {
+              position: relative;
+              margin: 0px 10px 5px;
+              width: $figure_width - 20px;
+              padding-top: 10px;
+              font-family: $common-helvetica;
+              font-size: 45px;
+              line-height: 50px;
+              .block {
+                display: block;
+                word-wrap: break-word;
               }
-              .status {
+            }
+          }
+
+          .inner {
+            $inner_padding: 10px;
+            width: $figure_width - $inner_padding * 2;
+            padding: $inner_padding;
+            .title-small {
+              min-height: 55px;
+              font-size: 18px;
+              line-height: 1.5;
+            }
+            .spacer {
+              display: block;
+              width: 100%;
+              height: 65px;
+            }
+            .description {
+              margin-bottom: 5px;
+              font-size: 14px;
+              line-height: 22px;
+              color: $common-dark-gray;
+            }
+            .status {
+              margin-bottom: 5px;
+              line-height: 18px;
+              font-size: 14px;
+              .recipes, .notes {
+                display: inline-block;
                 margin-bottom: 5px;
-                font-size: 10px;
-                font-family: $common-verdana;
-                .user {
+              }
+              .notes {
+                margin-left: 5px;
+              }
+              .starred {
+                display: inline-block;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                margin : 10px;
+                .icon {
                   display: inline-block;
-                  margin : 5px;
-                  border-right: $gray_border;
-                  .icon {
-                    display: inline-block;
-                    vertical-align: middle;
-                    max-width: 20px;
-                    max-height: 20px;
-                  }
-                  .name {
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin: 0 5px;
-                  }
+                  vertical-align: middle;
+                  width: 26px;
+                  height: 26px;
                 }
-                .starred {
+                .count {
                   display: inline-block;
-                  margin : 5px;
-                  .icon {
-                    display: inline-block;
-                    vertical-align: middle;
-                    max-width: 20px;
-                    max-height: 20px;
-                  }
-                  .count {
-                    display: inline-block;
-                    vertical-align: middle;
-                    margin-left: 5px;
-                  }
-                }
-              }
-              .meta {
-                line-height: 18px;
-                font-size: 12px;
-                font-family: $common-verdana;
-                .notes {
-                  margin-bottom: 5px;
+                  vertical-align: bottom;
+                  margin-left: 5px;
                 }
               }
             }
           }
         }
+      }
 
-        .more {
-          @include cf;
-          float: right;
-          margin-top: -80px;
-          bottom: 75px;
-          width: 80px;
-          text-align: right;
-          img {
-            width: 60px;
-            height: 60px;
+      .more {
+        margin: 20px 20px 0 0;
+        .more-projects {
+          display: block;
+          padding: 10px 10px 5px;
+          width: 140px;
+          height: 20px;
+          background: $common-basic-color;
+          color: #FFF;
+          font-size: 17.5px;
+          border-radius: 5px;
+        }
+      }
+
+    }
+  }
+
+  #featured {
+    padding-bottom: 40px;
+    .title {
+      margin: 0;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+  }
+
+  .search-projects {
+    width: 100%;
+    .inner {
+      margin: 0 auto;
+      width: $content_width;
+      height: 110px;
+      padding-bottom: 30px;
+      .search-icon-wrapper {
+        display: inline-block;
+        width: 80px;
+        height: 100%;
+      }
+      .search-project {
+        display: inline-block;
+        width: 300px;
+        height: 100%;
+        vertical-align: top;
+        padding-left: 15px;
+        border-left: 2px solid white;
+        .title {
+          margin-top: 10px;
+          color: white;
+          font-size: 30px;
+          line-height: 1.2;
+          font-weight: normal;
+        }
+        #search-box {
+          margin-top: 10px;
+          width: 240px;
+          height: 30px;
+          #search-form {
+            padding-left: 10px;
+            width: 270px;
+            height: 30px;
+            font-family: "novelsans-semibold";
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
           }
-          a {
-            font-family: $common-helvetica;
-            font-size: 12px;
-            &:first-child {
-              display: block;
-              height: 60px;
+        }
+      }
+      .tag-search {
+        display: inline-block;
+        width: 510px;
+        height: 100%;
+        vertical-align: top;
+        padding-left: 15px;
+        border-left: 2px solid white;
+        .title {
+          margin-top: 10px;
+          color: white;
+          font-size: 30px;
+          line-height: 1.2;
+          font-weight: normal;
+        }
+        .tags {
+          margin: 10px 0 0 5px;
+          font-size: 14px;
+          line-height: 19px;
+          .tag {
+            display: inline;
+            &:after {
+              content: ",";
+            }
+            &:before {
+              content: " "
+            }
+            &:last-child:after {
+              content: "";
             }
           }
         }
       }
     }
   }
+
+  #reciped {
+    padding-bottom: 75px;
+    background-color: $reciped_projects_color;
+  }
+
+  #searched {
+    background: #e6f9ff;
+    padding-bottom: 75px;
+    .title {
+      margin: 0px auto 30px;
+      width: 280px;
+      font-size: 30px;
+      font-weight: normal;
+      line-height: 1.2;
+    }
+  }
+
+
+  .pagination {
+    margin-top: 30px;
+    font-size: 17.5px;
+    color: #FFF;
+    span {
+      padding: 5px 2px 2px 5px;
+      margin-right: 5px;
+      background: $common-basic-color;
+      a {
+        color: #FFF;
+      }
+    }
+    .current {
+      background: none;
+      color: $common-basic-color;
+    }
+    .first {
+      border-radius: 5px 0 0 5px;
+    }
+    .last {
+      border-radius: 0 5px 5px 0;
+    }
+
+  }
+
 }
