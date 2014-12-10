@@ -1,6 +1,6 @@
 .tags
+  - tags = []
   - @projects.each do |project|
-    - tags = []
     - project.tags.each do |tag|
       - unless tags.include? tag.name
         - tags.push tag.name
