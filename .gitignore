@@ -34,4 +34,4 @@ Session.vim
 _cho*
 
 # Ignore featured-projects list
-config/sample-projects.yml
+/config/sample-projects.yml

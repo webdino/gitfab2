@@ -1,0 +1,16 @@
+.search-projects
+  .inner
+    .search-icon-wrapper
+      == image_tag "search.png", class: "search-icon"
+
+    .search-project
+      h2.title
+        'Search Project
+      #search-box
+        == form_tag :search, method: :get do |f|
+          == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
+
+    .tag-search
+      h2.title
+        'Tag Search
+      == render "tags"

@@ -1,12 +1,8 @@
 #searched.projects-wrapper
   .container
-    .left
-      .horizontal-border.basic-color.f-right.m-b-10
-      h2
-        'Searched Projects
-      .horizontal-border.basic-color.f-right.m-b-10
-    .right
-      ul#searched-projects.projects
-        - @projects.each do |project|
-          == render "project", project: project
-      == paginate @projects
+    h2.title
+      'Searched Projects
+    ul#searched-projects.projects
+      - @projects.each do |project|
+        == render "project", project: project
+    == paginate @projects

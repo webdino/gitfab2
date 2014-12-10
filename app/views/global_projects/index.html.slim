@@ -14,33 +14,16 @@
     #splash-wrapper
       .container
         .text
-          h1
+          h1.main-copy
             'Making stories of Making something
-          .horizontal-border
-          p
+          .sub-copy
             'New Platform to Share Fab Projects all over the world
+        .sign-up
+          == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
 
-        .scaffold
-          .sign-up
-            .arrow
-              == image_tag "index-arrow.png"
-            == link_to user_omniauth_authorize_path(:github) do
-              .inner
-                h2
-                  'Sign up for GitFAB
-                p
-                  'gitFAB Sign up with GitHub account
-          .search-project
-            .arrow
-              == image_tag "index-arrow.png"
-            .inner
-              h2
-                'Search Project
-              #search-box
-                == form_tag :search, method: :get do |f|
-                  == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
   - if @is_searching
     == render "searched_projects"
   - else
     == render "featured_projects"
+    == render "search_projects"
     == render "reciped_projects"
