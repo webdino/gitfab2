@@ -1,7 +1,7 @@
 - if can? :manage, group
   #new-membership
     h2.title
-      'Add memeber
+      'Add Member
 
     == form_tag group_members_path(group_id: group.id), method: "post", id: "new_member", remote: true
     == hidden_field_tag :member_name
