@@ -1,6 +1,6 @@
-class Group
-  FULLTEXT_SEARCHABLE_COLUMNS = [:name]
-  UPDATABLE_COLUMNS = [:name, :avatar]
+ class Group
+  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :url, :location]
+  UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
 
   include Mongoid::Document
   include Mongoid::Timestamps
