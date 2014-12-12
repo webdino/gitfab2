@@ -2,9 +2,10 @@
  - "Create Group"
 
 #groups-new
-  h1
-    'New Group
-  == render "form"
+  #edit-profile
+    h1.page-title
+      'New Group
+    == render "form"
 
 - content_for :bottom
   coffee:

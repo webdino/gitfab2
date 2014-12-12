@@ -1,5 +1,5 @@
 class User
-  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname]
+  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname, :url, :location]
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -122,7 +122,7 @@ class User
     end
 
     def updatable_columns
-      [:name, :avatar, memberships_attributes: Membership.updatable_columns]
+      [:name, :avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
     end
   end
 end
