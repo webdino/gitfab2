@@ -22,7 +22,7 @@
       margin-bottom: 20px;
     }
 
-    h1 {
+    .page-title {
       padding: 20px 0;
       font-weight: normal;
       font-size: 30px;
@@ -107,6 +107,7 @@
     .title{
       padding: 10px 0;
       font-size: 30px;
+      font-weight: normal;
       border-bottom: 1px solid $common-gray;
     }
     ul#members{
