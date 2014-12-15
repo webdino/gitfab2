@@ -53,6 +53,8 @@ gem "friendly_id", "~> 5.0.0"
 gem "carrierwave-mongoid", require: "carrierwave/mongoid"
 
 gem "truncate_html"
+gem "clockwork"
+gem "daemons"
 
 group :doc do
   gem "sdoc", require: false
