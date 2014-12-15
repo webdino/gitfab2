@@ -69,20 +69,37 @@ class ProjectsController < ApplicationController
     if owner_name.present?
       self.change_owner
     else
-      @project.updated_at = DateTime.now
+
       parameters = project_params
       if parameters.present? and parameters[:name].present?
         parameters[:name] = parameters[:name].downcase
       end
-      if @project.update parameters
-        respond_to do |format|
-          format.json {render :update}
-          format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+
+      if project_params[:likes_attributes].present?
+        if @project.timeless.update parameters
+          @project.clear_timeless_option
+          respond_to do |format|
+            format.json {render :update}
+            format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+          end
+        else
+          respond_to do |format|
+            format.json {render "error/failed", status: 400}
+            format.html {render :edit, status: 400}
+          end
         end
       else
-        respond_to do |format|
-          format.json {render "error/failed", status: 400}
-          format.html {render :edit, status: 400}
+        @project.updated_at = DateTime.now
+        if @project.update parameters
+          respond_to do |format|
+            format.json {render :update}
+            format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+          end
+        else
+          respond_to do |format|
+            format.json {render "error/failed", status: 400}
+            format.html {render :edit, status: 400}
+          end
         end
       end
     end
