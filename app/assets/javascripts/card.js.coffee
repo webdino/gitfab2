@@ -9,14 +9,17 @@ setupEditor = ->
   editor.panelInstance "markup-area"
   $(".nicEdit-main").addClass "validate"
 
+descriptionText = () ->
+  for instance in editor.nicInstances
+    html_text = instance.getContent()
+    plain_text = html_text.replace /<("[^"]*"|'[^']*'|[^'">])*>/g, ''
+    return plain_text
+
 validateForm = (event, is_note_card_form) ->
   unless is_note_card_form
-    for instance in editor.nicInstances
-      html_text =  instance.getContent()
-      plain_text = html_text.replace /<("[^"]*"|'[^']*'|[^'">])*>/g,''
-      if plain_text.length > 140
-        alert "Description text should be less than 140."
-        event.preventDefault()
+    if descriptionText().length > 140
+      alert "Description text should be less than 140."
+      event.preventDefault()
 
   validated = false
   $(".card-form:first-child .validate").each (index, element) ->
@@ -129,6 +132,14 @@ $ ->
 
   $(document).on "click", "#inner_content", (event) ->
     event.stopPropagation()
+
+  $(document).on "keyup", "#inner_content .nicEdit-main", (event) ->
+    description_text_length = descriptionText().length
+    $("#inner_content .plain-text-length").html description_text_length
+    if description_text_length > 140
+      $(".text-length").css "color", "red"
+    else
+      $(".text-length").css "color", "black"
 
   $(document).on "click", ".add-image", (event) ->
     figure_list = $ "ul.figures"

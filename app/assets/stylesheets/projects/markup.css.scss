@@ -4,53 +4,55 @@
     font-weight: 700;
   }
   .description {
-    ul { 
+    ul {
       margin-left: 10px;
-      list-style-type: disc; 
+      list-style-type: disc;
       list-style-position: inside;
     }
-    ol { 
+    ol {
       margin-left: 10px;
-      list-style-type: decimal; 
-      list-style-position: inside; 
+      list-style-type: decimal;
+      list-style-position: inside;
     }
-    ul ul, ol ul { 
-      list-style-type: circle; 
-      list-style-position: inside; 
-      margin-left: 10px; 
+    ul ul, ol ul {
+      list-style-type: circle;
+      list-style-position: inside;
+      margin-left: 10px;
     }
-    ol ol, ul ol { 
-      list-style-type: lower-latin; 
-      list-style-position: inside; 
-      margin-left: 10px; 
+    ol ol, ul ol {
+      list-style-type: lower-latin;
+      list-style-position: inside;
+      margin-left: 10px;
     }
   }
 }
 
-.nicEdit-main {  
+.nicEdit-main {
+  line-height: 1.5;
+  
   .material, .tool, .blueprint, .attachment {
     color: #52C3F1;
     font-weight: 700;
   }
-  ul { 
+  ul {
     margin-left: 10px;
-    list-style-type: disc; 
+    list-style-type: disc;
     list-style-position: inside;
   }
-  ol { 
+  ol {
     margin-left: 10px;
-    list-style-type: decimal; 
-    list-style-position: inside; 
+    list-style-type: decimal;
+    list-style-position: inside;
   }
-  ul ul, ol ul { 
-    list-style-type: circle; 
-    list-style-position: inside; 
-    margin-left: 10px; 
+  ul ul, ol ul {
+    list-style-type: circle;
+    list-style-position: inside;
+    margin-left: 10px;
   }
-  ol ol, ul ol { 
-    list-style-type: lower-latin; 
-    list-style-position: inside; 
-    margin-left: 10px; 
+  ol ol, ul ol {
+    list-style-type: lower-latin;
+    list-style-position: inside;
+    margin-left: 10px;
   }
 }
 
@@ -89,7 +91,7 @@
   .imageContainer {
     text-align: center;
   }
-  .image {  
+  .image {
     max-height: 100px;
     margin-top: 5px;
   }
