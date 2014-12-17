@@ -36,6 +36,18 @@
         'Remove all figures
     == f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength:"140"
 
+    - unless f.object.class.name.include? "Note"
+      .text-length
+        span.plain-text-length
+          - if f.object.description.present?
+            == f.object.description.length
+          - else
+            '0
+        span
+          '&nbsp;/
+        span.max-text-length
+          '140
+
     #attachments
       == f.fields_for :attachments do |af|
         == af.text_field :title, class: :title
