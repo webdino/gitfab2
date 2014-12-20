@@ -159,7 +159,7 @@
 
         .description {
           margin: 10px;
-          width: $note_card_width;
+          width: $note_card_width - 20px;
           font-family: $common-verdana;
           font-size: 16px;
           line-height: 32px;
