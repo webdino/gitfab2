@@ -10,12 +10,16 @@
       / li
       /   == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
       li
+        == link_to "Collaboration (#{@owner.collaborations.length})", "#", data: {tab: "#collaboration-tab"}
+      li
         == link_to "Favorite (#{@owner.liked_projects.length})", "#", data: {tab: "#starred-tab"}
 
   .tabs-content
     == render "project_tab"
     == render "note_tab"
     - if @owner.is_a? User
+      == render "collaboration_tab"
+
       / TODO: #486 Implement user.contributed_projects method in user.rb
       / == render "contribution_tab"
       == render "starred_tab"

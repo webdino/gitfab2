@@ -124,13 +124,14 @@
         display: inline-block;
         margin-right: 10px;
         padding-left: 10px;
-        width: 220px;
+        width: 140px;
         height: 28px;
         background-color: $inactive_tab_background;
         font-size: 14px;
         line-height: $common-line-height;
         border-radius: 5px 5px 0 0;
         &.active {
+          width: 220px;
           background-color: $active_tab_background;
         }
         &:last-child {
