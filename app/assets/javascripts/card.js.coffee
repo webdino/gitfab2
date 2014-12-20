@@ -130,7 +130,7 @@ $ ->
     if confirm "Are you sure to discard all changes on this dialog?"
       $.fancybox.close()
 
-  $(document).on "click", "#inner_content", (event) ->
+  $(document).on "click", ".fancybox-inner", (event) ->
     event.stopPropagation()
 
   $(document).on "keyup", "#inner_content .nicEdit-main", (event) ->
