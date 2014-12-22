@@ -12,13 +12,13 @@
 
       .joined-on
         span
-          'joined on:
+          'Joined on:
         == @owner.created_at.strftime "%b %d, %Y"
 
       .makes
         .projects
           span
-            'project:
+            'Project:
           span.count
             == "#{@owner.projects.length}"
 
