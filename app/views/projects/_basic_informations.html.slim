@@ -12,15 +12,15 @@ section#basic-informations
         section.dates
           span.created
             span.index
-              'created date:
+              'Created Date:
             span.value
-              == " #{@project.created_at.strftime '%Y-%m-%d, %H:%M:%S'} / "
+              == " #{@project.created_at.strftime '%Y-%m-%d'} / "
 
           span.updated
             span.index
               'updated date:
             span.value
-              == " #{@project.updated_at.strftime '%Y-%m-%d, %H:%M:%S'}"
+              == " #{@project.updated_at.strftime '%Y-%m-%d'}"
 
         .line
           label

@@ -33,11 +33,11 @@ section#recipes-utils
         == link_to "+ Add collaborator", recipe_collaborations_path(owner_name: @owner.slug, recipe_id: @recipe.name), id: "add-collaborator-btn", class: "btn"
       .timestamps
         time#created-datetime datetime = @recipe.created_at
-          'created date
-          == @recipe.created_at.strftime "%Y-%m-%d, %H:%M:%S"
+          'Created Date
+          == @recipe.created_at.strftime "%Y-%m-%d"
         time#last-updated-datetime datetime = @recipe.updated_at
           'updated date
-          == @recipe.updated_at.strftime "%Y-%m-%d, %H:%M:%S"
+          == @recipe.updated_at.strftime "%Y-%m-%d"
       #go-to-index
         == link_to "#{@recipe.owner.name}'s Project List", recipes_path(owner_name: @owner.slug), class: "btn"
 
