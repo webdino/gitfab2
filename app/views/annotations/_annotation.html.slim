@@ -15,6 +15,6 @@ article class="card annotation" data-position="#{annotation.try(:position)}" id=
           == link_to "Convert to State", convert_url, class: "to-state btn"
         == render "components/card_contributors", card: annotation
     .body
-      == render "components/card_figures", card: annotation
       == render "components/card_description", card: annotation
+      == render "components/card_figures", card: annotation
       == render "components/card_attachments", card: annotation

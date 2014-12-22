@@ -1,2 +1,8 @@
-.description
-  == card.description
+- figures = card.figures
+- if figures.present? and (figures.first.content.present? or figures.first.link.present?)
+    .description
+      == card.description
+
+- else
+  .description.without-figures
+    == card.description

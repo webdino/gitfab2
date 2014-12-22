@@ -22,7 +22,7 @@ class AnnotationsController < ApplicationController
 
   def create
     if @annotation.save
-      render result_view
+      render :create
     else
       render "errors/failed", status: 400
     end
@@ -30,7 +30,7 @@ class AnnotationsController < ApplicationController
 
   def update
     if @annotation.update annotation_params
-      render result_view
+      render :update
     else
       render "errors/failed", status: 400
     end

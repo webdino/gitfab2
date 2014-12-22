@@ -126,7 +126,7 @@
           @include cf;
           $card_content_width: $article_column_width - $common-margin * 4;
           $figure_width: 380px;
-          $figure_margin_right: 20px;
+          $figure_margin_left: 20px;
           margin-left: $common-margin * 2;
           margin-bottom: $common-margin * 2;
           padding-bottom: 0;
@@ -159,7 +159,7 @@
               float: left;
               max-width: $figure_width;
               width: $figure_width;
-              margin: 0 $figure_margin_right 0 0;
+              margin: 0 0 0 $figure_margin_left;
               overflow: hidden;
               border: none;
               box-shadow: none;
@@ -175,7 +175,7 @@
               float: left;
               max-width: $figure_width;
               width: $figure_width;
-              margin: 0 $figure_margin_right 0 0;
+              margin: 0 0 0 $figure_margin_left;
               overflow: hidden;
               border: none;
               border-radius: 0;
@@ -219,9 +219,12 @@
             .description {
               float: left;
               word-wrap: break-word;
-              width: $card_content_width - $figure_width - $figure_margin_right;
+              width: $card_content_width - $figure_width - $figure_margin_left;
               font-size: 14px;
               line-height: 24px;
+              &.without-figures {
+                width: 100%;
+              }
             }
 
           }
@@ -235,7 +238,7 @@
         $annotation_width: $article_column_width - $annotation_margin_left - $common-margin * 2;
         .annotation-list {
           $figure_width: 300px;
-          $figure_margin_right: $common-margin * 2;
+          $figure_margin_left: $common-margin * 2;
           width: $annotation_width;
           margin-left: $annotation_margin_left;
           >li {
@@ -252,7 +255,7 @@
                 float: left;
                 max-width: $figure_width;
                 width: $figure_width;
-                margin: 0 $figure_margin_right 0 0;
+                margin: 0 0 0 $figure_margin_left;
                 overflow: hidden;
                 border: none;
                 box-shadow: none;
@@ -268,7 +271,7 @@
                 float: left;
                 max-width: $figure_width;
                 width: $figure_width;
-                margin: 0 $figure_margin_right 0 0;
+                margin: 0 0 0 $figure_margin_left;
                 overflow: hidden;
                 border: none;
                 box-shadow: none;
@@ -317,9 +320,12 @@
               .description {
                 float: left;
                 word-wrap: break-word;
-                width: $annotation_width - $figure_width - $figure_margin_right;
+                width: $annotation_width - $figure_width - $figure_margin_left;
                 font-size: 14px;
                 line-height: 24px;
+                &.without-figures {
+                  width: 100%;
+                }
               }
               .attachments {
                 @include cf;
@@ -328,7 +334,7 @@
               footer {
                 float: left;
                 margin-top: $common-margin * 2;
-                width: $annotation_width - $figure_width - $figure_margin_right;
+                width: $annotation_width - $figure_width - $figure_margin_left;
               }
             }
           }

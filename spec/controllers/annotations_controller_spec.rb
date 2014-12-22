@@ -36,7 +36,7 @@ describe AnnotationsController, type: :controller do
       xhr :post, :create, user_id: user.id, project_id: project.id,
         state_id: state.id, annotation: {description: "ann"}
     end
-    it{should render_template :state_annotation}
+    it{should render_template :create}
   end
 
   describe "PATCH update" do
@@ -47,7 +47,7 @@ describe AnnotationsController, type: :controller do
       xhr :patch, :update, user_id: user.id, project_id: project.id,
         state_id: state.id, id: annotation.id, annotation: {description: "_ann"}
     end
-    it{should render_template :state_annotation}
+    it{should render_template :update}
   end
 
   describe "DELETE destroy" do
