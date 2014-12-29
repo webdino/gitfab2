@@ -220,8 +220,8 @@
               float: left;
               word-wrap: break-word;
               width: $card_content_width - $figure_width - $figure_margin_left;
-              font-size: 14px;
-              line-height: 24px;
+              font-size: 18px;
+              line-height: 1.75;
               &.without-figures {
                 width: 100%;
               }
@@ -321,8 +321,8 @@
                 float: left;
                 word-wrap: break-word;
                 width: $annotation_width - $figure_width - $figure_margin_left;
-                font-size: 14px;
-                line-height: 24px;
+                font-size: 18px;
+                line-height: 1.75;
                 &.without-figures {
                   width: 100%;
                 }
