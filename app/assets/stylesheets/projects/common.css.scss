@@ -68,3 +68,9 @@ article.card .title {
   float: left;
   width: $article_column_width;
 }
+
+.fb-comments .fb_iframe_widget {
+  background: white;
+  border-radius: 5px;
+  padding: 10px 0;
+}
