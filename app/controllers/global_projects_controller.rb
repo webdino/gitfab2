@@ -29,5 +29,16 @@ class GlobalProjectsController < ApplicationController
       end
       @is_searching = false
     end
+
+    @selected_tags = []
+    file_path = "#{Rails.root}/config/selected-tags.yml"
+    tags_list = YAML.load_file file_path
+
+    if tags_list.present?
+      tags_list.each do |tag_name|
+        @selected_tags.push tag_name
+      end
+    end
+
   end
 end

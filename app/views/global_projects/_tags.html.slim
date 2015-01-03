@@ -1,8 +1,4 @@
 .tags
-  - tags = []
-  - @projects.each do |project|
-    - project.tags.each do |tag|
-      - unless tags.include? tag.name
-        - tags.push tag.name
-        .tag
-          == link_to tag.name, "/search?q=#{tag.name}"
+  - @selected_tags.each do |tag_name|
+    .tag
+      == link_to tag_name, "/search?q=#{tag_name}"
