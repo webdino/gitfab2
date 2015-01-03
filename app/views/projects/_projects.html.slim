@@ -3,7 +3,7 @@
     li.active
       == link_to "Project (#{@owner.projects.length})", "#", data: {tab: "#project-tab"}
     li
-      == link_to "Note (#{@owner.projects.noted.length})", "#", data: {tab: "#note-tab"}
+      == link_to "Memo (#{@owner.projects.noted.length})", "#", data: {tab: "#note-tab"}
     - if @owner.is_a? User
 
       / TODO: #486 Implement user.contributed_projects method in user.rb

@@ -34,9 +34,9 @@ li.project
 
     .status
       .recipes
-        == "#{project.recipe.states.length} Recipes /"
+        == "#{project.recipe.states.length} Steps /"
       .notes
-        == "#{project.note.note_cards.length} Notes"
+        == "#{project.note.note_cards.length} Memos"
       .since
         == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago"
 

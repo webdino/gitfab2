@@ -5,16 +5,16 @@
       == "(#{@project.recipe.states.length})"
   == link_to project_note_path(@project, owner_name: @owner.slug) do
     .tab.active
-      'Note
+      'Memos
       == "(#{@project.note.note_cards.length})"
 
 section#note-cards
   .top
     .inner
       h1
-        'Note
+        'Memos
       - if can? :edit, @project
-        == link_to "+ add Note", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+        == link_to "+ add Memo", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
   ul#note-card-list.card-list
     - @note.note_cards.each do |card|
