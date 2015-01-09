@@ -1,4 +1,6 @@
 $ ->
+  $("#note-card-list .description a").attr "target", "_blank"
+
   makeAttachmentsList = (attachments, container) ->
     ul = container.find "ul"
     ul.empty()

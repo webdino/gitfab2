@@ -43,11 +43,14 @@
         font-size: 20px;
         line-height: 1.2;
       }
-      .joined-on {
+      .joined-on, .url, .location {
         margin: 0 auto;
         width: $inner_width;
         span {
           color: $common-gray;
+        }
+        a {
+          color: $common-basic-color;
         }
       }
       .makes {
