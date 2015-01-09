@@ -194,7 +194,7 @@ $ ->
       else if url.match /^https?:\/\//
         if url.match /[.](jpe?g|png|gif|bmp)$/i
           thumbnailURL = url
-        else 
+        else
           thumbnailURL = "http://wimg.ca/w_100_h_100/" + url
         image.attr "src", thumbnailURL
 

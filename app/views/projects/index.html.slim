@@ -26,13 +26,17 @@
         / .contributions
         /   == @owner.contributions.length
 
-      / TODO: implement user's information
-      / .website
-      /   span
-      /     'Website
-      /   == @owner.website
-      / .place
-      /   == @owner.place
+      - if @owner.url.present?
+        .url
+          span
+            'Website:
+          == link_to @owner.url, @owner.url
+
+      - if @owner.location.present?
+        .location
+          span
+            'Location:
+          == @owner.location
 
       .relation-wrapper
         - if @owner.is_a? Group

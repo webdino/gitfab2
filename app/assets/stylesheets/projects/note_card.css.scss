@@ -163,6 +163,9 @@
           font-family: $common-verdana;
           font-size: 16px;
           line-height: 32px;
+          a {
+            color: $common-basic-color;
+          }
           ul {
             margin-left: 20px;
             list-style-type: disc;
