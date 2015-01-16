@@ -20,6 +20,8 @@
             'New Platform to Share Fab Projects all over the world
         .sign-up
           == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
+      .topics
+        'TOPICS
 
   - if @is_searching
     == render "searched_projects"
