@@ -20,7 +20,7 @@
     .container {
       margin: 0 auto;
       width: $content_width;
-      height: 310px;
+      height: 270px;
       padding: 230px 0 60px;
       .text {
         margin: 0 auto;
@@ -45,6 +45,17 @@
         width: 830px;
         text-align: right;
       }
+    }
+    .topics {
+      margin: 0 auto;
+      bottom: 0;
+      padding-top: 15px;
+      width: 100px;
+      height: 25px;
+      background: white;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 5px 5px 0 0;
     }
   }
 
