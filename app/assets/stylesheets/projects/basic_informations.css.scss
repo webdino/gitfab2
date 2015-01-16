@@ -357,8 +357,7 @@ $tool_size: 75px;
   width: $tool_size;
   border-radius: 5px 0 0 5px;
   background: white;
-  #slideshow-btn,
-  #fork-btn {
+  #slideshow-btn, #fork-btn, .order-change-btn, .order-commit-btn{
     display: block;
     width: $tool_size;
     height: $tool_size + 10px;
@@ -370,8 +369,29 @@ $tool_size: 75px;
     background-image: asset-url("slideshow.png");
   }
   #fork-btn {
+    height: $tool_size + 20px;
     background-image: asset-url("fork.png");
   }
+  #card-order-tools {
+    .order-change-btn {
+      display: block;
+      background-image: asset-url("change_order.png");
+    }
+    .order-commit-btn {
+      display: none;
+      background-image: asset-url("commit_order.png");
+    }
+
+    &.order-changing {
+      .order-change-btn {
+        display: none;
+      }
+      .order-commit-btn {
+        display: block;
+      }
+    }
+  }
+
   #fork-destinations {
     $popup_width: 360px;
     @include spacing-row($popup_width, 20px, 3);

@@ -82,7 +82,11 @@ section#basic-informations
 
 section.tools
   == link_to "", "#", id: "slideshow-btn"
-  == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
+  - if can? :edit, @project
+    #card-order-tools
+      == link_to "", "#", class: "order-change-btn"
+      == link_to "", "#", class: "order-commit-btn"
+    == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
 
   #fork-destinations
     - if signed_in?

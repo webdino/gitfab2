@@ -28,10 +28,6 @@ section#recipe-cards
       .inner
         h2 Making
     ul#recipe-card-list.card-list
-      - if can? :edit, @project
-        #card-order-tools
-          == link_to "Change Order", "#", class: "order-change-btn btn"
-          == link_to "Commit Order", "#", class: "order-commit-btn btn"
       - @recipe.states.ordered_by_position.each do |card|
         li class="card-wrapper #{card.htmlclass}-wrapper"
           == render "recipe_cards/state", card: card, owner: @owner, project: @project

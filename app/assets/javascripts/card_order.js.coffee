@@ -20,6 +20,7 @@ $ ->
   $(document).on "click", ".order-change-btn", (event) ->
     event.preventDefault()
     $("#recipe-card-list").addClass "order-changing"
+    $("#card-order-tools").addClass "order-changing"
 
   $(document).on "click", ".order-commit-btn", (event) ->
     event.preventDefault()
@@ -41,4 +42,5 @@ $ ->
 
   $(document).on "ajax:success", ".edit_recipe", () ->
     $("#recipe-card-list").removeClass "order-changing"
+    $("#card-order-tools").removeClass "order-changing"
     $("#recipe-card-list").trigger "card-order-changed"
