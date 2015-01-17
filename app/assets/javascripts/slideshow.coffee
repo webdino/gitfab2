@@ -14,8 +14,8 @@ class Slideshow
     @split_annotations(state) for state in states
     $.fancybox.open @cards, {
       padding: 0
-      minWidth: "90%"
-      minHeight: "90%"
+      minWidth: "960px"
+      minHeight: "600px"
       wrapCSS: "slideshow"
       afterLoad: (current, previous) ->
         setTimeout ->
@@ -29,6 +29,10 @@ class Slideshow
     @cards.push state
     @cards.push(annotation) for annotation in annotation_list
   setupFlexSlider = ->
+    title = $("#basic-informations h1.title").clone()
+    card = $ ".slideshow .card"
+    card.append title
+
     $(".flexslider").flexslider
       animation: "slider"
       animationSpeed: 300
