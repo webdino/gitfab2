@@ -1,45 +1,87 @@
+@import "mixins/variables.css.scss";
+
 #collaborators-index {
   background: white;
+  font-family: $common-novelsans;
   .inner {
-    margin: 20px;
+    margin: 0 20px;
     padding: 20px 0;
-
     h1 {
       margin-bottom: 10px;
-      font-size: 24px;
+      font-size: 22px;
     }
     h2 {
-      margin-bottom: 10px;
-      font-size: 16px;
+      margin-bottom: 20px;
+      font-size: 22px;
     }
     #new_collaboration {
       margin-bottom: 20px;
       #s2id_user_name {
-        margin-right: 10px;
+        margin: 10px 20px 20px 0px;
+        padding: 1px 0;
+        font-family: $common-novelsans;
+        font-size: 14px;
+        .select2-choice {
+          background: white;
+        }
       }
     }
+    .add-collaborator-btn {
+      vertical-align: top;
+      margin-top: 11px;
+      height: 28px;
+      color: white;
+      background-color: $common-basic-color;
+      border: none;
+    }
+
     #owner, .collaboration {
       margin-bottom: 10px;
+      width: 240px;
+      display: inline-block;
+
       .avatar {
         img {
-          width: 30px;
+          width: 40px;
+          height: 40px;
+          border-radius: 40px;
+          border: none;
         }
       }
       .name {
         position: relative;
         vertical-align: top;
         margin-left: 5px;
-        top: 6px;
-        height: 24px
+        top: 14px;
+        height: 24px;
+        font-size: 15px;
       }
       .remove-collaboration-btn {
         vertical-align: top;
         margin-top: 3px;
         margin-left: 5px;
+        padding: 0;
+        border-radius: 18px;
+        width: 18px;
+        height: 18px;
+        text-align: center;
       }
     }
+    #owner {
+      margin-bottom: 40px;
+    }
     #collaborations {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
+    }
+    .back-btn {
+      width: 100%;
+      height: 35px;
+      text-align: center;
+      font-size: 18px;
     }
   }
+}
+
+.select2-results {
+  font-family: $common-novelsans;
 }
