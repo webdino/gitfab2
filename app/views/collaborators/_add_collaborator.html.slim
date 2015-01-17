@@ -2,11 +2,11 @@
   - if @owner.is_a? User
     == form_tag user_project_collaborators_path(user_id: project.owner, project_id: project.id, owner_name: project.owner.slug), remote: true, id: "new_collaboration"
       == hidden_field_tag :user_name
-      == submit_tag "add", class: "btn"
+      == submit_tag "Add", class: "add-collaborator-btn btn"
   - else
     == form_tag group_project_collaborators_path(group_id: project.owner, project_id: project.id, owner_name: project.owner.slug), remote: true, id: "new_collaboration"
       == hidden_field_tag :user_name
-      == submit_tag "add", class: "btn"
+      == submit_tag "Add", class: "add-collaborator-btn btn"
 
 - content_for :bottom do
 
