@@ -150,6 +150,11 @@
               position: absolute;
               right: 0;
               bottom: 5px;
+              .order-tools {
+                position: absolute;
+                right: -81px;
+                top: 0;
+              }
             }
           }
           .body {
@@ -371,47 +376,30 @@
 }
 
 #recipe-card-list {
-  #card-order-tools {
-    margin-top: -20px;
-    margin-left: $first_column_width;
-    padding-bottom: 20px;
-    width: $article_column_width;
-    text-align: right;
-    background: white;
-  }
   .order-up-btn {
     display: none;
   }
   .order-down-btn {
     display: none;
   }
-  .order-change-btn {
-    display: inline-block;
-    margin-right: 20px;
-  }
-  .order-commit-btn {
-    display: none;
-    margin-right: 20px;
+  &.order-changing{
+    .order-up-btn, .order-down-btn {
+      display: block;
+      width: 61px;
+      height: 23px;
+    }
+    .order-up-btn {
+      background: asset-url("order_up.png");
+    }
+    .order-down-btn {
+      margin-top: 8px;
+      background: asset-url("order_down.png");
+    }
   }
   .wait4save {
     .btn {
       display: none;
     }
-  }
-}
-
-#recipe-card-list.order-changing {
-  .order-up-btn {
-    display: inline-block;
-  }
-  .order-down-btn {
-    display: inline-block;
-  }
-  .order-change-btn {
-    display: none;
-  }
-  .order-commit-btn {
-    display: inline-block;
   }
 }
 
