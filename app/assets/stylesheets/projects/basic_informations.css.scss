@@ -391,6 +391,54 @@ $tool_size: 75px;
       }
     }
   }
+  #recipe-cards-list {
+    display: block;
+    width: $tool_size;
+    height: auto;
+    cursor: pointer;
+    .container {
+      display: table;
+      width: 25px;
+      height: auto;
+      margin: 25px auto;
+      .selector-column {
+        display: table-cell;
+        vertical-align: top;
+        width: 7px;
+        .selector {
+          display: block;
+          margin-top: 1px;
+          width: 0;
+          height: 0;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-left: 7px solid $common-basic-color;
+        }
+      }
+      .index-column {
+        display: table-cell;
+        width: 10px;
+        .state-link {
+          display: block;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+        }
+        .annotation-link {
+          display: block;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+
 
   #fork-destinations {
     $popup_width: 360px;

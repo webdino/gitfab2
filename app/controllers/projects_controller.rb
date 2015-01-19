@@ -131,6 +131,12 @@ class ProjectsController < ApplicationController
     render "potential_owners", format: "json"
   end
 
+  def recipe_cards_list
+    @project = @owner.projects.find params[:project_id]
+    @recipe = @project.recipe
+    render "recipe_cards_list"
+  end
+
   private
   def project_params
     if params[:project]

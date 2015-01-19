@@ -37,6 +37,7 @@ Gitfab2::Application.routes.draw do
   concern :owner do
     resources :projects do
       get "potential_owners"
+      get "recipe_cards_list"
     end
     resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]
@@ -60,6 +61,7 @@ Gitfab2::Application.routes.draw do
   end
 
   resources :global_projects, only: :index
+  
   resources :projects, path: "/:owner_name", except: [:create, :update] do
     resources :collaborators, except: [:create, :update]
     resource :note, only: :show do
