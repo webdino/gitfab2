@@ -81,12 +81,16 @@ section#basic-informations
   == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn", id: "project-edit-btn"
 
 section.tools
-  == link_to "", "#", id: "slideshow-btn"
+  - if @recipe.present?
+    == link_to "", "#", id: "slideshow-btn"
   - if can? :edit, @project
     #card-order-tools
       == link_to "", "#", class: "order-change-btn"
       == link_to "", "#", class: "order-commit-btn"
     == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
+  - if @recipe.present?
+    == render "projects/recipe_cards_list"
+
 
   #fork-destinations
     - if signed_in?

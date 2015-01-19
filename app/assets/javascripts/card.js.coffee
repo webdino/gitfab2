@@ -44,6 +44,38 @@ $ ->
   formContainer.attr "id", "card-form-container"
   formContainer.appendTo document.body
 
+  cards_top = []
+
+  getCardsTop = ->
+    cards_top = []
+    cards = $ "#making-list .card"
+    cards_top.push card.offsetTop for card in cards
+  getCardsTop()
+
+  reloadRecipeCardsList = ->
+    owner_id = $("#recipes-show").data "owner"
+    project_id = $("#recipes-show").data "project"
+    recipe_cards_index_url = "/users/"+ owner_id + "/projects/" + project_id + "/recipe_cards_list"
+    $.ajax
+      type: "GET",
+      url: recipe_cards_index_url,
+      dataType: "json",
+      success: (data) ->
+        $("#recipe-cards-list").replaceWith data.html
+        scrollTop = $(window).scrollTop()
+        setSelectorPosition i for card_top, i in cards_top when scrollTop >= card_top
+      ,
+      error: (data) ->
+        console.alert data.message
+
+  setSelectorPosition = (n) ->
+    link_height_in_card_index = 15
+    $("#recipe-cards-list .selector").css "margin-top", (n * link_height_in_card_index + 1) + "px"
+
+  $(window).on "load scroll resize", (event) ->
+    scrollTop = $(window).scrollTop()
+    setSelectorPosition i for card_top, i in cards_top when scrollTop >= card_top
+
   $(document).on "ajax:beforeSend", ".delete-card", ->
     confirm "Are you sure to remove this item?"
 
@@ -117,6 +149,8 @@ $ ->
     checkStateConvertiblity()
     setStateIndex()
     markup()
+    setTimeout getCardsTop, 100
+    reloadRecipeCardsList()
 
   $(document).on "click", ".cancel-btn", (event) ->
     event.preventDefault()
@@ -451,5 +485,8 @@ $ ->
     setStateIndex()
     markup()
     setupFigureSlider selector
+    setTimeout getCardsTop, 100
+    reloadRecipeCardsList()
+
     if card.length is 0
       location.reload()
