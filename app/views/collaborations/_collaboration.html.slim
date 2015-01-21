@@ -1,5 +1,5 @@
 li.collaboration
-  == collaboration.user.name
+  == collaboration.owner.name
   '|
   - if can? :manage, collaboration
     == link_to "remove", [@collaboration.project.owner, collaboration], method: :delete, remote: true, class: "remove-collaboration-btn"

@@ -135,7 +135,9 @@ class Project
   end
 
   def collaborators
-    User.where("collaborations.project_id" => id)
+    users = User.where("collaborations.project_id" => id)
+    groups = Group.where("collaborations.project_id" => id)
+    users.concat groups
   end
 
   def licenses
