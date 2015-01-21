@@ -1,45 +1,9 @@
 - if can? :manage, project
   - if @owner.is_a? User
     == form_tag user_project_collaborators_path(user_id: project.owner, project_id: project.id, owner_name: project.owner.slug), remote: true, id: "new_collaboration"
-      == hidden_field_tag :user_name
+      == hidden_field_tag :collaborator_name
       == submit_tag "Add", class: "add-collaborator-btn btn"
   - else
     == form_tag group_project_collaborators_path(group_id: project.owner, project_id: project.id, owner_name: project.owner.slug), remote: true, id: "new_collaboration"
-      == hidden_field_tag :user_name
+      == hidden_field_tag :collaborator_name
       == submit_tag "Add", class: "add-collaborator-btn btn"
-
-- content_for :bottom do
-
-  coffee:
-    $ ->
-      search_term = null
-      $("#user_name").select2 {
-        width: "40%",
-        placeholder: "Choose a collaborator",
-        allowClear: true,
-        ajax: {
-          url: "/users.json",
-          dataType: "json",
-          cache: false,
-          data: (term, page) ->
-            search_term = term
-          results: (data, page) ->
-            usersList = []
-            ownerName = $("#owner > span:nth-child(2)").text()
-            usersList.push ownerName
-            $(".collaboration > span.name").each (index, element) ->
-              usersList.push $(element).text()
-            return {
-              results: $.map(data, (user, i) ->
-                userName = user.name
-                userSlug = user.slug
-                if $.inArray(userName, usersList) == -1 and userName.indexOf(search_term) != -1
-                  return {id: userSlug, text: userName}
-              )
-            }
-        }
-      }
-
-    window.clearSelect2Value = () ->
-      $("#s2id_user_name").select2 "val",""
-      $("input#user_name").val ""

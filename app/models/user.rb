@@ -6,6 +6,7 @@ class User
   include Mongoid::Slug
   include ProjectOwner
   include Liker
+  include Collaborator
 
   ## Database authenticatable
   field :email
@@ -37,7 +38,6 @@ class User
   mount_uploader :avatar, AvatarUploader
 
   embeds_many :memberships
-  embeds_many :collaborations
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
@@ -48,10 +48,6 @@ class User
 
   def is_owner_of? project
     self == project.owner
-  end
-
-  def is_collaborator_of? project
-    collaborations.where(project_id: project.id).exists?
   end
 
   def is_contributor_of? target
@@ -70,14 +66,6 @@ class User
 
   def membership_in group
     memberships.find_by group_id: group.id
-  end
-
-  def collaboration_in project
-    collaborations.find_by project_id: project.id
-  end
-
-  def collaborate! project
-    collaborations.create project: project
   end
 
   [:admin, :editor, :member].each do |role|

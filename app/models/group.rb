@@ -6,6 +6,7 @@
   include Mongoid::Timestamps
   include Mongoid::Slug
   include ProjectOwner
+  include Collaborator
 
   mount_uploader :avatar, AvatarUploader
 

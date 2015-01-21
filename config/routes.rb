@@ -34,6 +34,8 @@ Gitfab2::Application.routes.draw do
     resources :tags, only: [:create, :destroy]
   end
 
+  resources :owners, only: [:index]
+
   concern :owner do
     resources :projects do
       get "potential_owners"
@@ -57,6 +59,7 @@ Gitfab2::Application.routes.draw do
   end
 
   resources :groups, concerns: :owner do
+    resources :collaborations
     resources :members
   end
 

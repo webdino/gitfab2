@@ -1,6 +1,6 @@
 class CollaborationsController < ApplicationController
 
-  before_action :load_user
+  before_action :load_owner
   before_action :load_collaboration, only: :destroy
   before_action :build_collaboration, only: :create
 
@@ -30,14 +30,16 @@ class CollaborationsController < ApplicationController
   end
 
   def build_collaboration
-    @collaboration = @user.collaborations.build collaboration_params
+    @collaboration = @owner.collaborations.build collaboration_params
   end
 
   def load_collaboration
-    @collaboration = @user.collaborations.find params[:id]
+    @collaboration = @owner.collaborations.find params[:id]
   end
 
-  def load_user
-    @user = User.find params[:user_id]
+  def load_owner
+    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    @owner = User.find(owner_id) || Group.find(owner_id)
   end
+
 end

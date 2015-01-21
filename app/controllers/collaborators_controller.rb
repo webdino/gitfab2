@@ -1,7 +1,7 @@
 class CollaboratorsController < ApplicationController
   before_action :load_owner
   before_action :load_project
-  before_action :load_user, only: :create
+  before_action :load_collaborator, only: :create
   before_action :build_collaboration, only: :create
 
   def index
@@ -24,11 +24,12 @@ class CollaboratorsController < ApplicationController
     @project = @owner.projects.find params[:project_id]
   end
 
-  def load_user
-    @user = User.find params[:user_name]
+  def load_collaborator
+    collaborator_id = params[:collaborator_name]
+    @collaborator = User.find(collaborator_id) || Group.find(collaborator_id)
   end
 
   def build_collaboration
-    @collaboration = @user.collaborations.build project_id: @project.id
+    @collaboration = @collaborator.collaborations.build project_id: @project.id
   end
 end
