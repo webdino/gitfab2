@@ -20,7 +20,9 @@ class GroupsController < ApplicationController
     @group = Group.new group_params
     if @group.save
       membership = current_user.join_to @group
-      redirect_to [current_user, :memberships]
+      membership.role = "admin"
+      membership.save
+      render :edit
     else
       render :new
     end

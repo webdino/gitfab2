@@ -42,7 +42,7 @@ describe GroupsController, type: :controller do
     end
     context "with valid params" do
       let(:group_params){FactoryGirl.build(:group).attributes}
-      it{should redirect_to [user, :memberships]}
+      it{should render_template :edit}
     end
     context "with invalid params" do
       let(:group_params){{name: nil}}
