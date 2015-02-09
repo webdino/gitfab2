@@ -57,8 +57,9 @@ main#note-cards-show
             == render "components/card_figures", card: card, note_card_show: true
             == render "components/card_description", card: card
             == render "components/card_attachments", card: card
-          - unless defined?(is_template)
-            == render "components/card_comments", resources: [@owner, @project, :note, card]
+          / TODO: add comments to note_card
+          / - unless defined?(is_template)
+          /   == render "components/card_comments", resources: [@owner, @project, :note, card]
 
     footer
       .inner

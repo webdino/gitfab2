@@ -13,8 +13,16 @@ article class="card annotation" data-position="#{annotation.try(:position)}" id=
           == link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
           == link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
           == link_to "Convert to State", convert_url, class: "to-state btn"
+
+        .show-comments-btn
+          == image_tag "comment-icon.png", class: "comment-icon icon"
+          .count
+            == annotation.comments.length
         == render "components/card_contributors", card: annotation
+
     .body
       == render "components/card_description", card: annotation
       == render "components/card_figures", card: annotation
       == render "components/card_attachments", card: annotation
+    .footer
+      == render "components/recipecard_comments", card: annotation, resources: [@owner, @project, :recipe, parent, annotation]

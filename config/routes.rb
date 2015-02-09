@@ -14,7 +14,7 @@ Gitfab2::Application.routes.draw do
   match "search" => "global_projects#index", via: :get
 
   concern :card_features_for_form do
-    resources :annotations, only: [:create, :update]
+    resources :annotations, only: [:create, :update], concerns: :comments
     resources :derivative_cards, only: [:create, :update]
   end
 
@@ -44,7 +44,7 @@ Gitfab2::Application.routes.draw do
     resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
-        resources :states, only: [:create, :update], concerns: :card_features_for_form
+        resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
       end
       resource :note, only: :update do
         resources :note_cards, only: [:create, :update], concerns: :comments
@@ -64,7 +64,7 @@ Gitfab2::Application.routes.draw do
   end
 
   resources :global_projects, only: :index
-  
+
   resources :projects, path: "/:owner_name", except: [:create, :update] do
     resources :collaborators, except: [:create, :update]
     resource :note, only: :show do
