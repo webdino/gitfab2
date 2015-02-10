@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
   def create
     if @card.save
       @resources << @comment
-      render :create
+      render :create, locals:{ card_order: @card.comments.length - 1 }
     else
       render "errors/failed", status: 400
     end
@@ -39,6 +39,13 @@ class CommentsController < ApplicationController
     if params[:note_card_id]
       @card = @project.note.note_cards.find params[:note_card_id]
       @resources = [@owner, @project, :note, @card]
+    elsif params[:annotation_id]
+      @state = @project.recipe.states.find params[:state_id]
+      @card = @state.annotations.find params[:annotation_id]
+      @resources = [@owner, @project, :recipe, @state, @card]
+    else params[:state_id]
+      @card = @project.recipe.states.find params[:state_id]
+      @resources = [@owner, @project, :recipe, @card]
     end
   end
 

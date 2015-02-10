@@ -1,14 +1,25 @@
+- user = User.find(comment.user_id)
+- user_url = projects_path(owner_name: user.slug)
+- avatar_image = image_tag(user.avatar.thumb, class: "avatar")
 li.comment
-  - user = User.find(comment.user_id)
-  - link = projects_path(owner_name: user.slug)
   .left
-    - image = image_tag user.avatar.thumb
-    == link_to image, link
+    == link_to avatar_image, user_url,title: user.name
   .right
-    == link_to user.name, link, class: "user-name"
-    == Sanitize.clean comment.body, Sanitize::Config::RELAXED
-    .created-at
-      == comment.created_at
-  - if can? :destroy, comment
-    .comment-link
-      == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
+    .wrapper
+      .header
+        span.number.header-content
+          == "No.%03d" % (i + 1)
+        span.owner.header-content
+          == link_to user.slug, user_url
+
+        span.created-at.header-content
+          == "Posted date: "
+          span.date
+            == comment.created_at.strftime('%Y.%m.%d.%H.%M')
+
+        - if can? :destroy, comment
+          span.comment-tools
+            == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
+
+      .body
+        == Sanitize.clean comment.body, Sanitize::Config::RELAXED
