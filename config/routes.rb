@@ -3,6 +3,8 @@ Gitfab2::Application.routes.draw do
   match "terms" => "static_pages#terms", via: :get
   match "privacy" => "static_pages#privacy", via: :get
 
+  match "about_en" => "static_pages#about_en", via: :get
+
   root "global_projects#index"
 
   if Rails.env.development? || Rails.env.test?
