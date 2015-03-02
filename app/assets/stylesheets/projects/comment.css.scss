@@ -1,14 +1,12 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/clickable.css.scss";
 @import "mixins/variables.css.scss";
 
 .show-comments-btn {
+  @include clickable;
   float: right;
   margin: 0 5px;
   min-width: 40px;
-  cursor: pointer;
-  &:hover {
-    opacity: 0.8;
-  }
   .count {
     display: inline-block;
     min-width: 20px;
@@ -32,14 +30,11 @@
   &:not(.in-notecard){
     border-radius: 10px;
     .close-comments-btn {
+      @include clickable;
       display: block;
       position: absolute;
       top: 13px;
       right: 20px;
-      cursor: pointer;
-      &:hover {
-        opacity: 0.8;
-      }
     }
   }
   h2 {
@@ -51,7 +46,6 @@
     font-family: $common-novelsans;
     color: $common-basic-color;
   }
-
   ul.comments {
     margin: 10px;
     padding-top: 10px;

@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "mixins/clickable.css.scss";
 
 #edit-profile {
   display: inline-block;
@@ -36,14 +37,11 @@
   }
 
   #group-avatar {
+    @include clickable;
     width: 300px;
     height: 300px;
     border-radius: 300px;
     border: 10px solid #D8D8D8;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.8;
-    }
   }
   #group-avatar-form {
     display: none;
@@ -74,15 +72,13 @@
   }
 
   #submit {
+    @include clickable;
     margin: 60px 0 20px;
     padding: 5px 68px;
     font-size: 18px;
     color: white;
     background: $common-basic-color;
     border: none;
-    &:hover {
-      opacity: 0.8;
-    }
   }
 
 }

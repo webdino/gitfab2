@@ -1,9 +1,8 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/clickable.css.scss";
 @import "mixins/rows.css.scss";
 @import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
-
-
 
 #basic-informations {
   @include cf;
@@ -160,6 +159,10 @@
       border: none;
       border-radius: 0px;
       box-shadow: none;
+      img {
+        @include clickable;
+        width: 100%;
+      }
       iframe {
         width: 100%;
         height: 100%;
@@ -459,15 +462,12 @@ $tool_size: 75px;
         overflow: hidden;
       }
       .fork-btn {
+        @include clickable;
         margin-bottom: $common-margin;
         width: 100px;
         height: 100px;
         background-size: cover;
         background-position: center;
-        cursor: pointer;
-        &:hover {
-          opacity: 0.5;
-        }
       }
     }
   }
