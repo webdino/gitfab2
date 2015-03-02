@@ -427,13 +427,16 @@ $tool_size: 75px;
           background-color: $common-basic-color;
         }
         .annotation-link {
-          display: block;
+          display: none;
           margin-bottom: 5px;
           width: 10px;
           height: 10px;
           background-repeat: no-repeat;
           background-color: $common-basic-color;
           border-radius: 10px;
+          &.is-opened {
+            display: block;
+          }
         }
       }
     }
