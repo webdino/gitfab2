@@ -29,6 +29,9 @@ validateForm = (event, is_note_card_form) ->
     alert "You cannot make empty card."
     event.preventDefault()
 
+focusOnTitle = () ->
+  $(".card-title").first().focus()
+
 $ ->
   $.rails.ajax = (option) ->
     option.xhr =  ->
@@ -108,6 +111,7 @@ $ ->
     card = null
     formContainer.html data.html
     setupEditor()
+    setTimeout focusOnTitle, 1
     formContainer.find "form"
     .bind "submit", (e) ->
       card = template.clone()
@@ -127,6 +131,7 @@ $ ->
     card = $(li).children().first()
     formContainer.html data.html
     setupEditor()
+    setTimeout focusOnTitle, 1
     formContainer.find "form"
     .bind "submit", (e) ->
       wait4save $(this), card

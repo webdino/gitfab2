@@ -1,5 +1,6 @@
 $ ->
   $(".project-form").validate()
+  $("#project_title").focus()
 
   $(document).on "submit", ".project-form", ->
     action = $("#project_owner_id").val()
