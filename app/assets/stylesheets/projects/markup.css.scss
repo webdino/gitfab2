@@ -1,7 +1,20 @@
+@import "projects/_project_variables.css.scss";
+
 #recipes-show, #notes-show {
   .material, .tool, .blueprint, .attachment, .link {
-    color: #52C3F1;
     font-weight: 700;
+  }
+  .material {
+    color: $material_color;
+  }
+  .tool {
+    color: $tool_color;
+  }
+  .blueprint {
+    color: $blueprint_color;
+  }
+  .attachment, .link {
+    color: $attachment_color;
   }
   .description {
     ul {
@@ -30,9 +43,20 @@
 .nicEdit-main {
   line-height: 1.5;
   
-  .material, .tool, .blueprint, .attachment {
-    color: #52C3F1;
+  .material, .tool, .blueprint, .attachment, .link {
     font-weight: 700;
+  }
+  .material {
+    color: $material_color;
+  }
+  .tool {
+    color: $tool_color;
+  }
+  .blueprint {
+    color: $blueprint_color;
+  }
+  .attachment, .link {
+    color: $attachment_color;
   }
   ul {
     margin-left: 10px;
