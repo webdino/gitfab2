@@ -439,6 +439,22 @@
   }
 }
 
+#material-list {
+  li, a {
+    color: $material_color; 
+  }
+}
+#tool-list {
+  li, a {
+    color: $tool_color;
+  }
+}
+#blueprint-list {
+  li, a {
+    color: $blueprint_color;
+  }
+}
+
 #state-convert-dialog {
   display: none;
   .src {
