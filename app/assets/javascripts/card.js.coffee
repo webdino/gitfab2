@@ -116,6 +116,7 @@ $ ->
       list.append li
     .bind "ajax:success", (xhr, data) ->
       updateCard card, data
+      fixCommentFormAction li if li.hasClass "state-wrapper"
     .bind "ajax:error", (xhr, status, error) ->
       li.remove()
       alert status
@@ -132,6 +133,7 @@ $ ->
       wait4save $(this), card
     .bind "ajax:success", (xhr, data) ->
       updateCard card, data
+      fixCommentFormAction li if li.hasClass "state-wrapper"
     .bind "ajax:error", (e, xhr, status, error) ->
       alert status
 
@@ -492,3 +494,11 @@ $ ->
 
     if card.length is 0
       location.reload()
+
+  fixCommentFormAction = (li) ->
+    card = li.find ".card"
+    card_id = card.attr "id"
+    comment_form = card.find "#new_comment"
+    comment_form_action = comment_form.attr "action"
+    new_comment_form_action = comment_form_action.replace /\/states\/.+\/comments/, "/states/" + card_id + "/comments"
+    comment_form.attr "action", new_comment_form_action

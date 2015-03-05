@@ -5,12 +5,14 @@ $ ->
     comments = li.closest "ul"
     li.remove()
     changeCommentNumbers comments
+    countDownComment comments
 
   $(document).on "ajax:success", ".comment-form", (xhr, data) ->
     form = $ this
-    ul = form.siblings ".comments"
-    ul.append data.html
+    comments = form.siblings ".comments"
+    comments.append data.html
     form.find("#comment_body").val ""
+    countUpComment comments
 
   $(document).on "ajax:error", ".comment-form, .delete-comment", (event, xhr, status, error) ->
     alert error.message
@@ -40,3 +42,15 @@ zeroFormat = (value, figures) ->
     return (new Array( (figures - value_length) + 1).join(0) ) + value
   else
     return value
+
+countUpComment = (comment_list) ->
+  card_content = comment_list.closest ".card-content"
+  count = card_content.find ".show-comments-btn .count"
+  current_value = count.text()
+  count.text current_value - 0 + 1
+
+countDownComment = (comment_list) ->
+  card_content = comment_list.closest ".card-content"
+  count = card_content.find ".show-comments-btn .count"
+  current_value = count.text()
+  count.text current_value - 0 - 1
