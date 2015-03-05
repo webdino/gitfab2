@@ -20,7 +20,7 @@
       .right
         .form-title
           'Project Title
-        == f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "30"
+        == f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "30", autofocus: true
 
     - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
       / TODO: make changing project owner enabled via project/update
