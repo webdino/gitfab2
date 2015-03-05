@@ -58,10 +58,11 @@ main#note-cards-show
             == render "components/card_description", card: card
             == render "components/card_attachments", card: card
           / TODO: add comments to note_card
-          / - unless defined?(is_template)
-          /   == render "components/card_comments", resources: [@owner, @project, :note, card]
 
     footer
+      - unless defined?(is_template)
+        == render "components/notecard_comments", card: card, resources: [@owner, @project, :note, card]
+
       .inner
         / TODO: implement pager
 

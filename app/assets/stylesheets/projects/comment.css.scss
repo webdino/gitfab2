@@ -26,7 +26,22 @@
   position: relative;
   margin-top: 20px;
   background: $common-light-blue;
-  border-radius: 10px;
+  .close-comments-btn {
+    display: none;
+  }
+  &:not(.in-notecard){
+    border-radius: 10px;
+    .close-comments-btn {
+      display: block;
+      position: absolute;
+      top: 13px;
+      right: 20px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
   h2 {
     float: none;
     margin: 0px auto;
@@ -36,15 +51,7 @@
     font-family: $common-novelsans;
     color: $common-basic-color;
   }
-  .close-comments-btn {
-    position: absolute;
-    top: 13px;
-    right: 20px;
-    cursor: pointer;
-    &:hover {
-      opacity: 0.8;
-    }
-  }
+
   ul.comments {
     margin: 10px;
     padding-top: 10px;
@@ -70,6 +77,7 @@
         font-size: 12px;
         background: white;
         .header {
+          position: relative;
           padding-top: 10px;
           border: none !important;
           font-family: $common-novelsans;
