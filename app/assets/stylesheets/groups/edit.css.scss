@@ -1,4 +1,5 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/clickable.css.scss";
 @import "mixins/variables.css.scss";
 @import "layouts/settings.css.scss";
 
@@ -6,7 +7,7 @@
   display: inline-block;
   width: 700px;
   margin: 0px 20px 0 0;
-  
+
   #edit-members {
     display: block;
     margin-bottom: $common-margin-for-footer;
@@ -104,12 +105,10 @@
         border-radius: 5px;
       }
       #add-btn {
+        @include clickable;
         font-size: 12px;
         background: $common-basic-color;
         border: none;
-        &:hover {
-          opacity: 0.8;
-        }
       }
     }
   }

@@ -1,10 +1,15 @@
 @import "mixins/clearfix.css.scss";
+@import "mixins/clickable.css.scss";
 @import "mixins/variables.css.scss";
 @import "projects/_project_variables.css.scss";
 
 #recipe-cards {
   width: $first_column_width + $article_column_width;
   margin-right: $first_column_width;
+  .clickable-img {
+    @include clickable;
+    width: 100%;
+  }
   .top {
     margin-left: $first_column_width;
     padding-top: 1px;
@@ -16,7 +21,6 @@
       margin: 34px $common-margin 0;
     }
   }
-
   #making-list {
     @include cf;
     width: $first_column_width + $article_column_width;
@@ -191,9 +195,6 @@
               overflow: hidden;
               border: none;
               box-shadow: none;
-              img {
-                width: 100%;
-              }
               iframe {
                 width: 100%;
                 height: $figure_width * 3 / 4;
@@ -208,9 +209,6 @@
               border: none;
               border-radius: 0;
               box-shadow: none;
-              img {
-                width: 100%;
-              }
               ol.flex-control-paging {
                 top: 10px;
                 height: 10px;
@@ -287,9 +285,6 @@
                 overflow: hidden;
                 border: none;
                 box-shadow: none;
-                img {
-                  width: 100%;
-                }
                 iframe {
                   width: 100%;
                   height: $figure_width * 3 / 4;
@@ -303,9 +298,6 @@
                 overflow: hidden;
                 border: none;
                 box-shadow: none;
-                img {
-                  width: 100%;
-                }
                 ol.flex-control-paging {
                   top: 10px;
                   li>a {
