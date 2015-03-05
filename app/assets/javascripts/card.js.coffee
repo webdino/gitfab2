@@ -48,7 +48,8 @@ $ ->
 
   getCardsTop = ->
     cards_top = []
-    cards = $ "#making-list .card"
+    cards = $ "#making-list .state"
+    #11 TODO: Show annotations index of focused status
     cards_top.push card.offsetTop for card in cards
   getCardsTop()
 
@@ -75,6 +76,7 @@ $ ->
   $(window).on "load scroll resize", (event) ->
     scrollTop = $(window).scrollTop()
     setSelectorPosition i for card_top, i in cards_top when scrollTop >= card_top
+    #11 TODO: Show annotations index of focused status
 
   $(document).on "ajax:beforeSend", ".delete-card", ->
     confirm "Are you sure to remove this item?"
