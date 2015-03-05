@@ -59,6 +59,29 @@
       }
     }
   }
+
+  .bottom {
+    margin-bottom: 20px;
+    margin-left: $first_column_width;
+    width: $article_column_width;
+    background: white;
+    border-radius: 5px;
+    .inner {
+      @include cf;
+      width: $article_column_width - $common-margin * 4;
+      margin: $common-margin $common-margin*2 0;
+      h2 {
+        margin-top: 5px;
+        display: inline-block;
+        vertical-align: top;
+        width: 40%;
+        font-family: $common-novelsans;
+        font-size: 22px;
+        font-weight: normal;
+        line-height: $common-line-height;
+      }
+    }
+  }
 }
 
 #recipe-card-list {
@@ -407,12 +430,17 @@
   display: none;
 }
 
-#material-list, #tool-list, #blueprint-list {
+#material-list, #tool-list, #blueprint-list, #references {
   display: none;
   border-top: $common-border;
   padding: 3px 0 70px;
   font-family: $common-verdana;
-  &.has-data { display: block; }
+  &#references {
+    border: none;
+  }
+  &.has-data {
+    display: block;
+  }
   h2 {
     display: inline-block;
     vertical-align: top;
