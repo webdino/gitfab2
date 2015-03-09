@@ -62,6 +62,7 @@ class StatesController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    owner_id.downcase!
     @owner = User.find(owner_id) || Group.find(owner_id)
   end
 
