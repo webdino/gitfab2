@@ -32,6 +32,9 @@ validateForm = (event, is_note_card_form) ->
 focusOnTitle = () ->
   $(".card-title").first().focus()
 
+makeFancyoboxDraggable = () ->
+  $(".fancybox-wrap").draggable()
+
 $ ->
   $.rails.ajax = (option) ->
     option.xhr =  ->
@@ -112,6 +115,7 @@ $ ->
     formContainer.html data.html
     setupEditor()
     setTimeout focusOnTitle, 1
+    setTimeout makeFancyoboxDraggable, 1
     formContainer.find "form"
     .bind "submit", (e) ->
       card = template.clone()
@@ -133,6 +137,7 @@ $ ->
     formContainer.html data.html
     setupEditor()
     setTimeout focusOnTitle, 1
+    setTimeout makeFancyoboxDraggable, 1
     formContainer.find "form"
     .bind "submit", (e) ->
       wait4save $(this), card
