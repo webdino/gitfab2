@@ -11,8 +11,9 @@ article class="card state" data-position="#{card.try(:position)}" id="#{card.id}
           == link_to "Delete", project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, recipe: @project.recipe, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
           == link_to "Convert to Annotation", "#", class: "btn convert-card"
           - if can? :manage, card
-            == link_to "Up", "#", class: "order-up-btn btn"
-            == link_to "Down", "#", class: "order-down-btn btn"
+            .order-tools
+              == link_to "Up", "#", class: "order-up-btn btn"
+              == link_to "Down", "#", class: "order-down-btn btn"
 
           .show-comments-btn
             == image_tag "comment-icon.png", class: "comment-icon icon"
