@@ -39,6 +39,8 @@ $ ->
         overlay:
           css:
             "background": "rgba(0, 0, 0, 0.2)"
+      afterLoad: ->
+        $(".fancybox-wrap").draggable()
 
 $(window).on "load" , ->
   $('.flexslider').flexslider({
