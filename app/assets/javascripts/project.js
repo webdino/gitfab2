@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery.ui.sortable
-//= require jquery.ui.draggable
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require jquery.flexslider-min
