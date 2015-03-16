@@ -1,0 +1,5 @@
+- original_project = @project.original
+#link-to-origin
+  .wrapper
+    == image_tag "forked.png", class: "forked-icon"
+    == link_to "This project was forked from #{original_project.title}.", project_path(original_project.owner.slug, original_project), class: "link"

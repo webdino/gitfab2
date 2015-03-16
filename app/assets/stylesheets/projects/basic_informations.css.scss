@@ -4,6 +4,29 @@
 @import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
 
+#link-to-origin {
+  margin: -35px 0 35px;
+  width: 100%;
+  background: $common-charcoal-gray;
+  .wrapper {
+    margin: auto;
+    width: 960px;
+    height: 44px;
+    .forked-icon {
+      margin-top: 8px;
+    }
+    .link {
+      position: absolute;
+      margin-top: 16px;
+      margin-left: 15px;
+      font-family: $common-helvetica;
+      font-weight: bold;
+      font-size: 14px;
+      color: white;
+    }
+  }
+}
+
 #basic-informations {
   @include cf;
   $margin_width: 70px;
@@ -350,6 +373,9 @@ $tool_size: 75px;
   background-color: $common-gray;
   background-image: asset-url("edit-project.png");
   background-position: 5px;
+  &.forked-project-tools {
+    top: 154px;
+  }
 }
 
 .tools {
@@ -360,6 +386,9 @@ $tool_size: 75px;
   width: $tool_size;
   border-radius: 5px 0 0 5px;
   background: white;
+  &.forked-project-tools {
+    top: 259px;
+  }
   #slideshow-btn, #fork-btn, .order-change-btn, .order-commit-btn{
     display: block;
     width: $tool_size;
@@ -444,7 +473,6 @@ $tool_size: 75px;
       }
     }
   }
-
 
   #fork-destinations {
     $popup_width: 360px;

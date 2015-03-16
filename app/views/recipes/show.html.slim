@@ -1,8 +1,7 @@
 - content_for :title do
   - @project.owner.name + "/" + @project.title + " : Recipe"
 
-main#recipes-show data-url="/#{@project.owner.name}/#{@project.name}/recipe" data-owner="#{@project.owner.name}" data-project="#{@project.name}" 
-
+main#recipes-show data-url="/#{@project.owner.name}/#{@project.name}/recipe" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
   == render "projects/basic_informations"
   == render "recipes/recipe_cards"
   == render "recipes/usages"
