@@ -78,15 +78,16 @@ section#basic-informations
 
 
 - if can? :manage, @project
-  == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn", id: "project-edit-btn"
+  == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
 
-section.tools
+section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
   - if @recipe.present?
     == link_to "", "#", id: "slideshow-btn"
   - if can? :edit, @project
     #card-order-tools
       == link_to "", "#", class: "order-change-btn"
       == link_to "", "#", class: "order-commit-btn"
+  - if signed_in?
     == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
   - if @recipe.present?
     == render "projects/recipe_cards_list"

@@ -3,6 +3,9 @@
 == content_for :javascript do
   == javascript_include_tag "project", "data-turbolinks-track" => true
 - content_for :content do
+  - if @project.original_id.present?
+    == render "projects/link_to_origin"
+
   #content.project-layout
     == yield
   == render "recipes/facebook"

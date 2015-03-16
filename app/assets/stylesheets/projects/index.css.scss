@@ -159,10 +159,10 @@
             margin-bottom: 30px;
             padding-top: 10px;
             width: 100%;
-            border-top: 1px solid #555555;
+            border-top: 1px solid $common-charcoal-gray;
             &:last-of-type {
               padding-bottom: 30px;
-              border-bottom: 1px solid #555555;
+              border-bottom: 1px solid $common-charcoal-gray;
             }
             .image-container {
               display: inline-block;
