@@ -31,7 +31,7 @@
           display: inline-block;
           vertical-align: top;
           width: 40%;
-          font-family: $common-novelsans;
+          font-family: $common-novelsans-semibold;
           font-size: 22px;
           font-weight: normal;
           line-height: $common-line-height;
@@ -64,7 +64,7 @@
 #recipe-card-list {
   @include cf;
   width: $content_width;
-  font-family: $common-verdana;
+  font-family: $common-novelsans-light;
   > li {
     width: 100%;
     float: left;
@@ -84,7 +84,7 @@
         -webkit-padding-start: 13px;
         width: 30px;
         max-width: 30px;
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-size: 45px;
         line-height: 140px;
         color: white;
@@ -141,7 +141,7 @@
               float: left;
               margin-bottom: 0;
               max-width: $card_content_width;
-              font-family: $common-verdana;
+              font-family: $common-novelsans-light;
               font-weight: normal;
               font-size: 25px;
               line-height: $common-line-height;
@@ -317,7 +317,7 @@
               h2.title {
                 float: left;
                 max-width: $annotation_width;
-                font-family: $common-verdana;
+                font-family: $common-novelsans-light;
                 font-weight: normal;
                 font-size: 20px;
                 line-height: $common-line-height;
@@ -349,7 +349,7 @@
           background-color: $common-basic-color;
           padding: 4px 0 1px;
           width: $annotation_width;
-          font-family: $common-novelsans;
+          font-family: $common-novelsans-semibold;
           font-size: 14px;
           line-height: $common-line-height;
           text-align: center;
@@ -411,13 +411,13 @@
   display: none;
   border-top: $common-border;
   padding: 3px 0 70px;
-  font-family: $common-verdana;
+  font-family: $common-novelsans-light;
   &.has-data { display: block; }
   h2 {
     display: inline-block;
     vertical-align: top;
     width: 240px;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     font-size: 22px;
     line-height: $common-line-height;
   }

@@ -15,11 +15,17 @@ $common-gray: #999999;
 $common-sans-serif: 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', sans-serif;
 $common-helvetica: helvetica, sans-serif;
 $common-verdana: verdana, 'Hiragino-Pro-W3', sans-serif;
-$common-novelsans: 'novelsans-semibold', 'Hiragino-Pro-W3', sans-serif;
+$common-novelsans-light: 'novelsans-light', 'Hiragino-Pro-W3', sans-serif;
+$common-novelsans-semibold: 'novelsans-semibold', 'Hiragino-Pro-W3', sans-serif;
 
 $common-line-height: 1.75em;
 $common-footer-height: 200px;
 
+@font-face {
+  font-family: "novelsans-light";
+  src: asset-url("NovelSansRdProLight.eot") format('eot'),
+       asset-url("NovelSansRdProLight.woff") format('woff');
+}
 @font-face {
   font-family: "novelsans-semibold";
   src: asset-url("NovelSansRdProSemiBold.eot") format('eot'),
