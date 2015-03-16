@@ -9,7 +9,7 @@
 }
 
 form.project-form {
-  font-family: $common-novelsans;
+  font-family: $common-novelsans-semibold;
   .page-title {
     margin: 50px 0 30px 90px;
     font-size: 30px;
@@ -19,7 +19,7 @@ form.project-form {
     display: inline-block;
     margin-left: 10px;
     width: 60px;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     color: $common-gray;
     text-align: right;
   }
@@ -37,7 +37,7 @@ form.project-form {
 
     #project_title {
       width: 540px;
-      font-family: $common-verdana;
+      font-family: $common-novelsans-light;
       font-size: 22px;
       font-weight: 500;
       margin: 10px 0 50px;
@@ -52,7 +52,7 @@ form.project-form {
       height: 28px;
       padding-left: 10px;
       background: white;
-      font-family: $common-verdana;
+      font-family: $common-novelsans-light;
       font-size: 14px;
       border: solid 1px $common-basic-color;
       border-radius: 2px;
@@ -69,7 +69,7 @@ form.project-form {
     .description {
       margin-top: 30px;
       #project_description {
-        font-family: $common-verdana;
+        font-family: $common-novelsans-light;
         font-size: 14px;
         padding: 5px 10px;
         width: 690px;
@@ -92,7 +92,7 @@ form.project-form {
       }
       .about-license {
         margin-top: 10px;
-        font-family: $common-verdana;
+        font-family: $common-novelsans-light;
         font-size: 12px;
         a {
           color: $common-gray;
@@ -190,7 +190,7 @@ form.project-form {
         padding: 0 10px;
         width: 250px;
         height: 24px;
-        font-family: $common-verdana;
+        font-family: $common-novelsans-light;
         font-size: 12px;
         border: 1px solid $common-basic-color;
         border-radius: 5px;

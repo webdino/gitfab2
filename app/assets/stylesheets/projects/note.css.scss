@@ -25,7 +25,7 @@
       margin: 34px $margin 0;
       border-top: $common-border;
       h1 {
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-weight: 700;
         font-size: 22px;
         line-height: $common-line-height;
@@ -116,7 +116,7 @@
           float: left;
           margin: 0 10px 0px 20px;
           width: 410px;
-          font-family: $common-verdana;
+          font-family: $common-novelsans-light;
           font-size: 22px;
           line-height: $common-line-height;
         }
@@ -124,7 +124,7 @@
           float: left;
           margin: 0 10px 0px 20px;
           width: 410px;
-          font-family: $common-novelsans;
+          font-family: $common-novelsans-semibold;
           font-size: 14px;
           line-height: $common-line-height;
           .postedby {
@@ -161,7 +161,7 @@
           float: left;
           margin: 10px 10px 0 20px;
           width: 410px;
-          font-family: $common-verdana;
+          font-family: $common-novelsans-light;
           font-size: 14px;
           line-height: 24px;
         }

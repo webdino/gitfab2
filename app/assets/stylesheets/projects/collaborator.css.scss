@@ -2,7 +2,7 @@
 
 #collaborators-index {
   background: white;
-  font-family: $common-novelsans;
+  font-family: $common-novelsans-semibold;
   .inner {
     margin: 0 20px;
     padding: 20px 0;
@@ -19,7 +19,7 @@
       #s2id_collaborator_name {
         margin: 10px 20px 20px 0px;
         padding: 1px 0;
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-size: 14px;
         .select2-choice {
           background: white;
@@ -83,5 +83,5 @@
 }
 
 .select2-results {
-  font-family: $common-novelsans;
+  font-family: $common-novelsans-semibold;
 }

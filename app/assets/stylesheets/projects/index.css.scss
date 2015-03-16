@@ -12,7 +12,7 @@
     float: left;
     margin-left: 10px;
     width: $left_pane_width;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     .image-wrapper {
       display: block;
       margin-left: $border_margin;
@@ -121,7 +121,7 @@
     float: left;
     margin-left: 20px;
     width: 710px;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     .tabs {
       li {
         display: inline-block;
@@ -218,7 +218,7 @@
                 display: block;
                 margin-top: 10px;
                 margin-bottom: 5px;
-                font-family: $common-verdana;
+                font-family: $common-novelsans-light;
                 font-size: 20px;
                 line-height: 1.2;
                 font-weight: normal;
@@ -238,7 +238,7 @@
               }
               .summary {
                 margin-bottom: 5px;
-                font-family: $common-verdana;
+                font-family: $common-novelsans-light;
                 font-size: 14px;
                 line-height: 22px;
                 color: black;
