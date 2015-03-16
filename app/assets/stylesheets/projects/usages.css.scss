@@ -20,7 +20,7 @@ section#usages {
     min-height: 256px;
 
     h1 {
-      font-family: $common-novelsans;
+      font-family: $common-novelsans-semibold;
       font-weight: normal;
       font-size: 22px;
       line-height: $common-line-height;
@@ -48,7 +48,7 @@ section#usages {
       padding: 11px 0 11px 0;
       width: $article_column_width - $margin * 2;
       background-color: $common-basic-color;
-      font-family: $common-novelsans;
+      font-family: $common-novelsans-semibold;
       font-size: 14px;
       line-height: $common-line-height;
       text-align: center;
@@ -129,7 +129,7 @@ section#usages {
       h2.title {
         float: left;
         max-width: $card_content_width - $figure_width - $figure_margin_right;
-        font-family: $common-verdana;
+        font-family: $common-novelsans-light;
         font-weight: 700;
         font-size: 14px;
         line-height: $common-line-height;
@@ -138,7 +138,7 @@ section#usages {
         float: left;
         word-wrap: break-word;
         width: $card_content_width - $figure_width - $figure_margin_right;
-        font-family: $common-verdana;
+        font-family: $common-novelsans-light;
         font-size: 14px;
         line-height: 24px;
       }
