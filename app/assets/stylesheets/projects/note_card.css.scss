@@ -19,7 +19,7 @@
       margin: 34px $margin 0;
       border-top: $common-border;
       h1 {
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-weight: 700;
         font-size: 22px;
         line-height: $common-line-height;
@@ -48,14 +48,14 @@
         .title {
           margin: 0 10px;
           width: $note_card_width - 20px;
-          font-family: $common-verdana;
+          font-family: $common-novelsans-light;
           font-size: 22px;
           line-height: $common-line-height;
         }
         .meta {
           margin: 0 10px;
           width: $note_card_width - 20px;
-          font-family: $common-novelsans;
+          font-family: $common-novelsans-semibold;
           font-size: 14px;
           line-height: $common-line-height;
           .postedby {
@@ -160,7 +160,7 @@
         .description {
           margin: 10px;
           width: $note_card_width - 20px;
-          font-family: $common-verdana;
+          font-family: $common-novelsans-light;
           font-size: 16px;
           line-height: 32px;
           a {

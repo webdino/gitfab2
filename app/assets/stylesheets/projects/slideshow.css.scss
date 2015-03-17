@@ -1,7 +1,7 @@
 @import "mixins/variables.css.scss";
 
 .slideshow {
-  font-family: $common-verdana;
+  font-family: $common-novelsans-light;
   .fancybox-skin {
     border-radius: 5px;
   }
@@ -46,7 +46,7 @@
       height: 40px;
       border-bottom: 1px solid $common-basic-color;
       text-align: center;
-      font-family: $common-novelsans;
+      font-family: $common-novelsans-semibold;
       font-size: 30px;
     }
     .arrow-column {
