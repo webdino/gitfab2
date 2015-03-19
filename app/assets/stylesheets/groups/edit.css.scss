@@ -13,7 +13,7 @@
     margin-bottom: $common-margin-for-footer;
     padding: 20px 0;
     width: 730px;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     background: white;
     border-radius: 5px;
     .inner {
@@ -61,7 +61,7 @@
             margin-top: 5px;
             padding: 3px 5px;
             background: white;
-            font-family: $common-novelsans;
+            font-family: $common-novelsans-semibold;
             font-size: 12px;
             border: 1px solid $common-gray;
             border-radius: 5px;
@@ -89,7 +89,7 @@
       margin-top: 55px;
       #s2id_member_name {
         margin: 20px 0px;
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-size: 12px;
         .select2-choice {
           background: white;
@@ -99,7 +99,7 @@
         margin: 2px 10px;
         padding: 3px 5px;
         background: white;
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-size: 12px;
         border: 1px solid $common-gray;
         border-radius: 5px;
@@ -115,5 +115,5 @@
 }
 
 .select2-searching, .select2-result-label {
-  font-family: $common-novelsans;
+  font-family: $common-novelsans-semibold;
 }

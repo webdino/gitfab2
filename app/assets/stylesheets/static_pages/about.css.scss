@@ -6,7 +6,7 @@ body {
 #about {
   .headers{
     text-align: center;
-    font-family: $common-novelsans;
+    font-family: $common-novelsans-semibold;
     h1 {
       margin: 45px 0 20px;
       line-height: 1.75;
@@ -42,7 +42,7 @@ body {
         position: absolute;
         left: 0;
         top: 0;
-        font-family: $common-novelsans;
+        font-family: $common-novelsans-semibold;
         font-size: 20px;
       }
       .abstract {

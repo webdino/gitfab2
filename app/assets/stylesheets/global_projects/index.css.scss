@@ -7,7 +7,7 @@
   $featured_projects_color: #63c5fb;
   $reciped_projects_color: #e6f9ff;
 
-  font-family: $common-novelsans;
+  font-family: $common-novelsans-semibold;
   margin-top: -35px;
   width: 100%;
   background-color: $featured_projects_color;
@@ -113,7 +113,7 @@
               margin: 0px 10px 5px;
               width: $figure_width - 20px;
               padding-top: 10px;
-              font-family: $common-novelsans;
+              font-family: $common-novelsans-semibold;
               font-weight: normal;
               font-size: 45px;
               line-height: 50px;
@@ -187,7 +187,7 @@
               margin: 0px 10px 5px;
               width: $figure_width - 20px;
               padding-top: 10px;
-              font-family: $common-novelsans;
+              font-family: $common-novelsans-semibold;
               font-weight: normal;
               font-size: 45px;
               line-height: 50px;
