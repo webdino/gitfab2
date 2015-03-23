@@ -7,7 +7,6 @@ describe RecipesController, type: :controller do
   let(:u_project){FactoryGirl.create :user_project}
   let(:g_project){FactoryGirl.create :group_project}
   let(:state){FactoryGirl.build :state}
-  let(:transition){FactoryGirl.build :transition}
   let(:annotation){FactoryGirl.build :annotation}
 
   subject{response}

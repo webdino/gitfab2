@@ -1,6 +1,6 @@
 aside#templates
   section#state-template
-    == render "recipe_cards/recipe_card", card: Card::State.new
+    == render "states/state", card: Card::State.new
   section#annotation-template
     == render "annotations/annotation", annotation: Card::Annotation.new, parent: Card::State.new
   section#usage-template

@@ -21,9 +21,9 @@ describe Project do
     let(:derivative_project){project.fork_for! forker}
     before do
       project.recipe.states.create _type: Card::State,
-        title: "a state", description: "desc"
-      project.recipe.states.create _type: Card::Transition,
-        title: "a transition", description: "desc"
+        title: "a state", description: "desc a"
+      project.recipe.states.create _type: Card::State,
+        title: "b state", description: "desc b"
       project.reload
     end
     it{expect(project.recipe).to have(2).states}

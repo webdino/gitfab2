@@ -44,7 +44,7 @@
     }
     .article-column.sp {
       background: white;
-      margin-top: -2px;
+      margin-top: -4px;
       margin-left: $first_column_width;
       margin-bottom: 20px;
       padding-bottom: 20px;
@@ -98,7 +98,7 @@
   }
   li.state-wrapper {
     $state_margin_top: 50px;
-    margin-top: -2px;
+    margin-top: -4px;
     width: $first_column_width + $article_column_width;
     article {
       @include cf;
