@@ -269,7 +269,7 @@
           margin-left: $annotation_margin_left;
           >li {
             width: 100%;
-            overflow: auto;
+            overflow: visible;
             .annotation>.card-content {
               @include cf;
               margin-left: 0;
@@ -277,6 +277,31 @@
               padding-bottom: 0;
               width: $annotation_width;
               border: none;
+
+              .header {
+                @include cf;
+                position: relative;
+                border-bottom: 1px solid $common-gray;
+                h2.title {
+                  float: left;
+                  max-width: $annotation_width;
+                  font-family: $common-verdana;
+                  font-weight: normal;
+                  font-size: 20px;
+                  line-height: $common-line-height;
+                }
+                .control {
+                  position: absolute;
+                  right: 0;
+                  bottom: 5px;
+                  .order-tools {
+                    position: absolute;
+                    right: -61px;
+                    top: 0;
+                  }
+                }
+              }
+
               figure {
                 float: left;
                 max-width: $figure_width;
@@ -351,7 +376,7 @@
                 @include cf;
                 float: left;
               }
-              footer {
+              .footer {
                 float: left;
                 margin-top: $common-margin * 2;
                 width: $annotation_width - $figure_width - $figure_margin_left;
@@ -370,6 +395,10 @@
           text-align: center;
           color: white;
         }
+      }
+
+      .update-state {
+        display: none;
       }
     }
     &:first-of-type {
@@ -397,7 +426,7 @@
   .order-down-btn {
     display: none;
   }
-  &.order-changing{
+  &.order-changing {
     .order-up-btn, .order-down-btn {
       display: block;
       width: 61px;
@@ -410,7 +439,42 @@
       margin-top: 8px;
       background: asset-url("order_down.png");
     }
+    .state-wrapper {
+      &:first-of-type {
+        .order-up-btn {
+          display: none;
+        }
+        .annotation-wrapper {
+          .order-up-btn {
+            display: block;
+          }
+        }
+      }
+      &:last-of-type {
+        .order-down-btn {
+          display: none;
+        }
+        .annotation-wrapper {
+          .order-up-btn {
+            display: block;
+          }
+        }
+      }
+      .annotation-wrapper {
+        &:first-of-type {
+          .order-up-btn {
+            display: none;
+          }
+        }
+        &:last-of-type {
+          .order-down-btn {
+            display: none;
+          }
+        }
+      }
+    }
   }
+
   .wait4save {
     .btn {
       display: none;
@@ -461,7 +525,7 @@
 
 #material-list {
   li, a {
-    color: $material_color; 
+    color: $material_color;
   }
 }
 #tool-list {

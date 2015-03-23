@@ -13,6 +13,9 @@ article class="card annotation" data-position="#{annotation.try(:position)}" id=
           == link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
           == link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
           == link_to "Convert to State", convert_url, class: "to-state btn"
+          .order-tools
+            == link_to "", "#", class: "order-up-btn"
+            == link_to "", "#", class: "order-down-btn"
 
         .show-comments-btn
           == image_tag "comment-icon.png", class: "comment-icon icon"
