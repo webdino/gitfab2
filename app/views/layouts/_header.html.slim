@@ -3,6 +3,7 @@ section#layouts-header
     .container
       #logo
         == link_to "", root_path, class: "logo"
+
       #search-box
         == form_tag :search, method: :get do |f|
           == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
@@ -21,5 +22,14 @@ section#layouts-header
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box
             == link_to "", new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-project"
+
+            == link_to user_notifications_path(current_user), remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
+              - unread_notifications_count = current_user.my_notifications.where(was_read: false).count
+              - if unread_notifications_count > 0
+                .notifications-badge
+                  .inner
+                    == unread_notifications_count
             == link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
             == link_to "", destroy_user_session_path, method: :delete, title: "Logout", class: "icon logout"
+
+        #notifications-index.hidden

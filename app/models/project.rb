@@ -8,6 +8,7 @@ class Project
   include Taggable
   include Likable
   include Searchable
+  include Notificatable
 
   searchable_field :name
   searchable_field :title

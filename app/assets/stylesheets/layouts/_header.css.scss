@@ -13,6 +13,7 @@ $icons-sprite-dimensions: true;
   }
   .container {
     @include cf;
+    position: relative;
     margin: 0 auto;
     padding: 18px 0 20px;
     width: 960px;
@@ -78,10 +79,11 @@ $icons-sprite-dimensions: true;
       }
     }
     .box {
+      position: relative;
       display: inline-block;
       padding: 18px 0px 12px 10px;
       text-align: right;
-      width: 130px;
+      width: 168px;
       height: 12px;
       border-left: solid 1px $common-basic-color;
       .icon {
@@ -94,11 +96,31 @@ $icons-sprite-dimensions: true;
       .create-project {
         @include icons-sprite(create_project);
       }
+      .show-notifications {
+        @include icons-sprite(notifications);
+      }
       .settings {
         @include icons-sprite(settings);
       }
       .logout {
         @include icons-sprite(logout);
+      }
+      .notifications-badge {
+        position: absolute;
+        top: 18px;
+        left: 64px;
+        width: 16px;
+        height: 16px;
+        border: 1px solid $common-basic-color;
+        border-radius: 16px;
+        background: $common-basic-color;
+        position: absolute;
+        .inner {
+          margin-top: 4px;
+          text-align: center;
+          font-size: 10px;
+          color: white;
+        }
       }
     }
   }
@@ -110,6 +132,56 @@ $icons-sprite-dimensions: true;
     font-size: 12px;
     line-height: 21px;
     border-left: $common-border;
+  }
+
+  #notifications-index {
+    position: absolute;
+    right: 0px;
+    top: 60px;
+    width: 250px;
+    max-height: 320px;
+    overflow: scroll;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid $common-basic-color;
+    z-index: 9999;
+    &.hidden {
+      display: none;
+    }
+    .notifications {
+      .notification {
+        margin: 0 10px;
+        width: 230px;
+        border-bottom: 1px solid $common-basic-color;
+        &:last-child {
+          border: none;
+        }
+        .container {
+          display: table;
+          margin: 0px auto;
+          padding: 10px 0px 5px;
+          width: 230px;
+          font-family: "novelsans-semibold";
+          .avatar-wrapper {
+            display: table-cell;
+            .avatar {
+              margin: -2px;
+              border: 2px solid $common-gray;
+              border-radius: 30px;
+              width: 30px;
+              height: 30px;
+            }
+          }
+          .body {
+            display: table-cell;
+            padding-left: 10px;
+            vertical-align: top;
+            font-size: 12px;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
   }
 
 }

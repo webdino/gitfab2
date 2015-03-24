@@ -4,4 +4,5 @@
 //= require jquery.remotipart
 //= require ../../../vendor/assets/javascripts/packery.pkgd.min
 //= require global_project
+//= require notifications
 //= require maintenance

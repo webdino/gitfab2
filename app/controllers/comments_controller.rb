@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
-
   before_action :load_owner
   before_action :load_project
   before_action :load_card
   before_action :build_comment, only: :create
   before_action :load_comment, only: :destroy
+  after_action :notify_users, only: :create
 
   authorize_resource
 
@@ -23,6 +23,18 @@ class CommentsController < ApplicationController
     else
       render "errors/failed", status: 400
     end
+  end
+
+  def notify_users
+    users = @project.notifiable_users current_user
+    if @card.class.name == "Card::NoteCard"
+      url = project_note_note_card_path owner_name: @project.owner.slug, project_id: @project.name, id: @card.id
+      body = "#{current_user.name} commented on your memo of #{@project.title}."
+    else
+      url = project_path @project, owner_name: @project.owner.slug
+      body = "#{current_user.name} commented on your recipe of #{@project.title}."
+    end
+    @project.notify users, current_user, url, body if users.length > 0
   end
 
   private

@@ -64,6 +64,7 @@ Gitfab2::Application.routes.draw do
   resources :users, concerns: :owner do
     resources :collaborations
     resources :memberships
+    resources :notifications
   end
 
   resources :groups, concerns: :owner do
