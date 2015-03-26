@@ -30,7 +30,7 @@ section#recipe-cards
     ul#recipe-card-list.card-list
       - @recipe.states.ordered_by_position.each do |card|
         li class="card-wrapper #{card.htmlclass}-wrapper"
-          == render "recipe_cards/state", card: card, owner: @owner, project: @project
+          == render "states/state", card: card, owner: @owner, project: @project
 
     .article-column.sp
       - if can? :edit, @project
