@@ -23,6 +23,7 @@
   $avatar-size: 55px;
   position: relative;
   margin-top: 20px;
+  padding: 20px 0;
   background: $common-light-blue;
   .close-comments-btn {
     display: none;
@@ -40,7 +41,6 @@
   h2 {
     float: none;
     margin: 0px auto;
-    padding-top: 20px;
     width: 115px;
     font-size: 22px;
     font-family: $common-novelsans-semibold;
@@ -123,7 +123,6 @@
     .right {
       float: left;
       width: calc(100% - 105px);
-      margin-bottom: 20px;
       padding: 10px 11px 10px 13px;
       border-radius: 10px;
       background: white;
