@@ -3,30 +3,45 @@
 .slideshow {
   font-family: $common-novelsans-light;
   .fancybox-skin {
-    border-radius: 5px;
+    border-radius: 0;
   }
   .fancybox-inner {
     overflow-x: hidden !important;
   }
   .fancybox-close {
-    top: 10px;
-    right: 10px;
+    top: 3%;
+    right: 3%;
+    width: 40px;
+    height: 40px;
+    background: asset-url("slideshow/close.png") no-repeat;
   }
   .fancybox-nav {
     width: 50px;
     height: 40px;
   }
   .fancybox-prev {
-    top: 85px;
-    left: 615px;
+    top: calc(50% - 20px);
+    left: 3%;
+    span {
+      width: 45px;
+      height: 50px;
+      background: asset-url("slideshow/back.png") no-repeat;
+    }
   }
   .fancybox-next {
-    top: 85px;
-    left: 775px;
-    right: auto;
+    top: calc(50% - 20px);
+    right: 3%;
+    span {
+      width: 45px;
+      height: 50px;
+      background: asset-url("slideshow/next.png") no-repeat;
+    }
   }
   .fancybox-nav span {
     visibility: visible;
+  }
+  .update-state {
+    display: none;
   }
   article.card {
     position: relative;
@@ -34,20 +49,28 @@
     height: calc(100% - 20px);
     h1.title {
       position: absolute;
-      left: 10px;
-      top: 20px;
-      font-size: 25px;
+      left: 3%;
+      top: 3%;
+      font-size: 36px;
+      font-family: $common-novelsans-semibold;
+    }
+    .denominator {
+      position: absolute;
+      top: calc(3% + 9px);
+      right: calc(12% - 40px);
+      text-align: left;
+      font-size: 24px;
+      font-family: $common-novelsans-semibold;
     }
     .number {
       position: absolute;
-      left: 665px;
-      top: 80px;
+      top: 3%;
+      right: 12%;
       width: 90px;
       height: 40px;
-      border-bottom: 1px solid $common-basic-color;
-      text-align: center;
+      text-align: right;
       font-family: $common-novelsans-semibold;
-      font-size: 30px;
+      font-size: 36px;
     }
     .arrow-column {
       display: none;
@@ -61,30 +84,35 @@
       height: 100%;
       h2.title {
         position: absolute;
-        top: 130px;
-        left: 480px;
-        width: 460px;
+        top: 79%;
+        left: 10%;
+        width: 80%;
         z-index: 10;
         text-align: center;
-        font-size: 25px;
+        font-size: 32px;
+        font-family: $common-novelsans-semibold;
         line-height: 1.5;
+        background: rgba(249, 249, 249, 0.6);
       }
       .control {
         display: none;
       }
       figure {
         position: absolute;
-        top: 80px;
-        width: 460px;
-        height: 460px;
+        width: 50%;
+        height: auto;
+        top: 20%;
+        left: 25%;
         iframe {
           z-index: 0;
           max-width: 100%;
           max-height: 100%;
+          width: 100%;
         }
         img {
           max-width: 100%;
           max-height: 100%;
+          width: 100%;
         }
         .flex-viewport:first-child {
           display: none;
@@ -95,11 +123,12 @@
       }
       .description {
         position: absolute;
-        top: 190px;
-        left: 480px;
-        width: 460px;
+        top: 85%;
+        left: 10%;
+        width: 80%;
         z-index: 10;
-        font-size: 16px;
+        font-size: 20px;
+        background: rgba(249, 249, 249, 0.6);
       }
     }
   }
