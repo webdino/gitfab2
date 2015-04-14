@@ -1,1 +1,0 @@
-json.html (render "components/card", card: @annotation, delete_url: project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: @recipe_card.id, id: @annotation.id), edit_url: edit_project_recipe_transition_annotation_path(owner_name: @owner.slug, project_id: @project.name, transition_id: @recipe_card.id, id: @annotation.id))
