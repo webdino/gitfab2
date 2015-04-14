@@ -8,7 +8,7 @@ class TagsController < ApplicationController
   authorize_resource
 
   def create
-    if @project.save
+    if @project.timeless.save
       @resources = [@owner, @project, @tag]
       render :create
     else
