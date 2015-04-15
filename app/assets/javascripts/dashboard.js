@@ -5,3 +5,4 @@
 //= require_tree ../../../vendor/assets/javascripts/tabby
 //= require select2
 //= require ./maintenance
+//= require ./features
