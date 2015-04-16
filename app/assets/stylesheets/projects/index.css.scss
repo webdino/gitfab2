@@ -15,14 +15,16 @@
     font-family: $common-novelsans-semibold;
     .image-wrapper {
       display: block;
-      margin-left: $border_margin;
-      width: $left_pane_width - $border_margin * 2;
+      width: $left_pane_width;
+      height: $left_pane_width;
       .owner-avatar {
-        margin-bottom: 20px;
-        max-width: 100%;
+        position: relative;
         border-radius: $left_pane_width - $border_margin * 2;
+        width: $left_pane_width - $border_margin * 2;
+        height: $left_pane_width - $border_margin * 2;
         border: $border_margin solid white;
-        margin: -$border_margin;
+        background-position: center center;
+        background-size: cover;
         z-index: 11111;
       }
     }

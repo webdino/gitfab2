@@ -4,7 +4,7 @@
 #projects-index
   .left
     .image-wrapper
-      == image_tag @owner.avatar, class: "owner-avatar"
+      .owner-avatar style="background-image: url('#{@owner.avatar}')"
 
     .wrapper
       .owner-name
