@@ -1,0 +1,17 @@
+@import "mixins/variables.css.scss";
+#layouts-maintenance-noticitaiton {
+  background: $common-basic-color;
+  .inner {
+    margin: 0 auto;
+    padding: 15px 0;
+    font-size: 14px;
+    text-align: center;
+    #hide-maintenance-notification {
+      margin-left: 20px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+}
