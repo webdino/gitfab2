@@ -17,4 +17,5 @@
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require ../../../vendor/assets/javascripts/packery.pkgd.min
+//= require ./maintenance
 //= require_tree .

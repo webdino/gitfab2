@@ -34,4 +34,5 @@
 //= require ./collaborator
 //= require ./change_owner
 //= require ./basic_informations
+//= require ./maintenance
 //= require select2
