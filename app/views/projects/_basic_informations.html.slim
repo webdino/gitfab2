@@ -14,8 +14,10 @@ section#basic-informations
             span.index
               'Created Date:
             span.value
-              == " #{@project.created_at.strftime '%Y-%m-%d'} / "
+              == " #{@project.created_at.strftime '%Y-%m-%d'}"
 
+          span.slash
+            '/
           span.updated
             span.index
               'updated date:

@@ -29,7 +29,7 @@
         color: white;
         line-height: 1.2;
         .main-copy {
-          width: 830px;
+          width: 832px;
           font-size: 50px;
           font-weight: normal;
         }
@@ -70,7 +70,7 @@
 
       .title {
         margin: 0px auto 30px;
-        width: 440px;
+        width: 343px;
         font-size: 30px;
         font-weight: normal;
         line-height: 1.2;
@@ -111,7 +111,7 @@
             .title-large {
               position: relative;
               margin: 0px 10px 5px;
-              width: $figure_width - 20px;
+              width: $figure_width - 60px;
               padding-top: 10px;
               font-family: $common-novelsans-semibold;
               font-weight: normal;
@@ -129,7 +129,8 @@
             width: $figure_width - $inner_padding * 2;
             padding: $inner_padding;
             .title-small {
-              min-height: 55px;
+              margin-bottom: 10px;
+              min-height: 45px;
               font-size: 18px;
               line-height: 1.5;
             }
@@ -143,6 +144,7 @@
               font-size: 14px;
               line-height: 22px;
               color: $common-dark-gray;
+              font-family: $common-novelsans-light;
               word-break: break-all;
             }
             .status {
@@ -186,7 +188,7 @@
             .title-large {
               position: relative;
               margin: 0px 10px 5px;
-              width: $figure_width - 20px;
+              width: $figure_width - 60px;
               padding-top: 10px;
               font-family: $common-novelsans-semibold;
               font-weight: normal;
@@ -204,7 +206,8 @@
             width: $figure_width - $inner_padding * 2;
             padding: $inner_padding;
             .title-small {
-              min-height: 55px;
+              margin-bottom: 10px;
+              min-height: 45px;
               font-size: 18px;
               line-height: 1.5;
             }
@@ -218,10 +221,13 @@
               font-size: 14px;
               line-height: 22px;
               color: $common-dark-gray;
+              font-family: $common-novelsans-light;
+              word-break: break-all;
             }
             .status {
               margin-bottom: 5px;
-              line-height: 18px;
+              line-height: 15px;
+              font-family: $common-novelsans-light;
               font-size: 14px;
               .recipes, .notes {
                 display: inline-block;

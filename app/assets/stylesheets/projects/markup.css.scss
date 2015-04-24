@@ -2,7 +2,7 @@
 
 #recipes-show, #notes-show {
   .material, .tool, .blueprint, .attachment, .link {
-    font-weight: 700;
+    font-weight: 500;
   }
   .material {
     color: $material_color;
@@ -42,9 +42,9 @@
 
 .nicEdit-main {
   line-height: 1.5;
-  
+
   .material, .tool, .blueprint, .attachment, .link {
-    font-weight: 700;
+    font-weight: 500;
   }
   .material {
     color: $material_color;
