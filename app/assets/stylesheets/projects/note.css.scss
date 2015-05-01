@@ -26,7 +26,7 @@
       border-top: $common-border;
       h1 {
         font-family: $common-novelsans-semibold;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 22px;
         line-height: $common-line-height;
       }
@@ -50,120 +50,124 @@
       .card-content {
         @include cf;
         $figure_width: 368px;
-        figure {
+        .left {
           float: left;
-          margin-left: 10px;
-          width: $figure_width;
-          height: auto;
-          border: 0;
-          border-radius: 0;
-          box-shadow: none;
-          li:first-child > img{
-            max-width: 100%;
+          .title {
+            margin: 0 10px 0px 20px;
+            width: 410px;
+            font-family: $common-novelsans-light;
+            font-size: 22px;
+            line-height: $common-line-height;
+          }
+          .meta {
+            margin: 0 10px 0px 20px;
+            width: 410px;
+            font-family: $common-novelsans-semibold;
+            font-size: 14px;
+            line-height: $common-line-height;
+            .postedby {
+              font-weight: normal;
+              img {
+                width: 12px;
+                height: 12px;
+              }
+            }
+            .control {
+              margin-top: 5px;
+              .starred {
+                height: 26px;
+                padding-right: 10px;
+                margin-right: 10px;
+                border-right: 1px solid black;
+                .icon {
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-top: 1px;
+                  width: 20px;
+                  height: 20px;
+                }
+                .count {
+                  display: inline-block;
+                  vertical-align: top;
+                  margin-left: 5px;
+                  height: 20px;
+                }
+              }
+            }
+          }
+          .description {
+            float: left;
+            margin: 10px 10px 0 20px;
+            width: 410px;
+            font-family: $common-novelsans-light;
+            font-size: 14px;
+            line-height: 24px;
           }
         }
-        figure>img {
-          width: 100%;
-        }
-        figure>iframe {
-          width: 100%;
-          height: 276px;
-        }
-        figure.flexslider {
+        .right {
           float: left;
-          max-width: $figure_width;
-          width: $figure_width;
-          overflow: hidden;
-          border: none;
-          border-radius: 0;
-          box-shadow: none;
-          img {
+          figure {
+            // float: left;
+            margin-left: 10px;
+            width: $figure_width;
+            height: auto;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            li:first-child > img{
+              max-width: 100%;
+            }
+          }
+          figure>img {
             width: 100%;
           }
-          ol.flex-control-paging {
-            top: 10px;
-            height: 10px;
-            li>a {
-              background: $common-basic-color;
-              opacity: 0.5;
-              &:hover {
-                background: $common-basic-color;
-                opacity: 0.7;
-              }
-              &.flex-active {
-                background: $common-basic-color;
-                opacity: 0.9;
-              }
-            }
+          figure>iframe {
+            width: 100%;
+            height: 276px;
           }
-
-          .flex-direction-nav a:before {
-            color: $common-basic-color;
-          }
-          .flex-prev, .flex-next {
-            top: 20px;
-            height: 100%;
-            font-size: 0;
-          }
-          .flex-prev:before {
-            content: "<";
-          }
-          .flex-next:before {
-            content: ">";
-          }
-        }
-        .title {
-          float: left;
-          margin: 0 10px 0px 20px;
-          width: 410px;
-          font-family: $common-novelsans-light;
-          font-size: 22px;
-          line-height: $common-line-height;
-        }
-        .meta {
-          float: left;
-          margin: 0 10px 0px 20px;
-          width: 410px;
-          font-family: $common-novelsans-semibold;
-          font-size: 14px;
-          line-height: $common-line-height;
-          .postedby {
-            font-weight: normal;
+          figure.flexslider {
+            float: left;
+            max-width: $figure_width;
+            width: $figure_width;
+            overflow: hidden;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
             img {
-              width: 12px;
-              height: 12px;
+              width: 100%;
             }
-          }
-          .control {
-            margin-top: 5px;
-            .starred {
-              height: 26px;
-              padding-right: 10px;
-              margin-right: 10px;
-              border-right: 1px solid black;
-              .icon {
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1px;
-                width: 20px;
-                height: 20px;
-              }
-              .count {
-                display: inline-block;
-                vertical-align: top;
-                margin-left: 5px;
-                height: 20px;
+            ol.flex-control-paging {
+              top: 10px;
+              height: 10px;
+              li>a {
+                background: $common-basic-color;
+                opacity: 0.5;
+                &:hover {
+                  background: $common-basic-color;
+                  opacity: 0.7;
+                }
+                &.flex-active {
+                  background: $common-basic-color;
+                  opacity: 0.9;
+                }
               }
             }
+
+            .flex-direction-nav a:before {
+              color: $common-basic-color;
+            }
+            .flex-prev, .flex-next {
+              top: 20px;
+              height: 100%;
+              font-size: 0;
+            }
+            .flex-prev:before {
+              content: "<";
+            }
+            .flex-next:before {
+              content: ">";
+            }
           }
-        }
-        .description {
-          float: left;
-          margin: 10px 10px 0 20px;
-          width: 410px;
-          font-family: $common-novelsans-light;
-          font-size: 14px;
-          line-height: 24px;
         }
       }
     }
