@@ -90,9 +90,9 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
       == link_to "", "#", class: "order-commit-btn"
   - if signed_in?
     == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
+  == link_to "", "#share-destinations", id: "share-button", class: "fancybox"
   - if @recipe.present?
     == render "projects/recipe_cards_list"
-
 
   #fork-destinations
     - if signed_in?
@@ -100,6 +100,12 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
       - current_user.groups.each do |group|
         - if can? :manage, group
           == render "projects/fork_destination", owner: group, project: @project
+
+  #share-destinations
+    .container
+      - url = "http://fabble.cc" + project_path(@owner, @project)
+      == link_to image_tag("twitter_100.png", alt: "Share on Twitter", class: "twitter-btn"), "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank"
+      == link_to image_tag("fb_100.png", alt: "Share on Facebook", class: "fb-btn"), "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;"
 
   #pointer
 

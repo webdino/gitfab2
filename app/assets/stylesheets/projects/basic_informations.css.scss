@@ -394,7 +394,7 @@ $tool_size: 75px;
   &.forked-project-tools {
     top: 259px;
   }
-  #slideshow-btn, #fork-btn, .order-change-btn, .order-commit-btn{
+  #slideshow-btn, #fork-btn, .order-change-btn, .order-commit-btn, #share-button {
     display: block;
     width: $tool_size;
     height: $tool_size + 10px;
@@ -408,6 +408,12 @@ $tool_size: 75px;
   #fork-btn {
     height: $tool_size + 20px;
     background-image: asset-url("fork.png");
+  }
+  #share-button {
+    margin: 5px 0;
+    padding: 5px 0;
+    height: $tool_size;
+    background-image: asset-url("share.png");
   }
   #card-order-tools {
     .order-change-btn {
@@ -504,8 +510,19 @@ $tool_size: 75px;
       }
     }
   }
+
+  #share-destinations {
+    display: none;
+    background: white;
+    .twitter-btn {
+      padding-right: 10px;
+    }
+  }
 }
 
+.fancybox-opened .fancybox-skin {
+    background: white;
+}
 
 #tabs {
   margin-top: $common-margin * 4;
