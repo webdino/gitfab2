@@ -1,0 +1,18 @@
+#features-index
+  h1.title Edit Featured Items
+  h2.title-2 Features
+  ol.features
+    - @features.each do |feature|
+      == render "feature", feature: feature
+
+  == form_for [Feature.new], html: {class: "feature-form"}, remote: true do |f|
+    .title Add New Feature
+    .target-title
+      div Target Title:
+      == f.text_field :name, placeholder: "Title of Feature", class: "title-form"
+
+    .target-class
+      span Target Class:
+      == f.select :class_name, Feature::TARGET_CLASS, {}, {class: "class-name-form"}
+    == f.number_field :category
+    == f.submit

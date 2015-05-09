@@ -27,7 +27,6 @@ section#basic-informations
         .line
           label
             == "Tags:"
-
           ul.tags
             - @project.tags.each do |tag|
               == render "tags/tag", tag: tag, resources: [@owner, @project, tag]

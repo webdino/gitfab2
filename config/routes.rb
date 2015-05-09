@@ -5,6 +5,8 @@ Gitfab2::Application.routes.draw do
 
   match "about_en" => "static_pages#about_en", via: :get
 
+  match "admin" => "features#index", via: :get
+
   root "global_projects#index"
 
   if Rails.env.development? || Rails.env.test?
@@ -34,6 +36,10 @@ Gitfab2::Application.routes.draw do
 
   concern :tags do
     resources :tags, only: [:create, :destroy]
+  end
+
+  resources :features do
+    resources :featured_items
   end
 
   resources :owners, only: [:index]

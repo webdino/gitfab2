@@ -32,6 +32,7 @@ class User
   field :avatar
   field :url
   field :location
+  field :authority
 
   devise :omniauthable, omniauth_providers: [:github]
   devise :database_authenticatable, :rememberable, :trackable, :validatable
@@ -46,6 +47,13 @@ class User
   validates :name, unique_owner_name: true,
     name_format: true, if: ->{self.name.present?}
 
+  def is_system_admin?
+    if self.authority == "admin"
+      return true
+    else
+      return false
+    end
+  end
   def is_owner_of? project
     self == project.owner
   end

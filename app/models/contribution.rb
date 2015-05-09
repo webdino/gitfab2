@@ -1,5 +1,4 @@
 class Contribution
-
   include Mongoid::Document
   include Mongoid::Timestamps
   include Contributable
