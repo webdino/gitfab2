@@ -2,7 +2,7 @@
   - if @note_card.present?
     - @project.owner.name + "/" + @project.title +  " : Memos/" + @note_card.title
   - else
-    - @project.owner.name + "/" + @project.title +  " : Memos/Memo"
+    - @project.owner.name + "/" + @project.title +  " : Memos/Notecard"
 
 main#note-cards-show
   == render "projects/basic_informations"
