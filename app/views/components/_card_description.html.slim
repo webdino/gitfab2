@@ -1,9 +1,8 @@
 - figures = card.figures
-
 - if figures.present? and (figures.first.content.present? or figures.first.link.present?)
     .description
-      == Sanitize.clean card.description, Sanitize::Config::RELAXED
+      == card.description
 
 - else
   .description.without-figures
-    == Sanitize.clean card.description, Sanitize::Config::RELAXED
+    == card.description
