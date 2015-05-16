@@ -15,7 +15,7 @@ module Clockwork
     file_path = "#{Rails.root}/config/selected-tags.yml"
 
     tags_list = YAML.load_file file_path
-    tag_list_length = 15
+    tag_list_length = 30
     tag_counters = {}
 
     p "---------Search and Evaluate tags---------"

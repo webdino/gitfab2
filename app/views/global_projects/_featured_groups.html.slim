@@ -1,0 +1,27 @@
+#featured-groups
+  .container
+    ul.groups
+      - @featured_groups.each do |group|
+        == link_to projects_path(group) do
+          li.group
+            .image-wrapper
+              == image_tag group.avatar, class: "image"
+
+            .title
+              == group.name
+            .meta
+              span.place
+                == group.location
+              span |
+              span.members
+                == "Members: #{group.members.length}"
+
+              span |
+              span.projects
+                == "Projects: #{group.projects.length}"
+
+            .description
+            / == group.description.truncate(300) #TODO: implement group.description
+
+  .label
+    'Tags & Keywords

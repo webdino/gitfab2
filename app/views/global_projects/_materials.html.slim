@@ -1,0 +1,4 @@
+.materials
+  - @selected_materials.each do |material_name|
+    .material
+      == link_to material_name, "/search?q=#{material_name}"

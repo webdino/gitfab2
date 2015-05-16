@@ -1,0 +1,7 @@
+#sign-up-pane
+  .container
+    .button-wrapper
+      == link_to "Sign up for Fabble", user_omniauth_authorize_path(:github), class: "sign-up-btn"
+
+      .description
+        'Fabble Sign up with GitHub account

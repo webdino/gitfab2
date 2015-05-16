@@ -3,7 +3,11 @@
     - "Search : " + request.url.split("q=").last
 
 #index
-  - unless user_signed_in?
+
+  - if user_signed_in?
+    == render "dashboard"
+
+  - else
     - if session["auth.faild.error"].present?
       #error_explanation
         h2
@@ -20,12 +24,22 @@
             'New Platform to Share Fab Projects all over the world
         .sign-up
           == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
-      .topics
-        'TOPICS
+      .label
+        'About
+    == render "functions"
+    == render "occasions"
 
   - if @is_searching
     == render "searched_projects"
+    == render "tags_and_keywords"
+
   - else
     == render "featured_projects"
-    == render "search_projects"
-    == render "reciped_projects"
+    == render "featured_groups"
+    == render "tags_and_keywords"
+
+  - unless user_signed_in?
+    == render "sign_up_pane"
+
+    / == render "search_projects"
+    / == render "reciped_projects"
