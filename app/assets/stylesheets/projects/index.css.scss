@@ -71,13 +71,20 @@
         width: $inner_width;
         background: $common-basic-color;
         border-radius: 5px;
-        h2 {
+        .title {
+          display: inline-block;
           padding: 15px 10px 10px;
-          width: 100%;
-          font-weight: 700;
+          width: 145px;
+          font-weight: 500;
           font-size: 14px;
           line-height: 1.2;
           color: white;
+        }
+        .create-group-btn {
+          display: inline-block;
+          height: 24px;
+          vertical-align: top;
+          margin-top: 9px;
         }
         .members, .groups {
           margin: 0 auto 20px;

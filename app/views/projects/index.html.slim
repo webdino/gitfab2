@@ -50,7 +50,9 @@
                     == member.name
 
         - elsif @owner.groups.any?
-          h2 Groups
+          h2.title GROUPS
+          - if signed_in? && current_user == @owner
+            == link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
           ul.groups
             - @owner.groups.each do |group|
               == link_to projects_path(group) do
