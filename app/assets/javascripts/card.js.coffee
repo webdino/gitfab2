@@ -17,8 +17,8 @@ descriptionText = () ->
 
 validateForm = (event, is_note_card_form) ->
   unless is_note_card_form
-    if descriptionText().length > 140
-      alert "Description text should be less than 140."
+    if descriptionText().length > 300
+      alert "Description text should be less than 300."
       event.preventDefault()
 
   validated = false
@@ -179,7 +179,7 @@ $ ->
   $(document).on "keyup", "#inner_content .nicEdit-main", (event) ->
     description_text_length = descriptionText().length
     $("#inner_content .plain-text-length").html description_text_length
-    if description_text_length > 140
+    if description_text_length > 300
       $(".text-length").css "color", "red"
     else
       $(".text-length").css "color", "black"

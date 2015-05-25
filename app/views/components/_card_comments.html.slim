@@ -8,5 +8,5 @@ ul.comments
   == form_for resources, html: {class: "comment-form"}, remote: true do |f|
     == image_tag current_user.avatar.thumb
     == f.hidden_field :user_id, value: current_user.slug
-    == f.text_area :body, maxlength: 140
+    == f.text_area :body, maxlength: 300
     == f.submit "comment", class: "btn"
