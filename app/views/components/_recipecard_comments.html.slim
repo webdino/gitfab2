@@ -39,5 +39,5 @@
         == image_tag current_user.avatar.thumb, class: "avatar"
       .right
         == f.hidden_field :user_id, value: current_user.slug
-        == f.text_area :body, maxlength: 140, size: "40x4", class: "comment-editor"
+        == f.text_area :body, maxlength: 300, size: "40x4", class: "comment-editor"
         == f.submit "comment", class: "btn"
