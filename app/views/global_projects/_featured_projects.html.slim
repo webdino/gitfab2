@@ -1,8 +1,13 @@
 #featured.projects-wrapper
   .container
-    h2.title
-      'Featured Projects
-    .right
-      ul#featured-projects.projects
-        - @featured_projects.each do |project|
-          == render "project", project: project
+    ul#featured-project-groups
+      - if @featured_project_groups.length >= 3
+        - for i in 0..2 do
+          li.featured-project-group
+            .group-title
+              == @featured_project_group_titles[i]
+            ul.featured-projects
+              - @featured_project_groups[i].each do |project|
+                == render "project", project: project
+  .label
+    'Featured Groups

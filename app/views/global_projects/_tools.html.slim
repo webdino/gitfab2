@@ -1,0 +1,4 @@
+.tools
+  - @selected_tools.each do |tool_name|
+    .tool
+      == link_to tool_name, "/search?q=#{tool_name}"

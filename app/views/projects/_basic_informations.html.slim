@@ -14,7 +14,8 @@ section#basic-informations
             span.index
               'Created Date:
             span.value
-              == " #{@project.created_at.strftime '%Y-%m-%d'}"
+              - if @project.created_at
+                == " #{@project.created_at.strftime '%Y-%m-%d'}"
 
           span.slash
             '/
@@ -22,7 +23,8 @@ section#basic-informations
             span.index
               'updated date:
             span.value
-              == " #{@project.updated_at.strftime '%Y-%m-%d'}"
+              - if @project.updated_at
+                == " #{@project.updated_at.strftime '%Y-%m-%d'}"
 
         .line
           label
