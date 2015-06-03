@@ -21,12 +21,12 @@
               span
                 'Created Date:
               span
-                == "#{project.created_at.strftime '%Y-%M-%d'}"
+                == "#{project.created_at.strftime '%Y-%M-%d'}" if project.created_at
             .updated
               span
                 'updated date:
               span
-                == "#{project.updated_at.strftime '%Y-%M-%d'}"
+                == "#{project.updated_at.strftime '%Y-%M-%d'}" if project.updated_at
         .text-container
           - if project.title.present?
             == link_to project.title, project_path(project.owner, project), class: "title"
