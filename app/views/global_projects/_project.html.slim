@@ -38,7 +38,7 @@ li.project
       .notes
         == "#{project.note.note_cards.length} Memos"
       .since
-        == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago"
+        == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago" if project.created_at
 
       .starred
         == image_tag "starred.png", class: "icon"

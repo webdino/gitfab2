@@ -31,13 +31,13 @@
                 span.index
                   'Created Date:
                 span.value
-                  == " #{project.created_at.strftime '%Y-%m-%d'} / "
+                  == " #{project.created_at.strftime '%Y-%m-%d'} / " if project.created_at
 
               span.updated
                 span.index
                   'updated date:
                 span.value
-                  == " #{project.updated_at.strftime '%Y-%m-%d'}"
+                  == " #{project.updated_at.strftime '%Y-%m-%d'}" if project.updated_at
 
             .numbers
               span.recipe
