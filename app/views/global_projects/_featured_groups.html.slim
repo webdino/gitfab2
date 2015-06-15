@@ -10,15 +10,17 @@
             .title
               == group.name
             .meta
-              span.place
-                == group.location
-              span |
-              span.members
-                == "Members: #{group.members.length}"
+              div
+                span.place
+                  == group.location
+                span
+              div
+                span.members
+                  == "Members: #{group.members.length}"
 
-              span |
-              span.projects
-                == "Projects: #{group.projects.length}"
+                span |
+                span.projects
+                  == "Projects: #{group.projects.length}"
 
             .description
             / == group.description.truncate(300) #TODO: implement group.description

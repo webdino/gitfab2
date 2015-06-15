@@ -1,13 +1,5 @@
 #reciped.projects-wrapper
   .container
-    h2.title
-      'Recent Updated Projects
-
-    / .left
-    /   .horizontal-border.basic-color.f-right.m-b-10
-    /   .horizontal-border.basic-color.f-right.m-b-10
-    /   /TODO: #470 add some links wrote on pdf
-    / .right
     ul#reciped-projects.projects
       - @projects.each do |project|
         == render "project", project: project
