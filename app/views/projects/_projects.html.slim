@@ -1,17 +1,30 @@
 #projects
   ul.tabs.tab-hotizontal
     li.active
-      == link_to "Project (#{@owner.projects.length})", "#", data: {tab: "#project-tab"}
+      - length = 0
+      - @owner.projects.each do |p|
+        - length += 1 if can? :read, p
+      == link_to "Project (#{length})", "#", data: {tab: "#project-tab"}
     li
-      == link_to "Memo (#{@owner.projects.noted.length})", "#", data: {tab: "#note-tab"}
+      - length = 0
+      - @owner.projects.noted.each do |p|
+        - length += 1 if can? :read, p
+      == link_to "Memo (#{length})", "#", data: {tab: "#note-tab"}
     li
-      == link_to "Collaboration (#{@owner.collaborations.length})", "#", data: {tab: "#collaboration-tab"}
+      - length = 0
+      - @owner.collaborations.each do |c|
+        - p = c.project
+        - length += 1 if can? :read, p
+      == link_to "Collaboration (#{length})", "#", data: {tab: "#collaboration-tab"}
     / TODO: #486 Implement user.contributed_projects method in user.rb
     / li
     /   == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
     - if @owner.is_a? User
       li
-        == link_to "Favorite (#{@owner.liked_projects.length})", "#", data: {tab: "#starred-tab"}
+        - length = 0
+        - @owner.liked_projects.each do |p|
+          - length += 1 if can? :read, p
+        == link_to "Favorite (#{length})", "#", data: {tab: "#starred-tab"}
 
   .tabs-content
     == render "project_tab"

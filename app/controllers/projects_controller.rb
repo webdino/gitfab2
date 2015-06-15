@@ -83,6 +83,7 @@ class ProjectsController < ApplicationController
             format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
           end
         else
+          @project.clear_timeless_option
           respond_to do |format|
             format.json {render "error/failed", status: 400}
             format.html {render :edit, status: 400}

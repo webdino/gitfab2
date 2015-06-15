@@ -176,7 +176,8 @@
             }
             .image-container {
               display: inline-block;
-              max-width: 200px;
+              margin-left: 20px;
+              max-width: 210px;
               .image {
                 display: block;
                 margin-bottom: 10px;
@@ -213,7 +214,6 @@
               display: inline-block;
               vertical-align: top;
               margin-top: -10px;
-              margin-left: 20px;
               width: 460px;
               .private-project {
                 display: inline-block;
