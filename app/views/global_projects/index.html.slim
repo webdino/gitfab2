@@ -6,7 +6,6 @@
 
   - if user_signed_in?
     == render "dashboard"
-
   - else
     - if session["auth.faild.error"].present?
       #error_explanation
@@ -15,19 +14,21 @@
           == session["auth.faild.error"]
           - session.delete("auth.faild.error")
 
-    #splash-wrapper
-      .container
-        .text
-          h1.main-copy
-            'Making stories of Making something
-          .sub-copy
-            'New Platform to Share Fab Projects all over the world
-        .sign-up
-          == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
-      .label
-        'About
-    == render "functions"
-    == render "occasions"
+    - unless @is_searching
+
+      #splash-wrapper
+        .container
+          .text
+            h1.main-copy
+              'Making stories of Making something
+            .sub-copy
+              'New Platform to Share Fab Projects all over the world
+          .sign-up
+            == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
+        .label
+          'About
+      == render "functions"
+      == render "occasions"
 
   - if @is_searching
     == render "searched_projects"
@@ -37,9 +38,7 @@
     == render "featured_projects"
     == render "featured_groups"
     == render "tags_and_keywords"
+    == render "reciped_projects"
 
   - unless user_signed_in?
     == render "sign_up_pane"
-
-    / == render "search_projects"
-    / == render "reciped_projects"

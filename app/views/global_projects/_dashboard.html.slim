@@ -24,5 +24,7 @@
           .image-wrapper
             == image_tag current_user.avatar.small, class: "image"
           .title See Your Projects
-    .label
-      'Your Recent Project
+
+    - unless @is_searching
+      .label
+        'Featured Projects

@@ -161,6 +161,7 @@
 
   #dashboard {
     background: $common-light-gray;
+    border-bottom: 2px solid white;
     .container {
       margin: 0 auto;
       width: $content_width;
@@ -208,12 +209,15 @@
         font-weight: normal;
         line-height: 1.2;
       }
+      .notice {
+        text-align: center;
+      }
 
       #featured-projects {
         margin-bottom: 40px;
       }
 
-      #searched-projects, #reciped-projects, .featured-projects {
+      #searched-projects, #your-projects, #reciped-projects, .featured-projects {
         width: 100%;
         .project {
           $figure_width: 300px;
@@ -364,7 +368,6 @@
   }
 
   #featured {
-    // padding-bottom: 40px;
     background: $common-light-blue;
     border-bottom: 2px solid white;
     .title {
@@ -415,6 +418,7 @@
             .place, .members, .projects {
               margin-left: 10px;
               margin-right: 10px;
+              line-height: 1.25;
             }
           }
           .description {
@@ -506,25 +510,44 @@
     }
   }
 
+  #your {
+    background: #e6f9ff;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
+  }
+
   #reciped {
-    padding-bottom: 75px;
     background-color: $reciped_projects_color;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
   }
 
   #searched {
     background: #e6f9ff;
-    padding-bottom: 75px;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
     .title {
       margin: 0px auto 30px;
       width: 280px;
       font-size: 30px;
       font-weight: normal;
       line-height: 1.2;
+      text-align: center;
     }
   }
 
   #tags-and-keywords {
     background: #EAEAEA;
+    border-bottom: 2px solid white;
     .container {
       @include cf;
       margin: 0 auto;

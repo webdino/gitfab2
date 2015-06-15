@@ -8,8 +8,11 @@ class GlobalProjectsController < ApplicationController
       @projects = Project.solr_search do |s|
         s.fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
         s.without :is_private, true
+        # s.order_by :updated_at, :desc
       end.results
+
       @is_searching = true
+      @query = q
 
     elsif !q.nil?
       @projects = Project.all().in(is_private: [false, nil]).page(params[:page]).order("updated_at DESC")
