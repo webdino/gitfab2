@@ -7,17 +7,6 @@
         - next
 
       li.project
-        .image-container
-          - if project.figures.any?
-            == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
-          - else
-            == link_to image_tag("fallback/blank.png"), project_path(project.owner, project), class: "image"
-
-          - if can? :manage, project
-            .btns
-              == link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
-              == link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
-
         .text-container
           - if project.is_private?
             .private-project
@@ -61,3 +50,12 @@
 
           .horizontal-border.basic-color.m-b-5
           == render "projects/tags", project: project
+
+        .image-container
+          - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)
+            == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
+
+          - if can? :manage, project
+            .btns
+              == link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
+              == link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"

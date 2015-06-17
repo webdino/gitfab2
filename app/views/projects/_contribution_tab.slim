@@ -4,37 +4,6 @@
   ul.project-list
     / TODO: #486 impmlement user.contributed_projects method in User.rb
     - @owner.contributed_projects.each do |project|
-      li.project
-        .image-container
-          == link_to project_path(@owner, project) do
-            - if project.figures.any?
-              - if project.figures.first.link.present?
-                / TODO: #466 create embed_url function in figure.rb
-                / iframe src="#{recipe.youtube_embed_url}"
-              - else
-                == link_to image_tag(project.figures.first.content), project_path(project.owner, project), class: "image"
-            - else
-              == link_to image_tag("fallback/blank.png"), project_path(project.owner, project), class: "image"
-          .horizontal-border.basic-color.m-b-5
-          .meta
-            .created
-              span
-                'Created Date:
-              span
-                == "#{project.created_at.strftime '%Y-%M-%d'}" if project.created_at
-            .updated
-              span
-                'updated date:
-              span
-                == "#{project.updated_at.strftime '%Y-%M-%d'}" if project.updated_at
-        .text-container
-          - if project.title.present?
-            == link_to project.title, project_path(project.owner, project), class: "title"
-          - else
-            p.title
-              'no title
-          - if project.description.present?
-            .summary
-              == "#{project.description}"
-          .horizontal-border.basic-color.m-b-5
-          == render "projects/tags", project: project
+      - unless can? :read, project
+        - next
+      == render "project", project: project, is_note: false
