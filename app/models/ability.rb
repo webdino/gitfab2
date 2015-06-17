@@ -96,7 +96,7 @@ class Ability
     if project.owner_type == Group.name
       is_member_of = user.is_member_of? project.owner
     end
-    is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
+    is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project) || user.is_in_collaborated_group?(project)
   end
 
 
