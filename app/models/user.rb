@@ -104,6 +104,16 @@ class User
     Project.where "likes.liker_id" => self.slug
   end
 
+  def is_in_collaborated_group? project
+    is_in_collaborated_group = false
+    project.collaborators.each do |collaborator|
+      if collaborator.class.name == Group.name
+        is_in_collaborated_group = is_in_collaborated_group || self.is_member_of?(collaborator)
+      end
+    end
+    is_in_collaborated_group
+  end
+
   class << self
     def find_for_github_oauth auth
       where(auth.slice :provider, :uid).first_or_create do |user|
