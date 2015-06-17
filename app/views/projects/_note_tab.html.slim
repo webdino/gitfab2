@@ -1,6 +1,5 @@
 #note-tab.tabs-pane
   ul.project-list
     - @owner.projects.noted.order("updated_at DESC").each do |project|
-      - unless can? :read, project
-        - next
-      == render "project", project: project, is_note: true
+      - if can? :read, project
+        == render "project", project: project, is_note: true
