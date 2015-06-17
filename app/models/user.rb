@@ -54,7 +54,6 @@ class User
       return false
     end
   end
-
   def is_owner_of? project
     self == project.owner
   end
