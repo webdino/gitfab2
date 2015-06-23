@@ -90,7 +90,8 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
       == link_to "", "#", class: "order-commit-btn"
   - if signed_in?
     == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
-  == link_to "", "#share-destinations", id: "share-button", class: "fancybox"
+  - unless @project.is_private
+    == link_to "", "#share-destinations", id: "share-button", class: "fancybox"
   - if @recipe.present?
     == render "projects/recipe_cards_list"
 
