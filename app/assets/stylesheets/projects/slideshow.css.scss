@@ -11,9 +11,10 @@
   .fancybox-close {
     top: 3%;
     right: 3%;
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     background: asset-url("slideshow/close.png") no-repeat;
+    background-size: 25px;
   }
   .fancybox-nav {
     width: 50px;
@@ -51,26 +52,26 @@
       position: absolute;
       left: 3%;
       top: 3%;
-      font-size: 36px;
+      font-size: 12px;
       font-family: $common-novelsans-semibold;
     }
     .denominator {
       position: absolute;
-      top: calc(3% + 9px);
-      right: calc(12% - 40px);
+      top: 3%;
+      right: calc(3% + 35px);
       text-align: left;
-      font-size: 24px;
+      font-size: 14px;
       font-family: $common-novelsans-semibold;
     }
     .number {
       position: absolute;
-      top: 3%;
-      right: 12%;
+      top: calc(3% - 4px);
+      right: calc(3% + 60px);
       width: 90px;
       height: 40px;
       text-align: right;
       font-family: $common-novelsans-semibold;
-      font-size: 36px;
+      font-size: 20px;
     }
     .arrow-column {
       display: none;
@@ -84,35 +85,32 @@
       height: 100%;
       h2.title {
         position: absolute;
-        top: 79%;
-        left: 10%;
+        top: 7%;
+        left: 3%;
         width: 80%;
         z-index: 10;
-        text-align: center;
-        font-size: 32px;
+        font-size: 20px;
         font-family: $common-novelsans-semibold;
         line-height: 1.5;
-        background: rgba(249, 249, 249, 0.6);
       }
       .control {
         display: none;
       }
       figure {
         position: absolute;
-        width: 50%;
-        height: auto;
-        top: 20%;
-        left: 25%;
+        top: 14.5%;
+        left: 10.7%;
+        max-width: 78.6%;
+        max-height: 40%;
+        height: 40%;
         iframe {
           z-index: 0;
           max-width: 100%;
           max-height: 100%;
-          width: 100%;
         }
         img {
           max-width: 100%;
           max-height: 100%;
-          width: 100%;
         }
         .flex-viewport:first-child {
           display: none;
@@ -123,13 +121,71 @@
       }
       .description {
         position: absolute;
-        top: 85%;
-        left: 10%;
-        width: 80%;
+        top: 60%;
+        left: 10.7%;
+        width: 78.6%;
         z-index: 10;
-        font-size: 20px;
-        background: rgba(249, 249, 249, 0.6);
+        font-size: 16px;
+        line-height: 30px;
+        &.without-figures {
+          top: 50%;
+        }
       }
     }
   }
+
+  #recipe-cards-list {
+    display: block;
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+    width: 75px;
+    height: auto;
+    cursor: pointer;
+    .container {
+      display: table;
+      width: 25px;
+      height: auto;
+      margin: 25px auto;
+      .selector-column {
+        display: table-cell;
+        vertical-align: top;
+        width: 7px;
+        .selector {
+          display: block;
+          margin-top: 1px;
+          width: 0;
+          height: 0;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-left: 7px solid $common-basic-color;
+        }
+      }
+      .index-column {
+        display: table-cell;
+        width: 10px;
+        .state-link {
+          display: block;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+        }
+        .annotation-link {
+          display: none;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+          border-radius: 10px;
+          &.is-opened {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
 }
