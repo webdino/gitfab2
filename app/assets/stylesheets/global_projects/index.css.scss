@@ -23,6 +23,34 @@
     font-size: 18px;
     border-radius: 5px 5px 0 0;
   }
+  #lang {
+    position: absolute;
+    right: 30px;
+    top: 32px;
+    z-index: 2147483647;
+    font-weight: normal;
+    font-size: 12px;
+    .lang {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
+      &.is-selected {
+        cursor: default;
+        color: $common-dark-gray;
+        &:hover {
+          opacity: 1.0;
+        }
+      }
+    }
+  }
+  .lang-jp {
+    display: none;
+  }
+  .lang-en {
+    display: block;
+  }
+
   #splash-wrapper {
     background: asset-url("background.jpg") no-repeat;
     background-size: cover;
@@ -43,12 +71,14 @@
           width: 834px;
           font-size: 50px;
           font-weight: normal;
+          text-align: center;
         }
         .sub-copy {
           margin: 20px auto;
           width: 490px;
           height: auto;
           font-size: 20px;
+          text-align: center;
         }
       }
       .sign-up {

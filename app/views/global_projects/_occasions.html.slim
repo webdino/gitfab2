@@ -1,5 +1,49 @@
 #occasions
-  .container
+  .container.lang-jp
+    ul.occasions
+      == link_to "/fabble/tutorial" do
+        .occasion
+          / TODO: add illustoration
+          / .image-wrapper
+          /   .image
+          .title-wrapper
+            .title
+              'ポートフォリオとして
+          .description
+            'Fabble の個人ページは、そのままあなたのFABプロジェクトのポートフォリオになります。「レシピの書き方」を参考にレシピを書いてみましょう。
+      == link_to "/fabble/about-group" do
+        .occasion
+          / TODO: add illustoration
+          / .image-wrapper
+          /   .image
+          .title-wrapper
+            .title
+              'グループワークに
+          .description
+            'Fabble は複数人で共同作業をするための機能を備えています。「グループワークでの使い方」をご覧ください。
+      == link_to "/fabble/about-group#555db85d6769746346133400" do
+        .occasion
+          / TODO: add illustoration
+          / .image-wrapper
+          /   .image
+          .title-wrapper
+            .title
+              '授業で
+          .description
+            '何かをつくる授業で学生の活動を記録するのに Fabble は最適です。Fabble を活用した授業の運営については「授業での使い方」をご覧ください。
+
+      == link_to "/fabble/tutorial-for-workshop" do
+        .occasion
+          / TODO: add illustoration
+          / .image-wrapper
+          /   .image
+          .title-wrapper
+            .title
+              'ワークショップで
+          .description
+            'Fabble を使えば、日々のワークショップを新たなプロジェクトのスタートに変えられます。「ワークショップでの使い方」をご覧ください。
+
+  .container.lang-en
     ul.occasions
       == link_to "/fabble/tutorial-en" do
         .occasion

@@ -3,7 +3,6 @@
     - "Search : " + request.url.split("q=").last
 
 #index
-
   - if user_signed_in?
     == render "dashboard"
   - else
@@ -16,8 +15,14 @@
 
     - unless @is_searching
 
+      #lang
+        span.lang.en.is-selected EN
+        span
+          '/
+        span.lang.jp JP
+
       #splash-wrapper
-        .container
+        .container.lang-en
           .text
             h1.main-copy
               'Making stories of Making something
@@ -25,6 +30,16 @@
               'New Platform to Share Fab Projects all over the world
           .sign-up
             == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
+
+        .container.lang-jp
+          .text
+            h1.main-copy
+              'つくるものを語る
+            .sub-copy
+              '世界中のFabプロジェクトのためのプラットフォーム
+          .sign-up
+            == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
+
         .label
           'About
       == render "functions"
