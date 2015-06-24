@@ -1,7 +1,14 @@
 #sign-up-pane
-  .container
+  .container.lang-en
     .button-wrapper
       == link_to "Sign up for Fabble", user_omniauth_authorize_path(:github), class: "sign-up-btn"
 
       .description
         'Fabble Sign up with GitHub account
+
+  .container.lang-jp
+    .button-wrapper
+      == link_to "Fabble にサインアップ", user_omniauth_authorize_path(:github), class: "sign-up-btn"
+
+      .description
+        'GitHub アカウントで Fabble にサインアップする
