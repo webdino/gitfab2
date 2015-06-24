@@ -34,14 +34,17 @@
         .container.lang-jp
           .text
             h1.main-copy
-              'つくるものを語る
+              'つくる・ものがたり
             .sub-copy
               '世界中のFabプロジェクトのためのプラットフォーム
           .sign-up
-            == link_to image_tag("signup.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
+            == link_to image_tag("signup_jp.png", alt: "sign up for github"), user_omniauth_authorize_path(:github)
 
-        .label
+        .label.lang-en
           'About
+        .label.lang-jp
+          'Fabble の特長
+
       == render "functions"
       == render "occasions"
 

@@ -9,5 +9,7 @@
             ul.featured-projects
               - @featured_project_groups[i].each do |project|
                 == render "project", project: project
-  .label
+  .label.lang-en
     'Featured Groups
+  .label.lang-jp
+    '注目のグループ
