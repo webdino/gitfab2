@@ -1,0 +1,24 @@
+meta property="og:site_name" content="Fabble"
+meta property="og:email" content="support@fabble.cc"
+meta property="og:type" content="article"
+
+- if local_assigns[:title].present?
+  meta property="og:title" content="#{title}"
+- else
+  meta property="og:title" content="Fabble"
+
+- if local_assigns[:description].present?
+  meta property="og:description" content="#{description}"
+- else
+  meta property="og:description" content="New Platform to Share Fab Projects all over the world"
+
+- if local_assigns[:image].present?
+  meta property="og:image" content="#{image}"
+- else
+  meta property="og:image" content="#{asset_path('logo.png')}"
+
+- if local_assigns[:video].present?
+  meta property="og:video" content="#{video}"
+  meta property="og:video:width" content="600"
+  meta property="og:video:height" content="400"
+  meta property="og:video:type" content="application/x-shockwave-flash"

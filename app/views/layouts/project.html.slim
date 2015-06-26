@@ -1,7 +1,25 @@
-== content_for :stylesheet do
+- content_for :stylesheet do
   == stylesheet_link_tag "project", media: "all", "data-turbolinks-track" => true
-== content_for :javascript do
+- content_for :javascript do
   == javascript_include_tag "project", "data-turbolinks-track" => true
+- content_for :ogp do
+  - if @project.persisted?
+    - title = "#{@project.title} by #{@project.owner.name}"
+    - description = @project.description
+    - if @project.figures.first.content.present?
+      - image = "#{@project.figures.first.content}"
+      - video = nil
+    - elsif @project.figures.first.link.present?
+      - image = @project.thumbnail
+      - video = @project.figures.first.link
+    - else
+      - image = nil
+      - video = nil
+    == render partial: "components/base_ogp", locals: {title: title, description: description, image: image, video: video}
+
+  - else
+    == render partial: "components/base_ogp"
+
 - content_for :content do
   - if @project.original_id.present?
     == render "projects/link_to_origin"
