@@ -26,8 +26,12 @@ $("#add-collaborator-btn").fancybox
         "background": "rgba(0, 0, 0, 0.2)"
   #TODO: add the function to reload the .collabortors when close the fancybox
 
-$(document).on "click", ".fork-btn", ->
-  $(this).find("form").submit()
+$(document).on "click", ".fork-btn", (event) ->
+  event.preventDefault()
+  form = $(this).find "form"
+  form.submit()
+  skin = $(this).closest ".fancybox-skin"
+  skin.css "display", "none"
 
 $ ->
   search_term = null
