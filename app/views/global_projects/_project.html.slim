@@ -13,7 +13,7 @@ li.project
       .title-large
         == link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
 
-    == link_to image_tag(project.owner.avatar.thumb, class: "icon", alt: "#{project.owner.name}"), projects_path(project.owner), class: "user"
+    == link_to image_tag(project.owner.avatar.thumb, class: "icon", alt: "#{project.owner.name}", title: project.owner.name,), projects_path(project.owner), class: "user"
 
   .inner
     - if project.figures.present?
