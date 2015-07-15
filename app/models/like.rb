@@ -5,6 +5,7 @@ class Like
 
   belongs_to :liker, class_name: User.name
   embedded_in :likable, polymorphic: true
+  validates_uniqueness_of :liker_id, scope: :likable
 
   class << self
     def updatable_columns
