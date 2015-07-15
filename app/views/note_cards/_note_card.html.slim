@@ -12,9 +12,9 @@ article class="card note_card" id="#{card.id}"
               -  author = User.find(card.contributions[0].contributor_id)
             - else
               -  author = @project.owner
-            - link = link_to author.name, projects_path(owner_name: author.slug)
             - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
             - if author.present?
+              - link = link_to author.name, projects_path(owner_name: author.slug)
               == "posted by #{link} on #{datetime}"
             - else
               == "posted on #{datetime}"
