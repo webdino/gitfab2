@@ -1,7 +1,10 @@
-== content_for :stylesheet do
+- content_for :stylesheet do
   == stylesheet_link_tag "static_pages", media: "all", "data-turbolinks-track" => true
-== content_for :javascript do
+- content_for :javascript do
   == javascript_include_tag "static_pages", "data-turbolinks-track" => true
+- content_for :ogp do
+  == render partial: "components/base_ogp"
+
 - content_for :content do
   #content
     == yield

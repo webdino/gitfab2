@@ -1,12 +1,17 @@
 - content_for :stylesheets do
   == stylesheet_link_tag "user", "data-turbolinks-track" => true
-
 - content_for :javascript do
   == javascript_include_tag "user", "data-turbolinks-track" => true
+- content_for :ogp do
+  - if @user.persisted?
+    - title = "#{@user.name} on Fabble"
+    - image = @user.avatar.present? ? "#{@user.avatar}" : nil
+    == render partial: "components/base_ogp", locals: {title: title, image: image}
+  - else
+    == render partial: "components/base_ogp"
 
 - content_for :content do
   #content
     == render partial: "layouts/setting_links"
     == yield
-
 == render partial: "layouts/base_layout"
