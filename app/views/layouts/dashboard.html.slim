@@ -3,7 +3,7 @@
 - content_for :javascript do
   == javascript_include_tag "dashboard", "data-turbolinks-track" => true
 - content_for :ogp do
-  - if @owner.persisted?
+  - if @owner.present? && @owner.persisted?
     - title = "#{@owner.name} on Fabble"
     - image = @owner.avatar.present? ? "#{@owner.avatar}" : nil
     == render partial: "components/base_ogp", locals: {title: title, image: image}
