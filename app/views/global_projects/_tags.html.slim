@@ -1,4 +1,15 @@
-.tags
+.tags.selected-tags
   - @selected_tags.each do |tag_name|
     .tag
       == link_to tag_name, "/search?q=#{tag_name}"
+
+  .show-all.btn
+    'Show All Tags
+
+.tags.all-tags
+  - @all_tags.each do |tag_name|
+    .tag
+      == link_to tag_name, "/search?q=#{tag_name}"
+
+  .show-selected.btn
+    'Show Selected Tags

@@ -17,6 +17,7 @@ gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rvm'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
+gem 'capistrano-clockwork', '>= 0.0.5'
 gem 'devise'
 gem 'rugged'
 gem 'therubyracer'
@@ -58,7 +59,7 @@ gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
 gem 'truncate_html'
 gem 'clockwork'
-gem 'daemons'
+gem 'daemons', '>= 1.2.0'
 
 group :doc do
   gem 'sdoc', require: false
