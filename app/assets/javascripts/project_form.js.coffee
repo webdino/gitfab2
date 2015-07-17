@@ -17,17 +17,18 @@ $ ->
     $("#recipes-edit iframe").attr "src", ""
     $("#recipes-edit .submit").attr "disabled", true
 
-  YOUTUBE_URL_MIN_LENGTH   = 41
+  YOUTUBE_URL_MIN_LENGTH   = 28
   YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
   # TODO: constantize '11'
-  YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:www\.)?youtube.com\/watch\?v=([^&]{11,})(&\S*)?$/
+  # This expression matches domains both youtube.com and youtu.be
+  YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:(?:youtu\.be\/)|(?:www\.)?(?:youtube\.com\/watch\?v=))([^&]{11,})(&\S*)?$/
   VIDEOID_MATCH_INDEX      = 1
 
   getVideoForProject = ->
     url = $(this).val()
     if previous_url != url
       previous_url = url
-      if url.length > YOUTUBE_URL_MIN_LENGTH
+      if url.length >= YOUTUBE_URL_MIN_LENGTH
         if matched = url.match YOUTUBE_WATCH_URL_REGEXP
           video_id_for_card = matched[VIDEOID_MATCH_INDEX]
           embed_url = YOUTUBE_EMBED_URL_BASE + video_id_for_card
@@ -38,7 +39,7 @@ $ ->
           $("main#recipes-edit .caution").text "Invalid YouTube URL"
           disableSubmitButtonForItems()
       else
-        $("main#recipes-edit .caution").text "URL is too short. URL length = #{url.length}. Min length = 42."
+        $("main#recipes-edit .caution").text "URL is too short. URL length = #{url.length}. Min length = #{YOUTUBE_URL_MIN_LENGTH}."
         disableSubmitButtonForItems()
 
   $(document).on "click", "#recipes-new .submit", (event) ->
