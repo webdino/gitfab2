@@ -14,3 +14,5 @@ $ ->
   $(document).on "click", ".remove-btn", (xhr, data) ->
     li = $(this).closest "li"
     li.remove()
+
+  $(".item-selection").select2()
