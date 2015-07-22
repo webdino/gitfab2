@@ -2,7 +2,7 @@ class Sanitize
   module Config
     CARD = {
       :elements => %w[
-        a br li ol ul u i b
+        a br li ol ul u i b div
       ],
 
       :attributes => {
