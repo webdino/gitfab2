@@ -26,6 +26,7 @@
 //= require ./card
 //= require ./card_markup
 //= require ./card_order
+//= require ./figures
 //= require ./slideshow
 //= require ./like
 //= require ./helpers/time_offset

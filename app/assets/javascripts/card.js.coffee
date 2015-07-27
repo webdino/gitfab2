@@ -184,51 +184,6 @@ $ ->
     else
       $(".text-length").css "color", "black"
 
-  $(document).on "click", ".add-image", (event) ->
-    figure_list = $ "ul.figures"
-    figures = figure_list.find ".figure"
-    figures_length = figures.length
-    last_figure = $(figures).last()
-    iframe = figures.first().find "iframe"
-    is_image_list = iframe.length == 0 or iframe.is ":hidden"
-    if is_image_list
-      last_figure.find(".card-figure-content").trigger "click"
-    else if confirm "When you add an image, the youtube movie on this card will be removed. Are you sure?"
-      removeAllFigures figures, figures_length
-      last_figure.find(".card-figure-link").hide()
-      last_figure.find(".card-figure-content").trigger "click"
-    else
-      event.preventDefault()
-
-  $(document).on "click", ".add-video", (event) ->
-    figure_list = $ "ul.figures"
-    figures = figure_list.find ".figure"
-    figures_length = figures.length
-    if figures_length == 1 or confirm "When you add the youtube movie, the other images on this card will be removed. Are you sure?"
-      removeAllFigures figures, figures_length
-      last_figure = $(figures).last()
-      last_figure.find("iframe").show()
-      last_figure.find(".card-figure-link").show()
-      last_figure.find(".edit").hide()
-      last_figure.find("img").hide()
-      figure_list.addClass "hide-add-buttons"
-    else
-      event.preventDefault()
-
-  $(document).on "click", ".edit.btn", (event) ->
-    $(event.target).siblings(".card-figure-content").trigger "click"
-
-  $(document).on "click", ".remove_nested_fields", (event) ->
-    figure_list = $ "ul.figures"
-    figure_list.removeClass "hide-add-buttons"
-
-  $(document).on "click", ".remove-all-figures", (event) ->
-    figure_list = $ "ul.figures"
-    figures = figure_list.find(".figure")
-    figures.each (index, element) ->
-      $(element).find(".delete.btn").find("a").trigger "click"
-    figure_list.removeClass "hide-add-buttons"
-
   $(document).on "click", ".convert-card", (event) ->
     event.preventDefault()
     state = $(this).closest ".state"
@@ -361,7 +316,6 @@ $ ->
       error: (data) ->
         alert data.message
 
-
   $(document).on "change", "input[type='file']", (event) ->
     file = event.target.files[0]
     reader = new FileReader()
@@ -370,54 +324,6 @@ $ ->
       tmp_img.src = reader.result
       $(event.target).siblings("img").attr "src", tmp_img.src
     reader.readAsDataURL file
-
-  disableSubmitButtonForItems = ->
-    $("#inner_content .caution").show()
-    $("#inner_content iframe").attr "src", ""
-    $("#inner_content .submit").attr "disabled", true
-
-  removeAllFigures = (figures, length) ->
-    figures.each (index, element) ->
-      if index != length - 1
-        $(element).find(".delete.btn").find("a").trigger "click"
-
-  YOUTUBE_URL_MIN_LENGTH   = 28
-  YOUTUBE_EMBED_URL_BASE   = "http://www.youtube.com/embed/"
-  # TODO: constantize '11'
-  # This expression matches domains both youtube.com and youtu.be
-  YOUTUBE_WATCH_URL_REGEXP = /https?:\/\/(?:(?:youtu\.be\/)|(?:www\.)?(?:youtube\.com\/watch\?v=))([^&]{11,})(&\S*)?$/
-  VIDEOID_MATCH_INDEX      = 1
-
-  getVideoForCard = ->
-    url = $(this).val()
-    if previous_url != url
-      previous_url = url
-      if url.length >= YOUTUBE_URL_MIN_LENGTH
-        if matched = url.match YOUTUBE_WATCH_URL_REGEXP
-          video_id_for_card = matched[VIDEOID_MATCH_INDEX]
-          embed_url = YOUTUBE_EMBED_URL_BASE + video_id_for_card
-          $(this).siblings("iframe").attr "src", embed_url
-          $(this).siblings(".caution").hide()
-          $("#inner_content").find(".submit").attr "disabled", false
-        else
-          $("#inner_content .caution").text "Invalid YouTube URL"
-          disableSubmitButtonForItems()
-      else
-        $("#inner_content .caution").text "URL is too short. URL length = #{url.length}. Min length = #{YOUTUBE_URL_MIN_LENGTH}."
-        disableSubmitButtonForItems()
-
-  $(document).on "click", "#inner_content .submit", (event) ->
-    url = $(".card-figure-link:visible").last().val()
-    if url
-      event.preventDefault()
-      matched = url.match YOUTUBE_WATCH_URL_REGEXP
-      video_id_for_card = matched[VIDEOID_MATCH_INDEX]
-      embed_url = YOUTUBE_EMBED_URL_BASE + video_id_for_card
-      $(".card-figure-link").last().val embed_url
-      $(event.target).submit()
-
-  $(document).on "keyup", "#inner_content .card-figure-link", getVideoForCard
-  $(document).on "change", "#inner_content .card-figure-link", getVideoForCard
 
   wait4save = (form, card) ->
     card.addClass "wait4save"
