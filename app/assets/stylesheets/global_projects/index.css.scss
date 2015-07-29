@@ -63,15 +63,16 @@
       padding: 230px 0 60px;
       .text {
         margin: 0 auto;
-        width: 830px;
+        width: $content_width;
         height: 100px;
         color: white;
         line-height: 1.2;
         .main-copy {
-          width: 834px;
+          width: $content_width;
           font-size: 50px;
           font-weight: normal;
           text-align: center;
+          letter-spacing: 1px;
         }
         .sub-copy {
           margin: 20px auto;
