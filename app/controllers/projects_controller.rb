@@ -4,6 +4,7 @@ class ProjectsController < ApplicationController
   before_action :load_owner
   before_action :load_project, only: [:show, :edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
+  before_action :delete_collaborations, only: :destroy
 
   authorize_resource
 
@@ -157,6 +158,13 @@ class ProjectsController < ApplicationController
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
     @owner = User.find(owner_id) || Group.find(owner_id)
+  end
+
+  def delete_collaborations
+    @project.collaborators.each do |collaborator|
+      collaboration = collaborator.collaborations.where("project_id" => @project.id).first
+      collaboration.destroy
+    end
   end
 
 end
