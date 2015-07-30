@@ -50,7 +50,7 @@ li.project
     == render "projects/tags", project: project
 
   .image-container
-    - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)
+    - if project.figures.present? and (project.figures.first.content.present? or project.figures.first.link.present?)
       - unless is_note
         == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
       - else
