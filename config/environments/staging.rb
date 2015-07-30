@@ -61,7 +61,6 @@ Gitfab2::Application.configure do
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   config.assets.precompile += %w(
     application.js
-    home.css
     groups.js    groups.css
     dashboard.js dashboard.css
     posts.js     posts.css

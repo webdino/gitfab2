@@ -3,7 +3,7 @@
 
 #recipes-new, #recipes-edit {
   width: 960px;
-  background: white;
+  background-color: $common-background-color;
   border-radius: 5px;
   margin-bottom: $common-margin-for-footer;
 }
@@ -20,7 +20,7 @@ form.project-form {
     margin-left: 10px;
     width: 60px;
     font-family: $common-novelsans-semibold;
-    color: $common-gray;
+    color: $common-quiet-text-color;
     text-align: right;
   }
   .right {
@@ -51,7 +51,7 @@ form.project-form {
       width: 220px;
       height: 28px;
       padding-left: 10px;
-      background: white;
+      background-color: $common-background-color;
       font-family: $common-novelsans-light;
       font-size: 14px;
       border: solid 1px $common-basic-color;
@@ -95,7 +95,7 @@ form.project-form {
         font-family: $common-novelsans-light;
         font-size: 12px;
         a {
-          color: $common-gray;
+          color: $common-quiet-text-color;
           text-decoration: underline;
         }
       }
@@ -213,7 +213,7 @@ form.project-form {
            display: inline-block;
            width: 40%;
            font-size: 14px;
-           color: red;
+           color: $common-error-text-color;
          }
          .card-figure-link {
            width: 80%;
@@ -229,10 +229,10 @@ form.project-form {
           padding: 2px 10px 0;
           width: 60px;
           height: 23px;
-          color: white;
+          color: $common-btn-text-color;
           background-color: $common-gray;
           a {
-            color: white;
+            color: $common-btn-text-color;
           }
         }
         .edit {
@@ -262,8 +262,8 @@ form.project-form {
         padding: 2px 10px 0;
         width: 140px;
         height: 23px;
-        color: $common-gray;
-        background-color: white;
+        color: $common-quiet-text-color;
+        background-color: $common-background-color;
         border: 1px solid $common-gray;
       }
       .add-image {
@@ -304,7 +304,7 @@ form.project-form {
   #filesize-caution {
     display: none;
     margin-top: 40px;
-    color: red;
+    color: $common-error-text-color;
     font-size: 21px;
   }
   .buttons {
@@ -318,7 +318,7 @@ form.project-form {
       padding: 5px 0 0 15px;
       background: $common-basic-color;
       border: none;
-      color: white;
+      color: $common-btn-text-color;
       font-size: 18px;
       &:before {
         content: url("/images/project/submit.png");

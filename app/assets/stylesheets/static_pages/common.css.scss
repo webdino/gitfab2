@@ -4,13 +4,10 @@
   margin-bottom: 0;
 }
 
-#layouts-footer {
-}
-
 .main {
   border-radius: 10px;
   margin: $common-margin-for-footer 0px;
-  background: #ebf8ff;
+  background: $common-light-blue;
   padding: 60px 100px 60px 100px;
   line-height: 1.75em;
   font-family: $common-verdana;
@@ -50,10 +47,4 @@
     margin-top: 20px;
     margin-bottom: 100px;
   }
-}
-
-@font-face {
-  font-family: "unitot-light";
-  src: asset-url("UnitOT-Light.eot") format('eot'),
-       asset-url("UnitOT-Light.woff") format('woff');
 }

@@ -10,7 +10,7 @@
   margin: 20px 0;
   font-family: $common-novelsans-semibold;
   border-radius: 5px;
-  background-color: white;
+  background-color: $common-background-color;
 
   #notice {
     color: green;
@@ -49,8 +49,8 @@
   #upload-button {
     margin: 20px 0 15px;
     padding: 5px 10px;
-    color: $common-gray;
-    background: white;
+    color: $common-quiet-text-color;
+    background-color: $common-background-color;
     border: 1px solid $common-gray;
     &:before {
       content: asset-url("edit_image_gray.png");
@@ -66,7 +66,7 @@
     padding: 10px;
     border: 1px solid $common-basic-color;
     border-radius: 5px;
-    background-color: white;
+    background-color: $common-background-color;
     font-family: $common-verdana;
     font-size: 22px;
   }
@@ -76,7 +76,7 @@
     margin: 60px 0 20px;
     padding: 5px 68px;
     font-size: 18px;
-    color: white;
+    color: $common-btn-text-color;
     background: $common-basic-color;
     border: none;
   }
