@@ -3,7 +3,6 @@
 @import "_project_variables.css.scss";
 
 #projects-index {
-  $quiet_font_color: $common-dark-gray;
   @include cf;
   margin-bottom: $common-margin-for-footer;
   .left {
@@ -35,7 +34,7 @@
       padding-top: ($left_pane_width - $border_margin * 2)/2;
       padding-bottom: 1px;
       width: $left_pane_width;
-      background: white;
+      background-color: $common-background-color;
       font-size: 14px;
       line-height: 18px;
       border-radius: 5px;
@@ -50,7 +49,7 @@
         margin: 0 auto;
         width: $inner_width;
         span {
-          color: $common-gray;
+          color: $common-quiet-text-color;
         }
         a {
           color: $common-basic-color;
@@ -59,9 +58,9 @@
       .makes {
         margin: 0 auto;
         width: $inner_width;
-        color: $common-gray;
+        color: $common-quiet-text-color;
         .count {
-          color: black;
+          color: $common-text-color;
         }
       }
       .relation-wrapper {
@@ -78,7 +77,7 @@
           font-weight: 500;
           font-size: 14px;
           line-height: 1.2;
-          color: white;
+          color: $common-title-text-color;
         }
         .create-group-btn {
           display: inline-block;
@@ -92,8 +91,8 @@
           font-size: 12px;
           line-height: 16px;
           border-radius: 5px;
-          color: black;
-          background: white;
+          color: $common-text-color;
+          background-color: $common-background-color;
           .member, .group {
             margin: 5px;
             padding: 10px 0px;
@@ -159,7 +158,7 @@
     .tabs-content {
       padding: 20px 10px 125px;
       width: 690px;
-      background: white;
+      background-color: $common-background-color;
       border-radius: 0 0 5px 5px;
       .tabs-pane {
         width: 100%;
@@ -169,10 +168,10 @@
             margin-bottom: 30px;
             padding-top: 10px;
             width: 100%;
-            border-top: 1px solid $common-charcoal-gray;
+            border-top: 1px solid $common-dark-gray;
             &:last-of-type {
               padding-bottom: 30px;
-              border-bottom: 1px solid $common-charcoal-gray;
+              border-bottom: 1px solid $common-dark-gray;
             }
             .image-container {
               display: inline-block;
@@ -191,7 +190,7 @@
                 width: 77px;
                 height: 23px;
                 font-size: 12px;
-                color: white;
+                color: $common-btn-text-color;
                 background: $common-gray;
               }
               .edit:before {
@@ -221,7 +220,7 @@
                 margin: 5px 0 -5px -2px;
                 border-radius: 5px;
                 background-color: red;
-                color: white;
+                color: $common-label-text-color;
                 text-align: center;
               }
               .title {
@@ -238,12 +237,12 @@
                 margin-bottom: 5px;
                 font-size: 12px;
                 line-height: 1.2;
-                color: black;
+                color: $common-text-color;
                 .dates {
                   margin-bottom: 5px;
                 }
                 .index {
-                  color: $common-gray;
+                  color: $common-quiet-text-color;
                 }
               }
               .summary {
@@ -251,7 +250,7 @@
                 font-family: $common-novelsans-light;
                 font-size: 14px;
                 line-height: 22px;
-                color: black;
+                color: $common-text-color;
                 word-wrap: break-word;
               }
               .tags {

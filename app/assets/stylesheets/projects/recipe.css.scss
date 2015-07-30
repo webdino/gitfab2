@@ -14,7 +14,7 @@
     margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
-    background: white;
+    background-color: $common-background-color;
     .inner {
       @include cf;
       width: $article_column_width - $common-margin * 2;
@@ -43,7 +43,7 @@
       }
     }
     .article-column.sp {
-      background: white;
+      background-color: $common-background-color;
       margin-top: -4px;
       margin-left: $first_column_width;
       margin-bottom: 20px;
@@ -59,7 +59,7 @@
         font-size: 14px;
         line-height: $common-line-height;
         text-align: center;
-        color: white;
+        color: $common-btn-text-color;
       }
     }
   }
@@ -68,7 +68,7 @@
     margin-bottom: 20px;
     margin-left: $first_column_width;
     width: $article_column_width;
-    background: white;
+    background-color: $common-background-color;
     border-radius: 5px;
     .inner {
       @include cf;
@@ -115,7 +115,7 @@
         font-size: 45px;
         font-weight: 500;
         line-height: 140px;
-        color: white;
+        color: $common-label-text-color;
       }
       .arrow-column {
         display: table-cell;
@@ -148,7 +148,7 @@
 
       .article-column {
         display: table-cell;
-        background: white;
+        background-color: $common-background-color;
         padding-top: $state_margin_top;
         .card-content {
           @include cf;
@@ -394,7 +394,7 @@
           font-size: 14px;
           line-height: $common-line-height;
           text-align: center;
-          color: white;
+          color: $common-btn-text-color;
         }
       }
 
@@ -565,7 +565,7 @@
   height: auto;
   overflow-x: auto;
   overflow-y: scroll;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: $common-modal-background-color;
 
   img {
     position: absolute;

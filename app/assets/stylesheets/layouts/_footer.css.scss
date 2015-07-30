@@ -3,7 +3,7 @@
 #layouts-footer{
   width: 100%;
   height: $common-footer-height;
-  background-color: white;
+  background-color: $common-background-color;
   .container {
     display: block;
     padding: 30px 0;
@@ -14,7 +14,7 @@
       padding: 5px 10px;
       font-size: 14px;
       font-family: $common-novelsans-semibold;
-      color: $common-charcoal-gray;
+      color: $common-dark-gray;
     }
     .navi {
       border-right: 1px solid $common-basic-color;
@@ -27,7 +27,7 @@
       padding: 5px 10px;
       font-size: 14px;
       font-family: $common-novelsans-semibold;
-      color: $common-charcoal-gray;
+      color: $common-dark-gray;
       a {
         padding: 0;
       }

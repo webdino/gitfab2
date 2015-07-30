@@ -3,7 +3,7 @@
 
 #layouts-header{
   margin-bottom: 35px;
-  background: white;
+  background-color: $common-background-color;
   .inner {
     width: 100%;
   }
@@ -34,7 +34,7 @@
       height: 30px;
       font-family: "novelsans-semibold";
       font-size: 15px;
-      border: solid 1px $common-dark-gray;
+      border: solid 1px $common-gray;
       border-radius: 5px;
     }
   }

@@ -11,7 +11,7 @@
     margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
-    background: white;
+    background-color: $common-background-color;
     .inner {
       @include cf;
       $margin: 10px;
@@ -41,7 +41,7 @@
       display: block;
       margin-right: 70px;
       padding-bottom: 40px;
-      background: white;
+      background-color: $common-background-color;
       .card-content {
         $note_card_width: 820px;
         @include cf;
@@ -184,7 +184,7 @@
     margin-left: $first_column_width;
     padding-top: 150px;
     width: $article_column_width;
-    background: white;
+    background-color: $common-background-color;
     .inner {
       $margin: 10px;
       width: $article_column_width - $margin * 2;

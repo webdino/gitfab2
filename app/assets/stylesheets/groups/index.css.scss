@@ -1,6 +1,5 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
-@import "layouts/settings.css.scss";
 
 #groups-index {
   display: inline-block;
@@ -14,7 +13,7 @@
     border-bottom: none;
 
     h1 {
-      background-color: $header_background;
+      background-color:  $common-gray;
       padding: 10px 0 10px 10px;
       font-size: 21px;
       border-bottom: $common-border;

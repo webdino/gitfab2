@@ -7,7 +7,7 @@
 #link-to-origin {
   margin: -35px 0 35px;
   width: 100%;
-  background: $common-charcoal-gray;
+  background: $common-dark-gray;
   .wrapper {
     margin: auto;
     width: 960px;
@@ -22,7 +22,7 @@
       font-family: $common-helvetica;
       font-weight: bold;
       font-size: 14px;
-      color: white;
+      color: $common-label-text-color;
     }
   }
 }
@@ -40,7 +40,7 @@
     left: -60px;
     padding: 5px;
     height: 10px;
-    color: white;
+    color: $common-label-text-color;
     font-family: $common-novelsans-semibold;
     font-size: 12px;
     background: $common-basic-color;
@@ -65,7 +65,7 @@
       font-family: $common-novelsans-semibold;
       font-size: 14px;
       line-height: 1.2;
-      color: black;
+      color: $common-text-color;
 
       .left {
         display: inline-block;
@@ -74,11 +74,11 @@
         .dates {
           margin-bottom: 5px;
           .index {
-            color: $common-gray;
+            color: $common-quiet-text-color;
           }
           .slash {
             margin: 0 2px 0 5px;
-            color: $common-gray;
+            color: $common-quiet-text-color;
           }
         }
 
@@ -86,7 +86,7 @@
           margin-bottom: 5px;
           label {
             display: inline-block;
-            color: $common-gray;
+            color: $common-quiet-text-color;
           }
           .tags {
             display: inline-block;
@@ -95,7 +95,7 @@
               height: 25px;
               margin-left: 10px;
               a {
-                color: black;
+                color: $common-text-color;
               }
               .delete-tag {
                 display: inline-block;
@@ -118,14 +118,14 @@
             .btn {
               border: none;
               background-color: $common-basic-color;
-              color: white;
+              color: $common-btn-text-color;
             }
           }
           #show-tag-form {
             display: inline-block;
             margin-left: 10px;
             background: $common-gray;
-            color: white;
+            color: $common-btn-text-color;
             .textfield {
               width: 120px;
             }
@@ -181,7 +181,7 @@
       margin: 0;
       width: 100%;
       height: 460px;
-      background-color: #E6E6E6;
+      background-color: $common-light-gray;
       overflow: hidden;
       border: none;
       border-radius: 0px;
@@ -256,7 +256,7 @@
       .title {
         font-family: $common-novelsans-semibold;
         font-size: 14px;
-        color: $common-gray;
+        color: $common-quiet-text-color;
         text-decoration: underline;
       }
       .collaborators {
@@ -299,7 +299,7 @@
       .title {
         font-family: $common-novelsans-semibold;
         font-size: 14px;
-        color: $common-gray;
+        color: $common-quiet-text-color;
         text-decoration: underline;
       }
       .text {
@@ -316,7 +316,7 @@
 
 #collaborators-index {
   display: none;
-  background: white;
+  background-color: $common-background-color;
   width: 960px;
   .inner {
     margin: 20px;
@@ -390,7 +390,7 @@ $tool_size: 75px;
   padding-left: 8px;
   width: $tool_size;
   border-radius: 5px 0 0 5px;
-  background: white;
+  background-color: $common-background-color;
   &.forked-project-tools {
     top: 259px;
   }
@@ -485,43 +485,41 @@ $tool_size: 75px;
     }
   }
 
-  #fork-destinations {
-    $popup_width: 360px;
-    @include spacing-row($popup_width, 20px, 3);
-    display: none;
-    width: $popup_width;
-    min-height: 442px;
-    border: $common-border;
-    border-left: none;
-    .fork-destination {
-      .dest-name {
-        margin-top: $common-margin;
-        margin-bottom: 4px;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-      .fork-btn {
-        @include clickable;
-        margin-bottom: $common-margin;
-        width: 100px;
-        height: 100px;
-        background-size: cover;
-        background-position: center;
-      }
-    }
-  }
-
   #share-destinations {
     display: none;
-    background: white;
+    background-color: $common-background-color;
     .twitter-btn {
       padding-right: 10px;
     }
   }
 }
 
+#fork-destinations {
+  $popup_width: 360px;
+  @include spacing-row($popup_width, 20px, 3);
+  display: none;
+  width: $popup_width;
+  min-height: 442px;
+  .fork-destination {
+    .dest-name {
+      margin-top: $common-margin;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .fork-btn {
+      @include clickable;
+      margin-bottom: $common-margin;
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+
 .fancybox-opened .fancybox-skin {
-    background: white;
+    background-color: $common-background-color;
 }
 
 #tabs {

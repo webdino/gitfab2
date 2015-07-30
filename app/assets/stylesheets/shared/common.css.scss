@@ -1,12 +1,12 @@
 @import "mixins/variables.css.scss";
 body {
-  background-color: #E6E6E6;
+  background-color: $common-light-gray;
   font-family: $common-sans-serif;
   a {
-    color: #000;
+    color: $common-text-color;
     text-decoration: none;
     &:hover {
-      color: #000;
+      color: $common-text-color;
       text-decoration: none;
       opacity: 0.6;
     }
@@ -17,7 +17,7 @@ body {
   margin: 0 auto;
 }
 #error_explanation {
-  color: red;
+  color: $common-error-text-color;
 }
 
 h1,h2,h3,h4,h5,h6 {

@@ -1,7 +1,7 @@
 @import "mixins/variables.css.scss";
 
 #collaborators-index {
-  background: white;
+  background-color: $common-background-color;
   font-family: $common-novelsans-semibold;
   .inner {
     margin: 0 20px;
@@ -22,7 +22,7 @@
         font-family: $common-novelsans-semibold;
         font-size: 14px;
         .select2-choice {
-          background: white;
+          background-color: $common-background-color;
         }
       }
     }
@@ -30,7 +30,7 @@
       vertical-align: top;
       margin-top: 11px;
       height: 28px;
-      color: white;
+      color: $common-btn-text-color;
       background-color: $common-basic-color;
       border: none;
     }

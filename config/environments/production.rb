@@ -62,7 +62,6 @@ Gitfab2::Application.configure do
   config.assets.paths += %w("/vendor/assets/javascripts")
   config.assets.precompile += %w(
     application.js
-    home.css
     groups.js    groups.css
     dashboard.js dashboard.css
     posts.js     posts.css

@@ -3,7 +3,6 @@
 
 #index {
   $white_border: 1px solid white;
-  $gray_border: 1px solid $common-dark-gray;
   $featured_projects_color: #63c5fb;
   $reciped_projects_color: #e6f9ff;
 
@@ -18,7 +17,7 @@
     padding-top: 15px;
     width: 200px;
     height: 25px;
-    background: white;
+    background-color: $common-background-color;
     text-align: center;
     font-size: 18px;
     border-radius: 5px 5px 0 0;
@@ -37,7 +36,7 @@
       }
       &.is-selected {
         cursor: default;
-        color: $common-dark-gray;
+        color: $common-quiet-text-color;
         &:hover {
           opacity: 1.0;
         }
@@ -65,7 +64,7 @@
         margin: 0 auto;
         width: $content_width;
         height: 100px;
-        color: white;
+        color: $common-title-text-color;
         line-height: 1.2;
         .main-copy {
           width: $content_width;
@@ -90,7 +89,7 @@
     }
   }
   #functions {
-    background: #EAEAEA;
+    background: $common-light-gray;
     border-bottom: 2px solid white;
     .container {
       margin: 0 auto;
@@ -112,7 +111,7 @@
               height: 120px;
               border-radius: 120px;
               border: none;
-              background: white;
+              background-color: $common-background-color;
             }
           }
           .title {
@@ -123,7 +122,7 @@
           .description {
             margin-top: 20px;
             width: 100%;
-            color: $common-dark-gray;
+            color: $common-quiet-text-color;
             font-size: 14px;
             line-height: 1.5;
           }
@@ -143,7 +142,7 @@
   }
 
   #occasions {
-    background: #EAEAEA;
+    background: $common-light-gray;
     border-bottom: 2px solid white;
     .container {
       margin: 0 auto;
@@ -165,7 +164,7 @@
               height: 120px;
               border-radius: 120px;
               border: none;
-              background: white;
+              background-color: $common-background-color;
             }
           }
           .title-wrapper {
@@ -181,7 +180,7 @@
           .description {
             margin-top: 20px;
             width: 100%;
-            color: $common-dark-gray;
+            color: $common-quiet-text-color;
             font-size: 14px;
             line-height: 1.5;
           }
@@ -210,7 +209,7 @@
             height: 68px;
             border-radius: 68px;
             border: 5px solid white;
-            background: white;
+            background-color: $common-background-color;
           }
         }
         .title {
@@ -253,7 +252,7 @@
         .project {
           $figure_width: 300px;
           width: $figure_width;
-          background: white;
+          background-color: $common-background-color;
           border-radius: 5px;
           .header {
             position: relative;
@@ -313,7 +312,7 @@
               margin-bottom: 5px;
               font-size: 14px;
               line-height: 22px;
-              color: $common-dark-gray;
+              color: $common-quiet-text-color;
               font-family: $common-novelsans-light;
               word-break: break-all;
             }
@@ -390,7 +389,7 @@
           width: 140px;
           height: 20px;
           background: $common-basic-color;
-          color: #FFF;
+          color: $common-btn-text-color;
           font-size: 17.5px;
           border-radius: 5px;
         }
@@ -432,7 +431,7 @@
               height: 140px;
               border-radius: 140px;
               border: none;
-              background: white;
+              background-color: $common-background-color;
             }
           }
           .title {
@@ -456,7 +455,7 @@
             margin-top: 20px;
             width: 100%;
             word-break: break-all;
-            color: $common-dark-gray;
+            color: $common-quiet-text-color;
             font-size: 14px;
             line-height: 1.5;
           }
@@ -486,7 +485,7 @@
         border-left: 2px solid white;
         .title {
           margin-top: 10px;
-          color: white;
+          color: $common-title-text-color;
           font-size: 30px;
           line-height: 1.2;
           font-weight: normal;
@@ -515,7 +514,7 @@
         border-left: 2px solid white;
         .title {
           margin-top: 10px;
-          color: white;
+          color: $common-title-text-color;
           font-size: 30px;
           line-height: 1.2;
           font-weight: normal;
@@ -542,7 +541,7 @@
   }
 
   #your {
-    background: #e6f9ff;
+    background: $reciped_projects_color;
     border-bottom: 2px solid white;
     .container {
       width: 940px;
@@ -560,7 +559,7 @@
   }
 
   #searched {
-    background: #e6f9ff;
+    background: $reciped_projects_color;
     border-bottom: 2px solid white;
     .container {
       width: 940px;
@@ -577,7 +576,7 @@
   }
 
   #tags-and-keywords {
-    background: #EAEAEA;
+    background: $common-light-gray;
     border-bottom: 2px solid white;
     .container {
       @include cf;
@@ -600,7 +599,7 @@
             margin: 5px;
             padding: 8px 10px 5px;
             font-size: 12px;
-            background: white;
+            background-color: $common-background-color;
             border: 1px solid gray;
           }
         }
@@ -619,7 +618,7 @@
             margin: 5px;
             padding: 8px 10px 5px;
             font-size: 12px;
-            background: white;
+            background-color: $common-background-color;
           }
         }
         .materials-wrapper .material {
@@ -648,13 +647,13 @@
           padding: 20px 60px 15px;
           text-align: center;
           font-size: 20px;
-          background: white;
+          background-color: $common-background-color;
           border-radius: 5px;
           color: $common-dark-blue;
         }
         .description {
           text-align: center;
-          color: white;
+          color: $common-label-text-color;
         }
       }
     }
@@ -663,13 +662,13 @@
   .pagination {
     margin-top: 30px;
     font-size: 17.5px;
-    color: #FFF;
+    color: $common-btn-text-color;
     span {
       padding: 5px 2px 2px 5px;
       margin-right: 5px;
       background: $common-basic-color;
       a {
-        color: #FFF;
+        color: $common-btn-text-color;
       }
     }
     .current {

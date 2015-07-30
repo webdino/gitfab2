@@ -1,5 +1,4 @@
 @import "mixins/variables.css.scss";
-@import "layouts/settings.css.scss";
 
 #layouts-setting-links {
   display: inline-block;
@@ -20,7 +19,7 @@
     .title {
       display: inline-block;
       padding: 10px 0 20px;
-      color: white;
+      color: $common-title-text-color;
     }
     .user, .group {
       .inner {
@@ -43,12 +42,12 @@
       .inner {
         padding: 10px;
         border-radius: 5px;
-        background: white;
+        background-color: $common-background-color;
       }
     }
     .groups {
       border-radius: 5px;
-      background: white;
+      background-color: $common-background-color;
       .inner {
         margin: 0 10px;
         padding: 10px 0;

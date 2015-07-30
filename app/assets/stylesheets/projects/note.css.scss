@@ -17,7 +17,7 @@
     margin-left: $first_column_width;
     padding-top: 1px;
     width: $article_column_width;
-    background: white;
+    background-color: $common-background-color;
     .inner {
       @include cf;
       $margin: 10px;
@@ -46,7 +46,7 @@
     .article-column {
       display: block;
       padding-bottom: 50px;
-      background: white;
+      background-color: $common-background-color;
       .card-content {
         @include cf;
         $figure_width: 368px;
@@ -178,7 +178,7 @@
     margin-left: $first_column_width;
     width: 820px;
     padding-top: 150px;
-    background: white;
+    background-color: $common-background-color;
     .inner {
       $margin: 10px;
       width: $article_column_width - $margin * 2;

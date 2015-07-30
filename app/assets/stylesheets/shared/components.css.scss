@@ -5,12 +5,12 @@
   background: $common-gray;
   font-family: $common-novelsans-semibold;
   font-size: 11px;
-  color: white;
+  color: $common-btn-text-color;
   line-height: $common-line-height;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    background: #ddd;
+    background: $common-light-gray;
   }
 }
 
@@ -27,9 +27,6 @@
   }
   &.white {
     border-color: white;
-  }
-  &.green {
-    border-color: #00FF00;
   }
   &.f-left{
     float: left;
