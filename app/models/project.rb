@@ -33,6 +33,7 @@ class Project
   validates :name, uniqueness: {scope: [:owner_id, :owner_type]}
   validates :title, presence: true
 
+  index :updated_at => -1
   index "note.num_cards" => 1
   scope :noted, ->{where :"note.num_cards".gt => 0}
   scope :ordered_by_owner, ->{order("owner_id ASC")}
