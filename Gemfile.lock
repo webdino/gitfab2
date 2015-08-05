@@ -6,6 +6,13 @@ GIT
       mongoid
 
 GIT
+  remote: git://github.com/oshimaryo/Flexslider-2-Rails-Gem.git
+  revision: db3eb771bf3166dc323057ad004e77fa3f95d06f
+  specs:
+    flexslider (2.2.0)
+      sass-rails (>= 3.1.0)
+
+GIT
   remote: git://github.com/radar/paranoia.git
   revision: d657443970a857c88f212c6f7e2265d7e2ec98d5
   branch: rails4
@@ -137,8 +144,6 @@ GEM
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
-    flexslider (2.2.0)
-      sass-rails (>= 3.1.0)
     formatador (0.2.4)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
@@ -448,7 +453,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   fancybox2-rails
-  flexslider
+  flexslider!
   friendly_id (~> 5.0.0)
   gitolite
   growl
