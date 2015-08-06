@@ -42,7 +42,7 @@ gem "omniauth-github"
 gem "select2-rails"
 gem "autoprefixer-rails"
 gem "fancybox2-rails"
-gem 'flexslider'
+gem 'flexslider', github: "oshimaryo/Flexslider-2-Rails-Gem"
 gem 'jquery-validation-rails'
 
 gem "mongoid"
