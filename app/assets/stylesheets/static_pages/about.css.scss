@@ -1,4 +1,7 @@
+$icons-sprite-dimensions: true;
 @import "mixins/variables.css.scss";
+@import "icons/*.png";
+@include all-icons-sprites;
 
 body {
   background-color: $common-basic-color;
@@ -29,6 +32,15 @@ body {
     }
     #abstract, #functions {
       border-bottom: 1px solid $common-basic-color;
+    }
+    .abstract {
+      @include icons-sprite(abstract);
+    }
+    .functions {
+      @include icons-sprite(functions);
+    }
+    .features {
+      @include icons-sprite(features);
     }
 
     .left, .right {

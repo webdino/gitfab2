@@ -2,7 +2,7 @@ section#layouts-header
   .inner
     .container
       #logo
-        == link_to image_tag("logo.png"), root_path
+        == link_to "", root_path, class: "logo"
       #search-box
         == form_tag :search, method: :get do |f|
           == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
@@ -20,6 +20,6 @@ section#layouts-header
             .name
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box
-            == link_to image_tag("create_project.png"), new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-recipe"
-            == link_to image_tag("settings.png"), edit_user_path(current_user), title: "Setting", class: "icon settings"
-            == link_to image_tag("logout.png"), destroy_user_session_path, method: :delete, title: "Logout", class: "icon logout"
+            == link_to "", new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-project"
+            == link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
+            == link_to "", destroy_user_session_path, method: :delete, title: "Logout", class: "icon logout"

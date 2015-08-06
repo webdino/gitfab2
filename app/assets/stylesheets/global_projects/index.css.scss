@@ -1,5 +1,9 @@
+$icons-sprite-dimensions: true;
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
 
 #index {
   $white_border: 1px solid white;
@@ -85,6 +89,14 @@
         margin: 10px auto;
         width: 830px;
         text-align: right;
+        .sign-up-btn {
+          display: inline-block;
+          @include icons-sprite(signup);
+        }
+        .sign-up-btn-jp {
+          display: inline-block;
+          @include icons-sprite(signup_jp);
+        }
       }
     }
   }
@@ -211,6 +223,15 @@
             border: 5px solid white;
             background-color: $common-background-color;
           }
+          .create_project {
+            @include icons-sprite(create_project_m);
+          }
+          .create_group {
+            @include icons-sprite(create_group_m);
+          }
+          .edit_profile {
+            @include icons-sprite(edit_profile_m);
+          }
         }
         .title {
           margin-bottom: 30px;
@@ -335,10 +356,10 @@
                 bottom: 10px;
                 margin : 10px;
                 .icon {
+                  @include icons-sprite(starred);
                   display: inline-block;
                   vertical-align: middle;
-                  width: 26px;
-                  height: 26px;
+                  top: -15px;
                 }
                 .count {
                   display: inline-block;
