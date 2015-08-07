@@ -3,7 +3,7 @@
 - avatar_image = image_tag(user.avatar.thumb, class: "avatar")
 li.comment
   .left
-    == link_to avatar_image, user_url,title: user.name
+    == link_to avatar_image, user_url, title: user.name
   .right
     .wrapper
       .header
@@ -20,6 +20,5 @@ li.comment
         - if can? :destroy, comment
           span.comment-tools
             == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
-
       .body
         == Sanitize.clean comment.body, Sanitize::Config::RELAXED
