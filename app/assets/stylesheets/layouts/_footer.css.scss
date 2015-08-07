@@ -1,4 +1,8 @@
+$icons-sprite-dimensions: true;
 @import "mixins/variables.css.scss";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
 
 #layouts-footer{
   width: 100%;
@@ -35,8 +39,15 @@
   }
   #logos {
     padding: 45px 0 0;
-    .logo img {
-      height: 60px;
+    .logo {
+      display: inline-block;
+      max-height: 50px;
+    }
+    .sfc-logo {
+      @include icons-sprite(sfc_logo);
+    }
+    .mozilla-japan-logo {
+      @include icons-sprite(mozilla_japan_logo);
     }
   }
 }

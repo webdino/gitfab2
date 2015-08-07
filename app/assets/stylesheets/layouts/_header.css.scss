@@ -1,5 +1,9 @@
+$icons-sprite-dimensions: true;
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
 
 #layouts-header{
   margin-bottom: 35px;
@@ -19,7 +23,8 @@
     float: left;
     margin-left: 10px;
     padding-top: 7px;
-    a {
+    .logo {
+      @include icons-sprite(logo);
       display: block;
     }
   }
@@ -85,6 +90,15 @@
         margin-right: 10px;
         width: 32px;
         height: 32px;
+      }
+      .create-project {
+        @include icons-sprite(create_project);
+      }
+      .settings {
+        @include icons-sprite(settings);
+      }
+      .logout {
+        @include icons-sprite(logout);
       }
     }
   }

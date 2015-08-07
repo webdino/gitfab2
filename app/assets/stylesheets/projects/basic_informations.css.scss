@@ -1,8 +1,12 @@
+$icons-sprite-dimensions: true;
 @import "mixins/clearfix.css.scss";
 @import "mixins/clickable.css.scss";
 @import "mixins/rows.css.scss";
 @import "mixins/variables.css.scss";
 @import "_project_variables.css.scss";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
 
 #link-to-origin {
   margin: -35px 0 35px;
@@ -153,13 +157,11 @@
           margin-top: 5px;
           position: absolute;
           right: 0;
-          top: 5px;
+          top: 2px;
           .like-button {
+            @include icons-sprite(star_l);
             display: inline-block;
             min-width: 25px;
-            height: $star_size;
-            background: asset-url("star.png") no-repeat;
-            background-size: contain;
             padding-left: $star_size + 5px;
             cursor: pointer;
             font-size: 14px;
@@ -167,8 +169,7 @@
             text-align: right;
           }
           .like-button.liked {
-            background: asset-url("starred.png") no-repeat;
-            background-size: contain;
+            @include icons-sprite(starred_l);
           }
         }
       }
@@ -280,6 +281,7 @@
         }
       }
       #add-collaborator-btn {
+        @include icons-sprite(add-member);
         display: inline-block;
         position: relative;
         top: 4px;
@@ -288,7 +290,6 @@
         width: 72px;
         height: 72px;
         border-radius: 72px;
-        background: asset-url("add-member.png") no-repeat;
         background-size: contain;
       }
     }
@@ -367,17 +368,16 @@
 $tool_size: 75px;
 
 #project-edit-btn {
+  @include icons-sprite(edit-project);
   position: absolute;
   top: 110px;
   right: 0;
-  padding: 4px 8px 4px 0;
+  padding: 0 8px 0 0;
   width: $tool_size;
   height: $tool_size;
   border-radius: 5px 0 0 5px;
   background-repeat: no-repeat;
   background-color: $common-gray;
-  background-image: asset-url("edit-project.png");
-  background-position: 5px;
   &.forked-project-tools {
     top: 154px;
   }
@@ -403,26 +403,26 @@ $tool_size: 75px;
     border-bottom: 1px solid $common-basic-color;
   }
   #slideshow-btn {
-    background-image: asset-url("slideshow.png");
+    @include icons-sprite(slideshow);
   }
   #fork-btn {
+    @include icons-sprite(fork);
     height: $tool_size + 20px;
-    background-image: asset-url("fork.png");
   }
   #share-button {
+    @include icons-sprite(share);
     margin: 5px 0;
     padding: 5px 0;
     height: $tool_size;
-    background-image: asset-url("share.png");
   }
   #card-order-tools {
     .order-change-btn {
+      @include icons-sprite(change_order);
       display: block;
-      background-image: asset-url("change_order.png");
     }
     .order-commit-btn {
       display: none;
-      background-image: asset-url("commit_order.png");
+      @include icons-sprite(commit_order);
     }
 
     &.order-changing {
@@ -484,13 +484,19 @@ $tool_size: 75px;
       }
     }
   }
+}
 
-  #share-destinations {
-    display: none;
-    background-color: $common-background-color;
-    .twitter-btn {
-      padding-right: 10px;
-    }
+#share-destinations {
+  display: none;
+  background-color: $common-background-color;
+  .twitter-btn {
+    @include icons-sprite(twitter_100);
+    display: inline-block;
+    padding-right: 10px;
+  }
+  .fb-btn {
+    @include icons-sprite(fb_100);
+    display: inline-block;
   }
 }
 

@@ -41,7 +41,6 @@ li.project
         == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago" if project.created_at
 
       .starred
-        == image_tag "starred.png", class: "icon"
-
+        .icon.starred
         span.count
           == "#{project.likes.length}"

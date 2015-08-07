@@ -4,19 +4,19 @@
       li.link.create-project
         == link_to new_project_path(owner_name: current_user.slug) do
           .image-wrapper
-            == image_tag "create_project_m.png", class: "image"
+            .image.create_project
           .title Create New Project
 
       li.link.create-group
         == link_to(new_group_path) do
           .image-wrapper
-            == image_tag "create_group_m.png", class: "image"
+            .image.create_group
           .title Create New Group
 
       li.link.edit-profile
         == link_to(edit_user_path(current_user)) do
           .image-wrapper
-            == image_tag "edit_profile_m.png", class: "image"
+            .image.edit_profile
           .title Edit Your Profile
 
       li.link.your-projects

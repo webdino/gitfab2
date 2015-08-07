@@ -16,7 +16,7 @@ article class="card state" data-position="#{card.try(:position)}" id="#{card.id}
               == link_to "", "#", class: "order-down-btn"
 
           .show-comments-btn
-            == image_tag "comment-icon.png", class: "comment-icon icon"
+            .comment-icon.icon
             .count
               == card.comments.length
           == render "components/card_contributors", card: card
