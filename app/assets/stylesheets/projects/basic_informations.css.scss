@@ -17,6 +17,8 @@ $icons-sprite-dimensions: true;
     width: 960px;
     height: 44px;
     .forked-icon {
+      @include icons-sprite(forked);
+      display: inline-block;
       margin-top: 8px;
     }
     .link {
