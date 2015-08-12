@@ -26,7 +26,7 @@ article class="card state" data-position="#{card.try(:position)}" id="#{card.id}
         == render "components/card_attachments", card: card
 
       .footer
-        == render "components/recipecard_comments", card: card, resources: [@owner, @project, :recipe, card]
+        == render "components/card_comments", card: card, resources: [@owner, @project, :recipe, card]
 
     ul.annotation-list
       - card.annotations.ordered_by_position.each do |annotation|

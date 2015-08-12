@@ -64,7 +64,7 @@ main#note-cards-show
 
     footer
       - unless defined?(is_template)
-        == render "components/notecard_comments", card: card, resources: [@owner, @project, :note, card]
+        == render "components/card_comments", card: card, resources: [@owner, @project, :note, card]
 
       .inner
         / TODO: implement pager

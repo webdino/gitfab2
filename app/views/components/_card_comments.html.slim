@@ -1,12 +1,18 @@
-ul.comments
-  - resources.last.comments.each do |comment|
-    - resources << comment
-    == render "comments/comment", comment: comment, resources: resources
-    - resources.delete(comment)
-- resources << Comment.new
-- if signed_in?
-  == form_for resources, html: {class: "comment-form"}, remote: true do |f|
-    == image_tag current_user.avatar.thumb
-    == f.hidden_field :user_id, value: current_user.slug
-    == f.text_area :body, maxlength: 300
-    == f.submit "comment", class: "btn"
+.comments-wrapper class="#{card.class.name == "Card::NoteCard" ? "in-notecard" : "is-closed"}"
+  h2 Comments
+  .close-comments-btn
+
+  ul.comments
+    - card.comments.each_with_index do |comment, i|
+      == render "comments/comment", comment: comment, resources: resources << comment, i: i
+      - resources.delete(comment)
+
+  - if signed_in? && card.persisted?
+    - resources << Comment.new
+    == form_for resources, html: {class: "comment-form"}, remote: true do |f|
+      .left
+        == image_tag current_user.avatar.thumb, class: "avatar"
+      .right
+        == f.hidden_field :user_id, value: current_user.slug
+        == f.text_area :body, maxlength: 300, size: "40x4", class: "comment-editor"
+        == f.submit "comment", class: "btn"
