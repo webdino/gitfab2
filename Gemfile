@@ -46,6 +46,8 @@ gem "flexslider", github: "oshimaryo/Flexslider-2-Rails-Gem"
 gem "jquery-validation-rails"
 gem "compass-rails"
 gem "travis"
+gem "exception_notification", github: "smartinez87/exception_notification"
+gem "slack-notifier"
 
 gem "mongoid"
 gem "mongoid_slug"
