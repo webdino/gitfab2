@@ -44,7 +44,8 @@ gem "autoprefixer-rails"
 gem "fancybox2-rails"
 gem "flexslider", github: "oshimaryo/Flexslider-2-Rails-Gem"
 gem "jquery-validation-rails"
-gem 'compass-rails'
+gem "compass-rails"
+gem "travis"
 
 gem "mongoid"
 gem "mongoid_slug"
