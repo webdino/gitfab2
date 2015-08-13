@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   IllegalAccessError = Class.new(ActionController::ActionControllerError)
 
   rescue_from Exception, with: :render_500
-  rescue_from ActionController::RoutingError, ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from Mongoid::Errors::DocumentNotFound, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render_404
   rescue_from UnauthorizedError, with: :render_401
   rescue_from IllegalAccessError, with: :render_403
   handle_as_unauthorized CanCan::AccessDenied
@@ -42,25 +43,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_401(error = nil)
+  def render_401(exception = nil)
     render file: Rails.root.join("public/401.html"), status: 401, layout: false, content_type: "text/html"
   end
 
-  def render_403(error = nil)
+  def render_403(exception = nil)
     render file: Rails.root.join("public/403.html"), status: 403, layout: false, content_type: "text/html"
   end
 
-  def render_404(error = nil)
+  def render_404(exception = nil)
     render file: Rails.root.join("public/404.html"), status: 404, layout: false, content_type: "text/html"
   end
 
-  def render_500(error = nil)
+  def render_500(exception = nil)
     env = request.env
     method = env["REQUEST_METHOD"]
     path = env["REQUEST_PATH"]
     user_agent = env["HTTP_USER_AGENT"]
     message = "#{method} '#{path}' \n UA: '#{user_agent}'"
-    ExceptionNotifier.notify_exception error, env: env, data: {message: message}
+    ExceptionNotifier.notify_exception exception, env: env, data: {message: message}
     render file: Rails.root.join("public/500.html"), status: 500, layout: false, content_type: "text/html"
   end
 
