@@ -42,20 +42,25 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def render_401(e = nil)
+  def render_401(error = nil)
     render file: Rails.root.join("public/401.html"), status: 401, layout: false, content_type: "text/html"
   end
 
-  def render_403(e = nil)
+  def render_403(error = nil)
     render file: Rails.root.join("public/403.html"), status: 403, layout: false, content_type: "text/html"
   end
 
-  def render_404(e = nil)
+  def render_404(error = nil)
     render file: Rails.root.join("public/404.html"), status: 404, layout: false, content_type: "text/html"
   end
 
-  def render_500(e = nil)
-    ExceptionNotifier.notify_exception e, env: request.env, data: {message: "500 error occured"}
+  def render_500(error = nil)
+    env = request.env
+    method = env["REQUEST_METHOD"]
+    path = env["REQUEST_PATH"]
+    user_agent = env["HTTP_USER_AGENT"]
+    message = "#{method} '#{path}' \n UA: '#{user_agent}'"
+    ExceptionNotifier.notify_exception error, env: env, data: {message: message}
     render file: Rails.root.join("public/500.html"), status: 500, layout: false, content_type: "text/html"
   end
 
