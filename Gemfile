@@ -48,6 +48,7 @@ gem "compass-rails"
 gem "travis"
 gem "exception_notification", github: "smartinez87/exception_notification"
 gem "slack-notifier"
+gem "grape"
 
 gem "mongoid"
 gem "mongoid_slug"
