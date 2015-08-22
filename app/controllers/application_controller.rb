@@ -5,11 +5,6 @@ class ApplicationController < ActionController::Base
   UnauthorizedError = Class.new(ActionController::ActionControllerError)
   IllegalAccessError = Class.new(ActionController::ActionControllerError)
 
-  rescue_from Exception, with: :render_500
-  rescue_from Mongoid::Errors::DocumentNotFound, with: :render_404
-  rescue_from ActionController::RoutingError, with: :render_404
-  rescue_from UnauthorizedError, with: :render_401
-  rescue_from IllegalAccessError, with: :render_403
   handle_as_unauthorized CanCan::AccessDenied
 
   before_action :verify_name
@@ -41,6 +36,10 @@ class ApplicationController < ActionController::Base
         !request.xhr?)
       session[:previous_url] = request.fullpath
     end
+  end
+
+  def not_found
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   def render_401(exception = nil)
