@@ -30,6 +30,7 @@ class UsersController < ApplicationController
   private
   def load_user
     @user = User.find params[:id]
+    not_found if @user.blank?
   end
 
   def user_params

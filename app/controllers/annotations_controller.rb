@@ -46,6 +46,7 @@ class AnnotationsController < ApplicationController
 
   def to_state
     annotation = @state.annotations.find params[:annotation_id]
+    not_found if annotation.blank?
     annotation._type = "Card::State"
     state = annotation.dup_document
     annotation.destroy
@@ -68,10 +69,13 @@ class AnnotationsController < ApplicationController
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
     @owner = User.find(owner_id) || Group.find(owner_id)
+    not_found if @owner.blank?
+
   end
 
   def load_project
     @project = @owner.projects.find params[:project_id]
+    not_found if @project.blank?
   end
 
   def load_recipe
@@ -81,11 +85,13 @@ class AnnotationsController < ApplicationController
   def load_state
     if params["state_id"]
       @state = @recipe.states.find params["state_id"]
+      not_found if @state.blank?
     end
   end
 
   def load_annotation
     @annotation = @state.annotations.find params[:id]
+    not_found if @annotation.blank?
   end
 
   def build_annotation
