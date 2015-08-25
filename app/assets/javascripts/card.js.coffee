@@ -198,9 +198,11 @@ $ ->
       states = $ ".state"
       states.each (index, element) ->
         position = $(element).data "position"
+        title = $(element).find(".title").first().text()
+        text = position + ": " + title
 
-        if position isnt src_data_position
-          select.append $("<option>").html(position).val position
+        if (position isnt src_data_position) and (position isnt "")
+          select.append $("<option>").html(text).val position
 
       $.fancybox.open
         href: "#state-convert-dialog"
@@ -257,6 +259,7 @@ $ ->
             article_id = $(data.html).find(".flexslider").closest("article").attr "id"
             selector = "#" + article_id + " .flexslider"
             card.replaceWith data.html
+            setupFigureSlider selector
             $("#loading").hide()
             $("#" + state_id).closest(".state-wrapper").remove()
             checkStateConvertiblity()
@@ -306,6 +309,7 @@ $ ->
             article_id = $(data.html).find(".flexslider").closest("article").attr "id"
             selector = "#" + article_id + " .flexslider"
             card.replaceWith data.html
+            setupFigureSlider selector
             $("#loading").hide()
             $("#" + annotation_id).closest("li").remove()
             checkStateConvertiblity()
