@@ -5,6 +5,7 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:show, :edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
+  after_action :notify_users, only: [:create, :update]
 
   authorize_resource
 
@@ -137,6 +138,27 @@ class ProjectsController < ApplicationController
     @project = @owner.projects.find params[:project_id]
     @recipe = @project.recipe
     render "recipe_cards_list"
+  end
+
+  def notify_users
+    if action_name == "update"
+      users = @project.notifiable_users current_user
+      url = project_path @project, owner_name: @owner.slug
+      if project_params[:likes_attributes].present?
+        body = "#{@project.title} was favorited by #{current_user.name}."
+      else
+        body = "#{@project.title} was updated by #{current_user.name}."
+      end
+      @project.notify users, current_user, url, body if users.length > 0
+    elsif action_name == "create" && params[:original_project_id]
+      original_project = Project.find params[:original_project_id]
+      users = @project.notifiable_users current_user, original_project
+      url = project_path @project, owner_name: @owner.slug
+      body = "#{original_project.title} was forked by #{current_user.name}."
+      @project.notify users, current_user, url, body if users.length > 0
+    else
+      p action_name
+    end
   end
 
   private

@@ -1,0 +1,14 @@
+- @notifications = notifications if @notifications.nil?
+#notifications-index
+  ul.notifications
+    - if @notifications.length > 0
+      - @notifications.each do |notification|
+        li.notification
+          .container
+            == link_to image_tag(notification.notifier.avatar.thumb, class: "avatar"), projects_path(notification.notifier), class: "avatar-wrapper"
+            == link_to notification.body, notification.notificatable_url , class: "body", data: {url: "/users/#{notification.notified.slug}/notifications/#{notification.id}"}
+    - else
+      li.notification
+        .container
+          .body
+            'You have no unread notifications.

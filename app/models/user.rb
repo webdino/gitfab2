@@ -39,6 +39,8 @@ class User
   mount_uploader :avatar, AvatarUploader
 
   embeds_many :memberships
+  has_many :notifications_given, class_name: "Notification", inverse_of: :notifier
+  has_many :my_notifications, class_name: "Notification", inverse_of: :notified
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
