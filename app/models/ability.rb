@@ -83,7 +83,7 @@ class Ability
       user.persisted?
     end
     can :manage, Notification do |notification|
-      notification.user == user
+      user == notification.notified || notification.notifier
     end
 
   end
