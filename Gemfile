@@ -79,4 +79,5 @@ group :development, :test do
   gem "pry-byebug"
   gem "better_errors"
   gem "resque-web", require: "resque_web"
+  gem "rack-mini-profiler"
 end
