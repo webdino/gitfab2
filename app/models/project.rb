@@ -21,7 +21,7 @@ class Project
 
   has_many :derivatives, class_name: Project.name, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
-  belongs_to :owner, polymorphic: true, index: true
+  belongs_to :owner, polymorphic: true, index: true, counter_cache: :projects_count
   embeds_many :usages, class_name: Card::Usage.name, cascade_callbacks: true
   embeds_one :recipe, autobuild: true, cascade_callbacks: true
   embeds_one :note, autobuild: true, cascade_callbacks: true
