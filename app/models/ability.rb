@@ -1,6 +1,8 @@
 class Ability
   include CanCan::Ability
 
+  # TODO: This initialize function is too long to read,
+  #   so it should be divided to multiple fucntions.
   def initialize(user, params)
     user ||= User.new
     can :manage, User, id: user.id
@@ -98,6 +100,9 @@ class Ability
     if project.owner_type == Group.name
       is_member_of = user.is_member_of? project.owner
     end
-    is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project) || user.is_in_collaborated_group?(project)
+    is_member_of ||
+      user.is_owner_of?(project) ||
+      user.is_collaborator_of?(project) ||
+      user.is_in_collaborated_group?(project)
   end
 end
