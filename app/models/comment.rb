@@ -7,7 +7,7 @@ class Comment
   belongs_to :user
   embedded_in :commentable, polymorphic: true
 
-  scope :created_at_desc, ->{order "created_at DESC"}
+  scope :created_at_desc, -> { order 'created_at DESC' }
 
   field :body
 

@@ -23,8 +23,9 @@ class Figure
   end
 
   private
+
   def dup_content
     ActionDispatch::Http::UploadedFile.new filename: content.file.filename,
-      type: content.file.content_type, tempfile: File.open(content.path)
+                                           type: content.file.content_type, tempfile: File.open(content.path)
   end
 end

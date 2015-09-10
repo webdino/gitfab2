@@ -1,21 +1,21 @@
-pid_file = "/tmp/unicorn_gitfab2.pid"
+pid_file = '/tmp/unicorn_gitfab2.pid'
 
-lock "3.1.0"
+lock '3.1.0'
 
-set :application, "gitfab2"
-set :repo_url, "https://github.com/mozilla-japan/gitfab2.git"
+set :application, 'gitfab2'
+set :repo_url, 'https://github.com/mozilla-japan/gitfab2.git'
 set :rvm_type, :system
-set :rvm_ruby_version, "2.1.2"
+set :rvm_ruby_version, '2.1.2'
 set :assets_roles, [:web, :app]
 
-if ENV["DEPLOY_BRANCH"]
-  set :branch, ENV["DEPLOY_BRANCH"]
+if ENV['DEPLOY_BRANCH']
+  set :branch, ENV['DEPLOY_BRANCH']
 else
-  ask :branch, proc {`git rev-parse --abbrev-ref HEAD`.chomp}.call
+  ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 end
 
 # Default deploy_to directory is /var/www/my_app
-set :deploy_to, "/usr/local/rails_apps/gitfab2"
+set :deploy_to, '/usr/local/rails_apps/gitfab2'
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -30,10 +30,10 @@ set :deploy_to, "/usr/local/rails_apps/gitfab2"
 # set :pty, true
 
 # Default value for :linked_files is []
-#set :linked_files, %w{config/database.yml}
+# set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{log public/uploads}
+set :linked_dirs, %w(log public/uploads)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -42,7 +42,7 @@ set :linked_dirs, %w{log public/uploads}
 set :keep_releases, 2
 
 namespace :deploy do
-  desc "Restart application"
+  desc 'Restart application'
   task :restart do
     on roles(:app) do
       execute "kill -USR2 `cat #{pid_file}`" if File.exist? "#{pid_file}"

@@ -1,84 +1,84 @@
-source "https://rubygems.org"
-gem "rails", "4.0.0"
-gem "sass-rails", "~> 4.0.0"
-gem "uglifier", ">= 1.3.0"
-gem "coffee-rails", "~> 4.0.0"
-gem "jquery-rails"
-gem "turbolinks"
-gem "jquery-turbolinks"
-gem "jbuilder", "~> 1.2"
-gem "resque"
-gem "resque-pool"
-gem "rails_config"
-gem "sanitize"
-gem "mini_magick"
-gem "unicorn"
-gem "capistrano", "~> 3.1.0"
-gem "capistrano-rvm"
-gem "capistrano-bundler"
-gem "capistrano-rails"
-gem "devise"
-gem "rugged"
-gem "therubyracer"
-gem "gitolite"
-gem "carrierwave"
-gem "slim-rails"
-gem "rails-config"
-gem "sunspot_rails"
-gem "sunspot_solr"
-gem "sunspot_mongoid2"
-gem "remotipart"
-gem "progress_bar"
-gem "cancancan"
-gem "nested_form"
-gem "jquery-ui-rails"
-gem "kaminari"
-gem "acts-as-taggable-on", "~> 3.1.0"
-gem "acts_as_commentable"
-gem "acts_as_votable", "~> 0.8.0"
-gem "paranoia", github: "radar/paranoia", branch: "rails4"
-gem "nokogiri"
-gem "omniauth-github"
-gem "select2-rails"
-gem "autoprefixer-rails"
-gem "fancybox2-rails"
-gem "flexslider", github: "oshimaryo/Flexslider-2-Rails-Gem"
-gem "jquery-validation-rails"
-gem "compass-rails"
-gem "travis"
-gem "exception_notification", github: "smartinez87/exception_notification"
-gem "slack-notifier"
+source 'https://rubygems.org'
+gem 'rails', '4.0.0'
+gem 'sass-rails', '~> 4.0.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'jquery-rails'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
+gem 'jbuilder', '~> 1.2'
+gem 'resque'
+gem 'resque-pool'
+gem 'rails_config'
+gem 'sanitize'
+gem 'mini_magick'
+gem 'unicorn'
+gem 'capistrano', '~> 3.1.0'
+gem 'capistrano-rvm'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
+gem 'devise'
+gem 'rugged'
+gem 'therubyracer'
+gem 'gitolite'
+gem 'carrierwave'
+gem 'slim-rails'
+gem 'rails-config'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+gem 'sunspot_mongoid2'
+gem 'remotipart'
+gem 'progress_bar'
+gem 'cancancan'
+gem 'nested_form'
+gem 'jquery-ui-rails'
+gem 'kaminari'
+gem 'acts-as-taggable-on', '~> 3.1.0'
+gem 'acts_as_commentable'
+gem 'acts_as_votable', '~> 0.8.0'
+gem 'paranoia', github: 'radar/paranoia', branch: 'rails4'
+gem 'nokogiri'
+gem 'omniauth-github'
+gem 'select2-rails'
+gem 'autoprefixer-rails'
+gem 'fancybox2-rails'
+gem 'flexslider', github: 'oshimaryo/Flexslider-2-Rails-Gem'
+gem 'jquery-validation-rails'
+gem 'compass-rails'
+gem 'travis'
+gem 'exception_notification', github: 'smartinez87/exception_notification'
+gem 'slack-notifier'
 
-gem "mongoid"
-gem "mongoid_slug"
-gem "mongoid_orderable", github: "johnny-miyake/mongoid_orderable"
-gem "bson_ext"
-gem "friendly_id", "~> 5.0.0"
-gem "carrierwave-mongoid", require: "carrierwave/mongoid"
+gem 'mongoid'
+gem 'mongoid_slug'
+gem 'mongoid_orderable', github: 'johnny-miyake/mongoid_orderable'
+gem 'bson_ext'
+gem 'friendly_id', '~> 5.0.0'
+gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
 
-gem "truncate_html"
-gem "clockwork"
-gem "daemons"
+gem 'truncate_html'
+gem 'clockwork'
+gem 'daemons'
 
 group :doc do
-  gem "sdoc", require: false
+  gem 'sdoc', require: false
 end
 
 group :development, :test do
-  gem "spring"
-  gem "spring-commands-rspec"
-  gem "rspec-rails", github: "rspec/rspec-rails"
-  gem "guard-rspec"
-  gem "rspec-collection_matchers"
-  gem "mongoid-rspec"
-  gem "factory_girl_rails"
-  gem "database_cleaner"
-  gem "rb-fsevent"
-  gem "growl"
-  gem "pry-rails"
-  gem "pry-byebug"
-  gem "better_errors"
-  gem "resque-web", require: "resque_web"
-  gem "rack-mini-profiler"
-  gem "rubocop", require: false
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  gem 'rspec-rails', github: 'rspec/rspec-rails'
+  gem 'guard-rspec'
+  gem 'rspec-collection_matchers'
+  gem 'mongoid-rspec'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'rb-fsevent'
+  gem 'growl'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'better_errors'
+  gem 'resque-web', require: 'resque_web'
+  gem 'rack-mini-profiler'
+  gem 'rubocop', require: false
 end

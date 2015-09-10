@@ -1,5 +1,5 @@
 class NotesController < ApplicationController
-  layout "project"
+  layout 'project'
 
   before_action :load_owner
   before_action :load_project
@@ -11,6 +11,7 @@ class NotesController < ApplicationController
   end
 
   private
+
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)

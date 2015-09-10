@@ -1,12 +1,12 @@
 class Feature
-  TARGET_CLASS = {Project: "Project", Group: "Group", User: "User" }
+  TARGET_CLASS = { Project: 'Project', Group: 'Group', User: 'User' }
 
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  scope :projects, ->{where class_name: "Project"}
-  scope :groups, ->{where class_name: "Group"}
-  scope :users, ->{where class_name: "User"}
+  scope :projects, -> { where class_name: 'Project' }
+  scope :groups, -> { where class_name: 'Group' }
+  scope :users, -> { where class_name: 'User' }
 
   has_many :featured_items
   accepts_nested_attributes_for :featured_items

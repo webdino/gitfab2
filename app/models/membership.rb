@@ -1,5 +1,5 @@
 class Membership
-  ROLE = {admin: "admin", editor: "editor"}
+  ROLE = { admin: 'admin', editor: 'editor' }
 
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -11,8 +11,8 @@ class Membership
   belongs_to :group
 
   before_validation :must_have_user_and_group
-  after_create ->{update_attributes role: ROLE[:admin]}, if: ->{group.admins.none?}
-  after_destroy ->{self.group.destroy}, if: ->{self.group.members.none?}
+  after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
+  after_destroy -> { group.destroy }, if: -> { group.members.none? }
   validates :group_id, :role, presence: :true
 
   Membership::ROLE.keys.each do |role|
@@ -28,12 +28,9 @@ class Membership
   end
 
   private
+
   def must_have_user_and_group
-    if self.user.blank?
-      self.errors.add :user, "Error"
-    end
-    if self.group.blank?
-      self.errors.add :group, "Error"
-    end
+    errors.add :user, 'Error' if user.blank?
+    errors.add :group, 'Error' if group.blank?
   end
 end

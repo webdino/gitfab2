@@ -1,19 +1,19 @@
 class Ability
   include CanCan::Ability
 
-  def initialize user, params
+  def initialize(user, params)
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Membership do |membership|
       user.is_admin_of?(membership.group) || user == membership.user
     end
-    can :create, Card::Usage do |card|
+    can :create, Card::Usage do |_card|
       user.persisted?
     end
     can :manage, Card::Usage do |card|
       card.project && (user.is_contributor_of?(card) || is_project_editor?(card.project, user))
     end
-    can :create, Card::Annotation do |card|
+    can :create, Card::Annotation do |_card|
       user.persisted?
     end
     can :manage, Card::Annotation do |card|
@@ -29,7 +29,7 @@ class Ability
       is_project_manager?(project, user)
     end
     can :update, Project do |project|
-      if params[:project].present? and params[:project][:likes_attributes]
+      if params[:project].present? && params[:project][:likes_attributes]
         true
       else
         is_project_manager?(project, user)
@@ -45,9 +45,7 @@ class Ability
       can? :read, note.project
     end
     can :update, Recipe do |recipe|
-      if recipe.owner_type == Group.name
-        user.is_member_of? recipe.owner
-      end
+      user.is_member_of? recipe.owner if recipe.owner_type == Group.name
     end
     can :read, Recipe do |recipe|
       can? :read, recipe.project
@@ -64,7 +62,7 @@ class Ability
     can :destroy, Comment do |comment|
       comment.user_id == user.slug || (can? :manage, comment.commentable)
     end
-    can :create, Like do |like|
+    can :create, Like do |_like|
       user.persisted?
     end
     can :destroy, Like do |like|
@@ -73,35 +71,33 @@ class Ability
     can :manage, Group do |group|
       user.is_admin_of? group
     end
-    can :create, Group do |group|
+    can :create, Group do |_group|
       user.persisted?
     end
-    can :create, Tag do |tag|
+    can :create, Tag do |_tag|
       user.persisted?
     end
-    can :destroy, Tag do |tag|
+    can :destroy, Tag do |_tag|
       user.persisted?
     end
     can :manage, Notification do |notification|
       user == notification.notified || notification.notifier
     end
-
   end
 
   private
-  def is_project_manager? project, user
+
+  def is_project_manager?(project, user)
     if project.owner_type == Group.name
       is_admin_of = user.is_admin_of? project.owner
     end
     is_admin_of || user.is_owner_of?(project) || user.is_collaborator_of?(project)
   end
 
-  def is_project_editor? project, user
+  def is_project_editor?(project, user)
     if project.owner_type == Group.name
       is_member_of = user.is_member_of? project.owner
     end
     is_member_of || user.is_owner_of?(project) || user.is_collaborator_of?(project) || user.is_in_collaborated_group?(project)
   end
-
-
 end

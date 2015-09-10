@@ -1,1 +1,2 @@
-json.html (render "components/card_form", resources: [@owner, @project, :recipe, @state])
+json.html (render 'components/card_form',
+                  resources: [@owner, @project, :recipe, @state])

@@ -9,7 +9,7 @@ class Note
   def dup_document
     dup.tap do |doc|
       doc.id = BSON::ObjectId.new
-      doc.note_cards = note_cards.map{|m| m.dup_document}
+      doc.note_cards = note_cards.map(&:dup_document)
     end
   end
 end

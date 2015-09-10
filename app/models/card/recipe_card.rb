@@ -3,7 +3,7 @@ class Card::RecipeCard < Card
   embedded_in :recipe
   orderable column: :position
 
-  scope :ordered_by_position, ->{order("position ASC")}
+  scope :ordered_by_position, -> { order('position ASC') }
 
   class << self
     def updatable_columns

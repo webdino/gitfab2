@@ -4,9 +4,9 @@ Devise.setup do |config|
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
-  config.secret_key = KEYS["devise_secret_key"] || "dummy_key"
-  config.omniauth :github, KEYS["github_app_id"], KEYS["github_app_secret"],
-    scope: "public_repo, user:email, user:follow"
+  config.secret_key = KEYS['devise_secret_key'] || 'dummy_key'
+  config.omniauth :github, KEYS['github_app_id'], KEYS['github_app_secret'],
+                  scope: 'public_repo, user:email, user:follow'
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -21,7 +21,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  #require 'devise/orm/active_record'
+  # require 'devise/orm/active_record'
   require 'devise/orm/mongoid'
 
   # ==> Configuration for any authentication mechanism
@@ -44,12 +44,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [:email]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :email ]
+  config.strip_whitespace_keys = [:email]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the

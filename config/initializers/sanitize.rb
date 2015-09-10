@@ -1,17 +1,17 @@
 class Sanitize
   module Config
     CARD = {
-      :elements => %w[
+      elements: %w(
         a br li ol ul u i b div
-      ],
+      ),
 
-      :attributes => {
-        :all => %w[class id],
-        'a'  => %w[href target],
+      attributes: {
+        :all => %w(class id),
+        'a'  => %w(href target)
       },
 
-      :protocols => {
-        'a'  => {'href' => ['http', 'https', 'mailto', :relative]},
+      protocols: {
+        'a'  => { 'href' => ['http', 'https', 'mailto', :relative] }
       }
     }
   end

@@ -1,21 +1,21 @@
 Gitfab2::Application.routes.draw do
-  match "about" => "static_pages#about", via: :get
-  match "terms" => "static_pages#terms", via: :get
-  match "privacy" => "static_pages#privacy", via: :get
+  match 'about' => 'static_pages#about', via: :get
+  match 'terms' => 'static_pages#terms', via: :get
+  match 'privacy' => 'static_pages#privacy', via: :get
 
-  match "about_en" => "static_pages#about_en", via: :get
+  match 'about_en' => 'static_pages#about_en', via: :get
 
-  match "admin" => "features#index", via: :get
+  match 'admin' => 'features#index', via: :get
 
-  root "global_projects#index"
+  root 'global_projects#index'
 
   if Rails.env.development? || Rails.env.test?
-    match "su" => "development#su", via: :post
+    match 'su' => 'development#su', via: :post
   end
 
-  devise_for :users, controllers: {omniauth_callbacks: "users/omniauth_callbacks"}
-  match "home" => "owner_projects#index", via: :get
-  match "search" => "global_projects#index", via: :get
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  match 'home' => 'owner_projects#index', via: :get
+  match 'search' => 'global_projects#index', via: :get
 
   concern :card_features_for_form do
     resources :annotations, only: [:create, :update], concerns: :comments
@@ -25,7 +25,7 @@ Gitfab2::Application.routes.draw do
   concern :card_features_for_link do
     resources :annotations, except: [:create, :update]
     resources :annotations do
-      get "to_state"
+      get 'to_state'
     end
     resources :derivative_cards, except: [:create, :update]
   end
@@ -46,8 +46,8 @@ Gitfab2::Application.routes.draw do
 
   concern :owner do
     resources :projects do
-      get "potential_owners"
-      get "recipe_cards_list"
+      get 'potential_owners'
+      get 'recipe_cards_list'
     end
     resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]
@@ -74,7 +74,7 @@ Gitfab2::Application.routes.draw do
 
   resources :global_projects, only: :index
 
-  resources :projects, path: "/:owner_name", except: [:create, :update] do
+  resources :projects, path: '/:owner_name', except: [:create, :update] do
     resources :collaborators, except: [:create, :update]
     resource :note, only: :show do
       resources :note_cards, except: [:create, :update]
@@ -82,9 +82,9 @@ Gitfab2::Application.routes.draw do
     resource :recipe, only: :show do
       resources :states, except: [:create, :update], concerns: :card_features_for_link
       resources :states do
-        get "to_annotation"
+        get 'to_annotation'
       end
     end
-    resources :usages, constraints: {id: /.+/}, except: [:create, :update]
+    resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
   end
 end

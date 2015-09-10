@@ -8,7 +8,7 @@ ExceptionNotification.configure do |config|
   # Adds a condition to decide when an exception must be ignored or not.
   # The ignore_if method can be invoked multiple times to add extra conditions.
   config.ignore_if do |exception, options|
-    not Rails.env.production?
+    !Rails.env.production?
   end
 
   # Notifiers =================================================================
@@ -41,8 +41,7 @@ ExceptionNotification.configure do |config|
 
   # Slack notifier sends notifications
   config.add_notifier :slack, {
-   :webhook_url => "https://hooks.slack.com/services/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",
-   :channel => "#500-errors"
+    webhook_url: 'https://hooks.slack.com/services/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',
+    channel: '#500-errors'
   }
-
 end

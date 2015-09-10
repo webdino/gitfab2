@@ -1,9 +1,9 @@
 class FeaturesController < ApplicationController
-  layout "dashboard"
+  layout 'dashboard'
 
   before_action :load_feature, only: [:show, :update, :destroy]
 
-#  authorize_resource
+  #  authorize_resource
 
   def index
     @features = Feature.all
@@ -19,7 +19,7 @@ class FeaturesController < ApplicationController
     if @feature.save
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -34,12 +34,12 @@ class FeaturesController < ApplicationController
   end
 
   private
+
   def load_feature
     @feature = Feature.find params[:id]
   end
 
   def feature_params
-    params.require(:feature).permit (Feature.updatable_columns)
+    params.require(:feature).permit(Feature.updatable_columns)
   end
-
 end

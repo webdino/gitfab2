@@ -3,7 +3,7 @@
 class AttachmentUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
-  version :small, :if => :is_image?
+  version :small, if: :is_image?
 
   storage :file
   def store_dir
@@ -11,16 +11,13 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
 
   version :small do
-    process :resize_to_fit => [400, 400]
+    process resize_to_fit: [400, 400]
   end
 
-  def is_image? file
-    begin
-      MiniMagick::Image.open(file.path)
-      return true
-    rescue => e
-      return false
-    end
+  def is_image?(file)
+    MiniMagick::Image.open(file.path)
+    return true
+  rescue => e
+    return false
   end
-
 end

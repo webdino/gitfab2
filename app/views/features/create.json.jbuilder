@@ -1,1 +1,1 @@
-json.html (render "feature", feature: @feature)
+json.html (render 'feature', feature: @feature)

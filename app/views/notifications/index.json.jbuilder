@@ -1,1 +1,2 @@
-json.html (render "notifications/index", locals:{notifications: @notifications})
+json.html (render 'notifications/index',
+                  locals: { notifications: @notifications })

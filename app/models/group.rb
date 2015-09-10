@@ -1,4 +1,4 @@
- class Group
+class Group
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :url, :location]
   UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
 
@@ -19,12 +19,12 @@
   validates :name, presence: true, uniqueness: true, unique_owner_name: true, name_format: true
 
   def members
-    User.where "memberships.group_id" => id
+    User.where 'memberships.group_id' => id
   end
 
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
-      members.where("memberships.role" => Membership::ROLE[role])
+      members.where('memberships.role' => Membership::ROLE[role])
     end
   end
 end
