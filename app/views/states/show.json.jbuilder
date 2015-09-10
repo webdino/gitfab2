@@ -1,1 +1,1 @@
-json.html (render "states/state", card: @state)
+json.html (render 'states/state', card: @state)

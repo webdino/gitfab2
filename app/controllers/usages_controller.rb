@@ -20,7 +20,7 @@ class UsagesController < ApplicationController
       @project.update
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -30,7 +30,7 @@ class UsagesController < ApplicationController
       @project.update
       render :update
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -38,11 +38,12 @@ class UsagesController < ApplicationController
     if @usage.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   private
+
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)
@@ -70,9 +71,7 @@ class UsagesController < ApplicationController
   end
 
   def update_contribution
-    unless current_user
-      return
-    end
+    return unless current_user
     @usage.contributions.each do |contribution|
       if contribution.contributor_id == current_user.slug
         contribution.updated_at = DateTime.now
@@ -91,5 +90,4 @@ class UsagesController < ApplicationController
       @project.update
     end
   end
-
 end

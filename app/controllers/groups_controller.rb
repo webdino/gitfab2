@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  layout "groups"
+  layout 'groups'
 
   before_action :build_group, only: [:new, :create]
   before_action :load_group, only: [:show, :edit, :update, :destroy]
@@ -20,7 +20,7 @@ class GroupsController < ApplicationController
     @group = Group.new group_params
     if @group.save
       membership = current_user.join_to @group
-      membership.role = "admin"
+      membership.role = 'admin'
       membership.save
       render :edit
     else
@@ -33,7 +33,7 @@ class GroupsController < ApplicationController
 
   def update
     if @group.update_attributes group_params
-      redirect_to [:edit, @group], notice: "Group profile was successfully updated."
+      redirect_to [:edit, @group], notice: 'Group profile was successfully updated.'
     else
       render :edit
     end
@@ -45,6 +45,7 @@ class GroupsController < ApplicationController
   end
 
   private
+
   def group_params
     if params[:group]
       params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params

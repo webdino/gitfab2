@@ -14,36 +14,32 @@
 Project.all.each do |project|
   recipe = project.recipe
 
-  if recipe.recipe_cards.blank?
-    recipe.recipe_cards = []
-  end
+  recipe.recipe_cards = [] if recipe.recipe_cards.blank?
 
-  if recipe.states.blank?
-    recipe.states = []
-  end
+  recipe.states = [] if recipe.states.blank?
 
   recipe.recipe_cards.each do |card|
-    p "-----------------------------------"
+    p '-----------------------------------'
     state = card.dup_document
     recipe.states << state
     for num in 0..(state.figures.length - 1) do
-        unless card.figures[num].content.blank?
-          p "IN:::DUP_CONTENT"
-          state.figures[num].content = card.figures[num].dup_content
-        else
-          p "content is null."
-          p card.figures[num].content
-        end
+      unless card.figures[num].content.blank?
+        p 'IN:::DUP_CONTENT'
+        state.figures[num].content = card.figures[num].dup_content
+      else
+        p 'content is null.'
+        p card.figures[num].content
+      end
     end
     state.figures.each do |fig|
-        p fig.content
+      p fig.content
     end
-    p "==================================="
+    p '==================================='
     card.figures.each do |fig|
-        p fig.content
+      p fig.content
     end
     state.save
     card.destroy
-    p "                                             "
+    p '                                             '
   end
 end

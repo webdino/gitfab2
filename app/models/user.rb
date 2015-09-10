@@ -39,42 +39,41 @@ class User
   mount_uploader :avatar, AvatarUploader
 
   embeds_many :memberships
-  has_many :notifications_given, class_name: "Notification", inverse_of: :notifier
-  has_many :my_notifications, class_name: "Notification", inverse_of: :notified
+  has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier
+  has_many :my_notifications, class_name: 'Notification', inverse_of: :notified
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
   validates :email, presence: true, uniqueness: true
-  validates :name, presence: true, if: ->{self.persisted?}
+  validates :name, presence: true, if: -> { self.persisted? }
   validates :name, unique_owner_name: true,
-    name_format: true, if: ->{self.name.present?}
+                   name_format: true, if: -> { name.present? }
 
   def is_system_admin?
-    if self.authority == "admin"
+    if authority == 'admin'
       return true
     else
       return false
     end
   end
-  def is_owner_of? project
+
+  def is_owner_of?(project)
     self == project.owner
   end
 
-  def is_contributor_of? target
+  def is_contributor_of?(target)
     target.contributions.each do |contribution|
-      if contribution.contributor_id == self.slug
-        return true
-      end
+      return true if contribution.contributor_id == slug
     end
-    return false
+    false
   end
 
-  def is_admin_of? group
+  def is_admin_of?(group)
     return false unless group
     group.admins.include? self
   end
 
-  def membership_in group
+  def membership_in(group)
     memberships.find_by group_id: group.id
   end
 
@@ -85,11 +84,11 @@ class User
     end
   end
 
-  def self.new_with_session params, session
+  def self.new_with_session(params, session)
     super.tap do |user|
-      data = session["devise.github_data"]
-      if data && data["extra"]["raw_info"] && user.email.blank?
-        user.email = data["email"]
+      data = session['devise.github_data']
+      if data && data['extra']['raw_info'] && user.email.blank?
+        user.email = data['email']
       end
     end
   end
@@ -98,26 +97,26 @@ class User
     Group.find memberships.map(&:group_id)
   end
 
-  def join_to group
+  def join_to(group)
     memberships.find_or_create_by group_id: group.id
   end
 
   def liked_projects
-    Project.where "likes.liker_id" => self.slug
+    Project.where 'likes.liker_id' => slug
   end
 
-  def is_in_collaborated_group? project
+  def is_in_collaborated_group?(project)
     is_in_collaborated_group = false
     project.collaborators.each do |collaborator|
       if collaborator.class.name == Group.name
-        is_in_collaborated_group = is_in_collaborated_group || self.is_member_of?(collaborator)
+        is_in_collaborated_group ||= self.is_member_of?(collaborator)
       end
     end
     is_in_collaborated_group
   end
 
   class << self
-    def find_for_github_oauth auth
+    def find_for_github_oauth(auth)
       where(auth.slice :provider, :uid).first_or_create do |user|
         user.provider = auth.provider
         user.uid = auth.uid

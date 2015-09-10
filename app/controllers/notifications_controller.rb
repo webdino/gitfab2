@@ -1,5 +1,4 @@
 class NotificationsController < ApplicationController
-
   before_action :load_user, only: :index
   before_action :delete_read_notifications, only: :index
   before_action :load_notification, only: [:destroy, :update]
@@ -14,7 +13,7 @@ class NotificationsController < ApplicationController
     if @notification.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -34,9 +33,7 @@ class NotificationsController < ApplicationController
 
   def delete_read_notifications
     @user.my_notifications.each do |notificaion|
-      if notificaion.was_read_before 1.hour
-        notificaion.delete
-      end
+      notificaion.delete if notificaion.was_read_before 1.hour
     end
   end
 

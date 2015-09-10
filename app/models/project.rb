@@ -26,18 +26,18 @@ class Project
   embeds_one :recipe, autobuild: true, cascade_callbacks: true
   embeds_one :note, autobuild: true, cascade_callbacks: true
 
-  after_initialize ->{self.name = SecureRandom.uuid, self.license = 0}, if: ->{new_record? && name.blank?}
+  after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
   after_create :create_recipe_and_note
 
   validates :name, presence: true, name_format: true
-  validates :name, uniqueness: {scope: [:owner_id, :owner_type]}
+  validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
 
-  index :updated_at => -1
-  index "note.num_cards" => 1
-  scope :noted, ->{where :"note.num_cards".gt => 0}
-  scope :ordered_by_owner, ->{order("owner_id ASC")}
+  index updated_at: -1
+  index 'note.num_cards' => 1
+  scope :noted, -> { where :"note.num_cards".gt => 0 }
+  scope :ordered_by_owner, -> { order('owner_id ASC') }
 
   accepts_nested_attributes_for :usages
 
@@ -52,11 +52,11 @@ class Project
     boolean :is_private
 
     text :tags do
-      tags.map { |tag| tag.name }.flatten
+      tags.map(&:name).flatten
     end
 
     text :recipe do
-      self.recipe.states.map do |card|
+      recipe.states.map do |card|
         Card.searchable_fields.map do |col|
           card.send col
         end
@@ -64,13 +64,13 @@ class Project
     end
 
     text :owner do
-      (self.owner.class)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
-        self.owner.send col
+      (owner.class)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
+        owner.send col
       end
     end
   end
 
-  def fork_for! owner
+  def fork_for!(owner)
     dup.tap do |project|
       project.id = BSON::ObjectId.new
       project.owner = owner
@@ -78,13 +78,13 @@ class Project
       names = owner.projects.pluck :name
       _name = name.dup
       if names.include? _name
-        _name << "-1"
-        _name.sub!(/(\d+)$/, "#{$1.to_i + 1}") while names.include? _name
+        _name << '-1'
+        _name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? _name
       end
       project.name = _name
       project.save!
       project.recipe = recipe.dup_document
-      project.figures = figures.map{|a| a.dup_document}
+      project.figures = figures.map(&:dup_document)
       project.likes = []
       project.usages = []
       project.note.note_cards = []
@@ -97,7 +97,7 @@ class Project
     end
   end
 
-  def change_owner! owner
+  def change_owner!(owner)
     self.owner = owner
     self.save!
     #   if project.collaborators.include?(new_owner)
@@ -121,30 +121,30 @@ class Project
         owner_list.push member
       end
     end
-    self.collaborators.each do |collaborator|
+    collaborators.each do |collaborator|
       owner_list.push collaborator
     end
-    return owner_list
+    owner_list
   end
 
   def thumbnail
     if figures.first.link.present?
-      "http://img.youtube.com/vi/" + figures.first.link.split("/").last + "/mqdefault.jpg"
+      'http://img.youtube.com/vi/' + figures.first.link.split('/').last + '/mqdefault.jpg'
     elsif figures.first.content.present?
       figures.first.content.small
     else
-      "fallback/blank.png"
+      'fallback/blank.png'
     end
   end
 
   def collaborators
-    users = User.where("collaborations.project_id" => id)
-    groups = Group.where("collaborations.project_id" => id)
+    users = User.where('collaborations.project_id' => id)
+    groups = Group.where('collaborations.project_id' => id)
     users.concat groups
   end
 
   def licenses
-    ["by", "by-sa", "by-nc", "by-nc-sa"]
+    ['by', 'by-sa', 'by-nc', 'by-nc-sa']
   end
 
   class << self
@@ -152,12 +152,13 @@ class Project
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :license,
        usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns,
-       likes_attributes: Like.updatable_columns,
+       likes_attributes: Like.updatable_columns
       ]
     end
   end
 
   private
+
   def ensure_a_figure_exists
     figures.create if figures.none?
   end

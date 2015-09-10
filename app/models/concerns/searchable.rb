@@ -6,8 +6,8 @@ module Searchable
   end
 
   module ClassMethods
-    def searchable_field *args
-      self.searchable_fields ||= Array.new
+    def searchable_field(*args)
+      self.searchable_fields ||= []
       self.searchable_fields << args.first
       field *args
     end

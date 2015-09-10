@@ -1,1 +1,1 @@
-json.html (render "usages/usage", usage: @usage)
+json.html (render 'usages/usage', usage: @usage)

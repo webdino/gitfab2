@@ -1,16 +1,16 @@
-rails_env = ENV["RAILS_ENV"] || "production"
-workers_procs = {production: 5, staging: 2}
+rails_env = ENV['RAILS_ENV'] || 'production'
+workers_procs = { production: 5, staging: 2 }
 workers_procs.default = 2
 worker_processes workers_procs[rails_env.to_sym]
 
-app_directory = "/usr/local/rails_apps/gitfab2/current"
+app_directory = '/usr/local/rails_apps/gitfab2/current'
 working_directory app_directory # available in 0.94.0+
 
-listen "/tmp/unicorn_gitfab2.sock", backlog: 128
+listen '/tmp/unicorn_gitfab2.sock', backlog: 128
 
 timeout 3000
 
-pid "/tmp/unicorn_gitfab2.pid"
+pid '/tmp/unicorn_gitfab2.pid'
 
 stderr_path "#{app_directory}/log/unicorn_#{rails_env}.log"
 stdout_path "#{app_directory}/log/unicorn_#{rails_env}.log"
@@ -19,13 +19,13 @@ preload_app true
 GC.respond_to?(:copy_on_write_friendly=) and
   GC.copy_on_write_friendly = true
 
-before_exec do |server|
+before_exec do |_server|
   ENV['BUNDLE_GEMFILE'] = "#{app_directory}/Gemfile"
 end
 
 before_fork do |server, worker|
-#  defined?(ActiveRecord::Base) and
-#    ActiveRecord::Base.connection.disconnect!
+  #  defined?(ActiveRecord::Base) and
+  #    ActiveRecord::Base.connection.disconnect!
 
   old_pid = "#{server.config[:pid]}.oldbin"
   if old_pid != server.pid
@@ -39,7 +39,7 @@ before_fork do |server, worker|
   sleep 1
 end
 
-after_fork do |server, worker|
-#  defined?(ActiveRecord::Base) and
-#    ActiveRecord::Base.establish_connection
+after_fork do |_server, _worker|
+  #  defined?(ActiveRecord::Base) and
+  #    ActiveRecord::Base.establish_connection
 end

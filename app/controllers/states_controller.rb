@@ -23,7 +23,7 @@ class StatesController < ApplicationController
     if @state.save
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -31,7 +31,7 @@ class StatesController < ApplicationController
     if @state.update state_params
       render :update
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -39,14 +39,14 @@ class StatesController < ApplicationController
     if @state.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   def to_annotation
     state = @recipe.states.find params[:state_id]
     not_found if state.blank?
-    state._type = "Card::Annotation"
+    state._type = 'Card::Annotation'
     annotation = state.dup_document
     state.destroy
     dst_state = @recipe.states.find params[:dst_state_id]
@@ -78,7 +78,7 @@ class StatesController < ApplicationController
   end
 
   def load_state
-    @state = @state || @recipe.states.find(params[:id])
+    @state ||= @recipe.states.find(params[:id])
     not_found if @state.blank?
   end
 
@@ -93,9 +93,7 @@ class StatesController < ApplicationController
   end
 
   def update_contribution
-    unless current_user
-      return
-    end
+    return unless current_user
     @state.contributions.each do |contribution|
       if contribution.contributor_id == current_user.slug
         contribution.updated_at = DateTime.now
@@ -119,6 +117,4 @@ class StatesController < ApplicationController
       @project.notify users, current_user, url, body if users.length > 0
     end
   end
-
-
 end

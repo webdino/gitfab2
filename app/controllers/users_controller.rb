@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  layout "user"
+  layout 'user'
 
   before_action :load_user, only: [:edit, :update, :destroy]
   before_action :verify_name, except: [:edit, :update]
 
-#  authorize_resource
+  #  authorize_resource
 
   def index
     @users = User.asc(:name).all
@@ -16,9 +16,9 @@ class UsersController < ApplicationController
 
   def update
     if @user.update user_params
-      redirect_to [:edit, @user], notice: "User profile was successfully updated."
+      redirect_to [:edit, @user], notice: 'User profile was successfully updated.'
     else
-      render action: "edit"
+      render action: 'edit'
     end
   end
 
@@ -28,13 +28,14 @@ class UsersController < ApplicationController
   end
 
   private
+
   def load_user
     @user = User.find params[:id]
     not_found if @user.blank?
   end
 
   def user_params
-    params.require(:user).permit (User.updatable_columns + additional_params)
+    params.require(:user).permit(User.updatable_columns + additional_params)
   end
 
   def additional_params

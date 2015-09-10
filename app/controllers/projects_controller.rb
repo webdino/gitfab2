@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  layout "project"
+  layout 'project'
 
   before_action :load_owner
   before_action :load_project, only: [:show, :edit, :update, :destroy]
@@ -13,25 +13,25 @@ class ProjectsController < ApplicationController
     if q = params[:q]
       owner_id = @owner.id
       @projects = Project.solr_search do |s|
-        s.fulltext q.split.map{|word| "\"#{word}\""}.join " AND "
+        s.fulltext q.split.map { |word| "\"#{word}\"" }.join ' AND '
         case params[:type]
-        when "own"
+        when 'own'
           s.with :owner_id, owner_id
-        when "contributed"
+        when 'contributed'
           # TODO: Implement
-        when "starred"
+        when 'starred'
           # TODO: Implement
         end
       end.results
     else
-      @projects = @owner.projects.order "updated_at DESC"
+      @projects = @owner.projects.order 'updated_at DESC'
     end
-    render layout: "dashboard"
+    render layout: 'dashboard'
   end
 
   def show
     @recipe = @project.recipe
-    render "recipes/show"
+    render 'recipes/show'
   end
 
   def new
@@ -40,7 +40,7 @@ class ProjectsController < ApplicationController
   def create
     return fork if params[:original_project_id]
     slug = project_params[:title]
-    slug = slug.gsub(/\W|\s/,"x").downcase
+    slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
       render :edit
@@ -69,11 +69,11 @@ class ProjectsController < ApplicationController
   def update
     owner_name = params[:owner_name]
     if owner_name.present?
-      self.change_owner
+      change_owner
     else
 
       parameters = project_params
-      if parameters.present? and parameters[:name].present?
+      if parameters.present? && parameters[:name].present?
         parameters[:name] = parameters[:name].downcase
       end
 
@@ -81,27 +81,27 @@ class ProjectsController < ApplicationController
         if @project.timeless.update parameters
           @project.clear_timeless_option
           respond_to do |format|
-            format.json {render :update}
-            format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+            format.json { render :update }
+            format.html { redirect_to project_path(@project, owner_name: @owner.slug) }
           end
         else
           @project.clear_timeless_option
           respond_to do |format|
-            format.json {render "error/failed", status: 400}
-            format.html {render :edit, status: 400}
+            format.json { render 'error/failed', status: 400 }
+            format.html { render :edit, status: 400 }
           end
         end
       else
         @project.updated_at = DateTime.now
         if @project.update parameters
           respond_to do |format|
-            format.json {render :update}
-            format.html {redirect_to project_path(@project, owner_name: @owner.slug)}
+            format.json { render :update }
+            format.html { redirect_to project_path(@project, owner_name: @owner.slug) }
           end
         else
           respond_to do |format|
-            format.json {render "error/failed", status: 400}
-            format.html {render :edit, status: 400}
+            format.json { render 'error/failed', status: 400 }
+            format.html { render :edit, status: 400 }
           end
         end
       end
@@ -116,32 +116,32 @@ class ProjectsController < ApplicationController
         old_collaboration = new_owner.collaboration_in project
         old_collaboration.destroy
       end
-      new_owner_projects_path = "http://" + request.raw_host_with_port + "/" + new_owner.slug
+      new_owner_projects_path = 'http://' + request.raw_host_with_port + '/' + new_owner.slug
       respond_to do |format|
-        format.html {redirect_to projects_path(new_owner.slug)}
-        format.js {render :js => "window.location.replace('" + new_owner_projects_path +"')"}
+        format.html { redirect_to projects_path(new_owner.slug) }
+        format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
       end
     else
       respond_to do |format|
-        format.json {render "error/failed", status: 400}
-        format.html {render "error/failed", status: 400}
+        format.json { render 'error/failed', status: 400 }
+        format.html { render 'error/failed', status: 400 }
       end
     end
   end
 
   def potential_owners
     @project = @owner.projects.find params[:project_id]
-    render "potential_owners", format: "json"
+    render 'potential_owners', format: 'json'
   end
 
   def recipe_cards_list
     @project = @owner.projects.find params[:project_id]
     @recipe = @project.recipe
-    render "recipe_cards_list"
+    render 'recipe_cards_list'
   end
 
   def notify_users
-    if action_name == "update"
+    if action_name == 'update'
       users = @project.notifiable_users current_user
       url = project_path @project, owner_name: @owner.slug
       if project_params[:likes_attributes].present?
@@ -150,7 +150,7 @@ class ProjectsController < ApplicationController
         body = "#{@project.title} was updated by #{current_user.name}."
       end
       @project.notify users, current_user, url, body if users.length > 0
-    elsif action_name == "create" && params[:original_project_id]
+    elsif action_name == 'create' && params[:original_project_id]
       original_project = Project.find params[:original_project_id]
       users = @project.notifiable_users current_user, original_project
       url = project_path @project, owner_name: @owner.slug
@@ -162,6 +162,7 @@ class ProjectsController < ApplicationController
   end
 
   private
+
   def project_params
     if params[:project]
       params.require(:project).permit(Project.updatable_columns)
@@ -186,9 +187,8 @@ class ProjectsController < ApplicationController
 
   def delete_collaborations
     @project.collaborators.each do |collaborator|
-      collaboration = collaborator.collaborations.where("project_id" => @project.id).first
+      collaboration = collaborator.collaborations.where('project_id' => @project.id).first
       collaboration.destroy
     end
   end
-
 end

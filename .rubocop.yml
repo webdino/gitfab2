@@ -2,5 +2,14 @@ AllCops:
   RunRailsCops: true
   Exclude:
     - db/seeds.rb
+    - 'bin/*'
     - 'vendor/**/*'
     - 'spec/**/*'
+
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: false
+
+Metrics/ClassLength:
+  Max: 180
+
+# inherit_from: .rubocop_todo.yml

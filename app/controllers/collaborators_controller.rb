@@ -12,7 +12,7 @@ class CollaboratorsController < ApplicationController
     if @collaboration.save
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -24,6 +24,7 @@ class CollaboratorsController < ApplicationController
   end
 
   private
+
   def load_owner
     @owner = User.find(params[:owner_name]) || Group.find(params[:owner_name])
   end

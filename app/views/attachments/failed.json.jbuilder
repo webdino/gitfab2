@@ -1,1 +1,1 @@
-json.result "Failed to upload."
+json.result 'Failed to upload.'

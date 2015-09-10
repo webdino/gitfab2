@@ -11,9 +11,9 @@ class CommentsController < ApplicationController
   def create
     if @card.save
       @resources << @comment
-      render :create, locals:{ card_order: @card.comments.length - 1 }
+      render :create, locals: { card_order: @card.comments.length - 1 }
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -21,13 +21,13 @@ class CommentsController < ApplicationController
     if @comment.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   def notify_users
     users = @project.notifiable_users current_user
-    if @card.class.name == "Card::NoteCard"
+    if @card.class.name == 'Card::NoteCard'
       url = project_note_note_card_path owner_name: @project.owner.slug, project_id: @project.name, id: @card.id
       body = "#{current_user.name} commented on your memo of #{@project.title}."
     else
@@ -38,6 +38,7 @@ class CommentsController < ApplicationController
   end
 
   private
+
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)

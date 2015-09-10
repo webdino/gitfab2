@@ -1,5 +1,4 @@
 class CollaborationsController < ApplicationController
-
   before_action :load_owner
   before_action :load_collaboration, only: :destroy
   before_action :build_collaboration, only: :create
@@ -23,6 +22,7 @@ class CollaborationsController < ApplicationController
   end
 
   private
+
   def collaboration_params
     if params[:collaboration].present?
       params.require(:collaboration).permit [:project_id]
@@ -41,5 +41,4 @@ class CollaborationsController < ApplicationController
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)
   end
-
 end

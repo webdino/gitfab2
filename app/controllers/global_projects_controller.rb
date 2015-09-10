@@ -1,13 +1,13 @@
 class GlobalProjectsController < ApplicationController
-  layout "global_projects"
+  layout 'global_projects'
 
   def index
     q = params[:q]
 
     if q.present?
-      query = q.force_encoding "utf-8"
+      query = q.force_encoding 'utf-8'
       @projects = Project.solr_search do |s|
-        s.fulltext query.split.map{|word| "\"#{word}\""}.join " AND "
+        s.fulltext query.split.map { |word| "\"#{word}\"" }.join ' AND '
         s.without :is_private, true
         # s.order_by :updated_at, :desc
       end.results
@@ -16,11 +16,11 @@ class GlobalProjectsController < ApplicationController
       @query = query
 
     elsif !q.nil?
-      @projects = Project.all().in(is_private: [false, nil]).page(params[:page]).order("updated_at DESC")
+      @projects = Project.all.in(is_private: [false, nil]).page(params[:page]).order('updated_at DESC')
       @is_searching = true
 
     else
-      @projects = Project.all().in(is_private: [false, nil]).page(params[:page]).order("updated_at DESC")
+      @projects = Project.all.in(is_private: [false, nil]).page(params[:page]).order('updated_at DESC')
 
       featured_projects_all = Feature.projects
       @featured_project_groups = []
@@ -28,13 +28,13 @@ class GlobalProjectsController < ApplicationController
 
       if featured_projects_all.length >= 3
 
-        first_featured_projects = featured_projects_all.first().featured_items || []
-        second_featured_projects = featured_projects_all.second().featured_items || []
-        third_featured_projects = featured_projects_all.projects.third().featured_items || []
+        first_featured_projects = featured_projects_all.first.featured_items || []
+        second_featured_projects = featured_projects_all.second.featured_items || []
+        third_featured_projects = featured_projects_all.projects.third.featured_items || []
 
-        @featured_project_group_titles.push(featured_projects_all.first().name)
-                                      .push(featured_projects_all.second().name)
-                                      .push(featured_projects_all.third().name)
+        @featured_project_group_titles.push(featured_projects_all.first.name)
+          .push(featured_projects_all.second.name)
+          .push(featured_projects_all.third.name)
 
         featured_projects = []
         first_featured_projects.each do |project|
@@ -64,7 +64,7 @@ class GlobalProjectsController < ApplicationController
 
       if featured_groups_all.length > 0
 
-        featured_groups = featured_groups_all.first().featured_items || []
+        featured_groups = featured_groups_all.first.featured_items || []
         if featured_groups.length > 0
           featured_groups.each do |group|
             group = Group.find group.target_object_id
@@ -105,7 +105,5 @@ class GlobalProjectsController < ApplicationController
         @selected_materials.push material_name
       end
     end
-
-
   end
 end

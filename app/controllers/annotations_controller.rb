@@ -24,7 +24,7 @@ class AnnotationsController < ApplicationController
     if @annotation.save
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -32,7 +32,7 @@ class AnnotationsController < ApplicationController
     if @annotation.update annotation_params
       render :update
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -40,14 +40,14 @@ class AnnotationsController < ApplicationController
     if @annotation.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   def to_state
     annotation = @state.annotations.find params[:annotation_id]
     not_found if annotation.blank?
-    annotation._type = "Card::State"
+    annotation._type = 'Card::State'
     state = annotation.dup_document
     annotation.destroy
     @recipe.states << state
@@ -60,6 +60,7 @@ class AnnotationsController < ApplicationController
   end
 
   private
+
   def result_view
     klass = @state.class
     view_name = "#{parametize(klass)}_annotation"
@@ -70,7 +71,6 @@ class AnnotationsController < ApplicationController
     owner_id.downcase!
     @owner = User.find(owner_id) || Group.find(owner_id)
     not_found if @owner.blank?
-
   end
 
   def load_project
@@ -83,8 +83,8 @@ class AnnotationsController < ApplicationController
   end
 
   def load_state
-    if params["state_id"]
-      @state = @recipe.states.find params["state_id"]
+    if params['state_id']
+      @state = @recipe.states.find params['state_id']
       not_found if @state.blank?
     end
   end
@@ -104,14 +104,12 @@ class AnnotationsController < ApplicationController
     end
   end
 
-  def parametize klass
+  def parametize(klass)
     klass.to_s.split(/::/).last.downcase
   end
 
   def update_contribution
-    unless current_user
-      return
-    end
+    return unless current_user
     @annotation.contributions.each do |contribution|
       if contribution.contributor_id == current_user.slug
         contribution.updated_at = DateTime.now

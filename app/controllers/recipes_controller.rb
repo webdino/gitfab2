@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  layout "project"
+  layout 'project'
 
   before_action :load_owner
   before_action :load_project
@@ -15,11 +15,12 @@ class RecipesController < ApplicationController
     if @recipe.update recipe_params
       render :update
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   private
+
   def recipe_params
     if params[:recipe]
       params.require(:recipe).permit states_attributes: [:id, :position]

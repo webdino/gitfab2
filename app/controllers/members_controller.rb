@@ -9,15 +9,14 @@ class MembersController < ApplicationController
       membership.save
       render :create
     else
-      render "errors/failed"
+      render 'errors/failed'
     end
   end
 
   private
+
   def member_params
-    if params[:member]
-      params.require(:member).permit [:name]
-    end
+    params.require(:member).permit [:name] if params[:member]
   end
 
   def load_group

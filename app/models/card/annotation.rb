@@ -3,7 +3,7 @@ class Card::Annotation < Card
   embedded_in :annotatable, polymorphic: true
   orderable column: :position
 
-  scope :ordered_by_position, ->{order("position ASC")}
+  scope :ordered_by_position, -> { order('position ASC') }
 
   class << self
     def updatable_columns

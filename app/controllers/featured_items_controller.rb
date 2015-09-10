@@ -1,10 +1,10 @@
 class FeaturedItemsController < ApplicationController
-  layout "dashboard"
+  layout 'dashboard'
 
   before_action :load_item, only: [:show, :destroy]
   before_action :load_feature, only: [:create, :update, :destroy]
 
-#  authorize_resource
+  #  authorize_resource
 
   def index
     @item = @featured_items.all
@@ -17,7 +17,7 @@ class FeaturedItemsController < ApplicationController
       @feature.update
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -26,9 +26,11 @@ class FeaturedItemsController < ApplicationController
   end
 
   private
+
   def load_feature
     @feature = Feature.find params[:feature_id]
   end
+
   def load_item
     @item = FeaturedItem.find params[:id]
   end
@@ -38,5 +40,4 @@ class FeaturedItemsController < ApplicationController
       params.require(:featured_item).permit(FeaturedItem.updatable_columns)
     end
   end
-
 end

@@ -1,5 +1,4 @@
 class TagsController < ApplicationController
-
   before_action :load_owner
   before_action :load_project
   before_action :build_tag, only: :create
@@ -12,7 +11,7 @@ class TagsController < ApplicationController
       @resources = [@owner, @project, @tag]
       render :create
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -20,11 +19,12 @@ class TagsController < ApplicationController
     if @tag.destroy
       render :destroy
     else
-      render "errors/failed", status: 400
+      render 'errors/failed', status: 400
     end
   end
 
   private
+
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     @owner = User.find(owner_id) || Group.find(owner_id)
@@ -47,8 +47,6 @@ class TagsController < ApplicationController
   end
 
   def tag_params
-    if params[:tag]
-      params.require(:tag).permit Tag.updatable_columns
-    end
+    params.require(:tag).permit Tag.updatable_columns if params[:tag]
   end
 end
