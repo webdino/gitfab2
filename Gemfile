@@ -80,4 +80,5 @@ group :development, :test do
   gem "better_errors"
   gem "resque-web", require: "resque_web"
   gem "rack-mini-profiler"
+  gem "rubocop", require: false
 end
