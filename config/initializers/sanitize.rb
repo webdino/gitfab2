@@ -7,11 +7,11 @@ class Sanitize
 
       :attributes => {
         :all => %w[class id],
-        'a'   => %w[href target],
+        'a'  => %w[href target],
       },
 
       :protocols => {
-        'a'          => {'href' => ['http', 'https', 'mailto', :relative]},
+        'a'  => {'href' => ['http', 'https', 'mailto', :relative]},
       }
     }
   end
