@@ -7,6 +7,6 @@ services:
   - mongodb
 notifications:
   slack:
-    secure: Ddsa0ve9FHvJQOAoZtXCZ/w7ilcNfjZ6x1BxFCKaiLSIrGsW02VNPFs0jy8SJ9CpAe5AAMWx7VS6yo0vKAAIYsBReoSQOIKBVg966Z9SgtviFbe3FD7d5nBgsONfQ7FnSTaR27TUT6jMQyt2uYYlR3kqlnGdAxgl7C7abUInzhg=
+    secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
 script:
   - bundle exec rubocop --fail-level=W
