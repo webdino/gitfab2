@@ -1,10 +1,19 @@
 AllCops:
   RunRailsCops: true
   Exclude:
-    - db/seeds.rb
+    - 'Capfile'
+    - 'db/seeds.rb'
     - 'bin/*'
     - 'vendor/**/*'
     - 'spec/**/*'
+
+ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Lint/AmbiguousOperator:
+  Exclude:
+    - 'app/controllers/concerns/error_handling.rb'
+    - 'app/models/concerns/searchable.rb'
 
 Lint/ParenthesesAsGroupedExpression:
   Enabled: false
@@ -12,4 +21,11 @@ Lint/ParenthesesAsGroupedExpression:
 Metrics/ClassLength:
   Max: 180
 
-# inherit_from: .rubocop_todo.yml
+Metrics/LineLength:
+  Max: 113
+
+PredicateName:
+  NamePrefixBlacklist:
+    - hoge_
+
+inherit_from: .rubocop_todo.yml

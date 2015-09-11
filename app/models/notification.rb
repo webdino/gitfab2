@@ -13,7 +13,7 @@ class Notification
   field :was_read, type: Boolean, default: false
 
   def was_read_before(time)
-    return true if was_read && Time.now - updated_at > time
+    return true if was_read && Time.zone.now - updated_at > time
     false
   end
 end

@@ -70,18 +70,19 @@ class Project
     end
   end
 
+  # TODO: This fork_for fucntion should be devided.
   def fork_for!(owner)
     dup.tap do |project|
       project.id = BSON::ObjectId.new
       project.owner = owner
       project.original = self
       names = owner.projects.pluck :name
-      _name = name.dup
-      if names.include? _name
-        _name << '-1'
-        _name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? _name
+      new_project_name = name.dup
+      if names.include? new_project_name
+        new_project_name << '-1'
+        new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
       end
-      project.name = _name
+      project.name = new_project_name
       project.save!
       project.recipe = recipe.dup_document
       project.figures = figures.map(&:dup_document)
@@ -90,7 +91,7 @@ class Project
       project.note.note_cards = []
       begin
         project.save!
-      rescue Exception => e
+      rescue => _e
         project.destroy
         raise
       end
@@ -109,6 +110,29 @@ class Project
     # end
   end
 
+  def managers
+    users = []
+    if owner.is_a? User
+      users << owner
+    else
+      users += owner.members
+    end
+    users
+  end
+
+  def collaborate_users
+    users = []
+    collaborators.each do |collaborator|
+      if collaborator.is_a? User
+        users << collaborator
+      else
+        users += collaborator.members
+      end
+    end
+    users
+  end
+
+  # TODO: This function should have less than 10 line.
   def potential_owners
     owner_list = []
     owner = self.owner
