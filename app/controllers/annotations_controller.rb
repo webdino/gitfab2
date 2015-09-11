@@ -103,18 +103,27 @@ class AnnotationsController < ApplicationController
     klass.to_s.split(/::/).last.downcase
   end
 
-  def update_contribution
-    return unless current_user
-    @annotation.contributions.each do |contribution|
-      if contribution.contributor_id == current_user.slug
-        contribution.updated_at = DateTime.now.in_time_zone
-        return
-      end
-    end
+  def save_current_users_contribution
+    return @annotation.contributions.find_all{|contribution|
+      contribution.contributor_id == current_user.slug
+    }.map{|contribution|
+      contribution.updated_at = DateTime.now.in_time_zone
+      contribution 
+    }[0]
+  end
+  
+  def create_new_contribution
     contribution = @annotation.contributions.new
     contribution.contributor_id = current_user.slug
     contribution.created_at = DateTime.now.in_time_zone
     contribution.updated_at = DateTime.now.in_time_zone
+    
+    return contribution
+  end  
+ 
+  def update_contribution
+    return nil unless current_user
+    return save_current_users_contribution || create_new_contribution  
   end
 
   def update_project
@@ -127,4 +136,5 @@ class AnnotationsController < ApplicationController
     body = "#{current_user.name} updated the recipe of #{@project.title}."
     @project.notify users, current_user, url, body if users.length > 0
   end
+
 end
