@@ -69,7 +69,9 @@ group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', github: 'rspec/rspec-rails'
+  gem 'rubocop', require: false
   gem 'guard-rspec'
+  gem 'guard-rubocop'
   gem 'rspec-collection_matchers'
   gem 'mongoid-rspec'
   gem 'factory_girl_rails'
@@ -81,6 +83,5 @@ group :development, :test do
   gem 'better_errors'
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
-  gem 'rubocop', require: false
   gem 'slim_lint'
 end
