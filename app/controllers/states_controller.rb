@@ -51,9 +51,9 @@ class StatesController < ApplicationController
     state.destroy
     dst_state = @recipe.states.find params[:dst_state_id]
     dst_state.annotations << annotation
-    @recipe.states.each.with_index(1) do |_state, index|
-      _state.position = index
-      _state.save
+    @recipe.states.each.with_index(1) do |st, index|
+      st.position = index
+      st.save
     end
     annotation.save
     render json: annotation.id
@@ -96,25 +96,24 @@ class StatesController < ApplicationController
     return unless current_user
     @state.contributions.each do |contribution|
       if contribution.contributor_id == current_user.slug
-        contribution.updated_at = DateTime.now
+        contribution.updated_at = DateTime.now.in_time_zone
         return
       end
     end
-    contribution = @state.contributions.new
+    contribution = @annotation.contributions.new
     contribution.contributor_id = current_user.slug
-    contribution.created_at = DateTime.now
-    contribution.updated_at = DateTime.now
+    contribution.created_at = DateTime.now.in_time_zone
+    contribution.updated_at = DateTime.now.in_time_zone
   end
 
   def update_project
-    if @_response.response_code == 200
-      @project.updated_at = DateTime.now
-      @project.update
+    return unless @_response.response_code == 200
+    @project.updated_at = DateTime.now.in_time_zone
+    @project.update
 
-      users = @project.notifiable_users current_user
-      url = project_path @project, owner_name: @project.owner.slug
-      body = "#{current_user.name} updated the recipe of #{@project.title}."
-      @project.notify users, current_user, url, body if users.length > 0
-    end
+    users = @project.notifiable_users current_user
+    url = project_path @project, owner_name: @project.owner.slug
+    body = "#{current_user.name} updated the recipe of #{@project.title}."
+    @project.notify users, current_user, url, body if users.length > 0
   end
 end

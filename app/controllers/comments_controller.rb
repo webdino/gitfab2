@@ -56,7 +56,7 @@ class CommentsController < ApplicationController
       @state = @project.recipe.states.find params[:state_id]
       @card = @state.annotations.find params[:annotation_id]
       @resources = [@owner, @project, :recipe, @state, @card]
-    else params[:state_id]
+    elsif params[:state_id]
       @card = @project.recipe.states.find params[:state_id]
       @resources = [@owner, @project, :recipe, @card]
     end

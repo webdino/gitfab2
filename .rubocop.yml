@@ -1,22 +1,41 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   RunRailsCops: true
   Exclude:
     - 'Capfile'
-    - 'db/seeds.rb'
+    - 'Guardfile'
+    - 'app/validators/*'
     - 'bin/*'
-    - 'vendor/**/*'
+    - 'config/**/*'
+    - 'db/seeds.rb'
+    - 'script/*'
     - 'spec/**/*'
+    - 'vendor/**/*'
 
 ClassAndModuleChildren:
   EnforcedStyle: compact
+
+GuardClause:
+  MinBodyLength: 4
 
 Lint/AmbiguousOperator:
   Exclude:
     - 'app/controllers/concerns/error_handling.rb'
     - 'app/models/concerns/searchable.rb'
 
+Lint/NonLocalExitFromIterator:
+  Enabled: false
+
 Lint/ParenthesesAsGroupedExpression:
   Enabled: false
+
+Lint/UselessSetterCall:
+  Exclude:
+    - 'app/controllers/annotations_controller.rb'
+    - 'app/controllers/note_cards_controller.rb'
+    - 'app/controllers/states_controller.rb'
+    - 'app/controllers/usages_controller.rb'
 
 Metrics/ClassLength:
   Max: 180
@@ -28,4 +47,9 @@ PredicateName:
   NamePrefixBlacklist:
     - hoge_
 
-inherit_from: .rubocop_todo.yml
+Style/SignalException:
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+
+Style/RaiseArgs:
+  Enabled: false

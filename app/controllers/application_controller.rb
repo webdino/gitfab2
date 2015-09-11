@@ -33,15 +33,13 @@ class ApplicationController < ActionController::Base
 
   def store_location
     return unless request.get?
-    if request.path != '/users/auth/github' &&
-       request.path != '/users/sign_out' &&
-       !request.xhr?
+    if request.path != '/users/auth/github' && request.path != '/users/sign_out' && !request.xhr?
       session[:previous_url] = request.fullpath
     end
   end
 
   def not_found
-    fail ActionController::RoutingError.new('Not Found')
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   def render_401(_exception = nil)

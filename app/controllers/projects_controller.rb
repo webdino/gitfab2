@@ -10,7 +10,8 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    if q = params[:q]
+    q = params[:q]
+    if q
       owner_id = @owner.id
       @projects = Project.solr_search do |s|
         s.fulltext q.split.map { |word| "\"#{word}\"" }.join ' AND '
@@ -51,7 +52,8 @@ class ProjectsController < ApplicationController
 
   def fork
     original_project = Project.find params[:original_project_id]
-    if @project = original_project.fork_for!(@owner)
+    @project = original_project.fork_for!(@owner)
+    if @project
       redirect_to project_path(id: @project.name, owner_name: @owner.slug)
     else
       redirect_to request.referer
@@ -92,7 +94,7 @@ class ProjectsController < ApplicationController
           end
         end
       else
-        @project.updated_at = DateTime.now
+        @project.updated_at = DateTime.now.in_time_zone
         if @project.update parameters
           respond_to do |format|
             format.json { render :update }
@@ -156,8 +158,6 @@ class ProjectsController < ApplicationController
       url = project_path @project, owner_name: @owner.slug
       body = "#{original_project.title} was forked by #{current_user.name}."
       @project.notify users, current_user, url, body if users.length > 0
-    else
-      p action_name
     end
   end
 

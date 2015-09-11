@@ -4,8 +4,8 @@ class UniqueOwnerNameValidator < ActiveModel::EachValidator
       record.errors[:name] << ' is nil'
       return
     end
-    _rec = User.find(record.name)
-    _rec ||= Group.find(record.name)
-    record.errors[:name] << 'has already been taken.' if _rec && record != _rec
+    rec = User.find(record.name)
+    rec ||= Group.find(record.name)
+    record.errors[:name] << 'has already been taken.' if rec && record != rec
   end
 end

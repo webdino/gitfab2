@@ -3,7 +3,8 @@ class MembersController < ApplicationController
   before_action :load_user
 
   def create
-    if membership = @user.join_to(@group)
+    membership = @user.join_to(@group)
+    if membership
       @member = membership.user
       membership.role = params[:role]
       membership.save
