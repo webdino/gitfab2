@@ -16,7 +16,7 @@ class UsagesController < ApplicationController
 
   def create
     if @usage.save
-      @project.updated_at = DateTime.now
+      @project.updated_at = DateTime.now.in_time_zone
       @project.update
       render :create
     else
@@ -26,7 +26,7 @@ class UsagesController < ApplicationController
 
   def update
     if @usage.update usage_params
-      @project.updated_at = DateTime.now
+      @project.updated_at = DateTime.now.in_time_zone
       @project.update
       render :update
     else
@@ -74,19 +74,19 @@ class UsagesController < ApplicationController
     return unless current_user
     @usage.contributions.each do |contribution|
       if contribution.contributor_id == current_user.slug
-        contribution.updated_at = DateTime.now
+        contribution.updated_at = DateTime.now.in_time_zone
         return
       end
     end
     contribution = @usage.contributions.new
     contribution.contributor_id = current_user.slug
-    contribution.created_at = DateTime.now
-    contribution.updated_at = DateTime.now
+    contribution.created_at = DateTime.now.in_time_zone
+    contribution.updated_at = DateTime.now.in_time_zone
   end
 
   def update_project
     if @_response.response_code == 200
-      @project.updated_at = DateTime.now
+      @project.updated_at = DateTime.now.in_time_zone
       @project.update
     end
   end

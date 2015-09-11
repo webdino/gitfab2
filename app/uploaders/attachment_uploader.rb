@@ -17,7 +17,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   def is_image?(file)
     MiniMagick::Image.open(file.path)
     return true
-  rescue => e
+  rescue => _e
     return false
   end
 end

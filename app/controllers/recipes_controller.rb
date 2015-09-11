@@ -42,7 +42,7 @@ class RecipesController < ApplicationController
 
   def update_project
     if @_response.response_code == 200
-      @project.updated_at = DateTime.now
+      @project.updated_at = DateTime.now.in_time_zone
       @project.update
     end
   end
