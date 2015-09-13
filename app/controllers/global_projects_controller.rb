@@ -76,12 +76,18 @@ class GlobalProjectsController < ApplicationController
       @is_searching = false
     end
 
-    @selected_tags = []
-    file_path = "#{Rails.root}/config/selected-tags.yml"
-    tags_list = YAML.load_file file_path
+    selected_tags_length = 30
 
-    if tags_list.present?
-      tags_list.each do |tag_name|
+    @selected_tags = []
+    @all_tags = []
+    all_tags_list_file_path = "#{Rails.root}/config/all-tags.yml"
+    all_tags_list = YAML.load_file all_tags_list_file_path
+
+    if all_tags_list.present?
+      all_tags_list.each do |tag_name|
+        @all_tags.push tag_name
+      end
+      all_tags_list.slice(0, selected_tags_length).each do |tag_name|
         @selected_tags.push tag_name
       end
     end
