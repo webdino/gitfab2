@@ -4,9 +4,6 @@ class StaticPagesController < ApplicationController
   def about
   end
 
-  def about_en
-  end
-
   def terms
   end
 

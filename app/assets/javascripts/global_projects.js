@@ -3,6 +3,7 @@
 //= require jquery_nested_form
 //= require jquery.remotipart
 //= require ../../../vendor/assets/javascripts/packery.pkgd.min
+//= require helpers/lang
 //= require global_project
 //= require notifications
 //= require maintenance

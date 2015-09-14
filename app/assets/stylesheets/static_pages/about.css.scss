@@ -7,6 +7,36 @@ body {
   background-color: $common-basic-color;
 }
 #about {
+
+  #lang {
+    position: absolute;
+    right: 30px;
+    top: 32px;
+    z-index: 2147483647;
+    font-weight: normal;
+    font-size: 12px;
+    .lang {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
+      &.is-selected {
+        cursor: default;
+        color: $common-quiet-text-color;
+        &:hover {
+          opacity: 1.0;
+        }
+      }
+    }
+  }
+
+  .lang-en {
+    display: block;
+  }
+  .lang-jp {
+    display: none;
+  }
+
   .headers{
     text-align: center;
     font-family: $common-novelsans-semibold;
