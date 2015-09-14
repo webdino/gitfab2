@@ -27,8 +27,8 @@ module Clockwork
     yml_file = File.open file_path, 'w'
 
     used_tags = Hash[tag_counters.sort { |(_k1, v1), (_k2, v2)| v2 <=> v1 }]
-    used_tags.each do |tag_name|
-      yml_file.puts "- #{tag_name}"
+    used_tags.each do |tag|
+      yml_file.puts "- #{tag[0]}"
     end
 
     yml_file.close
