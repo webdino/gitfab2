@@ -13,6 +13,14 @@ GIT
       sass-rails (>= 3.1.0)
 
 GIT
+  remote: git://github.com/oshimaryo/capistrano-clockwork.git
+  revision: 286fb4368592e8384e8d0e0ccccf3ab5faff6688
+  specs:
+    capistrano-clockwork (0.0.5)
+      capistrano (~> 3.1)
+      daemons (~> 1.2)
+
+GIT
   remote: git://github.com/radar/paranoia.git
   revision: d657443970a857c88f212c6f7e2265d7e2ec98d5
   branch: rails4
@@ -101,9 +109,6 @@ GEM
     capistrano-bundler (1.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano-clockwork (0.0.5)
-      capistrano (~> 3.1)
-      daemons (~> 1.2)
     capistrano-rails (1.1.1)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -512,7 +517,7 @@ DEPENDENCIES
   cancancan
   capistrano (~> 3.1.0)
   capistrano-bundler
-  capistrano-clockwork (>= 0.0.5)
+  capistrano-clockwork!
   capistrano-rails
   capistrano-rvm
   carrierwave
