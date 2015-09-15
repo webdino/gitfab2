@@ -100,7 +100,7 @@ class StatesController < ApplicationController
         return
       end
     end
-    contribution = @annotation.contributions.new
+    contribution = @state.contributions.new
     contribution.contributor_id = current_user.slug
     contribution.created_at = DateTime.now.in_time_zone
     contribution.updated_at = DateTime.now.in_time_zone
