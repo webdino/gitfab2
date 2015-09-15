@@ -1,36 +1,77 @@
 #about
-  .headers
-    h1 Making stories of making something
-    h2 「ものづくり」と「ものがたり」の統合プラットフォーム　“Fabble”
-  .main
-    #abstract
-      .left
-        h2 概要
-        .abstract
+  #lang
+    span.lang.en.is-selected EN
+    span
+      '/
+    span.lang.jp JP
 
-      .right
-        'Fabbleは、「文脈やストーリーと深く紐づいたモノづくり(FAB)」プロジェクトのための、共有ウェブサービスです。
-        'モノづくりのプロジェクト全体の進行を管理し、モノづくりの知識やその背後にある物語を、さまざまな粒度のコミュニケーションを通して包括的に記述・保存・蓄積・伝達していくことを支援します。
+  .container.lang-jp
+    .headers
+      h1 Making stories of making something
+      h2 「ものづくり」と「ものがたり」の統合プラットフォーム　“Fabble”
+    .main
+      #abstract
+        .left
+          h2 概要
+          .abstract
 
-    #functions
-      .left
-        h2 機能
-        .functions
+        .right
+          'Fabbleは、「文脈やストーリーと深く紐づいたモノづくり(FAB)」プロジェクトのための、共有ウェブサービスです。
+          'モノづくりのプロジェクト全体の進行を管理し、モノづくりの知識やその背後にある物語を、さまざまな粒度のコミュニケーションを通して包括的に記述・保存・蓄積・伝達していくことを支援します。
 
-      .right
-        'Fabbleは、モノづくり(FAB)プロジェクトを、「Recipe(レシピ)」と「Memol(メモ)」という２つの相互補完的な形式で記述していくことができます。「Memo(メモ)」は、自然言語による自由記述方式です。
-        '本システムの特徴である「Recipe(レシピ)」は、複数の写真や映像を、「有向グラフ（矢印）」を用いて関連付け、「制作過程」や「状態遷移」をまとめていくことで、非言語的な情報伝達を実現するものです。この「Recipe(レシピ)」は、モノづくりにおける、再現可能で分かりやすい形式であるとの仮説のもとに、採用したものです。「Recipe(レシピ)」には、適宜、短いコメントやアノテーションをつけることもできます。
-        'さらに、Fabbleでは、「スライドショー」機能を設けています。「スライドショー」中は、「Recipe(レシピ)」に投稿された写真や映像が、有向グラフ（矢印）で結ばれた順番にスクリーンに拡大表示されます。このため、別途プレゼンテーション資料をつくらなくても、Fabble上で直接プレゼンテーションを行うことができます。
+      #functions
+        .left
+          h2 機能
+          .functions
 
-    #features
-      .left
-        h2 特徴
-        .features
+        .right
+          'Fabbleは、モノづくり(FAB)プロジェクトを、「Recipe(レシピ)」と「Memol(メモ)」という２つの相互補完的な形式で記述していくことができます。「Memo(メモ)」は、自然言語による自由記述方式です。
+          '本システムの特徴である「Recipe(レシピ)」は、複数の写真や映像を、「有向グラフ（矢印）」を用いて関連付け、「制作過程」や「状態遷移」をまとめていくことで、非言語的な情報伝達を実現するものです。この「Recipe(レシピ)」は、モノづくりにおける、再現可能で分かりやすい形式であるとの仮説のもとに、採用したものです。「Recipe(レシピ)」には、適宜、短いコメントやアノテーションをつけることもできます。
+          'さらに、Fabbleでは、「スライドショー」機能を設けています。「スライドショー」中は、「Recipe(レシピ)」に投稿された写真や映像が、有向グラフ（矢印）で結ばれた順番にスクリーンに拡大表示されます。このため、別途プレゼンテーション資料をつくらなくても、Fabble上で直接プレゼンテーションを行うことができます。
 
-      .right
-        'Fabbleが、他の同種のサービスと最も異なる点は、モノづくり(FAB)プロジェクトの「はじまり（初期段階）」から「おわり（最終段階）」まで、あらゆる段階を支援するため、日常的に使うことができることです。
-        'モノづくり(FAB)プロジェクトの「はじまり（初期段階）」では、主に Memo を使用し、制作者本人が自分自身のために制作ノート、制作メモや試行錯誤の過程を整理しながらつけていくことができます。
-        'モノづくり(FAB)プロジェクトの「おわり（最終段階）」では、主に Recipe を使用し、他の人も同じつくりかたを再現できるように、必要最小限の情報だけに絞った、まとまった「手順」を保管することができます。
-        'また、ある制作者にとってプロジェクトが「おわり（最終段階）」であっても、それを見た別の制作者が、そのプロジェクトを引用することで、また別のプロジェクトを「はじめる（初期段階）」ことができます。GitHubと同様、Fabbleでは、こうした「Fork（分岐）」を重要視しています。
-        'さらに、モノがつくられた後にでも、その「Usages（使い方）」や、そこでの気づきや発見を蓄積していくことが可能です。
-        'このようなさまざまな機能を有し、さらに「グループ機能」を持っているため、個人のみならずグループ単位のプロジェクト管理にも有効です。メイン開発者、サブ開発者、プロジェクトパートナー、感想コメント、アドバイス、試用感など、さまざまな参加の方式、コミットメントの度合いを許容することも大きな特徴です。
+      #features
+        .left
+          h2 特徴
+          .features
+
+        .right
+          'Fabbleが、他の同種のサービスと最も異なる点は、モノづくり(FAB)プロジェクトの「はじまり（初期段階）」から「おわり（最終段階）」まで、あらゆる段階を支援するため、日常的に使うことができることです。
+          'モノづくり(FAB)プロジェクトの「はじまり（初期段階）」では、主に Memo を使用し、制作者本人が自分自身のために制作ノート、制作メモや試行錯誤の過程を整理しながらつけていくことができます。
+          'モノづくり(FAB)プロジェクトの「おわり（最終段階）」では、主に Recipe を使用し、他の人も同じつくりかたを再現できるように、必要最小限の情報だけに絞った、まとまった「手順」を保管することができます。
+          'また、ある制作者にとってプロジェクトが「おわり（最終段階）」であっても、それを見た別の制作者が、そのプロジェクトを引用することで、また別のプロジェクトを「はじめる（初期段階）」ことができます。GitHubと同様、Fabbleでは、こうした「Fork（分岐）」を重要視しています。
+          'さらに、モノがつくられた後にでも、その「Usages（使い方）」や、そこでの気づきや発見を蓄積していくことが可能です。
+          'このようなさまざまな機能を有し、さらに「グループ機能」を持っているため、個人のみならずグループ単位のプロジェクト管理にも有効です。メイン開発者、サブ開発者、プロジェクトパートナー、感想コメント、アドバイス、試用感など、さまざまな参加の方式、コミットメントの度合いを許容することも大きな特徴です。
+
+  .container.lang-en
+    .headers
+      h1 Making stories of making something
+      h2 "Fabble", New Platform to Share Fab Projects all over the world
+    .main
+      #abstract
+        .left
+          h2 Overview
+          .abstract
+
+        .right
+          p Fabble is a document (DOC) sharing service for crafting things (FAB) deeply tied to context and story.
+          p The aim is sharing and a new combination of a variety of information to encourage a comfortable structuring and accumulation of ideas, know-how, and stories for reuse (FORK).
+
+      #functions
+        .left
+          h2 Function
+          .functions
+
+        .right
+          p Broadly speaking, notation in Fabble can be in two formats.
+          p Memo is free-form notation for any type of information. Recipe, on the other hand, is a crafting process arranged in chronological order using a directional graph (arrows). These two can be understood as the right page (blank) and the left page (line-ruled) of the note, and a method of arranging the information can be devised by combining both formats.
+          p Fabble also has a slideshow function.
+          p In the slideshow, photographs and images posted in Recipes are enlarged on the screen in the order they are linked in the directional graph (arrows). As a result, even if you do not make separate presentation materials, you can give a presentation in Fabble anytime and anywhere.
+      #features
+        .left
+          h2 Characteristics
+          .features
+
+        .right
+          p The biggest difference between Fabble and other similar services is that Fabble supports every stage of crafting things (FAB) projects from beginning (initial stage) to end (final stage) and can be used on a daily basis. In the beginning (initial stage) of these (FAB) projects, mainly by using Memo, preparers can add related links and preparation notes and memos for their own personal use while adjusting experimental data and the trial and error process.
+          p In the end (final stage) of these (FAB) projects, mainly by using Recipe, it is possible to save a well put-together procedure for other people as well to recreate the same crafting method by summarizing the minimum amount of information necessary. Also, even if a project is finished (final stage) for a certain preparer, another preparer who saw that project can start (initial stage) yet another project by citing the finished project.
+          p The same as GitHub, Fabble places importance on this type of link = FORK (divergence). With these various types of functions, and moreover with a group function, Fabble is effective for management of projects not just for individuals but for groups as well. Another key characteristic is that it allows various degrees of commitment and types of participation such as main developers, sub developers, project partners, comments on impressions, advice, and impressions from experimental use.
