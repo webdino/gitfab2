@@ -23,7 +23,7 @@ gem 'rugged'
 gem 'therubyracer'
 gem 'gitolite'
 gem 'carrierwave'
-gem 'slim-rails'
+gem 'slim-rails', '~> 3.0.0'
 gem 'rails-config'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
@@ -82,4 +82,5 @@ group :development, :test do
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
   gem 'rubocop', require: false
+  gem 'slim_lint'
 end

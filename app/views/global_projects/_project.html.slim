@@ -1,7 +1,7 @@
 li.project
   .header
     - if project.figures.present?
-      - if project.figures.first.content.present? or project.figures.first.link.present?
+      - if project.figures.first.content.present? || project.figures.first.link.present?
         figure.visual
           == link_to image_tag(project.thumbnail, class: "thumb"), project_path(project.owner, project), class: "thumb-wrapper"
 
@@ -13,11 +13,11 @@ li.project
       .title-large
         == link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
 
-    == link_to image_tag(project.owner.avatar.thumb, class: "icon", alt: "#{project.owner.name}", title: project.owner.name,), projects_path(project.owner), class: "user"
+    == link_to image_tag(project.owner.avatar.thumb, class: "icon", alt: "#{project.owner.name}", title: project.owner.name), projects_path(project.owner), class: "user"
 
   .inner
     - if project.figures.present?
-      - if project.figures.first.content.present? or project.figures.first.link.present?
+      - if project.figures.first.content.present? || project.figures.first.link.present?
         .title-small
           == link_to project.title.truncate(40), project_path(project.owner, project)
       - else
@@ -38,7 +38,7 @@ li.project
       .notes
         == "#{project.note.note_cards.length} Memos"
       .since
-        == "since #{(Time.now.to_i - project.created_at.to_i)/86400} days ago" if project.created_at
+        == "since #{(Time.now.to_i - project.created_at.to_i) / 86_400} days ago" if project.created_at
 
       .starred
         .icon.starred

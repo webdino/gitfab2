@@ -1,14 +1,16 @@
 aside.like
   - exists = false
   - count = 0
-  == nested_form_for resources, html: {class: "like-form"}, remote: true do |f|
-    - f.class.send(:alias_method, "fields_blueprint_id_for_org", "fields_blueprint_id_for") 
-    - f.class.send(:define_method, "fields_blueprint_id_for") { |association| 
-    - assocs = object_name.to_s.scan(/(\w+)_attributes/).map(&:first)
-    - assocs << f.object.class.name.downcase.gsub(":", "_")
-    - assocs << association
-    - assocs.join('_') + '_fields_blueprint'
-    - }    
+  == nested_form_for resources, html: { class: "like-form" }, remote: true do |f|
+    ruby:
+      f.class.send(:alias_method, "fields_blueprint_id_for_org", "fields_blueprint_id_for")
+      f.class.send(:define_method, "fields_blueprint_id_for") do |association|
+        assocs = object_name.to_s.scan(/(\w+)_attributes/).map(&:first)
+        assocs << f.object.class.name.downcase.tr(":", "_")
+        assocs << association
+        assocs.join('_') + '_fields_blueprint'
+      end
+
     == f.fields_for :likes do |ff|
       == ff.hidden_field :liker_id, class: "liker_id"
       == ff.hidden_field :_destroy, class: "delete-like #{ff.object.liker_id}"
@@ -18,6 +20,6 @@ aside.like
         - exists = true
     - if exists == false
       == f.link_to_add "Like", :likes, class: "add-like"
-    - f.class.send(:alias_method, "fields_blueprint_id_for", "fields_blueprint_id_for_org") 
+    - f.class.send(:alias_method, "fields_blueprint_id_for", "fields_blueprint_id_for_org")
   .like-button class="#{exists == true ? 'liked' : ''}" data-user="#{current_user ? current_user.slug : ''}"
     == count

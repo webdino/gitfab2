@@ -1,10 +1,11 @@
 #your.projects-wrapper
   .container
     ul#your-projects.projects
-      - current_user.projects.sort{|a, b| (-1)*(a.updated_at <=> b.updated_at)}.slice(0,3).each do |project|
+      - projects = current_user.projects.sort { |a, b| (-1) * (a.updated_at <=> b.updated_at) }.slice(0, 3)
+      - projects.each do |project|
         == render "project", project: project
 
-    - if current_user.projects.present? and current_user.projects.length > 3
+    - if current_user.projects.present? && current_user.projects.length > 3
       .more
         == link_to "→ More Projects", projects_path(current_user.slug), class: "more-projects"
   .label

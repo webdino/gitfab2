@@ -2,5 +2,5 @@
   p.dest-name
     == owner.name
   .fork-btn style="background-image: url('#{owner.avatar.small}')"
-    == form_for [owner, owner.projects.build] do |f|
+    == form_for [owner, owner.projects.build] do
       == hidden_field_tag :original_project_id, project.id

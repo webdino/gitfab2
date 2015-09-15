@@ -2,7 +2,7 @@
   .container
     ul#featured-project-groups
       - if @featured_project_groups.length >= 3
-        - for i in 0..2 do
+        - (0..2).each do |i|
           li.featured-project-group
             .group-title
               == @featured_project_group_titles[i]

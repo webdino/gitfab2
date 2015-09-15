@@ -4,16 +4,16 @@ li.project
       .private-project
         ' private project
     - if project.title.present?
-      - unless is_note
-        == link_to project.title, project_path(project.owner, project), class: "title"
-      - else
+      - if is_note
         == link_to project.title, project_note_path(project.owner, project), class: "title"
+      - else
+        == link_to project.title, project_path(project.owner, project), class: "title"
 
     - else
-      - unless is_note
-        == link_to "no title", project_path(project.owner, project), class: "title"
-      - else
+      - if is_note
         == link_to "no title", project_note_path(project.owner, project), class: "title"
+      - else
+        == link_to "no title", project_path(project.owner, project), class: "title"
 
     .horizontal-border.basic-color.m-b-5
     .meta
@@ -50,13 +50,15 @@ li.project
     == render "projects/tags", project: project
 
   .image-container
-    - if project.figures.present? and (project.figures.first.content.present? or project.figures.first.link.present?)
-      - unless is_note
-        == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
-      - else
+    - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)
+      - if is_note
         == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
+      - else
+        == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
 
     - if can? :manage, project
       .btns
-        == link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
-        == link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
+        - edit_url = edit_project_path(project, owner_name: project.owner.slug)
+        - delete_url = project_path(project.owner.slug, project)
+        == link_to "edit", edit_url, class: "edit btn"
+        == link_to "delete", delete_url, method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"

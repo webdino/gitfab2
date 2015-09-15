@@ -1,5 +1,5 @@
 - figures = card.figures
-- if figures.present? and (figures.first.content.present? or figures.first.link.present?)
+- if figures.present? && (figures.first.content.present? || figures.first.link.present?)
     .description
       == Sanitize.clean card.description, Sanitize::Config::CARD
 
