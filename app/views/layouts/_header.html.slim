@@ -5,7 +5,7 @@ section#layouts-header
         == link_to "", root_path, class: "logo"
 
       #search-box
-        == form_tag :search, method: :get do |f|
+        == form_tag :search, method: :get do
           == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
 
           / TODO: add clear btn

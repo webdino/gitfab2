@@ -1,7 +1,8 @@
 - if parent.instance_of?(Card::State)
-  - delete_url = project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
-  - edit_url = edit_project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
-  - convert_url = project_recipe_state_annotation_to_state_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, annotation_id: annotation.id)
+  ruby:
+    delete_url = project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
+    edit_url = edit_project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, id: annotation.id)
+    convert_url = project_recipe_state_annotation_to_state_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, annotation_id: annotation.id)
 / == render "components/card", card: annotation, parent: parent, delete_url: delete_url, edit_url: edit_url
 
 article class="card annotation" data-position="#{annotation.try(:position)}" id="#{annotation.id}"

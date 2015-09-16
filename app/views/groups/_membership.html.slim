@@ -6,7 +6,7 @@ li.membership
     == link_to "remove", [membership.user, membership], method: :delete, remote: true, class: "remove-member-btn btn"
     == form_for [membership.user, membership], remote: true do |f|
       == f.hidden_field :user_id, value: membership.user.name
-      == f.select :role, Membership::ROLE, {selected: membership.role}, {:class => "membership-role", "data-persisted-role" => membership.role}
+      == f.select :role, Membership::ROLE, {selected: membership.role}, class: "membership-role", "data-persisted-role" => membership.role
       == f.submit "apply"
   - else
     .role

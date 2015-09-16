@@ -1,8 +1,8 @@
 - content_for :title do
   - if @note_card.present?
-    - @project.owner.name + "/" + @project.title +  " : Memos/" + @note_card.title
+    - @project.owner.name + "/" + @project.title + " : Memos/" + @note_card.title
   - else
-    - @project.owner.name + "/" + @project.title +  " : Memos/Notecard"
+    - @project.owner.name + "/" + @project.title + " : Memos/Notecard"
 
 main#note-cards-show
   == render "projects/basic_informations"
@@ -23,7 +23,8 @@ main#note-cards-show
         h1
           'Memo
         - if can? :edit, @project
-          == link_to "+ add Memo", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+          - new_url = new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+          == link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
     - card = @note_card
     - if card.present?
@@ -36,22 +37,25 @@ main#note-cards-show
                 == card.title
               .meta
                 .postedby
-                  - author = nil
-                  - if card.contributions.length > 0
-                    -  author = User.find(card.contributions[0].contributor_id)
+                  ruby:
+                    author = card.contributions.length > 0 ? User.find(card.contributions[0].contributor_id) : @project.owner
+                    link = link_to image_tag(author.avatar.thumb) + author.name, projects_path(owner_name: author.slug)
+                    datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
+
+                  - if author.present?
+                    == "posted by #{link} on #{datetime}"
                   - else
-                    -  author = @project.owner
-                  - link = link_to image_tag(author.avatar.thumb) + author.name, projects_path(owner_name: author.slug)
-                  - datetime = card.created_at == nil ? "" : card.created_at.strftime('%B %d, %Y')
-                  == "posted by #{link} on #{datetime}"
+                    == "posted on #{datetime}"
 
                 .control
                   span.starred
                     == render "components/like", resources: [@owner, @project, :note, card]
                   - if can? :manage, card
                     span.edit
-                      == link_to "delete", project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-                      == link_to "edit", edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id), remote: true, class: "btn edit-card", "data-container" => ".card"
+                      - delete_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                      - edit_url = edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                      == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+                      == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 
           .first-column
             .horizontal-border.black.f-left

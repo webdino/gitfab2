@@ -1,5 +1,5 @@
 - content_for :title do
-  - @project.owner.name + "/" + @project.title +  " : Memo"
+  - @project.owner.name + "/" + @project.title + " : Memo"
 
 main#notes-show
   == render "projects/basic_informations"

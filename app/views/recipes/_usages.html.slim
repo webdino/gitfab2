@@ -6,7 +6,10 @@ section#usages
     ul#usage-list.card-list
       - @project.usages.each do |usage|
         li
-          == render "components/card", card: usage, delete_url: project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id), edit_url: edit_project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id)
+          - delete_url = project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id)
+          - edit_url = edit_project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id)
+          == render "components/card", card: usage, delete_url: delete_url, edit_url: edit_url
 
     - if signed_in?
-      == link_to "+ Add Usage", new_project_usage_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#usage-list", "data-template" => "#usage-template"
+      - new_url = new_project_usage_path(owner_name: @owner.slug, project_id: @project.name)
+      == link_to "+ Add Usage", new_url, remote: true, class: "btn new-card", "data-list" => "#usage-list", "data-template" => "#usage-template"

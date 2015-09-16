@@ -34,7 +34,7 @@
       == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
       .remove-all-figures.btn
         'Remove all figures
-    == f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength:"300"
+    == f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength: "300"
 
     - unless f.object.class.name.include? "Note"
       .text-length

@@ -13,6 +13,6 @@
 
     .target-class
       span Target Class:
-      == f.select :class_name, Feature::TARGET_CLASS, {}, {class: "class-name-form"}
+      == f.select :class_name, Feature::TARGET_CLASS, {}, class: "class-name-form"
     == f.number_field :category
     == f.submit

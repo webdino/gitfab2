@@ -7,7 +7,7 @@
       h2.title
         'Search Project
       #search-box
-        == form_tag :search, method: :get do |f|
+        == form_tag :search, method: :get do
           == text_field_tag :q, nil, placeholder: "keyword Input…", id: "search-form"
 
     .tag-search

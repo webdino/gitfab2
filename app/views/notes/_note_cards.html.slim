@@ -14,7 +14,8 @@ section#note-cards
       h1
         'Memos
       - if can? :edit, @project
-        == link_to "+ add Memo", new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name), remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+        - new_url = new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+        == link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
   ul#note-card-list.card-list
     - @note.note_cards.each do |card|
