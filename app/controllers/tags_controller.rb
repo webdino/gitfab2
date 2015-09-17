@@ -37,7 +37,7 @@ class TagsController < ApplicationController
   def build_tag
     tag = @project.tags.create
     tag_parameter = tag_params
-    tag.name = tag_parameter[:name]
+    tag.name = Sanitize.clean(tag_parameter[:name]).strip
     tag.user_id = tag_parameter[:user_id]
     @tag = tag
   end
