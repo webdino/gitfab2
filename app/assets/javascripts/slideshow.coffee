@@ -18,6 +18,7 @@ class Slideshow
     @append_recipe_cards_list card for card in @cards
     @append_number card, i+1 for card, i in @cards
     @exchange_images card for card in @cards
+    @enlarge_videos card for card in @cards
     _cards = @cards
     $.fancybox.open @cards, {
       padding: 0
@@ -71,6 +72,15 @@ class Slideshow
         image = $ image
         original_src = image.data "src"
         image.attr "src", original_src
+  enlarge_videos: (card) ->
+    card = $ card
+    videos = card.find "figure iframe"
+    for video in videos
+      do (video) ->
+        iframe = $ video
+        iframe.css "width", "640px"
+        iframe.css "height", "360px"
+
   setupFlexSlider = (cards_length) ->
     title = $("#basic-informations h1.title").clone()
     card = $ ".slideshow .card"
@@ -90,6 +100,9 @@ class Slideshow
   fixImagePosition = () ->
     slideshow = $ ".slideshow"
     figure = slideshow.find ".card figure"
+    img = slideshow.find ".card figure > img"
+    val = if img.css("display") == "block" then "inline-block" else "block"
+    img.css "display", val
     left =  (slideshow.width() - figure.width()) / 2
     figure.animate {
       "left", left
