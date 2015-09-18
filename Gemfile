@@ -84,4 +84,5 @@ group :development, :test do
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
   gem 'slim_lint'
+  gem 'coveralls', require: false
 end
