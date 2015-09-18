@@ -35,3 +35,6 @@ _cho*
 
 # Ignore featured-projects list
 /config/sample-projects.yml
+
+# Ignore coverall files
+/coverage

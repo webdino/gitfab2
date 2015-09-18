@@ -10,6 +10,3 @@ notifications:
     secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
 script:
   - bundle exec rubocop --fail-level=W
-env:
-  global:
-    secure: "dnBq8Hll+IFe+IfrRzHWQeCNWzkY0RXMc+MQCLnFCarpkshraVFbJeE2HJZHsE1INeOyrKmF0puZLt0IX1X494JUWPcj/sIqpC2XwvRkG2cVyIDqo5SEekZaxdPweozRjClcBJ5uMV1bWoDt97hDCiCDLd+fWrHXoIM8Vei9k/Q="
