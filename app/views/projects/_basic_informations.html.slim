@@ -65,12 +65,16 @@ section#basic-informations
     section.members
       .title Members
       .owner
-        == link_to image_tag(@owner.avatar.small), projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumbnail"
+        == link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
+          .thumb style="background-image: url('#{@owner.avatar.small}')"
+
       - if @project.collaborators.present?
         ul.collaborators
           - @project.collaborators.each do |collaborator|
             li.collaborator
-              == link_to image_tag(collaborator.avatar.small), projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumbnail"
+              == link_to projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
+                .thumb style="background-image: url('#{collaborator.avatar.small}')"
+
       - if can? :manage, @project
         == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
     == render "collaborators/list"
