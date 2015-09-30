@@ -4,8 +4,16 @@ require 'rspec/rails'
 require 'database_cleaner'
 require "sunspot/rails/spec_helper"
 
+require 'simplecov'
 require 'coveralls'
-Coveralls.wear!('rails')
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start do
+  add_filter '.bundle/'
+end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 

@@ -609,6 +609,7 @@ DEPENDENCIES
   sass-rails (~> 4.0.0)
   sdoc
   select2-rails
+  simplecov
   slack-notifier
   slim-rails (~> 3.0.0)
   slim_lint
