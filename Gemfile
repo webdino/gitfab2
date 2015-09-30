@@ -85,4 +85,5 @@ group :development, :test do
   gem 'rack-mini-profiler'
   gem 'slim_lint'
   gem 'coveralls', require: false
+  gem 'simplecov', require: false
 end
