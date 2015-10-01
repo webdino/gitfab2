@@ -108,22 +108,21 @@ class AnnotationsController < ApplicationController
       contribution.contributor_id == current_user.slug
     }.map{|contribution|
       contribution.updated_at = DateTime.now.in_time_zone
-      contribution 
+      contribution
     }[0]
   end
-  
+
   def create_new_contribution
     contribution = @annotation.contributions.new
     contribution.contributor_id = current_user.slug
     contribution.created_at = DateTime.now.in_time_zone
     contribution.updated_at = DateTime.now.in_time_zone
-    
     return contribution
-  end  
- 
+  end
+
   def update_contribution
     return nil unless current_user
-    return save_current_users_contribution || create_new_contribution  
+    return save_current_users_contribution || create_new_contribution
   end
 
   def update_project
