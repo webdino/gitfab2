@@ -21,95 +21,18 @@ class GlobalProjectsController < ApplicationController
 
     else
       @projects = Project.all.in(is_private: [false, nil]).page(params[:page]).order('updated_at DESC')
-
-      featured_projects_all = Feature.projects
-      @featured_project_groups = []
-      @featured_project_group_titles = []
-
-      if featured_projects_all.length >= 3
-
-        first_featured_projects = featured_projects_all.first.featured_items || []
-        second_featured_projects = featured_projects_all.second.featured_items || []
-        third_featured_projects = featured_projects_all.projects.third.featured_items || []
-
-        @featured_project_group_titles.push(featured_projects_all.first.name)
-          .push(featured_projects_all.second.name)
-          .push(featured_projects_all.third.name)
-
-        featured_projects = []
-        first_featured_projects.each do |project|
-          project = Project.find project.target_object_id
-          featured_projects.push project
-        end
-        @featured_project_groups.push featured_projects
-
-        featured_projects = []
-        second_featured_projects.each do |project|
-          project = Project.find project.target_object_id
-          featured_projects.push project
-        end
-        @featured_project_groups.push featured_projects
-
-        featured_projects = []
-        third_featured_projects.each do |project|
-          project = Project.find project.target_object_id
-          featured_projects.push project
-        end
-        @featured_project_groups.push featured_projects
-
-      end
-
-      featured_groups_all = Feature.groups
-      @featured_groups = []
-
-      if featured_groups_all.length > 0
-
-        featured_groups = featured_groups_all.first.featured_items || []
-        if featured_groups.length > 0
-          featured_groups.each do |group|
-            group = Group.find group.target_object_id
-            @featured_groups.push group
-          end
-        end
-      end
-
+      @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
+      @featured_groups = Feature.groups.length > 0 ? view_context.featured_groups : []
       @is_searching = false
     end
 
-    selected_tags_length = 30
-
-    @selected_tags = []
-    @all_tags = []
     all_tags_list_file_path = "#{Rails.root}/config/all-tags.yml"
     all_tags_list = YAML.load_file all_tags_list_file_path
+    selected_tags_length = 30
+    @all_tags = view_context.all_tags all_tags_list
+    @selected_tags = view_context.selected_tags all_tags_list, selected_tags_length
 
-    if all_tags_list.present?
-      all_tags_list.each do |tag_name|
-        @all_tags.push tag_name
-      end
-      all_tags_list.slice(0, selected_tags_length).each do |tag_name|
-        @selected_tags.push tag_name
-      end
-    end
-
-    @selected_tools = []
-    file_path = "#{Rails.root}/config/selected-tools.yml"
-    tools_list = YAML.load_file file_path
-
-    if tools_list.present?
-      tools_list.each do |tool_name|
-        @selected_tools.push tool_name
-      end
-    end
-
-    @selected_materials = []
-    file_path = "#{Rails.root}/config/selected-materials.yml"
-    materials_list = YAML.load_file file_path
-
-    if materials_list.present?
-      materials_list.each do |material_name|
-        @selected_materials.push material_name
-      end
-    end
+    @selected_tools = view_context.selected_tools
+    @selected_materials = view_context.selected_materials
   end
 end
