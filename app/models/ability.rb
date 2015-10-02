@@ -27,6 +27,15 @@ class Ability
     can :manage, Card::NoteCard do |card|
       card.note && is_project_editor?(card.note.project, user)
     end
+    can :read, Card::State do |card|
+      can? :read, card.recipe.project
+    end
+    can :read, Card::Annotation do |card|
+      can? :read, card.state.recipe.project
+    end
+    can :read, Card::NoteCard do |card|
+      can? :read, card.note.project
+    end
     can :manage, Project do |project|
       is_project_manager?(project, user)
     end
