@@ -52,8 +52,8 @@ class ProjectsController < ApplicationController
 
   def fork
     original_project = Project.find params[:original_project_id]
-    @project = original_project.fork_for!(@owner)
-    if @project
+    @project = original_project.fork_for! @owner
+    if original_project.present? && @project.present?
       redirect_to project_path(id: @project.name, owner_name: @owner.slug)
     else
       redirect_to request.referer
@@ -69,8 +69,8 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    owner_name = params[:owner_name]
-    if owner_name.present?
+    new_owner_name = params[:new_owner_name]
+    if new_owner_name.present?
       change_owner
     else
 
@@ -112,8 +112,8 @@ class ProjectsController < ApplicationController
 
   def change_owner
     project = Project.find params[:id]
-    new_owner = User.find(params[:owner_name]) || Group.find(params[:owner_name])
-    if project.change_owner! new_owner
+    new_owner = User.find(params[:new_owner_name]) || Group.find(params[:new_owner_name])
+    if new_owner.present? && project.change_owner!(new_owner)
       if project.collaborators.include?(new_owner)
         old_collaboration = new_owner.collaboration_in project
         old_collaboration.destroy
@@ -124,10 +124,7 @@ class ProjectsController < ApplicationController
         format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
       end
     else
-      respond_to do |format|
-        format.json { render 'error/failed', status: 400 }
-        format.html { render 'error/failed', status: 400 }
-      end
+      render 'error/failed', status: 400
     end
   end
 
@@ -146,7 +143,9 @@ class ProjectsController < ApplicationController
     if action_name == 'update'
       users = @project.notifiable_users current_user
       url = project_path @project, owner_name: @owner.slug
-      if project_params[:likes_attributes].present?
+      if params[:new_owner_name]
+        return
+      elsif project_params[:likes_attributes].present?
         body = "#{@project.title} was favorited by #{current_user.name}."
       else
         body = "#{@project.title} was updated by #{current_user.name}."
