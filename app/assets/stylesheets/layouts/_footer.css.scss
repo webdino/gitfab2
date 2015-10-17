@@ -39,15 +39,24 @@ $icons-sprite-dimensions: true;
   }
   #logos {
     padding: 45px 0 0;
+    .desc {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-family: $common-novelsans-semibold;
+      color: $common-dark-gray;
+    }
     .logo {
-      display: inline-block;
-      max-height: 50px;
+      display: block;
+      margin: 5px auto 30px;
+      padding: 0;
+      max-height: 60px;
     }
     .sfc-logo {
       @include icons-sprite(sfc_logo);
     }
     .mozilla-japan-logo {
       @include icons-sprite(mozilla_japan_logo);
+      margin-bottom: 15px;
     }
   }
 }
