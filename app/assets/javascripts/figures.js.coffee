@@ -106,11 +106,8 @@ $ ->
       event.preventDefault()
       $("form.project-form").submit()
 
-  $(document).on "keyup", "#inner_content .card-figure-link", () ->
+  $(document).on "keyup change", "#inner_content .card-figure-link", () ->
     getVideoOf("card")
-  $(document).on "change", "#inner_content .card-figure-link", () ->
-    getVideoOf("card")
-  $(document).on "keyup", "main#recipes-edit .card-figure-link", () ->
-    getVideoOf("project")
-  $(document).on "change", "main#recipes-edit .card-figure-link", () ->
+
+  $(document).on "keyup change", "main#recipes-edit .card-figure-link", () ->
     getVideoOf("project")

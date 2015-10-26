@@ -32,19 +32,36 @@ $ ->
     makeAttachmentsList $("a.attachment"), $("#references")
 
   $(document).on "click", "figure img", () ->
-    $.fancybox.open $(this).data("src"),
-      openEffect: "none"
-      closeEffect: "none"
-      helpers:
-        overlay:
-          css:
-            "background": "rgba(0, 0, 0, 0.2)"
+    if $(this).parent().hasClass "flex-active-slide"
+      images = $(this)
+      images.push $(this).parent().siblings("[class!='clone']").find("img")
+      original_srcs = []
+      original_srcs.push $(image).data("src") for image in images
+      $.fancybox.open original_srcs,
+        openEffect: "none"
+        closeEffect: "none"
+        padding: 0
+        wrapCSS: "image-slideshow"
+        helpers:
+          overlay:
+            css:
+              "background": "rgba(0, 0, 0, 0.2)"
+    else
+      $.fancybox.open $(this).data("src"),
+        openEffect: "none"
+        closeEffect: "none"
+        helpers:
+          overlay:
+            css:
+              "background": "rgba(0, 0, 0, 0.2)"
+
+  $(document).on "click", ".fancybox-skin", (event) ->
+    event.stopPropagation()
 
 $(window).on "load" , ->
-  $('.flexslider').flexslider({
-    animation: "slider",
-    animationSpeed: 300,
-    controlNav: true,
-    smoothHeight: true,
-    slideshow: false,
-  })
+  $('.flexslider').flexslider
+    animation: "slider"
+    animationSpeed: 300
+    controlNav: true
+    smoothHeight: true
+    slideshow: false
