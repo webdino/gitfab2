@@ -571,3 +571,16 @@
     position: absolute;
   }
 }
+
+.image-slideshow {
+  .fancybox-skin {
+    border-radius: 0;
+    box-shadow: none !important;
+  }
+  .fancybox-inner {
+    overflow-x: hidden !important;
+  }
+  .fancybox-nav span {
+    visibility: visible;
+  }
+}

@@ -80,7 +80,6 @@ class Slideshow
         iframe = $ video
         iframe.css "width", "640px"
         iframe.css "height", "360px"
-
   setupFlexSlider = (cards_length) ->
     title = $("#basic-informations h1.title").clone()
     card = $ ".slideshow .card"
