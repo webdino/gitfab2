@@ -14,12 +14,13 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 SimpleCov.start do
   add_filter '.bundle/'
 end
+Coveralls.wear!
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
-  config.order = "random"
+  config.order = 'random'
   config.include FactoryGirl::Syntax::Methods
   config.include Mongoid::Matchers
   config.include Devise::TestHelpers, type: :controller
@@ -29,7 +30,7 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    DatabaseCleaner.orm = "mongoid"
+    DatabaseCleaner.orm = 'mongoid'
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :truncation
   end
