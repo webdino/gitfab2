@@ -82,8 +82,7 @@ section#basic-informations
     section.description
       .title Summary
       .text
-        == Sanitize.clean simple_format(@project.description), Sanitize::Config::CARD
-
+        == Sanitize.clean auto_link(simple_format(@project.description), sanitize: false), Sanitize::Config::CARD
 
 - if can? :manage, @project
   == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
