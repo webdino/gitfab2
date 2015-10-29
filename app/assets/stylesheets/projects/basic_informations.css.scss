@@ -309,6 +309,9 @@ $icons-sprite-dimensions: true;
         font-size: 18px;
         line-height: 32px;
         word-break: break-all;
+        a {
+          color: $common-dark-blue;
+        }
       }
     }
   }
