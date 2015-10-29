@@ -82,7 +82,7 @@ section#basic-informations
     section.description
       .title Summary
       .text
-        == Sanitize.clean @project.description, Sanitize::Config::RELAXED
+        == Sanitize.clean simple_format(@project.description), Sanitize::Config::CARD
 
 
 - if can? :manage, @project
