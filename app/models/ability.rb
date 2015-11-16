@@ -30,9 +30,6 @@ class Ability
     can :read, Card::State do |card|
       can? :read, card.recipe.project
     end
-    can :read, Card::Annotation do |card|
-      can? :read, card.state.recipe.project
-    end
     can :read, Card::NoteCard do |card|
       can? :read, card.note.project
     end

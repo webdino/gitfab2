@@ -85,7 +85,7 @@ class AnnotationsController < ApplicationController
   end
 
   def load_annotation
-    @annotation = @state.annotations.find params[:id]
+    @annotation ||= @state.annotations.find params[:id]
     not_found if @annotation.blank?
   end
 
