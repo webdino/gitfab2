@@ -38,16 +38,6 @@ section#basic-informations
             == link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
 
       .right
-        section.license
-
-          ruby:
-            index = @project.license.nil? ? 3 : @project.license
-            license = @project.licenses[index]
-            image = 'cc/' + license + '.png'
-            url = 'http://creativecommons.org/licenses/' + license + '/4.0'
-
-          == link_to image_tag(image), url, target: "_blank"
-
         == render "components/like", resources: [@owner, @project]
 
   section.body
@@ -78,6 +68,32 @@ section#basic-informations
       - if can? :manage, @project
         == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
     == render "collaborators/list"
+
+    section.license
+      ruby:
+        index = @project.license.nil? ? 3 : @project.license
+        license = @project.licenses[index]
+        image = 'cc/' + license + '.png'
+        url = 'http://creativecommons.org/licenses/' + license + '/4.0'
+        right_holder_links = @project.right_holders.map{|holder| link_to(holder.name, projects_path(holder.name))}
+
+        license_texts = [
+          'Creative Commons - Attribution',
+          'Creative Commons - Attribution-ShareAlike',
+          'Creative Commons - Attribution-NonCommercial',
+          'Creative Commons - Attribution-NonCommercial-ShareAlike'
+        ]
+
+        text = link_to(@project.title, project_path(@project.owner, @project)) + ' by '
+        right_holder_links.map{|link| text += link + ', '}
+        text.chop!.chop!
+        text += ' is licensed under the '
+        text += link_to(license_texts[index], url) + ' license.'
+
+      .title License
+      == link_to image_tag(image, class: 'license-image'), url, target: '_blank'
+      .text
+        == text
 
     section.description
       .title Summary

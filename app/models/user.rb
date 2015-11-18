@@ -7,6 +7,7 @@ class User
   include ProjectOwner
   include Liker
   include Collaborator
+  include RightHolder
 
   ## Database authenticatable
   field :email

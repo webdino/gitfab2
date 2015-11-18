@@ -7,6 +7,7 @@ class Group
   include Mongoid::Slug
   include ProjectOwner
   include Collaborator
+  include RightHolder
 
   mount_uploader :avatar, AvatarUploader
 

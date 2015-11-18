@@ -19,6 +19,7 @@ class Project
 
   field :license, type: :integer
 
+  has_many :rights
   has_many :derivatives, class_name: Project.name, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
   belongs_to :owner, polymorphic: true, index: true, counter_cache: :projects_count
@@ -108,6 +109,18 @@ class Project
     # else
     #   return false
     # end
+  end
+
+  def right_holders
+    holders = []
+    rights.each do |right|
+      if right.right_holder_type == 'Group'
+        holders << Group.find(right.right_holder_id)
+      else
+        holders << User.find(right.right_holder_id)
+      end
+    end
+    holders
   end
 
   def managers
