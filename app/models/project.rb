@@ -2,7 +2,6 @@ class Project
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Slug
-  include Sunspot::Mongoid2
   include Figurable
   include Commentable
   include Contributable

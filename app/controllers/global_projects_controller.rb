@@ -6,11 +6,10 @@ class GlobalProjectsController < ApplicationController
 
     if q.present?
       query = q.force_encoding 'utf-8'
-      @projects = Sunspot.search(Project) do
-        fulltext query.split.map { |word| "\"#{word}\"" }.join(' AND ')
-        without :is_private, true
-        paginate page: params[:page] || 1, :per_page => 12
-        #order_by :updated_at, :desc
+      @projects = Project.solr_search do |s|
+        s.fulltext query.split.map { |word| "\"#{word}\"" }.join ' AND '
+        s.without :is_private, true
+        # s.order_by :updated_at, :desc
       end.results
 
       @is_searching = true
