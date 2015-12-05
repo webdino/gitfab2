@@ -18,7 +18,7 @@ class NotificationsController < ApplicationController
   end
 
   def update
-    unless @notification.was_read
+    unless @notification.nil? && @notification.was_read
       @notification.was_read = true
       @notification.save
     end
