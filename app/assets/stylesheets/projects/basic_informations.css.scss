@@ -140,14 +140,6 @@ $icons-sprite-dimensions: true;
         vertical-align: top;
         width: 190px;
         height: 70px;
-
-        .license {
-          display: inline-block;
-          margin-top: 5px;
-          img {
-            width: 96px;
-          }
-        }
         .like {
           $star_size: 26px;
           display: inline-block;
@@ -292,7 +284,30 @@ $icons-sprite-dimensions: true;
         border-radius: 72px;
       }
     }
-
+    .license {
+      margin-top: 30px;
+      .title {
+        font-family: $common-novelsans-semibold;
+        font-size: 14px;
+        color: $common-quiet-text-color;
+        text-decoration: underline;
+      }
+      .license-image {
+        margin-top: 10px;
+        width: 96px;
+      }
+      .text {
+        font-family: $common-novelsans-light;
+        margin-top: 10px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.2;
+        word-break: break-all;
+        a {
+          color: $common-dark-blue;
+        }
+      }
+    }
     .description {
       margin-top: 30px;
       width: 100%;

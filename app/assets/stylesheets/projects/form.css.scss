@@ -85,10 +85,15 @@ form.project-form {
       img {
         width: 100px;
         border: 5px solid rgba(0, 0, 0, 0);
+        cursor: pointer;
       }
       img.selected {
         border: 5px solid $common-basic-color;
         background: $common-basic-color;
+      }
+      img.unselectable {
+        filter: brightness(60%);
+        cursor: default;
       }
       .about-license {
         margin-top: 10px;
