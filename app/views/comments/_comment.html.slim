@@ -23,4 +23,4 @@ li.comment
           span.comment-tools
             == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
       .body
-        == Sanitize.clean comment.body, Sanitize::Config::RELAXED
+        == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED

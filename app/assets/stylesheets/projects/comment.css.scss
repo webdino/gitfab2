@@ -109,6 +109,9 @@ $icons-sprite-dimensions: true;
           font-family: $common-novelsans-light;
           font-size: 12px;
           line-height: 19px;
+          a {
+            color: $common-dark-blue;
+          }
         }
       }
     }
