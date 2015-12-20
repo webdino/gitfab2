@@ -64,6 +64,8 @@ describe ProjectsController, type: :controller do
           it{expect redirect_to projects_path(owner_name: project.owner.slug)}
           it{expect(user).to have(0).collaboration}
           it{expect(group).to have(0).collaboration}
+          it{expect(Project.where(right_holder_id: user.id).length).to eq(0)}
+          it{expect(Project.where(right_holder_id: group.id).length).to eq(0)}
         end
       end
       describe 'GET edit' do
@@ -83,6 +85,7 @@ describe ProjectsController, type: :controller do
             post :create, user_id: user.slug, project: new_project.attributes
           end
           it{should render_template :edit}
+          it{expect(Project.last.rights).to have(1).right}
         end
         context 'when newly creating with wrong parameters' do
           let(:user){FactoryGirl.create :user}

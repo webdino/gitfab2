@@ -5,7 +5,9 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:show, :edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
+  before_action :delete_rights, only: :destroy
   after_action :notify_users, only: [:create, :update]
+  after_action :build_right, only: :create
 
   authorize_resource
 
@@ -54,6 +56,7 @@ class ProjectsController < ApplicationController
     original_project = Project.find params[:original_project_id]
     @project = original_project.fork_for! @owner
     if original_project.present? && @project.present?
+      duplicate_rights
       redirect_to project_path(id: @project.name, owner_name: @owner.slug)
     else
       redirect_to request.referer
@@ -158,6 +161,27 @@ class ProjectsController < ApplicationController
       body = "#{original_project.title} was forked by #{current_user.name}."
       @project.notify users, current_user, url, body if users.length > 0
     end
+  end
+
+  def build_right
+    duplicated_right = Right.where(project_id: @project.id).where(right_holder_id: @owner.id)
+    if duplicated_right.length == 0
+      right = Right.new project_id: @project.id, right_holder_id: @owner.id, right_holder_type: @owner.class.name
+      right.save
+    end
+  end
+
+  def duplicate_rights
+    origin = Project.find params[:original_project_id]
+    origin_right_holders = origin.rights.map(&:right_holder)
+    origin_right_holders.each do |right_holder|
+      right = Right.new project_id: @project.id, right_holder_id: right_holder.id, right_holder_type: right_holder.class.name
+      right.save
+    end
+  end
+
+  def delete_rights
+    rights.destroy_all
   end
 
   private

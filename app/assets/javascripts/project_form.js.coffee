@@ -17,8 +17,11 @@ $ ->
     $("form.project-form").submit()
 
   $(document).on "click", ".license img", (event) ->
-    $(".license img").removeClass "selected"
-    target = $ this
-    target.addClass "selected"
-    value = target.attr("id").substring "license-".length
-    $("#project_license").val value
+    if $(this).hasClass 'unselectable'
+      alert 'You cannot choose this license because of Creative Commons license restriction of the original content.'
+    else
+      $(".license img").removeClass "selected"
+      target = $ this
+      target.addClass "selected"
+      value = target.attr("id").substring "license-".length
+      $("#project_license").val value
