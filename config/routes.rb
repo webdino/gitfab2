@@ -85,4 +85,23 @@ Gitfab2::Application.routes.draw do
     end
     resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
   end
+
+
+  concern :project_holder do
+    resources :projects do
+      resource :recipe do
+        resource :states do
+          resource :annotations
+        end
+      end
+    end
+  end
+
+  namespace :api, { formats: 'json' } do
+    namespace :v0 do
+      resources :users, concerns: :project_holder
+      resources :groups, concerns: :project_holder
+    end
+  end
+
 end
