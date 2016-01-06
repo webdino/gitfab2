@@ -53,7 +53,7 @@ section#basic-informations
           iframe src="#{@project.figures.first.link}"
 
     section.members
-      .title Members
+      .title Owner & Collaborators
       .owner
         == link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
           .thumb style="background-image: url('#{@owner.avatar.small}')"
