@@ -5,13 +5,15 @@ $ ->
     ul = container.find "ul"
     ul.empty()
     attachments.attr "target", "_blank"
-    if attachments.length is 0
+    filtered_attachments = attachments.filter (i) ->
+      return this.textContent.replace(/[\n\s ]/g, "").length != 0
+    if filtered_attachments.length is 0
       container.removeClass "has-data"
       $("#making-list .inner").removeClass "has-data"
       return
     container.addClass "has-data"
     $("#making-list .inner").addClass "has-data"
-    for attachment in attachments
+    for attachment in filtered_attachments
       href = attachment.getAttribute "href"
       description = attachment.getAttribute "data-description"
       name = attachment.textContent
