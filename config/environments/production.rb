@@ -69,7 +69,7 @@ Gitfab2::Application.configure do
     user.js      user.css
     global_projects.js
     global_projects.css
-    packery.pkgd.min.js
+    masonry.pkgd.min.js
     static_pages.js
     static_pages.css
   )
