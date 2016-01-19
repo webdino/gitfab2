@@ -1,8 +1,8 @@
 - if card.figures.present?
   - if card.figures.first.content.present?
     - if card.figures.length > 1
-      figure.flexslider
-        ul.slides
+      figure
+        ul.slides.slick
           - card.figures.each do |figure|
             li
               - if defined? note_card_show

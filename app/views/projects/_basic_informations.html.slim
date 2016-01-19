@@ -43,8 +43,8 @@ section#basic-informations
   section.body
     - if @project.figures.present?
       - if @project.figures.first.content.present?
-        figure.visual.flexslider
-          ul.slides
+        figure.visual
+          ul.slides.slick
             - @project.figures.each do |figure|
               li
                 == image_tag figure.content.medium, data: {src: figure.content.url}

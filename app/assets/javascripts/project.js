@@ -14,7 +14,7 @@
 //= require jquery.ui.sortable
 //= require jquery_ujs
 //= require jquery_nested_form
-//= require jquery.flexslider-min
+//= require jquery.slick
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require_tree ../../../vendor/assets/javascripts/jquery
