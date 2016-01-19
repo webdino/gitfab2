@@ -10,6 +10,6 @@ $ ->
     $(".selected-tags").css "display", "block"
 
 $(window).on "load" , ->
-  $(".projects").packery
+  $(".projects").masonry
     itemSelector: ".project",
-    gutter: 20
+    "gutter": 20

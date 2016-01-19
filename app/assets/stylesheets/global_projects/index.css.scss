@@ -272,6 +272,7 @@ $icons-sprite-dimensions: true;
         width: 100%;
         .project {
           $figure_width: 300px;
+          margin-bottom: 20px;
           width: $figure_width;
           background-color: $common-background-color;
           border-radius: 5px;
