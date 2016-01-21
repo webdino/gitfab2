@@ -1,4 +1,6 @@
 #= require fancybox
+#= require_tree ../../../vendor/assets/javascripts/formstone
+
 state_index_list = []
 
 class Slideshow

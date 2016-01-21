@@ -5,6 +5,7 @@
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./projects
+ *= require_tree ../../../vendor/assets/formstone
  *= require jquery.ui.selectable
  *= require fancybox
  *= require ./card

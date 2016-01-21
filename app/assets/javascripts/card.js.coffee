@@ -1,4 +1,5 @@
 #= require fancybox
+#= require_tree ../../../vendor/assets/javascripts/formstone
 
 editor = null
 
