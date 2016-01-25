@@ -289,7 +289,6 @@ $icons-sprite-dimensions: true;
 }
 
 #collaborators-index {
-  display: none;
   background-color: $common-background-color;
   width: 960px;
   .inner {
@@ -460,8 +459,9 @@ $tool_size: 75px;
 }
 
 #share-destinations {
-  display: none;
-  background-color: $common-background-color;
+  padding: 20px 40px;
+  background: $common-background-color;
+  border-radius: 5px;
   .twitter-btn {
     @include icons-sprite(twitter_100);
     display: inline-block;
@@ -476,9 +476,11 @@ $tool_size: 75px;
 #fork-destinations {
   $popup_width: 360px;
   @include spacing-row($popup_width, 20px, 3);
-  display: none;
   width: $popup_width;
   min-height: 442px;
+  padding: 20px 40px;
+  background: $common-background-color;
+  border-radius: 5px;
   .fork-destination {
     .dest-name {
       margin-top: $common-margin;
@@ -495,10 +497,6 @@ $tool_size: 75px;
       background-position: center;
     }
   }
-}
-
-.fancybox-opened .fancybox-skin {
-    background-color: $common-background-color;
 }
 
 #tabs {

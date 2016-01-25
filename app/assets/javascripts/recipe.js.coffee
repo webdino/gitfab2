@@ -34,35 +34,16 @@ $ ->
     makeAttachmentsList $("a.attachment"), $("#references")
 
   $(document).on "click", "figure img", () ->
-    if $(this).parent().hasClass "flex-active-slide"
-      images = $(this)
-      images.push $(this).parent().siblings("[class!='clone']").find("img")
-      original_srcs = []
-      original_srcs.push $(image).data("src") for image in images
-      $.fancybox.open original_srcs,
-        openEffect: "none"
-        closeEffect: "none"
-        padding: 0
-        wrapCSS: "image-slideshow"
-        helpers:
-          overlay:
-            css:
-              "background": "rgba(0, 0, 0, 0.2)"
-    else
-      $.fancybox.open $(this).data("src"),
-        openEffect: "none"
-        closeEffect: "none"
-        helpers:
-          overlay:
-            css:
-              "background": "rgba(0, 0, 0, 0.2)"
-
-  $(document).on "click", ".fancybox-skin", (event) ->
-    event.stopPropagation()
+    selector = "." + $(this).data "groupname"
+    $(selector).colorbox
+      className: "color-box-image-slideshow"
+      rel: "photo-slideshow"
+      maxWidth: "90%"
+      maxHeight: "90%"
 
 $(window).on "load" , ->
   $('.slick').slick
-    adaptiveHeight: true,
-    dots: true,
-    infinite: true,
+    adaptiveHeight: true
+    dots: true
+    infinite: true
     speed: 300
