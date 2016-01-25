@@ -6,13 +6,6 @@ GIT
       mongoid
 
 GIT
-  remote: git://github.com/oshimaryo/Flexslider-2-Rails-Gem.git
-  revision: db3eb771bf3166dc323057ad004e77fa3f95d06f
-  specs:
-    flexslider (2.2.0)
-      sass-rails (>= 3.1.0)
-
-GIT
   remote: git://github.com/oshimaryo/capistrano-clockwork.git
   revision: 4dc94f03bae2ffee8feba9152940a4612350da84
   specs:
@@ -232,6 +225,8 @@ GEM
     jquery-rails (3.1.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-slick-rails (1.5.9.1)
+      railties (>= 3.1)
     jquery-turbolinks (2.0.2)
       railties (>= 3.1.0)
       turbolinks
@@ -570,7 +565,6 @@ DEPENDENCIES
   exception_notification!
   factory_girl_rails
   fancybox2-rails
-  flexslider!
   friendly_id (~> 5.0.0)
   gitolite
   growl
@@ -578,6 +572,7 @@ DEPENDENCIES
   guard-rubocop
   jbuilder (~> 1.2)
   jquery-rails
+  jquery-slick-rails
   jquery-turbolinks
   jquery-ui-rails
   jquery-validation-rails

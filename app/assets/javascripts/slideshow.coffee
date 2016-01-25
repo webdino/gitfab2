@@ -88,14 +88,12 @@ class Slideshow
     denominator.html "/" + cards_length
     denominator.addClass "denominator"
     card.append denominator
-    $(".flexslider").flexslider
-      animation: "slider"
-      animationSpeed: 300
-      controlNav: true
-      smoothHeight: true
-      slideshow: true
-      itemWidth: 0
-      itemMargin: 0
+    $(".slick").slick
+      adaptiveHeight: true,
+      dots: true,
+      infinite: true,
+      speed: 300
+
   fixImagePosition = () ->
     slideshow = $ ".slideshow"
     figure = slideshow.find ".card figure"

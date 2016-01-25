@@ -1,6 +1,7 @@
 @import "mixins/variables.css.scss";
 @import "mixins/clearfix.css.scss";
 @import "mixins/rows.css.scss";
+@import "mixins/slick.css.scss";
 @import "projects/_project_variables.css.scss";
 
 section#usages {
@@ -82,49 +83,12 @@ section#usages {
           width: 100%;
           height: $figure_width * 3 / 4;
         }
-      }
-      figure.flexslider {
-        float: left;
-        max-width: $figure_width;
-        width: $figure_width;
-        margin: 0 $figure_margin_right 0 0;
-        overflow: hidden;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-        img {
-          width: 100%;
-        }
-        ol.flex-control-paging {
-          top: 10px;
-          height: 10px;
-          li>a {
-            background: $common-basic-color;
-            opacity: 0.5;
-            &:hover {
-              background: $common-basic-color;
-              opacity: 0.7;
-            }
-            &.flex-active {
-              background: $common-basic-color;
-              opacity: 0.9;
-            }
-          }
-        }
-
-        .flex-direction-nav a:before {
-          color: $common-basic-color;
-        }
-        .flex-prev, .flex-next {
-          top: 20px;
-          height: 100%;
-          font-size: 0;
-        }
-        .flex-prev:before {
-          content: '<';
-        }
-        .flex-next:before {
-          content: '>';
+        @include slick;
+        .slick {
+          float: left;
+          max-width: $figure_width;
+          width: $figure_width;
+          margin: 0 $figure_margin_right 0 0 ;
         }
       }
       h2.title {

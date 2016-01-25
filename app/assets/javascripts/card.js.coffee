@@ -256,8 +256,8 @@ $ ->
             li.append card
             $("#" + dst_state_id + " .annotation-list").append li
 
-            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-            selector = "#" + article_id + " .flexslider"
+            article_id = $(data.html).find(".slick").closest("article").attr "id"
+            selector = "#" + article_id + " .slick"
             card.replaceWith data.html
             setupFigureSlider selector
             $("#loading").hide()
@@ -306,8 +306,8 @@ $ ->
             li.append card
             $("#recipe-card-list").append li
 
-            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-            selector = "#" + article_id + " .flexslider"
+            article_id = $(data.html).find(".slick").closest("article").attr "id"
+            selector = "#" + article_id + " .slick"
             card.replaceWith data.html
             setupFigureSlider selector
             $("#loading").hide()
@@ -388,18 +388,16 @@ $ ->
   setStateIndex()
 
   setupFigureSlider = (selector) ->
-    $(selector).flexslider {
-      animation: "slider",
-      animationSpeed: 300,
-      controlNav: true,
-      smoothHeight: true,
-      slideshow: false,
-    }
+    $(selector).slick
+      adaptiveHeight: true,
+      dots: true,
+      infinite: true,
+      speed: 300
 
   updateCard = (card, data) ->
     formContainer.empty()
-    article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-    selector = "#" + article_id + " .flexslider"
+    article_id = $(data.html).find(".slick").closest("article").attr "id"
+    selector = "#" + article_id + " .slick"
     card.replaceWith data.html
     checkStateConvertiblity()
     setStateIndex()

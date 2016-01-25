@@ -61,9 +61,8 @@ $ ->
     event.stopPropagation()
 
 $(window).on "load" , ->
-  $('.flexslider').flexslider
-    animation: "slider"
-    animationSpeed: 300
-    controlNav: true
-    smoothHeight: true
-    slideshow: false
+  $('.slick').slick
+    adaptiveHeight: true,
+    dots: true,
+    infinite: true,
+    speed: 300
