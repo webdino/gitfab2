@@ -86,7 +86,6 @@ Gitfab2::Application.routes.draw do
     resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
   end
 
-
   concern :project_holder do
     resources :projects do
       resource :recipe do
