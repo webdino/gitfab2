@@ -6,15 +6,15 @@
           - card.figures.each do |figure|
             li
               - if defined? note_card_show
-                == image_tag figure.content.medium, data: {src: figure.content.url}
+                == image_tag figure.content.medium, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
               - else
-                == image_tag figure.content.small, data: {src: figure.content.url}, class: "clickable-img"
+                == image_tag figure.content.small, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
     - else
       figure
         - if defined? note_card_show
-          == image_tag card.figures.first.content.medium, data: {src: card.figures.first.content.url}
+          == image_tag card.figures.first.content.medium, href: card.figures.first.content.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
         - else
-          == image_tag card.figures.first.content.small, data: {src: card.figures.first.content.url}, class: "clickable-img"
+          == image_tag card.figures.first.content.small, href: card.figures.first.content.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
 
 
   - elsif card.figures.first.link.present?

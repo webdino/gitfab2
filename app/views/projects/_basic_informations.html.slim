@@ -47,7 +47,8 @@ section#basic-informations
           ul.slides.slick
             - @project.figures.each do |figure|
               li
-                == image_tag figure.content.medium, data: {src: figure.content.url}
+                == image_tag figure.content.medium, href: figure.content.url, data: {groupname: "top-image"}, class: "top-image"
+
       - elsif @project.figures.first.link.present?
         figure.visual
           iframe src="#{@project.figures.first.link}"
@@ -66,8 +67,9 @@ section#basic-informations
                 .thumb style="background-image: url('#{collaborator.avatar.small}')"
 
       - if can? :manage, @project
-        == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn fancybox"
-    == render "collaborators/list"
+        == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
+    .hidden
+      == render "collaborators/list"
 
     section.license
       ruby:
@@ -112,24 +114,25 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
       == link_to "", "#", class: "order-change-btn"
       == link_to "", "#", class: "order-commit-btn"
   - if signed_in?
-    == link_to "", "#fork-destinations", id: "fork-btn", class: "fancybox"
+    == link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
   - unless @project.is_private
-    == link_to "", "#share-destinations", id: "share-button", class: "fancybox"
+    == link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
   - if @recipe.present?
     == render "projects/recipe_cards_list"
 
-  #fork-destinations
-    - if signed_in?
-      == render "projects/fork_destination", owner: current_user, project: @project
-      - current_user.groups.each do |group|
-        - if can? :manage, group
-          == render "projects/fork_destination", owner: group, project: @project
+  .hidden
+    #fork-destinations
+      - if signed_in?
+        == render "projects/fork_destination", owner: current_user, project: @project
+        - current_user.groups.each do |group|
+          - if can? :manage, group
+            == render "projects/fork_destination", owner: group, project: @project
 
-  #share-destinations
-    .container
-      - url = "http://fabble.cc" + project_path(@owner, @project)
-      == link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
-      == link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
+    #share-destinations
+      .container
+        - url = "http://fabble.cc" + project_path(@owner, @project)
+        == link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
+        == link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
 
   #pointer
 

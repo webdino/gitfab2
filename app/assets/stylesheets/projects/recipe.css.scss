@@ -2,6 +2,7 @@
 @import "mixins/clickable.css.scss";
 @import "mixins/variables.css.scss";
 @import "mixins/slick.css.scss";
+@import "mixins/colorbox.css.scss";
 @import "projects/_project_variables.css.scss";
 
 #recipe-cards {
@@ -477,6 +478,9 @@
 
 #state-convert-dialog {
   display: none;
+  padding: 10px 20px;
+  background: $common-background-color;
+  border-radius: 5px;
   .src {
     display: inline;
   }
@@ -504,18 +508,5 @@
 
   img {
     position: absolute;
-  }
-}
-
-.image-slideshow {
-  .fancybox-skin {
-    border-radius: 0;
-    box-shadow: none !important;
-  }
-  .fancybox-inner {
-    overflow-x: hidden !important;
-  }
-  .fancybox-nav span {
-    visibility: visible;
   }
 }

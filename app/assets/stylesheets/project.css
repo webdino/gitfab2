@@ -6,7 +6,7 @@
  *= require_tree ./layouts
  *= require_tree ./projects
  *= require jquery.ui.selectable
- *= require fancybox
+ *= require jquery.colorbox-example3
  *= require ./card
  *= require select2
  */
