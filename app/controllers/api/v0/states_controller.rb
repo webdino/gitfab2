@@ -1,6 +1,7 @@
 module Api
   module V0
     class StatesController < ApplicationController
+      protect_from_forgery :except => [:index, :show, :create, :destroy, :edit, :update]
       skip_authorize_resource
       before_action :check_authorization
       before_action :load_owner
@@ -10,6 +11,10 @@ module Api
       before_action :load_state, only: [:edit, :show, :update, :destroy]
       before_action :update_contribution, only: [:create, :update]
       after_action :update_project, only: [:create, :update, :destroy]
+
+      def index
+        render json: @recipe.states, status: 200
+      end
 
       def new
       end
@@ -48,11 +53,11 @@ module Api
       private
 
       def load_owner
-        request_auth_key = response.header['Auth-Key']
+        request_auth_key = request.headers['HTTP_X_AUTH_KEY']
         @owner = nil
-        if request_auth_key == ENV[API_AUTH_KEY_0]
+        if request_auth_key == ENV['API_AUTH_KEY_0']
           @owner = Group.find('fabmodules')
-        elsif request_auth_key == ENV[API_AUTH_KEY_1]
+        elsif request_auth_key == ENV['API_AUTH_KEY_1']
           @owner = Group.find('fabnavi')
         end
         not_found if @owner.blank?
@@ -105,13 +110,11 @@ module Api
       end
 
       def check_authorization
-        key_0 = ENV[API_AUTH_KEY_0]
-        key_1 = ENV[API_AUTH_KEY_1]
+        key_0 = ENV['API_AUTH_KEY_0']
+        key_1 = ENV['API_AUTH_KEY_1']
         auth_keys = [key_0, key_1]
-        request_auth_key = response.header['Auth-Key']
-        if request_auth_key.present? && auth_keys.include?(request_auth_key)
-          authorize! :manage, :all
-        else
+        request_auth_key = request.headers['HTTP_X_AUTH_KEY']
+        unless request_auth_key.present? && auth_keys.include?(request_auth_key)
           return head 403
         end
       end
