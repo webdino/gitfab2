@@ -89,8 +89,8 @@ Gitfab2::Application.routes.draw do
   concern :project_holder do
     resources :projects do
       resource :recipe do
-        resource :states do
-          resource :annotations
+        resources :states do
+          resources :annotations
         end
       end
     end
