@@ -50,12 +50,24 @@ $ ->
     is_image_list = iframe.length == 0 or iframe.is ":hidden"
     if is_image_list
       last_figure.find(".card-figure-content").trigger "click"
+      setTimeout $.colorbox.resize, 100 if $("#colorbox").length > 0
     else if confirm "When you add an image, the youtube movie on this card will be removed. Are you sure?"
       removeAllFigures figures, figures_length
       last_figure.find(".card-figure-link").hide()
       last_figure.find(".card-figure-content").trigger "click"
+      setTimeout $.colorbox.resize, 100 if $("#colorbox").length > 0
     else
       event.preventDefault()
+
+  $(document).on "change", "input[type='file']", (event) ->
+    file = event.target.files[0]
+    reader = new FileReader()
+    reader.onload = ->
+      tmp_img = new Image
+      tmp_img.src = reader.result
+      $(event.target).siblings("img").attr "src", tmp_img.src
+      setTimeout $.colorbox.resize, 100 if $("#colorbox").length > 0
+    reader.readAsDataURL file
 
   $(document).on "click", ".add-video", (event) ->
     figure_list = $ "ul.figures"
@@ -69,6 +81,7 @@ $ ->
       last_figure.find(".edit").hide()
       last_figure.find("img").hide()
       figure_list.addClass "hide-add-buttons"
+      setTimeout $.colorbox.resize, 100 if $("#colorbox").length > 0
     else
       event.preventDefault()
 

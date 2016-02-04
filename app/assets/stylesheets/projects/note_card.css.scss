@@ -1,5 +1,6 @@
 @import "mixins/clearfix.css.scss";
 @import "mixins/variables.css.scss";
+@import "mixins/slick.css.scss";
 @import "projects/_project_variables.css.scss";
 
 #note-cards-show {
@@ -111,49 +112,10 @@
             width: 100%;
             height: ($note_card_width - 20px) * 3 / 4;
           }
-        }
-        figure.flexslider {
-          margin-left: 10px;
-          width: $note_card_width - 20px;
-          height: auto;
-          overflow: hidden;
-          border: none;
-          border-radius: 0;
-          box-shadow: none;
-          img {
-            width: 100%;
-          }
-          li:first-child > img{
-            max-width: 100%;
-          }
-          ol.flex-control-paging {
-            top: 10px;
-            li>a {
-              background: $common-basic-color;
-              opacity: 0.5;
-              &:hover {
-                background: $common-basic-color;
-                opacity: 0.7;
-              }
-              &.flex-active {
-                background: $common-basic-color;
-                opacity: 0.9;
-              }
-            }
-          }
-          .flex-direction-nav a:before {
-            color: $common-basic-color;
-          }
-          .flex-prev, .flex-next {
-            top: 20px;
-            height: 100%;
-            font-size: 0;
-          }
-          .flex-prev:before {
-            content: '<';
-          }
-          .flex-next:before {
-            content: '>';
+          @include slick(15px, 15px);
+          .slick {
+            width: $note_card_width - 20px;
+            height: auto;
           }
         }
 

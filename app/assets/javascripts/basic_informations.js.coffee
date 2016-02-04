@@ -1,37 +1,7 @@
-$(".fancybox").fancybox
-  openEffect: "none"
-  closeEffect: "none"
-  wrapCSS: ".fork-popup"
-  helpers:
-    overlay:
-      css:
-        "background": "rgba(0, 0, 0, 0.2)"
-
-$(".change-owner-btn").fancybox
-  openEffect: "none"
-  closeEffect: "none"
-  wrapCSS: ".fork-popup"
-  helpers:
-    overlay:
-      css:
-        "background": "rgba(0, 0, 0, 0.2)"
-
-$("#add-collaborator-btn").fancybox
-  openEffect: "none"
-  closeEffect: "none"
-  wrapCSS: ".fork-popup"
-  helpers:
-    overlay:
-      css:
-        "background": "rgba(0, 0, 0, 0.2)"
-  #TODO: add the function to reload the .collabortors when close the fancybox
-
 $(document).on "click", ".fork-btn", (event) ->
   event.preventDefault()
   form = $(this).find "form"
   form.submit()
-  skin = $(this).closest ".fancybox-skin"
-  skin.css "display", "none"
 
 $ ->
   search_term = null
@@ -62,6 +32,24 @@ $ ->
         }
     }
   }
+
+  $(".colorbox-link").colorbox
+    inline: true
+    width: "auto"
+    height: "auto"
+    className: "colorbox-bg-transparent"
+
+  $(".change-owner-btn").colorbox
+    inline: true
+    width: "auto"
+    height: "auto"
+    className: "colorbox-bg-transparent"
+
+  $("#add-collaborator-btn").colorbox
+    inline: true
+    width: "auto"
+    height: "auto"
+    className: "colorbox-bg-transparent"
 
 window.clearSelect2Value = () ->
   $("#s2id_user_name").select2 "val",""

@@ -1,4 +1,4 @@
-#= require fancybox
+#= require jquery.colorbox
 state_index_list = []
 
 class Slideshow
@@ -8,7 +8,13 @@ class Slideshow
       event.preventDefault()
       @start()
   start: ->
+    $(".card.state:not(:last) .slick-initialized").slick "unslick"
     states = $(".card.state:not(:last)").clone()
+    $(".card.state:not(:last) .slick").slick
+      adaptiveHeight: true
+      dots: true
+      infinite: true
+      speed: 300
     states.find(".footer").remove()
     states.find(".new-card").remove()
     @cards = []
@@ -20,21 +26,27 @@ class Slideshow
     @exchange_images card for card in @cards
     @enlarge_videos card for card in @cards
     _cards = @cards
-    $.fancybox.open @cards, {
-      padding: 0
-      minWidth: "100%"
-      minHeight: "100%"
-      wrapCSS: "slideshow"
-      afterLoad: (current, previous) ->
-        setTimeout ->
-          setupFlexSlider _cards.length
-        , 100
-      onUpdate: () ->
+    $.colorbox
+      inline: true
+      href: @cards
+      rel: "slideshows"
+      width: "100%"
+      height: "100%"
+      className: "slideshow"
+      onComplete: () ->
+        $("#cboxLoadedContent").slick
+          adaptiveHeight: true
+          dots: true
+          infinite: true
+          speed: 300
+        $("#cboxLoadedContent figure .slick").slick
+          dots: true
+          infinite: true
+          speed: 300
+        setupDenominator _cards.length
         fixTextPosition()
-        setTimeout ->
-          fixImagePosition()
-        , 100
-    }
+        fixImagePosition()
+
   split_annotations: (state) ->
     annotations = $(state).find ".annotation"
     annotation_list = annotations.clone()
@@ -70,7 +82,7 @@ class Slideshow
     for image in images
       do (image) ->
         image = $ image
-        original_src = image.data "src"
+        original_src = image.attr "href"
         image.attr "src", original_src
   enlarge_videos: (card) ->
     card = $ card
@@ -80,7 +92,7 @@ class Slideshow
         iframe = $ video
         iframe.css "width", "640px"
         iframe.css "height", "360px"
-  setupFlexSlider = (cards_length) ->
+  setupDenominator = (cards_length) ->
     title = $("#basic-informations h1.title").clone()
     card = $ ".slideshow .card"
     card.append title
@@ -88,24 +100,18 @@ class Slideshow
     denominator.html "/" + cards_length
     denominator.addClass "denominator"
     card.append denominator
-    $(".flexslider").flexslider
-      animation: "slider"
-      animationSpeed: 300
-      controlNav: true
-      smoothHeight: true
-      slideshow: true
-      itemWidth: 0
-      itemMargin: 0
+
   fixImagePosition = () ->
     slideshow = $ ".slideshow"
-    figure = slideshow.find ".card figure"
+    figures = slideshow.find ".card figure"
     img = slideshow.find ".card figure > img"
     val = if img.css("display") == "block" then "inline-block" else "block"
     img.css "display", val
-    left =  (slideshow.width() - figure.width()) / 2
-    figure.animate {
-      "left", left
-    }, 150
+    for figure in figures
+      do (figure) ->
+        left =  (slideshow.width() - $(figure).width()) / 2
+        $(figure).css "left", left
+
   fixTextPosition = () ->
     slideshow = $ ".slideshow"
     description = slideshow.find ".description.without-figures"
@@ -118,5 +124,5 @@ $ ->
   slideshow = new Slideshow()
   $(document).on "click", ".slideshow #recipe-cards-list .state-link", (event) ->
     event.preventDefault()
-    index = $(".slideshow #recipe-cards-list .state-link").index this
-    $.fancybox.jumpto state_index_list[index]
+    index = $(this).parent().find(".state-link").index this
+    $("#cboxLoadedContent").slick "slickGoTo", state_index_list[index]
