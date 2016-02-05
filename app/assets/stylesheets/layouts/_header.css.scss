@@ -119,7 +119,7 @@ $icons-sprite-dimensions: true;
           margin-top: 4px;
           text-align: center;
           font-size: 10px;
-          color: white;
+          color: $common-label-text-color;
         }
       }
     }
@@ -141,7 +141,7 @@ $icons-sprite-dimensions: true;
     width: 250px;
     max-height: 320px;
     overflow: scroll;
-    background: white;
+    background: $common-background-color;
     border-radius: 5px;
     border: 1px solid $common-basic-color;
     z-index: 9999;

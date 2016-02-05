@@ -1,11 +1,12 @@
 /*
  *= require_self
- *= require flexslider
+ *= require slick
+ *= require slick-theme
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./projects
  *= require jquery.ui.selectable
- *= require fancybox
+ *= require jquery.colorbox-example3
  *= require ./card
  *= require select2
  */

@@ -1,8 +1,7 @@
-#= require fancybox
-
+#= require jquery.colorbox
 editor = null
 
-setupEditor = ->
+setupNicEditor = ->
   editor = new nicEditor {
     buttonList: ["material", "tool", "blueprint", "attachment", "ol", "ul", "bold", "italic", "underline"]
   }
@@ -31,6 +30,10 @@ validateForm = (event, is_note_card_form) ->
 
 focusOnTitle = () ->
   $(".card-title").first().focus()
+
+hideTemplateForms = () ->
+  $("#card-form-container").css "display", "none"
+  $("#state-convert-dialog").css "display", "none"
 
 $ ->
   $.rails.ajax = (option) ->
@@ -96,9 +99,7 @@ $ ->
     submitButton = $(this).find ".submit"
     .off()
     .fadeTo 80, 0.01
-    $.fancybox.close()
-
-  $(document).on "ajax:beforeSend", ".new-card, .edit-card", $.fancybox.showLoading
+    $.colorbox.close()
 
   $(document).on "ajax:success", ".new-card", (xhr, data) ->
     link = $ this
@@ -110,8 +111,8 @@ $ ->
     li.addClass className
     card = null
     formContainer.html data.html
-    setupEditor()
-    setTimeout focusOnTitle, 1
+    setupNicEditor()
+    setTimeout focusOnTitle, 500
     formContainer.find "form"
     .bind "submit", (e) ->
       card = template.clone()
@@ -131,7 +132,7 @@ $ ->
     li = $(this).closest "li"
     card = $(li).children().first()
     formContainer.html data.html
-    setupEditor()
+    setupNicEditor()
     setTimeout focusOnTitle, 1
     formContainer.find "form"
     .bind "submit", (e) ->
@@ -143,12 +144,16 @@ $ ->
       alert status
 
   $(document).on "ajax:success", ".new-card, .edit-card", ->
-    $.fancybox.open
-      padding: 0
-      href: "#card-form-container"
-      helpers:
-        overlay:
-          closeClick: false
+    form_object = $("#card-form-container")
+    form_object.css "display", "block"
+    $.colorbox
+      inline: true
+      href: form_object
+      width: "auto"
+      maxHeight: "90%"
+      opacity: 0.6
+      overlayClose: false
+      className: "colorbox-card-form"
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
     link = $ this
@@ -161,20 +166,19 @@ $ ->
     setTimeout getCardsTop, 100
     reloadRecipeCardsList()
 
-  $(document).on "click", ".cancel-btn", (event) ->
+  $(document).on "click", "#cboxClose", (event) ->
     event.preventDefault()
-    $.fancybox.close()
+    $.colorbox.close()
+    hideTemplateForms()
 
   $(document).on "card-order-changed", "#recipe-card-list", (event) ->
     setStateIndex()
 
-  $(document).on "click", ".fancybox-overlay", (event) ->
+  $(document).on "click", "#cboxOverlay.colorbox-card-form", (event) ->
     event.preventDefault()
     if confirm "Are you sure to discard all changes on this dialog?"
-      $.fancybox.close()
-
-  $(document).on "click", ".fancybox-inner", (event) ->
-    event.stopPropagation()
+      $.colorbox.close()
+      hideTemplateForms()
 
   $(document).on "keyup", "#inner_content .nicEdit-main", (event) ->
     description_text_length = descriptionText().length
@@ -204,12 +208,17 @@ $ ->
         if (position isnt src_data_position) and (position isnt "")
           select.append $("<option>").html(text).val position
 
-      $.fancybox.open
-        href: "#state-convert-dialog"
+      state_convert_dialog = $("#state-convert-dialog")
+      state_convert_dialog.css "display", "block"
+      $.colorbox
+        inline: true
+        href: state_convert_dialog
+        width: "auto"
+        maxHeight: "90%"
+        opacity: 0.6
 
     else
       alert "First, make 2 or more state."
-
 
   $(document).on "click", "#state-convert-dialog .ok-btn", (event) ->
     event.preventDefault()
@@ -234,7 +243,7 @@ $ ->
       success: (data) ->
         new_annotation_id = data.$oid
         new_annotation_url = recipe_url + "/states/" + dst_state_id + "/annotations/" + new_annotation_id
-        $.fancybox.close()
+        $.colorbox.close()
         loading = $ "#loading"
         img = loading.find "img"
         left = (loading.width() - img.width()) / 2
@@ -256,8 +265,8 @@ $ ->
             li.append card
             $("#" + dst_state_id + " .annotation-list").append li
 
-            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-            selector = "#" + article_id + " .flexslider"
+            article_id = $(data.html).find(".slick").closest("article").attr "id"
+            selector = "#" + article_id + " .slick"
             card.replaceWith data.html
             setupFigureSlider selector
             $("#loading").hide()
@@ -306,8 +315,8 @@ $ ->
             li.append card
             $("#recipe-card-list").append li
 
-            article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-            selector = "#" + article_id + " .flexslider"
+            article_id = $(data.html).find(".slick").closest("article").attr "id"
+            selector = "#" + article_id + " .slick"
             card.replaceWith data.html
             setupFigureSlider selector
             $("#loading").hide()
@@ -319,15 +328,6 @@ $ ->
             alert data.message
       error: (data) ->
         alert data.message
-
-  $(document).on "change", "input[type='file']", (event) ->
-    file = event.target.files[0]
-    reader = new FileReader()
-    reader.onload = ->
-      tmp_img = new Image
-      tmp_img.src = reader.result
-      $(event.target).siblings("img").attr "src", tmp_img.src
-    reader.readAsDataURL file
 
   wait4save = (form, card) ->
     card.addClass "wait4save"
@@ -388,18 +388,16 @@ $ ->
   setStateIndex()
 
   setupFigureSlider = (selector) ->
-    $(selector).flexslider {
-      animation: "slider",
-      animationSpeed: 300,
-      controlNav: true,
-      smoothHeight: true,
-      slideshow: false,
-    }
+    $(selector).slick
+      adaptiveHeight: true,
+      dots: true,
+      infinite: true,
+      speed: 300
 
   updateCard = (card, data) ->
     formContainer.empty()
-    article_id = $(data.html).find(".flexslider").closest("article").attr "id"
-    selector = "#" + article_id + " .flexslider"
+    article_id = $(data.html).find(".slick").closest("article").attr "id"
+    selector = "#" + article_id + " .slick"
     card.replaceWith data.html
     checkStateConvertiblity()
     setStateIndex()
