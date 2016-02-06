@@ -14,7 +14,8 @@ module Api
       after_action :update_project, only: [:create, :update, :destroy]
 
       def index
-        render json: @state.annotations, status: 200
+        @annotations = @state.annotations
+        render :index, format: 'json'
       end
 
       def new
@@ -24,30 +25,36 @@ module Api
       end
 
       def show
-        render json: @annotation, status: 200
+        load_prev
+        load_next
+        render :show, format: 'json'
       end
 
       def create
         if @annotation.save
-          render json: @annotation, status: 200
+          load_prev
+          load_next
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
       def update
         if @annotation.update annotation_params
-          render json: @annotation, status: 200
+          load_prev
+          load_next
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
       def destroy
         if @annotation.destroy
-          return head :no_content, status: 200
+          return head :no_content, status: 200, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
@@ -125,6 +132,16 @@ module Api
         unless request_auth_key.present? && auth_keys.include?(request_auth_key)
           return head 403
         end
+      end
+
+      def load_prev
+        prev_position = @annotation.position - 1
+        @prev = prev_position <= 0 ? nil : @state.annotations.where(position: prev_position).first
+      end
+
+      def load_next
+        next_position = @annotation.position + 1
+        @next = next_position > @state.annotations.length ? nil : @state.annotations.where(position: next_position).first
       end
 
     end

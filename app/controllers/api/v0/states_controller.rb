@@ -13,7 +13,8 @@ module Api
       after_action :update_project, only: [:create, :update, :destroy]
 
       def index
-        render json: @recipe.states, status: 200
+        @states = @recipe.states
+        render :index, format: 'json'
       end
 
       def new
@@ -23,30 +24,36 @@ module Api
       end
 
       def show
-        render json: @state, status: 200
+        load_prev
+        load_next
+        render :show, format: 'json'
       end
 
       def create
         if @state.save
-          render json: @state, status: 200
+          load_prev
+          load_next
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
       def update
         if @state.update state_params
-          render json: @state, status: 200
+          load_prev
+          load_next
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
       def destroy
         if @state.destroy
-          return head :no_content, status: 200
+          return head :no_content, status: 200, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
@@ -117,6 +124,16 @@ module Api
         unless request_auth_key.present? && auth_keys.include?(request_auth_key)
           return head 403
         end
+      end
+
+      def load_prev
+        prev_position = @state.position - 1
+        @prev = prev_position <= 0 ? nil : @recipe.states.where(position: prev_position).first
+      end
+
+      def load_next
+        next_position = @state.position + 1
+        @next = next_position > @recipe.states.length ? nil : @recipe.states.where(position: next_position).first
       end
 
     end

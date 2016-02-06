@@ -10,11 +10,12 @@ module Api
       before_action :delete_collaborations, only: :destroy
 
       def index
-        render json: @owner.projects, status: 200
+        @projects = @owner.projects
+        render :index, format: 'json'
       end
 
       def show
-        render json: @project, status: 200
+        render :show, format: 'json'
       end
 
       def create
@@ -22,17 +23,17 @@ module Api
         slug = slug.gsub(/\W|\s/, 'x').downcase
         @project.name = slug
         if @project.save
-          render json: @project, status: 200
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
       def destroy
         if @project.destroy
-          return head :no_content, status: 200
+          return head :no_content, status: 200, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
@@ -46,9 +47,9 @@ module Api
         end
         @project.updated_at = DateTime.now.in_time_zone
         if @project.update parameters
-          render json: @project, status: 200
+          render :show, format: 'json'
         else
-          return head 400
+          return head 400, format: 'json'
         end
       end
 
