@@ -1,5 +1,5 @@
 json.array! @states do |state|
-  json.id state._id
+  json.id state.id.to_str
   json.(state,
     :created_at,
     :updated_at,
