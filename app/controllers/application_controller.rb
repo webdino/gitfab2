@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   include ErrorHandling
   protect_from_forgery with: :exception
 
-  rescue_from Exception, with: :render_500
-  UnauthorizedError = Class.new(ActionController::ActionControllerError)
-  IllegalAccessError = Class.new(ActionController::ActionControllerError)
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from ActionController::RoutingError, with: :render_404
+  rescue_from StandardError, with: :render_500
 
   handle_as_unauthorized CanCan::AccessDenied
 

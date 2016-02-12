@@ -45,18 +45,21 @@ class AnnotationsController < ApplicationController
   end
 
   def to_state
-    annotation = @state.annotations.find params[:annotation_id]
-    not_found if annotation.blank?
-    annotation._type = 'Card::State'
-    state = annotation.dup_document
-    annotation.destroy
-    @recipe.states << state
-    @recipe.states.each.with_index(1) do |st, index|
-      st.position = index
-      st.save
+    annotation = @state.annotations.where(id: params[:annotation_id]).first
+    if annotation.blank?
+      render_404
+    else
+      annotation._type = 'Card::State'
+      state = annotation.dup_document
+      annotation.destroy
+      @recipe.states << state
+      @recipe.states.each.with_index(1) do |st, index|
+        st.position = index
+        st.save
+      end
+      @recipe.save
+      render json: state.id
     end
-    @recipe.save
-    render json: state.id
   end
 
   private
@@ -97,10 +100,6 @@ class AnnotationsController < ApplicationController
     if params[:annotation]
       params.require(:annotation).permit Card::Annotation.updatable_columns
     end
-  end
-
-  def parametize(klass)
-    klass.to_s.split(/::/).last.downcase
   end
 
   def save_current_users_contribution
