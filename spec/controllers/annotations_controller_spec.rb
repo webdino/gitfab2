@@ -9,7 +9,7 @@ describe AnnotationsController, type: :controller do
 
   subject{response}
 
-  describe "GET new" do
+  describe "GET #new" do
     before do
       sign_in user
       state = project.recipe.states.create _type: Card::State.name, description: "foo"
@@ -18,7 +18,7 @@ describe AnnotationsController, type: :controller do
     it{should render_template :new}
   end
 
-  describe "GET edit" do
+  describe "GET #edit" do
     before do
       sign_in user
       state = project.recipe.states.create _type: Card::State.name, description: "foo"
@@ -29,28 +29,62 @@ describe AnnotationsController, type: :controller do
     it{should render_template :edit}
   end
 
-  describe "POST create" do
-    before do
-      sign_in user
-      state = project.recipe.states.create _type: Card::State.name, description: "foo"
-      xhr :post, :create, user_id: user.id, project_id: project.id,
-        state_id: state.id, annotation: {description: "ann"}
-    end
-    it{should render_template :create}
-  end
-
-  describe "PATCH update" do
+  describe "GET #show" do
     before do
       sign_in user
       state = project.recipe.states.create _type: Card::State.name, description: "foo"
       annotation = state.annotations.create description: "ann"
-      xhr :patch, :update, user_id: user.id, project_id: project.id,
-        state_id: state.id, id: annotation.id, annotation: {description: "_ann"}
+      xhr :get, :show, owner_name: user.id, project_id: project.id,
+        state_id: state.id, id: annotation.id
     end
-    it{should render_template :update}
+    it{should render_template :show}
   end
 
-  describe "DELETE destroy" do
+  describe "POST #create" do
+    describe "with correct parameters" do
+      before do
+        sign_in user
+        state = project.recipe.states.create _type: Card::State.name, description: "foo"
+        xhr :post, :create, user_id: user.id, project_id: project.id,
+          state_id: state.id, annotation: {description: "ann"}
+      end
+      it{should render_template :create}
+    end
+    describe "with incorrect parameters" do
+      before do
+        sign_in user
+        state = project.recipe.states.create _type: Card::State.name, description: "foo"
+        xhr :post, :create, user_id: user.id, project_id: project.id,
+          state_id: state.id, annotation: {_type: nil, description: "ann"}
+      end
+      it{expect(response.status).to eq(400)}
+    end
+  end
+
+  describe "PATCH #update" do
+    describe "with correct parameters" do
+      before do
+        sign_in user
+        state = project.recipe.states.create _type: Card::State.name, description: "foo"
+        annotation = state.annotations.create description: "ann"
+        xhr :patch, :update, user_id: user.id, project_id: project.id,
+          state_id: state.id, id: annotation.id, annotation: {description: "_ann"}
+      end
+      it{should render_template :update}
+    end
+    describe "with incorrect parameters" do
+      before do
+        sign_in user
+        state = project.recipe.states.create _type: Card::State.name, description: "foo"
+        annotation = state.annotations.create description: "ann"
+        xhr :patch, :update, user_id: user.id, project_id: project.id,
+          state_id: state.id, id: annotation.id, annotation: {_type: nil, description: "_ann"}
+      end
+      it{expect(response.status).to eq(400)}
+    end
+  end
+
+  describe "DELETE #destroy" do
     before do
       sign_in user
       state = project.recipe.states.create _type: Card::State.name, description: "foo"
@@ -60,4 +94,38 @@ describe AnnotationsController, type: :controller do
     end
     it{should render_template :destroy}
   end
+
+  describe "POST #to_state" do
+    # TODO: #1366 change #to_state route
+    # describe "with correct parameters" do
+    #   before do
+    #     sign_in user
+    #     state = project.recipe.states.create _type: Card::State.name, description: "foo"
+    #     annotation = state.annotations.create description: "ann"
+    #     xhr :get, :to_state, owner_name: user.slug, project_id: project.id,
+    #       state_id: state.id, annotation_id: annotation.id
+    #   end
+    #   it{expect(project.recipe.states.first.annotations.length).to eq(0)}
+    # end
+    describe "with incorrect parameters" do
+      before do
+        sign_in user
+        state = project.recipe.states.create _type: Card::State.name, description: "foo"
+        annotation = state.annotations.create description: "ann"
+        xhr :get, :to_state, owner_name: user.slug, project_id: project.id,
+          state_id: state.id, annotation_id: "unexisted_id"
+      end
+      it{expect(response.status).to eq(404)}
+    end
+  end
+
+  #TODO: create update_contribution spec
+  describe "update_contribution" do
+    describe "save_current_users_contribution" do
+    end
+    describe "create_new_contribution" do
+    end
+
+  end
+
 end
