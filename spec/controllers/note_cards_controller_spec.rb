@@ -49,17 +49,33 @@ describe NoteCardsController, type: :controller do
           .to be_a Attachment::Material
       end
     end
+    context "with incorrect params" do
+      before do
+        xhr :post, :create, user_id: user.id, project_id: project.id, note_card: {incorrect: "params"}
+      end
+      it{expect render_template 'error/failed', status: 400}
+    end
   end
 
   describe "PATCH update" do
-    let(:title_to_change){"_foo"}
-    before do
-      xhr :patch, :update, user_id: user.id, project_id: project.id,
-        id: note_card.id, note_card: {title: title_to_change}
-      note_card.reload
+    context "with correct params" do
+      let(:title_to_change){"_foo"}
+      before do
+        xhr :patch, :update, user_id: user.id, project_id: project.id,
+          id: note_card.id, note_card: {title: title_to_change}
+        note_card.reload
+      end
+      it{should render_template :update}
+      it{expect(project.note.note_cards.first.title).to eq title_to_change}
     end
-    it{should render_template :update}
-    it{expect(project.note.note_cards.first.title).to eq title_to_change}
+
+    context "with incorrect params" do
+      before do
+        xhr :patch, :update, user_id: user.id, project_id: project.id,
+          id: note_card.id, note_card: {title: "", description: ""}
+      end
+      it{expect render_template 'error/failed', status: 400}
+    end
   end
 
   describe "DELETE destroy" do
