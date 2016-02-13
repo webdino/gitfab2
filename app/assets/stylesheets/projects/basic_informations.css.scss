@@ -536,3 +536,7 @@ $tool_size: 75px;
     }
   }
 }
+
+.select2-dropdown {
+  z-index: 9999999 !important;
+}

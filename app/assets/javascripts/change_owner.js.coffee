@@ -1,5 +1,4 @@
 $ ->
-  search_term = null
   url = $("#change-owner").data "url"
   $("#owner_name").select2 {
     width: "40%",
@@ -9,15 +8,13 @@ $ ->
       url: url,
       dataType: "json",
       cache: false,
-      data: (term, page) ->
-        search_term = term
-      results: (data, page) ->
+      processResults: (data, params) ->
         ownerName = url.split("/")[1]
         return {
           results: $.map(data, (user, i) ->
             userName = user.name
             userSlug = user.slug
-            if (userName isnt ownerName) and userName.indexOf(search_term) != -1
+            if (userName isnt ownerName) and userName.indexOf(params.term) != -1
               return {id: userSlug, text: userName}
           )
         }
