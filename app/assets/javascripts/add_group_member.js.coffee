@@ -1,5 +1,4 @@
 $ ->
-  search_term = null
   $("#member_name").select2 {
     width: "40%",
     placeholder: "Choose a new member",
@@ -8,17 +7,15 @@ $ ->
       url: "/users.json",
       dataType: "json",
       cache: false,
-      data: (term, page) ->
-        search_term = term
-      results: (data, page) ->
+      processResults: (data, params) ->
         usersList = []
-        $(".membership > .name").each (index, element) ->
+        $(".membership > .name > a").each (index, element) ->
           usersList.push $(element).text()
         return {
           results: $.map(data, (user, i) ->
             userName = user.name
             userSlug = user.slug
-            if $.inArray(userName, usersList) == -1 and userName.indexOf(search_term) != -1
+            if $.inArray(userName, usersList) == -1 && userName.indexOf(params.term) != -1
               return {id: userSlug, text: userName}
           )
         }

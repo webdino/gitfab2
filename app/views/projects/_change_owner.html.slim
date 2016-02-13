@@ -2,5 +2,5 @@
   h1 Change Project Owner
   - if can? :manage, project
     == form_tag [@owner, @project], method: "patch", remote: true, id: "change_owner"
-      == hidden_field_tag :owner_name
+      == select_tag :owner_name
       == submit_tag "submit", class: "btn"

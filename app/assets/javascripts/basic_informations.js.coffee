@@ -4,7 +4,6 @@ $(document).on "click", ".fork-btn", (event) ->
   form.submit()
 
 $ ->
-  search_term = null
   $("#collaborator_name").select2 {
     width: "40%",
     placeholder: "Choose a collaborator",
@@ -13,10 +12,8 @@ $ ->
       url: "/owners.json",
       dataType: "json",
       cache: false,
-      quietMillis: 250,
-      data: (term, page) ->
-        search_term = term
-      results: (data, page) ->
+      delay: 250,
+      processResults: (data, params) ->
         collaboratorsList = []
         ownerName = $("#owner > span:nth-child(2)").text()
         collaboratorsList.push ownerName
@@ -26,7 +23,7 @@ $ ->
           results: $.map(data, (collaborator, i) ->
             collaboratorName = collaborator.name
             collaboratorSlug = collaborator.slug
-            if $.inArray(collaboratorName, collaboratorsList) == -1 and collaboratorName.indexOf(search_term) != -1
+            if $.inArray(collaboratorName, collaboratorsList) == -1 && collaboratorName.indexOf(params.term) != -1
               return {id: collaboratorSlug, text: collaboratorName}
           )
         }
@@ -50,6 +47,12 @@ $ ->
     width: "auto"
     height: "auto"
     className: "colorbox-bg-transparent"
+
+$(document).on "click", ".select2-container", (event) ->
+  $(".dropdown-wrapper").first().append $(".select2-dropdown").first()
+
+$(document).on "click", ".select2-dropdown", (event) ->
+  event.stopPropagation()
 
 window.clearSelect2Value = () ->
   $("#s2id_user_name").select2 "val",""
