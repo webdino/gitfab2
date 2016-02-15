@@ -15,7 +15,6 @@ describe CollaboratorsController, type: :controller do
     it{should render_template :index}
   end
 
-
   describe 'POST create' do
     context 'for user project' do
       context 'with valid parameters' do

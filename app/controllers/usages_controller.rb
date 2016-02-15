@@ -73,13 +73,13 @@ class UsagesController < ApplicationController
   def update_contribution
     return unless current_user
     @usage.contributions.each do |contribution|
-      if contribution.contributor_id == current_user.slug
+      if contribution.contributor_id == current_user.id
         contribution.updated_at = DateTime.now.in_time_zone
         return
       end
     end
     contribution = @usage.contributions.new
-    contribution.contributor_id = current_user.slug
+    contribution.contributor_id = current_user.id
     contribution.created_at = DateTime.now.in_time_zone
     contribution.updated_at = DateTime.now.in_time_zone
   end
