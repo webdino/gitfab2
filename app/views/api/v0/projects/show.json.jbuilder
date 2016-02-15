@@ -1,4 +1,4 @@
-json.id @project._id
+json.id @project.id.to_str
 json.(@project,
   :created_at,
   :updated_at,
