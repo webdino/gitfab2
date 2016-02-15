@@ -8,14 +8,25 @@ describe CommentsController, type: :controller do
   let(:project){FactoryGirl.create :user_project}
 
   describe "POST create" do
-    before do
-      note_card = project.note.note_cards.create
-      sign_in user1
-      xhr :post, :create, user_id: project.owner.id, project_id: project.id,
-        note_card_id: note_card.id, comment: {body: "foo", user_id: user1.id}
+    context "with valid parameters" do
+      before do
+        note_card = project.note.note_cards.create
+        sign_in user1
+        xhr :post, :create, user_id: project.owner.id, project_id: project.id,
+          note_card_id: note_card.id, comment: {body: "foo", user_id: user1.id}
+      end
+      it_behaves_like "success"
+      it_behaves_like "render template", "create"
     end
-    it_behaves_like "success"
-    it_behaves_like "render template", "create"
+    context "with invalid parameters" do
+      before do
+        note_card = project.note.note_cards.create
+        sign_in user1
+        xhr :post, :create, user_id: project.owner.id, project_id: project.id,
+          note_card_id: note_card.id, comment: {body: "foo", user_id: "unkonwn_user_id"}
+      end
+      it{expect render_template 'error/failed', status: 400}
+    end
   end
 
   describe "DELETE destroy" do
