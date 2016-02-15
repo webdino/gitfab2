@@ -16,28 +16,49 @@ describe MembershipsController, type: :controller do
   end
 
   describe "POST create" do
-    before do
-      sign_in user
-      group = Group.create name: "foo"
-      xhr :post, :create, user_id: user.id,
-        membership: {group_id: group.id.to_s}, format: :json
-    end
     context "with valid params" do
+      before do
+        sign_in user
+        group = Group.create name: "foo"
+        xhr :post, :create, user_id: user.id,
+          membership: {group_id: group.id.to_s}, format: :json
+      end
       it_behaves_like "success"
       it_behaves_like "render template", "create"
+    end
+    context "with invalid params" do
+      before do
+        sign_in user
+        xhr :post, :create, user_id: user.id,
+          membership: {group_id: "unexisted_group"}, format: :json
+      end
+      it{expect render_template 'error/failed', status: 400}
     end
   end
 
   describe "PATCH update" do
-    let(:membership_params){{role: "editor"}}
-    before do
-      sign_in user
-      group = Group.create name: "foo"
-      membership = user.memberships.create group_id: group.id
-      patch :update, user_id: user.id, id: membership.id,
-        membership: membership_params, format: :json
+    context "with invalid params" do
+      let(:membership_params){{role: "editor"}}
+      before do
+        sign_in user
+        group = Group.create name: "foo"
+        membership = user.memberships.create group_id: group.id
+        patch :update, user_id: user.id, id: membership.id,
+          membership: membership_params, format: :json
+      end
+      it{should render_template :update}
     end
-    it{should render_template :update}
+    context "with invalid params" do
+      let(:membership_params){{role: "unknown_role"}}
+      before do
+        sign_in user
+        group = Group.create name: "foo"
+        membership = user.memberships.create group_id: group.id
+        xhr :post, :create, user_id: user.id, id: membership.id,
+          membership: membership_params, format: :json
+      end
+      it{expect render_template 'error/failed', status: 400}
+    end
   end
 
   describe "DELETE destroy" do
