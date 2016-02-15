@@ -1,4 +1,4 @@
-json.id @annotation._id
+json.id @annotation.id.to_str
 json.(@annotation,
   :created_at,
   :updated_at,
