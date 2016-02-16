@@ -63,7 +63,7 @@ class User
 
   def is_contributor_of?(target)
     target.contributions.each do |contribution|
-      return true if contribution.contributor_id == slug
+      return true if contribution.contributor_id == self.id
     end
     false
   end

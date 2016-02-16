@@ -104,7 +104,7 @@ class AnnotationsController < ApplicationController
 
   def save_current_users_contribution
     return @annotation.contributions.find_all{|contribution|
-      contribution.contributor_id == current_user.slug
+      contribution.contributor_id == current_user.id
     }.map{|contribution|
       contribution.updated_at = DateTime.now.in_time_zone
       contribution
@@ -113,7 +113,7 @@ class AnnotationsController < ApplicationController
 
   def create_new_contribution
     contribution = @annotation.contributions.new
-    contribution.contributor_id = current_user.slug
+    contribution.contributor_id = current_user.id
     contribution.created_at = DateTime.now.in_time_zone
     contribution.updated_at = DateTime.now.in_time_zone
     return contribution
