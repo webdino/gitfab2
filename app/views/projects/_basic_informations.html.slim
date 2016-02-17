@@ -76,7 +76,7 @@ section#basic-informations
         index = @project.license.nil? ? 3 : @project.license
         license = @project.licenses[index]
         image = 'cc/' + license + '.png'
-        url = 'http://creativecommons.org/licenses/' + license + '/4.0'
+        url = 'https://creativecommons.org/licenses/' + license + '/4.0'
         project_members = @project.collaborators.unshift @project.owner
         project_member_links = project_members.map{|member| link_to(member.name, projects_path(member.slug))}
 
@@ -130,7 +130,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
 
     #share-destinations
       .container
-        - url = "http://fabble.cc" + project_path(@owner, @project)
+        - url = "https://fabble.cc" + project_path(@owner, @project)
         == link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
         == link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
 

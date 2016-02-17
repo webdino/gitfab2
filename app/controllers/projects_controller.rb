@@ -118,7 +118,7 @@ class ProjectsController < ApplicationController
         old_collaboration = new_owner.collaboration_in project
         old_collaboration.destroy
       end
-      new_owner_projects_path = 'http://' + request.raw_host_with_port + '/' + new_owner.slug
+      new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
       respond_to do |format|
         format.html { redirect_to projects_path(new_owner.slug) }
         format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
