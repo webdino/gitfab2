@@ -1,6 +1,6 @@
 $ ->
   YOUTUBE_URL_MIN_LENGTH = 28
-  YOUTUBE_EMBED_URL_BASE = "http://www.youtube.com/embed/"
+  YOUTUBE_EMBED_URL_BASE = "https://www.youtube.com/embed/"
   YOUTUBE_ID_LENGTH = 11
   YOUTUBE_WATCH_URL_REGEXP = ///https?:\/\/(?:(?:youtu\.be\/)|(?:www\.)?(?:youtube\.com\/watch\?v=))([^&]{#{YOUTUBE_ID_LENGTH},})(&\S*)?$///
   VIDEOID_MATCH_INDEX = 1
@@ -13,7 +13,7 @@ $ ->
 
   getVideoOf = (object) ->
     id = if object == "card" then "#inner_content" else "main#recipes-edit"
-    url = $(".card-figure-link").val()
+    url = $(".card-figure-link").last().val()
     if previous_url != url
       previous_url = url
       if url.length >= YOUTUBE_URL_MIN_LENGTH
