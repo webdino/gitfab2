@@ -4,7 +4,7 @@
 def convert _obj
   if _obj.figures.length == 1 && _obj.figures.first.link.present?
     _obj.figures.first.link = _obj.figures.first.link.gsub("http://", "https://")
-    _obj.save
+    _obj.save!
   end
 end
 
