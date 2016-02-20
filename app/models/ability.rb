@@ -34,20 +34,26 @@ class Ability
       can? :read, card.note.project
     end
     can :manage, Project do |project|
-      is_project_manager?(project, user)
+      !project.is_deleted && is_project_manager?(project, user)
     end
     can :update, Project do |project|
-      if params[:project].present? && params[:project][:likes_attributes]
+      if project.is_deleted
+        false
+      elsif params[:project].present? && params[:project][:likes_attributes]
         true
       else
         is_project_manager?(project, user)
       end
     end
     can :edit, Project do |project|
-      is_project_editor?(project, user)
+      !project.is_deleted && is_project_editor?(project, user)
     end
     can :read, Project do |project|
-      !project.is_private? ? true : is_project_editor?(project, user)
+      if project.is_deleted
+        false
+      else
+        !project.is_private ? true : is_project_editor?(project, user)
+      end
     end
     can :read, Note do |note|
       can? :read, note.project

@@ -21,6 +21,7 @@
 //= require_tree ../../../vendor/assets/javascripts/nicedit
 //= require_tree ./helpers
 //= require_tree ./jquery
+//= require ../../../vendor/assets/javascripts/d3
 //= require ./recipe
 //= require ./project_form
 //= require ./card

@@ -46,6 +46,7 @@ Gitfab2::Application.routes.draw do
     resources :projects do
       get 'potential_owners'
       get 'recipe_cards_list'
+      get 'relation_tree'
     end
     resources :projects, only: [:create, :update], concerns: :tags do
       resources :collaborators, only: [:create, :update]

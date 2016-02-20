@@ -27,8 +27,10 @@
     == render partial: "components/base_ogp"
 
 - content_for :content do
-  - if @project.original_id.present?
-    == render "projects/link_to_origin"
+  - has_origin = @project.original.present?
+  - has_derivatives = @project.derivatives.present?
+  - if has_origin || has_derivatives
+    == render "projects/relations"
 
   #content.project-layout
     == yield

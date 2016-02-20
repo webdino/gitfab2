@@ -14,6 +14,7 @@ class Project
   searchable_field :title
   searchable_field :description
   searchable_field :is_private, type: :boolean
+  searchable_field :is_deleted, type: :boolean
   searchable_field :owner_id
   slug :name, scope: :owner_id
 
@@ -50,6 +51,7 @@ class Project
     string :owner_type
     string :owner_id
     boolean :is_private
+    boolean :is_deleted
 
     text :tags do
       tags.map(&:name).flatten
@@ -151,6 +153,11 @@ class Project
     owner_list
   end
 
+  def root project
+    return project if project.original.blank?
+    root project.original
+  end
+
   def thumbnail
     if figures.first.link.present?
       'https://img.youtube.com/vi/' + figures.first.link.split('/').last + '/mqdefault.jpg'
@@ -173,7 +180,7 @@ class Project
 
   class << self
     def updatable_columns
-      [:name, :title, :description, :owner_id, :owner_type, :is_private, :license,
+      [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
        usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns,
        likes_attributes: Like.updatable_columns
