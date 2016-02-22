@@ -62,16 +62,16 @@ $(document).on "click", ".select2-dropdown", (event) ->
 
 $(document).on "click", ".show-project-relation-tree-link", (event) ->
   $("#project-relation-tree svg").remove()
-  width = 800
-  height = 600
+  width = $(window).width() - 100
+  height = $(window).height() - 160
   url = $("#project-relation-tree").data("url")
   svg = d3.select("#project-relation-tree").append("svg")
   .attr("width", width)
   .attr("height", height)
-  .attr("transform", "translate(10, 10)");
+
 
   tree = d3.layout.tree()
-  .size([700, 500])
+  .size([height - 200, width - 200])
   .children(children)
 
   d3.json url, (data) ->
@@ -86,17 +86,24 @@ $(document).on "click", ".show-project-relation-tree-link", (event) ->
     .append("g")
     .attr("class", "node")
     .attr "transform", (d) ->
-      return "translate(" + d.y + "," + d.x + ")"
+      return "translate(" + (d.y + 10) + "," + (d.x + 100) + ")"
 
     node.append("circle")
     .attr("r", 8)
     .attr("fill", ((d) -> return if d.this then common_basic_color else common_gray))
     .on("mouseover", (d) ->
-      d3.select(this).attr "opacity", "0.6"
-      d3.select(this).style "cursor", "pointer"
+      d3.select(this)
+      .attr("opacity", "0.6")
+      .style("cursor", "pointer")
+      d3.select(this.parentNode).select("text")
+      .attr("opacity", "0.6")
+      .attr("font-size", "14px")
     )
     .on("mouseout", (d) ->
       d3.select(this).attr "opacity", "1.0"
+      d3.select(this.parentNode).select("text")
+      .attr("opacity", "1.0")
+      .attr("font-size", "12px")
     )
     .on("click", showLink)
 
@@ -104,17 +111,24 @@ $(document).on "click", ".show-project-relation-tree-link", (event) ->
     .text((d) -> return d.name)
     .attr("x", 10)
     .attr("y", -10)
+    .attr("font-size", "12px")
     .on("mouseover", (d) ->
-      d3.select(this).attr "opacity", "0.6"
-      d3.select(this).style "cursor", "pointer"
+      d3.select(this)
+      .attr("font-size", "14px")
+      .attr("opacity", "0.6")
+      .style("cursor", "pointer")
+      d3.select(this.parentNode).select("circle").attr "opacity", "0.6"
     )
     .on("mouseout", (d) ->
-      d3.select(this).attr "opacity", "1.0"
+      d3.select(this)
+      .attr("font-size", "12px")
+      .attr("opacity", "1.0")
+      d3.select(this.parentNode).select("circle").attr "opacity", "1.0"
     )
     .on("click", showLink)
 
     diagonal = d3.svg.diagonal()
-    .projection ((d) -> return([d.y, d.x]))
+    .projection ((d) -> return([d.y + 10, d.x + 100]))
 
     svg.selectAll(".link")
     .data(links)
