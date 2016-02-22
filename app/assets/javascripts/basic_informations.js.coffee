@@ -126,7 +126,10 @@ $(document).on "click", ".show-project-relation-tree-link", (event) ->
     .attr("d", diagonal)
 
 window.showLink = (d) ->
-  window.open d.url, "_blank"
+  if d.url == "http://fabble.cc" || d.url == "https://fabble.cc"
+    alert "You cannot see this project."
+  else
+    window.open d.url, "_blank"
 
 window.children = (d) ->
   return d["children"]
