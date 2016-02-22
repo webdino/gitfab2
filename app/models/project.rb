@@ -154,7 +154,7 @@ class Project
   end
 
   def root project
-    return project if project.original.blank?
+    return project if project.original.blank? || Project.where(id: project.original_id).length == 0
     root project.original
   end
 
