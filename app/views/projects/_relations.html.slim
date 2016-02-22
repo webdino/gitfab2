@@ -17,8 +17,10 @@
 
   - if @project.owner_type == "User"
     - url = root_url.chop + user_project_relation_tree_path(@project.owner, @project) + ".json"
+    - url = url.gsub "http://", "https://"
   - else
     - url = root_url.chop + group_project_relation_tree_path(@project.owner, @project) + ".json"
+    - url = url.gsub "http://", "https://"
 
   #project-relation-tree data-url="#{url}"
     h1.title Project Relation Tree
