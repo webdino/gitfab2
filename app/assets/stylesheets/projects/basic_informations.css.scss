@@ -9,31 +9,6 @@ $icons-sprite-dimensions: true;
 @import "icons/*.png";
 @include all-icons-sprites;
 
-#link-to-origin {
-  margin: -35px 0 35px;
-  width: 100%;
-  background: $common-dark-gray;
-  .wrapper {
-    margin: auto;
-    width: 960px;
-    height: 44px;
-    .forked-icon {
-      @include icons-sprite(forked);
-      display: inline-block;
-      margin-top: 8px;
-    }
-    .link {
-      position: absolute;
-      margin-top: 16px;
-      margin-left: 15px;
-      font-family: $common-helvetica;
-      font-weight: bold;
-      font-size: 14px;
-      color: $common-label-text-color;
-    }
-  }
-}
-
 #basic-informations {
   @include cf;
   $margin_width: 70px;

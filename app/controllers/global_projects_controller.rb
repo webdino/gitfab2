@@ -9,6 +9,7 @@ class GlobalProjectsController < ApplicationController
       @projects = Project.solr_search do |s|
         s.fulltext query.split.map { |word| "\"#{word}\"" }.join ' AND '
         s.without :is_private, true
+        s.without :is_deleted, true
         # s.order_by :updated_at, :desc
       end.results
 
@@ -16,11 +17,11 @@ class GlobalProjectsController < ApplicationController
       @query = query
 
     elsif !q.nil?
-      @projects = Project.all.in(is_private: [false, nil]).page(params[:page]).order('updated_at DESC')
+      @projects = Project.all.in(is_private: [false, nil]).in(is_deleted: [false, nil]).page(params[:page]).order('updated_at DESC')
       @is_searching = true
 
     else
-      @projects = Project.all.in(is_private: [false, nil]).page(params[:page]).order('updated_at DESC')
+      @projects = Project.all.in(is_private: [false, nil]).in(is_deleted: [false, nil]).page(params[:page]).order('updated_at DESC')
       @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
       @featured_groups = Feature.groups.length > 0 ? view_context.featured_groups : []
       @is_searching = false

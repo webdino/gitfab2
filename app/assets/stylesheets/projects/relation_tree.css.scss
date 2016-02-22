@@ -1,0 +1,40 @@
+$icons-sprite-dimensions: true;
+@import "mixins/variables.css.scss";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
+
+#link-to-relation-tree {
+  margin: -35px 0 35px;
+  width: 100%;
+  background: $common-dark-gray;
+  .wrapper {
+    margin: auto;
+    width: 960px;
+    height: 44px;
+    .forked-icon {
+      @include icons-sprite(forked);
+      display: inline-block;
+      margin-top: 8px;
+    }
+    .link {
+      position: absolute;
+      margin-top: 16px;
+      margin-left: 15px;
+      font-family: $common-sans-serif;
+      font-weight: bold;
+      font-size: 14px;
+      color: $common-label-text-color;
+    }
+  }
+}
+
+#project-relation-tree {
+  display: block;
+  .title {
+    margin-top: 14px;
+    font-family: $common-sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+  }
+}

@@ -61,8 +61,12 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project.destroy project_params
-    redirect_to projects_path(owner_name: @project.owner.slug)
+    @project.is_deleted = true
+    if @project.save
+      redirect_to projects_path(owner_name: @project.owner.slug)
+    else
+      render 'error/failed', status: 400
+    end
   end
 
   def edit
@@ -137,6 +141,12 @@ class ProjectsController < ApplicationController
     @project = @owner.projects.find params[:project_id]
     @recipe = @project.recipe
     render 'recipe_cards_list'
+  end
+
+  def relation_tree
+    @project = @owner.projects.find params[:project_id]
+    @root = @project.root(@project)
+    render 'relation_tree', format: 'json'
   end
 
   def notify_users
