@@ -153,6 +153,7 @@ $ ->
       maxHeight: "90%"
       opacity: 0.6
       overlayClose: false
+      trapFocus: false
       className: "colorbox-card-form"
 
   $(document).on "ajax:success", ".delete-card", (xhr, data) ->
