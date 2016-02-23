@@ -241,7 +241,7 @@ $ ->
       fields = $("#attachments .fields:last")
 
     fields.find(".title").val data.name
-    fields.find(".url").val data.url
+    fields.find(".link").val data.url
     fields.find(".description").val data.description
     fields.find(".markup_id").val data.id
     content = fields.find ".content"
