@@ -69,7 +69,6 @@ $(document).on "click", ".show-project-relation-tree-link", (event) ->
   .attr("width", width)
   .attr("height", height)
 
-
   tree = d3.layout.tree()
   .size([height - 200, width - 200])
   .children(children)

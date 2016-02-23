@@ -14,6 +14,7 @@ $ ->
         this.ne.selectedInstance.restoreRng()
 
     addPane: ->
+      $(".nicEdit-main").blur()
       modalpane.show()
 
       container = new bkElement("div")
