@@ -4,11 +4,13 @@
 def change doc, class_name, card
   xpath = "//a[@class='#{class_name}']"
   doc.xpath(xpath).each do |dom|
-    id = dom.attribute('id').value
-    attachment = card.attachments.where(markup_id: id).first
-    if attachment.present?
-      attachment.kind = class_name
-      attachment.save!
+    if dom.attribute('id').present?
+      id = dom.attribute('id').value
+      attachment = card.attachments.where(markup_id: id).first
+      if attachment.present?
+        attachment.kind = class_name
+        attachment.save!
+      end
     end
   end
 end
