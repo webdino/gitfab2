@@ -6,8 +6,10 @@ def change doc, class_name, card
   doc.xpath(xpath).each do |dom|
     id = dom.attribute('id').value
     attachment = card.attachments.where(markup_id: id).first
-    attachment.kind = class_name
-    attachment.save!
+    if attachment.present?
+      attachment.kind = class_name
+      attachment.save!
+    end
   end
 end
 
