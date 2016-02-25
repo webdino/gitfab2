@@ -11,6 +11,7 @@ class Attachment
   field :link
   field :title
   field :description
+  field :kind
 
   def dup_document
     dup.tap do |doc|
@@ -21,7 +22,7 @@ class Attachment
 
   class << self
     def updatable_columns
-      [:id, :content, :link, :_type, :title, :description, :markup_id]
+      [:id, :content, :link, :_type, :title, :description, :kind, :markup_id]
     end
   end
 
