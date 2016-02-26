@@ -73,7 +73,7 @@ $ ->
         setSelectorPosition i for card_top, i in cards_top when scrollTop >= card_top
       ,
       error: (data) ->
-        console.alert data.message
+        alert data.message
 
   setSelectorPosition = (n) ->
     link_height_in_card_index = 15
@@ -350,6 +350,9 @@ $ ->
       li.append img
       ul.append li
     description = form.find(".card-description").val()
+    if (description == "" || description == null)
+      description = $("#inner_content").find(".nicEdit-main").html()
+      form.find(".card-description").html description
     card_content.find(".description").html description
     progress = $(document.createElement "progress")
     progress.attr "max", 1.0
