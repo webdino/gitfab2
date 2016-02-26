@@ -16,6 +16,7 @@ class NoteCardsController < ApplicationController
   end
 
   def create
+    @note_card.description = view_context.auto_link @note_card.description, html: {target: '_blank'}
     if @note_card.save
       render :create
     else
@@ -27,7 +28,9 @@ class NoteCardsController < ApplicationController
   end
 
   def update
-    if @note_card.update note_card_params
+    auto_linked_params = note_card_params
+    auto_linked_params[:description] = view_context.auto_link note_card_params[:description], html: {target: '_blank'}
+    if @note_card.update auto_linked_params
       render :update
     else
       render 'errors/failed', status: 400
