@@ -21,6 +21,7 @@ class AnnotationsController < ApplicationController
   end
 
   def create
+    @annotation.description = view_context.auto_link @annotation.description, html: {target: '_blank'}
     if @annotation.save
       render :create
     else
@@ -29,7 +30,9 @@ class AnnotationsController < ApplicationController
   end
 
   def update
-    if @annotation.update annotation_params
+    auto_linked_params = annotation_params
+    auto_linked_params[:description] = view_context.auto_link annotation_params[:description], html: {target: '_blank'}
+    if @annotation.update auto_linked_params
       render :update
     else
       render 'errors/failed', status: 400
