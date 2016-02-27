@@ -63,7 +63,9 @@ Gitfab2::Application.routes.draw do
   resources :users, concerns: :owner do
     resources :collaborations
     resources :memberships
-    resources :notifications
+    resources :notifications do
+      get 'mark_all_as_read', on: :collection
+    end
   end
 
   resources :groups, concerns: :owner do

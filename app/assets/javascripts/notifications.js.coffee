@@ -14,3 +14,14 @@ $ ->
       type: "PUT"
       url: url
       dataType: "json"
+
+  $(document).on "click", "#notifications-index .mark-all-as-read", (event) ->
+    url = $(this).data "url"
+    $.ajax
+      type: "GET"
+      url: url
+      dataType: "json"
+      success: (data) ->
+        $(".notifications-badge").hide()
+      error: (data) ->
+        alert data.message
