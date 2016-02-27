@@ -1,5 +1,7 @@
 - @notifications = notifications if @notifications.nil?
 #notifications-index
+  .mark-all-as-read data-url="#{mark_all_as_read_user_notifications_path (current_user)}"
+    .container Mark All as Read
   ul.notifications
     - if @notifications.length > 0
       - @notifications.each do |notification|

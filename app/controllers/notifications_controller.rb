@@ -1,5 +1,5 @@
 class NotificationsController < ApplicationController
-  before_action :load_user, only: :index
+  before_action :load_user, only: [:index, :mark_all_as_read]
   before_action :delete_read_notifications, only: :index
   before_action :load_notification, only: [:destroy, :update]
 
@@ -24,6 +24,13 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def mark_all_as_read
+    @user.my_notifications.each do |notification|
+      notification.was_read = true
+      notification.save
+    end
+  end
+
   private
 
   def load_user
@@ -32,8 +39,8 @@ class NotificationsController < ApplicationController
   end
 
   def delete_read_notifications
-    @user.my_notifications.each do |notificaion|
-      notificaion.delete if notificaion.was_read_before 1.hour
+    @user.my_notifications.each do |notification|
+      notification.delete if notification.was_read_before 1.hour
     end
   end
 
