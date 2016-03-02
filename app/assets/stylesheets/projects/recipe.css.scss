@@ -207,7 +207,10 @@
                 float: left;
                 max-width: $figure_width;
                 width: $figure_width;
-                margin: 0 0 0 $figure_margin_left;
+                margin: 0;
+                .slick-next {
+                  right: 5px;
+                }
               }
             }
             .description {
@@ -287,7 +290,10 @@
                   float: left;
                   max-width: $figure_width;
                   width: $figure_width;
-                  margin: 0 0 0 $figure_margin_left;
+                  margin: 0;
+                  .slick-next {
+                    right: 5px;
+                  }
                 }
               }
 

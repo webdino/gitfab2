@@ -19,8 +19,11 @@
 //= require jquery.validate.additional-methods
 //= require_tree ../../../vendor/assets/javascripts/jquery
 //= require_tree ../../../vendor/assets/javascripts/nicedit
+//= require ../../../vendor/assets/javascripts/three
+//= require_tree ../../../vendor/assets/javascripts/threejs
 //= require_tree ./helpers
 //= require_tree ./jquery
+//= require_tree ./services
 //= require ../../../vendor/assets/javascripts/d3
 //= require ./recipe
 //= require ./project_form
