@@ -1,13 +1,5 @@
-ruby:
-  figures = card.figures
-  has_stl = false
-  card.attachments.each do |attachment|
-    if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-      has_stl = true
-    end
-  end
-
-- if figures.present? && (figures.first.content.present? || figures.first.link.present?) || has_stl
+- figures = card.figures
+- if figures.present? && (figures.first.content.present? || figures.first.link.present?)
     .description
       == Sanitize.clean card.description, Sanitize::Config::CARD
 
