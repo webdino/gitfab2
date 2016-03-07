@@ -9,6 +9,9 @@ main#recipes-show data-url="#{recipe_url}" data-owner="#{@project.owner.name}" d
   == render "recipes/state_convert_dialog"
   == render "recipes/loading"
 
+  #stl-viewer
+    .container
+
 - content_for :bottom do
   coffee:
     $ ->

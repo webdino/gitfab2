@@ -135,5 +135,4 @@ class AnnotationsController < ApplicationController
     body = "#{current_user.name} updated the recipe of #{@project.title}."
     @project.notify users, current_user, url, body if users.length > 0
   end
-
 end

@@ -1,6 +1,14 @@
+ruby:
+  stl_file_num = 0
+  card.attachments.each do |attachment|
+    if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+      stl_file_num += 1
+    end
+  end
+
 - if card.figures.present?
   - if card.figures.first.content.present?
-    - if card.figures.length > 1
+    - if card.figures.length + stl_file_num > 1
       figure
         ul.slides.slick
           - card.figures.each do |figure|
@@ -9,6 +17,14 @@
                 == image_tag figure.content.medium, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
               - else
                 == image_tag figure.content.small, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+
+          - card.attachments.each do |attachment|
+            - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+
+              li
+                - if attachment.content.thumb.present? && attachment.content.thumb.url.present? && attachment.content.thumb.url[-4..-1] == '.gif'
+                  == image_tag attachment.content.thumb, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
+
     - else
       figure
         - if defined? note_card_show
@@ -26,3 +42,12 @@
     - if card.class.to_s.underscore.include? "note"
       figure class = "#{card.class.to_s.underscore}"
         == image_tag("fallback/blank.png")
+
+  - if stl_file_num > 0
+    figure
+      ul.slides.slick
+        - card.attachments.each do |attachment|
+          - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+            li
+              - if attachment.content.thumb.present? && attachment.content.thumb.url.present? && attachment.content.thumb.url[-4..-1] == '.gif'
+                == image_tag attachment.content.thumb, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
