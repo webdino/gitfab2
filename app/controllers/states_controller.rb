@@ -29,7 +29,6 @@ class StatesController < ApplicationController
 
   def update
     auto_linked_params = state_params
-    auto_linked_params[:description] = view_context.auto_link state_params[:description], html: {target: '_blank'}
     if @state.update auto_linked_params
       render :update
     else
