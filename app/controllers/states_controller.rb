@@ -20,7 +20,6 @@ class StatesController < ApplicationController
   end
 
   def create
-    @state.description = view_context.auto_link @state.description, html: {target: '_blank'}
     if @state.save
       render :create
     else
