@@ -60,6 +60,7 @@ $ ->
   getCardsTop()
 
   reloadRecipeCardsList = ->
+    return if $("#recipes-show").length < 1
     owner_id = $("#recipes-show").data "owner"
     project_id = $("#recipes-show").data "project"
     recipe_cards_index_url = "/users/"+ owner_id + "/projects/" + project_id + "/recipe_cards_list"
