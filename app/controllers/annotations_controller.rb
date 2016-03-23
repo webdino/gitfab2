@@ -30,7 +30,6 @@ class AnnotationsController < ApplicationController
 
   def update
     auto_linked_params = annotation_params
-    auto_linked_params[:description] = view_context.auto_link annotation_params[:description], html: {target: '_blank'}
     if @annotation.update auto_linked_params
       render :update
     else

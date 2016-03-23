@@ -26,7 +26,6 @@ class UsagesController < ApplicationController
 
   def update
     auto_linked_params = usage_params
-    auto_linked_params[:description] = view_context.auto_link usage_params[:description], html: {target: '_blank'}
     if @usage.update auto_linked_params
       @project.updated_at = DateTime.now.in_time_zone
       @project.update
