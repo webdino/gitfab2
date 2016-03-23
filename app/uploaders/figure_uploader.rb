@@ -5,6 +5,8 @@ class FigureUploader < CarrierWave::Uploader::Base
 
   storage :file
 
+  process :fix_exif_rotation
+
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
@@ -53,5 +55,11 @@ class FigureUploader < CarrierWave::Uploader::Base
       c.geometry "+#{x}+#{y}"
     end
     img
+  end
+
+  def fix_exif_rotation
+    manipulate! do |img|
+      img.tap(&:auto_orient)
+    end
   end
 end
