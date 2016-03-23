@@ -15,7 +15,6 @@ class UsagesController < ApplicationController
   end
 
   def create
-    @usage.description = view_context.auto_link @usage.description, html: {target: '_blank'}
     if @usage.save
       @project.updated_at = DateTime.now.in_time_zone
       @project.update
