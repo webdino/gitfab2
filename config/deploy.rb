@@ -46,7 +46,7 @@ set :delayed_job_workers, 2
 set :delayed_job_roles, [:app]
 
 ### Set the location of the delayed_job logfile
-set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log/delayed_job.log'
+set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log'
 
 namespace :deploy do
   desc 'Restart application'
