@@ -136,7 +136,7 @@ $ ->
       id = this.uuid() if !id
 
       url = this.container.find(".url").val()
-      url = "https://" + url unless url.match /https?:\/\//
+      url = "https://" + url unless ((url.match /https?:\/\//) || url?)
       fileInput = this.container.find(".file").get 0
       file = fileInput.files[0] if fileInput.files.length > 0
 
