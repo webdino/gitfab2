@@ -3,6 +3,8 @@ $ ->
   modalpane.attr "id", "modal-pane"
   $(document.body).append modalpane
 
+  is_safari = if window.navigator.userAgent.toLowerCase().indexOf("safari") != -1 then true else false
+
   nicMarkupButton = nicEditorAdvancedButton.extend {
     width: 400,
 
@@ -94,7 +96,15 @@ $ ->
       this.container = container
 
       selectionText = $.selection()
-      this.link = this.ne.selectedInstance.selElm().parentTag "A"
+      if is_safari
+        sel_elm = this.ne.selectedInstance.selElm()
+        unless sel_elm?
+          this.link = false
+        else
+          this.link = sel_elm.parentTag "A"
+      else
+        this.link = this.ne.selectedInstance.selElm().parentTag "A"
+
       unless this.link
         if selectionText.length > 0
           nameInput.val selectionText
@@ -167,7 +177,10 @@ $ ->
       element.text name
 
       unless this.link
-        this.ne.nicCommand "insertHTML", element.get(0).outerHTML
+        if is_safari
+          this.ne.selectedInstance.elm.appendChild element.get(0)
+        else
+          this.ne.nicCommand "insertHTML", element.get(0).outerHTML
 
     clickCancel: ->
       this.removePane()
