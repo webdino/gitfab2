@@ -48,6 +48,11 @@ set :delayed_job_roles, [:app]
 ### Set the location of the delayed_job logfile
 set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log'
 
+# Set the location of the delayed_job executable
+# Can be relative to the release_path or absolute
+# default value 'bin'
+set :delayed_job_bin_path, 'script' # for rails 3.x
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do
