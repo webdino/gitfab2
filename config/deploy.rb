@@ -41,6 +41,10 @@ set :linked_dirs, %w(log public/uploads)
 # Default value for keep_releases is 5
 set :keep_releases, 2
 
+# Default value for ::delayed_job_workers is 1
+set :delayed_job_workers, 2
+set :delayed_job_roles, [:app]
+
 namespace :deploy do
   desc 'Restart application'
   task :restart do

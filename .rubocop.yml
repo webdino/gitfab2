@@ -4,8 +4,10 @@ AllCops:
   RunRailsCops: true
   Exclude:
     - 'Capfile'
+    - 'Gemfile'
     - 'Guardfile'
     - 'app/validators/*'
+    - 'app/models/ability.rb'
     - 'bin/*'
     - 'config/**/*'
     - 'db/seeds.rb'
@@ -41,7 +43,7 @@ Metrics/ClassLength:
   Max: 180
 
 Metrics/LineLength:
-  Max: 113
+  Max: 120
 
 PredicateName:
   NamePrefixBlacklist:

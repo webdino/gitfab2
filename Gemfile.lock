@@ -6,12 +6,37 @@ GIT
       mongoid
 
 GIT
+  remote: git://github.com/lardawge/carrierwave_backgrounder.git
+  revision: bff7bc3954b9184157812f948b9a6a4f64ff36d3
+  ref: bff7bc3954b9184157812f948b9a6a4f64ff36d3
+  specs:
+    carrierwave_backgrounder (0.4.2)
+      carrierwave (~> 0.5)
+
+GIT
   remote: git://github.com/oshimaryo/capistrano-clockwork.git
   revision: 4dc94f03bae2ffee8feba9152940a4612350da84
   specs:
     capistrano-clockwork (0.0.6)
       capistrano (~> 3.1)
       daemons (~> 1.2)
+
+GIT
+  remote: git://github.com/oshimaryo/stl-ruby.git
+  revision: 907c63e99227e3f2748e2ff38277ab56b7067fc6
+  specs:
+    stl (0.2)
+      geometry
+
+GIT
+  remote: git://github.com/oshimaryo/stl2gif.git
+  revision: 2e508559aa3e2e5f935214d2e6988f1862cea26f
+  ref: 2e508559aa3e2e5f935214d2e6988f1862cea26f
+  branch: develop
+  specs:
+    stl2gif (0.0.2)
+      mustache
+      rmagick
 
 GIT
   remote: git://github.com/radar/paranoia.git
@@ -108,6 +133,8 @@ GEM
     capistrano-rvm (0.1.1)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capistrano3-delayed-job (1.6.0)
+      capistrano (>= 3.0.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -143,15 +170,26 @@ GEM
     compass-rails (2.0.0)
       compass (>= 0.12.2)
     connection_pool (2.0.0)
-    coveralls (0.8.2)
+    coveralls (0.8.9)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
       simplecov (~> 0.10.0)
       term-ansicolor (~> 1.3)
       thor (~> 0.19.1)
+      tins (~> 1.6.0)
     daemons (1.2.3)
     database_cleaner (1.3.0)
     debugger-linecache (1.2.0)
+    delayed_job (4.1.1)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_mongoid (2.2.0)
+      delayed_job (>= 3.0, < 5)
+      mongoid (>= 3.0, < 6)
+      mongoid-compatibility
+    delayed_job_web (1.2.10)
+      activerecord (> 3.0.0)
+      delayed_job (> 2.0.3)
+      sinatra (>= 1.4.4)
     devise (3.2.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -160,7 +198,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    domain_name (0.5.24)
+    domain_name (0.5.20160216)
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     ethon (0.7.4)
@@ -180,6 +218,7 @@ GEM
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
     fssm (0.2.10)
+    geometry (6.5)
     gh (0.14.0)
       addressable
       backports
@@ -264,6 +303,9 @@ GEM
       moped (~> 2.0.0)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
+    mongoid-compatibility (0.3.1)
+      activesupport
+      mongoid (>= 2.0)
     mongoid-grid_fs (2.1.0)
       mime-types (>= 1.0, < 3.0)
       mongoid (>= 3.0, < 5.0)
@@ -282,13 +324,14 @@ GEM
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    mustache (1.0.2)
     nested_form (0.3.2)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.0.1)
-    netrc (0.10.3)
+    netrc (0.11.0)
     nio4r (1.0.0)
     nokogiri (1.6.2.1)
       mini_portile (= 0.6.0)
@@ -392,6 +435,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rmagick (2.15.4)
     rsolr (1.0.10)
       builder (>= 2.1.2)
     rspec (3.0.0)
@@ -526,7 +570,7 @@ GEM
       json (>= 1.8.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.1)
+    unf_ext (0.0.7.2)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -553,14 +597,18 @@ DEPENDENCIES
   capistrano-clockwork!
   capistrano-rails
   capistrano-rvm
+  capistrano3-delayed-job
   carrierwave
   carrierwave-mongoid
+  carrierwave_backgrounder!
   clockwork
   coffee-rails (~> 4.0.0)
   compass-rails
   coveralls
   daemons (>= 1.2.0)
   database_cleaner
+  delayed_job_mongoid
+  delayed_job_web
   devise
   exception_notification!
   factory_girl_rails
@@ -613,6 +661,8 @@ DEPENDENCIES
   slim_lint
   spring
   spring-commands-rspec
+  stl!
+  stl2gif!
   sunspot_mongoid2
   sunspot_rails
   sunspot_solr
@@ -622,3 +672,6 @@ DEPENDENCIES
   turbolinks
   uglifier (>= 1.3.0)
   unicorn
+
+BUNDLED WITH
+   1.11.2

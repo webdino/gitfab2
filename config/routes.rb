@@ -3,6 +3,7 @@ Gitfab2::Application.routes.draw do
   match 'terms' => 'static_pages#terms', via: :get
   match 'privacy' => 'static_pages#privacy', via: :get
 
+  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   match 'admin' => 'features#index', via: :get
 
   root 'global_projects#index'
