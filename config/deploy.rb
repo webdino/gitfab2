@@ -46,24 +46,24 @@ set :keep_releases, 2
 ### Set the location of the delayed_job logfile
 # set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log'
 
-namespace :delayed_job do
-  desc "Install Deployed Job executable if needed"
-  task :install do
-    on roles(delayed_job_roles) do |host|
-      within release_path do
-        # Only install if not already present
-        unless test("[ -f #{release_path}/#{delayed_job_bin} ]")
-          with rails_env: fetch(:rails_env) do
-            execute :bundle, :exec, :rails, :generate, :delayed_job
-          end
-        end
-      end
-    end
-  end
-
-  before :start, :install
-  before :restart, :install
-end
+# namespace :delayed_job do
+#   desc "Install Deployed Job executable if needed"
+#   task :install do
+#     on roles(delayed_job_roles) do |host|
+#       within release_path do
+#         # Only install if not already present
+#         unless test("[ -f #{release_path}/#{delayed_job_bin} ]")
+#           with rails_env: fetch(:rails_env) do
+#             execute :bundle, :exec, :rails, :generate, :delayed_job
+#           end
+#         end
+#       end
+#     end
+#   end
+#
+#   before :start, :install
+#   before :restart, :install
+# end
 
 namespace :deploy do
   desc 'Restart application'
