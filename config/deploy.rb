@@ -41,12 +41,10 @@ set :linked_dirs, %w(log public/uploads)
 # Default value for keep_releases is 5
 set :keep_releases, 2
 
-# Default value for ::delayed_job_workers is 1
-set :delayed_job_workers, 2
-set :delayed_job_roles, [:app]
+# set :delayed_job_roles, [:app]
 
 ### Set the location of the delayed_job logfile
-set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log'
+# set :delayed_log_dir, '/usr/local/rails_apps/gitfab2/shared/log'
 
 namespace :delayed_job do
   desc "Install Deployed Job executable if needed"

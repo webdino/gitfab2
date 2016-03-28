@@ -53,7 +53,7 @@ gem 'rails_autolink'
 gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
 
-gem 'capistrano3-delayed-job'
+# gem 'capistrano3-delayed-job'
 gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
 
 gem 'mongoid'
