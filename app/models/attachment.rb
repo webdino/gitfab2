@@ -4,7 +4,6 @@ class Attachment
   include Mongoid::Attributes::Dynamic
 
   mount_uploader :content, AttachmentUploader
-  store_in_background :content
 
   embedded_in :attachable, polymorphic: true
 
