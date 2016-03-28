@@ -3,13 +3,13 @@ Gitfab2::Application.routes.draw do
   match 'terms' => 'static_pages#terms', via: :get
   match 'privacy' => 'static_pages#privacy', via: :get
 
-  match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   match 'admin' => 'features#index', via: :get
 
   root 'global_projects#index'
 
   if Rails.env.development? || Rails.env.test?
     match 'su' => 'development#su', via: :post
+    match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
