@@ -22,8 +22,8 @@ ruby:
             - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
 
               li
-                - if attachment.content.thumb.present? && attachment.content.thumb.url.present? && attachment.content.thumb.url[-4..-1] == '.gif'
-                  == image_tag attachment.content.thumb, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
+                - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
+                  == image_tag attachment.content.tmp, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
 
     - else
       figure
@@ -49,5 +49,5 @@ ruby:
         - card.attachments.each do |attachment|
           - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
             li
-              - if attachment.content.thumb.present? && attachment.content.thumb.url.present? && attachment.content.thumb.url[-4..-1] == '.gif'
-                == image_tag attachment.content.thumb, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
+              - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
+                == image_tag attachment.content.tmp, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
