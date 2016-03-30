@@ -33,7 +33,7 @@ $ ->
     makeAttachmentsList $("a.blueprint"), $("#blueprint-list")
     makeAttachmentsList $("a.attachment"), $("#references")
 
-  $(document).on "click", "figure img", () ->
+  $(document).on "click", "figure img:not(.stl)", () ->
     selector = "." + $(this).data "groupname"
     $(selector).colorbox
       className: "color-box-image-slideshow"
