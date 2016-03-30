@@ -23,7 +23,7 @@ ruby:
 
               li
                 - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                  == image_tag attachment.content.tmp, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
+                  == image_tag attachment.content.tmp, href: attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
 
     - else
       figure
@@ -50,4 +50,4 @@ ruby:
           - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
             li
               - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                == image_tag attachment.content.tmp, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id}"
+                == image_tag attachment.content.tmp, href: attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"

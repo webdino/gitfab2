@@ -407,7 +407,9 @@ $ ->
     checkStateConvertiblity()
     setStateIndex()
     markup()
-    setupFigureSlider selector
+    setTimeout ->
+      setupFigureSlider selector
+    , 100
     setTimeout getCardsTop, 100
     reloadRecipeCardsList()
 
