@@ -230,7 +230,7 @@ $ ->
   window.nicAttachmentButton = nicMarkupButton.extend { type: "Attachment", clazz: "attachment" }
   nicOptions = {
     buttons : {
-      "material" : {name : "Matrial", type: "nicMaterialButton", tags : ["A"]},
+      "material" : {name : "Material", type: "nicMaterialButton", tags : ["A"]},
       "tool" : {name : "Tool", type: "nicToolButton", tags : ["A"]},
       "blueprint" : {name : "Blueprint", type: "nicBlueprintButton", tags : ["A"]},
       "attachment" : {name : "Attachment or Link", type: "nicAttachmentButton", tags : ["A"]},
