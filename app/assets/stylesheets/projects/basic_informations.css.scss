@@ -341,7 +341,7 @@ $tool_size: 75px;
   &.forked-project-tools {
     top: 259px;
   }
-  #slideshow-btn, #fork-btn, .order-change-btn, .order-commit-btn, #share-button {
+  #slideshow-btn, #print-btn, #fork-btn, .order-change-btn, .order-commit-btn, #share-button {
     display: block;
     width: $tool_size;
     height: $tool_size + 10px;
@@ -351,6 +351,11 @@ $tool_size: 75px;
   }
   #slideshow-btn {
     @include icons-sprite(slideshow);
+  }
+  #print-btn {
+    @include icons-sprite(print);
+    margin-top: 10px;
+    height: $tool_size + 10px;
   }
   #fork-btn {
     @include icons-sprite(fork);

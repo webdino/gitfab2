@@ -109,6 +109,7 @@ section#basic-informations
 section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
   - if @recipe.present?
     == link_to "", "#", id: "slideshow-btn"
+  == link_to "", "#", id: "print-btn"
   - if can? :edit, @project
     #card-order-tools
       == link_to "", "#", class: "order-change-btn"

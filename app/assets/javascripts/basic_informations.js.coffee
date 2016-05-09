@@ -3,6 +3,10 @@ $(document).on "click", ".fork-btn", (event) ->
   form = $(this).find "form"
   form.submit()
 
+$(document).on "click", "#print-btn", (event) ->
+  event.preventDefault()
+  window.print()
+
 $ ->
   $("#collaborator_name").select2 {
     width: "40%",
