@@ -4,7 +4,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   rescue_from ActionController::RoutingError, with: :render_404
-  rescue_from StandardError, with: :render_500
+  unless Rails.env.development?
+    rescue_from StandardError, with: :render_500
+  end
 
   handle_as_unauthorized CanCan::AccessDenied
 
@@ -55,6 +57,12 @@ class ApplicationController < ActionController::Base
   end
 
   def render_500(exception = nil)
+    if exception
+      Rails.logger.error(exception)
+      exception.backtrace.each do |f|
+        Rails.logger.error("  #{f}")
+      end
+    end
     env = request.env
     method = env['REQUEST_METHOD']
     path = env['REQUEST_PATH']
