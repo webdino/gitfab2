@@ -3,6 +3,7 @@
 # $clockworkd -c script/extract_tags_on_clock.rb --log start
 
 require 'clockwork'
+require 'yaml'
 
 require File.expand_path('../../config/boot', __FILE__)
 require File.expand_path('../../config/environment', __FILE__)
@@ -27,9 +28,7 @@ module Clockwork
     yml_file = File.open file_path, 'w'
 
     used_tags = Hash[tag_counters.sort { |(_k1, v1), (_k2, v2)| v2 <=> v1 }]
-    used_tags.each_key do |tag_name|
-      yml_file.puts "- '#{tag_name}'"
-    end
+    yml_file.write used_tags.keys.to_yaml
 
     yml_file.close
   end
