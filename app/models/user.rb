@@ -129,7 +129,7 @@ class User
     end
 
     def updatable_columns
-      [:name, :avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
+      [:avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
     end
   end
 end
