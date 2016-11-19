@@ -86,8 +86,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'rb-fsevent'
   gem 'growl'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'better_errors'
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'

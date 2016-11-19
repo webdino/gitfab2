@@ -38,3 +38,6 @@ _cho*
 
 # Ignore coverall files
 /coverage
+
+Gemfile.local
+Gemfile.local.lock
