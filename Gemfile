@@ -94,3 +94,6 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'delayed_job_web'
 end
+
+gem 'ridgepole'
+gem 'mysql2', '~> 0.3.21'

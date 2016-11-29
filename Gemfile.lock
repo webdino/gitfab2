@@ -318,6 +318,7 @@ GEM
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mustache (1.0.2)
+    mysql2 (0.3.21)
     nested_form (0.3.2)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
@@ -423,6 +424,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    ridgepole (0.5.2)
+      activerecord (< 4.2.0)
     rmagick (2.15.4)
     rsolr (1.0.10)
       builder (>= 2.1.2)
@@ -617,6 +620,7 @@ DEPENDENCIES
   mongoid-rspec
   mongoid_orderable!
   mongoid_slug
+  mysql2 (~> 0.3.21)
   nested_form
   nokogiri
   omniauth-github
@@ -632,6 +636,7 @@ DEPENDENCIES
   resque
   resque-pool
   resque-web
+  ridgepole
   rspec-collection_matchers
   rspec-rails!
   rubocop
