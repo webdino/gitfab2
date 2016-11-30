@@ -97,3 +97,4 @@ end
 
 gem 'ridgepole'
 gem 'mysql2', '~> 0.3.21'
+gem 'foreigner'

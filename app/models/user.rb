@@ -14,8 +14,8 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   has_many :memberships
-  has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier
-  has_many :my_notifications, class_name: 'Notification', inverse_of: :notified
+  has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id
+  has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
       end
     end
     is_in_collaborated_group
+  end
+
+  def slug
+    name
   end
 
   class << self
