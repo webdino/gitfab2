@@ -1,44 +1,19 @@
-class User
+class User < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname, :url, :location]
 
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Slug
+  include MongoidStubbable
   include ProjectOwner
   include Liker
   include Collaborator
 
-  ## Database authenticatable
-  field :email
-  field :encrypted_password
-
-  ## Rememberable
-  field :remember_created_at, type: DateTime
-
-  ## Trackable
-  field :sign_in_count, default: 0, type: Integer
-  field :current_sign_in_at, type: DateTime
-  field :last_sign_in_at, type: DateTime
-  field :current_sign_in_ip
-  field :last_sign_in_ip
-
-  # OmniAuth
-  field :provider
-  field :uid
-
-  field :name
-  slug :name
-  field :fullname
-  field :avatar
-  field :url
-  field :location
-  field :authority
+  extend FriendlyId
+  friendly_id :name, use: :slugged
 
   devise :omniauthable, omniauth_providers: [:github]
   devise :database_authenticatable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
-  embeds_many :memberships
+  has_many :memberships
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified
 

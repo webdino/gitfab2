@@ -22,7 +22,6 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.include FactoryGirl::Syntax::Methods
-  config.include Mongoid::Matchers
   config.include Devise::TestHelpers, type: :controller
 
   config.before(:all) do
@@ -30,7 +29,7 @@ RSpec.configure do |config|
   end
 
   config.before :suite do
-    DatabaseCleaner.orm = 'mongoid'
+    DatabaseCleaner.orm = 'active_record'
     DatabaseCleaner.clean_with :truncation
     DatabaseCleaner.strategy = :truncation
   end
