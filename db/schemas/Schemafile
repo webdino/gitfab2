@@ -1,3 +1,4 @@
 require 'users.schema'
 require 'notifications.schema'
 require 'groups.schema'
+require 'memberships.schema'

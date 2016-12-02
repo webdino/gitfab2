@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id

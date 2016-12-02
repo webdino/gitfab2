@@ -6,13 +6,12 @@ class Group < ActiveRecord::Base
   include ProjectOwner
   include Collaborator
 
+  has_many :memberships, dependent: :destroy
+  has_many :members, class_name: 'User', through: :memberships, source: :user
+
   mount_uploader :avatar, AvatarUploader
 
   validates :name, presence: true, uniqueness: true, unique_owner_name: true, name_format: true
-
-  def members
-    User.where 'memberships.group_id' => id
-  end
 
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
