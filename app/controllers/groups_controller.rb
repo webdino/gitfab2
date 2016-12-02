@@ -63,6 +63,6 @@ class GroupsController < ApplicationController
   end
 
   def load_group
-    @group = Group.find params[:id]
+    @group = Group.friendly.find params[:id]
   end
 end

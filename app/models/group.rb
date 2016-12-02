@@ -6,6 +6,9 @@ class Group < ActiveRecord::Base
   include ProjectOwner
   include Collaborator
 
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   has_many :memberships, dependent: :destroy
   has_many :members, class_name: 'User', through: :memberships, source: :user
 
