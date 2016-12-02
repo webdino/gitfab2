@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   #  authorize_resource
 
   def index
-    @users = User.asc(:name).all
+    @users = User.order(:name) # TODO: ユーザー名による絞り込み
   end
 
   def edit
