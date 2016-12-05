@@ -1,6 +1,6 @@
 class Card::NoteCard < Card
   include Taggable
-  embedded_in :note
+  belongs_to :note
 
   after_create -> { note.inc num_cards: 1 }
   after_destroy -> { note.inc num_cards: -1 }

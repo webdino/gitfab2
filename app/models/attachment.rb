@@ -1,18 +1,7 @@
-class Attachment
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Attributes::Dynamic
-
+class Attachment < ActiveRecord::Base
   mount_uploader :content, AttachmentUploader
 
-  embedded_in :attachable, polymorphic: true
-
-  field :markup_id
-  field :link
-  field :title
-  field :description
-  field :kind
-  field :content_tmp, type: String
+  belongs_to :attachable, polymorphic: true
 
   def dup_document
     dup.tap do |doc|

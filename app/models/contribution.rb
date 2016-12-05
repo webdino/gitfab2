@@ -1,8 +1,6 @@
-class Contribution
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class Contribution < ActiveRecord::Base
   include Contributable
 
   belongs_to :contributor, class_name: User.name
-  embedded_in :contributable, polymorphic: true
+  belongs_to :contributable, polymorphic: true
 end

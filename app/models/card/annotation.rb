@@ -1,7 +1,6 @@
 class Card::Annotation < Card
-  include Mongoid::Orderable
-  embedded_in :annotatable, polymorphic: true
-  orderable column: :position
+  belongs_to :annotatable, polymorphic: true
+  acts_as_list scope: :recipe
 
   scope :ordered_by_position, -> { order('position ASC') }
 

@@ -21,7 +21,7 @@ class Project < ActiveRecord::Base
   has_many :derivatives, class_name: Project.name, foreign_key: :original_id, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
   belongs_to :owner, polymorphic: true, counter_cache: :projects_count
-  embeds_many :usages, class_name: Card::Usage.name, cascade_callbacks: true
+  has_many :usages, class_name: Card::Usage.name, dependent: :destroy
   has_one :recipe
   has_one :note
 
@@ -167,8 +167,8 @@ class Project < ActiveRecord::Base
   end
 
   def collaborators
-    users = User.where('collaborations.project_id' => id)
-    groups = Group.where('collaborations.project_id' => id)
+    users = User.joins(:collaborations).where('collaborations.project_id' => id)
+    groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
     users.concat groups
   end
 
