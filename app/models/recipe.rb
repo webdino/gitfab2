@@ -1,10 +1,9 @@
-class Recipe
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class Recipe < ActiveRecord::Base
+  include MongoidStubbable
 
-  embedded_in :project
-  embeds_many :states, cascade_callbacks: true, class_name: 'Card::State'
-  embeds_many :recipe_cards, cascade_callbacks: true, class_name: 'Card::RecipeCard'
+  belongs_to :project
+  has_many :states, class_name: 'Card::State'
+  has_many :recipe_cards, class_name: 'Card::RecipeCard'
   accepts_nested_attributes_for :states
 
   def dup_document

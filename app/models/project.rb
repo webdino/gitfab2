@@ -1,7 +1,5 @@
-class Project
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Slug
+class Project < ActiveRecord::Base
+  include MongoidStubbable
   include Figurable
   include Commentable
   include Contributable
@@ -16,16 +14,16 @@ class Project
   searchable_field :is_private, type: :boolean
   searchable_field :is_deleted, type: :boolean
   searchable_field :owner_id
-  slug :name, scope: :owner_id
 
-  field :license, type: :integer
+  extend FriendlyId
+  friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
-  has_many :derivatives, class_name: Project.name, inverse_of: :original
+  has_many :derivatives, class_name: Project.name, foreign_key: :original_id, inverse_of: :original
   belongs_to :original, class_name: Project.name, inverse_of: :derivatives
-  belongs_to :owner, polymorphic: true, index: true, counter_cache: :projects_count
+  belongs_to :owner, polymorphic: true, counter_cache: :projects_count
   embeds_many :usages, class_name: Card::Usage.name, cascade_callbacks: true
-  embeds_one :recipe, autobuild: true, cascade_callbacks: true
-  embeds_one :note, autobuild: true, cascade_callbacks: true
+  has_one :recipe
+  has_one :note
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists

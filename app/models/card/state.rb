@@ -1,7 +1,7 @@
 class Card::State < Card
-  include Mongoid::Orderable
-  embedded_in :recipe
-  orderable column: :position
+  include MongoidStubbable
+  belongs_to :recipe
+  acts_as_list scope: :recipe
 
   scope :ordered_by_position, -> { order('position ASC') }
   accepts_nested_attributes_for :annotations
@@ -14,3 +14,4 @@ class Card::State < Card
     end
   end
 end
+

@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
-      render :edit
+      redirect_to edit_project_url(id: @project.name, owner_name: @owner.slug)
     else
       render :new
     end
@@ -183,14 +183,14 @@ class ProjectsController < ApplicationController
   end
 
   def load_project
-    @project = @owner.projects.find params[:id]
+    @project = @owner.projects.find_by_slug params[:id]
     not_found if @project.blank?
   end
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
     not_found if @owner.blank?
   end
 

@@ -1,7 +1,5 @@
-class Card
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Attributes::Dynamic
+class Card < ActiveRecord::Base
+  include MongoidStubbable
   include Attachable
   include Figurable
   include Contributable
@@ -11,11 +9,6 @@ class Card
   include Annotatable
   include CardDecorator
   include Searchable
-
-  field :title
-  field :description
-
-  validates :_type, presence: true
 
   searchable_field :description
 
@@ -34,7 +27,7 @@ class Card
 
   class << self
     def updatable_columns
-      [:id, :title, :description, :_type,
+      [:id, :title, :description, :type,
        figures_attributes: Figure.updatable_columns,
        attachments_attributes: Attachment.updatable_columns,
        likes_attributes: Like.updatable_columns

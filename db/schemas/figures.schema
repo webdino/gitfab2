@@ -1,0 +1,13 @@
+create_table :figures, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+  t.string :content
+
+  t.string :figurable_type
+  t.integer :figurable_id
+
+  t.string :link
+
+  t.datetime :created_at
+  t.datetime :updated_at
+end
+
+add_index :figures, %i(figurable_type figurable_id), name: :index_figures_figurable, using: :btree

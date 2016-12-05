@@ -1,7 +1,11 @@
 module Figurable
   extend ActiveSupport::Concern
   included do
-    embeds_many :figures, cascade_callbacks: true
+    if respond_to?(:has_many)
+      has_many :figures, as: :figurable
+    else
+      embeds_many :figures, cascade_callbacks: true
+    end
     accepts_nested_attributes_for :figures, allow_destroy: true
   end
 end

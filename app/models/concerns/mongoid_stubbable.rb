@@ -19,6 +19,11 @@ module MongoidStubbable
     end
     deprecate :embeds_one, deprecator: MongoidStubbable::Deprecator.new
 
+    def embedded_in(relation_name, options={})
+      belongs_to relation_name, options
+    end
+    deprecate :embedded_in, deprecator: MongoidStubbable::Deprecator.new
+
     [
       :field,
       :index,

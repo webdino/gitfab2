@@ -99,6 +99,8 @@ GEM
       activerecord (>= 3, < 5)
       activesupport (>= 3, < 5)
     acts_as_commentable (4.0.1)
+    acts_as_list (0.8.2)
+      activerecord (>= 3.0)
     acts_as_votable (0.8.0)
     addressable (2.3.8)
     arel (4.0.2)
@@ -580,6 +582,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
+  acts_as_list
   acts_as_votable (~> 0.8.0)
   autoprefixer-rails
   better_errors

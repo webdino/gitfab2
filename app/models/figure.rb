@@ -1,13 +1,9 @@
-class Figure
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Attributes::Dynamic
+class Figure < ActiveRecord::Base
+  include MongoidStubbable
 
   mount_uploader :content, FigureUploader
 
-  embedded_in :figurable, polymorphic: true
-
-  field :link
+  belongs_to :figurable, polymorphic: true
 
   def dup_document
     dup.tap do |doc|

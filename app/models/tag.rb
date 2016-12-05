@@ -1,12 +1,9 @@
-class Tag
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class Tag < ActiveRecord::Base
+  include MongoidStubbable
   include Contributable
   belongs_to :user
 
-  embedded_in :taggable, polymorphic: true
-
-  field :name
+  belongs_to :taggable, polymorphic: true
 
   class << self
     def updatable_columns
