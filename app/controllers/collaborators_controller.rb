@@ -27,7 +27,7 @@ class CollaboratorsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
   end
 
   def load_project
@@ -36,7 +36,7 @@ class CollaboratorsController < ApplicationController
 
   def load_collaborator
     collaborator_id = params[:collaborator_name]
-    @collaborator = User.find(collaborator_id) || Group.find(collaborator_id)
+    @collaborator = User.find_by_slug(collaborator_id) || Group.find_by_slug(collaborator_id)
   end
 
   def build_collaboration
