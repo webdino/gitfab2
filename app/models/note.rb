@@ -1,7 +1,7 @@
 class Note < ActiveRecord::Base
   include MongoidStubbable
 
-  has_many :note_cards, class_name: Card::NoteCard.name
+  has_many :note_cards, class_name: 'Card::NoteCard'
   belongs_to :project
 
   def dup_document

@@ -18,10 +18,10 @@ class Project < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
-  has_many :derivatives, class_name: Project.name, foreign_key: :original_id, inverse_of: :original
-  belongs_to :original, class_name: Project.name, inverse_of: :derivatives
+  has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
+  belongs_to :original, class_name: 'Project', inverse_of: :derivatives
   belongs_to :owner, polymorphic: true, counter_cache: :projects_count
-  has_many :usages, class_name: Card::Usage.name, dependent: :destroy
+  has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe
   has_one :note
 
