@@ -37,6 +37,7 @@ class Project < ActiveRecord::Base
   index 'note.num_cards' => 1
   scope :noted, -> { where :"note.num_cards".gt => 0 }
   scope :ordered_by_owner, -> { order('owner_id ASC') }
+  scope :public, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
 
   accepts_nested_attributes_for :usages
 
