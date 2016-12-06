@@ -138,7 +138,7 @@ class ProjectsController < ApplicationController
   end
 
   def recipe_cards_list
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     @recipe = @project.recipe
     render 'recipe_cards_list'
   end
