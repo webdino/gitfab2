@@ -1,7 +1,7 @@
 create_table :comments, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
   t.integer :user_id, null: false
   t.integer :commentable_id, null: false
-  t.integer :commentable_type, null: false
+  t.string :commentable_type, null: false
   t.text :body
 
   t.datetime :created_at

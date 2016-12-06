@@ -2,7 +2,7 @@ create_table :contributions, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSE
   t.integer :contributor_id, null: false
 
   t.integer :contributable_id, null: false
-  t.integer :contributable_type, null: false
+  t.string :contributable_type, null: false
 
   t.datetime :created_at
   t.datetime :updated_at
