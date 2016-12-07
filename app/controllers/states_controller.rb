@@ -47,17 +47,19 @@ class StatesController < ApplicationController
   def to_annotation
     state = @recipe.states.find params[:state_id]
     not_found if state.blank?
-    state._type = 'Card::Annotation'
+    state.type = 'Card::Annotation'
     annotation = state.dup_document
-    state.destroy
-    dst_state = @recipe.states.find params[:dst_state_id]
-    dst_state.annotations << annotation
-    @recipe.states.each.with_index(1) do |st, index|
-      st.position = index
-      st.save
+    Card.transaction do
+      state.destroy!
+      dst_state = @recipe.states.find params[:dst_state_id]
+      dst_state.annotations << annotation
+      @recipe.states.each.with_index(1) do |st, index|
+        st.position = index
+        st.save!
+      end
+      annotation.save!
     end
-    annotation.save
-    render json: annotation.id
+    render json: {'$oid' => annotation.id}
   end
 
   private
