@@ -50,16 +50,18 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      annotation._type = 'Card::State'
+      annotation.type = Card::State.name
       state = annotation.dup_document
-      annotation.destroy
-      @recipe.states << state
-      @recipe.states.each.with_index(1) do |st, index|
-        st.position = index
-        st.save
+      Card.transaction do
+        annotation.destroy!
+        @recipe.states << state
+        @recipe.states.each.with_index(1) do |st, index|
+          st.position = index
+          st.save!
+        end
+        @recipe.save!
       end
-      @recipe.save
-      render json: state.id
+      render json: {'$oid' => state.id}
     end
   end
 

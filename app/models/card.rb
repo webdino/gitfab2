@@ -13,8 +13,8 @@ class Card < ActiveRecord::Base
   searchable_field :description
 
   def dup_document
-    dup.tap do |doc|
-      doc.id = BSON::ObjectId.new
+    dup_klass = type.present? ? type.constantize : Card
+    becomes(dup_klass).dup.tap do |doc|
       doc.annotations = annotations.map(&:dup_document)
       doc.figures = figures.map(&:dup_document)
       doc.attachments = attachments.map(&:dup_document)
