@@ -29,11 +29,11 @@ class RecipesController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
   end
 
   def load_recipe
@@ -43,7 +43,7 @@ class RecipesController < ApplicationController
   def update_project
     if @_response.response_code == 200
       @project.updated_at = DateTime.now.in_time_zone
-      @project.update
+      @project.save!
     end
   end
 end
