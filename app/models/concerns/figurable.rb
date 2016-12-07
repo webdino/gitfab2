@@ -2,7 +2,7 @@ module Figurable
   extend ActiveSupport::Concern
   included do
     if respond_to?(:has_many)
-      has_many :figures, as: :figurable
+      has_many :figures, as: :figurable, dependent: :destroy
     else
       embeds_many :figures, cascade_callbacks: true
     end

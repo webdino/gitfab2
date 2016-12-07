@@ -2,8 +2,8 @@ class Recipe < ActiveRecord::Base
   include MongoidStubbable
 
   belongs_to :project
-  has_many :states, class_name: 'Card::State'
-  has_many :recipe_cards, class_name: 'Card::RecipeCard'
+  has_many :states, class_name: 'Card::State', dependent: :destroy
+  has_many :recipe_cards, class_name: 'Card::RecipeCard', dependent: :destroy
   accepts_nested_attributes_for :states
 
   def dup_document
