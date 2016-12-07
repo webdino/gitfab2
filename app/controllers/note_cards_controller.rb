@@ -49,12 +49,12 @@ class NoteCardsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
     not_found if @owner.blank?
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.find_by_slug params[:project_id]
     not_found if @project.blank?
   end
 
@@ -94,7 +94,7 @@ class NoteCardsController < ApplicationController
   def update_project
     return unless @_response.response_code == 200
     @project.updated_at = DateTime.now.in_time_zone
-    @project.update
+    @project.save!
     users = @project.notifiable_users current_user
     url = project_note_note_card_path owner_name: @project.owner.slug,
                                       project_id: @project.name,

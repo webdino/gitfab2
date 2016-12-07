@@ -2,8 +2,8 @@ class Card::NoteCard < Card
   include Taggable
   belongs_to :note
 
-  after_create -> { note.inc num_cards: 1 }
-  after_destroy -> { note.inc num_cards: -1 }
+  after_create -> { note.increment!(:num_cards) }
+  after_destroy -> { note.decrement!(:num_cards) }
 
   class << self
     def updatable_columns
