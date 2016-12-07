@@ -41,11 +41,11 @@ class CommentsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
   end
 
   def load_card
@@ -63,10 +63,10 @@ class CommentsController < ApplicationController
   end
 
   def build_comment
-    comment = @card.comments.create
+    comment = @card.comments.build
     comment_parameter = comment_params
     comment.body = comment_parameter[:body]
-    comment.user_id = comment_parameter[:user_id]
+    comment.user = current_user
     @comment = comment
   end
 
