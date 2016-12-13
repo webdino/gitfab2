@@ -1,11 +1,6 @@
-class FeaturedItem
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class FeaturedItem < ActiveRecord::Base
 
   belongs_to :feature
-
-  field :target_object_id
-  field :url
 
   class << self
     def updatable_columns

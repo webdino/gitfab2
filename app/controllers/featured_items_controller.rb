@@ -11,10 +11,9 @@ class FeaturedItemsController < ApplicationController
   end
 
   def create
-    @item = FeaturedItem.new item_params
+    @item = @feature.featured_items.build item_params
     @item.feature_id = params[:feature_id]
     if @item.save
-      @feature.update
       render :create
     else
       render 'errors/failed', status: 400
