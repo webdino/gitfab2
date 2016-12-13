@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   authorize_resource
 
   def create
-    if @project.timeless.save
+    if @tag.save
       @resources = [@owner, @project, @tag]
       render :create
     else
@@ -27,18 +27,18 @@ class TagsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
   end
 
   def build_tag
-    tag = @project.tags.create
+    tag = @project.tags.build
     tag_parameter = tag_params
     tag.name = Sanitize.clean(tag_parameter[:name]).strip
-    tag.user_id = tag_parameter[:user_id]
+    tag.user = current_user
     @tag = tag
   end
 

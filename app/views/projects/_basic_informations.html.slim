@@ -32,7 +32,6 @@ section#basic-informations
               == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
           - if signed_in?
             == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
-              == f.hidden_field :user_id, value: current_user.slug
               == f.text_field :name, class: "textfield"
               == f.submit "Add", class: "btn"
             == link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
