@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def liked_projects
-    Project.where 'likes.liker_id' => slug
+    Project.joins(:likes).merge(Like.where(liker: self))
   end
 
   def is_in_collaborated_group?(project)

@@ -84,8 +84,8 @@ class ProjectsController < ApplicationController
       end
 
       if project_params[:likes_attributes].present?
-        if @project.timeless.update parameters
-          @project.clear_timeless_option
+        likes_attributes = project_params[:likes_attributes]
+        if @project.update(likes_attributes: likes_attributes)
           respond_to do |format|
             format.json { render :update }
             format.html { redirect_to project_path(@project, owner_name: @owner.slug) }
