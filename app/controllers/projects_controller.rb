@@ -144,7 +144,7 @@ class ProjectsController < ApplicationController
   end
 
   def relation_tree
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     @root = @project.root(@project)
     render 'relation_tree', format: 'json'
   end
