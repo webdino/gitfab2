@@ -1,6 +1,6 @@
 create_table :cards, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
   t.string :title
-  t.string :description
+  t.text :description
   t.string :type, null: false
 
   # Card::State
