@@ -35,7 +35,7 @@ class Project < ActiveRecord::Base
 
   index updated_at: -1
   index 'note.num_cards' => 1
-  scope :noted, -> { where :"note.num_cards".gt => 0 }
+  scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
   scope :ordered_by_owner, -> { order('owner_id ASC') }
   scope :public, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
 
@@ -73,29 +73,31 @@ class Project < ActiveRecord::Base
 
   # TODO: This fork_for fucntion should be devided.
   def fork_for!(owner)
-    dup.tap do |project|
-      project.id = BSON::ObjectId.new
-      project.owner = owner
-      project.original = self
-      names = owner.projects.pluck :name
-      new_project_name = name.dup
-      if names.include? new_project_name
-        new_project_name << '-1'
-        new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
-      end
-      project.name = new_project_name
-      project.save!
-      project.recipe = recipe.dup_document
-      project.figures = figures.map(&:dup_document)
-      project.likes = []
-      project.usages = []
-      project.note.note_cards = []
-      begin
+    transaction do
+      dup.tap do |project|
+        project.owner = owner
+        project.original = self
+        names = owner.projects.pluck :name
+        new_project_name = name.dup
+        if names.include? new_project_name
+          new_project_name << '-1'
+          new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
+        end
+        project.name = new_project_name
         project.save!
-      rescue => _e
-        project.destroy
-        raise
+        project.recipe = recipe.dup_document
+        project.figures = figures.map(&:dup_document)
+        project.likes = []
+        project.usages = []
+        project.note = note.dup_document
+        begin
+          project.save!
+        rescue => _e
+          project.destroy
+          raise
+        end
       end
+
     end
   end
 

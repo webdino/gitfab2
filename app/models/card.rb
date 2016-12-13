@@ -18,6 +18,7 @@ class Card < ActiveRecord::Base
       doc.annotations = annotations.map(&:dup_document)
       doc.figures = figures.map(&:dup_document)
       doc.attachments = attachments.map(&:dup_document)
+      doc.comments = comments.map(&:dup)
     end
   end
 
