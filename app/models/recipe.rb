@@ -1,5 +1,4 @@
 class Recipe < ActiveRecord::Base
-  include MongoidStubbable
 
   belongs_to :project
   has_many :states, class_name: 'Card::State', dependent: :destroy

@@ -1,5 +1,4 @@
 class Tag < ActiveRecord::Base
-  include MongoidStubbable
   include Contributable
   belongs_to :user
 

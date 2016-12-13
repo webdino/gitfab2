@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname, :url, :location]
 
-  include MongoidStubbable
   include ProjectOwner
   include Liker
   include Collaborator

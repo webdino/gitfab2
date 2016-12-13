@@ -2,7 +2,6 @@ class Group < ActiveRecord::Base
   FULLTEXT_SEARCHABLE_COLUMNS = [:name, :url, :location]
   UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
 
-  include MongoidStubbable
   include ProjectOwner
   include Collaborator
 

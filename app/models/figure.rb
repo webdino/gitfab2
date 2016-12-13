@@ -1,5 +1,4 @@
 class Figure < ActiveRecord::Base
-  include MongoidStubbable
 
   mount_uploader :content, FigureUploader
 

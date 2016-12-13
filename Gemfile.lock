@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/johnny-miyake/mongoid_orderable.git
-  revision: 34379206e5190586a59db3021e063fe3ead485ae
-  specs:
-    mongoid_orderable (4.1.0)
-      mongoid
-
-GIT
   remote: git://github.com/lardawge/carrierwave_backgrounder.git
   revision: bff7bc3954b9184157812f948b9a6a4f64ff36d3
   ref: bff7bc3954b9184157812f948b9a6a4f64ff36d3
@@ -115,8 +108,6 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     blankslate (3.1.2)
-    bson (2.3.0)
-    bson_ext (1.5.1)
     builder (3.1.4)
     cancancan (1.8.1)
     capistrano (3.1.0)
@@ -137,10 +128,6 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    carrierwave-mongoid (0.7.1)
-      carrierwave (>= 0.8.0, < 0.11.0)
-      mongoid (>= 3.0, < 5.0)
-      mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     celluloid-io (0.15.0)
@@ -165,7 +152,6 @@ GEM
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
-    connection_pool (2.0.0)
     coveralls (0.8.9)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
@@ -177,10 +163,9 @@ GEM
     database_cleaner (1.3.0)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
-    delayed_job_mongoid (2.2.0)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
-      mongoid (>= 3.0, < 6)
-      mongoid-compatibility
     delayed_job_web (1.2.10)
       activerecord (> 3.0.0)
       delayed_job (> 2.0.3)
@@ -295,29 +280,7 @@ GEM
       subexec (~> 0.2.1)
     mini_portile (0.6.0)
     minitest (4.7.5)
-    mongoid (4.0.0)
-      activemodel (~> 4.0)
-      moped (~> 2.0.0)
-      origin (~> 2.1)
-      tzinfo (>= 0.3.37)
-    mongoid-compatibility (0.3.1)
-      activesupport
-      mongoid (>= 2.0)
-    mongoid-grid_fs (2.1.0)
-      mime-types (>= 1.0, < 3.0)
-      mongoid (>= 3.0, < 5.0)
-    mongoid-rspec (1.10.0)
-      mongoid (>= 3.0.1)
-      rake
-      rspec (>= 2.14)
-    mongoid_slug (3.2.1)
-      mongoid (> 3.0)
-      stringex (~> 2.0)
     mono_logger (1.1.0)
-    moped (2.0.0)
-      bson (~> 2.2)
-      connection_pool (~> 2.0)
-      optionable (~> 0.2.0)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -350,9 +313,7 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
-    optionable (0.2.0)
     options (2.3.2)
-    origin (2.1.1)
     orm_adapter (0.5.0)
     parser (2.2.2.6)
       ast (>= 1.1, < 3.0)
@@ -508,15 +469,10 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    stringex (2.5.2)
     subexec (0.2.3)
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_mongoid2 (0.5.1.7)
-      mongoid (>= 2)
-      sunspot (>= 2)
-      sunspot_rails (>= 2)
     sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
@@ -586,7 +542,6 @@ DEPENDENCIES
   acts_as_votable (~> 0.8.0)
   autoprefixer-rails
   better_errors
-  bson_ext
   cancancan
   capistrano (~> 3.1.0)
   capistrano-bundler
@@ -594,7 +549,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   carrierwave
-  carrierwave-mongoid
   carrierwave_backgrounder!
   clockwork
   coffee-rails (~> 4.0.0)
@@ -602,7 +556,7 @@ DEPENDENCIES
   coveralls
   daemons (>= 1.2.0)
   database_cleaner
-  delayed_job_mongoid
+  delayed_job_active_record
   delayed_job_web
   devise
   exception_notification!
@@ -622,10 +576,6 @@ DEPENDENCIES
   jquery-validation-rails
   kaminari
   mini_magick
-  mongoid
-  mongoid-rspec
-  mongoid_orderable!
-  mongoid_slug
   mysql2 (~> 0.3.21)
   nested_form
   nokogiri
@@ -659,7 +609,6 @@ DEPENDENCIES
   spring-commands-rspec
   stl!
   stl2gif!
-  sunspot_mongoid2
   sunspot_rails
   sunspot_solr
   therubyracer
@@ -670,4 +619,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.13.5
+   1.13.6

@@ -1,5 +1,4 @@
 class Card < ActiveRecord::Base
-  include MongoidStubbable
   include Attachable
   include Figurable
   include Contributable

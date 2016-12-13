@@ -8,3 +8,4 @@ end
 
 add_index :notes, %i(project_id), name: :index_notes_project_id, using: :btree
 add_foreign_key :notes, :projects, name: :fk_notes_project_id, column: :project_id
+add_index :notes, %i(num_cards), name: :index_notes_num_cards, using: :btree

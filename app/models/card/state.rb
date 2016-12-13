@@ -1,5 +1,4 @@
 class Card::State < Card
-  include MongoidStubbable
   belongs_to :recipe
   acts_as_list scope: :recipe
 

@@ -1,5 +1,4 @@
 class Project < ActiveRecord::Base
-  include MongoidStubbable
   include Figurable
   include Commentable
   include Contributable
@@ -33,8 +32,6 @@ class Project < ActiveRecord::Base
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
 
-  index updated_at: -1
-  index 'note.num_cards' => 1
   scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
   scope :ordered_by_owner, -> { order('owner_id ASC') }
   scope :public, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
