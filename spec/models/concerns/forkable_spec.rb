@@ -2,7 +2,6 @@ require "spec_helper"
 
 describe Forkable do
   class ForkableClass
-    include Mongoid::Document
     include Forkable
   end
 
