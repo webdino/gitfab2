@@ -7,7 +7,6 @@ class Recipe < ActiveRecord::Base
 
   def dup_document
     dup.tap do |doc|
-      doc.id = BSON::ObjectId.new
       doc.states = states.map(&:dup_document)
     end
   end

@@ -26,7 +26,7 @@ class FigureUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    ActionController::Base.helpers.asset_path('fallback/blank.png')
+    'fallback/blank.png'
   end
 
   def play_btn_path
