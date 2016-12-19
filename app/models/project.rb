@@ -34,7 +34,7 @@ class Project < ActiveRecord::Base
 
   scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
   scope :ordered_by_owner, -> { order('owner_id ASC') }
-  scope :public, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
+  scope :published, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
 
   accepts_nested_attributes_for :usages
 

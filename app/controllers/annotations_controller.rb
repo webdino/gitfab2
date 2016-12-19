@@ -50,9 +50,11 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      annotation.type = Card::State.name
-      state = annotation.dup_document
+      state = nil
       Card.transaction do
+        annotation.lock!
+        annotation.type = Card::State.name
+        state = annotation.dup_document
         annotation.destroy!
         @recipe.states << state
         @recipe.states.each.with_index(1) do |st, index|
