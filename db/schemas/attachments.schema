@@ -1,5 +1,4 @@
 create_table :attachments, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
-  t.string :type, null: false
   t.string :content
   t.string :attachable_type, null: false
   t.integer :attachable_id, null: false
