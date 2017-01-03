@@ -52,16 +52,7 @@ class AnnotationsController < ApplicationController
     else
       state = nil
       Card.transaction do
-        annotation.lock!
-        annotation.type = Card::State.name
-        state = annotation.dup_document
-        annotation.destroy!
-        @recipe.states << state
-        @recipe.states.each.with_index(1) do |st, index|
-          st.position = index
-          st.save!
-        end
-        @recipe.save!
+        state = annotation.to_state!(@recipe)
       end
       render json: {'$oid' => state.id}
     end
