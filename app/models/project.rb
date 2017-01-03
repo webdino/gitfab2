@@ -21,8 +21,8 @@ class Project < ActiveRecord::Base
   belongs_to :original, class_name: 'Project', inverse_of: :derivatives
   belongs_to :owner, polymorphic: true, counter_cache: :projects_count
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
-  has_one :recipe
-  has_one :note
+  has_one :recipe, dependent: :destroy
+  has_one :note, dependent: :destroy
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
