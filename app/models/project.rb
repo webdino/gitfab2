@@ -86,7 +86,7 @@ class Project < ActiveRecord::Base
         project.figures = figures.map(&:dup_document)
         project.likes = []
         project.usages = []
-        project.note = note.dup_document
+        project.build_note
         begin
           project.save!
         rescue => _e
