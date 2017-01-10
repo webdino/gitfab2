@@ -1,6 +1,12 @@
 FactoryGirl.define do
   factory :comment do |comment|
-    body "MyString"
-    comment.user {|u| u.association :user}
+    sequence(:body) { |n| "Comment##{n}" }
+    association :user
+
+    after(:build) do |comment|
+      commentable = comment.commentable || FactoryGirl.build(:user_project)
+      commentable.comments << comment
+      commentable.save!
+    end
   end
 end

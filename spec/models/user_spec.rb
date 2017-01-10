@@ -3,6 +3,9 @@ require "spec_helper"
 describe User do
   disconnect_sunspot
 
+  it_behaves_like 'Liker', :user
+  it_behaves_like 'Collaborator', :user
+
   let(:user){FactoryGirl.create :user}
   let(:project){FactoryGirl.create :user_project}
   let(:group){FactoryGirl.create :group}
