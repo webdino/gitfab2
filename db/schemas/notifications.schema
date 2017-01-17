@@ -7,6 +7,9 @@ create_table 'notifications', force: true, options: 'ENGINE=InnoDB DEFAULT CHARS
   t.string 'body'
   t.boolean 'was_read', default: false
 
+  # Mongoidからのデータ変換追跡用
+  t.string :oldid
+
   t.datetime 'created_at'
   t.datetime 'updated_at'
 end

@@ -17,6 +17,9 @@ create_table :cards, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb
   t.string :annotatable_type
   t.integer :annotatable_id
 
+  # Mongoidからのデータ変換追跡用
+  t.string :oldid
+
   t.datetime :created_at
   t.datetime :updated_at
 end
