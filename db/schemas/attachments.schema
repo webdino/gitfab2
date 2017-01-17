@@ -3,8 +3,8 @@ create_table :attachments, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=
   t.string :attachable_type, null: false
   t.integer :attachable_id, null: false
   t.string :markup_id
-  t.string :link
-  t.string :title
+  t.text :link 
+  t.text :title
   t.string :description
   t.string :kind
   t.string :content_tmp
