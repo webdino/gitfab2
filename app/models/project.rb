@@ -196,4 +196,8 @@ class Project < ActiveRecord::Base
     create_recipe
     create_note
   end
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 end

@@ -103,4 +103,10 @@ class User < ActiveRecord::Base
       [:avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
     end
   end
+
+  private
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
+  end
 end

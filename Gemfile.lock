@@ -471,6 +471,7 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    stringex (2.5.2)
     subexec (0.2.3)
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
@@ -610,6 +611,7 @@ DEPENDENCIES
   spring-commands-rspec
   stl!
   stl2gif!
+  stringex (= 2.5.2)
   sunspot_rails
   sunspot_solr
   therubyracer

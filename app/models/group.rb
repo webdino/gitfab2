@@ -21,7 +21,10 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def normalize_friendly_id(value)
-    value.to_s.parameterize.present? ? value.to_s.parameterize : value
+  private
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
+
 end
