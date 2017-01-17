@@ -1,6 +1,6 @@
 create_table :featured_items, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
   t.integer :feature_id
-  t.integer :target_object_id
+  t.string :target_object_id
   t.string :url
 
   t.datetime :created_at
