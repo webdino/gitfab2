@@ -3,7 +3,7 @@ class Admin::BackgroundController < ApplicationController
   layout 'dashboard'
 
   def index
-    @background_image = BackgroundImage.find
+    @background_image = BackgroundImage.find || BackgroundImage.new
   end
 
   def update
