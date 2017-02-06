@@ -22,7 +22,7 @@ class BackgroundImage
     end
 
     def path
-      Rails.root.join('public', basename)
+      Rails.root.join('public', 'uploads', basename)
     end
 
     def exists?
@@ -46,14 +46,27 @@ class BackgroundImage
     return unless exists?
     File.join(
       Rails.application.config.relative_url_root.presence || '/',
+      'uploads',
       basename + '?t=' + timestamp
     )
   end
 
   def save
     return false unless valid?
-    FileUtils.cp(file.tempfile.path, path)
-    true
+    begin
+      temp_path = "#{path}.#{Process.pid}.#{Time.current.to_i}.tmp"
+      begin
+        FileUtils.move(path, temp_path) if FileTest.file?(path)
+        FileUtils.cp(file.tempfile.path, path)
+        FileUtils.chmod(0644, path)
+        true
+      rescue
+        FileUtils.cp(temp_path, path) if FileTest.file?(temp_path)
+        false
+      end
+    ensure
+      FileUtils.remove(temp_path) if FileTest.file?(temp_path)
+    end
   end
 
   private
