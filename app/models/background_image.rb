@@ -43,15 +43,17 @@ class BackgroundImage
   end
 
   def request_uri
+    return unless exists?
     File.join(
       Rails.application.config.relative_url_root.presence || '/',
-      basename + '?t=' + (stat.mtime || stat.ctime).to_i.to_s
+      basename + '?t=' + timestamp
     )
   end
 
   def save
     return false unless valid?
     FileUtils.cp(file.tempfile.path, path)
+    true
   end
 
   private
@@ -61,6 +63,12 @@ class BackgroundImage
 
   def stat
     @stat ||= File::Stat.new(path)
+  end
+
+  def timestamp
+    (stat.mtime || stat.ctime).to_i.to_s
+  rescue Errno::ENOENT
+    ''
   end
 
 end

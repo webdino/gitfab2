@@ -15,7 +15,7 @@
 
   h2.title-2 現在の画像
 
-  - if @background_image.present?
+  - if @background_image.request_uri.present?
     img.background src="#{@background_image.request_uri}"
   - else
     'なし
