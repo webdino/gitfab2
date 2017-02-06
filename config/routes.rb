@@ -9,6 +9,8 @@ Gitfab2::Application.routes.draw do
       resources :featured_items
     end
     resources :projects, via: %i(get put delete)
+    get 'background' => 'background#index', as: :background
+    put 'background' => 'background#update'
   end
 
   root 'global_projects#index'

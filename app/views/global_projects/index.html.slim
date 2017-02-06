@@ -27,7 +27,8 @@
           span
             'Fabble.cc長期運用停止と、データ消失についてのお詫びとご今後について
 
-      #splash-wrapper
+      - background_image = BackgroundImage.find
+      #splash-wrapper style="background: url(#{background_image.try(:request_uri) || image_path('background.jpg')}) no-repeat"
         .container.lang-en
           .text
             h1.main-copy
