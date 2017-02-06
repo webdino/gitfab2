@@ -3,7 +3,12 @@ Gitfab2::Application.routes.draw do
   match 'terms' => 'static_pages#terms', via: :get
   match 'privacy' => 'static_pages#privacy', via: :get
 
-  match 'admin' => 'features#index', via: :get
+  namespace :admin do
+    root 'dashboard#index'
+    resources :features do
+      resources :featured_items
+    end
+  end
 
   root 'global_projects#index'
 
@@ -35,10 +40,6 @@ Gitfab2::Application.routes.draw do
 
   concern :tags do
     resources :tags, only: [:create, :destroy]
-  end
-
-  resources :features do
-    resources :featured_items
   end
 
   resources :owners, only: [:index]

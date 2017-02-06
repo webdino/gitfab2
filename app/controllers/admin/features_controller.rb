@@ -1,4 +1,5 @@
-class FeaturesController < ApplicationController
+class Admin::FeaturesController < ApplicationController
+  include Administration
   layout 'dashboard'
 
   before_action :load_feature, only: [:show, :update, :destroy]
@@ -7,11 +8,6 @@ class FeaturesController < ApplicationController
 
   def index
     @features = Feature.all
-    if signed_in? && current_user.is_system_admin?
-      @features
-    else
-      redirect_to root_path
-    end
   end
 
   def create

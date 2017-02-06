@@ -5,7 +5,7 @@
     - @features.each do |feature|
       == render "feature", feature: feature
 
-  == form_for [Feature.new], html: {class: "feature-form"}, remote: true do |f|
+  == form_for [:admin, Feature.new], html: {class: "feature-form"}, remote: true do |f|
     .title Add New Feature
     .target-title
       div Target Title:
