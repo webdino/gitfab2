@@ -8,6 +8,7 @@ Gitfab2::Application.routes.draw do
     resources :features do
       resources :featured_items
     end
+    resources :projects, via: %i(get put delete)
   end
 
   root 'global_projects#index'

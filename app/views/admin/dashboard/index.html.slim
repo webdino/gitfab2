@@ -1,4 +1,8 @@
-#dashboard-index
+#admin-dashboard-index
   h1.title Administration Menu
 
-  == link_to('Features', admin_features_path)
+  ul
+    li
+      == link_to('Features', admin_features_path)
+    li
+      == link_to('Porjects', admin_projects_path)
