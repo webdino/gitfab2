@@ -176,6 +176,14 @@ class Project < ActiveRecord::Base
     ['by', 'by-sa', 'by-nc', 'by-nc-sa']
   end
 
+  def soft_destroy
+    update(is_deleted: true)
+  end
+
+  def path
+    [owner.name, title].join('/')
+  end
+
   class << self
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,

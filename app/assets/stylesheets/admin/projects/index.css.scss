@@ -1,0 +1,22 @@
+@import "mixins/clearfix.css.scss";
+@import "mixins/variables.css.scss";
+
+#admin-projects-index,
+#admin-projects-show {
+  margin-bottom: 50px;
+  padding: 30px 40px;
+  font-family: $common-novelsans-light;
+  font-size: 14px;
+  background-color: $common-background-color;
+  border-radius: 5px;
+  .title {
+    font-family: $common-novelsans-semibold;
+    font-size: 40px;
+  }
+  .title-2 {
+    margin-top: 40px;
+    width: 420px;
+    font-family: $common-novelsans-semibold;
+    font-size: 24px;
+  }
+}

@@ -1,4 +1,5 @@
-class FeaturedItemsController < ApplicationController
+class Admin::FeaturedItemsController < ApplicationController
+  include Administration
   layout 'dashboard'
 
   before_action :load_item, only: [:show, :destroy]
