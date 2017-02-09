@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe Card::RecipeCard do
+  it_behaves_like 'Annotable', :recipe_card
   it_behaves_like 'Card', :recipe_card
   it_behaves_like 'Orderable', :recipe_card
   it_behaves_like 'Orderable Scoped incrementation', [:recipe_card], :recipe

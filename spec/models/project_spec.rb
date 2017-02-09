@@ -15,8 +15,8 @@ describe Project do
 
   describe "#collaborators" do
     before do
-      user1.collaborations.create project_id: project
-      user2.collaborations.create project_id: project
+      user1.collaborations.create project: project
+      user2.collaborations.create project: project
     end
     subject{project.collaborators}
     it{should eq [user1, user2]}
@@ -26,9 +26,9 @@ describe Project do
     let(:forker){FactoryGirl.create :user}
     let(:derivative_project){project.fork_for! forker}
     before do
-      project.recipe.states.create _type: Card::State,
+      project.recipe.states.create type: Card::State.name,
         title: "a state", description: "desc a"
-      project.recipe.states.create _type: Card::State,
+      project.recipe.states.create type: Card::State.name,
         title: "b state", description: "desc b"
       project.reload
     end
@@ -44,12 +44,12 @@ describe Project do
     end
 
     it 'changes to other user.' do
-      expect { project.change_owner!(user1) }.to change { project.owner.id }.to(user1.id)
+      expect { project.change_owner!(user1) }.to change { project.owner }.to(user1)
     end
 
     it 'changes to other group.' do
       group = FactoryGirl.create(:group)
-      expect { project.change_owner!(group) }.to change { project.owner.id }.to(group.id)
+      expect { project.change_owner!(group) }.to change { project.owner }.to(group)
     end
   end
 

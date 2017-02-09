@@ -11,9 +11,8 @@ describe Attachment do
     it { expect(subject).to_not eq(attachment) }
     it { expect(subject.title).to eq(attachment.title) }
     it { expect(subject.kind).to eq(attachment.kind) }
-    it { expect(subject.content).to_not eq(attachment.content) }
+    it { expect(subject).to be_content_changed }
     describe 'content' do
-      it { expect(subject.content.model).to eq(subject) }
       it { expect(subject.content.filename).to eq(attachment.content.filename) }
       it { expect(subject.content.file.size).to eq(attachment.content.file.size) }
       it { expect(subject.content.file.content_type).to eq(attachment.content.file.content_type) }

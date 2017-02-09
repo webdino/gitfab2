@@ -47,15 +47,15 @@ describe User do
     it{should eq project}
   end
 
-  describe '#liked_projects' do
+  describe '#liked_projects', foreign_key_checks: false do
     let!(:project_a) { FactoryGirl.create :project }
     let!(:project_b) { FactoryGirl.create :project }
     let!(:project_not_like) { FactoryGirl.create :project }
     let!(:comment_a) { FactoryGirl.create :comment, commentable: project_not_like }
     before do
-      FactoryGirl.create :like, liker_id: user.slug, likable: project_a
-      FactoryGirl.create :like, liker_id: user.slug, likable: project_b
-      FactoryGirl.create :like, liker_id: user.slug, likable: comment_a
+      FactoryGirl.create :like, liker_id: user.id, likable: project_a
+      FactoryGirl.create :like, liker_id: user.id, likable: project_b
+      FactoryGirl.create :like, liker_id: user.id, likable: comment_a
     end
 
     it do

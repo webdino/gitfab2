@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Contribution do
-  it_behaves_like 'Contributable', :contribution
 
   describe "#contributor" do
     let(:contribution) { FactoryGirl.create(:contribution) }

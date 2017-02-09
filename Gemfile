@@ -76,7 +76,6 @@ group :development, :test do
   gem 'guard-rubocop'
   gem 'rspec-collection_matchers'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
   gem 'rb-fsevent'
   gem 'growl'
   gem 'better_errors'
@@ -93,3 +92,4 @@ gem 'mysql2', '~> 0.3.21'
 gem 'foreigner'
 gem 'acts_as_list'
 gem 'delayed_job_active_record'
+gem 'database_rewinder', group: [:test]

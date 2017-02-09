@@ -27,8 +27,7 @@ describe Figure do
       it 'contentを複製すること' do
         figure = FactoryGirl.create(:content_figure)
         dupped_document = figure.dup_document
-        expect(dupped_document.content).to_not be_nil
-        expect(dupped_document.content).to_not eq(figure.content)
+        expect(dupped_document).to be_content_changed
         expect(dupped_document.content.filename).to eq(figure.content.filename)
       end
     end

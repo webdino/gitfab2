@@ -3,7 +3,6 @@ shared_examples 'Card' do |*factory_args|
   it_behaves_like 'Figurable', *factory_args
   it_behaves_like 'Contributable', *factory_args
   it_behaves_like 'Commentable', *factory_args
-  it_behaves_like 'Annotable', *factory_args
 
   describe '#dup_document' do
     let(:card) { FactoryGirl.create(*factory_args) }

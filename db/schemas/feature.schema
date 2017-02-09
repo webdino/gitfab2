@@ -1,5 +1,5 @@
 create_table :features, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
-  t.string :class_name, null: false
+  t.string :class_name
   t.string :name, null: false
   t.integer :category, null: false, default: 0
 

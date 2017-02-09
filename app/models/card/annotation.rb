@@ -1,6 +1,6 @@
 class Card::Annotation < Card
   belongs_to :annotatable, polymorphic: true
-  acts_as_list
+  acts_as_list scope: :annotatable
 
   scope :ordered_by_position, -> { order('position ASC') }
 

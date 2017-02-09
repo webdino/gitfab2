@@ -99,7 +99,7 @@ describe ProjectsController, type: :controller do
           let(:forker){FactoryGirl.create :user}
           before do
             sign_in forker
-            user_project.recipe.states.create _type: 'Card::State', title: 'sta1', description: 'desc1'
+            user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
             user_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: user_project.id
@@ -112,7 +112,7 @@ describe ProjectsController, type: :controller do
           let(:forker){FactoryGirl.create :user}
           before do
             sign_in forker
-            user_project.recipe.states.create _type: 'Card::State', title: 'sta1', description: 'desc1'
+            user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
             user_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: 'wrongparameter'
