@@ -1,6 +1,8 @@
 require "spec_helper"
 
 describe Group do
+  it_behaves_like 'Collaborator', :group
+
   let(:user1){FactoryGirl.create :user}
   let(:user2){FactoryGirl.create :user}
   let(:group1){FactoryGirl.create :group}

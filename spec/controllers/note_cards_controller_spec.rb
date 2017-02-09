@@ -40,13 +40,13 @@ describe NoteCardsController, type: :controller do
       before do
         xhr :post, :create, user_id: user.id, project_id: project.id,
           note_card: new_note_card.attributes.merge({
-            attachments_attributes: [{_type: Attachment::Material, content: UploadFileHelper.upload_file}]})
+            attachments_attributes: [{kind: 'material', content: UploadFileHelper.upload_file}]})
         project.reload
       end
       it{expect(project.note.note_cards.first).to have(1).attachments}
       it do
-        expect(project.note.note_cards.first.attachments.first)
-          .to be_a Attachment::Material
+        expect(project.note.note_cards.first.attachments.first.kind)
+          .to eq('material')
       end
     end
     context "with incorrect params" do

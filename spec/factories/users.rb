@@ -6,4 +6,8 @@ FactoryGirl.define do
     email {"#{SecureRandom.uuid}@example.com"}
     password "password"
   end
+
+  factory :administrator, parent: :user do
+    authority 'admin'
+  end
 end

@@ -1,18 +1,15 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :recipe do
-    name {"recipe_#{SecureRandom.hex 10}"}
-    title {SecureRandom.uuid}
-    description {SecureRandom.uuid}
-    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, "/spec/assets/images/image.jpg")))
+    association :project, factory: :user_project
 
-    factory :user_recipe, class: Recipe do |ur|
-      ur.owner {|o| o.association :user}
-    end
+    after(:create) do |recipe|
+      FactoryGirl.create(:state, recipe: recipe)
+      FactoryGirl.create(:state, recipe: recipe)
+      FactoryGirl.create(:state, recipe: recipe)
 
-    factory :group_recipe, class: Recipe do |gr|
-      gr.owner {|o| o.association :group}
+      FactoryGirl.create(:recipe_card, recipe: recipe)
+      FactoryGirl.create(:recipe_card, recipe: recipe)
+      FactoryGirl.create(:recipe_card, recipe: recipe)
     end
   end
 end
