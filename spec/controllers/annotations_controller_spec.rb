@@ -13,7 +13,7 @@ describe AnnotationsController, type: :controller do
     before do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: "foo"
-      xhr :get, :new, owner_name: user.id, project_id: project.id, state_id: state.id
+      xhr :get, :new, owner_name: user, project_id: project, state_id: state.id
     end
     it{should render_template :new}
   end
@@ -23,7 +23,7 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: "foo"
       annotation = state.annotations.create description: "ann"
-      xhr :get, :edit, owner_name: user.id, project_id: project.id,
+      xhr :get, :edit, owner_name: user, project_id: project,
         state_id: state.id, id: annotation.id
     end
     it{should render_template :edit}
@@ -34,7 +34,7 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: "foo"
       annotation = state.annotations.create description: "ann"
-      xhr :get, :show, owner_name: user.id, project_id: project.id,
+      xhr :get, :show, owner_name: user, project_id: project,
         state_id: state.id, id: annotation.id
     end
     it{should render_template :show}
@@ -45,19 +45,10 @@ describe AnnotationsController, type: :controller do
       before do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: "foo"
-        xhr :post, :create, user_id: user.id, project_id: project.id,
+        xhr :post, :create, user_id: user, project_id: project,
           state_id: state.id, annotation: {description: "ann"}
       end
       it{should render_template :create}
-    end
-    describe "with incorrect parameters" do
-      before do
-        sign_in user
-        state = project.recipe.states.create type: Card::State.name, description: "foo"
-        xhr :post, :create, user_id: user.id, project_id: project.id,
-          state_id: state.id, annotation: {type: nil, description: "ann"}
-      end
-      it{expect(response.status).to eq(400)}
     end
   end
 
@@ -67,7 +58,7 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: "foo"
         annotation = state.annotations.create description: "ann"
-        xhr :patch, :update, user_id: user.id, project_id: project.id,
+        xhr :patch, :update, user_id: user, project_id: project,
           state_id: state.id, id: annotation.id, annotation: {description: "_ann"}
       end
       it{should render_template :update}
@@ -77,7 +68,7 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: "foo"
         annotation = state.annotations.create description: "ann"
-        xhr :patch, :update, user_id: user.id, project_id: project.id,
+        xhr :patch, :update, user_id: user, project_id: project,
           state_id: state.id, id: annotation.id, annotation: {type: nil, description: "_ann"}
       end
       it{expect(response.status).to eq(400)}
@@ -89,7 +80,7 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: "foo"
       annotation = state.annotations.create description: "ann"
-      xhr :delete, :destroy, owner_name: user.id, project_id: project.id,
+      xhr :delete, :destroy, owner_name: user, project_id: project,
         state_id: state.id, id: annotation.id
     end
     it{should render_template :destroy}
@@ -102,7 +93,7 @@ describe AnnotationsController, type: :controller do
     #     sign_in user
     #     state = project.recipe.states.create type: Card::State.name, description: "foo"
     #     annotation = state.annotations.create description: "ann"
-    #     xhr :get, :to_state, owner_name: user.slug, project_id: project.id,
+    #     xhr :get, :to_state, owner_name: user.slug, project_id: project,
     #       state_id: state.id, annotation_id: annotation.id
     #   end
     #   it{expect(project.recipe.states.first.annotations.length).to eq(0)}
@@ -112,7 +103,7 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: "foo"
         annotation = state.annotations.create description: "ann"
-        xhr :get, :to_state, owner_name: user.slug, project_id: project.id,
+        xhr :get, :to_state, owner_name: user.slug, project_id: project,
           state_id: state.id, annotation_id: "unexisted_id"
       end
       it{expect(response.status).to eq(404)}

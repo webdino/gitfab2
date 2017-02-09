@@ -10,7 +10,7 @@ describe TagsController, type: :controller do
   describe "POST create" do
     before do
       sign_in user1
-      xhr :post, :create, user_id: project.owner.id, project_id: project.id, tag: {name: "foo", user_id: user1.id}
+      xhr :post, :create, user_id: project.owner, project_id: project, tag: {name: "foo", user_id: user1.id}
     end
     it_behaves_like "success"
     it_behaves_like "render template", "create"
@@ -20,7 +20,7 @@ describe TagsController, type: :controller do
     before do
       tag = project.tags.create
       sign_in user1
-      xhr :delete, :destroy, user_id: project.owner.id, project_id: project.id, id: tag.id
+      xhr :delete, :destroy, user_id: project.owner, project_id: project, id: tag.id
     end
     it_behaves_like "render template", "destroy"
   end

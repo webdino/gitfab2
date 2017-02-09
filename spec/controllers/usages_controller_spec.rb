@@ -13,7 +13,7 @@ describe UsagesController, type: :controller do
   describe "GET new" do
     before do
       sign_in owner
-      xhr :get, :new, owner_name: owner.id, project_id: project.id
+      xhr :get, :new, owner_name: owner.to_param, project_id: project
     end
     it{should render_template :new}
   end
@@ -22,7 +22,7 @@ describe UsagesController, type: :controller do
     before do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project
-      xhr :get, :edit, owner_name: owner.id, project_id: project.id,
+      xhr :get, :edit, owner_name: owner.to_param, project_id: project,
         id: usage.id
     end
     it{should render_template :edit}
@@ -31,8 +31,8 @@ describe UsagesController, type: :controller do
   describe "POST create" do
     before do
       sign_in owner
-      xhr :post, :create, user_id: owner.name,
-        project_id: project.name, usage: new_usage.attributes
+      xhr :post, :create, user_id: owner.to_param,
+        project_id: project.name, usage: { title: 'title' }
       project.reload
     end
     it{should render_template :create}
@@ -44,8 +44,8 @@ describe UsagesController, type: :controller do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project,
         title: "foo", description: "bar"
-      xhr :patch, :update, user_id: owner.id,
-        project_id: project.id, id: usage.id, usage: new_usage.attributes
+      xhr :patch, :update, user_id: owner.to_param,
+        project_id: project, id: usage.id, usage: { title: 'title' }
     end
     it{should render_template :update}
   end
@@ -55,8 +55,8 @@ describe UsagesController, type: :controller do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project,
         title: "foo", description: "bar"
-      xhr :delete, :destroy, owner_name: owner.id,
-        project_id: project.id, id: usage.id
+      xhr :delete, :destroy, owner_name: owner.to_param,
+        project_id: project, id: usage.id
     end
     it{should render_template :destroy}
   end

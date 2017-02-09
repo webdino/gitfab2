@@ -82,7 +82,7 @@ describe ProjectsController, type: :controller do
             sign_in user
             post :create, user_id: user.slug, project: new_project.attributes
           end
-          it{should render_template :edit}
+          it{should redirect_to(edit_project_url(id: assigns(:project), owner_name: user))}
         end
         context 'when newly creating with wrong parameters' do
           let(:user){FactoryGirl.create :user}
