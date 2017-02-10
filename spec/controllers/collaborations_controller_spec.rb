@@ -13,7 +13,7 @@ describe CollaborationsController, type: :controller do
   describe "POST create" do
     before do
       sign_in project.owner
-      xhr :post, :create, user_id: project.owner.id,
+      xhr :post, :create, user_id: project.owner.to_param,
         collaboration: collaboration_params
     end
     context "for user project" do
@@ -33,7 +33,7 @@ describe CollaborationsController, type: :controller do
     before do
       collaboration = user1.collaborations.create project_id: project.id
       sign_in user1
-      xhr :delete, :destroy, user_id: user1.id, project_id: project.id,
+      xhr :delete, :destroy, user_id: user1.to_param, project_id: project.id,
         id: collaboration.id
     end
     it_behaves_like "render template", "destroy"

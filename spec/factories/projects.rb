@@ -6,6 +6,23 @@ FactoryGirl.define do
     title {SecureRandom.uuid}
     description {SecureRandom.uuid}
 
+    after(:create) do |project|
+      FactoryGirl.create(:usage, project: project)
+      FactoryGirl.create(:usage, project: project)
+      FactoryGirl.create(:usage, project: project)
+      FactoryGirl.create(:usage, project: project)
+      FactoryGirl.create(:usage, project: project)
+
+      # 順番変更のテストのため
+      # 順番がID通りにならないようにする
+      project.usages.to_a.shuffle.
+        each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+      project.usages.to_a.shuffle.
+        each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+
+      project.usages(true)
+    end
+
     factory :user_project, class: Project do |up|
       up.owner {|o| o.association :user}
     end

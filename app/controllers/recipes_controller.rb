@@ -29,7 +29,7 @@ class RecipesController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
+    @owner = ProjectOwner.friendly_first(owner_id)
   end
 
   def load_project

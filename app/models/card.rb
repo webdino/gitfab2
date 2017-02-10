@@ -7,6 +7,8 @@ class Card < ActiveRecord::Base
   include CardDecorator
   include Searchable
 
+  validates :type, presence: true
+
   searchable_field :description
 
   def dup_document

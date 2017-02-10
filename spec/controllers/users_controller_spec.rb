@@ -15,14 +15,14 @@ describe UsersController, type: :controller do
 
   describe "GET edit" do
     before do
-      get :edit, id: user.id
+      get :edit, id: user
     end
     it{should render_template :edit}
   end
 
   describe "PATCH update" do
     before do
-      patch :update, id: user.id, user: {name: "foo"}
+      patch :update, id: user, user: {name: "foo"}
       user.reload
     end
     it{should redirect_to edit_user_path(user)}
@@ -30,7 +30,7 @@ describe UsersController, type: :controller do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: user.id
+      delete :destroy, id: user
     end
     it{should redirect_to root_path}
   end
