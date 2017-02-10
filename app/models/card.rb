@@ -16,7 +16,7 @@ class Card < ActiveRecord::Base
     becomes(dup_klass).dup.tap do |doc|
       doc.figures = figures.map(&:dup_document)
       doc.attachments = attachments.map(&:dup_document)
-      doc.comments = comments.map(&:dup)
+      doc.comments = []
     end
   end
 
