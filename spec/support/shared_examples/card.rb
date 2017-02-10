@@ -21,15 +21,6 @@ shared_examples 'Card' do |*factory_args|
     it { expect(dupped_card.title).to eq(card.title) }
     it { expect(dupped_card.description).to eq(card.description) }
 
-    it 'annotations を複製すること' do
-      card.annotations << FactoryGirl.build(:annotation, annotatable: card)
-      card.annotations << FactoryGirl.build(:annotation, annotatable: card)
-      card.save!
-
-      expect(dupped_card.annotations).to_not eq(card.annotations)
-      expect(dupped_card.annotations.size).to eq(card.annotations.size)
-    end
-
     it 'figures を複製すること' do
       card.figures << FactoryGirl.build(:link_figure)
       card.figures << FactoryGirl.build(:link_figure)

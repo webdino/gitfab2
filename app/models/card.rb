@@ -4,7 +4,6 @@ class Card < ActiveRecord::Base
   include Contributable
   include Likable
   include Commentable
-  include Annotatable
   include CardDecorator
   include Searchable
 
@@ -15,7 +14,6 @@ class Card < ActiveRecord::Base
   def dup_document
     dup_klass = type.present? ? type.constantize : Card
     becomes(dup_klass).dup.tap do |doc|
-      doc.annotations = annotations.map(&:dup_document)
       doc.figures = figures.map(&:dup_document)
       doc.attachments = attachments.map(&:dup_document)
       doc.comments = comments.map(&:dup)

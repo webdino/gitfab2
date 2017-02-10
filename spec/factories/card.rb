@@ -11,10 +11,10 @@ FactoryGirl.define do
 
     factory :annotation, class: Card::Annotation do
       type Card::Annotation.name
-      sequence(:title) { |n| "NoteCard #{n}" }
+      sequence(:title) { |n| "Annotation #{n}" }
 
       after(:build) do |annotation|
-        annotatable = annotation.annotatable || FactoryGirl.build(:note_card)
+        annotatable = annotation.annotatable || FactoryGirl.build(:state)
         annotatable.annotations << annotation
         annotatable.save!
       end
@@ -24,12 +24,46 @@ FactoryGirl.define do
       type Card::RecipeCard.name
       sequence(:title) { |n| "RecipeCard #{n}" }
       recipe
+
+      after(:create) do |recipe_card|
+        FactoryGirl.create(:annotation, annotatable: recipe_card)
+        FactoryGirl.create(:annotation, annotatable: recipe_card)
+        FactoryGirl.create(:annotation, annotatable: recipe_card)
+        FactoryGirl.create(:annotation, annotatable: recipe_card)
+        FactoryGirl.create(:annotation, annotatable: recipe_card)
+
+        # 順番変更のテストのため
+        # 順番がID通りにならないようにする
+        recipe_card.annotations.to_a.shuffle.
+          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+        recipe_card.annotations.to_a.shuffle.
+          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+
+        recipe_card.annotations(true)
+      end
     end
 
     factory :state, class: Card::State do
       type Card::State.name
       sequence(:title) { |n| "State #{n}" }
       recipe
+
+      after(:create) do |state|
+        FactoryGirl.create(:annotation, annotatable: state)
+        FactoryGirl.create(:annotation, annotatable: state)
+        FactoryGirl.create(:annotation, annotatable: state)
+        FactoryGirl.create(:annotation, annotatable: state)
+        FactoryGirl.create(:annotation, annotatable: state)
+
+        # 順番変更のテストのため
+        # 順番がID通りにならないようにする
+        state.annotations.to_a.shuffle.
+          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+        state.annotations.to_a.shuffle.
+          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+
+        state.annotations(true)
+      end
     end
 
     factory :usage, class: Card::Usage do

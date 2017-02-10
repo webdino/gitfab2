@@ -1,7 +1,9 @@
 module Annotatable
   extend ActiveSupport::Concern
   included do
-    has_many :annotations, class_name: 'Card::Annotation',
+    has_many :annotations,
+             ->{ order(:position) },
+             class_name: 'Card::Annotation',
              as: :annotatable,
              dependent: :destroy
     accepts_nested_attributes_for :annotations
