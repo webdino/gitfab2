@@ -37,6 +37,11 @@ describe Project do
     it{expect(derivative_project.recipe).to have(2).states}
     it{expect(derivative_project.id).not_to eq project.id}
 
+    it 'プロジェクト名（slug）を維持すること' do
+      expect(derivative_project.name).to eq(project.name)
+      expect(derivative_project.slug).to eq(project.slug)
+    end
+
     describe 'usagesを複製しない' do
       let(:recipe) { FactoryGirl.create(:recipe) }
       it '複製先では空であること' do
