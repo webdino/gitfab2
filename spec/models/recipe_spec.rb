@@ -15,7 +15,7 @@ describe Recipe do
       it{expect(g_project_recipe.dup_document).to be_a Recipe}
     end
 
-    describe 'Stateを複製する' do
+    describe 'statesを複製する' do
       let(:recipe) { FactoryGirl.create(:recipe) }
       subject(:dupped_recipe) do
         recipe.dup_document.tap { |obj| obj.save! }
@@ -29,6 +29,17 @@ describe Recipe do
       end
       it '複製であること' do
         expect(dupped_recipe.states.map(&:id)).to_not eq(recipe.states.map(&:id))
+      end
+    end
+
+    describe 'recipe_cardsを複製しない' do
+      let(:recipe) { FactoryGirl.create(:recipe) }
+      subject(:dupped_recipe) do
+        recipe.dup_document.tap { |obj| obj.save! }
+      end
+      it '複製先では空であること' do
+        expect(recipe.recipe_cards.size).to_not eq(0)
+        expect(dupped_recipe.recipe_cards.size).to eq(0)
       end
     end
 

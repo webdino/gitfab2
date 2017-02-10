@@ -31,6 +31,7 @@ describe UsagesController, type: :controller do
   describe "POST create" do
     before do
       sign_in owner
+      project.usages.destroy_all
       xhr :post, :create, user_id: owner.to_param,
         project_id: project.name, usage: { title: 'title' }
       project.reload

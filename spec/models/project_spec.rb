@@ -36,6 +36,15 @@ describe Project do
     it{expect(derivative_project.owner).to eq forker}
     it{expect(derivative_project.recipe).to have(2).states}
     it{expect(derivative_project.id).not_to eq project.id}
+
+    describe 'usagesを複製しない' do
+      let(:recipe) { FactoryGirl.create(:recipe) }
+      it '複製先では空であること' do
+        expect(project.usages.size).to_not eq(0)
+        expect(derivative_project.usages.size).to eq(0)
+      end
+    end
+
   end
 
   describe '#change_owner!(owner)' do
