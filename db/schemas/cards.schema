@@ -2,6 +2,7 @@ create_table :cards, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb
   t.string :title
   t.text :description, limit: 4294967295
   t.string :type, null: false
+  t.integer :likes_count, null: false, default: 0
 
   # Card::State
   t.integer :position, default: 0, null: false

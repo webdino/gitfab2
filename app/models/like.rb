@@ -2,7 +2,7 @@ class Like < ActiveRecord::Base
   include Contributable
 
   belongs_to :liker, class_name: 'User'
-  belongs_to :likable, polymorphic: true
+  belongs_to :likable, polymorphic: true, counter_cache: :likes_count
   validates_uniqueness_of :liker_id, scope: :likable
 
   class << self

@@ -10,6 +10,7 @@ create_table :projects, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf
   t.string :scope
   t.integer :license
   t.integer :original_id
+  t.integer :likes_count, null: false, default: 0, index: true
 
   # Mongoidからのデータ変換追跡用
   t.string :oldid
