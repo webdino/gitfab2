@@ -35,7 +35,7 @@ class NotificationsController < ApplicationController
 
   def load_user
     owner_id = params[:owner_name] || params[:user_id]
-    @user = User.find owner_id
+    @user = User.friendly.find owner_id
   end
 
   def delete_read_notifications

@@ -1,16 +1,9 @@
 staging:
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   reconnect: false
   database: gitfab2_staging
   pool: 5
   username: root
   password: root
   socket: /var/lib/mysql/mysql.sock
-
-redis:
-  host: localhost
-  port: 6379
-  db: 0
-  options:
-  namespace: gitfab2_staging

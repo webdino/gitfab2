@@ -1,15 +1,11 @@
-class Comment
-  include Mongoid::Document
-  include Mongoid::Timestamps
+class Comment < ActiveRecord::Base
   include Contributable
   include Likable
 
   belongs_to :user
-  embedded_in :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true
 
   scope :created_at_desc, -> { order 'created_at DESC' }
-
-  field :body
 
   class << self
     def updatable_columns

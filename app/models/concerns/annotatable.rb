@@ -1,9 +1,17 @@
 module Annotatable
   extend ActiveSupport::Concern
   included do
-    embeds_many :annotations, class_name: Card::Annotation.name,
-                              as: :annotatable,
-                              cascade_callbacks: true
+    has_many :annotations,
+             ->{ order(:position) },
+             class_name: 'Card::Annotation',
+             as: :annotatable,
+             dependent: :destroy
     accepts_nested_attributes_for :annotations
+  end
+
+  def dup_document
+    super.tap do |doc|
+      doc.annotations = annotations.map(&:dup_document)
+    end
   end
 end

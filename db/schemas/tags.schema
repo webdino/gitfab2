@@ -1,0 +1,17 @@
+create_table :tags, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+  t.integer :user_id
+  t.string :taggable_type
+  t.integer :taggable_id
+
+  t.string :name
+
+  # Mongoidからのデータ変換追跡用
+  t.string :oldid
+
+  t.datetime :created_at
+  t.datetime :updated_at
+end
+
+add_index :tags, %i(user_id), name: :index_tags_user_id, using: :btree
+add_foreign_key :tags, :users, name: :fk_tags_user_id, column: :user_id
+add_index :tags, %i(taggable_type taggable_id), name: :index_tags_taggable, using: :btree

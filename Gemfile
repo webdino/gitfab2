@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
-gem 'rails', '4.0.0'
+gem 'rails', '4.1.16'
+gem 'rake', '~> 10.4.2'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
@@ -27,7 +28,6 @@ gem 'slim-rails', '~> 3.0.0'
 gem 'rails-config'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
-gem 'sunspot_mongoid2'
 gem 'remotipart'
 gem 'progress_bar'
 gem 'cancancan'
@@ -56,14 +56,8 @@ gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3
 # gem 'capistrano3-delayed-job'
 gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
 
-gem 'mongoid'
-gem 'mongoid_slug'
-gem 'mongoid_orderable', github: 'johnny-miyake/mongoid_orderable'
-gem 'bson_ext'
 gem 'friendly_id', '~> 5.0.0'
-gem 'carrierwave-mongoid', require: 'carrierwave/mongoid'
-gem 'delayed_job_mongoid'
-
+gem 'stringex', '2.5.2'
 
 gem 'truncate_html'
 gem 'clockwork'
@@ -81,13 +75,9 @@ group :development, :test do
   gem 'guard-rspec'
   gem 'guard-rubocop'
   gem 'rspec-collection_matchers'
-  gem 'mongoid-rspec'
   gem 'factory_girl_rails'
-  gem 'database_cleaner'
   gem 'rb-fsevent'
   gem 'growl'
-  gem 'pry-rails'
-  gem 'pry-byebug'
   gem 'better_errors'
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
@@ -96,3 +86,10 @@ group :development, :test do
   gem 'simplecov', require: false
   gem 'delayed_job_web'
 end
+
+gem 'ridgepole'
+gem 'mysql2', '~> 0.3.21'
+gem 'foreigner'
+gem 'acts_as_list'
+gem 'delayed_job_active_record'
+gem 'database_rewinder', group: [:test]

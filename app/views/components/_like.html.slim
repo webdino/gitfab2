@@ -16,10 +16,10 @@ aside.like
       == ff.hidden_field :_destroy, class: "delete-like #{ff.object.liker_id}"
       - if ff.object.liker_id
         - count += 1
-      - if current_user && ff.object.liker_id == current_user.slug
+      - if current_user && ff.object.liker_id == current_user.id
         - exists = true
     - if exists == false
       == f.link_to_add "Like", :likes, class: "add-like"
     - f.class.send(:alias_method, "fields_blueprint_id_for", "fields_blueprint_id_for_org")
-  .like-button class="#{exists == true ? 'liked' : ''}" data-user="#{current_user ? current_user.slug : ''}"
+  .like-button class="#{exists == true ? 'liked' : ''}" data-user="#{current_user ? current_user.id : ''}"
     == count

@@ -11,7 +11,7 @@ describe CollaboratorsController, type: :controller do
   let(:user_2){FactoryGirl.create :user}
 
   describe "GET index" do
-    before{get :index, owner_name: project.owner.name, project_id: project.id}
+    before{get :index, owner_name: project.owner.name, project_id: project}
     it{should render_template :index}
   end
 
@@ -20,14 +20,14 @@ describe CollaboratorsController, type: :controller do
       context 'with valid parameters' do
         before do
           sign_in project.owner
-          post :create, user_id: project.owner.id, project_id: project.id, collaborator_name: user_2.slug
+          xhr :post, :create, user_id: project.owner, project_id: project, collaborator_name: user_2.slug
         end
         it{should render_template :create}
       end
       context 'with invalid parameters' do
         before do
           sign_in project.owner
-          post :create, user_id: project.owner.id, project_id: project.id, collaborator_name: 'unknownuser'
+          xhr :post, :create, user_id: project.owner, project_id: project, collaborator_name: 'unknownuser'
         end
         it{expect render_template 'errors/failed', status: 400}
       end

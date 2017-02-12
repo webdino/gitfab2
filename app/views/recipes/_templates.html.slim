@@ -1,7 +1,7 @@
 aside#templates
   section#state-template
-    == render "states/state", card: Card::State.new
+    == render "states/state", card: Card::State.new(id: -1)
   section#annotation-template
-    == render "annotations/annotation", annotation: Card::Annotation.new, parent: Card::State.new
+    == render "annotations/annotation", annotation: Card::Annotation.new(id: -1), parent: Card::State.new(id: -1)
   section#usage-template
-    == render "usages/usage", usage: Card::Usage.new
+    == render "usages/usage", usage: Card::Usage.new(id: -1)

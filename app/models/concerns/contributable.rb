@@ -1,6 +1,6 @@
 module Contributable
   extend ActiveSupport::Concern
   included do
-    embeds_many :contributions, as: :contributable
+    has_many :contributions, as: :contributable, dependent: :destroy
   end
 end

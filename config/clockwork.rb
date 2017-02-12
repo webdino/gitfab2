@@ -10,7 +10,7 @@ require File.expand_path('../../config/environment', __FILE__)
 
 module Clockwork
   handler do |_job|
-    @_projects = Project.all.in(is_private: [false, nil])
+    @_projects = Project.all.where(is_private: [false, nil])
     file_path = "#{Rails.root}/config/all-tags.yml"
     tag_counters = {}
 

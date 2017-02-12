@@ -18,14 +18,15 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new group_params
-    if @group.save
+    Group.transaction do
+      @group.save!
       membership = current_user.join_to @group
       membership.role = 'admin'
-      membership.save
-      render :edit
-    else
-      render :new
+      membership.save!
     end
+    redirect_to edit_group_url(@group)
+  rescue ActiveRecord::ActiveRecordError
+    render :new
   end
 
   def edit
@@ -62,6 +63,6 @@ class GroupsController < ApplicationController
   end
 
   def load_group
-    @group = Group.find params[:id]
+    @group = Group.friendly.find params[:id]
   end
 end

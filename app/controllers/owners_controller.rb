@@ -1,5 +1,5 @@
 class OwnersController < ApplicationController
   def index
-    @owners = User.asc(:name).all + Group.asc(:name).all
+    @owners = User.order(name: :asc).all + Group.order(name: :asc).all
   end
 end

@@ -1,0 +1,18 @@
+eval_gemfile File.join(File.dirname(__FILE__), 'Gemfile')
+
+=begin
+ローカル環境だけで使いたいgemがある場合
+
+$ cp Gemfile.lock Gemfile.local.lock
+$ cp Gemfile.local.sample Gemfile.local
+$ vi Gemfile.local
+$ BUNDLE_GEMFILE=Gemfile.local bundle install
+
+注意
+- Gemfile.lockは更新されずGemfile.local.lockが更新される（Gemfile.local.lockは.gitignoreに入っている）
+- Gemfileにgemを追加するなどした場合はコミットの前にbundle installしてGemfile.lockに追加する
+- Gemfile.lockに変更があった場合はGemfile.local.lockを作り直す
+=end
+
+#gem 'pry-byebug', group: [:development, :test]
+#gem 'pry-rails', group: [:development, :test]

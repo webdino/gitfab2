@@ -2,9 +2,9 @@ class ApplicationController < ActionController::Base
   include ErrorHandling
   protect_from_forgery with: :exception
 
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
-  rescue_from ActionController::RoutingError, with: :render_404
   unless Rails.env.development?
+    rescue_from ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from ActionController::RoutingError, with: :render_404
     rescue_from StandardError, with: :render_500
   end
 

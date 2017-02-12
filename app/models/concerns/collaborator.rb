@@ -1,7 +1,7 @@
 module Collaborator
   extend ActiveSupport::Concern
   included do
-    embeds_many :collaborations, as: :owner
+    has_many :collaborations, as: :owner, dependent: :destroy
 
     def is_collaborator_of?(project)
       collaborations.where(project_id: project.id).exists?

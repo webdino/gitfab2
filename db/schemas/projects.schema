@@ -1,0 +1,25 @@
+create_table :projects, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+  t.string :name, null: false
+  t.string :title, null: false
+  t.text :description
+  t.boolean :is_private, default: false
+  t.boolean :is_deleted, default: false
+  t.string :owner_type
+  t.integer :owner_id
+  t.string :slug
+  t.string :scope
+  t.integer :license
+  t.integer :original_id
+  t.integer :likes_count, null: false, default: 0, index: true
+
+  # Mongoidからのデータ変換追跡用
+  t.string :oldid
+
+  t.datetime :created_at
+  t.datetime :updated_at
+end
+
+add_index :projects, %i(slug owner_type owner_id), name: :index_projects_slug_owner, unique: true, using: :btree
+add_index :projects, %i(owner_type owner_id), name: :index_projects_owner, using: :btree
+add_index :projects, %i(original_id), name: :index_projects_original_id, using: :btree
+add_index :projects, %i(updated_at), name: :index_projects_updated_at, using: :btree

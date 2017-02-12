@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/johnny-miyake/mongoid_orderable.git
-  revision: 34379206e5190586a59db3021e063fe3ead485ae
-  specs:
-    mongoid_orderable (4.1.0)
-      mongoid
-
-GIT
   remote: git://github.com/lardawge/carrierwave_backgrounder.git
   revision: bff7bc3954b9184157812f948b9a6a4f64ff36d3
   ref: bff7bc3954b9184157812f948b9a6a4f64ff36d3
@@ -70,38 +63,42 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actionmailer (4.0.0)
-      actionpack (= 4.0.0)
-      mail (~> 2.5.3)
-    actionpack (4.0.0)
-      activesupport (= 4.0.0)
-      builder (~> 3.1.0)
-      erubis (~> 2.7.0)
+    actionmailer (4.1.16)
+      actionpack (= 4.1.16)
+      actionview (= 4.1.16)
+      mail (~> 2.5, >= 2.5.4)
+    actionpack (4.1.16)
+      actionview (= 4.1.16)
+      activesupport (= 4.1.16)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    activemodel (4.0.0)
-      activesupport (= 4.0.0)
-      builder (~> 3.1.0)
-    activerecord (4.0.0)
-      activemodel (= 4.0.0)
-      activerecord-deprecated_finders (~> 1.0.2)
-      activesupport (= 4.0.0)
-      arel (~> 4.0.0)
-    activerecord-deprecated_finders (1.0.3)
-    activesupport (4.0.0)
-      i18n (~> 0.6, >= 0.6.4)
-      minitest (~> 4.2)
-      multi_json (~> 1.3)
+    actionview (4.1.16)
+      activesupport (= 4.1.16)
+      builder (~> 3.1)
+      erubis (~> 2.7.0)
+    activemodel (4.1.16)
+      activesupport (= 4.1.16)
+      builder (~> 3.1)
+    activerecord (4.1.16)
+      activemodel (= 4.1.16)
+      activesupport (= 4.1.16)
+      arel (~> 5.0.0)
+    activesupport (4.1.16)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
       thread_safe (~> 0.1)
-      tzinfo (~> 0.3.37)
+      tzinfo (~> 1.1)
     acts-as-taggable-on (3.1.1)
       actionpack (>= 3, < 5)
       activerecord (>= 3, < 5)
       activesupport (>= 3, < 5)
     acts_as_commentable (4.0.1)
+    acts_as_list (0.8.2)
+      activerecord (>= 3.0)
     acts_as_votable (0.8.0)
     addressable (2.3.8)
-    arel (4.0.2)
+    arel (5.0.1.20140414130214)
     ast (2.1.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
@@ -113,12 +110,7 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
     blankslate (3.1.2)
-    bson (2.3.0)
-    bson_ext (1.5.1)
-    builder (3.1.4)
-    byebug (2.7.0)
-      columnize (~> 0.3)
-      debugger-linecache (~> 1.2)
+    builder (3.2.2)
     cancancan (1.8.1)
     capistrano (3.1.0)
       i18n
@@ -138,10 +130,6 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
-    carrierwave-mongoid (0.7.1)
-      carrierwave (>= 0.8.0, < 0.11.0)
-      mongoid (>= 3.0, < 5.0)
-      mongoid-grid_fs (>= 1.3, < 3.0)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     celluloid-io (0.15.0)
@@ -160,14 +148,12 @@ GEM
       execjs
     coffee-script-source (1.7.0)
     colorize (0.7.7)
-    columnize (0.8.9)
     compass (0.12.7)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
       sass (~> 3.2.19)
     compass-rails (2.0.0)
       compass (>= 0.12.2)
-    connection_pool (2.0.0)
     coveralls (0.8.9)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
@@ -176,14 +162,12 @@ GEM
       thor (~> 0.19.1)
       tins (~> 1.6.0)
     daemons (1.2.3)
-    database_cleaner (1.3.0)
-    debugger-linecache (1.2.0)
+    database_rewinder (0.8.0)
     delayed_job (4.1.1)
       activesupport (>= 3.0, < 5.0)
-    delayed_job_mongoid (2.2.0)
+    delayed_job_active_record (4.1.1)
+      activerecord (>= 3.0, < 5.1)
       delayed_job (>= 3.0, < 5)
-      mongoid (>= 3.0, < 6)
-      mongoid-compatibility
     delayed_job_web (1.2.10)
       activerecord (> 3.0.0)
       delayed_job (> 2.0.3)
@@ -212,6 +196,8 @@ GEM
     faraday_middleware (0.10.0)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.3)
+    foreigner (1.7.4)
+      activerecord (>= 3.0.0)
     formatador (0.2.4)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
@@ -287,42 +273,20 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     lumberjack (1.0.5)
-    mail (2.5.4)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_magick (3.7.0)
       subexec (~> 0.2.1)
     mini_portile (0.6.0)
-    minitest (4.7.5)
-    mongoid (4.0.0)
-      activemodel (~> 4.0)
-      moped (~> 2.0.0)
-      origin (~> 2.1)
-      tzinfo (>= 0.3.37)
-    mongoid-compatibility (0.3.1)
-      activesupport
-      mongoid (>= 2.0)
-    mongoid-grid_fs (2.1.0)
-      mime-types (>= 1.0, < 3.0)
-      mongoid (>= 3.0, < 5.0)
-    mongoid-rspec (1.10.0)
-      mongoid (>= 3.0.1)
-      rake
-      rspec (>= 2.14)
-    mongoid_slug (3.2.1)
-      mongoid (> 3.0)
-      stringex (~> 2.0)
+    minitest (5.10.1)
     mono_logger (1.1.0)
-    moped (2.0.0)
-      bson (~> 2.2)
-      connection_pool (~> 2.0)
-      optionable (~> 0.2.0)
-    multi_json (1.10.1)
+    multi_json (1.12.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
     mustache (1.0.2)
+    mysql2 (0.3.21)
     nested_form (0.3.2)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
@@ -350,13 +314,10 @@ GEM
       multi_json (~> 1.3)
       oauth2 (~> 0.9.3)
       omniauth (~> 1.2)
-    optionable (0.2.0)
     options (2.3.2)
-    origin (2.1.1)
     orm_adapter (0.5.0)
     parser (2.2.2.6)
       ast (>= 1.1, < 3.0)
-    polyglot (0.3.5)
     posix-spawn (0.3.8)
     powerpack (0.1.1)
     pr_geohash (1.0.0)
@@ -367,37 +328,34 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
-    pry-byebug (1.3.2)
-      byebug (~> 2.7)
-      pry (~> 0.9.12)
-    pry-rails (0.3.2)
-      pry (>= 0.9.10)
     pusher-client (0.6.2)
       json
       websocket (~> 1.0)
-    rack (1.5.2)
+    rack (1.5.5)
     rack-mini-profiler (0.9.7)
       rack (>= 1.1.3)
     rack-protection (1.5.3)
       rack
-    rack-test (0.6.2)
+    rack-test (0.6.3)
       rack (>= 1.0)
-    rails (4.0.0)
-      actionmailer (= 4.0.0)
-      actionpack (= 4.0.0)
-      activerecord (= 4.0.0)
-      activesupport (= 4.0.0)
+    rails (4.1.16)
+      actionmailer (= 4.1.16)
+      actionpack (= 4.1.16)
+      actionview (= 4.1.16)
+      activemodel (= 4.1.16)
+      activerecord (= 4.1.16)
+      activesupport (= 4.1.16)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.0.0)
-      sprockets-rails (~> 2.0.0)
+      railties (= 4.1.16)
+      sprockets-rails (~> 2.0)
     rails-config (0.0.3)
     rails_autolink (1.1.6)
       rails (> 3.1)
     rails_config (0.4.2)
       activesupport (>= 3.0)
-    railties (4.0.0)
-      actionpack (= 4.0.0)
-      activesupport (= 4.0.0)
+    railties (4.1.16)
+      actionpack (= 4.1.16)
+      activesupport (= 4.1.16)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
@@ -433,6 +391,8 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    ridgepole (0.5.2)
+      activerecord (< 4.2.0)
     rmagick (2.15.4)
     rsolr (1.0.10)
       builder (>= 2.1.2)
@@ -503,10 +463,10 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.0.1)
+    sprockets-rails (2.3.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
-      sprockets (~> 2.8)
+      sprockets (>= 2.8, < 4.0)
     sshkit (1.7.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -516,10 +476,6 @@ GEM
     sunspot (2.1.1)
       pr_geohash (~> 1.0)
       rsolr (~> 1.0.7)
-    sunspot_mongoid2 (0.5.1.7)
-      mongoid (>= 2)
-      sunspot (>= 2)
-      sunspot_rails (>= 2)
     sunspot_rails (2.1.1)
       nokogiri
       rails (>= 3)
@@ -532,8 +488,8 @@ GEM
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
-    thor (0.19.1)
-    thread_safe (0.3.4)
+    thor (0.19.4)
+    thread_safe (0.3.5)
     tilt (1.4.1)
     timers (1.1.0)
     tins (1.6.0)
@@ -548,9 +504,6 @@ GEM
       pry (~> 0.9, < 0.10)
       pusher-client (~> 0.4)
       typhoeus (~> 0.6, >= 0.6.8)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     trollop (1.16.2)
     truncate_html (0.9.3)
     turbolinks (2.2.2)
@@ -562,7 +515,8 @@ GEM
       railties (>= 3.1)
     typhoeus (0.7.3)
       ethon (>= 0.7.4)
-    tzinfo (0.3.39)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -585,10 +539,10 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
+  acts_as_list
   acts_as_votable (~> 0.8.0)
   autoprefixer-rails
   better_errors
-  bson_ext
   cancancan
   capistrano (~> 3.1.0)
   capistrano-bundler
@@ -596,19 +550,19 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   carrierwave
-  carrierwave-mongoid
   carrierwave_backgrounder!
   clockwork
   coffee-rails (~> 4.0.0)
   compass-rails
   coveralls
   daemons (>= 1.2.0)
-  database_cleaner
-  delayed_job_mongoid
+  database_rewinder
+  delayed_job_active_record
   delayed_job_web
   devise
   exception_notification!
   factory_girl_rails
+  foreigner
   friendly_id (~> 5.0.0)
   gitolite
   growl
@@ -623,27 +577,24 @@ DEPENDENCIES
   jquery-validation-rails
   kaminari
   mini_magick
-  mongoid
-  mongoid-rspec
-  mongoid_orderable!
-  mongoid_slug
+  mysql2 (~> 0.3.21)
   nested_form
   nokogiri
   omniauth-github
   paranoia!
   progress_bar
-  pry-byebug
-  pry-rails
   rack-mini-profiler
-  rails (= 4.0.0)
+  rails (= 4.1.16)
   rails-config
   rails_autolink
   rails_config
+  rake (~> 10.4.2)
   rb-fsevent
   remotipart
   resque
   resque-pool
   resque-web
+  ridgepole
   rspec-collection_matchers
   rspec-rails!
   rubocop
@@ -660,7 +611,7 @@ DEPENDENCIES
   spring-commands-rspec
   stl!
   stl2gif!
-  sunspot_mongoid2
+  stringex (= 2.5.2)
   sunspot_rails
   sunspot_solr
   therubyracer
@@ -671,4 +622,4 @@ DEPENDENCIES
   unicorn
 
 BUNDLED WITH
-   1.11.2
+   1.13.6

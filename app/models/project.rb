@@ -1,7 +1,4 @@
-class Project
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Slug
+class Project < ActiveRecord::Base
   include Figurable
   include Commentable
   include Contributable
@@ -16,16 +13,16 @@ class Project
   searchable_field :is_private, type: :boolean
   searchable_field :is_deleted, type: :boolean
   searchable_field :owner_id
-  slug :name, scope: :owner_id
 
-  field :license, type: :integer
+  extend FriendlyId
+  friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
-  has_many :derivatives, class_name: Project.name, inverse_of: :original
-  belongs_to :original, class_name: Project.name, inverse_of: :derivatives
-  belongs_to :owner, polymorphic: true, index: true, counter_cache: :projects_count
-  embeds_many :usages, class_name: Card::Usage.name, cascade_callbacks: true
-  embeds_one :recipe, autobuild: true, cascade_callbacks: true
-  embeds_one :note, autobuild: true, cascade_callbacks: true
+  has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
+  belongs_to :original, class_name: 'Project', inverse_of: :derivatives
+  belongs_to :owner, polymorphic: true, counter_cache: :projects_count
+  has_many :usages, class_name: 'Card::Usage', dependent: :destroy
+  has_one :recipe, dependent: :destroy
+  has_one :note, dependent: :destroy
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
@@ -35,10 +32,9 @@ class Project
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
 
-  index updated_at: -1
-  index 'note.num_cards' => 1
-  scope :noted, -> { where :"note.num_cards".gt => 0 }
+  scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
   scope :ordered_by_owner, -> { order('owner_id ASC') }
+  scope :published, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
 
   accepts_nested_attributes_for :usages
 
@@ -74,29 +70,31 @@ class Project
 
   # TODO: This fork_for fucntion should be devided.
   def fork_for!(owner)
-    dup.tap do |project|
-      project.id = BSON::ObjectId.new
-      project.owner = owner
-      project.original = self
-      names = owner.projects.pluck :name
-      new_project_name = name.dup
-      if names.include? new_project_name
-        new_project_name << '-1'
-        new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
-      end
-      project.name = new_project_name
-      project.save!
-      project.recipe = recipe.dup_document
-      project.figures = figures.map(&:dup_document)
-      project.likes = []
-      project.usages = []
-      project.note.note_cards = []
-      begin
+    transaction do
+      dup.tap do |project|
+        project.owner = owner
+        project.original = self
+        names = owner.projects.pluck :name
+        new_project_name = name.dup
+        if names.include? new_project_name
+          new_project_name << '-1'
+          new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
+        end
+        project.name = new_project_name
         project.save!
-      rescue => _e
-        project.destroy
-        raise
+        project.recipe = recipe.dup_document
+        project.figures = figures.map(&:dup_document)
+        project.likes = []
+        project.usages = []
+        project.build_note
+        begin
+          project.save!
+        rescue => _e
+          project.destroy
+          raise
+        end
       end
+
     end
   end
 
@@ -169,13 +167,21 @@ class Project
   end
 
   def collaborators
-    users = User.where('collaborations.project_id' => id)
-    groups = Group.where('collaborations.project_id' => id)
+    users = User.joins(:collaborations).where('collaborations.project_id' => id)
+    groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
     users.concat groups
   end
 
   def licenses
     ['by', 'by-sa', 'by-nc', 'by-nc-sa']
+  end
+
+  def soft_destroy
+    update(is_deleted: true)
+  end
+
+  def path
+    [owner.name, title].join('/')
   end
 
   class << self
@@ -197,5 +203,9 @@ class Project
   def create_recipe_and_note
     create_recipe
     create_note
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed? || super
   end
 end

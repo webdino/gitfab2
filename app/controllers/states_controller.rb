@@ -46,18 +46,17 @@ class StatesController < ApplicationController
 
   def to_annotation
     state = @recipe.states.find params[:state_id]
-    not_found if state.blank?
-    state._type = 'Card::Annotation'
-    annotation = state.dup_document
-    state.destroy
-    dst_state = @recipe.states.find params[:dst_state_id]
-    dst_state.annotations << annotation
-    @recipe.states.each.with_index(1) do |st, index|
-      st.position = index
-      st.save
+    if state.blank?
+      not_found
+    else
+      annotation = nil
+      Card.transaction do
+
+        dst_state = @recipe.states.find params[:dst_state_id]
+        annotation = state.to_annotation!(dst_state)
+      end
+      render json: {'$oid' => annotation.id}
     end
-    annotation.save
-    render json: annotation.id
   end
 
   private
@@ -65,12 +64,12 @@ class StatesController < ApplicationController
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = ProjectOwner.friendly_first(owner_id)
     not_found if @owner.blank?
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     not_found if @project.blank?
   end
 
@@ -110,7 +109,7 @@ class StatesController < ApplicationController
   def update_project
     return unless @_response.response_code == 200
     @project.updated_at = DateTime.now.in_time_zone
-    @project.update
+    @project.save!
 
     users = @project.notifiable_users current_user
     url = project_path @project, owner_name: @project.owner.slug

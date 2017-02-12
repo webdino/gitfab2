@@ -13,14 +13,14 @@ describe NoteCardsController, type: :controller do
 
   describe "GET new" do
     before do
-      xhr :get, :new, owner_name: user.id, project_id: project.id
+      xhr :get, :new, owner_name: user, project_id: project
     end
     it{should render_template :new}
   end
 
   describe "GET edit" do
     before do
-      xhr :get, :edit, owner_name: user.id, project_id: project.id,
+      xhr :get, :edit, owner_name: user, project_id: project,
         id: note_card.id
     end
     it{should render_template :edit}
@@ -29,7 +29,7 @@ describe NoteCardsController, type: :controller do
   describe "POST create" do
     context "without attachments" do
       before do
-        xhr :post, :create, user_id: user.id, project_id: project.id,
+        xhr :post, :create, user_id: user, project_id: project,
           note_card: new_note_card.attributes
         project.reload
       end
@@ -38,20 +38,20 @@ describe NoteCardsController, type: :controller do
     end
     context "with attachments" do
       before do
-        xhr :post, :create, user_id: user.id, project_id: project.id,
+        xhr :post, :create, user_id: user, project_id: project,
           note_card: new_note_card.attributes.merge({
-            attachments_attributes: [{_type: Attachment::Material, content: UploadFileHelper.upload_file}]})
+            attachments_attributes: [{kind: 'material', content: UploadFileHelper.upload_file}]})
         project.reload
       end
       it{expect(project.note.note_cards.first).to have(1).attachments}
       it do
-        expect(project.note.note_cards.first.attachments.first)
-          .to be_a Attachment::Material
+        expect(project.note.note_cards.first.attachments.first.kind)
+          .to eq('material')
       end
     end
     context "with incorrect params" do
       before do
-        xhr :post, :create, user_id: user.id, project_id: project.id, note_card: {incorrect: "params"}
+        xhr :post, :create, user_id: user, project_id: project, note_card: {incorrect: "params"}
       end
       it{expect render_template 'error/failed', status: 400}
     end
@@ -61,7 +61,7 @@ describe NoteCardsController, type: :controller do
     context "with correct params" do
       let(:title_to_change){"_foo"}
       before do
-        xhr :patch, :update, user_id: user.id, project_id: project.id,
+        xhr :patch, :update, user_id: user, project_id: project,
           id: note_card.id, note_card: {title: title_to_change}
         note_card.reload
       end
@@ -71,7 +71,7 @@ describe NoteCardsController, type: :controller do
 
     context "with incorrect params" do
       before do
-        xhr :patch, :update, user_id: user.id, project_id: project.id,
+        xhr :patch, :update, user_id: user, project_id: project,
           id: note_card.id, note_card: {title: "", description: ""}
       end
       it{expect render_template 'error/failed', status: 400}
@@ -80,7 +80,7 @@ describe NoteCardsController, type: :controller do
 
   describe "DELETE destroy" do
     before do
-      xhr :delete, :destroy, owner_name: user.id, project_id: project.id,
+      xhr :delete, :destroy, owner_name: user, project_id: project,
         id: note_card.id
       project.reload
     end
