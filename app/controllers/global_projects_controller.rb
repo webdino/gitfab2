@@ -23,7 +23,7 @@ class GlobalProjectsController < ApplicationController
     else
       @projects = Project.published.page(params[:page]).order('updated_at DESC')
       @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
-      @featured_groups = Feature.groups.length > 0 ? view_context.featured_groups : []
+      @featured_groups = Group.order(projects_count: :desc).limit(3)
       @is_searching = false
     end
 
