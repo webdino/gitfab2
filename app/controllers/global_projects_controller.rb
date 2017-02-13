@@ -23,15 +23,13 @@ class GlobalProjectsController < ApplicationController
     else
       @projects = Project.published.page(params[:page]).order('updated_at DESC')
       @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
-      @featured_groups = Feature.groups.length > 0 ? view_context.featured_groups : []
+      @featured_groups = Group.order(projects_count: :desc).limit(3)
       @is_searching = false
     end
 
-    all_tags_list_file_path = "#{Rails.root}/config/all-tags.yml"
-    all_tags_list = YAML.load_file all_tags_list_file_path
     selected_tags_length = 30
-    @all_tags = view_context.all_tags all_tags_list
-    @selected_tags = view_context.selected_tags all_tags_list, selected_tags_length
+    @all_tags = Tag.where(taggable_type: 'Project').where.not(name: '').group(:name).order('COUNT(id) DESC').pluck(:name)
+    @selected_tags = view_context.selected_tags @all_tags, selected_tags_length
 
     @selected_tools = view_context.selected_tools
     @selected_materials = view_context.selected_materials
