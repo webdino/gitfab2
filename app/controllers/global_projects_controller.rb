@@ -27,11 +27,9 @@ class GlobalProjectsController < ApplicationController
       @is_searching = false
     end
 
-    all_tags_list_file_path = "#{Rails.root}/config/all-tags.yml"
-    all_tags_list = YAML.load_file all_tags_list_file_path
     selected_tags_length = 30
-    @all_tags = view_context.all_tags all_tags_list
-    @selected_tags = view_context.selected_tags all_tags_list, selected_tags_length
+    @all_tags = Tag.where(taggable_type: 'Project').where.not(name: '').group(:name).order('COUNT(id) DESC').pluck(:name)
+    @selected_tags = view_context.selected_tags @all_tags, selected_tags_length
 
     @selected_tools = view_context.selected_tools
     @selected_materials = view_context.selected_materials
