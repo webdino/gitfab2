@@ -5,6 +5,7 @@ describe User do
 
   it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user
+  it_behaves_like 'ProjectOwner', :user
 
   let(:user){FactoryGirl.create :user}
   let(:project){FactoryGirl.create :user_project}
