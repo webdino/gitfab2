@@ -5,6 +5,19 @@ FactoryGirl.define do
     name {"project-#{SecureRandom.hex 10}"}
     title {SecureRandom.uuid}
     description {SecureRandom.uuid}
+    is_deleted false
+
+    trait :public do
+      is_private false
+    end
+
+    trait :private do
+      is_private true
+    end
+
+    trait :soft_destroyed do
+      is_deleted true
+    end
 
     after(:create) do |project|
       FactoryGirl.create(:usage, project: project)

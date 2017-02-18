@@ -61,8 +61,7 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    @project.is_deleted = true
-    if @project.save
+    if @project.soft_destroy
       redirect_to projects_path(owner_name: @project.owner)
     else
       render 'error/failed', status: 400
