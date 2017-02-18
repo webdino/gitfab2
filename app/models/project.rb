@@ -188,6 +188,14 @@ class Project < ActiveRecord::Base
     update!(is_deleted: true)
   end
 
+  def soft_restore
+    update(is_deleted: false)
+  end
+
+  def soft_restore!
+    update!(is_deleted: false)
+  end
+
   def path
     [owner.name, title].join('/')
   end
@@ -229,17 +237,27 @@ class Project < ActiveRecord::Base
     return true unless is_private_changed? || is_deleted_changed?
     private_to_public = is_private_was && !is_private
     public_to_private = !is_private_was && is_private
+    now_soft_destroyed = !is_deleted_was && is_deleted
+    now_soft_restored = is_deleted_was && !is_deleted
+
     operations = []
-    if private_to_public
-      operations << :increment
-    end
-    if public_to_private
-      operations << :decrement
+
+    unless now_soft_restored
+      if private_to_public
+        operations << :increment
+      end
+      if public_to_private
+        operations << :decrement
+      end
     end
 
-    now_soft_destroyed = !is_deleted_was && is_deleted
-    if !is_private && now_soft_destroyed
-      operations << :decrement
+    unless is_private
+      if now_soft_destroyed
+        operations << :decrement
+      end
+      if now_soft_restored
+        operations << :increment
+      end
     end
 
     operations.each do |operation|

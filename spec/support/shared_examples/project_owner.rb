@@ -60,14 +60,34 @@ shared_examples 'ProjectOwner' do |*factory_args|
       expect { project.destroy! }.to_not change(owner, :projects_count)
     end
 
+    it '論理削除済みのpublicプロジェクトを復元した際にカウントアップすること' do
+      project = FactoryGirl.create(:user_project, :soft_destroyed, is_private: false, owner: owner)
+      expect { project.soft_restore! }.to change(owner, :projects_count).by(1)
+    end
+
+    it '論理削除済みのprivateプロジェクトを復元した際にカウントアップしないこと' do
+      project = FactoryGirl.create(:user_project, :soft_destroyed, is_private: true, owner: owner)
+      expect { project.soft_restore! }.to_not change(owner, :projects_count)
+    end
+
     it 'privateなプロジェクトをpublicにしつつ論理削除した際にカウントアップもダウンもしないこと' do
       project = FactoryGirl.create(:user_project, is_private: true, owner: owner)
       expect { project.update(is_private: false, is_deleted: true) }.to_not change(owner, :projects_count)
     end
 
-    it 'publicなプロジェクトをprivateにしつつ論理削除した際に二重にカウントダウンしなこと' do
+    it 'publicなプロジェクトをprivateにしつつ論理削除した際にカウントダウンすること' do
       project = FactoryGirl.create(:user_project, is_private: false, owner: owner)
       expect { project.update(is_private: true, is_deleted: true) }.to change(owner, :projects_count).by(-1)
+    end
+
+    it 'privateなプロジェクトをpublicにしつつ復元した際ににカウントアップすること' do
+      project = FactoryGirl.create(:user_project, :soft_destroyed, is_private: true, owner: owner)
+      expect { project.update(is_private: false, is_deleted: false) }.to change(owner, :projects_count).by(1)
+    end
+
+    it 'publicなプロジェクトをprivateにしつつ復元した際にカウントアップもダウンもしないこと' do
+      project = FactoryGirl.create(:user_project, :soft_destroyed, is_private: false, owner: owner)
+      expect { project.update(is_private: true, is_deleted: false) }.to_not change(owner, :projects_count)
     end
 
   end
