@@ -228,7 +228,7 @@ class Project < ActiveRecord::Base
   def update_projects_count_created
     return true if is_private? || is_deleted?
     execute_after_commit do
-      owner.increment(:projects_count)
+      owner.increment!(:projects_count)
     end
     true
   end
@@ -264,11 +264,11 @@ class Project < ActiveRecord::Base
       case operation
         when :increment
           execute_after_commit do
-            owner.increment(:projects_count)
+            owner.increment!(:projects_count)
           end
         when :decrement
           execute_after_commit do
-            owner.decrement(:projects_count)
+            owner.decrement!(:projects_count)
           end
       end
     end
@@ -280,7 +280,7 @@ class Project < ActiveRecord::Base
     return true if is_private?
     return true if is_deleted?
     execute_after_commit do
-      owner.decrement(:projects_count)
+      owner.decrement!(:projects_count)
     end
     true
   end
