@@ -7,6 +7,7 @@ class GlobalProjectsController < ApplicationController
     if q.present?
       query = q.force_encoding 'utf-8'
       @projects = Project.solr_search do |s|
+        s.paginate page: params[:page], per_page: 30
         s.fulltext query.split.map { |word| "\"#{word}\"" }.join ' AND '
         s.without :is_private, true
         s.without :is_deleted, true
