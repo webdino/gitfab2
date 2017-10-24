@@ -3,8 +3,8 @@ cache: bundler
 language: ruby
 rvm:
   - 2.1.2
-services:
-  - mongodb
+before_install:
+  - gem update bundler
 notifications:
   slack:
     secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
