@@ -1,6 +1,6 @@
 development:
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   reconnect: false
   database: gitfab2_development
   pool: 5
@@ -8,27 +8,12 @@ development:
   password: root
   socket: /var/run/mysqld/mysqld.sock
 
-redis:
-  host: localhost
-  port: 6379
-  db: 0
-  options:
-  namespace: gitfab2_development
-
 test:
   adapter: mysql2
-  encoding: utf8
+  encoding: utf8mb4
   reconnect: false
   database: gitfab2_test
   pool: 5
   username: root
   password: root
   socket: /var/run/mysqld/mysqld.sock
-
-redis:
-  host: localhost
-  port: 6379
-  db: 0
-  options:
-  namespace: gitfab2_test
-

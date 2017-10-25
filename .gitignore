@@ -20,6 +20,7 @@ erd.pdf
 /public/assets
 /public/uploads
 /public/dump
+/public/background_image.jpg
 *.swp
 
 config/settings.local.yml
@@ -38,3 +39,6 @@ _cho*
 
 # Ignore coverall files
 /coverage
+
+Gemfile.local
+Gemfile.local.lock

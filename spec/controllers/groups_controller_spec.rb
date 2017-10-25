@@ -42,7 +42,7 @@ describe GroupsController, type: :controller do
     end
     context "with valid params" do
       let(:group_params){FactoryGirl.build(:group).attributes}
-      it{should render_template :edit}
+      it{should redirect_to(edit_group_url(assigns(:group)))}
     end
     context "with invalid params" do
       let(:group_params){{name: nil}}
@@ -60,7 +60,7 @@ describe GroupsController, type: :controller do
   end
 
   describe "PATCH update" do
-    let(:group_params){FactoryGirl.build(:group).attributes}
+    let(:group_params){ { name: 'updated' } }
     describe "as an admin" do
       before do
         sign_in user

@@ -50,16 +50,11 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      annotation._type = 'Card::State'
-      state = annotation.dup_document
-      annotation.destroy
-      @recipe.states << state
-      @recipe.states.each.with_index(1) do |st, index|
-        st.position = index
-        st.save
+      state = nil
+      Card.transaction do
+        state = annotation.to_state!(@recipe)
       end
-      @recipe.save
-      render json: state.id
+      render json: {'$oid' => state.id}
     end
   end
 
@@ -68,12 +63,12 @@ class AnnotationsController < ApplicationController
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = ProjectOwner.friendly_first(owner_id)
     not_found if @owner.blank?
   end
 
   def load_project
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     not_found if @project.blank?
   end
 
@@ -128,7 +123,7 @@ class AnnotationsController < ApplicationController
   def update_project
     return unless @_response.response_code == 200
     @project.updated_at = DateTime.now.in_time_zone
-    @project.update
+    @project.save!
 
     users = @project.notifiable_users current_user
     url = project_path @project, owner_name: @project.owner.slug

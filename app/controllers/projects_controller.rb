@@ -44,7 +44,7 @@ class ProjectsController < ApplicationController
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
-      render :edit
+      redirect_to edit_project_url(id: @project, owner_name: @owner)
     else
       render :new
     end
@@ -54,16 +54,15 @@ class ProjectsController < ApplicationController
     original_project = Project.find params[:original_project_id]
     @project = original_project.fork_for! @owner
     if original_project.present? && @project.present?
-      redirect_to project_path(id: @project.name, owner_name: @owner.slug)
+      redirect_to project_path(id: @project, owner_name: @owner)
     else
       redirect_to request.referer
     end
   end
 
   def destroy
-    @project.is_deleted = true
-    if @project.save
-      redirect_to projects_path(owner_name: @project.owner.slug)
+    if @project.soft_destroy
+      redirect_to projects_path(owner_name: @project.owner)
     else
       render 'error/failed', status: 400
     end
@@ -84,11 +83,11 @@ class ProjectsController < ApplicationController
       end
 
       if project_params[:likes_attributes].present?
-        if @project.timeless.update parameters
-          @project.clear_timeless_option
+        likes_attributes = project_params[:likes_attributes]
+        if @project.update(likes_attributes: likes_attributes)
           respond_to do |format|
             format.json { render :update }
-            format.html { redirect_to project_path(@project, owner_name: @owner.slug) }
+            format.html { redirect_to project_path(@project, owner_name: @owner) }
           end
         else
           @project.clear_timeless_option
@@ -102,7 +101,7 @@ class ProjectsController < ApplicationController
         if @project.update parameters
           respond_to do |format|
             format.json { render :update }
-            format.html { redirect_to project_path(@project, owner_name: @owner.slug) }
+            format.html { redirect_to project_path(@project, owner_name: @owner) }
           end
         else
           respond_to do |format|
@@ -133,18 +132,18 @@ class ProjectsController < ApplicationController
   end
 
   def potential_owners
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     render 'potential_owners', format: 'json'
   end
 
   def recipe_cards_list
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     @recipe = @project.recipe
     render 'recipe_cards_list'
   end
 
   def relation_tree
-    @project = @owner.projects.find params[:project_id]
+    @project = @owner.projects.friendly.find params[:project_id]
     @root = @project.root(@project)
     render 'relation_tree', format: 'json'
   end
@@ -152,7 +151,7 @@ class ProjectsController < ApplicationController
   def notify_users
     if action_name == 'update'
       users = @project.notifiable_users current_user
-      url = project_path @project, owner_name: @owner.slug
+      url = project_path @project, owner_name: @owner
       if params[:new_owner_name]
         return
       elsif project_params[:likes_attributes].present?
@@ -164,7 +163,7 @@ class ProjectsController < ApplicationController
     elsif action_name == 'create' && params[:original_project_id]
       original_project = Project.find params[:original_project_id]
       users = @project.notifiable_users current_user, original_project
-      url = project_path @project, owner_name: @owner.slug
+      url = project_path @project, owner_name: @owner
       body = "#{original_project.title} was forked by #{current_user.name}."
       @project.notify users, current_user, url, body if users.length > 0
     end
@@ -183,14 +182,14 @@ class ProjectsController < ApplicationController
   end
 
   def load_project
-    @project = @owner.projects.find params[:id]
+    @project = @owner.projects.friendly.find params[:id]
     not_found if @project.blank?
   end
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
-    @owner = User.find(owner_id) || Group.find(owner_id)
+    @owner = ProjectOwner.friendly_first(owner_id)
     not_found if @owner.blank?
   end
 

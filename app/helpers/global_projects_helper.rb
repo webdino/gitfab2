@@ -3,11 +3,8 @@ module GlobalProjectsHelper
     project_groups = {}
     all_featured_projects = Feature.projects
     all_featured_projects.each do |project_group|
-      featured_projects = []
-      project_group.featured_items.each do |project|
-        project = Project.find project.target_object_id
-        featured_projects.push project
-      end
+      ids = project_group.featured_items.pluck(:target_object_id)
+      featured_projects = Project.where(id: ids).order(likes_count: :desc)
       project_groups[project_group.name] = featured_projects
     end
     project_groups.to_a

@@ -1,17 +1,11 @@
-class Figure
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Attributes::Dynamic
+class Figure < ActiveRecord::Base
 
   mount_uploader :content, FigureUploader
 
-  embedded_in :figurable, polymorphic: true
-
-  field :link
+  belongs_to :figurable, polymorphic: true
 
   def dup_document
     dup.tap do |doc|
-      doc.id = BSON::ObjectId.new
       doc.content = dup_content if content.present?
     end
   end

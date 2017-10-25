@@ -1,0 +1,13 @@
+create_table 'memberships', force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
+  t.integer :group_id
+  t.integer :user_id
+  t.string :role, default: 'editor'
+
+  # Mongoidからのデータ変換追跡用
+  t.string :oldid
+
+  t.datetime 'created_at'
+  t.datetime 'updated_at'
+end
+
+add_index 'memberships', %w(group_id user_id), name: 'index_users_on_group_id_user_id', unique: true, using: :btree

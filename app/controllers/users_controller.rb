@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   #  authorize_resource
 
   def index
-    @users = User.asc(:name).all
+    @users = User.order(:name) # TODO: ユーザー名による絞り込み
   end
 
   def edit
@@ -30,8 +30,7 @@ class UsersController < ApplicationController
   private
 
   def load_user
-    @user = User.find params[:id]
-    not_found if @user.blank?
+    @user = User.friendly.find(params[:id])
   end
 
   def user_params

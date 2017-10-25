@@ -1,7 +1,7 @@
 class Card::RecipeCard < Card
-  include Mongoid::Orderable
-  embedded_in :recipe
-  orderable column: :position
+  include Annotatable
+  belongs_to :recipe
+  acts_as_list scope: :recipe
 
   scope :ordered_by_position, -> { order('position ASC') }
 

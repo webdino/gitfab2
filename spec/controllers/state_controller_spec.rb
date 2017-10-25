@@ -5,7 +5,7 @@ describe StatesController, type: :controller do
   render_views
 
   let(:project){FactoryGirl.create :user_project}
-  let(:state){project.recipe.states.create _type: Card::State.name, description: 'foo'}
+  let(:state){project.recipe.states.create type: Card::State.name, description: 'foo'}
   let(:new_state){FactoryGirl.build :state}
 
   subject{response}
@@ -35,7 +35,7 @@ describe StatesController, type: :controller do
     context 'with proper values' do
       before do
         sign_in project.owner
-        xhr :post, :create, user_id: project.owner.id, project_id: project.id, state: {_type: Card::State.name, title: 'foo', description: 'bar'}
+        xhr :post, :create, user_id: project.owner, project_id: project, state: {type: Card::State.name, title: 'foo', description: 'bar'}
         project.reload
       end
       it{expect render_template :create}
@@ -44,7 +44,7 @@ describe StatesController, type: :controller do
     context 'with invalid values' do
       before do
         sign_in project.owner
-        xhr :post, :create, user_id: project.owner.id, project_id: project.id, state: {_type: '', title: 'foo', description: 'bar'}
+        xhr :post, :create, user_id: project.owner, project_id: project, state: {type: '', title: 'foo', description: 'bar'}
       end
       it{expect render_template 'error/failed'}
     end
@@ -54,7 +54,7 @@ describe StatesController, type: :controller do
     context 'when updating the card itself' do
       before do
         sign_in project.owner
-        xhr :patch, :update, user_id: project.owner.id,
+        xhr :patch, :update, user_id: project.owner,
           project_id: project.id, id: state.id
       end
       it{expect render_template :update}
@@ -62,9 +62,9 @@ describe StatesController, type: :controller do
     context 'with invalid values' do
       before do
         sign_in project.owner
-        xhr :patch, :update, user_id: project.owner.id,
+        xhr :patch, :update, user_id: project.owner,
           project_id: project.id, id: state.id,
-          state: {_type: '', title: 'foo', description: 'bar'}
+          state: {type: '', title: 'foo', description: 'bar'}
       end
       it{expect render_template 'error/failed'}
     end
@@ -74,7 +74,7 @@ describe StatesController, type: :controller do
     context 'by who can manage the state' do
       before do
         sign_in project.owner
-        xhr :delete, :destroy, owner_name: project.owner.name,
+        xhr :delete, :destroy, owner_name: project.owner,
           project_id: project.name, id: state.id
       end
       it{expect render_template :destroy}
@@ -82,10 +82,10 @@ describe StatesController, type: :controller do
   end
 
   describe 'POST to_annotation' do
-    let(:state_2){project.recipe.states.create _type: Card::State.name, description: 'bar'}
+    let(:state_2){project.recipe.states.create type: Card::State.name, description: 'bar'}
     before do
       sign_in project.owner
-      xhr :post, :to_annotation, owner_name: project.owner.name,
+      xhr :post, :to_annotation, owner_name: project.owner,
         project_id: project.name, state_id: state_2.id, dst_state_id: state.id
       project.reload
     end

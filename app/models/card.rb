@@ -1,30 +1,22 @@
-class Card
-  include Mongoid::Document
-  include Mongoid::Timestamps
-  include Mongoid::Attributes::Dynamic
+class Card < ActiveRecord::Base
   include Attachable
   include Figurable
   include Contributable
   include Likable
   include Commentable
-  include Forkable
-  include Annotatable
   include CardDecorator
   include Searchable
 
-  field :title
-  field :description
-
-  validates :_type, presence: true
+  validates :type, presence: true
 
   searchable_field :description
 
   def dup_document
-    dup.tap do |doc|
-      doc.id = BSON::ObjectId.new
-      doc.annotations = annotations.map(&:dup_document)
+    dup_klass = type.present? ? type.constantize : Card
+    becomes(dup_klass).dup.tap do |doc|
       doc.figures = figures.map(&:dup_document)
       doc.attachments = attachments.map(&:dup_document)
+      doc.comments = []
     end
   end
 
@@ -34,7 +26,7 @@ class Card
 
   class << self
     def updatable_columns
-      [:id, :title, :description, :_type,
+      [:id, :title, :description, :type,
        figures_attributes: Figure.updatable_columns,
        attachments_attributes: Attachment.updatable_columns,
        likes_attributes: Like.updatable_columns

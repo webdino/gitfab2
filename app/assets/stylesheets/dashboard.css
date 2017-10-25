@@ -5,7 +5,7 @@
  *= require_tree ./projects
  *= require_tree ./users
  *= require_tree ./groups
- *= require_tree ./features
+ *= require_tree ./admin
  *= require_tree ../../../vendor/assets/stylesheets/tabby
  *= require select2
 */

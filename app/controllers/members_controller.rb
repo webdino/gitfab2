@@ -25,6 +25,6 @@ class MembersController < ApplicationController
   end
 
   def load_user
-    @user = User.find params[:member_name]
+    @user = User.friendly.find params[:member_name]
   end
 end
