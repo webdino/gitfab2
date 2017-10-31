@@ -10,9 +10,9 @@ production:
 development:
   solr:
     hostname: localhost
-    port: 8984
+    port: 18983
     log_level: INFO
-    path: /solr/gitfab2_development
+    path: /solr/gitfab2
 
 staging:
   solr:
@@ -24,7 +24,6 @@ staging:
 test:
   solr:
     hostname: localhost
-    port: 8984
+    port: 28983
     log_level: WARNING
-    path: /solr/gitfab2_test
-    
+    path: /solr/gitfab2
