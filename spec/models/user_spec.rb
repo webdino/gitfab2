@@ -94,10 +94,14 @@ describe User do
     let!(:group_not_membered) { FactoryGirl.create :group }
     before do
       FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin])
+      # 先にadminとなるユーザーとgroup_memberedを紐づけておく
+      admin = FactoryGirl.create(:user)
+      FactoryGirl.create(:membership, group: group_membered, user: admin, role: Membership::ROLE[:admin])
+      # ２番目のユーザーはrole: 'editor'となる（すでにadminがグループにいるので）
       FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
     end
     it { expect(user.is_admin_of?(group_administered)).to be_truthy }
-    it { expect(user.is_admin_of?(group_membered)).to be_falsey } # Maybe bugged
+    it { expect(user.is_admin_of?(group_membered)).to be_falsey }
     it { expect(user.is_admin_of?(group_not_membered)).to be_falsey }
     it { expect(user.is_admin_of?(nil)).to be_falsey }
   end
@@ -108,9 +112,11 @@ describe User do
     let!(:group_not_membered) { FactoryGirl.create :group }
     before do
       FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin])
+      admin = FactoryGirl.create(:user)
+      FactoryGirl.create(:membership, group: group_membered, user: admin, role: Membership::ROLE[:admin])
       FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
     end
-    it { expect(user.is_editor_of?(group_administered)).to be_falsey } # Maybe bugged
+    it { expect(user.is_editor_of?(group_administered)).to be_falsey }
     it { expect(user.is_editor_of?(group_membered)).to be_truthy }
     it { expect(user.is_editor_of?(group_not_membered)).to be_falsey }
     it { expect(user.is_editor_of?(nil)).to be_falsey }
