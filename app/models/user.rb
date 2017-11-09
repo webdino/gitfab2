@@ -43,11 +43,6 @@ class User < ActiveRecord::Base
     false
   end
 
-  def is_admin_of?(group)
-    return false unless group
-    group.admins.include? self
-  end
-
   def membership_in(group)
     memberships.find_by group_id: group.id
   end
