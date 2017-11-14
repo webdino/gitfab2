@@ -70,7 +70,7 @@ end
 group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', github: 'rspec/rspec-rails'
+  gem 'rspec-rails', '~> 3.4.1'
   gem 'rubocop', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop'
