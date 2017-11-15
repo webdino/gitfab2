@@ -1,32 +1,32 @@
-require "spec_helper"
+require 'spec_helper'
 
-shared_examples "success" do
-  subject{response.status}
-  it{should be 200}
+shared_examples 'success' do
+  subject { response.status }
+  it { is_expected.to eq 200 }
 end
 
-shared_examples "unauthorized" do
-  subject{response.status}
-  it{should be 401}
+shared_examples 'unauthorized' do
+  subject { response.status }
+  it { is_expected.to eq 401 }
 end
 
-shared_examples "redirected" do
-  subject{response.status}
-  it{should be 302}
+shared_examples 'redirected' do
+  subject { response.status }
+  it { is_expected.to eq 302 }
 end
 
-shared_examples "render template" do |name|
-  subject{response}
-  it{should render_template name}
+shared_examples 'render template' do |name|
+  subject { response }
+  it { is_expected.to render_template name }
 end
 
-shared_examples "operation without team privilege" do |klass|
-  subject{response.status}
+shared_examples 'operation without team privilege' do |klass|
+  subject { response.status }
   it do
-    if ["status", "material", "way"].include? klass
-      should be 401
+    if %w(status material way).include? klass
+      is_expected.to eq 401
     else
-      should be 200
+      is_expected.to eq 200
     end
   end
 end
