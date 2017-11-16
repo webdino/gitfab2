@@ -89,7 +89,6 @@ end
 
 gem 'ridgepole'
 gem 'mysql2', '~> 0.3.21'
-gem 'foreigner'
 gem 'acts_as_list'
 gem 'delayed_job_active_record'
 gem 'database_rewinder', group: [:test]

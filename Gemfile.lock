@@ -201,8 +201,6 @@ GEM
     faraday_middleware (0.10.0)
       faraday (>= 0.7.4, < 0.10)
     ffi (1.9.3)
-    foreigner (1.7.4)
-      activerecord (>= 3.0.0)
     formatador (0.2.4)
     friendly_id (5.0.4)
       activerecord (>= 4.0.0)
@@ -602,7 +600,6 @@ DEPENDENCIES
   devise (~> 3.4.1)
   exception_notification!
   factory_girl_rails
-  foreigner
   friendly_id (~> 5.0.0)
   gitolite
   growl
