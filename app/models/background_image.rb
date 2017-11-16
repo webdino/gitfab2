@@ -1,5 +1,4 @@
 class BackgroundImage
-  extend Forwardable
   include ActiveModel::Model
   attr_accessor :file
   validates :file, presence: true
