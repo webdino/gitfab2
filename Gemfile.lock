@@ -141,10 +141,10 @@ GEM
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
-    coffee-script (2.2.0)
+    coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.0)
+    coffee-script-source (1.12.2)
     colorize (0.7.7)
     compass (0.12.7)
       chunky_png (~> 1.2)
@@ -187,7 +187,7 @@ GEM
     erubis (2.7.0)
     ethon (0.7.4)
       ffi (>= 1.3.0)
-    execjs (2.1.0)
+    execjs (2.7.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -537,7 +537,7 @@ GEM
       typhoeus (~> 0.6, >= 0.6.8)
     trollop (1.16.2)
     truncate_html (0.9.3)
-    turbolinks (2.2.2)
+    turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (2.2.8)
       actionpack (>= 3.1)
@@ -649,7 +649,7 @@ DEPENDENCIES
   therubyracer
   travis
   truncate_html
-  turbolinks
+  turbolinks (~> 2.5, >= 2.5.3)
   uglifier (>= 1.3.0)
   unicorn
 
