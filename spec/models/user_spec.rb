@@ -48,10 +48,10 @@ describe User do
     it{should eq project}
   end
 
-  describe '#liked_projects', foreign_key_checks: false do
-    let!(:project_a) { FactoryGirl.create :project }
-    let!(:project_b) { FactoryGirl.create :project }
-    let!(:project_not_like) { FactoryGirl.create :project }
+  describe '#liked_projects' do
+    let!(:project_a) { FactoryGirl.create :project, owner: user }
+    let!(:project_b) { FactoryGirl.create :project, owner: user }
+    let!(:project_not_like) { FactoryGirl.create :project, owner: user }
     let!(:comment_a) { FactoryGirl.create :comment, commentable: project_not_like }
     before do
       FactoryGirl.create :like, liker_id: user.id, likable: project_a
@@ -74,15 +74,16 @@ describe User do
   end
 
   describe '#is_owner_of?(project)' do
+    let(:other_user){ FactoryGirl.create :user }
     let!(:project_owned) { FactoryGirl.create :project, owner: user }
-    let!(:project_not_owned) { FactoryGirl.create :project }
+    let!(:project_not_owned) { FactoryGirl.create :project, owner: other_user }
     it { expect(user.is_owner_of?(project_owned)).to be_truthy }
     it { expect(user.is_owner_of?(project_not_owned)).to be_falsey }
   end
 
   describe '#is_contributor_of?(project)' do
     let!(:project_contributed) { FactoryGirl.create :project, owner: user }
-    let!(:project_not_contributed) { FactoryGirl.create :project }
+    let!(:project_not_contributed) { FactoryGirl.create :project, owner: user }
     before { FactoryGirl.create(:contribution, contributor: user, contributable: project_contributed) }
     it { expect(user.is_contributor_of?(project_contributed)).to be_truthy }
     it { expect(user.is_contributor_of?(project_not_contributed)).to be_falsey }
@@ -169,9 +170,9 @@ describe User do
   end
 
   describe '#is_in_collaborated_group?(project)' do
-    let!(:project_collaborated_by_user) { FactoryGirl.create :project }
-    let!(:project_collaborated_by_group) { FactoryGirl.create :project }
-    let!(:project_not_collaborated) { FactoryGirl.create :project }
+    let!(:project_collaborated_by_user) { FactoryGirl.create :project, owner: user }
+    let!(:project_collaborated_by_group) { FactoryGirl.create :project, owner: group }
+    let!(:project_not_collaborated) { FactoryGirl.create :project, owner: user }
     before do
       group = FactoryGirl.create(:group)
       user.join_to(group)
