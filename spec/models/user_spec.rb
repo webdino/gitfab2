@@ -74,9 +74,9 @@ describe User do
   end
 
   describe '#is_owner_of?(project)' do
-    let(:other_user){ FactoryGirl.create :user }
+    let(:someone_else) { FactoryGirl.create :user }
     let!(:project_owned) { FactoryGirl.create :project, owner: user }
-    let!(:project_not_owned) { FactoryGirl.create :project, owner: other_user }
+    let!(:project_not_owned) { FactoryGirl.create :project, owner: someone_else }
     it { expect(user.is_owner_of?(project_owned)).to be_truthy }
     it { expect(user.is_owner_of?(project_not_owned)).to be_falsey }
   end
@@ -170,9 +170,11 @@ describe User do
   end
 
   describe '#is_in_collaborated_group?(project)' do
-    let!(:project_collaborated_by_user) { FactoryGirl.create :project, owner: user }
-    let!(:project_collaborated_by_group) { FactoryGirl.create :project, owner: group }
-    let!(:project_not_collaborated) { FactoryGirl.create :project, owner: user }
+    let(:someone_else) { FactoryGirl.create :user }
+    let!(:project_collaborated_by_user) { FactoryGirl.create :project, owner: someone_else }
+    let!(:project_collaborated_by_group) { FactoryGirl.create :project, owner: someone_else }
+    let!(:project_not_collaborated) { FactoryGirl.create :project, owner: someone_else }
+    # 他のユーザーが作成したプロジェクトやグループとコラボレートする
     before do
       group = FactoryGirl.create(:group)
       user.join_to(group)
