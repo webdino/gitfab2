@@ -1,7 +1,7 @@
 class Notification < ActiveRecord::Base
 
-  belongs_to :notifier, class_name: 'User', inverse_of: :notifications_given
-  belongs_to :notified, class_name: 'User', inverse_of: :my_notifications
+  belongs_to :notifier, class_name: 'User', inverse_of: :notifications_given, required: true
+  belongs_to :notified, class_name: 'User', inverse_of: :my_notifications, required: true
 
   validates :notifier, :notified, :notificatable_url, :notificatable_type, :body, presence: true
 

@@ -1,7 +1,7 @@
 class Note < ActiveRecord::Base
 
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
-  belongs_to :project
+  belongs_to :project, required: true
 
   def dup_document
     dup.tap do |doc|

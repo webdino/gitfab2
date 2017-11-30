@@ -19,7 +19,7 @@ class Project < ActiveRecord::Base
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
-  belongs_to :original, class_name: 'Project', inverse_of: :derivatives
+  belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
   belongs_to :owner, polymorphic: true, required: true
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe, dependent: :destroy

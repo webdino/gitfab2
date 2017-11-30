@@ -1,6 +1,6 @@
 class Recipe < ActiveRecord::Base
 
-  belongs_to :project
+  belongs_to :project, required: true
   has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy
   has_many :recipe_cards, ->{ order(:position) }, class_name: 'Card::RecipeCard', dependent: :destroy
   accepts_nested_attributes_for :states

@@ -1,6 +1,6 @@
 class Collaboration < ActiveRecord::Base
-  belongs_to :owner, polymorphic: true
-belongs_to :project
+  belongs_to :owner, polymorphic: true, required: true
+  belongs_to :project, required: true
 
-validates :project, presence: true
+  validates :project, presence: true
 end

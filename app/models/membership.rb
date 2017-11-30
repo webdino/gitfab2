@@ -1,8 +1,8 @@
 class Membership < ActiveRecord::Base
   ROLE = { admin: 'admin', editor: 'editor' }
 
-  belongs_to :user
-  belongs_to :group
+  belongs_to :user, required: true
+  belongs_to :group, required: true
 
   before_validation :must_have_user_and_group
   after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
