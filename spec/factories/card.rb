@@ -14,6 +14,8 @@ FactoryGirl.define do
       sequence(:title) { |n| "Annotation #{n}" }
 
       after(:build) do |annotation|
+        # TODO: annotation.annotatable がnilであることを許容するのか要確認
+        # TODO: ファイル名は複数形のほうが良いか
         annotatable = annotation.annotatable || FactoryGirl.build(:state)
         annotatable.annotations << annotation
         annotatable.save!

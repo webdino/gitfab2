@@ -18,6 +18,7 @@ describe TagsController, type: :controller do
 
   describe "DELETE destroy" do
     before do
+      # TODO: ここでtag を生成できていない？
       tag = project.tags.create
       sign_in user1
       xhr :delete, :destroy, user_id: project.owner, project_id: project, id: tag.id

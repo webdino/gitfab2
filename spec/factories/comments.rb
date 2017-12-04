@@ -4,6 +4,7 @@ FactoryGirl.define do
     association :user
 
     after(:build) do |comment|
+      # TODO: comment.commentable がnil を許容するかどうか要検討
       commentable = comment.commentable || FactoryGirl.build(:user_project)
       commentable.comments << comment
       commentable.save!

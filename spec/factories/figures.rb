@@ -1,9 +1,11 @@
 FactoryGirl.define do
   factory :figure do
+    # TODO: figurable はnil になりうるのかどうか要確認
     figurable nil
     link nil
 
     after(:build) do |figure|
+      # TODO: figurable はnil になりうるのかどうか要確認
       figurable = figure.figurable || FactoryGirl.build(:user_project)
       figurable.figures << figure
       figurable.save!

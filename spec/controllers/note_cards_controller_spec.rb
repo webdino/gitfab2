@@ -36,6 +36,7 @@ describe NoteCardsController, type: :controller do
       it{should render_template :create}
       it{expect(project.note).to have(1).note_cards}
     end
+    # TODO: attachments_attributes には attachment_material ファクトリの属性を使えるかも
     context "with attachments" do
       before do
         xhr :post, :create, user_id: user, project_id: project,

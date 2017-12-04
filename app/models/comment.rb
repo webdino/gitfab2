@@ -3,6 +3,7 @@ class Comment < ActiveRecord::Base
   include Likable
 
   belongs_to :user, required: true
+  # TODO: required: true が付けられるかどうか要検討
   belongs_to :commentable, polymorphic: true
 
   scope :created_at_desc, -> { order 'created_at DESC' }

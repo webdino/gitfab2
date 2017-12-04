@@ -1,7 +1,7 @@
 class Figure < ActiveRecord::Base
 
   mount_uploader :content, FigureUploader
-
+  # TODO: required: true を付けられるかどうか要検討
   belongs_to :figurable, polymorphic: true
 
   def dup_document
