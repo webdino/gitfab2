@@ -5,4 +5,4 @@ gitfab2 [![Build Status](https://travis-ci.org/mozilla-japan/gitfab2.svg?branch=
 
 gitfab2 is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
 
-Copyright 2016 Mozilla Japan.
+Copyright 2017 WebDINO Japan.
