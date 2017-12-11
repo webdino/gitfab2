@@ -54,8 +54,8 @@ $icons-sprite-dimensions: true;
     .sfc-logo {
       @include icons-sprite(sfc_logo);
     }
-    .mozilla-japan-logo {
-      @include icons-sprite(mozilla_japan_logo);
+    .webdino-japan-logo {
+      @include icons-sprite(webdino_japan_logo);
       margin-bottom: 15px;
     }
   }
