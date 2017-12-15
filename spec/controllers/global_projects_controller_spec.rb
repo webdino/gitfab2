@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe GlobalProjectsController, type: :controller do
-  # テスト用にdocker-composeで建てたSolrサーバを使うのでコメントアウト
-  # disconnect_sunspot
   render_views
 
   describe 'GET index' do
@@ -26,9 +24,8 @@ describe GlobalProjectsController, type: :controller do
     end
   end
 
-  shared_examples_for '検索結果' do |query, option|
-    # TODO: Solrを止めたら部分一致のテストも追加すること
-    it "完全一致(#{option})" do
+  shared_examples_for '完全一致' do |query, option|
+    it "検索結果(#{option})" do
       # 公開プロジェクト
       # デフォルトで公開になっているが明示的に
       public_user_project = FactoryGirl.create(:user_project, :public, option)
@@ -37,16 +34,43 @@ describe GlobalProjectsController, type: :controller do
       private_user_project = FactoryGirl.create(:user_project, :private, option)
       # 削除済みプロジェクト
       deleted_user_project = FactoryGirl.create(:user_project, :soft_destroyed, option)
-      # クエリと一致しないプロジェクト
-      one_of_the_project = FactoryGirl.create(:user_project, :public)
+      # クエリと完全一致しないプロジェクト
+      one_of_the_project = FactoryGirl.create(:user_project, :public, title: 'samplesample')
 
       Project.reindex
       Sunspot.commit
 
       get :index, q: query
 
+      expect(assigns(:projects)).to include(public_user_project, public_group_prject)
+
       aggregate_failures do
-        expect(assigns(:projects)).to include(public_user_project, public_group_prject)
+        expect(assigns(:projects)).not_to include(private_user_project)
+        expect(assigns(:projects)).not_to include(deleted_user_project)
+        expect(assigns(:projects)).not_to include(one_of_the_project)
+      end
+    end
+  end
+
+  shared_examples_for '部分一致' do |query, option|
+    # TODO: Solrを止めたらpendingも止めること
+    xit "検索結果(#{option})" do
+      public_user_project = FactoryGirl.create(:user_project, :public, option)
+      public_group_prject = FactoryGirl.create(:group_project, :public, option)
+      private_user_project = FactoryGirl.create(:user_project, :private, option)
+      deleted_user_project = FactoryGirl.create(:user_project, :soft_destroyed, option)
+      # クエリと部分一致しないプロジェクト
+      # TODO: もう少しパターンを増やす必要あり？
+      one_of_the_project = FactoryGirl.create(:user_project, :public, title: 'foo')
+
+      Project.reindex
+      Sunspot.commit
+
+      get :index, q: query
+
+      expect(assigns(:projects)).to include(public_user_project, public_group_prject)
+
+      aggregate_failures do
         expect(assigns(:projects)).not_to include(private_user_project)
         expect(assigns(:projects)).not_to include(deleted_user_project)
         expect(assigns(:projects)).not_to include(one_of_the_project)
@@ -55,8 +79,13 @@ describe GlobalProjectsController, type: :controller do
   end
 
   describe '全文検索' do
-    it_behaves_like '検索結果', 'sample', name: 'sample'
-    it_behaves_like '検索結果', 'sample', title: 'sample'
-    it_behaves_like '検索結果', 'sample', description: 'sample'
+    it_behaves_like '完全一致', 'sample', name: 'sample'
+    it_behaves_like '完全一致', 'sample', title: 'sample'
+    it_behaves_like '完全一致', 'sample', description: 'sample'
+
+    # クエリは空白文字区切りで単語に分ける
+    it_behaves_like '部分一致', 'foo bar', name: 'foobar'
+    it_behaves_like '部分一致', 'foo bar', title: 'foobar'
+    it_behaves_like '部分一致', 'foo bar', description: 'foobar'
   end
 end
