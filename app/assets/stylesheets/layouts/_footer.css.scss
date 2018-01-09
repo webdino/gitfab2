@@ -6,7 +6,6 @@ $icons-sprite-dimensions: true;
 
 #layouts-footer{
   width: 100%;
-  height: $common-footer-height;
   background-color: $common-background-color;
   .container {
     display: block;
@@ -27,7 +26,6 @@ $icons-sprite-dimensions: true;
       }
     }
     .copyright {
-      display: inline-block;
       padding: 10px 10px;
       font-size: 14px;
       font-family: $common-novelsans-semibold;
