@@ -54,7 +54,6 @@ $icons-sprite-dimensions: true;
     }
     .webdino-japan-logo {
       @include icons-sprite(webdino_japan_logo);
-      margin-bottom: 15px;
     }
     .adobe-standard-logo {
       @include icons-sprite(adobe_standard_logo);
