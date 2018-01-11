@@ -8,13 +8,6 @@ class Project < ActiveRecord::Base
   include Notificatable
   include AfterCommitAction
 
-  searchable_field :name
-  searchable_field :title
-  searchable_field :description
-  searchable_field :is_private, type: :boolean
-  searchable_field :is_deleted, type: :boolean
-  searchable_field :owner_id
-
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
@@ -43,34 +36,6 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :usages
 
   paginates_per 12
-
-  searchable do
-    text :name
-    text :title
-    text :description
-    string :owner_type
-    string :owner_id
-    boolean :is_private
-    boolean :is_deleted
-
-    text :tags do
-      tags.map(&:name).flatten
-    end
-
-    text :recipe do
-      recipe.states.map do |card|
-        Card.searchable_fields.map do |col|
-          card.send col
-        end
-      end.flatten
-    end
-
-    text :owner do
-      (owner.class)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
-        owner.send col
-      end
-    end
-  end
 
   # TODO: This fork_for fucntion should be devided.
   def fork_for!(owner)

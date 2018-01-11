@@ -1,6 +1,7 @@
 require "spec_helper"
 
 describe GlobalProjectsController, type: :controller do
+  disconnect_sunspot
   render_views
 
   describe 'GET index' do
@@ -26,10 +27,6 @@ describe GlobalProjectsController, type: :controller do
 
   shared_examples_for '検索結果' do |query|
     it do
-
-      Project.reindex
-      Sunspot.commit
-
       get :index, q: query
       expect(assigns(:projects)).to include(public_user_project, public_group_project)
 
@@ -43,10 +40,6 @@ describe GlobalProjectsController, type: :controller do
 
   shared_examples_for '検索結果(public user project only)' do |query|
     it do
-
-      Project.reindex
-      Sunspot.commit
-
       get :index, q: query
       expect(assigns(:projects)).to include(public_user_project)
 
@@ -61,10 +54,6 @@ describe GlobalProjectsController, type: :controller do
 
   shared_examples_for '検索結果(public group project only)' do |query|
     it do
-
-      Project.reindex
-      Sunspot.commit
-
       get :index, q: query
       expect(assigns(:projects)).to include(public_group_project)
 
