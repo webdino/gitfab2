@@ -47,7 +47,6 @@ $icons-sprite-dimensions: true;
       display: block;
       margin: 5px auto 30px;
       padding: 0;
-      max-height: 60px;
     }
     .sfc-logo {
       @include icons-sprite(sfc_logo);
