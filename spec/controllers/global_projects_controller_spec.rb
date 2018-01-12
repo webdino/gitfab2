@@ -81,13 +81,11 @@ describe GlobalProjectsController, type: :controller do
     end
 
     context '完全一致' do
-      include_context 'projects with name', 'sample', 'samplesample'
+      include_context 'projects with name', 'sample', 'zample'
       include_examples '検索結果', 'sample'
     end
 
-    # TODO: Solrを止めたらpendingも止めること
-    xcontext '部分一致' do
-      # TODO: name: 'foobar' のプロジェクトは返ってきて欲しい
+    context '部分一致' do
       include_context 'projects with name', 'foobar', 'foo'
       include_examples '検索結果', 'foo bar'
     end
@@ -103,12 +101,11 @@ describe GlobalProjectsController, type: :controller do
     end
 
     context '完全一致' do
-      include_context 'projects with title', 'sample', 'samplesample'
+      include_context 'projects with title', 'sample', 'zample'
       include_examples '検索結果', 'sample'
     end
 
-    # TODO: Solrを止めたらpendingも止めること
-    xcontext '部分一致' do
+    context '部分一致' do
       include_context 'projects with title', 'foobar', 'foo'
       include_examples '検索結果', 'foo bar'
     end
@@ -124,12 +121,11 @@ describe GlobalProjectsController, type: :controller do
     end
 
     context '完全一致' do
-      include_context 'projects with description', 'sample', 'samplesample'
+      include_context 'projects with description', 'sample', 'zample'
       include_examples '検索結果', 'sample'
     end
 
-    # TODO: Solrを止めたらpendingも止めること
-    xcontext '部分一致' do
+    context '部分一致' do
       include_context 'projects with description', 'foobar', 'foo'
       include_examples '検索結果', 'foo bar'
     end
@@ -153,15 +149,14 @@ describe GlobalProjectsController, type: :controller do
           project.tags.create(tag_hash)
         end
 
-        tag_hash['name'] += '_unmatched'
+        tag_hash['name'] = 'zample'
         one_of_the_project.tags.create(tag_hash)
       end
 
       include_examples '検索結果', 'sample'
     end
 
-    # TODO: Solrを止めたらpendingも止めること
-    xcontext '部分一致' do
+    context '部分一致' do
       let!(:tag_hash) { FactoryGirl.build(:tag, name: 'foobar').attributes }
       include_context 'projects'
 
@@ -195,14 +190,13 @@ describe GlobalProjectsController, type: :controller do
           FactoryGirl.create(:state, description: 'sample', recipe: project.recipe)
         end
 
-        FactoryGirl.create(:state, description: 'samplesample',recipe: one_of_the_project.recipe)
+        FactoryGirl.create(:state, description: 'zample',recipe: one_of_the_project.recipe)
       end
 
       include_examples '検索結果', 'sample'
     end
 
-    # TODO: Solrを止めたらpendingも止めること
-    xcontext '部分一致' do
+    context '部分一致' do
       include_context 'projects'
 
       before do
@@ -238,7 +232,7 @@ describe GlobalProjectsController, type: :controller do
       include_examples '検索結果(public group project only)', 'sample-group'
     end
 
-    xcontext '部分一致' do
+    context '部分一致' do
       include_examples '検索結果', 'sample'
     end
   end
@@ -257,8 +251,8 @@ describe GlobalProjectsController, type: :controller do
       include_examples '検索結果(public user project only)', 'sample-user'
     end
 
-    xcontext '部分一致' do
-      include_examples '検索結果(public user project only)', 'sample'
+    context '部分一致' do
+      include_examples '検索結果(public user project only)', 'sample user'
     end
   end
 
@@ -273,7 +267,7 @@ describe GlobalProjectsController, type: :controller do
       include_examples '検索結果', 'https://sample.com'
     end
 
-    xcontext '部分一致' do
+    context '部分一致' do
       include_examples '検索結果', 'sample'
     end
   end
@@ -289,7 +283,7 @@ describe GlobalProjectsController, type: :controller do
       include_examples '検索結果', 'Tokyo,Japan'
     end
 
-    xcontext '部分一致' do
+    context '部分一致' do
       include_examples '検索結果', 'Tokyo Japan'
     end
   end
