@@ -37,3 +37,11 @@ Rails/Validation:
 # Offense count: 82
 Style/Documentation:
   Enabled: false
+
+Lint/EmptyWhen:
+  Exclude:
+    - 'app/controllers/projects_controller.rb'
+
+Lint/EmptyWhen:
+  Exclude:
+    - 'app/controllers/projects_controller.rb'
