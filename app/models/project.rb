@@ -36,8 +36,9 @@ class Project < ActiveRecord::Base
 
   paginates_per 12
 
-  # TODO: This fork_for fucntion should be devided.
+  # このプロジェクトを owner のプロジェクトとしてフォークする
   def fork_for!(owner)
+    # 整合性を保つため1トランザクション内でデータを準備
     transaction do
       dup.tap do |project|
         project.owner = owner
@@ -49,20 +50,14 @@ class Project < ActiveRecord::Base
           new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
         end
         project.name = new_project_name
-        project.save!
         project.recipe = recipe.dup_document
         project.figures = figures.map(&:dup_document)
-        project.likes = []
+        project.likes = [] # reset counter
         project.usages = []
-        project.build_note
-        begin
-          project.save!
-        rescue => _e
-          project.destroy
-          raise
-        end
-      end
 
+        project.save!
+        project.recipe.save!
+      end
     end
   end
 
@@ -181,8 +176,8 @@ class Project < ActiveRecord::Base
   end
 
   def create_recipe_and_note
-    create_recipe
-    create_note
+    create_recipe unless recipe
+    create_note unless note
   end
 
   def should_generate_new_friendly_id?

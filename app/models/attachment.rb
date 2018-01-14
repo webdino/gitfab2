@@ -7,7 +7,7 @@ class Attachment < ActiveRecord::Base
 
   def dup_document
     dup.tap do |doc|
-      doc.content = dup_content if content.present?
+      doc.content = content&.file
     end
   end
 
@@ -15,13 +15,5 @@ class Attachment < ActiveRecord::Base
     def updatable_columns
       [:id, :content, :link, :_type, :title, :description, :kind, :markup_id]
     end
-  end
-
-  private
-
-  def dup_content
-    ActionDispatch::Http::UploadedFile.new(filename: content.file.filename,
-                                           _type: content.file.content_type,
-                                           tempfile: File.open(content.path))
   end
 end
