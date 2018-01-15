@@ -13,15 +13,15 @@ html
     == content_for?(:content) ? yield(:content) : yield
     == render "layouts/footer"
     == content_for?(:bottom) ? yield(:bottom) : nil
-    - if ENV['GA_TRACKING_ID']
-      script{async src=("https://www.googletagmanager.com/gtag/js?id=#{ ENV['GA_TRACKING_ID'] }")}
+    - if Rails.application.secrets.ga_tracking_id
+      script{async src=("https://www.googletagmanager.com/gtag/js?id=#{ Rails.application.secrets.ga_tracking_id }")}
       javascript:
         window.dataLayer = window.dataLayer || [];
         function gtag() {
           dataLayer.push(arguments);
         }
         gtag('js', new Date());
-        gtag('config', "#{ ENV['GA_TRACKING_ID'] }");
+        gtag('config', "#{ Rails.application.secrets.ga_tracking_id }");
 
     - if Rails.env.development?
       hr
