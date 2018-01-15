@@ -21,15 +21,6 @@
           '/
         span.lang.jp JP
 
-      <!-- TODO: 管理者が変更できるようにする -->
-      #important-announcement
-        a.lang-en href="http://info.fabble.cc/index-en.html"
-          span
-            'Announcement for long-term system failure and data loss on fabble.cc
-        a.lang-jp href="http://info.fabble.cc"
-          span
-            'Fabble.cc長期運用停止と、データ消失についてのお詫びとご今後について
-
       - background_image = BackgroundImage.find
       #splash-wrapper style="background: url(#{background_image.try(:request_uri) || image_path('background.jpg')}) center center no-repeat"
         .container.lang-en
