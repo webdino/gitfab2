@@ -61,5 +61,8 @@ $icons-sprite-dimensions: true;
     .trotec-logo {
       @include icons-sprite(trotec_logo);
     }
+    .supporter {
+      line-height: 2em;
+    }
   }
 }
