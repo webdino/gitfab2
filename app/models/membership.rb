@@ -6,7 +6,7 @@ class Membership < ActiveRecord::Base
 
   after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
   # after_destroy -> { group.destroy }, if: -> { group && group.members.none? }
-  validates :role, presence: true
+  validates :role, presence: :true
 
   Membership::ROLE.keys.each do |role|
     define_method "#{role}?" do
