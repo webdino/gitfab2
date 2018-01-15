@@ -56,6 +56,13 @@ $icons-sprite-dimensions: true;
     }
     .adobe-standard-logo {
       @include icons-sprite(adobe_standard_logo);
+      margin-bottom: 0;
+    }
+    .trotec-logo {
+      @include icons-sprite(trotec_logo);
+    }
+    .supporter {
+      line-height: 2em;
     }
   }
 }
