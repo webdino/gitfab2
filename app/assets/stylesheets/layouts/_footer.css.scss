@@ -6,7 +6,6 @@ $icons-sprite-dimensions: true;
 
 #layouts-footer{
   width: 100%;
-  height: $common-footer-height;
   background-color: $common-background-color;
   .container {
     display: block;
@@ -27,8 +26,7 @@ $icons-sprite-dimensions: true;
       }
     }
     .copyright {
-      display: inline-block;
-      padding: 5px 10px;
+      padding: 10px 10px;
       font-size: 14px;
       font-family: $common-novelsans-semibold;
       color: $common-dark-gray;
@@ -49,14 +47,15 @@ $icons-sprite-dimensions: true;
       display: block;
       margin: 5px auto 30px;
       padding: 0;
-      max-height: 60px;
     }
     .sfc-logo {
       @include icons-sprite(sfc_logo);
     }
     .webdino-japan-logo {
       @include icons-sprite(webdino_japan_logo);
-      margin-bottom: 15px;
+    }
+    .adobe-standard-logo {
+      @include icons-sprite(adobe_standard_logo);
     }
   }
 }

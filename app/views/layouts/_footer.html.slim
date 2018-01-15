@@ -6,12 +6,17 @@ footer#layouts-footer
     .desc Developed by
     == link_to "", "https://www.webdino.org/", class: "logo webdino-japan-logo"
 
+    .desc Supported by
+    'ファブ地球社会コンソーシアム会員企業有志
+    .logo.adobe-standard-logo
+
   nav.container
     == link_to "About", "/about", class: "navi"
     == mail_to "support@fabble.cc", "Contact", class: "navi"
     == link_to "Terms of Service", "/terms", class: "navi"
     == link_to "Privacy Policy", "/privacy", class: "navi"
     == link_to "Licenses", "/licenses.txt", class: "navi"
+    == link_to "Support Blog", "https://blog.fabble.cc/", class: "navi"
 
     .copyright
       'Copyright © 2014-#{Date.current.year}
