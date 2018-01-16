@@ -111,6 +111,9 @@ GEM
       debug_inspector (>= 0.0.1)
     blankslate (3.1.2)
     builder (3.2.3)
+    bullet (5.7.1)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11.0)
     cancancan (1.8.1)
     capistrano (3.1.0)
       i18n
@@ -567,6 +570,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uniform_notifier (1.11.0)
     vegas (0.1.11)
       rack (>= 1.0.0)
     warden (1.2.7)
@@ -589,6 +593,7 @@ DEPENDENCIES
   after_commit_action
   autoprefixer-rails
   better_errors
+  bullet
   cancancan
   capistrano (~> 3.1.0)
   capistrano-bundler
