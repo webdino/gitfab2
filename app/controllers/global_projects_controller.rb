@@ -19,9 +19,8 @@ class GlobalProjectsController < ApplicationController
 
       ids = search_by_projects | search_by_users | search_by_groups | search_by_tags | search_by_states
 
-      @projects = Project.includes([
-        :figures, :owner, { recipe: :states }, { note: :note_cards }, :likes
-      ])
+      @projects = Project
+                  .includes(:figures, :owner, { recipe: :states }, { note: :note_cards }, :likes)
                   .where(id: ids).order(updated_at: :desc).page(params[:page])
 
       @is_searching = true
