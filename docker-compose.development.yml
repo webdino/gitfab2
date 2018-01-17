@@ -22,15 +22,4 @@ services:
       interval: 1m
       timeout: 10s
       retries: 5
-    depends_on:
-      - solr_development
-      - solr_test
-  solr_development:
-    image: solr:5.3
-    ports:
-      - '18983:8983'
-  solr_test:
-    image: solr:5.3
-    ports:
-      - '28983:8983'
 

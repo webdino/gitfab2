@@ -31,26 +31,7 @@ $ docker-compose ps
               Name                             Command               State            Ports
 ----------------------------------------------------------------------------------------------------
 gitfab2private_db_1                 docker-entrypoint.sh --inn ...   Up      0.0.0.0:13306->3306/tcp
-gitfab2private_solr_development_1   docker-entrypoint.sh solr- ...   Up      0.0.0.0:18983->8983/tcp
-gitfab2private_solr_test_1          docker-entrypoint.sh solr- ...   Up      0.0.0.0:28983->8983/tcp
 ```
-
-#### Create solr cores
-
-コンテナを起動したまま
-
-```bash
-docker exec -it --user=solr gitfab2private_solr_test_1 solr create -c gitfab2
-docker exec -it --user=solr gitfab2private_solr_development_1 solr create -c gitfab2
-```
-
-※`gitfab2private_solr_test_1`および`gitfab2private_solr_development_1`の部分は起動中のコンテナ名。（`docker-compose ps`で確認できるもの）
-
-Web UIで確認できる。
-
-http://127.0.0.1:18983/solr/
-
-http://127.0.0.1:28983/solr/
 
 #### Create database
 
