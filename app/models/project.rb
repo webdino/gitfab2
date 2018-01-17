@@ -4,7 +4,6 @@ class Project < ActiveRecord::Base
   include Contributable
   include Taggable
   include Likable
-  include Searchable
   include Notificatable
   include AfterCommitAction
 

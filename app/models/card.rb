@@ -5,11 +5,8 @@ class Card < ActiveRecord::Base
   include Likable
   include Commentable
   include CardDecorator
-  include Searchable
 
   validates :type, presence: true
-
-  searchable_field :description
 
   def dup_document
     dup_klass = type.present? ? type.constantize : Card
