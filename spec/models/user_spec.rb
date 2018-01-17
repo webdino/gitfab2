@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe User do
-  disconnect_sunspot
-
   it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user

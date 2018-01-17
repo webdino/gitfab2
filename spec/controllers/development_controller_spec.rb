@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe DevelopmentController, type: :controller do
-  disconnect_sunspot
   render_views
 
   let(:user){FactoryGirl.create :user}

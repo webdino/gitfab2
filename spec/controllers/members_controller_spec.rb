@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe MembersController, type: :controller do
-  disconnect_sunspot
-
   let(:group){FactoryGirl.create :group}
   let(:user){FactoryGirl.create :user}
 

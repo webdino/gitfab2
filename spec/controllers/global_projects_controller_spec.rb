@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe GlobalProjectsController, type: :controller do
-  disconnect_sunspot
   render_views
 
   describe 'GET index' do

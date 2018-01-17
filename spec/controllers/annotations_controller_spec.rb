@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe AnnotationsController, type: :controller do
-  disconnect_sunspot
   render_views
 
   let(:project){FactoryGirl.create :user_project}

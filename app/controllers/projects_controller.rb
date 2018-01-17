@@ -10,23 +10,7 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    q = params[:q]
-    if q
-      owner_id = @owner.id
-      @projects = Project.solr_search do |s|
-        s.fulltext q.split.map { |word| "\"#{word}\"" }.join ' AND '
-        case params[:type]
-        when 'own'
-          s.with :owner_id, owner_id
-        when 'contributed'
-          # TODO: Implement
-        when 'starred'
-          # TODO: Implement
-        end
-      end.results
-    else
-      @projects = @owner.projects.order 'updated_at DESC'
-    end
+    @projects = @owner.projects.order 'updated_at DESC'
     render layout: 'dashboard'
   end
 

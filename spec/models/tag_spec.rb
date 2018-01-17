@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Tag do
-  disconnect_sunspot
-
   let(:tag) { FactoryGirl.create(:tag) }
 
   it { expect(tag).to be_respond_to(:name) }

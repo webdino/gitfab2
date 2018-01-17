@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe Recipe do
-  disconnect_sunspot
   let(:u_project){FactoryGirl.create :user_project}
   let(:u_project_recipe){u_project.recipe}
   let(:g_project){FactoryGirl.create :group_project}

@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe MembershipsController, type: :controller do
-  disconnect_sunspot
   let(:user){FactoryGirl.create :user}
   let(:other){FactoryGirl.create :user}
 

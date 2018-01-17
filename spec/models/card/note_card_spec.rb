@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe Card::NoteCard do
-  disconnect_sunspot
-
   it_behaves_like 'Card', :note_card
   it_behaves_like 'Taggable', :note_card
 

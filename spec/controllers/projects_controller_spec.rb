@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe ProjectsController, type: :controller do
-  disconnect_sunspot
   render_views
 
   subject{response}
@@ -13,17 +12,13 @@ describe ProjectsController, type: :controller do
     let(:project){send "#{owner_type}_project"}
     context "with a project owned by a #{owner_type}" do
       describe 'GET index' do
-        context 'with no query' do
+        context 'with owner name' do
           before{get :index, owner_name: project.owner.slug}
           it{should render_template :index}
         end
-        context 'with single querie' do
-          before{get :index, owner_name: project.owner.slug, q: 'foo'}
-          it{should render_template :index}
-        end
-        context 'with multi queries' do
-          before{get :index, owner_name: project.owner.slug, q: 'foo bar'}
-          it{expect render_template :index}
+        context 'with owner id' do
+          before{ get :index, "#{owner_type}_id": project.owner.slug }
+          it { is_expected.to render_template :index }
         end
       end
       describe 'GET show' do

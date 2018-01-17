@@ -1,8 +1,6 @@
 require "spec_helper"
 
 describe Project do
-  disconnect_sunspot
-
   it_behaves_like 'Likable', :user_project
   it_behaves_like 'Figurable', :user_project
   it_behaves_like 'Contributable', :user_project

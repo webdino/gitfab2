@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe UsersController, type: :controller do
-  disconnect_sunspot
 #  render_views
 
   subject{response}

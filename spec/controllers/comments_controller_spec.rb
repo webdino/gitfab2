@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe CommentsController, type: :controller do
-  disconnect_sunspot
   render_views
 
   let(:user1){FactoryGirl.create :user}

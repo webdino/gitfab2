@@ -1,7 +1,6 @@
 require "spec_helper"
 
 describe RecipesController, type: :controller do
-  disconnect_sunspot
   render_views
 
   let(:u_project){FactoryGirl.create :user_project}
