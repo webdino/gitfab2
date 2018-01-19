@@ -9,7 +9,7 @@ describe DevelopmentController, type: :controller do
   describe "POST su" do
     before do
       sign_in user
-      controller.request.stub referer: "/foo.html"
+      allow(controller.request).to receive(:referer).and_return("/foo.html")
       post :su, user_id: other.id
     end
     it{expect(response).to redirect_to "/foo.html"}
