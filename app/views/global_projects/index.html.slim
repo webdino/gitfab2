@@ -22,7 +22,7 @@
         span.lang.jp JP
 
       - background_image = BackgroundImage.find
-      #splash-wrapper style="background: url(#{background_image.try(:request_uri) || image_path('background.jpg')}) center center no-repeat"
+      #splash-wrapper style="background: url(#{background_image&.request_uri || image_path('background.jpg')}) center center no-repeat"
         .container.lang-en
           .text
             h1.main-copy
