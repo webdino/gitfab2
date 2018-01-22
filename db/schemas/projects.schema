@@ -4,8 +4,8 @@ create_table :projects, force: true, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf
   t.text :description
   t.boolean :is_private, default: false
   t.boolean :is_deleted, default: false
-  t.string :owner_type
-  t.integer :owner_id
+  t.string :owner_type, null: false
+  t.integer :owner_id, null: false
   t.string :slug
   t.string :scope
   t.integer :license
