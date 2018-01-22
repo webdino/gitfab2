@@ -3,6 +3,11 @@ inherit_from: .rubocop_todo.yml
 Rails:
   Enabled: true
 
+# TODO: Remove this to enable this cop in Rails 5
+# https://github.com/bbatsov/rubocop/issues/3675
+Rails/HttpPositionalArguments:
+  Enabled: false
+
 AllCops:
   Exclude:
     - 'Capfile'
