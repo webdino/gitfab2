@@ -150,6 +150,8 @@ describe GlobalProjectsController, type: :controller do
 
         tag_hash['name'] = 'zample'
         one_of_the_project.tags.create(tag_hash)
+
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
       end
 
       include_examples '検索結果', 'sample'
@@ -166,6 +168,8 @@ describe GlobalProjectsController, type: :controller do
 
         tag_hash['name'] = 'foo'
         one_of_the_project.tags.create(tag_hash)
+
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
       end
 
       include_examples '検索結果', 'foo bar'
@@ -185,11 +189,14 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
+
         [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
           FactoryGirl.create(:state, description: 'sample', recipe: project.recipe)
         end
 
         FactoryGirl.create(:state, description: 'zample',recipe: one_of_the_project.recipe)
+
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
       end
 
       include_examples '検索結果', 'sample'
@@ -204,6 +211,8 @@ describe GlobalProjectsController, type: :controller do
         end
 
         FactoryGirl.create(:state, description: 'foo',recipe: one_of_the_project.recipe)
+
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
       end
 
       include_examples '検索結果', 'foo bar'

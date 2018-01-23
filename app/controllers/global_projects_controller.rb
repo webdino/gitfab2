@@ -6,23 +6,7 @@ class GlobalProjectsController < ApplicationController
 
     if q.present?
       query = q.force_encoding 'utf-8'
-
-      search_by_projects = Project.published.ransack(name_or_title_or_description_cont_all: query.split).result.pluck(:id)
-
-      search_by_users = Project.published.ransack(owner_of_User_type_name_or_owner_of_User_type_fullname_or_owner_of_User_type_url_or_owner_of_User_type_location_cont_all: query.split).result.pluck(:id)
-
-      search_by_groups = Project.published.ransack(owner_of_Group_type_name_or_owner_of_Group_type_url_or_owner_of_Group_type_location_cont_all: query.split).result.pluck(:id)
-
-      search_by_tags = Project.published.ransack(tags_name_cont_all: query.split).result.pluck(:id)
-
-      search_by_states = Project.published.ransack(recipe_states_description_cont_all: query.split).result.pluck(:id)
-
-      ids = search_by_projects | search_by_users | search_by_groups | search_by_tags | search_by_states
-
-      @projects = Project
-                  .includes(:figures, :owner, { recipe: :states }, { note: :note_cards }, :likes)
-                  .where(id: ids).order(updated_at: :desc).page(params[:page])
-
+      @projects = Project.published.ransack(draft_cont_all: query.split).result.distinct.page(params[:page])
       @is_searching = true
       @query = query
 
