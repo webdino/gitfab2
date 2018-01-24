@@ -1,14 +1,16 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe Group do
   it_behaves_like 'Collaborator', :group
   it_behaves_like 'ProjectOwner', :user
 
-  let(:user1){FactoryGirl.create :user}
-  let(:user2){FactoryGirl.create :user}
-  let(:group1){FactoryGirl.create :group}
+  let(:user1) { FactoryGirl.create :user }
+  let(:user2) { FactoryGirl.create :user }
+  let(:group1) { FactoryGirl.create :group }
 
-  describe "#admins" do
+  describe '#admins' do
     subject do
       group1.admins.map do |admin|
         group1.add_admin user2
@@ -16,10 +18,10 @@ describe Group do
         ms.admin?
       end.all?
     end
-    it{should be true}
+    it { is_expected.to be true }
   end
 
-  describe "#editors" do
+  describe '#editors' do
     subject do
       group1.editors.map do |editor|
         group1.add_editor user2
@@ -27,7 +29,7 @@ describe Group do
         ms.editor?
       end.all?
     end
-    it{should be true}
+    it { is_expected.to be true }
   end
 
   describe '#generate_draft' do
