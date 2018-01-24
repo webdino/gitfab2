@@ -1,16 +1,18 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe User do
   it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user
 
-  let(:user){FactoryGirl.create :user}
-  let(:project){FactoryGirl.create :user_project}
-  let(:group){FactoryGirl.create :group}
+  let(:user) { FactoryGirl.create :user }
+  let(:project) { FactoryGirl.create :user_project }
+  let(:group) { FactoryGirl.create :group }
 
   # #623 local test could pass, but travis was faild.
-  #describe "#groups" do
+  # describe "#groups" do
   #  let(:user_joining_groups){FactoryGirl.create_list :group, 3}
   #  before do
   #    user_joining_groups.each do |group|
@@ -19,10 +21,10 @@ describe User do
   #    user.reload
   #  end
   #  subject{user.groups}
-  #  it{should eq user_joining_groups}
-  #end
+  #  it{ is_expected.to eq user_joining_groups}
+  # end
 
-  describe "#collaborate!" do
+  describe '#collaborate!' do
     before do
       user.collaborate! project
       user.reload
@@ -31,10 +33,10 @@ describe User do
       collaboration = user.collaborations.find_by project: project
       collaboration.project
     end
-    it{should eq project}
+    it { is_expected.to eq project }
   end
 
-  describe "#is_collaborator_of?" do
+  describe '#is_collaborator_of?' do
     before do
       user.collaborate! project
       user.reload
@@ -43,7 +45,7 @@ describe User do
       collaboration = user.collaborations.find_by project: project
       collaboration.project
     end
-    it{should eq project}
+    it { is_expected.to eq project }
   end
 
   describe '#liked_projects' do
@@ -163,8 +165,8 @@ describe User do
     let!(:group_not_membered) { FactoryGirl.create :group }
     subject { user.join_to(group_membered) }
     it { expect(subject).to be_an_instance_of(Membership) }
-    it { expect{ subject }.to change{ user.membership_in(group_membered) } }
-    it { expect{ subject }.to_not change{ user.membership_in(group_not_membered) } }
+    it { expect { subject }.to change { user.membership_in(group_membered) } }
+    it { expect { subject }.to_not change { user.membership_in(group_not_membered) } }
   end
 
   describe '#is_in_collaborated_group?(project)' do
