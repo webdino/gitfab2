@@ -162,7 +162,7 @@ class Project < ActiveRecord::Base
   end
 
   def update_draft!
-    update!(draft: create_draft)
+    update!(draft: generate_draft)
   end
 
   class << self
@@ -186,21 +186,18 @@ class Project < ActiveRecord::Base
     create_note unless note
   end
 
-  def create_draft
-    self.draft = [].tap do |lines|
-      lines << name
-      lines << title
-      lines << description
-      lines << owner.draft
+  def generate_draft
+    [].tap { |lines|
+      lines.push(name, title, description, owner.draft)
       tags.each do |t|
         lines << t.name
       end
       lines << recipe.draft if recipe
-    end.join('\n')
+    }.join("\n")
   end
 
   def set_draft
-    self.draft = create_draft
+    self.draft = generate_draft
   end
 
   def should_generate_new_friendly_id?

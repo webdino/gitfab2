@@ -10,7 +10,7 @@ class Recipe < ActiveRecord::Base
     states.each do |state|
       lines << ActionController::Base.helpers.strip_tags(state.description)
     end
-    lines.join('\n')
+    lines.join("\n")
   end
 
   def dup_document
