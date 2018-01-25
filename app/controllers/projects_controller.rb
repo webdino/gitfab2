@@ -172,7 +172,11 @@ class ProjectsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+    # FIXME: :user_id, :group_idが数値の文字列で渡された場合
+    # owner_id.downcase! はnilになってしまうのでは
     owner_id.downcase!
+    # friendly_firstは内部的にfind_by_slugを使用している
+    # owner_idという名前もどうなんだろな
     @owner = ProjectOwner.friendly_first(owner_id)
     not_found if @owner.blank?
   end
