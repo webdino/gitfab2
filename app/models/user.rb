@@ -79,6 +79,10 @@ class User < ActiveRecord::Base
     is_in_collaborated_group
   end
 
+  def draft
+    "#{name}\n#{fullname}\n#{url}\n#{location}"
+  end
+
   class << self
     def find_for_github_oauth(auth)
       where(auth.slice :provider, :uid).first_or_create do |user|

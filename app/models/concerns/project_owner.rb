@@ -5,6 +5,10 @@ module ProjectOwner
     scope :ordered_by_name, -> { order('name ASC') }
   end
 
+  def draft
+    raise NotImplementedError
+  end
+
   def self.friendly_first(owner_id)
     User.find_by_slug(owner_id) || Group.find_by_slug(owner_id)
   end

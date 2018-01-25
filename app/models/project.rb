@@ -17,7 +17,7 @@ class Project < ActiveRecord::Base
   has_one :recipe, dependent: :destroy
   has_one :note, dependent: :destroy
 
-  before_save :create_draft
+  before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
@@ -161,6 +161,10 @@ class Project < ActiveRecord::Base
     [owner.name, title].join('/')
   end
 
+  def update_draft!
+    update!(draft: create_draft)
+  end
+
   class << self
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
@@ -183,21 +187,20 @@ class Project < ActiveRecord::Base
   end
 
   def create_draft
-    self.draft = ''.tap do |str|
-      str.concat([name, title, description].join(' '))
-      case owner_type
-      when 'User'
-        str.concat(%(#{owner.name} #{owner.fullname} #{owner.url} #{owner.location}))
-      when 'Group'
-        str.concat(%(#{owner.name} #{owner.url} #{owner.location}))
-      end
+    self.draft = [].tap do |lines|
+      lines << name
+      lines << title
+      lines << description
+      lines << owner.draft
       tags.each do |t|
-        str.concat(" #{t.name}")
+        lines << t.name
       end
-      self&.recipe&.states&.each do |s|
-        str.concat(' ' + ActionController::Base.helpers.strip_tags(s.description))
-      end
-    end
+      lines << recipe.draft if recipe
+    end.join('\n')
+  end
+
+  def set_draft
+    self.draft = create_draft
   end
 
   def should_generate_new_friendly_id?

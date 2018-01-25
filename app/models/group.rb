@@ -20,6 +20,10 @@ class Group < ActiveRecord::Base
     end
   end
 
+  def draft
+    "#{name}\n#{url}\n#{location}"
+  end
+
   private
 
   def should_generate_new_friendly_id?

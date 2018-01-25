@@ -151,7 +151,7 @@ describe GlobalProjectsController, type: :controller do
         tag_hash['name'] = 'zample'
         one_of_the_project.tags.create(tag_hash)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
       end
 
       include_examples '検索結果', 'sample'
@@ -169,7 +169,7 @@ describe GlobalProjectsController, type: :controller do
         tag_hash['name'] = 'foo'
         one_of_the_project.tags.create(tag_hash)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
       end
 
       include_examples '検索結果', 'foo bar'
@@ -196,7 +196,7 @@ describe GlobalProjectsController, type: :controller do
 
         FactoryGirl.create(:state, description: 'zample',recipe: one_of_the_project.recipe)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
       end
 
       include_examples '検索結果', 'sample'
@@ -212,7 +212,7 @@ describe GlobalProjectsController, type: :controller do
 
         FactoryGirl.create(:state, description: 'foo',recipe: one_of_the_project.recipe)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.save! }
+        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
       end
 
       include_examples '検索結果', 'foo bar'
