@@ -187,13 +187,12 @@ class Project < ActiveRecord::Base
   end
 
   def generate_draft
-    [].tap { |lines|
-      lines.push(name, title, description, owner.draft)
-      tags.each do |t|
-        lines << t.name
-      end
-      lines << recipe.draft if recipe
-    }.join("\n")
+    lines = [name, title, description, owner.draft]
+    tags.each do |t|
+      lines << t.name
+    end
+    lines << recipe.draft if recipe
+    lines.join("\n")
   end
 
   def set_draft

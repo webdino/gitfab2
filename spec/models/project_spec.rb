@@ -178,4 +178,13 @@ describe Project do
     expect(project.licenses).to contain_exactly('by', 'by-sa', 'by-nc', 'by-nc-sa')
   end
 
+  describe '#update_draft!' do
+    owner = FactoryGirl.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo')
+    project_params = { name: 'name', title: 'title', description: 'description', owner: owner }
+    project = FactoryGirl.create(:user_project, project_params)
+
+    it "generates a draft which contains project and owner's draft" do
+      expect(project.draft).to eq "name\ntitle\ndescription\nuser1\nUser One\nhttp://example.com\nTokyo"
+    end
+  end
 end
