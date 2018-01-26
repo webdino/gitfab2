@@ -184,4 +184,8 @@ describe User do
     it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be_falsey }
   end
 
+  describe '#generate_draft' do
+    user = FactoryGirl.create(:user)
+    it_behaves_like 'DraftGenerator', user
+  end
 end

@@ -29,4 +29,9 @@ describe Group do
     end
     it{should be true}
   end
+
+  describe '#generate_draft' do
+    group = FactoryGirl.create(:group)
+    it_behaves_like 'DraftGenerator', group
+  end
 end

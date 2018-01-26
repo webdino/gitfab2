@@ -3,6 +3,7 @@ class Group < ActiveRecord::Base
 
   include ProjectOwner
   include Collaborator
+  include DraftGenerator
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -20,7 +21,7 @@ class Group < ActiveRecord::Base
     end
   end
 
-  def draft
+  def generate_draft
     "#{name}\n#{url}\n#{location}"
   end
 

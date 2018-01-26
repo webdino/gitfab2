@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include ProjectOwner
   include Liker
   include Collaborator
+  include DraftGenerator
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -79,7 +80,7 @@ class User < ActiveRecord::Base
     is_in_collaborated_group
   end
 
-  def draft
+  def generate_draft
     "#{name}\n#{fullname}\n#{url}\n#{location}"
   end
 

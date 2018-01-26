@@ -41,6 +41,10 @@ describe Recipe do
         expect(dupped_recipe.recipe_cards.size).to eq(0)
       end
     end
+  end
 
+  describe '#generate_draft' do
+    recipe = FactoryGirl.create(:recipe)
+    it_behaves_like 'DraftGenerator', recipe
   end
 end

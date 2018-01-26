@@ -14,4 +14,9 @@ describe Tag do
     it { expect(tag).to be_respond_to(:taggable) }
     it { expect(tag.taggable.class).to be_include(Taggable) }
   end
+
+  describe '#generate_draft' do
+    tag = FactoryGirl.create(:tag)
+    it_behaves_like 'DraftGenerator', tag
+  end
 end

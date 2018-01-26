@@ -187,11 +187,11 @@ class Project < ActiveRecord::Base
   end
 
   def generate_draft
-    lines = [name, title, description, owner.draft]
+    lines = [name, title, description, owner.generate_draft]
     tags.each do |t|
-      lines << t.name
+      lines << t.generate_draft
     end
-    lines << recipe.draft if recipe
+    lines << recipe.generate_draft if recipe
     lines.join("\n")
   end
 
