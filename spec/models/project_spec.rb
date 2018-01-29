@@ -179,12 +179,38 @@ describe Project do
   end
 
   describe '#update_draft!' do
-    owner = FactoryGirl.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo')
-    project_params = { name: 'name', title: 'title', description: 'description', owner: owner }
-    project = FactoryGirl.create(:user_project, project_params)
+    let!(:owner) { FactoryGirl.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
+    let!(:project) { FactoryGirl.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }
 
     it "generates a draft which contains project and owner's draft" do
-      expect(project.draft).to eq "name\ntitle\ndescription\nuser1\nUser One\nhttp://example.com\nTokyo"
+      expect(project.draft).to eq <<~EOS.chomp
+        name
+        title
+        description
+        user1
+        User One
+        http://example.com
+        Tokyo
+      EOS
+    end
+
+    it "generates a draft which contains tag's draft" do
+      tag1 = project.tags.build(name: 'tag1', user_id: owner.id)
+      tag1.save!
+      tag2 = project.tags.build(name: 'tag2', user_id: owner.id)
+      tag2.save!
+      project.update_draft!
+      expect(project.draft).to eq <<~EOS
+        name
+        title
+        description
+        user1
+        User One
+        http://example.com
+        Tokyo
+        tag1
+        tag2
+      EOS
     end
   end
 end
