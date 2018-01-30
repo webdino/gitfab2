@@ -295,4 +295,19 @@ describe GlobalProjectsController, type: :controller do
       include_examples '検索結果', 'Tokyo Japan'
     end
   end
+
+  describe 'Search project by zenkaku-space or tab separated query' do
+    shared_context 'projects with name' do |matched, unmatched|
+      let!(:public_user_project) { FactoryGirl.create(:user_project, :public, name: matched) }
+      let!(:public_group_project) { FactoryGirl.create(:group_project, :public, name: matched) }
+      let!(:private_user_project) { FactoryGirl.create(:user_project, :private, name: matched) }
+      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, name: matched) }
+      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, name: unmatched) }
+    end
+
+    context '部分一致' do
+      include_context 'projects with name', 'foobar', 'foo'
+      include_examples '検索結果', "foo　\tbar"
+    end
+  end
 end
