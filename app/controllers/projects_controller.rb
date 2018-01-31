@@ -35,11 +35,16 @@ class ProjectsController < ApplicationController
   end
 
   def fork
-    original_project = Project.find params[:original_project_id]
-    @project = original_project.fork_for! @owner
-    if original_project.present? && @project.present?
+    # RecordNotFoundではなくnilを格納したいのでfind_byを使用
+    original_project = Project.find_by id: params[:original_project_id]
+    @project = original_project.fork_for!(@owner) if original_project.present?
+    # build_projectにより@projectはProjectのインスタンスになってしまう
+    # よって@project.valid? で判別する
+    if original_project.present? && @project.valid?
       redirect_to project_path(id: @project, owner_name: @owner)
     else
+      # FIXME: request.refererがnilになってる?
+      # そもそも失敗した場合にどこへ遷移させたいのか
       redirect_to request.referer
     end
   end
@@ -74,7 +79,9 @@ class ProjectsController < ApplicationController
             format.html { redirect_to project_path(@project, owner_name: @owner) }
           end
         else
-          @project.clear_timeless_option
+          # FIXME: clear_timeless_optionはmongoidのメソッドでは
+          # https://stackoverflow.com/a/46402670/6623139
+          # @project.clear_timeless_option
           respond_to do |format|
             format.json { render 'error/failed', status: 400 }
             format.html { render :edit, status: 400 }
@@ -98,8 +105,9 @@ class ProjectsController < ApplicationController
   end
 
   def change_owner
-    project = Project.find params[:id]
-    new_owner = User.find(params[:new_owner_name]) || Group.find(params[:new_owner_name])
+    project = Project.friendly.find params[:id]
+    # ownerが見つからなかった場合にnilを返したいのでProjectOwner.friendly_firstを使用
+    new_owner = ProjectOwner.friendly_first(params[:new_owner_name])
     if new_owner.present? && project.change_owner!(new_owner)
       if project.collaborators.include?(new_owner)
         old_collaboration = new_owner.collaboration_in project
@@ -111,7 +119,7 @@ class ProjectsController < ApplicationController
         format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
       end
     else
-      render 'error/failed', status: 400
+      render 'errors/failed', status: 400
     end
   end
 
@@ -172,11 +180,7 @@ class ProjectsController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    # FIXME: :user_id, :group_idが数値の文字列で渡された場合
-    # owner_id.downcase! はnilになってしまうのでは
     owner_id.downcase!
-    # friendly_firstは内部的にfind_by_slugを使用している
-    # owner_idという名前もどうなんだろな
     @owner = ProjectOwner.friendly_first(owner_id)
     not_found if @owner.blank?
   end
