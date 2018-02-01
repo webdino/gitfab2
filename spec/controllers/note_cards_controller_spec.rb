@@ -14,7 +14,7 @@ describe NoteCardsController, type: :controller do
     before do
       xhr :get, :new, owner_name: user, project_id: project
     end
-    it{should render_template :new}
+    it{is_expected.to render_template :new}
   end
 
   describe "GET edit" do
@@ -22,7 +22,7 @@ describe NoteCardsController, type: :controller do
       xhr :get, :edit, owner_name: user, project_id: project,
         id: note_card.id
     end
-    it{should render_template :edit}
+    it{is_expected.to render_template :edit}
   end
 
   describe "POST create" do
@@ -32,15 +32,14 @@ describe NoteCardsController, type: :controller do
           note_card: new_note_card.attributes
         project.reload
       end
-      it{should render_template :create}
+      it{is_expected.to render_template :create}
       it{expect(project.note).to have(1).note_cards}
     end
-    # TODO: attachments_attributes には attachment_material ファクトリの属性を使えるかも
     context "with attachments" do
       before do
         xhr :post, :create, user_id: user, project_id: project,
           note_card: new_note_card.attributes.merge({
-            attachments_attributes: [{kind: 'material', content: UploadFileHelper.upload_file}]})
+            attachments_attributes: [FactoryGirl.attributes_for(:attachment_material)]})
         project.reload
       end
       it{expect(project.note.note_cards.first).to have(1).attachments}
@@ -49,11 +48,14 @@ describe NoteCardsController, type: :controller do
           .to eq('material')
       end
     end
-    context "with incorrect params" do
+    xcontext "with incorrect params" do
       before do
-        xhr :post, :create, user_id: user, project_id: project, note_card: {incorrect: "params"}
+        # TODO: Card::NoteCardのtitle, descriptionにはバリデーション無い
+        # card.js.coffeeのvalidateForm(event, is_note_card_form)で制御している
+        xhr :post, :create, user_id: user, project_id: project, note_card: { title: "", description: "" }
       end
-      it{expect render_template 'error/failed', status: 400}
+      it{ is_expected.to render_template 'errors/failed'}
+      it { is_expected.to have_http_status(400)}
     end
   end
 
@@ -65,16 +67,19 @@ describe NoteCardsController, type: :controller do
           id: note_card.id, note_card: {title: title_to_change}
         note_card.reload
       end
-      it{should render_template :update}
+      it{is_expected.to render_template :update}
       it{expect(project.note.note_cards.first.title).to eq title_to_change}
     end
 
-    context "with incorrect params" do
+    xcontext "with incorrect params" do
       before do
+        # TODO: Card::NoteCardのtitle, descriptionにはバリデーション無い
+        # card.js.coffeeのvalidateForm(event, is_note_card_form)で制御している
         xhr :patch, :update, user_id: user, project_id: project,
           id: note_card.id, note_card: {title: "", description: ""}
       end
-      it{expect render_template 'error/failed', status: 400}
+      it { is_expected.to render_template 'errors/failed' }
+      it { is_expected.to have_http_status(400) }
     end
   end
 
@@ -84,7 +89,7 @@ describe NoteCardsController, type: :controller do
         id: note_card.id
       project.reload
     end
-    it{should render_template :destroy}
+    it{is_expected.to render_template :destroy}
     it{expect(project.note.note_cards).to have(0).note_cards}
   end
 end
