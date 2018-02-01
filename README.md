@@ -13,9 +13,10 @@ gitfab2 [![Build Status](https://travis-ci.org/mozilla-japan/gitfab2.svg?branch=
 ### Installation
 
 ```bash
+$ git clone git@github.com:webdino/gitfab2.git
 $ cd gitfab2
 $ rbenv install `cat .ruby-version`
-$ gem install bundler --no-ri --no-rdoc
+$ gem install bundler --no-document
 $ bundle install
 $ cp config/database.ymls/development.yml config/database.yml
 $ cp .envrc.sample .envrc
@@ -30,7 +31,7 @@ $ docker-compose up -d
 $ docker-compose ps
               Name                             Command               State            Ports
 ----------------------------------------------------------------------------------------------------
-gitfab2private_db_1                 docker-entrypoint.sh --inn ...   Up      0.0.0.0:13306->3306/tcp
+gitfab2_db_1                 docker-entrypoint.sh --inn ...   Up      0.0.0.0:13306->3306/tcp
 ```
 
 #### Create database
