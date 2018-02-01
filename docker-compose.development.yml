@@ -5,7 +5,7 @@ volumes:
 services:
   db:
     image: mysql:5.6
-    command: '--innodb-file-format=Barracuda --innodb-file-per-table=true --innodb-large-prefix=true'
+    command: '--innodb-file-format=Barracuda --innodb-file-per-table=true --innodb-large-prefix=true --max-allowed-packet=32MB'
     environment:
       MYSQL_USER: root
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
