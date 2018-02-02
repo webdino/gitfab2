@@ -14,7 +14,7 @@ describe ProjectsController, type: :controller do
       describe 'GET index' do
         context 'with owner name' do
           before{get :index, owner_name: project.owner.slug}
-          it{should render_template :index}
+          it{ is_expected.to render_template :index }
         end
         context 'with owner id' do
           before{ get :index, "#{owner_type}_id": project.owner.slug }
@@ -33,7 +33,7 @@ describe ProjectsController, type: :controller do
           sign_in user_project.owner
           get :new, owner_name: project.owner.slug, id: project.id
         end
-        it{should render_template :new}
+        it{ is_expected.to render_template :new }
       end
       describe 'DELETE destroy' do
         context 'without collaborators' do
@@ -67,7 +67,7 @@ describe ProjectsController, type: :controller do
           sign_in user_project.owner
           get :edit, owner_name: project.owner.slug, id: project.id
         end
-        it{should render_template :edit}
+        it{ is_expected.to render_template :edit }
       end
       describe 'POST create' do
         context 'when newly creating' do
@@ -77,7 +77,7 @@ describe ProjectsController, type: :controller do
             sign_in user
             post :create, user_id: user.slug, project: new_project.attributes
           end
-          it{should redirect_to(edit_project_url(id: assigns(:project), owner_name: user))}
+          it{ is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
         end
         context 'when newly creating with wrong parameters' do
           let(:user){FactoryGirl.create :user}
@@ -99,7 +99,7 @@ describe ProjectsController, type: :controller do
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: user_project.id
           end
-          it{should redirect_to project_path(id: Project.last.name, owner_name: forker.slug)}
+          it{ is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
           it{expect(Project.last.recipe).to have(1).state}
           it{expect(Project.last.recipe.states.first).to have(1).annotation}
         end
