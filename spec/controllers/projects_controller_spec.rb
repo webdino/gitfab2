@@ -103,7 +103,7 @@ describe ProjectsController, type: :controller do
           it{expect(Project.last.recipe).to have(1).state}
           it{expect(Project.last.recipe.states.first).to have(1).annotation}
         end
-        xcontext 'when forking with a wrong parameter' do
+        context 'when forking with a wrong parameter' do
           let(:forker){FactoryGirl.create :user}
           let!(:original_project) { FactoryGirl.create :user_project }
 
@@ -112,13 +112,9 @@ describe ProjectsController, type: :controller do
             original_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
             original_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
             original_project.reload
-            # そもそもoriginal_project_idにはproject.idがセットされるのでは？
-            # cf. views/projects/_fork_destination.html.slim
-            # cf. views/recipes/_fork_destination.html.slim
             post :create, user_id: forker.slug, original_project_id: 'wrongparameter'
           end
-          # FIXME: 404になってしまう
-          it{ is_expected.to redirect_to project_path(owner_name: original_project.owner, id: original_project) }
+          it { is_expected.to have_http_status(404) }
         end
       end
       describe 'GET potential_owners' do

@@ -35,17 +35,10 @@ class ProjectsController < ApplicationController
   end
 
   def fork
-    # RecordNotFoundではなくnilを格納したいのでfind_byを使用
-    original_project = Project.find_by id: params[:original_project_id]
-    @project = original_project.fork_for!(@owner) if original_project.present?
-    # build_projectにより@projectはProjectのインスタンスになってしまう
-    # よって@project.valid? で判別する
-    if original_project.present? && @project.valid?
+    original_project = Project.find params[:original_project_id]
+    @project = original_project.fork_for! @owner
+    if original_project.present? && @project.present?
       redirect_to project_path(id: @project, owner_name: @owner)
-    else
-      # FIXME: request.refererがnilになってる?
-      # そもそも失敗した場合にどこへ遷移させたいのか
-      redirect_to request.referer
     end
   end
 
@@ -79,9 +72,6 @@ class ProjectsController < ApplicationController
             format.html { redirect_to project_path(@project, owner_name: @owner) }
           end
         else
-          # FIXME: clear_timeless_optionはmongoidのメソッドでは
-          # https://stackoverflow.com/a/46402670/6623139
-          # @project.clear_timeless_option
           respond_to do |format|
             format.json { render 'error/failed', status: 400 }
             format.html { render :edit, status: 400 }
