@@ -148,26 +148,43 @@ describe ProjectsController, type: :controller do
           before do
             sign_in user
           end
-          context 'success' do
-            before do
-              if owner_type == 'user'
-                xhr :patch, :update, user_id: project.owner, id: project, project: {likes_attributes: {'1341431431' => {liker_id: user.id, _destroy: false}}}
-              else
-                xhr :patch, :update, group_id: project.owner, id: project, project: {likes_attributes: {'1341431431' => {liker_id: user.id, _destroy: false}}}
-              end
+
+          let(:patch_to_success) do
+            if owner_type == 'user'
+              xhr :patch, :update, user_id: project.owner, id: project, project: {likes_attributes: {'1341431431' => {liker_id: user.id, _destroy: false}}}
+            else
+              xhr :patch, :update, group_id: project.owner, id: project, project: {likes_attributes: {'1341431431' => {liker_id: user.id, _destroy: false}}}
             end
+          end
+
+          let(:patch_to_fail) do
+            if owner_type == 'user'
+              xhr :patch, :update, user_id: project.owner, id: project, project: {title: '', likes_attributes: {'1341431431' => {liker_id: 'invalid', _destroy: false}}}
+            else
+              xhr :patch, :update, group_id: project.owner, id: project, project: {title: '', likes_attributes: {'1341431431' => {liker_id: 'invalid', _destroy: false}}}
+            end
+          end
+
+          context 'success' do
+            before { patch_to_success }
             it { is_expected.to redirect_to [project, owner_name: project.owner] }
           end
-          context 'error' do
-            before do
-              if owner_type == 'user'
-                xhr :patch, :update, user_id: project.owner, id: project, project: {title: '', likes_attributes: {'1341431431' => {liker_id: 'invalid', _destroy: false}}}
-              else
-                xhr :patch, :update, group_id: project.owner, id: project, project: {title: '', likes_attributes: {'1341431431' => {liker_id: 'invalid', _destroy: false}}}
-              end
-            end
+          context 'fail' do
+            before { patch_to_fail }
             it { is_expected.to have_http_status(400) }
             it { is_expected.to render_template :edit }
+          end
+          context 'for timestamps' do
+            it 'should not change updated_at on success' do
+              travel 1.day do
+                expect { patch_to_success }.not_to change { project.reload.updated_at }
+              end
+            end
+            it 'should not change updated_at on fail' do
+              travel 1.day do
+                expect { patch_to_fail }.not_to change { project.reload.updated_at }
+              end
+            end
           end
         end
 
