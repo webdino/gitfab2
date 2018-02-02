@@ -57,8 +57,12 @@ describe ProjectsController, type: :controller do
             group.reload
           end
           it{ is_expected.to redirect_to projects_path(owner_name: project.owner.slug)}
-          it{ expect(user).to have(0).collaboration}
-          it{ expect(group).to have(0).collaboration}
+          it 'has 0 collaborations' do
+            aggregate_failures do
+              expect(user.collaborations.size).to eq 0
+              expect(group.collaborations.size).to eq 0
+            end
+          end
         end
       end
       describe 'GET edit' do
@@ -100,8 +104,13 @@ describe ProjectsController, type: :controller do
             post :create, user_id: forker.slug, original_project_id: user_project.id
           end
           it{ is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
-          it{expect(Project.last.recipe).to have(1).state}
-          it{expect(Project.last.recipe.states.first).to have(1).annotation}
+          it 'has 1 states and 1 annotation' do
+            aggregate_failures do
+              recipe_states = Project.last.recipe.states
+              expect(recipe_states.size).to eq 1
+              expect(recipe_states.first.annotations.size).to eq 1
+            end
+          end
         end
         context 'when forking with a wrong parameter' do
           let(:forker){FactoryGirl.create :user}

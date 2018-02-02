@@ -32,10 +32,15 @@ describe Project do
                                    title: 'b state', description: 'desc b'
       project.reload
     end
-    it { expect(project.recipe).to have(2).states }
     it { expect(derivative_project.owner).to eq forker }
-    it { expect(derivative_project.recipe).to have(2).states }
     it { expect(derivative_project.id).not_to eq project.id }
+
+    it 'プロジェクトと複製先のstateの数が同じであること' do
+      aggregate_failures do
+        expect(project.recipe.states.size).to eq 2
+        expect(derivative_project.recipe.states.size).to eq 2
+      end
+    end
 
     it 'プロジェクト名（slug）を維持すること' do
       expect(derivative_project.name).to eq(project.name)

@@ -38,7 +38,9 @@ describe StatesController, type: :controller do
         project.reload
       end
       it{expect render_template :create}
-      it{expect(project.recipe).to have(1).state}
+      it 'has 1 state' do
+        expect(project.recipe.states.size).to eq 1
+      end
     end
     context 'with invalid values' do
       before do
@@ -88,8 +90,11 @@ describe StatesController, type: :controller do
         project_id: project.name, state_id: state_2.id, dst_state_id: state.id
       project.reload
     end
-    it{expect(project.recipe).to have(1).state}
-    it{expect(project.recipe.states.first).to have(1).annotation}
+    it 'creates an annotation from a state' do
+      aggregate_failures '1 state, 1 annotation' do
+        expect(project.recipe.states.size).to eq 1
+        expect(project.recipe.states.first.annotations.size).to eq 1
+      end
+    end
   end
-
 end

@@ -33,7 +33,9 @@ describe NoteCardsController, type: :controller do
         project.reload
       end
       it{is_expected.to render_template :create}
-      it{expect(project.note).to have(1).note_cards}
+      it 'has 1 note_card' do
+        expect(project.note.note_cards.size).to eq 1
+      end
     end
     context "with attachments" do
       before do
@@ -42,10 +44,12 @@ describe NoteCardsController, type: :controller do
             attachments_attributes: [FactoryGirl.attributes_for(:attachment_material)]})
         project.reload
       end
-      it{expect(project.note.note_cards.first).to have(1).attachments}
-      it do
-        expect(project.note.note_cards.first.attachments.first.kind)
-          .to eq('material')
+      it "has 1 attachment of kind 'material'" do
+        note_card = project.note.note_cards.first
+        aggregate_failures do
+          expect(note_card.attachments.size).to eq 1
+          expect(note_card.attachments.first.kind).to eq('material')
+        end
       end
     end
     xcontext "with incorrect params" do
@@ -90,6 +94,8 @@ describe NoteCardsController, type: :controller do
       project.reload
     end
     it{is_expected.to render_template :destroy}
-    it{expect(project.note.note_cards).to have(0).note_cards}
+    it 'has 0 note_cards' do
+      expect(project.note.note_cards.size).to eq 0
+    end
   end
 end

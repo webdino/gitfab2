@@ -38,7 +38,9 @@ describe UsagesController, type: :controller do
       project.reload
     end
     it { is_expected.to render_template :create }
-    it { expect(project).to have(1).usage }
+    it 'has 1 usage' do
+      expect(project.usages.size).to eq 1
+    end
   end
 
   describe 'PATCH update' do

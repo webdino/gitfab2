@@ -14,6 +14,8 @@ describe MembersController, type: :controller do
       user.reload
     end
     it { is_expected.to render_template :create }
-    it { expect(user).to have(1).memberships }
+    it 'has 1 membership' do
+      expect(user.memberships.size).to eq 1
+    end
   end
 end
