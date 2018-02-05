@@ -19,22 +19,11 @@
     / TODO: #486 Implement user.contributed_projects method in user.rb
     / li
     /   == link_to "Contribution", "#", data: {tab: "#contribution-tab"}
-    - if @owner.is_a? User
-      li
-        - length = 0
-        - @owner.liked_projects.each do |p|
-          - length += 1 if can? :read, p
-        == link_to "Favorite (#{length})", "#", data: {tab: "#starred-tab"}
 
   .tabs-content
     == render "project_tab"
     == render "note_tab"
     == render "collaboration_tab"
-    - if @owner.is_a? User
-
-      / TODO: #486 Implement user.contributed_projects method in user.rb
-      / == render "contribution_tab"
-      == render "starred_tab"
 
 content_for :bottom
   coffee:
