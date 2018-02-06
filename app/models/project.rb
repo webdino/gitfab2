@@ -169,8 +169,7 @@ class Project < ActiveRecord::Base
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
        usages_attributes: Card::Usage.updatable_columns,
-       figures_attributes: Figure.updatable_columns,
-       likes_attributes: Like.updatable_columns
+       figures_attributes: Figure.updatable_columns
       ]
     end
   end

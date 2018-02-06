@@ -1,5 +1,0 @@
-#starred-tab.tabs-pane
-  ul.project-list
-    - @owner.liked_projects.each do |project|
-      - if can? :read, project
-        == render "project", project: project, is_note: false

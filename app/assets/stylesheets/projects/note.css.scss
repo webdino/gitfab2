@@ -8,12 +8,6 @@
   a:not(.btn) {
     color: $common-basic-color;
   }
-  aside.like {
-    display: inline;
-    .like-button {
-      font-size: 16px;
-    }
-  }
   .top {
     margin-left: $first_column_width;
     padding-top: 1px;
@@ -75,25 +69,6 @@
             }
             .control {
               margin-top: 5px;
-              .starred {
-                height: 26px;
-                padding-right: 10px;
-                margin-right: 10px;
-                border-right: 1px solid black;
-                .icon {
-                  display: inline-block;
-                  vertical-align: top;
-                  margin-top: 1px;
-                  width: 20px;
-                  height: 20px;
-                }
-                .count {
-                  display: inline-block;
-                  vertical-align: top;
-                  margin-left: 5px;
-                  height: 20px;
-                }
-              }
             }
           }
           .description {

@@ -5,9 +5,6 @@
 
 #note-cards-show {
   width: $content_width;
-  aside.like {
-    display: inline;
-  }
   .top {
     margin-left: $first_column_width;
     padding-top: 1px;
@@ -75,25 +72,6 @@
             margin-top: 5px;
             width: 40%;
             text-align: right;
-            .starred {
-              height: 26px;
-              padding-right: 10px;
-              margin-right: 10px;
-              border-right: 1px solid black;
-              .icon {
-                display: inline-block;
-                vertical-align: top;
-                margin-top: 1px;
-                width: 20px;
-                height: 20px;
-              }
-              .count {
-                display: inline-block;
-                vertical-align: top;
-                margin-left: 5px;
-                height: 20px;
-              }
-            }
           }
         }
 
