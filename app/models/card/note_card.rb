@@ -5,8 +5,7 @@ class Card::NoteCard < Card
   after_create -> { note.increment!(:num_cards) }
   after_destroy -> { note.decrement!(:num_cards) }
 
-  # TODO: validationはかけるべきだが、テストが落ちるので要確認
-  # validates :title, :description, presence: true
+  validates :title, :description, presence: true
 
   class << self
     def updatable_columns

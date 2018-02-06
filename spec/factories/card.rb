@@ -5,7 +5,9 @@ FactoryGirl.define do
 
     factory :note_card, class: Card::NoteCard do
       type Card::NoteCard.name
+      # title, descriptionはpresence: true
       sequence(:title) { |n| "NoteCard #{n}" }
+      sequence(:description) { |n| "Description for NoteCard #{n}" }
       note
     end
 

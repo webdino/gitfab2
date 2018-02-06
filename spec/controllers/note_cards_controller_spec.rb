@@ -32,7 +32,7 @@ describe NoteCardsController, type: :controller do
           note_card: new_note_card.attributes
         project.reload
       end
-      it{is_expected.to render_template :create}
+      it{ is_expected.to render_template :create }
       it 'has 1 note_card' do
         expect(project.note.note_cards.size).to eq 1
       end
@@ -52,38 +52,65 @@ describe NoteCardsController, type: :controller do
         end
       end
     end
-    xcontext "with incorrect params" do
+    context "with incorrect params" do
       before do
-        # TODO: Card::NoteCardのtitle, descriptionにはバリデーション無い
-        # card.js.coffeeのvalidateForm(event, is_note_card_form)で制御している
-        xhr :post, :create, user_id: user, project_id: project, note_card: { title: "", description: "" }
+        # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
+        # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
+        xhr :post, :create, user_id: user, project_id: project, note_card: { title: '', description: '' }
       end
-      it{ is_expected.to render_template 'errors/failed'}
-      it { is_expected.to have_http_status(400)}
+      it "should render 'errors/failed' with 400" do
+        aggregate_failures do
+          is_expected.to render_template 'errors/failed'
+          is_expected.to have_http_status(400)
+        end
+      end
     end
   end
 
   describe "PATCH update" do
     context "with correct params" do
-      let(:title_to_change){"_foo"}
-      before do
-        xhr :patch, :update, user_id: user, project_id: project,
-          id: note_card.id, note_card: {title: title_to_change}
-        note_card.reload
+      let(:title_to_change) { "_foo" }
+      let(:description_to_change) { "_bar" }
+
+      context 'with a title only' do
+        before do
+          xhr :patch, :update, user_id: user, project_id: project,
+            id: note_card.id, note_card: {title: title_to_change}
+          note_card.reload
+        end
+        it{ is_expected.to render_template :update }
+        it{ expect(project.note.note_cards.first.title).to eq title_to_change }
       end
-      it{is_expected.to render_template :update}
-      it{expect(project.note.note_cards.first.title).to eq title_to_change}
+      context 'with a title and a description' do
+        before do
+          xhr :patch, :update, user_id: user, project_id: project,
+            id: note_card.id, note_card: { title: title_to_change, description: description_to_change }
+          note_card.reload
+        end
+        it{ is_expected.to render_template :update }
+        it 'should change both a title and a description' do
+          aggregate_failures do
+            note_card = project.note.note_cards.first
+            expect(note_card.title).to eq title_to_change
+            expect(note_card.description).to eq description_to_change
+          end
+        end
+      end
     end
 
-    xcontext "with incorrect params" do
+    context "with incorrect params" do
       before do
-        # TODO: Card::NoteCardのtitle, descriptionにはバリデーション無い
-        # card.js.coffeeのvalidateForm(event, is_note_card_form)で制御している
+        # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
+        # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
         xhr :patch, :update, user_id: user, project_id: project,
-          id: note_card.id, note_card: {title: "", description: ""}
+          id: note_card.id, note_card: { title: '', description: '' }
       end
-      it { is_expected.to render_template 'errors/failed' }
-      it { is_expected.to have_http_status(400) }
+      it "should render 'errors/failed' with 400" do
+        aggregate_failures do
+          is_expected.to render_template 'errors/failed'
+          is_expected.to have_http_status(400)
+        end
+      end
     end
   end
 

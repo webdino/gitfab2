@@ -29,10 +29,12 @@ class NoteCardsController < ApplicationController
 
   def update
     auto_linked_params = note_card_params
-    auto_linked_params[:description] = view_context.auto_link note_card_params[:description], html: { target: '_blank' }
-    # FIXME: titleのみを変更しようとした場合、descriptionは空になる
+    # titleのみを変更しようとした場合、descriptionは空になる
     # {"title"=>"_foo", "description"=>""}
-    # validationをかけていた場合、ここで死んでしまう
+    # validationをかけているので、ここで有無を判別する
+    if note_card_params[:description].present?
+      auto_linked_params[:description] = view_context.auto_link note_card_params[:description], html: { target: '_blank' }
+    end
     if @note_card.update auto_linked_params
       render :update
     else
