@@ -42,14 +42,14 @@ describe CommentsController, type: :controller do
   end
 
   describe "DELETE destroy" do
+    let(:note_card) { FactoryGirl.create(:note_card, note: project.note) }
+    let(:comment) { FactoryGirl.create(:comment, user: user1, commentable: note_card) }
     before do
-      note_card = FactoryGirl.create(:note_card, note: project.note)
-      comment = FactoryGirl.create(:comment, user: user1, commentable: note_card)
       sign_in project.owner
       xhr :delete, :destroy, user_id: project.owner.to_param, project_id: project.id,
         note_card_id: note_card.id, id: comment.id
-      note_card.reload
     end
+    it { expect(note_card.comments.size).to eq 0 }
     it { is_expected.to render_template :destroy }
   end
 end
