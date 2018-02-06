@@ -39,8 +39,6 @@ class Ability
     can :update, Project do |project|
       if project.is_deleted
         false
-      elsif params[:project].present? && params[:project][:likes_attributes]
-        true
       else
         is_project_manager?(project, user)
       end

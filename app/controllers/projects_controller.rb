@@ -64,31 +64,16 @@ class ProjectsController < ApplicationController
         parameters[:name] = parameters[:name].downcase
       end
 
-      if project_params[:likes_attributes].present?
-        likes_attributes = project_params[:likes_attributes]
-        if @project.update(likes_attributes: likes_attributes)
-          respond_to do |format|
-            format.json { render :update }
-            format.html { redirect_to project_path(@project, owner_name: @owner) }
-          end
-        else
-          respond_to do |format|
-            format.json { render 'error/failed', status: 400 }
-            format.html { render :edit, status: 400 }
-          end
+      @project.updated_at = DateTime.now.in_time_zone
+      if @project.update parameters
+        respond_to do |format|
+          format.json { render :update }
+          format.html { redirect_to project_path(@project, owner_name: @owner) }
         end
       else
-        @project.updated_at = DateTime.now.in_time_zone
-        if @project.update parameters
-          respond_to do |format|
-            format.json { render :update }
-            format.html { redirect_to project_path(@project, owner_name: @owner) }
-          end
-        else
-          respond_to do |format|
-            format.json { render 'error/failed', status: 400 }
-            format.html { render :edit, status: 400 }
-          end
+        respond_to do |format|
+          format.json { render 'error/failed', status: 400 }
+          format.html { render :edit, status: 400 }
         end
       end
     end
@@ -136,8 +121,6 @@ class ProjectsController < ApplicationController
       url = project_path @project, owner_name: @owner
       if params[:new_owner_name]
         return
-      elsif project_params[:likes_attributes].present?
-        body = "#{@project.title} was favorited by #{current_user.name}."
       else
         body = "#{@project.title} was updated by #{current_user.name}."
       end
