@@ -15,7 +15,11 @@ $ ->
     countUpComment comments
 
   $(document).on "ajax:error", ".comment-form, .delete-comment", (event, xhr, status, error) ->
-    alert error.message
+    message = JSON.parse(xhr.responseText).message
+    msg = ''
+    for key, value of message
+      msg = "#{key} #{value}"
+    alert msg
     event.preventDefault()
 
   $(document).on "click", ".show-comments-btn", () ->

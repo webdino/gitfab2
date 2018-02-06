@@ -13,7 +13,8 @@ class CommentsController < ApplicationController
       @resources << @comment
       render :create, locals: { card_order: @card.comments.length - 1 }
     else
-      render 'errors/failed', status: 400
+      @message = @comment.errors.messages || { "Error:": "Something's wrong" }
+      render 'failed', message: @message, status: 400
     end
   end
 

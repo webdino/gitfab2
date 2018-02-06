@@ -6,6 +6,8 @@ class Comment < ActiveRecord::Base
   # TODO: required: true が付けられるかどうか要検討
   belongs_to :commentable, polymorphic: true
 
+  validates :body, presence: true
+
   scope :created_at_desc, -> { order 'created_at DESC' }
 
   class << self
