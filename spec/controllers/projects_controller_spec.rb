@@ -1,23 +1,25 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe ProjectsController, type: :controller do
   render_views
 
-  subject{response}
+  subject { response }
 
-  let(:user_project){FactoryGirl.create :user_project}
-  let(:group_project){FactoryGirl.create :group_project}
+  let(:user_project) { FactoryGirl.create :user_project }
+  let(:group_project) { FactoryGirl.create :group_project }
 
-  %w(user group).each do |owner_type|
-    let(:project){send "#{owner_type}_project"}
+  %w[user group].each do |owner_type|
+    let(:project) { send "#{owner_type}_project" }
     context "with a project owned by a #{owner_type}" do
       describe 'GET index' do
         context 'with owner name' do
-          before{get :index, owner_name: project.owner.slug}
-          it{ is_expected.to render_template :index }
+          before { get :index, owner_name: project.owner.slug }
+          it { is_expected.to render_template :index }
         end
         context 'with owner id' do
-          before{ get :index, "#{owner_type}_id": project.owner.slug }
+          before { get :index, "#{owner_type}_id": project.owner.slug }
           it { is_expected.to render_template :index }
         end
       end
@@ -25,7 +27,7 @@ describe ProjectsController, type: :controller do
         before do
           get :show, owner_name: project.owner.slug, id: project.name
         end
-        it{ is_expected.to render_template 'recipes/show' }
+        it { is_expected.to render_template 'recipes/show' }
       end
       describe 'GET new' do
         before do
@@ -33,7 +35,7 @@ describe ProjectsController, type: :controller do
           sign_in user_project.owner
           get :new, owner_name: project.owner.slug, id: project.id
         end
-        it{ is_expected.to render_template :new }
+        it { is_expected.to render_template :new }
       end
       describe 'DELETE destroy' do
         context 'without collaborators' do
@@ -42,11 +44,11 @@ describe ProjectsController, type: :controller do
             sign_in user_project.owner
             delete :destroy, owner_name: project.owner.slug, id: project.id
           end
-          it{ is_expected.to redirect_to projects_path(owner_name: project.owner.slug)}
+          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
         end
         context 'with collaborators' do
-          let(:user){FactoryGirl.create :user}
-          let(:group){FactoryGirl.create :group}
+          let(:user) { FactoryGirl.create :user }
+          let(:group) { FactoryGirl.create :group }
           before do
             user_project.owner.memberships.create group_id: group_project.owner.id
             sign_in user_project.owner
@@ -56,7 +58,7 @@ describe ProjectsController, type: :controller do
             user.reload
             group.reload
           end
-          it{ is_expected.to redirect_to projects_path(owner_name: project.owner.slug)}
+          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
           it 'has 0 collaborations' do
             aggregate_failures do
               expect(user.collaborations.size).to eq 0
@@ -71,31 +73,31 @@ describe ProjectsController, type: :controller do
           sign_in user_project.owner
           get :edit, owner_name: project.owner.slug, id: project.id
         end
-        it{ is_expected.to render_template :edit }
+        it { is_expected.to render_template :edit }
       end
       describe 'POST create' do
         context 'when newly creating' do
-          let(:user){FactoryGirl.create :user}
-          let(:new_project){FactoryGirl.build(:user_project, original: nil)}
+          let(:user) { FactoryGirl.create :user }
+          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
           before do
             sign_in user
             post :create, user_id: user.slug, project: new_project.attributes
           end
-          it{ is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
+          it { is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
         end
         context 'when newly creating with wrong parameters' do
-          let(:user){FactoryGirl.create :user}
-          let(:new_project){FactoryGirl.build(:user_project, original: nil)}
+          let(:user) { FactoryGirl.create :user }
+          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
           before do
             sign_in user
             wrong_parameters = new_project.attributes
             wrong_parameters['title'] = ''
             post :create, user_id: user.slug, project: wrong_parameters
           end
-          it{ is_expected.to render_template :new}
+          it { is_expected.to render_template :new }
         end
         context 'when forking' do
-          let(:forker){FactoryGirl.create :user}
+          let(:forker) { FactoryGirl.create :user }
           before do
             sign_in forker
             user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
@@ -103,7 +105,7 @@ describe ProjectsController, type: :controller do
             user_project.reload
             post :create, user_id: forker.slug, original_project_id: user_project.id
           end
-          it{ is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
+          it { is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
           it 'has 1 states and 1 annotation' do
             aggregate_failures do
               recipe_states = Project.last.recipe.states
@@ -113,7 +115,7 @@ describe ProjectsController, type: :controller do
           end
         end
         context 'when forking with a wrong parameter' do
-          let(:forker){FactoryGirl.create :user}
+          let(:forker) { FactoryGirl.create :user }
           let!(:original_project) { FactoryGirl.create :user_project }
 
           before do
@@ -148,7 +150,7 @@ describe ProjectsController, type: :controller do
             xhr :get, :recipe_cards_list, group_id: project.owner, project_id: project
           end
         end
-        it{ is_expected.to render_template 'recipe_cards_list' }
+        it { is_expected.to render_template 'recipe_cards_list' }
       end
 
       describe 'PATCH update' do
@@ -168,7 +170,7 @@ describe ProjectsController, type: :controller do
               end
               user.reload
             end
-            it{ is_expected.to redirect_to projects_path(owner_name: user)}
+            it { is_expected.to redirect_to projects_path(owner_name: user) }
             it 'has 0 collaborations' do
               expect(user.collaborations.size).to eq 0
             end
@@ -177,7 +179,7 @@ describe ProjectsController, type: :controller do
             end
           end
           context 'to group' do
-            let!(:group){FactoryGirl.create :group}
+            let!(:group) { FactoryGirl.create :group }
             before do
               group.collaborations.create project_id: project.id
               if owner_type == 'user'
@@ -187,7 +189,7 @@ describe ProjectsController, type: :controller do
               end
               group.reload
             end
-            it{ is_expected.to redirect_to projects_path(owner_name: group) }
+            it { is_expected.to redirect_to projects_path(owner_name: group) }
             it 'has 0 collaborations' do
               expect(group.collaborations.size).to eq 0
             end
@@ -222,19 +224,19 @@ describe ProjectsController, type: :controller do
           context 'success' do
             before do
               if owner_type == 'user'
-                patch :update, user_id: project.owner.slug, id: project.id, project: {description: '_proj'}
+                patch :update, user_id: project.owner.slug, id: project.id, project: { description: '_proj' }
               else
-                patch :update, group_id: project.owner.slug, id: project.id, project: {description: '_proj'}
+                patch :update, group_id: project.owner.slug, id: project.id, project: { description: '_proj' }
               end
             end
-            it{ is_expected.to redirect_to project_path(owner_name: project.owner.slug, id: project)}
+            it { is_expected.to redirect_to project_path(owner_name: project.owner.slug, id: project) }
           end
           context 'raising error by invalid title' do
             before do
               if owner_type == 'user'
-                patch :update, user_id: project.owner.slug, id: project.id, project: {title: ''}
+                patch :update, user_id: project.owner.slug, id: project.id, project: { title: '' }
               else
-                patch :update, group_id: project.owner.slug, id: project.id, project: {title: ''}
+                patch :update, group_id: project.owner.slug, id: project.id, project: { title: '' }
               end
             end
             it { is_expected.to render_template :edit }

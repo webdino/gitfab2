@@ -56,6 +56,9 @@ PredicateName:
   NamePrefixBlacklist:
     - hoge_
 
+Style/AsciiComments:
+  Enabled: false
+
 Style/SignalException:
   Exclude:
     - 'app/controllers/application_controller.rb'

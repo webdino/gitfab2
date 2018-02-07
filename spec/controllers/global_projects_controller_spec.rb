@@ -1,26 +1,28 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe GlobalProjectsController, type: :controller do
   render_views
 
   describe 'GET index' do
     context 'without queries' do
-      before{xhr :get, :index}
-      it{expect(response).to render_template :index}
+      before { xhr :get, :index }
+      it { expect(response).to render_template :index }
     end
     context 'with a querie' do
-      before{xhr :get, :index, q: 'foo'}
-      it{expect(response).to render_template :index}
+      before { xhr :get, :index, q: 'foo' }
+      it { expect(response).to render_template :index }
     end
 
     context 'with multi queries' do
-      before{xhr :get, :index, q: 'foo bar'}
-      it{expect(response).to render_template :index}
+      before { xhr :get, :index, q: 'foo bar' }
+      it { expect(response).to render_template :index }
     end
 
     context 'with empty queries' do
-      before{xhr :get, :index, q: ''}
-      it{expect(response).to render_template :index}
+      before { xhr :get, :index, q: '' }
+      it { expect(response).to render_template :index }
     end
   end
 
@@ -144,14 +146,16 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
-        [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
           project.tags.create(tag_hash)
         end
 
         tag_hash['name'] = 'zample'
         one_of_the_project.tags.create(tag_hash)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
       end
 
       include_examples '検索結果', 'sample'
@@ -162,14 +166,16 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
-        [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
           project.tags.create(tag_hash)
         end
 
         tag_hash['name'] = 'foo'
         one_of_the_project.tags.create(tag_hash)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
       end
 
       include_examples '検索結果', 'foo bar'
@@ -189,14 +195,15 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
-
-        [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
           FactoryGirl.create(:state, description: 'sample', recipe: project.recipe)
         end
 
-        FactoryGirl.create(:state, description: 'zample',recipe: one_of_the_project.recipe)
+        FactoryGirl.create(:state, description: 'zample', recipe: one_of_the_project.recipe)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
       end
 
       include_examples '検索結果', 'sample'
@@ -210,9 +217,10 @@ describe GlobalProjectsController, type: :controller do
           FactoryGirl.create(:state, description: 'foobar', recipe: project.recipe)
         end
 
-        FactoryGirl.create(:state, description: 'foo',recipe: one_of_the_project.recipe)
+        FactoryGirl.create(:state, description: 'foo', recipe: one_of_the_project.recipe)
 
-        [public_user_project, public_group_project, private_user_project, deleted_user_project, one_of_the_project].each { |project| project.update_draft! }
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
       end
 
       include_examples '検索結果', 'foo bar'
