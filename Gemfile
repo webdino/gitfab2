@@ -83,6 +83,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'simplecov', require: false
   gem 'delayed_job_web'
+  gem 'bullet'
 end
 
 gem 'ridgepole'
@@ -92,4 +93,3 @@ gem 'delayed_job_active_record'
 gem 'database_rewinder', group: [:test]
 gem 'after_commit_action'
 gem 'web-console', '~> 2.0', group: :development
-gem 'bullet', group: :development
