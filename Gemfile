@@ -73,7 +73,6 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'guard-rspec'
   gem 'guard-rubocop'
-  gem 'rspec-collection_matchers'
   gem 'factory_girl_rails'
   gem 'rb-fsevent'
   gem 'growl'
