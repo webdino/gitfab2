@@ -1,7 +1,8 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe Figure do
-
   describe '#dup_document' do
     shared_examples_for '複製を返す' do |*factory|
       let(:figure) { FactoryGirl.create(*factory) }

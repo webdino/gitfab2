@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Tag do
@@ -10,7 +12,7 @@ describe Tag do
     it { expect(tag.user).to be_an_instance_of(User) }
   end
 
-  describe "#taggable" do
+  describe '#taggable' do
     it { expect(tag).to be_respond_to(:taggable) }
     it { expect(tag.taggable.class).to be_include(Taggable) }
   end
