@@ -1,9 +1,9 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :post do
     recipe nil
-    title "MyString"
-    body "MyText"
+    title 'MyString'
+    body 'MyText'
   end
 end

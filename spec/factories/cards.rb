@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :card do
     type Card.name
-    description "description"
+    description 'description'
 
     factory :note_card, class: Card::NoteCard do
       type Card::NoteCard.name
@@ -17,7 +19,6 @@ FactoryGirl.define do
 
       after(:build) do |annotation|
         # TODO: annotation.annotatable がnilであることを許容するのか要確認
-        # TODO: ファイル名は複数形のほうが良いか
         annotatable = annotation.annotatable || FactoryGirl.build(:state)
         annotatable.annotations << annotation
         annotatable.save!
@@ -38,10 +39,10 @@ FactoryGirl.define do
 
         # 順番変更のテストのため
         # 順番がID通りにならないようにする
-        recipe_card.annotations.to_a.shuffle.
-          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
-        recipe_card.annotations.to_a.shuffle.
-          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+        recipe_card.annotations.to_a.shuffle
+                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+        recipe_card.annotations.to_a.shuffle
+                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
         recipe_card.annotations(true)
       end
@@ -61,10 +62,10 @@ FactoryGirl.define do
 
         # 順番変更のテストのため
         # 順番がID通りにならないようにする
-        state.annotations.to_a.shuffle.
-          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
-        state.annotations.to_a.shuffle.
-          each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+        state.annotations.to_a.shuffle
+             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+        state.annotations.to_a.shuffle
+             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
         state.annotations(true)
       end

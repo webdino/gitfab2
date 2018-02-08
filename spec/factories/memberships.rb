@@ -1,9 +1,9 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :membership do
     user nil
     group nil
-    role "MyString"
+    role 'MyString'
   end
 end

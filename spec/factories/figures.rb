@@ -1,3 +1,6 @@
+# NOTE: frozen_string_literalをtrueにすると
+# 複製の際にcan't modify frozen String
+
 FactoryGirl.define do
   factory :figure do
     # TODO: figurable はnil になりうるのかどうか要確認

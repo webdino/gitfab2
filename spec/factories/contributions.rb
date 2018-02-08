@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :contribution, class: Contribution do
     association :contributor, factory: :user
@@ -8,6 +10,5 @@ FactoryGirl.define do
       contributable.contributions << contribution
       contributable.save!
     end
-
   end
 end

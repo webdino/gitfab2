@@ -1,8 +1,9 @@
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :attachment, class: Attachment do
     title 'Attachment'
-    content File.open(File.join Rails.root, '/spec/assets/images/image.jpg')
+    content File.open(Rails.root.join('spec', 'assets', 'images', 'image.jpg'))
   end
 
   factory :attachment_material, parent: :attachment do

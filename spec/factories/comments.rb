@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
-  factory :comment do |comment|
+  factory :comment do
     sequence(:body) { |n| "Comment##{n}" }
     association :user
 

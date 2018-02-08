@@ -1,10 +1,10 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :user do
-    name {"user-#{SecureRandom.hex 10}"}
-    email {"#{SecureRandom.uuid}@example.com"}
-    password "password"
+    name { "user-#{SecureRandom.hex 10}" }
+    email { "#{SecureRandom.uuid}@example.com" }
+    password 'password'
   end
 
   factory :administrator, parent: :user do

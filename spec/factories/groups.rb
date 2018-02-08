@@ -1,7 +1,7 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
-  factory :group do |group|
-    name {"group#{SecureRandom.hex 10}"}
+  factory :group do
+    name { "group#{SecureRandom.hex 10}" }
   end
 end
