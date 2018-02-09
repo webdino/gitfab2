@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Contributable' do |*factory_args|
   describe '#contributions' do
     let(:contributable) { FactoryGirl.create(*factory_args) }

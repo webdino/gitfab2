@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Orderable' do |*factory_args|
   describe 'increment position' do
     let(:orderable) { FactoryGirl.create(*factory_args) }
@@ -28,5 +30,3 @@ shared_examples 'Orderable Scoped incrementation' do |factory_args, scope|
     expect(new_orderable.position).to eq(orderable.position)
   end
 end
-
-

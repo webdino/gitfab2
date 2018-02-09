@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 shared_examples 'success' do
@@ -23,7 +25,7 @@ end
 shared_examples 'operation without team privilege' do |klass|
   subject { response.status }
   it do
-    if %w(status material way).include? klass
+    if %w[status material way].include? klass
       is_expected.to eq 401
     else
       is_expected.to eq 200

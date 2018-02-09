@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Taggable' do |*factory_args|
   describe '#tags' do
     let(:taggable) { FactoryGirl.create(*factory_args) }
