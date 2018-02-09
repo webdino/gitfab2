@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   layout 'project'
 
   before_action :load_owner
-  before_action :load_project, only: [:show, :edit, :update, :destroy]
+  before_action :load_project, only: [:edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
   after_action :notify_users, only: [:create, :update]
@@ -15,6 +15,10 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @project = @owner.projects
+                     .includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find params[:id]
+    not_found if @project.blank?
+
     @recipe = @project.recipe
     render 'recipes/show'
   end
