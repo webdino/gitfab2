@@ -2,7 +2,7 @@ class Recipe < ActiveRecord::Base
   include DraftGenerator
 
   belongs_to :project, required: true
-  has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy
+  has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy, inverse_of: :recipe
   has_many :recipe_cards, ->{ order(:position) }, class_name: 'Card::RecipeCard', dependent: :destroy
   accepts_nested_attributes_for :states
 
