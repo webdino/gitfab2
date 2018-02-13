@@ -3,7 +3,7 @@ class GlobalProjectsController < ApplicationController
 
   def index
     q = params[:q]
-    published_projects = Project.published.includes(:figures, :owner, { recipe: :states }, { note: :note_cards })
+    published_projects = Project.published.includes(:figures, :owner, recipe: :states, note: :note_cards)
 
     if q.present?
       query = q.force_encoding 'utf-8'
