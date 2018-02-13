@@ -13,23 +13,25 @@ describe StatesController, type: :controller do
 
   describe 'GET new' do
     before do
+      sign_in project.owner
       xhr :get, :new, owner_name: project.owner.name, project_id: project.name
     end
-    it { expect render_template :_card_form }
+    it { is_expected.to render_template :_card_form }
   end
 
   describe 'GET show' do
     before do
       xhr :get, :show, owner_name: project.owner.slug, project_id: project.name, id: state.id
     end
-    it { expect render_template :show, formats: :json }
+    it { is_expected.to render_template :show, formats: :json }
   end
 
   describe 'GET edit' do
     before do
-      xhr :get, :edit, owner_name: project.owner.name, project_id: project.name, id: state.id
+      sign_in project.owner
+      xhr :get, :edit, owner_name: project.owner, project_id: project, id: state
     end
-    it { expect render_template :edit }
+    it { is_expected.to render_template :edit }
   end
 
   describe 'POST create' do
@@ -40,7 +42,7 @@ describe StatesController, type: :controller do
                             state: { type: Card::State.name, title: 'foo', description: 'bar' }
         project.reload
       end
-      it { expect render_template :create }
+      it { is_expected.to render_template :create }
       it 'has 1 state' do
         expect(project.recipe.states.size).to eq 1
       end
@@ -51,18 +53,26 @@ describe StatesController, type: :controller do
         xhr :post, :create, user_id: project.owner, project_id: project,
                             state: { type: '', title: 'foo', description: 'bar' }
       end
-      it { expect render_template 'error/failed' }
+      it { is_expected.to render_template 'errors/failed' }
     end
   end
 
   describe 'PATCH update' do
     context 'when updating the card itself' do
+      let!(:state) { project.recipe.states.create type: Card::State.name, description: 'foo' }
+
       before do
         sign_in project.owner
         xhr :patch, :update, user_id: project.owner,
-                             project_id: project.id, id: state.id
+                             project_id: project.id, id: state.id,
+                             state: { title: 'new_title', description: 'new_desc' }
       end
-      it { expect render_template :update }
+      it 'should have new title and new description' do
+        state.reload
+        expect(state.title).to eq 'new_title'
+        expect(state.description).to eq 'new_desc'
+      end
+      it { is_expected.to render_template :update }
     end
     context 'with invalid values' do
       before do
@@ -71,7 +81,7 @@ describe StatesController, type: :controller do
                              project_id: project.id, id: state.id,
                              state: { type: '', title: 'foo', description: 'bar' }
       end
-      it { expect render_template 'error/failed' }
+      it { is_expected.to render_template 'errors/failed' }
     end
   end
 
@@ -82,7 +92,7 @@ describe StatesController, type: :controller do
         xhr :delete, :destroy, owner_name: project.owner,
                                project_id: project.name, id: state.id
       end
-      it { expect render_template :destroy }
+      it { is_expected.to render_template :destroy }
     end
   end
 
