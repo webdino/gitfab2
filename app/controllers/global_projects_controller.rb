@@ -3,20 +3,20 @@ class GlobalProjectsController < ApplicationController
 
   def index
     q = params[:q]
-    project = Project.includes(:figures, :owner, { recipe: :states }, { note: :note_cards })
+    published_projects = Project.published.includes(:figures, :owner, { recipe: :states }, { note: :note_cards })
 
     if q.present?
       query = q.force_encoding 'utf-8'
-      @projects = project.published.ransack(draft_cont_all: query.split(/\p{space}+/)).result.page(params[:page])
+      @projects = published_projects.ransack(draft_cont_all: query.split(/\p{space}+/)).result.page(params[:page])
       @is_searching = true
       @query = query
 
     elsif !q.nil?
-      @projects = project.published.page(params[:page]).order('updated_at DESC')
+      @projects = published_projects.page(params[:page]).order('updated_at DESC')
       @is_searching = true
 
     else
-      @projects = project.published.page(params[:page]).order('updated_at DESC')
+      @projects = published_projects.page(params[:page]).order('updated_at DESC')
       @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
       @featured_groups = Group.includes(:members, :projects).order(projects_count: :desc).limit(3)
       @is_searching = false
