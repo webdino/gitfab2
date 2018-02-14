@@ -28,7 +28,7 @@ class StatesController < ApplicationController
   end
 
   def update
-    if @state.update(state_params || {})
+    if @state.update(state_params)
       render :update
     else
       render 'errors/failed', status: 400
