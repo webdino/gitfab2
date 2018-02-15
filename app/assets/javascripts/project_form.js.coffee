@@ -25,3 +25,6 @@ $ ->
       target.addClass "selected"
       value = target.attr("id").substring "license-".length
       $("#project_license").val value
+
+  $(document).on "submit", "#new_project.new_project", (event) ->
+    $('#spinner').show()
