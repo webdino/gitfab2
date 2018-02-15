@@ -26,5 +26,5 @@ $ ->
       value = target.attr("id").substring "license-".length
       $("#project_license").val value
 
-  $(document).on "submit", "#new_project.new_project", (event) ->
-    $('#spinner').show()
+  $(document).on "submit", "#new_project.new_project", ->
+    $('#loading-bar').show()
