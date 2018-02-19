@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'ProjectOwner' do |*factory_args|
   describe '#projects' do
     let(:owner) { FactoryGirl.create(*factory_args) }
@@ -89,6 +91,5 @@ shared_examples 'ProjectOwner' do |*factory_args|
       project = FactoryGirl.create(:user_project, :soft_destroyed, is_private: false, owner: owner)
       expect { project.update(is_private: true, is_deleted: false) }.to_not change(owner, :projects_count)
     end
-
   end
 end

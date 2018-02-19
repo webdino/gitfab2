@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Likable' do |*factory_name|
   describe '#likes' do
     let(:likable) { FactoryGirl.create(*factory_name) }

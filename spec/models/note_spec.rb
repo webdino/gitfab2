@@ -1,7 +1,9 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe Note do
-  let(:note){ FactoryGirl.create(:note) }
+  let(:note) { FactoryGirl.create(:note) }
 
   it '#note_cards' do
     expect(note).to be_respond_to(:note_cards)

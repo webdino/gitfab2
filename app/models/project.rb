@@ -4,26 +4,20 @@ class Project < ActiveRecord::Base
   include Contributable
   include Taggable
   include Likable
-  include Searchable
   include Notificatable
   include AfterCommitAction
-
-  searchable_field :name
-  searchable_field :title
-  searchable_field :description
-  searchable_field :is_private, type: :boolean
-  searchable_field :is_deleted, type: :boolean
-  searchable_field :owner_id
 
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
-  belongs_to :original, class_name: 'Project', inverse_of: :derivatives
-  belongs_to :owner, polymorphic: true
+  belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
+  belongs_to :owner, polymorphic: true, required: true
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe, dependent: :destroy
   has_one :note, dependent: :destroy
+
+  before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
@@ -44,36 +38,9 @@ class Project < ActiveRecord::Base
 
   paginates_per 12
 
-  searchable do
-    text :name
-    text :title
-    text :description
-    string :owner_type
-    string :owner_id
-    boolean :is_private
-    boolean :is_deleted
-
-    text :tags do
-      tags.map(&:name).flatten
-    end
-
-    text :recipe do
-      recipe.states.map do |card|
-        Card.searchable_fields.map do |col|
-          card.send col
-        end
-      end.flatten
-    end
-
-    text :owner do
-      (owner.class)::FULLTEXT_SEARCHABLE_COLUMNS.map do |col|
-        owner.send col
-      end
-    end
-  end
-
-  # TODO: This fork_for fucntion should be devided.
+  # このプロジェクトを owner のプロジェクトとしてフォークする
   def fork_for!(owner)
+    # 整合性を保つため1トランザクション内でデータを準備
     transaction do
       dup.tap do |project|
         project.owner = owner
@@ -85,20 +52,14 @@ class Project < ActiveRecord::Base
           new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
         end
         project.name = new_project_name
-        project.save!
         project.recipe = recipe.dup_document
         project.figures = figures.map(&:dup_document)
-        project.likes = []
+        project.likes = [] # reset counter
         project.usages = []
-        project.build_note
-        begin
-          project.save!
-        rescue => _e
-          project.destroy
-          raise
-        end
-      end
 
+        project.save!
+        project.recipe.save!
+      end
     end
   end
 
@@ -200,12 +161,15 @@ class Project < ActiveRecord::Base
     [owner.name, title].join('/')
   end
 
+  def update_draft!
+    update!(draft: generate_draft)
+  end
+
   class << self
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
        usages_attributes: Card::Usage.updatable_columns,
-       figures_attributes: Figure.updatable_columns,
-       likes_attributes: Like.updatable_columns
+       figures_attributes: Figure.updatable_columns
       ]
     end
   end
@@ -217,8 +181,21 @@ class Project < ActiveRecord::Base
   end
 
   def create_recipe_and_note
-    create_recipe
-    create_note
+    create_recipe unless recipe
+    create_note unless note
+  end
+
+  def generate_draft
+    lines = [name, title, description, owner.generate_draft]
+    tags.each do |t|
+      lines << t.generate_draft
+    end
+    lines << recipe.generate_draft if recipe
+    lines.join("\n")
+  end
+
+  def set_draft
+    self.draft = generate_draft
   end
 
   def should_generate_new_friendly_id?

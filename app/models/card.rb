@@ -5,11 +5,8 @@ class Card < ActiveRecord::Base
   include Likable
   include Commentable
   include CardDecorator
-  include Searchable
 
   validates :type, presence: true
-
-  searchable_field :description
 
   def dup_document
     dup_klass = type.present? ? type.constantize : Card
@@ -28,8 +25,7 @@ class Card < ActiveRecord::Base
     def updatable_columns
       [:id, :title, :description, :type,
        figures_attributes: Figure.updatable_columns,
-       attachments_attributes: Attachment.updatable_columns,
-       likes_attributes: Like.updatable_columns
+       attachments_attributes: Attachment.updatable_columns
       ]
     end
 

@@ -1,10 +1,10 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :tool do
-    name "MyString"
-    url "MyString"
-    photo Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/assets/images/image.jpg')))
-    description "MyText"
+    name 'MyString'
+    url 'MyString'
+    photo Rack::Test::UploadedFile.new(File.open(Rails.root.join('spec', 'assets', 'images', 'image.jpg')))
+    description 'MyText'
   end
 end

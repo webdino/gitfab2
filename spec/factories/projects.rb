@@ -1,10 +1,10 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+# frozen_string_literal: true
 
 FactoryGirl.define do
   factory :project do
-    name {"project-#{SecureRandom.hex 10}"}
-    title {SecureRandom.uuid}
-    description {SecureRandom.uuid}
+    name { "project-#{SecureRandom.hex 10}" }
+    title { SecureRandom.uuid }
+    description { SecureRandom.uuid }
     is_deleted false
 
     trait :public do
@@ -28,20 +28,20 @@ FactoryGirl.define do
 
       # 順番変更のテストのため
       # 順番がID通りにならないようにする
-      project.usages.to_a.shuffle.
-        each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
-      project.usages.to_a.shuffle.
-        each_with_index { |s, i| s.tap { s.update_column(:position, i + 1) } }
+      project.usages.to_a.shuffle
+             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+      project.usages.to_a.shuffle
+             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
       project.usages(true)
     end
 
     factory :user_project, class: Project do |up|
-      up.owner {|o| o.association :user}
+      up.owner { |o| o.association :user }
     end
 
     factory :group_project, class: Project do |gp|
-      gp.owner {|o| o.association :group}
+      gp.owner { |o| o.association :group }
     end
   end
 end

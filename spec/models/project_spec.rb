@@ -1,41 +1,46 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe Project do
-  disconnect_sunspot
-
   it_behaves_like 'Likable', :user_project
   it_behaves_like 'Figurable', :user_project
   it_behaves_like 'Contributable', :user_project
   it_behaves_like 'Commentable', :user_project
   it_behaves_like 'Taggable', :user_project
 
-  let(:project){FactoryGirl.create :user_project}
-  let(:user1){FactoryGirl.create :user}
-  let(:user2){FactoryGirl.create :user}
+  let(:project) { FactoryGirl.create :user_project }
+  let(:user1) { FactoryGirl.create :user }
+  let(:user2) { FactoryGirl.create :user }
 
-  describe "#collaborators" do
+  describe '#collaborators' do
     before do
       user1.collaborations.create project: project
       user2.collaborations.create project: project
     end
-    subject{project.collaborators}
-    it{should eq [user1, user2]}
+    subject { project.collaborators }
+    it { is_expected.to eq [user1, user2] }
   end
 
-  describe "#fork_for!" do
-    let(:forker){FactoryGirl.create :user}
-    let(:derivative_project){project.fork_for! forker}
+  describe '#fork_for!' do
+    let(:forker) { FactoryGirl.create :user }
+    let(:derivative_project) { project.fork_for! forker }
     before do
       project.recipe.states.create type: Card::State.name,
-        title: "a state", description: "desc a"
+                                   title: 'a state', description: 'desc a'
       project.recipe.states.create type: Card::State.name,
-        title: "b state", description: "desc b"
+                                   title: 'b state', description: 'desc b'
       project.reload
     end
-    it{expect(project.recipe).to have(2).states}
-    it{expect(derivative_project.owner).to eq forker}
-    it{expect(derivative_project.recipe).to have(2).states}
-    it{expect(derivative_project.id).not_to eq project.id}
+    it { expect(derivative_project.owner).to eq forker }
+    it { expect(derivative_project.id).not_to eq project.id }
+
+    it 'プロジェクトと複製先のstateの数が同じであること' do
+      aggregate_failures do
+        expect(project.recipe.states.size).to eq 2
+        expect(derivative_project.recipe.states.size).to eq 2
+      end
+    end
 
     it 'プロジェクト名（slug）を維持すること' do
       expect(derivative_project.name).to eq(project.name)
@@ -49,7 +54,6 @@ describe Project do
         expect(derivative_project.usages.size).to eq(0)
       end
     end
-
   end
 
   describe '#change_owner!(owner)' do
@@ -69,13 +73,13 @@ describe Project do
 
   describe '#managers' do
     context 'ownerがUserのとき' do
-      let(:project){ FactoryGirl.create(:user_project) }
+      let(:project) { FactoryGirl.create(:user_project) }
       it 'ownerのみであること' do
         expect(project.managers).to contain_exactly(project.owner)
       end
     end
     context 'ownerがGroupのとき' do
-      let(:project){ FactoryGirl.create(:group_project) }
+      let(:project) { FactoryGirl.create(:group_project) }
       before do
         user1.memberships.create(group_id: project.owner.id, role: 'admin')
         user2.memberships.create(group_id: project.owner.id, role: 'editor')
@@ -88,7 +92,7 @@ describe Project do
 
   describe '#potential_owners' do
     context 'ownerがUserのとき' do
-      let(:project){ FactoryGirl.create(:user_project) }
+      let(:project) { FactoryGirl.create(:user_project) }
       let(:owner) { project.owner }
       let(:group_a) { FactoryGirl.create(:group) }
       let(:group_b) { FactoryGirl.create(:group) }
@@ -103,7 +107,7 @@ describe Project do
       end
     end
     context 'ownerがGroupのとき' do
-      let(:project){ FactoryGirl.create(:group_project) }
+      let(:project) { FactoryGirl.create(:group_project) }
       let(:owner) { project.owner }
       let(:group_user_a) { FactoryGirl.create(:user) }
       let(:group_user_b) { FactoryGirl.create(:user) }
@@ -117,7 +121,6 @@ describe Project do
         expect(project.potential_owners).to contain_exactly(group_user_a, group_user_b, collaborate_user)
       end
     end
-
   end
 
   describe '#root(project)' do
@@ -144,7 +147,6 @@ describe Project do
         expect(project.root(project)).to eq(root_project)
       end
     end
-
   end
 
   describe '#thumbnail' do
@@ -161,8 +163,9 @@ describe Project do
       before do
         uploader_content = double('content', small: figure_content_small_url)
         allow(project.figures.first).to receive_messages(
-                                          link: nil,
-                                          content: uploader_content)
+          link: nil,
+          content: uploader_content
+        )
       end
       it '画像サムネイルURLを返すこと' do
         expect(project.thumbnail).to eq(figure_content_small_url)
@@ -173,11 +176,45 @@ describe Project do
         expect(project.thumbnail).to eq('fallback/blank.png')
       end
     end
-
   end
 
   it '#licenses' do
     expect(project.licenses).to contain_exactly('by', 'by-sa', 'by-nc', 'by-nc-sa')
   end
 
+  describe '#update_draft!' do
+    let!(:owner) { FactoryGirl.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
+    let!(:project) { FactoryGirl.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }
+
+    it "generates a draft which contains project and owner's draft" do
+      expect(project.draft).to eq <<~EOS.chomp
+        name
+        title
+        description
+        user1
+        User One
+        http://example.com
+        Tokyo
+      EOS
+    end
+
+    it "generates a draft which contains tag's draft" do
+      tag1 = project.tags.build(name: 'tag1', user_id: owner.id)
+      tag1.save!
+      tag2 = project.tags.build(name: 'tag2', user_id: owner.id)
+      tag2.save!
+      project.update_draft!
+      expect(project.draft).to eq <<~EOS
+        name
+        title
+        description
+        user1
+        User One
+        http://example.com
+        Tokyo
+        tag1
+        tag2
+      EOS
+    end
+  end
 end

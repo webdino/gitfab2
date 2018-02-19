@@ -3,28 +3,22 @@ class GlobalProjectsController < ApplicationController
 
   def index
     q = params[:q]
+    published_projects = Project.published.includes(:figures, :owner, recipe: :states, note: :note_cards)
 
     if q.present?
       query = q.force_encoding 'utf-8'
-      @projects = Project.solr_search do |s|
-        s.paginate page: params[:page], per_page: 30
-        s.fulltext query.split.map { |word| "\"#{word}\"" }.join ' AND '
-        s.without :is_private, true
-        s.without :is_deleted, true
-        # s.order_by :updated_at, :desc
-      end.results
-
+      @projects = published_projects.ransack(draft_cont_all: query.split(/\p{space}+/)).result.page(params[:page])
       @is_searching = true
       @query = query
 
     elsif !q.nil?
-      @projects = Project.published.page(params[:page]).order('updated_at DESC')
+      @projects = published_projects.page(params[:page]).order('updated_at DESC')
       @is_searching = true
 
     else
-      @projects = Project.published.page(params[:page]).order('updated_at DESC')
+      @projects = published_projects.page(params[:page]).order('updated_at DESC')
       @featured_project_groups = Feature.projects.length >= 3 ? view_context.featured_project_groups : []
-      @featured_groups = Group.order(projects_count: :desc).limit(3)
+      @featured_groups = Group.includes(:members, :projects).order(projects_count: :desc).limit(3)
       @is_searching = false
     end
 

@@ -1,9 +1,9 @@
 class Group < ActiveRecord::Base
-  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :url, :location]
   UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
 
   include ProjectOwner
   include Collaborator
+  include DraftGenerator
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -19,6 +19,10 @@ class Group < ActiveRecord::Base
     define_method role.to_s.pluralize do
       members.where('memberships.role' => Membership::ROLE[role])
     end
+  end
+
+  def generate_draft
+    "#{name}\n#{url}\n#{location}"
   end
 
   private

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Card' do |*factory_args|
   it_behaves_like 'Likable', *factory_args
   it_behaves_like 'Figurable', *factory_args

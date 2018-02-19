@@ -39,8 +39,3 @@ li.project
         == "#{project.note.note_cards.length} Memos"
       .since
         == "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
-
-      .starred
-        .icon.starred
-        span.count
-          == "#{project.likes.length}"

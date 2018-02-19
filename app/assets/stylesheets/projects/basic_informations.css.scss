@@ -116,28 +116,6 @@ $icons-sprite-dimensions: true;
         vertical-align: top;
         width: 190px;
         height: 70px;
-        .like {
-          $star_size: 26px;
-          display: inline-block;
-          vertical-align: top;
-          margin-top: 5px;
-          position: absolute;
-          right: 0;
-          top: 2px;
-          .like-button {
-            @include icons-sprite(star_l);
-            display: inline-block;
-            min-width: 25px;
-            padding-left: $star_size + 5px;
-            cursor: pointer;
-            font-size: 14px;
-            line-height: 35px;
-            text-align: right;
-          }
-          .like-button.liked {
-            @include icons-sprite(starred_l);
-          }
-        }
       }
     }
   }

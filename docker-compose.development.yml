@@ -1,0 +1,25 @@
+version: '3'
+volumes:
+  mysql-data:
+    driver: 'local'
+services:
+  db:
+    image: mysql:5.6
+    command: '--innodb-file-format=Barracuda --innodb-file-per-table=true --innodb-large-prefix=true --max-allowed-packet=32MB'
+    environment:
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+      TZ: /usr/share/zoneinfo/Asia/Tokyo
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - '13306:3306'
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot", "-P", "3306"]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+

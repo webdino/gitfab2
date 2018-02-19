@@ -28,8 +28,7 @@ class StatesController < ApplicationController
   end
 
   def update
-    auto_linked_params = state_params
-    if @state.update auto_linked_params
+    if @state.update(state_params)
       render :update
     else
       render 'errors/failed', status: 400
@@ -87,9 +86,7 @@ class StatesController < ApplicationController
   end
 
   def state_params
-    if params[:state]
-      params.require(:state).permit Card::State.updatable_columns
-    end
+    (params[:state] || ActionController::Parameters.new).permit Card::State.updatable_columns
   end
 
   def update_contribution

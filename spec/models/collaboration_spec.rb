@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Collaboration do
-
-  describe "#owner" do
+  describe '#owner' do
     let(:collaboration) { FactoryGirl.create(:collaboration, owner: owner) }
     context 'User' do
       let(:owner) { FactoryGirl.create(:user) }
@@ -18,10 +19,9 @@ describe Collaboration do
     end
   end
 
-  describe "#project" do
+  describe '#project' do
     let(:collaboration) { FactoryGirl.create(:collaboration) }
     it { expect(collaboration).to be_respond_to(:project) }
     it { expect(collaboration.project).to be_an_instance_of(Project) }
   end
-
 end

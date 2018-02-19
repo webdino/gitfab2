@@ -1,17 +1,18 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe NotesController, type: :controller do
-  disconnect_sunspot
   render_views
 
-  let(:project){FactoryGirl.create :user_project}
+  let(:project) { FactoryGirl.create :user_project }
 
-  subject{response}
+  subject { response }
 
-  describe "GET show" do
+  describe 'GET show' do
     before do
       xhr :get, :show, owner_name: project.owner.name, project_id: project.name
     end
-    it{should render_template :show}
+    it { is_expected.to render_template :show }
   end
 end

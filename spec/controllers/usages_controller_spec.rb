@@ -1,64 +1,67 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe UsagesController, type: :controller do
-  disconnect_sunspot
   render_views
 
-  let(:project){FactoryGirl.create :user_project}
-  let(:owner){project.owner}
-  let(:new_usage){FactoryGirl.build :usage}
+  let(:project) { FactoryGirl.create :user_project }
+  let(:owner) { project.owner }
+  let(:new_usage) { FactoryGirl.build :usage }
 
-  subject{response}
+  subject { response }
 
-  describe "GET new" do
+  describe 'GET new' do
     before do
       sign_in owner
       xhr :get, :new, owner_name: owner.to_param, project_id: project
     end
-    it{should render_template :new}
+    it { is_expected.to render_template :new }
   end
 
-  describe "GET edit" do
+  describe 'GET edit' do
     before do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project
       xhr :get, :edit, owner_name: owner.to_param, project_id: project,
-        id: usage.id
+                       id: usage.id
     end
-    it{should render_template :edit}
+    it { is_expected.to render_template :edit }
   end
 
-  describe "POST create" do
+  describe 'POST create' do
     before do
       sign_in owner
       project.usages.destroy_all
       xhr :post, :create, user_id: owner.to_param,
-        project_id: project.name, usage: { title: 'title' }
+                          project_id: project.name, usage: { title: 'title' }
       project.reload
     end
-    it{should render_template :create}
-    it{expect(project).to have(1).usage}
+    it { is_expected.to render_template :create }
+    it 'has 1 usage' do
+      expect(project.usages.size).to eq 1
+    end
   end
 
-  describe "PATCH update" do
+  describe 'PATCH update' do
     before do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project,
-        title: "foo", description: "bar"
+                                         title: 'foo', description: 'bar'
       xhr :patch, :update, user_id: owner.to_param,
-        project_id: project, id: usage.id, usage: { title: 'title' }
+                           project_id: project, id: usage.id, usage: { title: 'title' }
     end
-    it{should render_template :update}
+    it { is_expected.to render_template :update }
   end
 
-  describe "DELETE destroy" do
+  describe 'DELETE destroy' do
     before do
       sign_in owner
       usage = FactoryGirl.create :usage, project: project,
-        title: "foo", description: "bar"
+                                         title: 'foo', description: 'bar'
       xhr :delete, :destroy, owner_name: owner.to_param,
-        project_id: project, id: usage.id
+                             project_id: project, id: usage.id
     end
-    it{should render_template :destroy}
+    it { is_expected.to render_template :destroy }
   end
 end

@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+/vendor/bundle
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
@@ -40,5 +41,7 @@ _cho*
 # Ignore coverall files
 /coverage
 
+# Ignore local config
 Gemfile.local
 Gemfile.local.lock
+.envrc

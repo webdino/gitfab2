@@ -2,7 +2,6 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_rewinder'
-require "sunspot/rails/spec_helper"
 
 require 'simplecov'
 require 'coveralls'
@@ -43,12 +42,13 @@ RSpec.configure do |config|
   end
 end
 
-
 RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
+  config.include ActiveSupport::Testing::TimeHelpers
+  config.include ControllerMacros::InstanceMethods, :type => :controller
 
   config.before(:all) do
     FactoryGirl.reload

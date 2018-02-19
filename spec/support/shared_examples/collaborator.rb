@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Collaborator' do |*factory_args|
   let(:collaborator) { FactoryGirl.create(*factory_args) }
   let(:collaboration) { FactoryGirl.create(:collaboration, owner: collaborator) }
@@ -42,8 +44,8 @@ shared_examples 'Collaborator' do |*factory_args|
 
     it 'レシーバにcollaborationがないならnilを返すこと' do
       not_collaborated_project = FactoryGirl.create(:user_project)
-      other_collaboration = FactoryGirl.create(:collaboration,
-                                               project: not_collaborated_project)
+      FactoryGirl.create(:collaboration, project: not_collaborated_project)
+
       expect(collaborator.collaboration_in(not_collaborated_project)).to be_nil
     end
   end

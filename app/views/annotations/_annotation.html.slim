@@ -5,7 +5,7 @@
     convert_url = project_recipe_state_annotation_to_state_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, annotation_id: annotation.id)
 / == render "components/card", card: annotation, parent: parent, delete_url: delete_url, edit_url: edit_url
 
-article class="card annotation" data-position="#{annotation.try(:position)}" id="#{annotation.id}"
+article class="card annotation" data-position="#{annotation.position}" id="#{annotation.id}"
   .card-content
     .header
       == render "components/card_title", card: annotation

@@ -13,6 +13,12 @@
   background: rgba(0, 0, 0, 0.2);
 }
 
+// Overwrite style in
+// jquery-colorbox-rails-0.3.2/vendor/assets/stylesheets/jquery.colorbox-example3.css.scss
+#colorbox, #cboxOverlay, #cboxWrapper {
+  z-index: 8888 !important;
+}
+
 #colorbox.colorbox-bg-transparent {
   #cboxContent{
     padding: 10px 20px;

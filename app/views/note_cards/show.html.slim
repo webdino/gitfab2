@@ -48,8 +48,6 @@ main#note-cards-show
                     == "posted on #{datetime}"
 
                 .control
-                  span.starred
-                    == render "components/like", resources: [@owner, @project, :note, card]
                   - if can? :manage, card
                     span.edit
                       - delete_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)

@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
-  FULLTEXT_SEARCHABLE_COLUMNS = [:name, :fullname, :url, :location]
-
   include ProjectOwner
   include Liker
   include Collaborator
+  include DraftGenerator
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -43,11 +42,6 @@ class User < ActiveRecord::Base
     false
   end
 
-  def is_admin_of?(group)
-    return false unless group
-    group.admins.include? self
-  end
-
   def membership_in(group)
     memberships.find_by group_id: group.id
   end
@@ -84,6 +78,10 @@ class User < ActiveRecord::Base
       end
     end
     is_in_collaborated_group
+  end
+
+  def generate_draft
+    "#{name}\n#{fullname}\n#{url}\n#{location}"
   end
 
   class << self

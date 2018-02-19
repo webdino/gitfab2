@@ -3,6 +3,7 @@ class TagsController < ApplicationController
   before_action :load_project
   before_action :build_tag, only: :create
   before_action :load_tag, only: :destroy
+  after_action :update_draft!, only: [:create, :destroy]
 
   authorize_resource
 
@@ -44,6 +45,10 @@ class TagsController < ApplicationController
 
   def load_tag
     @tag = @project.tags.find params[:id]
+  end
+
+  def update_draft!
+    @project.update_draft!
   end
 
   def tag_params

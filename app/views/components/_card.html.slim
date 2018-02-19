@@ -1,4 +1,4 @@
-article class="card #{card.htmlclass}" data-position="#{card.try(:position)}" id="#{card.id}"
+article class="card #{card.htmlclass}" data-position="#{card.position}" id="#{card.id}"
   .card-content
     == render "components/card_figures", card: card
     == render "components/card_title", card: card

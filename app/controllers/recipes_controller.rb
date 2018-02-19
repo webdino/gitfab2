@@ -1,17 +1,21 @@
 class RecipesController < ApplicationController
   layout 'project'
 
-  before_action :load_owner
-  before_action :load_project
-  before_action :load_recipe
   after_action :update_project, only: [:update]
 
   authorize_resource parent: Project.name
 
   def show
+    load_owner
+    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find params[:project_id]
+    load_recipe
   end
 
   def update
+    load_owner
+    load_project
+    load_recipe
+
     if @recipe.update recipe_params
       render :update
     else

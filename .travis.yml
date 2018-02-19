@@ -1,8 +1,21 @@
+dist: trusty
 sudo: false
 cache: bundler
 language: ruby
 rvm:
-  - 2.1.2
+  - 2.3.5
+services:
+  - mysql
+before_script:
+  - |
+    echo -e "[mysqld]
+    innodb_file_per_table=ON
+    innodb_large_prefix=ON
+    innodb_file_format=Barracuda" | sudo tee /etc/mysql/conf.d/travis.cnf
+  - sudo /etc/init.d/mysql restart
+  - cp config/database.ymls/travis.yml config/database.yml
+  - RAILS_ENV=test bundle exec rake db:create
+  - bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
 before_install:
   - gem update bundler
 notifications:
@@ -10,3 +23,4 @@ notifications:
     secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
 script:
   - bundle exec rubocop --fail-level=W
+  - bundle exec rspec

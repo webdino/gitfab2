@@ -1,4 +1,5 @@
 class Card::Annotation < Card
+  # TODO: required: true を付けられるかどうか要検討
   belongs_to :annotatable, polymorphic: true
   acts_as_list scope: :annotatable
 

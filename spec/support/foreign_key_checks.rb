@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.configure do |config|
   config.before(:each, foreign_key_checks: false) do
     ActiveRecord::Base.connection.execute('SET FOREIGN_KEY_CHECKS=0')

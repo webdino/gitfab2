@@ -1,7 +1,8 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe Feature do
-
   it { expect(Feature).to be_respond_to(:projects) }
   it { expect(Feature).to be_respond_to(:groups) }
   it { expect(Feature).to be_respond_to(:users) }
@@ -13,7 +14,7 @@ describe Feature do
     it { expect(feature).to be_respond_to(:category) }
   end
 
-  describe "#featured_items" do
+  describe '#featured_items' do
     let(:feature) { FactoryGirl.create(:feature) }
     it { expect(feature).to be_respond_to(:featured_items) }
     it { expect(feature.featured_items.build).to be_an_instance_of(FeaturedItem) }

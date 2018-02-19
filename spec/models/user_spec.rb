@@ -1,18 +1,18 @@
-require "spec_helper"
+# frozen_string_literal: true
+
+require 'spec_helper'
 
 describe User do
-  disconnect_sunspot
-
   it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user
 
-  let(:user){FactoryGirl.create :user}
-  let(:project){FactoryGirl.create :user_project}
-  let(:group){FactoryGirl.create :group}
+  let(:user) { FactoryGirl.create :user }
+  let(:project) { FactoryGirl.create :user_project }
+  let(:group) { FactoryGirl.create :group }
 
   # #623 local test could pass, but travis was faild.
-  #describe "#groups" do
+  # describe "#groups" do
   #  let(:user_joining_groups){FactoryGirl.create_list :group, 3}
   #  before do
   #    user_joining_groups.each do |group|
@@ -21,10 +21,10 @@ describe User do
   #    user.reload
   #  end
   #  subject{user.groups}
-  #  it{should eq user_joining_groups}
-  #end
+  #  it{ is_expected.to eq user_joining_groups}
+  # end
 
-  describe "#collaborate!" do
+  describe '#collaborate!' do
     before do
       user.collaborate! project
       user.reload
@@ -33,10 +33,10 @@ describe User do
       collaboration = user.collaborations.find_by project: project
       collaboration.project
     end
-    it{should eq project}
+    it { is_expected.to eq project }
   end
 
-  describe "#is_collaborator_of?" do
+  describe '#is_collaborator_of?' do
     before do
       user.collaborate! project
       user.reload
@@ -45,13 +45,13 @@ describe User do
       collaboration = user.collaborations.find_by project: project
       collaboration.project
     end
-    it{should eq project}
+    it { is_expected.to eq project }
   end
 
-  describe '#liked_projects', foreign_key_checks: false do
-    let!(:project_a) { FactoryGirl.create :project }
-    let!(:project_b) { FactoryGirl.create :project }
-    let!(:project_not_like) { FactoryGirl.create :project }
+  describe '#liked_projects' do
+    let!(:project_a) { FactoryGirl.create :project, owner: user }
+    let!(:project_b) { FactoryGirl.create :project, owner: user }
+    let!(:project_not_like) { FactoryGirl.create :project, owner: user }
     let!(:comment_a) { FactoryGirl.create :comment, commentable: project_not_like }
     before do
       FactoryGirl.create :like, liker_id: user.id, likable: project_a
@@ -74,15 +74,16 @@ describe User do
   end
 
   describe '#is_owner_of?(project)' do
+    let(:someone_else) { FactoryGirl.create :user }
     let!(:project_owned) { FactoryGirl.create :project, owner: user }
-    let!(:project_not_owned) { FactoryGirl.create :project }
+    let!(:project_not_owned) { FactoryGirl.create :project, owner: someone_else }
     it { expect(user.is_owner_of?(project_owned)).to be_truthy }
     it { expect(user.is_owner_of?(project_not_owned)).to be_falsey }
   end
 
   describe '#is_contributor_of?(project)' do
     let!(:project_contributed) { FactoryGirl.create :project, owner: user }
-    let!(:project_not_contributed) { FactoryGirl.create :project }
+    let!(:project_not_contributed) { FactoryGirl.create :project, owner: user }
     before { FactoryGirl.create(:contribution, contributor: user, contributable: project_contributed) }
     it { expect(user.is_contributor_of?(project_contributed)).to be_truthy }
     it { expect(user.is_contributor_of?(project_not_contributed)).to be_falsey }
@@ -90,30 +91,46 @@ describe User do
 
   describe '#is_admin_of?(group)' do
     let!(:group_administered) { FactoryGirl.create :group }
-    let!(:group_membered) { FactoryGirl.create :group }
     let!(:group_not_membered) { FactoryGirl.create :group }
-    before do
-      FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin])
-      FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
-    end
+    before { FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }
     it { expect(user.is_admin_of?(group_administered)).to be_truthy }
-    it { expect(user.is_admin_of?(group_membered)).to be_falsey } # Maybe bugged
     it { expect(user.is_admin_of?(group_not_membered)).to be_falsey }
     it { expect(user.is_admin_of?(nil)).to be_falsey }
   end
 
   describe '#is_editor_of?(group)' do
     let!(:group_administered) { FactoryGirl.create :group }
-    let!(:group_membered) { FactoryGirl.create :group }
     let!(:group_not_membered) { FactoryGirl.create :group }
-    before do
-      FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin])
-      FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
-    end
-    it { expect(user.is_editor_of?(group_administered)).to be_falsey } # Maybe bugged
-    it { expect(user.is_editor_of?(group_membered)).to be_truthy }
+    before { FactoryGirl.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }
+    it { expect(user.is_editor_of?(group_administered)).to be_falsey }
     it { expect(user.is_editor_of?(group_not_membered)).to be_falsey }
     it { expect(user.is_editor_of?(nil)).to be_falsey }
+  end
+
+  describe 'ユーザーをeditorとしてグループに追加するとき' do
+    let!(:group_membered) { FactoryGirl.create :group }
+
+    context 'グループにadminがすでに存在している場合' do
+      before do
+        # 先にadminとなるユーザーとgroup_memberedを紐づけておく
+        admin = FactoryGirl.create(:user)
+        FactoryGirl.create(:membership, group: group_membered, user: admin, role: Membership::ROLE[:admin])
+        # ２番目のユーザーはrole: 'editor'となる（すでにadminがグループにいるので）
+        FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
+      end
+      it "role: 'editor'として登録されること" do
+        expect(user.is_admin_of?(group_membered)).to be_falsey
+        expect(user.is_editor_of?(group_membered)).to be_truthy
+      end
+    end
+
+    context 'グループにadminが存在していない場合' do
+      before { FactoryGirl.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor]) }
+      it "role: 'admin'として登録されること" do
+        expect(user.is_admin_of?(group_membered)).to be_truthy
+        expect(user.is_editor_of?(group_membered)).to be_falsey
+      end
+    end
   end
 
   describe '#membership_in(group)' do
@@ -148,14 +165,16 @@ describe User do
     let!(:group_not_membered) { FactoryGirl.create :group }
     subject { user.join_to(group_membered) }
     it { expect(subject).to be_an_instance_of(Membership) }
-    it { expect{ subject }.to change{ user.membership_in(group_membered) } }
-    it { expect{ subject }.to_not change{ user.membership_in(group_not_membered) } }
+    it { expect { subject }.to change { user.membership_in(group_membered) } }
+    it { expect { subject }.to_not change { user.membership_in(group_not_membered) } }
   end
 
   describe '#is_in_collaborated_group?(project)' do
-    let!(:project_collaborated_by_user) { FactoryGirl.create :project }
-    let!(:project_collaborated_by_group) { FactoryGirl.create :project }
-    let!(:project_not_collaborated) { FactoryGirl.create :project }
+    let(:someone_else) { FactoryGirl.create :user }
+    let!(:project_collaborated_by_user) { FactoryGirl.create :project, owner: someone_else }
+    let!(:project_collaborated_by_group) { FactoryGirl.create :project, owner: someone_else }
+    let!(:project_not_collaborated) { FactoryGirl.create :project, owner: someone_else }
+    # 他のユーザーが作成したプロジェクトやグループとコラボレートする
     before do
       group = FactoryGirl.create(:group)
       user.join_to(group)
@@ -167,4 +186,8 @@ describe User do
     it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be_falsey }
   end
 
+  describe '#generate_draft' do
+    user = FactoryGirl.create(:user)
+    it_behaves_like 'DraftGenerator', user
+  end
 end

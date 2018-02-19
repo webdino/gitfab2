@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Commentable' do |*factory_args|
   describe '#comments' do
     let(:commentable) { FactoryGirl.create(*factory_args) }

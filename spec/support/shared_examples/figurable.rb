@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'Figurable' do |*factory_args|
   describe '#figures' do
     let(:figurable) { FactoryGirl.create(*factory_args) }

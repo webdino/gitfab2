@@ -74,3 +74,17 @@ article.card .title {
   border-radius: 5px;
   padding: 10px 0;
 }
+
+.modal {
+  display:    none;
+  position:   fixed;
+  z-index:    9999;
+  top:        0;
+  left:       0;
+  height:     100%;
+  width:      100%;
+  background: $common-modal-background-color
+              url(image-path(#{$modal-img}))
+              50% 50%
+              no-repeat;
+}
