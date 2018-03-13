@@ -46,8 +46,8 @@ class FigureUploader < CarrierWave::Uploader::Base
   def add_play_btn(src_img)
     overlay_file = File.open(play_btn_path).read
     overlay_img =  MiniMagick::Image.read(overlay_file)
-    x = (src_img['width'] - overlay_img['width']) / 2
-    y = (src_img['height'] - overlay_img['height']) / 2
+    x = ((src_img['width'] - overlay_img['width']) / 2).floor
+    y = ((src_img['height'] - overlay_img['height']) / 2).floor
     img = src_img.composite overlay_img, 'png' do |c|
       c.channel 'A'
       c.alpha 'Activate'
