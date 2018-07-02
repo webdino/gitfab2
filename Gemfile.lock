@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/lardawge/carrierwave_backgrounder.git
+  remote: https://github.com/lardawge/carrierwave_backgrounder.git
   revision: bff7bc3954b9184157812f948b9a6a4f64ff36d3
   ref: bff7bc3954b9184157812f948b9a6a4f64ff36d3
   specs:
@@ -7,7 +7,7 @@ GIT
       carrierwave (~> 0.5)
 
 GIT
-  remote: git://github.com/oshimaryo/capistrano-clockwork.git
+  remote: https://github.com/oshimaryo/capistrano-clockwork.git
   revision: 4dc94f03bae2ffee8feba9152940a4612350da84
   specs:
     capistrano-clockwork (0.0.6)
@@ -15,14 +15,14 @@ GIT
       daemons (~> 1.2)
 
 GIT
-  remote: git://github.com/oshimaryo/stl-ruby.git
+  remote: https://github.com/oshimaryo/stl-ruby.git
   revision: 907c63e99227e3f2748e2ff38277ab56b7067fc6
   specs:
     stl (0.2)
       geometry
 
 GIT
-  remote: git://github.com/oshimaryo/stl2gif.git
+  remote: https://github.com/oshimaryo/stl2gif.git
   revision: 2e508559aa3e2e5f935214d2e6988f1862cea26f
   ref: 2e508559aa3e2e5f935214d2e6988f1862cea26f
   branch: develop
@@ -32,20 +32,20 @@ GIT
       rmagick
 
 GIT
-  remote: git://github.com/radar/paranoia.git
-  revision: d657443970a857c88f212c6f7e2265d7e2ec98d5
+  remote: https://github.com/radar/paranoia.git
+  revision: bd3383729c790bf09e488f84221eaaea27c6597e
   branch: rails4
   specs:
-    paranoia (2.0.2)
-      activerecord (~> 4.0)
+    paranoia (2.2.0.alpha)
+      activerecord (>= 4.0, < 5.1)
 
 GIT
-  remote: git://github.com/smartinez87/exception_notification.git
-  revision: 2fa2b71f7521f7c9d81c85b83039feac6e89fb0f
+  remote: https://github.com/smartinez87/exception_notification.git
+  revision: aea78adc145009c0906d7917decc514b4a509eeb
   specs:
-    exception_notification (4.1.1)
-      actionmailer (>= 3.0.4)
-      activesupport (>= 3.0.4)
+    exception_notification (4.2.2)
+      actionmailer (>= 4.0, < 6)
+      activesupport (>= 4.0, < 6)
 
 GEM
   remote: https://rubygems.org/
@@ -296,7 +296,7 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    mustache (1.0.2)
+    mustache (1.0.5)
     mysql2 (0.3.21)
     nested_form (0.3.2)
     net-http-persistent (2.9.4)
@@ -425,7 +425,7 @@ GEM
     ridgepole (0.6.6)
       activerecord (>= 4.2, < 6)
       diffy
-    rmagick (2.15.4)
+    rmagick (2.16.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -660,4 +660,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.2
