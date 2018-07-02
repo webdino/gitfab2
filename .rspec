@@ -1,3 +1,4 @@
 --color
 --format documentation
 --profile 10
+--order rand
