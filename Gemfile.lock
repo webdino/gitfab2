@@ -432,7 +432,6 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
     ruby-progressbar (1.9.0)
-    rugged (0.19.0)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
     sass (3.4.25)
@@ -595,7 +594,6 @@ DEPENDENCIES
   ridgepole
   rspec-rails
   rubocop
-  rugged
   sanitize
   sass-rails
   select2-rails
