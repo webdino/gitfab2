@@ -67,7 +67,7 @@ gem 'daemons', '>= 1.2.0'
 group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', '~> 3.4.1'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'factory_girl_rails'
   gem 'rb-fsevent'
