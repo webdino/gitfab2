@@ -16,7 +16,7 @@
 //= require jquery.remotipart
 //= require jquery.validate
 //= require jquery.validate.additional-methods
-//= require ../../../vendor/assets/javascripts/masonry.pkgd.min
+//= require masonry.pkgd.min
 //= require ./notifications
 //= require ./maintenance
 //= require_tree .

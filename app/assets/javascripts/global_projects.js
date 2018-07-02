@@ -2,7 +2,7 @@
 //= require jquery_ujs
 //= require jquery_nested_form
 //= require jquery.remotipart
-//= require ../../../vendor/assets/javascripts/masonry.pkgd.min
+//= require masonry.pkgd.min
 //= require helpers/lang
 //= require global_project
 //= require notifications
