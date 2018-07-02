@@ -518,7 +518,6 @@ DEPENDENCIES
   rails (= 4.2.10)
   rails_autolink
   ransack
-  rb-fsevent
   remotipart
   resque
   resque-pool

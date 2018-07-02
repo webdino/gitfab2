@@ -60,7 +60,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'factory_bot_rails'
-  gem 'rb-fsevent'
   gem 'better_errors'
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
