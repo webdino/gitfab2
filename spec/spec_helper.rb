@@ -19,30 +19,13 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
-    DatabaseRewinder.strategy = :transaction
-    DatabaseRewinder.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseRewinder.strategy = :transaction
-    DatabaseRewinder.start
-  end
-
-  config.before(:each, use_truncation: true) do
-    DatabaseRewinder.strategy = :truncation
-    DatabaseRewinder.start
+    DatabaseRewinder.clean_all
   end
 
   config.after(:each) do
     DatabaseRewinder.clean
   end
 
-  config.after(:all) do
-    DatabaseRewinder.clean_with(:truncation)
-  end
-end
-
-RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.include FactoryBot::Syntax::Methods
