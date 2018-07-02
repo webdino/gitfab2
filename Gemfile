@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '4.2.10'
-gem 'rake', '~> 10.4.2'
 gem 'sass-rails'
 gem 'uglifier'
 gem 'coffee-rails'
