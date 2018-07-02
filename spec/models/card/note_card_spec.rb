@@ -6,8 +6,8 @@ describe Card::NoteCard do
   it_behaves_like 'Card', :note_card
   it_behaves_like 'Taggable', :note_card
 
-  let(:project) { FactoryGirl.create :user_project }
-  let(:note_card) { FactoryGirl.create :note_card, note: project.note }
+  let(:project) { FactoryBot.create :user_project }
+  let(:note_card) { FactoryBot.create :note_card, note: project.note }
 
   describe '#is_taggable?' do
     subject { note_card.is_taggable? }

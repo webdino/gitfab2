@@ -5,15 +5,15 @@ require 'spec_helper'
 describe CommentsController, type: :controller do
   render_views
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:project) { FactoryGirl.create :user_project }
+  let(:user1) { FactoryBot.create :user }
+  let(:project) { FactoryBot.create :user_project }
 
   subject { response }
 
   describe 'POST create' do
     context 'with valid parameters' do
       before do
-        note_card = FactoryGirl.create(:note_card, note: project.note)
+        note_card = FactoryBot.create(:note_card, note: project.note)
 
         sign_in user1
         xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
@@ -28,7 +28,7 @@ describe CommentsController, type: :controller do
     end
     context 'with invalid parameters' do
       before do
-        note_card = FactoryGirl.create(:note_card, note: project.note)
+        note_card = FactoryBot.create(:note_card, note: project.note)
 
         sign_in user1
         xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
@@ -44,8 +44,8 @@ describe CommentsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:note_card) { FactoryGirl.create(:note_card, note: project.note) }
-    let(:comment) { FactoryGirl.create(:comment, user: user1, commentable: note_card) }
+    let(:note_card) { FactoryBot.create(:note_card, note: project.note) }
+    let(:comment) { FactoryBot.create(:comment, user: user1, commentable: note_card) }
     before do
       sign_in project.owner
       xhr :delete, :destroy, user_id: project.owner.to_param, project_id: project.id,

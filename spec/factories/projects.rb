@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :project do
     name { "project-#{SecureRandom.hex 10}" }
     title { SecureRandom.uuid }
@@ -20,11 +20,11 @@ FactoryGirl.define do
     end
 
     after(:create) do |project|
-      FactoryGirl.create(:usage, project: project)
-      FactoryGirl.create(:usage, project: project)
-      FactoryGirl.create(:usage, project: project)
-      FactoryGirl.create(:usage, project: project)
-      FactoryGirl.create(:usage, project: project)
+      FactoryBot.create(:usage, project: project)
+      FactoryBot.create(:usage, project: project)
+      FactoryBot.create(:usage, project: project)
+      FactoryBot.create(:usage, project: project)
+      FactoryBot.create(:usage, project: project)
 
       # 順番変更のテストのため
       # 順番がID通りにならないようにする

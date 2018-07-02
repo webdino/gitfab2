@@ -7,7 +7,7 @@ describe UsersController, type: :controller do
 
   subject { response }
 
-  let(:user) { FactoryGirl.create :user }
+  let(:user) { FactoryBot.create :user }
 
   describe 'GET index' do
     before { get :index }

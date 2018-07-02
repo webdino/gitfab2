@@ -1,7 +1,7 @@
 # NOTE: frozen_string_literalをtrueにすると
 # 複製の際にcan't modify frozen String
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :figure do
     # TODO: figurable はnil になりうるのかどうか要確認
     figurable nil
@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     after(:build) do |figure|
       # TODO: figurable はnil になりうるのかどうか要確認
-      figurable = figure.figurable || FactoryGirl.build(:user_project)
+      figurable = figure.figurable || FactoryBot.build(:user_project)
       figurable.figures << figure
       figurable.save!
     end

@@ -6,9 +6,9 @@ describe Group do
   it_behaves_like 'Collaborator', :group
   it_behaves_like 'ProjectOwner', :user
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:user2) { FactoryGirl.create :user }
-  let(:group1) { FactoryGirl.create :group }
+  let(:user1) { FactoryBot.create :user }
+  let(:user2) { FactoryBot.create :user }
+  let(:group1) { FactoryBot.create :group }
 
   describe '#admins' do
     subject do
@@ -33,7 +33,7 @@ describe Group do
   end
 
   describe '#generate_draft' do
-    group = FactoryGirl.create(:group)
+    group = FactoryBot.create(:group)
     it_behaves_like 'DraftGenerator', group
   end
 end

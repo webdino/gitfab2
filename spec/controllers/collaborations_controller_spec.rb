@@ -5,10 +5,10 @@ require 'spec_helper'
 describe CollaborationsController, type: :controller do
   render_views
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:user2) { FactoryGirl.create :user }
-  let(:group1) { FactoryGirl.create :group, creator: user1 }
-  let(:project) { FactoryGirl.create :user_project }
+  let(:user1) { FactoryBot.create :user }
+  let(:user2) { FactoryBot.create :user }
+  let(:group1) { FactoryBot.create :group, creator: user1 }
+  let(:project) { FactoryBot.create :user_project }
   let(:valid_attributes) { { project_id: project.id } }
 
   describe 'POST create' do

@@ -7,7 +7,7 @@ shared_examples 'Card' do |*factory_args|
   it_behaves_like 'Commentable', *factory_args
 
   describe '#dup_document' do
-    let(:card) { FactoryGirl.create(*factory_args) }
+    let(:card) { FactoryBot.create(*factory_args) }
 
     it do
       expect(card).to be_respond_to(:dup_document)
@@ -24,8 +24,8 @@ shared_examples 'Card' do |*factory_args|
     it { expect(dupped_card.description).to eq(card.description) }
 
     it 'figures を複製すること' do
-      card.figures << FactoryGirl.build(:link_figure)
-      card.figures << FactoryGirl.build(:link_figure)
+      card.figures << FactoryBot.build(:link_figure)
+      card.figures << FactoryBot.build(:link_figure)
       card.save!
 
       expect(dupped_card.figures).to_not eq(card.figures)
@@ -33,8 +33,8 @@ shared_examples 'Card' do |*factory_args|
     end
 
     it 'attachments を複製すること' do
-      card.attachments << FactoryGirl.build(:attachment)
-      card.attachments << FactoryGirl.build(:attachment)
+      card.attachments << FactoryBot.build(:attachment)
+      card.attachments << FactoryBot.build(:attachment)
       card.save!
 
       expect(dupped_card.attachments).to_not eq(card.attachments)

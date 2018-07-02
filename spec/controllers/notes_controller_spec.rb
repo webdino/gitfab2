@@ -5,7 +5,7 @@ require 'spec_helper'
 describe NotesController, type: :controller do
   render_views
 
-  let(:project) { FactoryGirl.create :user_project }
+  let(:project) { FactoryBot.create :user_project }
 
   subject { response }
 

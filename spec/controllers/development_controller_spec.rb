@@ -5,8 +5,8 @@ require 'spec_helper'
 describe DevelopmentController, type: :controller do
   render_views
 
-  let(:user) { FactoryGirl.create :user }
-  let(:other) { FactoryGirl.create :user }
+  let(:user) { FactoryBot.create :user }
+  let(:other) { FactoryBot.create :user }
 
   describe 'POST su' do
     before do

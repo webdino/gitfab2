@@ -7,8 +7,8 @@ describe ProjectsController, type: :controller do
 
   subject { response }
 
-  let(:user_project) { FactoryGirl.create :user_project }
-  let(:group_project) { FactoryGirl.create :group_project }
+  let(:user_project) { FactoryBot.create :user_project }
+  let(:group_project) { FactoryBot.create :group_project }
 
   %w[user group].each do |owner_type|
     let(:project) { send "#{owner_type}_project" }
@@ -47,8 +47,8 @@ describe ProjectsController, type: :controller do
           it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
         end
         context 'with collaborators' do
-          let(:user) { FactoryGirl.create :user }
-          let(:group) { FactoryGirl.create :group }
+          let(:user) { FactoryBot.create :user }
+          let(:group) { FactoryBot.create :group }
           before do
             user_project.owner.memberships.create group_id: group_project.owner.id
             sign_in user_project.owner
@@ -77,8 +77,8 @@ describe ProjectsController, type: :controller do
       end
       describe 'POST create' do
         context 'when newly creating' do
-          let(:user) { FactoryGirl.create :user }
-          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
+          let(:user) { FactoryBot.create :user }
+          let(:new_project) { FactoryBot.build(:user_project, original: nil) }
           before do
             sign_in user
             post :create, user_id: user.slug, project: new_project.attributes
@@ -86,8 +86,8 @@ describe ProjectsController, type: :controller do
           it { is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
         end
         context 'when newly creating with wrong parameters' do
-          let(:user) { FactoryGirl.create :user }
-          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
+          let(:user) { FactoryBot.create :user }
+          let(:new_project) { FactoryBot.build(:user_project, original: nil) }
           before do
             sign_in user
             wrong_parameters = new_project.attributes
@@ -97,7 +97,7 @@ describe ProjectsController, type: :controller do
           it { is_expected.to render_template :new }
         end
         context 'when forking' do
-          let(:forker) { FactoryGirl.create :user }
+          let(:forker) { FactoryBot.create :user }
           before do
             sign_in forker
             user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
@@ -115,8 +115,8 @@ describe ProjectsController, type: :controller do
           end
         end
         context 'when forking with a wrong parameter' do
-          let(:forker) { FactoryGirl.create :user }
-          let!(:original_project) { FactoryGirl.create :user_project }
+          let(:forker) { FactoryBot.create :user }
+          let!(:original_project) { FactoryBot.create :user_project }
 
           before do
             sign_in forker
@@ -160,7 +160,7 @@ describe ProjectsController, type: :controller do
             sign_in user_project.owner
           end
           context 'to user' do
-            let!(:user) { FactoryGirl.create(:user) }
+            let!(:user) { FactoryBot.create(:user) }
             before do
               user.collaborations.create project_id: project.id
               if owner_type == 'user'
@@ -179,7 +179,7 @@ describe ProjectsController, type: :controller do
             end
           end
           context 'to group' do
-            let!(:group) { FactoryGirl.create :group }
+            let!(:group) { FactoryBot.create :group }
             before do
               group.collaborations.create project_id: project.id
               if owner_type == 'user'

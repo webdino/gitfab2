@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe Recipe do
-  let(:u_project) { FactoryGirl.create :user_project }
+  let(:u_project) { FactoryBot.create :user_project }
   let(:u_project_recipe) { u_project.recipe }
-  let(:g_project) { FactoryGirl.create :group_project }
+  let(:g_project) { FactoryBot.create :group_project }
   let(:g_project_recipe) { g_project.recipe }
 
   describe '#dup_document' do
@@ -17,7 +17,7 @@ describe Recipe do
     end
 
     describe 'statesを複製する' do
-      let(:recipe) { FactoryGirl.create(:recipe) }
+      let(:recipe) { FactoryBot.create(:recipe) }
       subject(:dupped_recipe) do
         recipe.dup_document.tap(&:save!)
       end
@@ -34,7 +34,7 @@ describe Recipe do
     end
 
     describe 'recipe_cardsを複製しない' do
-      let(:recipe) { FactoryGirl.create(:recipe) }
+      let(:recipe) { FactoryBot.create(:recipe) }
       subject(:dupped_recipe) do
         recipe.dup_document.tap(&:save!)
       end
@@ -46,7 +46,7 @@ describe Recipe do
   end
 
   describe '#generate_draft' do
-    recipe = FactoryGirl.create(:recipe)
+    recipe = FactoryBot.create(:recipe)
     it_behaves_like 'DraftGenerator', recipe
   end
 end

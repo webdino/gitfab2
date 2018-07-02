@@ -5,7 +5,7 @@ require 'spec_helper'
 describe NoteCardsController, type: :controller do
   render_views
 
-  let(:project) { FactoryGirl.create :user_project }
+  let(:project) { FactoryBot.create :user_project }
   let(:note_card) { project.note.note_cards.create title: 'foo', description: 'bar' }
   let(:new_note_card) { project.note.note_cards.build title: 'foo', description: 'bar' }
   let(:user) { project.owner }
@@ -43,7 +43,7 @@ describe NoteCardsController, type: :controller do
       before do
         xhr :post, :create, user_id: user, project_id: project,
                             note_card: new_note_card.attributes.merge(
-                              attachments_attributes: [FactoryGirl.attributes_for(:attachment_material)]
+                              attachments_attributes: [FactoryBot.attributes_for(:attachment_material)]
                             )
         project.reload
       end

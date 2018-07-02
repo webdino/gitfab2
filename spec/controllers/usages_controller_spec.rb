@@ -5,9 +5,9 @@ require 'spec_helper'
 describe UsagesController, type: :controller do
   render_views
 
-  let(:project) { FactoryGirl.create :user_project }
+  let(:project) { FactoryBot.create :user_project }
   let(:owner) { project.owner }
-  let(:new_usage) { FactoryGirl.build :usage }
+  let(:new_usage) { FactoryBot.build :usage }
 
   subject { response }
 
@@ -22,7 +22,7 @@ describe UsagesController, type: :controller do
   describe 'GET edit' do
     before do
       sign_in owner
-      usage = FactoryGirl.create :usage, project: project
+      usage = FactoryBot.create :usage, project: project
       xhr :get, :edit, owner_name: owner.to_param, project_id: project,
                        id: usage.id
     end
@@ -46,7 +46,7 @@ describe UsagesController, type: :controller do
   describe 'PATCH update' do
     before do
       sign_in owner
-      usage = FactoryGirl.create :usage, project: project,
+      usage = FactoryBot.create :usage, project: project,
                                          title: 'foo', description: 'bar'
       xhr :patch, :update, user_id: owner.to_param,
                            project_id: project, id: usage.id, usage: { title: 'title' }
@@ -57,7 +57,7 @@ describe UsagesController, type: :controller do
   describe 'DELETE destroy' do
     before do
       sign_in owner
-      usage = FactoryGirl.create :usage, project: project,
+      usage = FactoryBot.create :usage, project: project,
                                          title: 'foo', description: 'bar'
       xhr :delete, :destroy, owner_name: owner.to_param,
                              project_id: project, id: usage.id

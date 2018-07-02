@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe MembersController, type: :controller do
-  let(:group) { FactoryGirl.create :group }
-  let(:user) { FactoryGirl.create :user }
+  let(:group) { FactoryBot.create :group }
+  let(:user) { FactoryBot.create :user }
 
   subject { response }
 

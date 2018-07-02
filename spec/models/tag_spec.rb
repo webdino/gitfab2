@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Tag do
-  let(:tag) { FactoryGirl.create(:tag) }
+  let(:tag) { FactoryBot.create(:tag) }
 
   it { expect(tag).to be_respond_to(:name) }
 
@@ -18,7 +18,7 @@ describe Tag do
   end
 
   describe '#generate_draft' do
-    tag = FactoryGirl.create(:tag)
+    tag = FactoryBot.create(:tag)
     it_behaves_like 'DraftGenerator', tag
   end
 end

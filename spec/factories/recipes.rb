@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :recipe do
     association :project, factory: :user_project
 
     after(:create) do |recipe|
-      FactoryGirl.create(:state, recipe: recipe)
-      FactoryGirl.create(:state, recipe: recipe)
-      FactoryGirl.create(:state, recipe: recipe)
-      FactoryGirl.create(:state, recipe: recipe)
-      FactoryGirl.create(:state, recipe: recipe)
+      FactoryBot.create(:state, recipe: recipe)
+      FactoryBot.create(:state, recipe: recipe)
+      FactoryBot.create(:state, recipe: recipe)
+      FactoryBot.create(:state, recipe: recipe)
+      FactoryBot.create(:state, recipe: recipe)
 
-      FactoryGirl.create(:recipe_card, recipe: recipe)
-      FactoryGirl.create(:recipe_card, recipe: recipe)
-      FactoryGirl.create(:recipe_card, recipe: recipe)
-      FactoryGirl.create(:recipe_card, recipe: recipe)
-      FactoryGirl.create(:recipe_card, recipe: recipe)
+      FactoryBot.create(:recipe_card, recipe: recipe)
+      FactoryBot.create(:recipe_card, recipe: recipe)
+      FactoryBot.create(:recipe_card, recipe: recipe)
+      FactoryBot.create(:recipe_card, recipe: recipe)
+      FactoryBot.create(:recipe_card, recipe: recipe)
 
       # 順番変更のテストのため
       # 順番がID通りにならないようにする

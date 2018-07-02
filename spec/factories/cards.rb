@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :card do
     type Card.name
     description 'description'
@@ -19,7 +19,7 @@ FactoryGirl.define do
 
       after(:build) do |annotation|
         # TODO: annotation.annotatable がnilであることを許容するのか要確認
-        annotatable = annotation.annotatable || FactoryGirl.build(:state)
+        annotatable = annotation.annotatable || FactoryBot.build(:state)
         annotatable.annotations << annotation
         annotatable.save!
       end
@@ -31,11 +31,11 @@ FactoryGirl.define do
       recipe
 
       after(:create) do |recipe_card|
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
+        FactoryBot.create(:annotation, annotatable: recipe_card)
+        FactoryBot.create(:annotation, annotatable: recipe_card)
+        FactoryBot.create(:annotation, annotatable: recipe_card)
+        FactoryBot.create(:annotation, annotatable: recipe_card)
+        FactoryBot.create(:annotation, annotatable: recipe_card)
 
         # 順番変更のテストのため
         # 順番がID通りにならないようにする
@@ -54,11 +54,11 @@ FactoryGirl.define do
       recipe
 
       after(:create) do |state|
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
+        FactoryBot.create(:annotation, annotatable: state)
+        FactoryBot.create(:annotation, annotatable: state)
+        FactoryBot.create(:annotation, annotatable: state)
+        FactoryBot.create(:annotation, annotatable: state)
+        FactoryBot.create(:annotation, annotatable: state)
 
         # 順番変更のテストのため
         # 順番がID通りにならないようにする

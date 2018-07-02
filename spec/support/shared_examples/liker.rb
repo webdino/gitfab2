@@ -2,11 +2,11 @@
 
 shared_examples 'Liker' do |*factory_name|
   describe '#liked?(likable)' do
-    let(:liker) { FactoryGirl.create(*factory_name) }
-    let(:likable) { FactoryGirl.create(:user_project) }
+    let(:liker) { FactoryBot.create(*factory_name) }
+    let(:likable) { FactoryBot.create(:user_project) }
     context 'likableをLikeしているとき' do
       before do
-        FactoryGirl.create(:like, liker: liker, likable: likable)
+        FactoryBot.create(:like, liker: liker, likable: likable)
       end
       it 'returns true' do
         expect(liker.liked?(likable)).to be_truthy

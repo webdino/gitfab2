@@ -5,8 +5,8 @@ require 'spec_helper'
 describe TagsController, type: :controller do
   render_views
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:project) { FactoryGirl.create :user_project }
+  let(:user1) { FactoryBot.create :user }
+  let(:project) { FactoryBot.create :user_project }
 
   describe 'POST create' do
     before do

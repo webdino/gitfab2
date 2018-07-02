@@ -5,10 +5,10 @@ require 'spec_helper'
 describe RecipesController, type: :controller do
   render_views
 
-  let(:u_project) { FactoryGirl.create :user_project }
-  let(:g_project) { FactoryGirl.create :group_project }
-  let(:state) { FactoryGirl.build :state }
-  let(:annotation) { FactoryGirl.build :annotation }
+  let(:u_project) { FactoryBot.create :user_project }
+  let(:g_project) { FactoryBot.create :group_project }
+  let(:state) { FactoryBot.build :state }
+  let(:annotation) { FactoryBot.build :annotation }
 
   subject { response }
 

@@ -71,14 +71,14 @@ describe GlobalProjectsController, type: :controller do
     shared_context 'projects with name' do |matched, unmatched|
       # 公開プロジェクト
       # デフォルトで公開になっているが明示的に
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public, name: matched) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public, name: matched) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, name: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, name: matched) }
       # 非公開プロジェクト
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private, name: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, name: matched) }
       # 削除済みプロジェクト
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, name: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, name: matched) }
       # クエリと一致しないプロジェクト
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, name: unmatched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, name: unmatched) }
     end
 
     context '完全一致' do
@@ -94,11 +94,11 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'Search projects by title' do
     shared_context 'projects with title' do |matched, unmatched|
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public, title: matched) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public, title: matched) }
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private, title: matched) }
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, title: matched) }
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, title: unmatched) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, title: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, title: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, title: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, title: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, title: unmatched) }
     end
 
     context '完全一致' do
@@ -114,11 +114,11 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'Search projects by description' do
     shared_context 'projects with description' do |matched, unmatched|
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public, description: matched) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public, description: matched) }
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private, description: matched) }
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, description: matched) }
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, description: unmatched) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, description: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, description: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, description: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, description: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, description: unmatched) }
     end
 
     context '完全一致' do
@@ -134,15 +134,15 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'Search projects by tag' do
     shared_context 'projects' do
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public) }
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private) }
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed) }
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public) }
     end
 
     context '完全一致' do
-      let!(:tag_hash) { FactoryGirl.build(:tag, name: 'sample').attributes }
+      let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample').attributes }
       include_context 'projects'
 
       before do
@@ -162,7 +162,7 @@ describe GlobalProjectsController, type: :controller do
     end
 
     context '部分一致' do
-      let!(:tag_hash) { FactoryGirl.build(:tag, name: 'foobar').attributes }
+      let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar').attributes }
       include_context 'projects'
 
       before do
@@ -184,11 +184,11 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'Search projects by recipe' do
     shared_context 'projects' do
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public) }
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private) }
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed) }
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public) }
     end
 
     context '完全一致' do
@@ -197,10 +197,10 @@ describe GlobalProjectsController, type: :controller do
       before do
         [public_user_project, public_group_project,
          private_user_project, deleted_user_project].each do |project|
-          FactoryGirl.create(:state, description: 'sample', recipe: project.recipe)
+          FactoryBot.create(:state, description: 'sample', recipe: project.recipe)
         end
 
-        FactoryGirl.create(:state, description: 'zample', recipe: one_of_the_project.recipe)
+        FactoryBot.create(:state, description: 'zample', recipe: one_of_the_project.recipe)
 
         [public_user_project, public_group_project,
          private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
@@ -214,10 +214,10 @@ describe GlobalProjectsController, type: :controller do
 
       before do
         [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
-          FactoryGirl.create(:state, description: 'foobar', recipe: project.recipe)
+          FactoryBot.create(:state, description: 'foobar', recipe: project.recipe)
         end
 
-        FactoryGirl.create(:state, description: 'foo', recipe: one_of_the_project.recipe)
+        FactoryBot.create(:state, description: 'foo', recipe: one_of_the_project.recipe)
 
         [public_user_project, public_group_project,
          private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
@@ -228,17 +228,17 @@ describe GlobalProjectsController, type: :controller do
   end
 
   shared_context 'projects with owner' do
-    let!(:public_user_project) { FactoryGirl.create(:user_project, :public, owner: user) }
-    let!(:public_group_project) { FactoryGirl.create(:group_project, :public, owner: group) }
-    let!(:private_user_project) { FactoryGirl.create(:user_project, :private, owner: user) }
-    let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, owner: user) }
-    let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, owner: one_of_the_users) }
+    let!(:public_user_project) { FactoryBot.create(:user_project, :public, owner: user) }
+    let!(:public_group_project) { FactoryBot.create(:group_project, :public, owner: group) }
+    let!(:private_user_project) { FactoryBot.create(:user_project, :private, owner: user) }
+    let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, owner: user) }
+    let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, owner: one_of_the_users) }
   end
 
   describe 'Search projects by owner name' do
-    let!(:user) { FactoryGirl.create(:user, name: 'sample-user') }
-    let!(:one_of_the_users) { FactoryGirl.create(:user, name: 'one-of-the-users') }
-    let!(:group) { FactoryGirl.create(:group, name: 'sample-group') }
+    let!(:user) { FactoryBot.create(:user, name: 'sample-user') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, name: 'one-of-the-users') }
+    let!(:group) { FactoryBot.create(:group, name: 'sample-group') }
 
     include_context 'projects with owner'
 
@@ -254,11 +254,11 @@ describe GlobalProjectsController, type: :controller do
   end
 
   describe 'Search projects by user fullname' do
-    let!(:user) { FactoryGirl.create(:user, fullname: 'sample-user') }
-    let!(:one_of_the_users) { FactoryGirl.create(:user, fullname: 'one-of-the-users') }
+    let!(:user) { FactoryBot.create(:user, fullname: 'sample-user') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, fullname: 'one-of-the-users') }
     # group has no fullnameなので今回のテスト対象ではないが
     # shared_context内で必要なので用意する
-    let!(:group) { FactoryGirl.create(:group, name: 'sample-group') }
+    let!(:group) { FactoryBot.create(:group, name: 'sample-group') }
 
     include_context 'projects with owner'
 
@@ -273,9 +273,9 @@ describe GlobalProjectsController, type: :controller do
   end
 
   describe 'Search projects by url' do
-    let!(:user) { FactoryGirl.create(:user, url: 'https://sample.com') }
-    let!(:one_of_the_users) { FactoryGirl.create(:user, url: 'https://oneoftheusers.com') }
-    let!(:group) { FactoryGirl.create(:group, url: 'https://sample.com') }
+    let!(:user) { FactoryBot.create(:user, url: 'https://sample.com') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, url: 'https://oneoftheusers.com') }
+    let!(:group) { FactoryBot.create(:group, url: 'https://sample.com') }
 
     include_context 'projects with owner'
 
@@ -289,9 +289,9 @@ describe GlobalProjectsController, type: :controller do
   end
 
   describe 'Search projects by location' do
-    let!(:user) { FactoryGirl.create(:user, location: 'Tokyo,Japan') }
-    let!(:one_of_the_users) { FactoryGirl.create(:user, location: 'Hachinohe,Japan') }
-    let!(:group) { FactoryGirl.create(:group, location: 'Tokyo,Japan') }
+    let!(:user) { FactoryBot.create(:user, location: 'Tokyo,Japan') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, location: 'Hachinohe,Japan') }
+    let!(:group) { FactoryBot.create(:group, location: 'Tokyo,Japan') }
 
     include_context 'projects with owner'
 
@@ -306,11 +306,11 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'Search project by zenkaku-space or tab separated query' do
     shared_context 'projects with name' do |matched, unmatched|
-      let!(:public_user_project) { FactoryGirl.create(:user_project, :public, name: matched) }
-      let!(:public_group_project) { FactoryGirl.create(:group_project, :public, name: matched) }
-      let!(:private_user_project) { FactoryGirl.create(:user_project, :private, name: matched) }
-      let!(:deleted_user_project) { FactoryGirl.create(:user_project, :soft_destroyed, name: matched) }
-      let!(:one_of_the_project) { FactoryGirl.create(:user_project, :public, name: unmatched) }
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, name: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, name: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, name: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, name: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, name: unmatched) }
     end
 
     context '部分一致' do

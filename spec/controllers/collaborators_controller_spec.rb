@@ -7,9 +7,9 @@ describe CollaboratorsController, type: :controller do
 
   subject { response }
 
-  let(:project) { FactoryGirl.create :user_project }
-  let(:user) { FactoryGirl.create :user }
-  let(:user_2) { FactoryGirl.create :user }
+  let(:project) { FactoryBot.create :user_project }
+  let(:user) { FactoryBot.create :user }
+  let(:user_2) { FactoryBot.create :user }
 
   describe 'GET index' do
     before { get :index, owner_name: project.owner.name, project_id: project }

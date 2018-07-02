@@ -5,9 +5,9 @@ require 'spec_helper'
 describe GroupsController, type: :controller do
   render_views
 
-  let(:user) { FactoryGirl.create :user }
-  let(:other) { FactoryGirl.create :user }
-  let(:group) { FactoryGirl.create :group }
+  let(:user) { FactoryBot.create :user }
+  let(:other) { FactoryBot.create :user }
+  let(:group) { FactoryBot.create :group }
 
   subject { response }
 
@@ -42,7 +42,7 @@ describe GroupsController, type: :controller do
       post :create, group: group_params
     end
     context 'with valid params' do
-      let(:group_params) { FactoryGirl.build(:group).attributes }
+      let(:group_params) { FactoryBot.build(:group).attributes }
       it { is_expected.to redirect_to(edit_group_url(assigns(:group))) }
     end
     context 'with invalid params' do

@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe Membership do
-  let(:membership) { FactoryGirl.build :membership }
+  let(:membership) { FactoryBot.build :membership }
   describe '#admin?' do
     before { membership.role = Membership::ROLE[:admin] }
     subject { membership.admin? }

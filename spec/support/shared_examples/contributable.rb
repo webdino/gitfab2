@@ -2,8 +2,8 @@
 
 shared_examples 'Contributable' do |*factory_args|
   describe '#contributions' do
-    let(:contributable) { FactoryGirl.create(*factory_args) }
-    let(:contribute) { FactoryGirl.create(:contribution, contributable: contributable) }
+    let(:contributable) { FactoryBot.create(*factory_args) }
+    let(:contribute) { FactoryBot.create(:contribution, contributable: contributable) }
     it do
       expect(contributable).to be_respond_to(:contributions)
     end

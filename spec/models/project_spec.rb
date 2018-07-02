@@ -9,9 +9,9 @@ describe Project do
   it_behaves_like 'Commentable', :user_project
   it_behaves_like 'Taggable', :user_project
 
-  let(:project) { FactoryGirl.create :user_project }
-  let(:user1) { FactoryGirl.create :user }
-  let(:user2) { FactoryGirl.create :user }
+  let(:project) { FactoryBot.create :user_project }
+  let(:user1) { FactoryBot.create :user }
+  let(:user2) { FactoryBot.create :user }
 
   describe '#collaborators' do
     before do
@@ -23,7 +23,7 @@ describe Project do
   end
 
   describe '#fork_for!' do
-    let(:forker) { FactoryGirl.create :user }
+    let(:forker) { FactoryBot.create :user }
     let(:derivative_project) { project.fork_for! forker }
     before do
       project.recipe.states.create type: Card::State.name,
@@ -48,7 +48,7 @@ describe Project do
     end
 
     describe 'usagesを複製しない' do
-      let(:recipe) { FactoryGirl.create(:recipe) }
+      let(:recipe) { FactoryBot.create(:recipe) }
       it '複製先では空であること' do
         expect(project.usages.size).to_not eq(0)
         expect(derivative_project.usages.size).to eq(0)
@@ -66,20 +66,20 @@ describe Project do
     end
 
     it 'changes to other group.' do
-      group = FactoryGirl.create(:group)
+      group = FactoryBot.create(:group)
       expect { project.change_owner!(group) }.to change { project.owner }.to(group)
     end
   end
 
   describe '#managers' do
     context 'ownerがUserのとき' do
-      let(:project) { FactoryGirl.create(:user_project) }
+      let(:project) { FactoryBot.create(:user_project) }
       it 'ownerのみであること' do
         expect(project.managers).to contain_exactly(project.owner)
       end
     end
     context 'ownerがGroupのとき' do
-      let(:project) { FactoryGirl.create(:group_project) }
+      let(:project) { FactoryBot.create(:group_project) }
       before do
         user1.memberships.create(group_id: project.owner.id, role: 'admin')
         user2.memberships.create(group_id: project.owner.id, role: 'editor')
@@ -92,11 +92,11 @@ describe Project do
 
   describe '#potential_owners' do
     context 'ownerがUserのとき' do
-      let(:project) { FactoryGirl.create(:user_project) }
+      let(:project) { FactoryBot.create(:user_project) }
       let(:owner) { project.owner }
-      let(:group_a) { FactoryGirl.create(:group) }
-      let(:group_b) { FactoryGirl.create(:group) }
-      let(:collaborate_user) { FactoryGirl.create(:user) }
+      let(:group_a) { FactoryBot.create(:group) }
+      let(:group_b) { FactoryBot.create(:group) }
+      let(:collaborate_user) { FactoryBot.create(:user) }
       before do
         owner.memberships.create(group_id: group_a.id, role: 'admin')
         owner.memberships.create(group_id: group_b.id, role: 'editor')
@@ -107,11 +107,11 @@ describe Project do
       end
     end
     context 'ownerがGroupのとき' do
-      let(:project) { FactoryGirl.create(:group_project) }
+      let(:project) { FactoryBot.create(:group_project) }
       let(:owner) { project.owner }
-      let(:group_user_a) { FactoryGirl.create(:user) }
-      let(:group_user_b) { FactoryGirl.create(:user) }
-      let(:collaborate_user) { FactoryGirl.create(:user) }
+      let(:group_user_a) { FactoryBot.create(:user) }
+      let(:group_user_b) { FactoryBot.create(:user) }
+      let(:collaborate_user) { FactoryBot.create(:user) }
       before do
         group_user_a.memberships.create(group_id: owner.id, role: 'admin')
         group_user_b.memberships.create(group_id: owner.id, role: 'editor')
@@ -125,24 +125,24 @@ describe Project do
 
   describe '#root(project)' do
     context '自身がルートのとき' do
-      let(:project) { FactoryGirl.create(:user_project, original: nil) }
+      let(:project) { FactoryBot.create(:user_project, original: nil) }
       it '自身を返すこと' do
         expect(project.root(project)).to eq(project)
       end
     end
 
     context '自身が別のrootプロジェクトをforkしているとき' do
-      let(:root_project) { FactoryGirl.create(:user_project, original: nil) }
-      let(:project) { FactoryGirl.create(:user_project, original: root_project) }
+      let(:root_project) { FactoryBot.create(:user_project, original: nil) }
+      let(:project) { FactoryBot.create(:user_project, original: root_project) }
       it '親を返すこと' do
         expect(project.root(project)).to eq(root_project)
       end
     end
 
     context '自身が別のrootプロジェクトのforkのforkのとき' do
-      let(:root_project) { FactoryGirl.create(:user_project, original: nil) }
-      let(:parent_project) { FactoryGirl.create(:user_project, original: root_project) }
-      let(:project) { FactoryGirl.create(:user_project, original: parent_project) }
+      let(:root_project) { FactoryBot.create(:user_project, original: nil) }
+      let(:parent_project) { FactoryBot.create(:user_project, original: root_project) }
+      let(:project) { FactoryBot.create(:user_project, original: parent_project) }
       it 'ルートを返すこと' do
         expect(project.root(project)).to eq(root_project)
       end
@@ -183,8 +183,8 @@ describe Project do
   end
 
   describe '#update_draft!' do
-    let!(:owner) { FactoryGirl.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
-    let!(:project) { FactoryGirl.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }
+    let!(:owner) { FactoryBot.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
+    let!(:project) { FactoryBot.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }
 
     it "generates a draft which contains project and owner's draft" do
       expect(project.draft).to eq <<~EOS.chomp

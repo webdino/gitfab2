@@ -7,7 +7,7 @@ describe Card::Usage do
   it_behaves_like 'Orderable', :usage
   it_behaves_like 'Orderable Scoped incrementation', [:usage], :project
 
-  let(:usage) { FactoryGirl.build :usage }
+  let(:usage) { FactoryBot.build :usage }
 
   describe '#is_taggable?' do
     subject { usage.is_taggable? }

@@ -2,8 +2,8 @@
 
 shared_examples 'Commentable' do |*factory_args|
   describe '#comments' do
-    let(:commentable) { FactoryGirl.create(*factory_args) }
-    let(:comment) { FactoryGirl.create(:comment, commentable: commentable) }
+    let(:commentable) { FactoryBot.create(*factory_args) }
+    let(:comment) { FactoryBot.create(:comment, commentable: commentable) }
     it do
       expect(commentable).to be_respond_to(:comments)
     end

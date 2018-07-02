@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe MembershipsController, type: :controller do
-  let(:user) { FactoryGirl.create :user }
-  let(:other) { FactoryGirl.create :user }
+  let(:user) { FactoryBot.create :user }
+  let(:other) { FactoryBot.create :user }
   subject { response }
 
   describe 'GET index' do

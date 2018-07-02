@@ -2,8 +2,8 @@
 
 shared_examples 'Annotable' do |*factory_args|
   describe '#annotations' do
-    let(:annotatable) { FactoryGirl.create(*factory_args) }
-    let(:annotate) { FactoryGirl.create(:annotation, annotatable: annotatable) }
+    let(:annotatable) { FactoryBot.create(*factory_args) }
+    let(:annotate) { FactoryBot.create(:annotation, annotatable: annotatable) }
     it do
       expect(annotatable).to be_respond_to(:annotations)
     end
@@ -14,7 +14,7 @@ shared_examples 'Annotable' do |*factory_args|
   end
 
   describe 'annotationsを複製する' do
-    let(:annotatable) { FactoryGirl.create(*factory_args) }
+    let(:annotatable) { FactoryBot.create(*factory_args) }
     subject(:dupped_annotatable) do
       annotatable.dup_document.tap(&:save!)
     end

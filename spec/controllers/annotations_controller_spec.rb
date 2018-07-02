@@ -5,7 +5,7 @@ require 'spec_helper'
 describe AnnotationsController, type: :controller do
   render_views
 
-  let(:project) { FactoryGirl.create :user_project }
+  let(:project) { FactoryBot.create :user_project }
   let(:user) { project.owner }
 
   subject { response }
