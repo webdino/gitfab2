@@ -9,8 +9,6 @@ gem 'jquery-rails'
 gem 'turbolinks', '~> 2.5', '>= 2.5.3'
 gem 'jquery-turbolinks'
 gem 'jbuilder', '~> 1.2'
-gem 'resque'
-gem 'resque-pool'
 gem 'sanitize'
 gem 'mini_magick'
 gem 'unicorn'
@@ -61,7 +59,6 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'factory_bot_rails'
   gem 'better_errors'
-  gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'
   gem 'slim_lint'
   gem 'coveralls', require: false
