@@ -64,20 +64,13 @@ gem 'truncate_html'
 gem 'clockwork'
 gem 'daemons', '>= 1.2.0'
 
-group :doc do
-  gem 'sdoc', require: false
-end
-
 group :development, :test do
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'rspec-rails', '~> 3.4.1'
   gem 'rubocop', require: false
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
   gem 'factory_girl_rails'
   gem 'rb-fsevent'
-  gem 'growl'
   gem 'better_errors'
   gem 'resque-web', require: 'resque_web'
   gem 'rack-mini-profiler'

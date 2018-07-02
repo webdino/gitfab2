@@ -12,7 +12,6 @@ AllCops:
   Exclude:
     - 'Capfile'
     - 'Gemfile'
-    - 'Guardfile'
     - 'app/validators/*'
     - 'app/models/ability.rb'
     - 'bin/*'
