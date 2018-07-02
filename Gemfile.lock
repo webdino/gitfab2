@@ -359,8 +359,6 @@ GEM
       loofah (~> 2.2, >= 2.2.2)
     rails_autolink (1.1.6)
       rails (> 3.1)
-    rails_config (0.4.2)
-      activesupport (>= 3.0)
     railties (4.2.10)
       actionpack (= 4.2.10)
       activesupport (= 4.2.10)
@@ -584,7 +582,6 @@ DEPENDENCIES
   rails (= 4.2.10)
   rails-config
   rails_autolink
-  rails_config
   ransack
   rb-fsevent
   remotipart
