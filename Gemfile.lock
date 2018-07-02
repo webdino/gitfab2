@@ -266,7 +266,7 @@ GEM
       less (~> 2.6.0)
       sprockets (> 2, < 4)
       tilt
-    libv8 (3.16.14.19)
+    libv8 (6.3.292.48.1)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -278,6 +278,8 @@ GEM
       subexec (~> 0.2.1)
     mini_mime (1.0.0)
     mini_portile2 (2.3.0)
+    mini_racer (0.1.15)
+      libv8 (~> 6.3)
     minitest (5.11.3)
     mono_logger (1.1.0)
     multi_json (1.13.1)
@@ -378,7 +380,6 @@ GEM
     redis (4.0.1)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
-    ref (2.0.0)
     remotipart (1.2.1)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
@@ -487,9 +488,6 @@ GEM
     temple (0.8.0)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
-    therubyracer (0.12.3)
-      libv8 (~> 3.16.14.15)
-      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (1.4.1)
@@ -580,6 +578,7 @@ DEPENDENCIES
   jquery-validation-rails
   kaminari
   mini_magick
+  mini_racer
   mysql2 (~> 0.3.21)
   nested_form
   nokogiri
@@ -614,7 +613,6 @@ DEPENDENCIES
   stl!
   stl2gif!
   stringex (= 2.5.2)
-  therubyracer
   travis
   truncate_html
   turbolinks (~> 2.5, >= 2.5.3)
