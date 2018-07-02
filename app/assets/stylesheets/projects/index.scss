@@ -1,0 +1,271 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+@import "_project_variables";
+
+#projects-index {
+  @include cf;
+  margin-bottom: $common-margin-for-footer;
+  .left {
+    $left_pane_width: 220px;
+    $border_margin: 7px;
+    float: left;
+    margin-left: 10px;
+    width: $left_pane_width;
+    font-family: $common-novelsans-semibold;
+    .image-wrapper {
+      display: block;
+      width: $left_pane_width;
+      height: $left_pane_width;
+      .owner-avatar {
+        position: relative;
+        border-radius: $left_pane_width - $border_margin * 2;
+        width: $left_pane_width - $border_margin * 2;
+        height: $left_pane_width - $border_margin * 2;
+        border: $border_margin solid white;
+        background-position: center center;
+        background-size: cover;
+        z-index: 11111;
+      }
+    }
+    $inner_width: 198px;
+    .wrapper {
+      display: block;
+      margin-top: -($left_pane_width - $border_margin * 2)/2;
+      padding-top: ($left_pane_width - $border_margin * 2)/2;
+      padding-bottom: 1px;
+      width: $left_pane_width;
+      background-color: $common-background-color;
+      font-size: 14px;
+      line-height: 18px;
+      border-radius: 5px;
+      .owner-name {
+        margin: 15px auto 10px;
+        width: $inner_width;
+        font-size: 20px;
+        line-height: 1.2;
+        word-break: break-all;
+      }
+      .joined-on, .url, .location {
+        margin: 0 auto;
+        width: $inner_width;
+        span {
+          color: $common-quiet-text-color;
+        }
+        a {
+          color: $common-basic-color;
+        }
+      }
+      .makes {
+        margin: 0 auto;
+        width: $inner_width;
+        color: $common-quiet-text-color;
+        .count {
+          color: $common-text-color;
+        }
+      }
+      .relation-wrapper {
+        display: block;
+        margin: 25px auto 15px;
+        padding-bottom: 5px;
+        width: $inner_width;
+        background: $common-basic-color;
+        border-radius: 5px;
+        .title {
+          display: inline-block;
+          padding: 15px 10px 10px;
+          width: 145px;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 1.2;
+          color: $common-title-text-color;
+        }
+        .create-group-btn {
+          display: inline-block;
+          height: 24px;
+          vertical-align: top;
+          margin-top: 9px;
+        }
+        .members, .groups {
+          margin: 0 auto 20px;
+          width: 179px;
+          font-size: 12px;
+          line-height: 16px;
+          border-radius: 5px;
+          color: $common-text-color;
+          background-color: $common-background-color;
+          .member, .group {
+            margin: 5px;
+            padding: 10px 0px;
+            width: 169px;
+            border-bottom: 1px solid $common-gray;
+            .name {
+              display: inline-block;
+              position: relative;
+              vertical-align: top;
+              top: 10px;
+              margin-left: 15px;
+              padding-bottom: 10px;
+              max-width: 120px;
+              word-break: break-all;
+            }
+          }
+          .member-avatar, .group-avatar {
+            display: inline-block;
+            max-width: 30px;
+            max-height: 30px;
+            border-radius: 30px;
+            border: 1px solid white;
+            margin: -1px;
+          }
+          a:last-child {
+            .member, .group {
+              border: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .right {
+    float: left;
+    margin-left: 20px;
+    width: 710px;
+    font-family: $common-novelsans-semibold;
+    .tabs {
+      li {
+        display: inline-block;
+        margin-right: 10px;
+        padding-left: 10px;
+        width: 140px;
+        height: 28px;
+        background-color: $inactive_tab_background;
+        font-size: 14px;
+        line-height: $common-line-height;
+        border-radius: 5px 5px 0 0;
+        &.active {
+          width: 220px;
+          background-color: $active_tab_background;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        a {
+          position: relative;
+          top: 3px;
+        }
+      }
+    }
+    .tabs-content {
+      padding: 20px 10px 125px;
+      width: 690px;
+      background-color: $common-background-color;
+      border-radius: 0 0 5px 5px;
+      .tabs-pane {
+        width: 100%;
+        .project-list {
+          margin-top: 15px;
+          .project {
+            margin-bottom: 30px;
+            padding-top: 10px;
+            width: 100%;
+            border-top: 1px solid $common-dark-gray;
+            &:last-of-type {
+              padding-bottom: 30px;
+              border-bottom: 1px solid $common-dark-gray;
+            }
+            .image-container {
+              display: inline-block;
+              margin-left: 20px;
+              max-width: 210px;
+              .image {
+                display: block;
+                margin-bottom: 10px;
+                max-width: 100%;
+                img {
+                  max-width: 100%;
+                }
+              }
+              .btn {
+                padding: 2px 0px 0px 3px;
+                width: 77px;
+                height: 23px;
+                font-size: 12px;
+                color: $common-btn-text-color;
+                background: $common-gray;
+              }
+              .edit:before {
+                  content: url("/images/project/edit_image.png");
+                  position: relative;
+                  top: 2px;
+                  padding-right: 5px;
+                  padding-left: 5px;
+              }
+              .delete:before {
+                  content: url("/images/project/delete_image.png");
+                  position: relative;
+                  top: 2px;
+                  padding-right: 5px;
+                  padding-left: 5px;
+              }
+
+            }
+            .text-container {
+              display: inline-block;
+              vertical-align: top;
+              margin-top: -10px;
+              width: 460px;
+              .private-project {
+                display: inline-block;
+                padding: 5px;
+                margin: 5px 0 -5px -2px;
+                border-radius: 5px;
+                background-color: red;
+                color: $common-label-text-color;
+                text-align: center;
+              }
+              .title {
+                display: block;
+                margin-top: 10px;
+                margin-bottom: 5px;
+                font-family: $common-novelsans-light;
+                font-size: 20px;
+                line-height: 1.2;
+                font-weight: normal;
+              }
+              .meta {
+                width: 100%;
+                margin-bottom: 5px;
+                font-size: 12px;
+                line-height: 1.2;
+                color: $common-text-color;
+                .dates {
+                  margin-bottom: 5px;
+                }
+                .index {
+                  color: $common-quiet-text-color;
+                }
+              }
+              .summary {
+                margin-bottom: 5px;
+                font-family: $common-novelsans-light;
+                font-size: 14px;
+                line-height: 22px;
+                color: $common-text-color;
+                word-wrap: break-word;
+              }
+              .tags {
+                line-height: 18px;
+                font-size: 10px;
+                font-weight: 500;
+                .tag {
+                  margin-right: 5px;
+                  font-weight: 700;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

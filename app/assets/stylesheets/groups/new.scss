@@ -1,0 +1,9 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+@import "layouts/setting_links";
+
+#groups-new {
+  display: inline-block;
+  width: 700px;
+  margin: 0px 20px 0 0;
+}

@@ -1,0 +1,77 @@
+@import "mixins/variables";
+
+#layouts-setting-links {
+  display: inline-block;
+  vertical-align: top;
+  width: 210px;
+  height: auto;
+  margin: 20px 20px $common-margin-for-footer 0;
+  font-family: $common-helvetica;
+  font-size: 16px;
+  .account {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-family: $common-novelsans-semibold;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: $common-basic-color;
+    .title {
+      display: inline-block;
+      padding: 10px 0 20px;
+      color: $common-title-text-color;
+    }
+    .user, .group {
+      .inner {
+        .avatar {
+          margin: auto;
+          max-width: 30px;
+          max-height: 30px;
+          border-radius: 30px;
+          border: 1px solid $common-gray;
+        }
+        .name {
+          display: inline-block;
+          vertical-align: top;
+          margin: 10px 0 0 10px;
+          word-break: break-all;
+        }
+      }
+    }
+    .user {
+      .inner {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: $common-background-color;
+      }
+    }
+    .groups {
+      border-radius: 5px;
+      background-color: $common-background-color;
+      .inner {
+        margin: 0 10px;
+        padding: 10px 0;
+        border-bottom: $common-border;
+        .name {
+          max-width: 120px;
+        }
+      }
+      a:last-child {
+        .inner {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+  .groups-account {
+    .title {
+      width: 165px;
+    }
+    .create-group-btn {
+      display: inline-block;
+      height: 24px;
+      vertical-align: top;
+      margin-top: 3px;
+    }
+  }
+}

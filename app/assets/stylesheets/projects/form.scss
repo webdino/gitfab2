@@ -1,0 +1,375 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+
+#recipes-new, #recipes-edit {
+  width: 960px;
+  background-color: $common-background-color;
+  border-radius: 5px;
+  margin-bottom: $common-margin-for-footer;
+}
+
+form.project-form {
+  font-family: $common-novelsans-semibold;
+  .page-title {
+    margin: 50px 0 30px 90px;
+    font-size: 30px;
+    line-height: 1.2;
+  }
+  .left {
+    display: inline-block;
+    margin-left: 10px;
+    width: 60px;
+    font-family: $common-novelsans-semibold;
+    color: $common-quiet-text-color;
+    text-align: right;
+  }
+  .right {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    margin-left: 20px;
+    width: 860px;
+    .form-title {
+      margin-bottom: 10px;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    #project_title {
+      width: 540px;
+      font-family: $common-novelsans-light;
+      font-size: 22px;
+      font-weight: 500;
+      margin: 10px 0 50px;
+      padding: 8px 0 10px 12px;
+      box-sizing: border-box;
+      border: solid 1px $common-basic-color;
+      border-radius: 5px;
+    }
+
+    #project_owner_id {
+      width: 220px;
+      height: 28px;
+      padding-left: 10px;
+      background-color: $common-background-color;
+      font-family: $common-novelsans-light;
+      font-size: 14px;
+      border: solid 1px $common-basic-color;
+      border-radius: 2px;
+    }
+  }
+
+  input#project_video_id {
+    width: 580px;
+    font-size: 12px;
+  }
+
+  #project-summary {
+    @include cf;
+    .description {
+      margin-top: 30px;
+      #project_description {
+        font-family: $common-novelsans-light;
+        font-size: 14px;
+        padding: 5px 10px;
+        width: 690px;
+        height: 120px;
+        line-height: 1.7em;
+        border: 1px solid $common-basic-color;
+        border-radius: 5px;
+      }
+    }
+
+    .license {
+      margin-top: 30px;
+      img {
+        width: 100px;
+        border: 5px solid rgba(0, 0, 0, 0);
+        cursor: pointer;
+      }
+      img.selected {
+        border: 5px solid $common-basic-color;
+        background: $common-basic-color;
+      }
+      img.unselectable {
+        filter: brightness(60%);
+        cursor: default;
+      }
+      .about-license {
+        margin-top: 10px;
+        font-family: $common-novelsans-light;
+        font-size: 12px;
+        a {
+          color: $common-quiet-text-color;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .access-level {
+      margin-top: 30px;
+      .right {
+        font-size: 15px;
+
+        label {
+          margin-left: 10px;
+          vertical-align: bottom;
+        }
+
+        input[type=checkbox] {
+          display: none;
+        }
+        .checkbox {
+          box-sizing: border-box;
+          transition: background-color 0.2s linear;
+          position: relative;
+          display: inline-block;
+          margin: 0 20px 8px -15px;
+          padding: 12px 12px 12px 42px;
+          border-radius: 8px;
+          vertical-align: middle;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+            &:after {
+              border-color: $common-basic-color;
+            }
+          }
+
+          &:before {
+            transition: opacity 0.2s linear;
+            position: absolute;
+            top: 50%;
+            left: 21px;
+            display: block;
+            margin-top: -7px;
+            width: 5px;
+            height: 9px;
+            border-right: 3px solid $common-basic-color;
+            border-bottom: 3px solid $common-basic-color;
+            content: '';
+            opacity: 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+
+          &:after {
+            transition: border-color 0.2s linear;
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            display: block;
+            margin-top: -10px;
+            width: 16px;
+            height: 16px;
+            border: 2px solid $common-basic-color;
+            border-radius: 5px;
+            content: '';
+          }
+        }
+
+        input[type=checkbox]:checked + .checkbox {
+          &:before {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    .permalink {
+      @include cf;
+      margin-top: 30px;
+      font-size: 15px;
+      #permalink-label {
+        float: left;
+        height: 14px;
+        line-height: 22px;
+      }
+      #project_name {
+        position: relative;
+        vertical-align: bottom;
+        bottom: 5px;
+        margin-left: 5px;
+        padding: 0 10px;
+        width: 250px;
+        height: 24px;
+        font-family: $common-novelsans-light;
+        font-size: 12px;
+        border: 1px solid $common-basic-color;
+        border-radius: 5px;
+      }
+    }
+
+    ul.figures {
+      li.figure {
+        width: 100%;
+         img {
+           max-width: 300px;
+         }
+         iframe {
+           max-width: 300px;
+         }
+         img + iframe {
+           display: none;
+         }
+         .caution {
+           display: inline-block;
+           width: 40%;
+           font-size: 14px;
+           color: $common-error-text-color;
+         }
+         .card-figure-link {
+           width: 80%;
+         }
+      }
+      .btns {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: 20px;
+        .btn {
+          display: block;
+          margin: 0 0 5px 0;
+          padding: 2px 10px 0;
+          width: 60px;
+          height: 23px;
+          color: $common-btn-text-color;
+          background-color: $common-gray;
+          a {
+            color: $common-btn-text-color;
+          }
+        }
+        .edit {
+          &:before {
+            content: url("/images/project/edit_image.png");
+            position: relative;
+            top: 3px;
+            padding-right: 5px;
+          };
+        }
+        .delete {
+          &:before {
+            content: url("/images/project/delete_image.png");
+            position: relative;
+            top: 3px;
+            padding-right: 5px;
+          };
+        }
+      }
+      .card-figure-content, .card-figure-link {
+        display: none;
+      }
+
+      .add-image, .add-video, .remove-all-figures {
+        vertical-align: top;
+        margin-top: 20px;
+        padding: 2px 10px 0;
+        width: 140px;
+        height: 23px;
+        color: $common-quiet-text-color;
+        background-color: $common-background-color;
+        border: 1px solid $common-gray;
+      }
+      .add-image {
+        &:before {
+          content: url("/images/project/add.png");
+          position: relative;
+          top: 3px;
+          padding-right: 5px;
+        };
+      }
+      .add-video {
+        padding-top: 3px;
+        &:before {
+          content: url("/images/project/add_movie.png");
+          position: relative;
+          top: 2px;
+          padding-right: 5px;
+        };
+      }
+      .remove-all-figures {
+        padding-top: 0;
+        height: 25px;
+        &:before {
+          content: url("/images/project/remove_all_images.png");
+          position: relative;
+          top: 4px;
+          padding-right: 5px;
+        };
+      }
+
+      &.hide-add-buttons {
+        a.add-image, .add-video {
+          display: none;
+        }
+      }
+    }
+  }
+  #filesize-caution {
+    display: none;
+    margin-top: 40px;
+    color: $common-error-text-color;
+    font-size: 21px;
+  }
+  .buttons {
+    margin: 55px 90px;
+    #submit-btn {
+      display: none;
+    }
+    .submit {
+      width: 180px;
+      height: 40px;
+      padding: 5px 0 0 15px;
+      background: $common-basic-color;
+      border: none;
+      color: $common-btn-text-color;
+      font-size: 18px;
+      &:before {
+        content: url("/images/project/submit.png");
+        position: relative;
+        top: 6px;
+        left: 2px;
+        padding-right: 20px;
+      };
+    }
+    .update:before {
+      content: url("/images/project/update_project.png");
+      position: relative;
+      top: 6px;
+      left: 2px;
+      padding-right: 10px;
+    }
+
+    .cancel {
+      vertical-align: bottom;
+      margin-left: 15px;
+      width: 66px;
+      height: 25px;
+      padding: 5px 0px 0px 3px;
+      font-size: 12px;
+      &:before {
+        content: url("/images/project/cancel.png");
+        position: relative;
+        top: 3px;
+        padding-right: 3px;
+        padding-left: 3px;
+      };
+    }
+    #delete-btn {
+      vertical-align: bottom;
+      margin-left: 15px;
+      padding: 5px 0px 0px 3px;
+      width: 112px;
+      height: 25px;
+      font-size: 12px;
+      &:before {
+        content: url("/images/project/delete_project.png");
+        position: relative;
+        top: 2px;
+        padding-right: 5px;
+        padding-left: 5px;
+      };
+    }
+  }
+}

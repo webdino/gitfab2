@@ -1,0 +1,702 @@
+$icons-sprite-dimensions: true;
+@import "mixins/clearfix";
+@import "mixins/variables";
+@import "compass/utilities/sprites";
+@import "icons/*.png";
+@include all-icons-sprites;
+
+#index {
+  $white_border: 1px solid white;
+  $featured_projects_color: #63c5fb;
+  $reciped_projects_color: #e6f9ff;
+
+  font-family: $common-novelsans-semibold;
+  margin-top: -35px;
+  width: 100%;
+  background-color: $common-dark-blue;
+
+  .label {
+    margin: 0 auto;
+    bottom: 0;
+    padding-top: 15px;
+    width: 200px;
+    height: 25px;
+    background-color: $common-background-color;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 5px 5px 0 0;
+  }
+  #lang {
+    position: absolute;
+    right: 30px;
+    top: 32px;
+    z-index: 2147483647;
+    font-weight: normal;
+    font-size: 12px;
+    .lang {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.6;
+      }
+      &.is-selected {
+        cursor: default;
+        color: $common-quiet-text-color;
+        &:hover {
+          opacity: 1.0;
+        }
+      }
+    }
+  }
+  .lang-jp {
+    display: none;
+  }
+  .lang-en {
+    display: block;
+  }
+
+  #splash-wrapper {
+    // background: asset-url("background.jpg") no-repeat;
+    background-size: cover;
+    background-color: $common-basic-color;
+    border-bottom: 2px solid white;
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      height: 270px;
+      padding: 230px 0 60px;
+      .text {
+        margin: 0 auto;
+        width: $content_width;
+        height: 100px;
+        color: $common-title-text-color;
+        line-height: 1.2;
+        .main-copy {
+          width: $content_width;
+          font-size: 50px;
+          font-weight: normal;
+          text-align: center;
+          letter-spacing: 1px;
+        }
+        .sub-copy {
+          margin: 20px auto;
+          width: 490px;
+          height: auto;
+          font-size: 20px;
+          text-align: center;
+        }
+      }
+      .sign-up {
+        margin: 10px auto;
+        width: 830px;
+        text-align: right;
+        .sign-up-btn {
+          display: inline-block;
+          @include icons-sprite(signup);
+        }
+        .sign-up-btn-jp {
+          display: inline-block;
+          @include icons-sprite(signup_jp);
+        }
+      }
+    }
+  }
+  #functions {
+    background: $common-light-gray;
+    border-bottom: 2px solid white;
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      padding: 40px 0 0px;
+      .functions {
+        .function {
+          display: inline-block;
+          margin-bottom: 20px;
+          margin-right: 10px;
+          margin-left: 10px;
+          width: 300px;
+          vertical-align: top;
+          .image-wrapper {
+            width: 100%;
+            .image {
+              margin: 0 auto;
+              width: 120px;
+              height: 120px;
+              border-radius: 120px;
+              border: none;
+              background-color: $common-background-color;
+            }
+          }
+          .title {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+          }
+          .description {
+            margin-top: 20px;
+            width: 100%;
+            color: $common-quiet-text-color;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+    .link-wrapper {
+      margin-right: 20px;
+      margin-bottom: 40px;
+      text-align: right;
+      .about {
+        padding: 0px 1px 1px;
+        font-size: 14px;
+        border-bottom: 2px solid black;
+      }
+    }
+  }
+
+  #occasions {
+    background: $common-light-gray;
+    border-bottom: 2px solid white;
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      padding: 40px 0 0px;
+      .occasions {
+        .occasion {
+          display: inline-block;
+          margin-bottom: 40px;
+          margin-right: 10px;
+          margin-left: 10px;
+          width: 460px;
+          vertical-align: top;
+          .image-wrapper {
+            width: 100%;
+            .image {
+              margin: 0 auto;
+              width: 120px;
+              height: 120px;
+              border-radius: 120px;
+              border: none;
+              background-color: $common-background-color;
+            }
+          }
+          .title-wrapper {
+            margin-top: 20px;
+            text-align: center;
+            .title {
+              display: inline-block;
+              padding: 0 1px 1px;
+              font-size: 18px;
+              border-bottom: 2px solid black;
+            }
+          }
+          .description {
+            margin-top: 20px;
+            width: 100%;
+            color: $common-quiet-text-color;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+  }
+
+  #dashboard {
+    background: $common-light-gray;
+    border-bottom: 2px solid white;
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      padding: 40px 0 0px;
+      .link {
+        display: inline-block;
+        margin: 0 10px;
+        width: $content_width / 4 - 20px;
+        .image-wrapper {
+          width: 100%;
+          .image {
+            display: block;
+            margin: 0 auto 10px;
+            width: 68px;
+            height: 68px;
+            border-radius: 68px;
+            border: 5px solid white;
+            background-color: $common-background-color;
+          }
+          .create_project {
+            @include icons-sprite(create_project_m);
+          }
+          .create_group {
+            @include icons-sprite(create_group_m);
+          }
+          .edit_profile {
+            @include icons-sprite(edit_profile_m);
+          }
+        }
+        .title {
+          margin-bottom: 30px;
+          width: 100%;
+          font-size: 20px;
+          text-align: center;
+        }
+      }
+    }
+  }
+
+
+  .projects-wrapper {
+    width: 100%;
+
+    .container {
+      @include cf;
+      width: 960px;
+      margin: 0 auto;
+      padding-top: 50px;
+
+      .title {
+        margin: 0px auto 30px;
+        width: 343px;
+        font-size: 30px;
+        font-weight: normal;
+        line-height: 1.2;
+      }
+      .notice {
+        text-align: center;
+      }
+
+      #featured-projects {
+        margin-bottom: 40px;
+      }
+
+      #searched-projects, #your-projects, #reciped-projects, .featured-projects {
+        width: 100%;
+        .project {
+          $figure_width: 300px;
+          margin-bottom: 20px;
+          width: $figure_width;
+          background-color: $common-background-color;
+          border-radius: 5px;
+          .header {
+            position: relative;
+            .thumb-wrapper {
+              max-width: $figure_width;
+              width: $figure_width;
+              margin: 0;
+              overflow: hidden;
+              .thumb {
+                width: 100%;
+                border-radius: 5px 5px 0 0;
+              }
+            }
+            .user {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              width: 40px;
+              height: 40px;
+              .icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 40px;
+                border: 2px solid white;
+                background-position: center center;
+                background-size: cover;
+              }
+            }
+            .title-large {
+              position: relative;
+              margin: 0px 10px 5px;
+              width: $figure_width - 60px;
+              padding-top: 10px;
+              font-family: $common-novelsans-semibold;
+              font-weight: normal;
+              font-size: 45px;
+              line-height: 50px;
+              .block {
+                display: block;
+                word-wrap: break-word;
+              }
+            }
+          }
+
+          .inner {
+            $inner_padding: 10px;
+            width: $figure_width - $inner_padding * 2;
+            padding: $inner_padding;
+            .title-small {
+              margin-bottom: 10px;
+              min-height: 45px;
+              font-size: 18px;
+              line-height: 1.5;
+            }
+            .spacer {
+              display: block;
+              width: 100%;
+              height: 65px;
+            }
+            .description {
+              margin-bottom: 5px;
+              font-size: 14px;
+              line-height: 22px;
+              color: $common-quiet-text-color;
+              font-family: $common-novelsans-light;
+              word-break: break-all;
+            }
+            .status {
+              margin-bottom: 5px;
+              line-height: 15px;
+              font-family: $common-novelsans-light;
+              font-size: 14px;
+              .recipes, .notes {
+                display: inline-block;
+                margin-bottom: 5px;
+              }
+              .notes {
+                margin-left: 5px;
+              }
+            }
+          }
+        }
+      }
+
+      #featured-project-groups {
+        width: 100%;
+        margin-top: -30px;
+        .featured-project-group {
+          $figure_width: 300px;
+          display: inline-block;
+          width: $figure-width;
+          vertical-align: top;
+          margin: 0 10px;
+          .group-title {
+            width: $figure-width - 10px;
+            height: 40px;
+            word-break: break-all;
+            font-size: 18px;
+            color: $common-dark-blue;
+            border-left: 1px solid $common-dark-blue;
+            padding: 1px 0 10px 10px;
+
+          }
+          .featured-projects {
+            width: $figure-width;
+            .project {
+              margin-top: 10px;
+              margin-bottom: 20px;
+              position: relative;
+            }
+          }
+        }
+      }
+
+      .more {
+        margin: 20px 20px 0 0;
+        .more-projects {
+          display: block;
+          padding: 10px 10px 5px;
+          width: 140px;
+          height: 20px;
+          background: $common-basic-color;
+          color: $common-btn-text-color;
+          font-size: 17.5px;
+          border-radius: 5px;
+        }
+      }
+    }
+  }
+
+  #featured {
+    background: $common-light-blue;
+    border-bottom: 2px solid white;
+    .title {
+      margin: 0;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+  }
+
+  #featured-groups {
+    background: $common-light-blue;
+    border-bottom: 2px solid white;
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      padding: 40px 0 0px;
+      .groups {
+        .group {
+          display: inline-block;
+          margin-bottom: 40px;
+          margin-right: 10px;
+          margin-left: 10px;
+          width: 300px;
+          vertical-align: top;
+          .image-wrapper {
+            width: 100%;
+            .image {
+              display: block;
+              margin: 0 auto;
+              width: 140px;
+              height: 140px;
+              border-radius: 140px;
+              border: none;
+              background-color: $common-background-color;
+            }
+          }
+          .title {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.25;
+          }
+          .meta {
+            margin: 10px 0;
+            font-size: 12px;
+            color: $common-basic-color;
+            text-align: center;
+            .place, .members, .projects {
+              margin-left: 10px;
+              margin-right: 10px;
+              line-height: 1.25;
+            }
+          }
+          .description {
+            margin-top: 20px;
+            width: 100%;
+            word-break: break-all;
+            color: $common-quiet-text-color;
+            font-size: 14px;
+            line-height: 1.5;
+          }
+        }
+      }
+    }
+  }
+
+  .search-projects {
+    width: 100%;
+    .inner {
+      margin: 0 auto;
+      width: $content_width;
+      height: 110px;
+      padding-bottom: 30px;
+      .search-icon-wrapper {
+        display: inline-block;
+        width: 80px;
+        height: 100%;
+      }
+      .search-project {
+        display: inline-block;
+        width: 300px;
+        height: 100%;
+        vertical-align: top;
+        padding-left: 15px;
+        border-left: 2px solid white;
+        .title {
+          margin-top: 10px;
+          color: $common-title-text-color;
+          font-size: 30px;
+          line-height: 1.2;
+          font-weight: normal;
+        }
+        #search-box {
+          margin-top: 10px;
+          width: 240px;
+          height: 30px;
+          #search-form {
+            padding-left: 10px;
+            width: 270px;
+            height: 30px;
+            font-family: "novelsans-semibold";
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+          }
+        }
+      }
+      .tag-search {
+        display: inline-block;
+        width: 510px;
+        height: 100%;
+        vertical-align: top;
+        padding-left: 15px;
+        border-left: 2px solid white;
+        .title {
+          margin-top: 10px;
+          color: $common-title-text-color;
+          font-size: 30px;
+          line-height: 1.2;
+          font-weight: normal;
+        }
+        .tags {
+          margin: 10px 0 0 5px;
+          font-size: 14px;
+          line-height: 19px;
+          .tag {
+            display: inline;
+            &:after {
+              content: ",";
+            }
+            &:before {
+              content: " "
+            }
+            &:last-child:after {
+              content: "";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #your {
+    background: $reciped_projects_color;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
+  }
+
+  #reciped {
+    background-color: $reciped_projects_color;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
+  }
+
+  #searched {
+    background: $reciped_projects_color;
+    border-bottom: 2px solid white;
+    .container {
+      width: 940px;
+      padding-bottom: 75px;
+    }
+    .title {
+      margin: 0px auto 30px;
+      width: 280px;
+      font-size: 30px;
+      font-weight: normal;
+      line-height: 1.2;
+      text-align: center;
+    }
+  }
+
+  #tags-and-keywords {
+    background: $common-light-gray;
+    border-bottom: 2px solid white;
+    .container {
+      @include cf;
+      margin: 0 auto;
+      width: $content_width;
+      padding: 40px 0;
+      .left {
+        float: left;
+        width: 470px;
+        margin-right: 20px;
+        .tags-wrapper {
+          width: 100%;
+          .title {
+            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: normal;
+          }
+          .tag {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 10px 5px;
+            font-size: 12px;
+            background-color: $common-background-color;
+            border: 1px solid gray;
+          }
+          .show-all, .show-selected {
+            margin-top: 5px;
+            margin-left: 5px;
+          }
+          .all-tags {
+            display:  none;
+          }
+        }
+      }
+      .right {
+        float: left;
+        .materials-wrapper, .tools-wrapper {
+          width: 470px;
+          .title {
+            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: normal;
+          }
+          .material, .tool {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 10px 5px;
+            font-size: 12px;
+            background-color: $common-background-color;
+          }
+        }
+        .materials-wrapper .material {
+          border: 1px solid #23CE6A;
+        }
+        .tools-wrapper {
+          margin-top: 20px;
+          .tool {
+            border: 1px solid #F34D06;
+          }
+        }
+      }
+    }
+  }
+
+  #sign-up-pane {
+    .container {
+      margin: 0 auto;
+      width: $content_width;
+      padding: 100px 0;
+      .button-wrapper {
+        .sign-up-btn {
+          display: block;
+          width: 210px;
+          margin: 0 auto 15px;
+          padding: 20px 60px 15px;
+          text-align: center;
+          font-size: 20px;
+          background-color: $common-background-color;
+          border-radius: 5px;
+          color: $common-dark-blue;
+        }
+        .description {
+          text-align: center;
+          color: $common-label-text-color;
+        }
+      }
+    }
+  }
+
+  .pagination {
+    margin-top: 30px;
+    font-size: 17.5px;
+    color: $common-btn-text-color;
+    span {
+      padding: 5px 2px 2px 5px;
+      margin-right: 5px;
+      background: $common-basic-color;
+      a {
+        color: $common-btn-text-color;
+      }
+    }
+    .current {
+      background: none;
+      color: $common-basic-color;
+    }
+    .first {
+      border-radius: 5px 0 0 5px;
+    }
+    .last {
+      border-radius: 0 5px 5px 0;
+    }
+
+  }
+
+}

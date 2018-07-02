@@ -1,0 +1,123 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+
+#admin-features-index {
+  margin-bottom: 50px;
+  padding: 30px 40px;
+  font-family: $common-novelsans-light;
+  font-size: 14px;
+  background-color: $common-background-color;
+  border-radius: 5px;
+  .title {
+    font-family: $common-novelsans-semibold;
+    font-size: 40px;
+  }
+  .title-2 {
+    margin-top: 40px;
+    width: 420px;
+    font-family: $common-novelsans-semibold;
+    font-size: 24px;
+  }
+  .features {
+    margin-top: 20px;
+    margin-left: 20px;
+    .feature {
+      margin-bottom: 50px;
+      width: 400px;
+      .meta {
+        border-bottom: 1px solid $common-gray;
+        .title {
+          display: inline-block;
+          width: 230px;
+          font-family: $common-novelsans-semibold;
+          font-size: 18px;
+          word-break: break-all;
+        }
+        .class_name {
+          margin-left: 20px;
+          font-size: 20px;
+          &:before {
+            content: ("class::");
+          }
+        }
+        .btn {
+          margin-left: 7px;
+          margin-bottom: 2px;
+        }
+      }
+      .items {
+        margin-left: 40px;
+        .item {
+          @include cf;
+          width: 360px;
+          padding: 10px 0 0;
+          border-bottom: 1px solid $common-gray;
+          .name {
+            display: inline-block;
+            margin-top: 7px;
+          }
+          .remove-btn {
+            float: right;
+          }
+        }
+      }
+      .item-form {
+        margin-top: 15px;
+        .title {
+          margin: 10px 0;
+          font-size: 14px;
+        }
+        .item-selection {
+          display: block;
+          margin-bottom: 10px;
+          width: 100%;
+          font-family: $common-novelsans-light;
+          font-size: 14px;
+          option {
+            font-family: $common-novelsans-light;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+  .feature-form {
+    width: 420px;
+    .title {
+      font-family: $common-novelsans-semibold;
+      font-size: 20px;
+      border-bottom: 1px solid $common-gray;
+    }
+    .target-title {
+      margin-top: 20px;
+      font-family: $common-novelsans-semibold;
+      font-size: 14px;
+      .title-form {
+        display: block;
+        margin-top: 10px;
+        width: 98%;
+        font-family: $common-novelsans-light;
+        font-size: 14px;
+      }
+    }
+    .target-class {
+      margin-top: 10px;
+      font-family: $common-novelsans-semibold;
+      font-size: 14px;
+      .class-name-form {
+        margin-left: 20px;
+        font-family: $common-novelsans-light;
+        font-size: 14px;
+        option {
+          font-family: $common-novelsans-light;
+          font-size: 14px;
+        }
+      }
+    }
+    input {
+      display: block;
+      margin-top: 10px;
+    }
+
+  }
+}
