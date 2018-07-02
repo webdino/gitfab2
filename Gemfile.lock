@@ -84,10 +84,6 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts-as-taggable-on (3.1.1)
-      actionpack (>= 3, < 5)
-      activerecord (>= 3, < 5)
-      activesupport (>= 3, < 5)
     acts_as_commentable (4.0.1)
     acts_as_list (0.8.2)
       activerecord (>= 3.0)
@@ -540,7 +536,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts-as-taggable-on (~> 3.1.0)
   acts_as_commentable
   acts_as_list
   acts_as_votable (~> 0.8.0)
