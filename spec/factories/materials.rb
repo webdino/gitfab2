@@ -6,6 +6,6 @@ FactoryBot.define do
     size 'MyString'
     url 'MyString'
     description 'MyText'
-    photo Rack::Test::UploadedFile.new(File.open(Rails.root.join('spec', 'assets', 'images', 'image.jpg')))
+    photo { Rack::Test::UploadedFile.new(File.open(Rails.root.join('spec', 'fixtures', 'images', 'image.jpg'))) }
   end
 end

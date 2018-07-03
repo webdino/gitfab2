@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :attachment, class: Attachment do
     title 'Attachment'
-    content File.open(Rails.root.join('spec', 'assets', 'images', 'image.jpg'))
+    content { File.open(Rails.root.join('spec', 'fixtures', 'images', 'image.jpg')) }
   end
 
   factory :attachment_material, parent: :attachment do
