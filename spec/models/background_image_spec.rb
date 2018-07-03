@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "spec_helper"
-
 describe BackgroundImage do
   let(:background_image) { BackgroundImage.new(file: file) }
   let(:file) { nil }

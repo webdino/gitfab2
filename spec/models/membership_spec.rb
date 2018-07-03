@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Membership do
   let(:membership) { FactoryBot.build :membership }
   describe '#admin?' do

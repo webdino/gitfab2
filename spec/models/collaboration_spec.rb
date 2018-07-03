@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Collaboration do
   describe '#owner' do
     let(:collaboration) { FactoryBot.create(:collaboration, owner: owner) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe GlobalProjectsController, type: :controller do
   render_views
 

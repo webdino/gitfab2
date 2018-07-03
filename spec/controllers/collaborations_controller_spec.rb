@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe CollaborationsController, type: :controller do
   render_views
 

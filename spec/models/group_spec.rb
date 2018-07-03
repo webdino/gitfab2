@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Group do
   it_behaves_like 'Collaborator', :group
   it_behaves_like 'ProjectOwner', :user

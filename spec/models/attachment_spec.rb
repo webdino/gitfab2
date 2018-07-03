@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Attachment do
   let(:attachment) do
     FactoryBot.build :attachment_material

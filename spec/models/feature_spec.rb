@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Feature do
   it { expect(Feature).to be_respond_to(:projects) }
   it { expect(Feature).to be_respond_to(:groups) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Card::State do
   it_behaves_like 'Annotable', :state
   it_behaves_like 'Card', :state

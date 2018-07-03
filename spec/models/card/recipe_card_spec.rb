@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Card::RecipeCard do
   it_behaves_like 'Annotable', :recipe_card
   it_behaves_like 'Card', :recipe_card

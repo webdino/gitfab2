@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Contribution do
   describe '#contributor' do
     let(:contribution) { FactoryBot.create(:contribution) }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Project do
   it_behaves_like 'Likable', :user_project
   it_behaves_like 'Figurable', :user_project

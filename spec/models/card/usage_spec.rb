@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Card::Usage do
   it_behaves_like 'Card', :usage
   it_behaves_like 'Orderable', :usage

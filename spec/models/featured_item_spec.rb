@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe FeaturedItem do
   describe 'attributes' do
     let(:featured_item) { FactoryBot.create(:featured_item) }

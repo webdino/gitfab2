@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Recipe do
   let(:u_project) { FactoryBot.create :user_project }
   let(:u_project_recipe) { u_project.recipe }

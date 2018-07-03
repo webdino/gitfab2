@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Comment do
   it_behaves_like 'Likable', :comment
   it_behaves_like 'Contributable', :comment

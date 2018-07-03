@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe MembershipsController, type: :controller do
   let(:user) { FactoryBot.create :user }
   let(:other) { FactoryBot.create :user }

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Note do
   let(:note) { FactoryBot.create(:note) }
 

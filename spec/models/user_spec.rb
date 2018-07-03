@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe User do
   it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user

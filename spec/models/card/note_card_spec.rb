@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Card::NoteCard do
   it_behaves_like 'Card', :note_card
   it_behaves_like 'Taggable', :note_card
