@@ -10,7 +10,8 @@ describe BackgroundImage do
     subject { BackgroundImage.find }
 
     context "with file" do
-      before { allow(BackgroundImage).to receive(:exists?).and_return(true) }
+      let(:file) { image_file }
+      before { background_image.save }
       it { is_expected.to be_kind_of BackgroundImage }
     end
 
