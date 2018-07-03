@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :contribution, class: Contribution do
+  factory :contribution do
     association :contributor, factory: :user
 
     after(:build) do |contribution|

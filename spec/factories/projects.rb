@@ -36,13 +36,13 @@ FactoryBot.define do
 
       project.usages.reload
     end
+  end
 
-    factory :user_project, class: Project do
-      association :owner, factory: :user
-    end
+  factory :user_project, parent: :project do
+    association :owner, factory: :user
+  end
 
-    factory :group_project, class: Project do
-      association :owner, factory: :group
-    end
+  factory :group_project, parent: :project do
+    association :owner, factory: :group
   end
 end

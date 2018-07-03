@@ -4,77 +4,77 @@ FactoryBot.define do
   factory :card do
     type Card.name
     description 'description'
+  end
 
-    factory :note_card, class: Card::NoteCard do
-      type Card::NoteCard.name
-      # title, descriptionはpresence: true
-      sequence(:title) { |n| "NoteCard #{n}" }
-      sequence(:description) { |n| "Description for NoteCard #{n}" }
-      note
+  factory :note_card, class: Card::NoteCard, parent: :card do
+    type Card::NoteCard.name
+    # title, descriptionはpresence: true
+    sequence(:title) { |n| "NoteCard #{n}" }
+    sequence(:description) { |n| "Description for NoteCard #{n}" }
+    note
+  end
+
+  factory :annotation, class: Card::Annotation, parent: :card do
+    type Card::Annotation.name
+    sequence(:title) { |n| "Annotation #{n}" }
+
+    after(:build) do |annotation|
+      # TODO: annotation.annotatable がnilであることを許容するのか要確認
+      annotatable = annotation.annotatable || FactoryBot.build(:state)
+      annotatable.annotations << annotation
+      annotatable.save!
     end
+  end
 
-    factory :annotation, class: Card::Annotation do
-      type Card::Annotation.name
-      sequence(:title) { |n| "Annotation #{n}" }
+  factory :recipe_card, class: Card::RecipeCard, parent: :card do
+    type Card::RecipeCard.name
+    sequence(:title) { |n| "RecipeCard #{n}" }
+    recipe
 
-      after(:build) do |annotation|
-        # TODO: annotation.annotatable がnilであることを許容するのか要確認
-        annotatable = annotation.annotatable || FactoryBot.build(:state)
-        annotatable.annotations << annotation
-        annotatable.save!
-      end
+    after(:create) do |recipe_card|
+      FactoryBot.create(:annotation, annotatable: recipe_card)
+      FactoryBot.create(:annotation, annotatable: recipe_card)
+      FactoryBot.create(:annotation, annotatable: recipe_card)
+      FactoryBot.create(:annotation, annotatable: recipe_card)
+      FactoryBot.create(:annotation, annotatable: recipe_card)
+
+      # 順番変更のテストのため
+      # 順番がID通りにならないようにする
+      recipe_card.annotations.to_a.shuffle
+        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+      recipe_card.annotations.to_a.shuffle
+        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+
+      recipe_card.annotations.reload
     end
+  end
 
-    factory :recipe_card, class: Card::RecipeCard do
-      type Card::RecipeCard.name
-      sequence(:title) { |n| "RecipeCard #{n}" }
-      recipe
+  factory :state, class: Card::State, parent: :card do
+    type Card::State.name
+    sequence(:title) { |n| "State #{n}" }
+    recipe
 
-      after(:create) do |recipe_card|
-        FactoryBot.create(:annotation, annotatable: recipe_card)
-        FactoryBot.create(:annotation, annotatable: recipe_card)
-        FactoryBot.create(:annotation, annotatable: recipe_card)
-        FactoryBot.create(:annotation, annotatable: recipe_card)
-        FactoryBot.create(:annotation, annotatable: recipe_card)
+    after(:create) do |state|
+      FactoryBot.create(:annotation, annotatable: state)
+      FactoryBot.create(:annotation, annotatable: state)
+      FactoryBot.create(:annotation, annotatable: state)
+      FactoryBot.create(:annotation, annotatable: state)
+      FactoryBot.create(:annotation, annotatable: state)
 
-        # 順番変更のテストのため
-        # 順番がID通りにならないようにする
-        recipe_card.annotations.to_a.shuffle
-                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-        recipe_card.annotations.to_a.shuffle
-                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+      # 順番変更のテストのため
+      # 順番がID通りにならないようにする
+      state.annotations.to_a.shuffle
+        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+      state.annotations.to_a.shuffle
+        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
-        recipe_card.annotations.reload
-      end
+      state.annotations.reload
     end
+  end
 
-    factory :state, class: Card::State do
-      type Card::State.name
-      sequence(:title) { |n| "State #{n}" }
-      recipe
-
-      after(:create) do |state|
-        FactoryBot.create(:annotation, annotatable: state)
-        FactoryBot.create(:annotation, annotatable: state)
-        FactoryBot.create(:annotation, annotatable: state)
-        FactoryBot.create(:annotation, annotatable: state)
-        FactoryBot.create(:annotation, annotatable: state)
-
-        # 順番変更のテストのため
-        # 順番がID通りにならないようにする
-        state.annotations.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-        state.annotations.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-        state.annotations.reload
-      end
-    end
-
-    factory :usage, class: Card::Usage do
-      type Card::Usage.name
-      sequence(:title) { |n| "Usage #{n}" }
-      association :project, factory: :user_project
-    end
+  factory :usage, class: Card::Usage, parent: :card do
+    type Card::Usage.name
+    sequence(:title) { |n| "Usage #{n}" }
+    association :project, factory: :user_project
   end
 end
