@@ -22,6 +22,14 @@ describe BackgroundImage do
     end
   end
 
+  describe ".basename" do
+    it { expect(BackgroundImage.basename).to eq "background_image.jpg" }
+  end
+
+  describe ".path" do
+    it { expect(BackgroundImage.path).to eq Rails.root.join("public", "uploads", BackgroundImage.basename) }
+  end
+
   describe "#basename" do
     it { expect(background_image.basename).to eq "background_image.jpg" }
   end

@@ -15,7 +15,6 @@ class BackgroundImage
       new(file: file)
     end
 
-    private
     def basename
       'background_image.jpg'
     end
@@ -24,17 +23,19 @@ class BackgroundImage
       Rails.root.join('public', 'uploads', basename)
     end
 
-    def exists?
-      FileTest.file?(path)
-    end
+    private
+
+      def exists?
+        FileTest.file?(path)
+      end
   end
 
   def basename
-    self.class.send(:basename)
+    self.class.basename
   end
 
   def path
-    self.class.send(:path)
+    self.class.path
   end
 
   def content_type
@@ -68,22 +69,23 @@ class BackgroundImage
   end
 
   private
-  def exists?
-    file.present?
-  end
 
-  def tmp_file_path(time = Time.current)
-    "#{path}.#{Process.pid}.#{time.to_i}.tmp"
-  end
+    def exists?
+      file.present?
+    end
 
-  def stat
-    @stat ||= File::Stat.new(path)
-  end
+    def tmp_file_path(time = Time.current)
+      "#{path}.#{Process.pid}.#{time.to_i}.tmp"
+    end
 
-  def timestamp
-    (stat.mtime || stat.ctime).to_i.to_s
-  rescue Errno::ENOENT
-    ''
-  end
+    def stat
+      @stat ||= File::Stat.new(path)
+    end
+
+    def timestamp
+      (stat.mtime || stat.ctime).to_i.to_s
+    rescue Errno::ENOENT
+      ''
+    end
 
 end
