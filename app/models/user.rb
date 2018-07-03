@@ -24,11 +24,7 @@ class User < ActiveRecord::Base
                    name_format: true, if: -> { name.present? }
 
   def is_system_admin?
-    if authority == 'admin'
-      return true
-    else
-      return false
-    end
+    authority == 'admin'
   end
 
   def is_owner_of?(project)

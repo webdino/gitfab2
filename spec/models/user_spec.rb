@@ -63,11 +63,17 @@ describe User do
   end
 
   describe '#is_system_admin?' do
-    it do
-      expect(FactoryBot.create(:user).is_system_admin?).to be_falsey
+    subject { user.is_system_admin? }
+    let(:user) { User.new(authority: authority) }
+
+    context "when user has admin authority" do
+      let(:authority) { "admin" }
+      it { is_expected.to be true }
     end
-    it do
-      expect(FactoryBot.create(:administrator).is_system_admin?).to be_truthy
+
+    context "when user does not have admin authority" do
+      let(:authority) { nil }
+      it { is_expected.to be false }
     end
   end
 
