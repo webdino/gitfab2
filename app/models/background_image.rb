@@ -53,24 +53,27 @@ class BackgroundImage
   def save
     return false unless valid?
     begin
-      temp_path = "#{path}.#{Process.pid}.#{Time.current.to_i}.tmp"
       begin
-        FileUtils.move(path, temp_path) if FileTest.file?(path)
+        FileUtils.move(path, tmp_file_path) if FileTest.file?(path)
         FileUtils.cp(file.tempfile.path, path)
         FileUtils.chmod(0644, path)
         true
       rescue
-        FileUtils.cp(temp_path, path) if FileTest.file?(temp_path)
+        FileUtils.cp(tmp_file_path, path) if FileTest.file?(tmp_file_path)
         false
       end
     ensure
-      FileUtils.remove(temp_path) if FileTest.file?(temp_path)
+      FileUtils.remove(tmp_file_path) if FileTest.file?(tmp_file_path)
     end
   end
 
   private
   def exists?
     file.present?
+  end
+
+  def tmp_file_path(time = Time.current)
+    "#{path}.#{Process.pid}.#{time.to_i}.tmp"
   end
 
   def stat

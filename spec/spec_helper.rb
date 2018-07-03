@@ -18,6 +18,8 @@ Coveralls.wear!
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
+  config.fixture_path = "spec/fixtures"
+
   config.before(:suite) do
     DatabaseRewinder.clean_all
   end
