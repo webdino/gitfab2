@@ -5,12 +5,9 @@ class Admin::ProjectsController < ApplicationController
   before_action :load_project, only: [:show, :update, :destroy]
 
   def index
-    q = params[:q].to_s
-    @projects = Project.published.search { |s|
-      s.fulltext q.split.map { |word| "\"#{word}\"" }.join ' AND '
-      s.with(:is_deleted, false)
-      s.paginate page: params[:page]
-    }.results
+    @projects = Project.published
+    @projects = @projects.ransack(draft_cont_all: params[:q].split(/\p{space}+/)).result if params[:q]
+    @projects = @projects.page(params[:page])
   end
 
   def show; end
