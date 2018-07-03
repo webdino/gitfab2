@@ -21,6 +21,7 @@ RSpec.configure do |config|
   config.fixture_path = "spec/fixtures"
 
   config.before(:suite) do
+    FactoryBot.lint
     DatabaseRewinder.clean_all
   end
 
