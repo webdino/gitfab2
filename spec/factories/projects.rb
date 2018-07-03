@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :project do
+    association :owner, factory: :user
     name { "project-#{SecureRandom.hex 10}" }
     title { SecureRandom.uuid }
     description { SecureRandom.uuid }
@@ -36,12 +37,12 @@ FactoryBot.define do
       project.usages.reload
     end
 
-    factory :user_project, class: Project do |up|
-      up.owner { |o| o.association :user }
+    factory :user_project, class: Project do
+      association :owner, factory: :user
     end
 
-    factory :group_project, class: Project do |gp|
-      gp.owner { |o| o.association :group }
+    factory :group_project, class: Project do
+      association :owner, factory: :group
     end
   end
 end
