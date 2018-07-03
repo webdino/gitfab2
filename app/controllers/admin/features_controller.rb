@@ -1,7 +1,4 @@
-class Admin::FeaturesController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::FeaturesController < Admin::ApplicationController
   before_action :load_feature, only: [:show, :update, :destroy]
 
   #  authorize_resource

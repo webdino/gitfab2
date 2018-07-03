@@ -1,7 +1,4 @@
-class Admin::FeaturedItemsController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::FeaturedItemsController < Admin::ApplicationController
   before_action :load_item, only: [:show, :destroy]
   before_action :load_feature, only: [:create, :update, :destroy]
 

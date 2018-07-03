@@ -1,7 +1,4 @@
-class Admin::ProjectsController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::ProjectsController < Admin::ApplicationController
   before_action :load_project, only: [:show, :update, :destroy]
 
   def index
