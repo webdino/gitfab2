@@ -403,7 +403,6 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    stringex (2.5.2)
     subexec (0.2.3)
     sysexits (1.2.0)
     temple (0.8.0)
@@ -495,7 +494,6 @@ DEPENDENCIES
   spring-commands-rspec
   stl!
   stl2gif!
-  stringex (= 2.5.2)
   truncate_html
   turbolinks (~> 2.5, >= 2.5.3)
   uglifier
