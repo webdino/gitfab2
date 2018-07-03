@@ -24,8 +24,8 @@ FactoryBot.define do
       recipe.recipe_cards.to_a.shuffle
             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
-      recipe.states(true)
-      recipe.recipe_cards(true)
+      recipe.states.reload
+      recipe.recipe_cards.reload
     end
   end
 end

@@ -31,7 +31,7 @@ describe Card::State do
     it 'parent_stateのannotationsに追加する' do
       expect do
         state.to_annotation!(parent_state)
-      end.to change { parent_state.annotations(true).count }
+      end.to change { parent_state.annotations.reload.count }
     end
   end
 end

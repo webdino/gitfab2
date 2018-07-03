@@ -44,7 +44,7 @@ FactoryBot.define do
         recipe_card.annotations.to_a.shuffle
                    .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
-        recipe_card.annotations(true)
+        recipe_card.annotations.reload
       end
     end
 
@@ -67,7 +67,7 @@ FactoryBot.define do
         state.annotations.to_a.shuffle
              .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
-        state.annotations(true)
+        state.annotations.reload
       end
     end
 

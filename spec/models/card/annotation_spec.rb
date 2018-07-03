@@ -30,7 +30,7 @@ describe Card::Annotation do
     it 'recipeのstatesに追加する' do
       expect do
         annotation.to_state!(recipe)
-      end.to change { recipe.states(true).count }
+      end.to change { recipe.states.reload.count }
     end
   end
 end

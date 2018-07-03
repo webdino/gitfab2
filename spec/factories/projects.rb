@@ -33,7 +33,7 @@ FactoryBot.define do
       project.usages.to_a.shuffle
              .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
 
-      project.usages(true)
+      project.usages.reload
     end
 
     factory :user_project, class: Project do |up|
