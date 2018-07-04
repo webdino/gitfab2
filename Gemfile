@@ -44,7 +44,7 @@ gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3
 # gem 'capistrano3-delayed-job'
 gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
 
-gem 'friendly_id', '~> 5.0.0'
+gem 'friendly_id'
 
 gem 'truncate_html'
 gem 'clockwork'
