@@ -28,7 +28,10 @@ describe CollaboratorsController, type: :controller do
           sign_in project.owner
           xhr :post, :create, user_id: project.owner, project_id: project, collaborator_name: 'unknownuser'
         end
-        it { expect render_template 'errors/failed', status: 400 }
+        it do
+          is_expected.to have_http_status(400)
+                    .and render_template 'errors/failed'
+        end
       end
     end
   end
