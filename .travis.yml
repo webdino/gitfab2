@@ -3,7 +3,7 @@ sudo: false
 cache: bundler
 language: ruby
 rvm:
-  - 2.3.5
+  - 2.4.4
 services:
   - mysql
 before_script:
