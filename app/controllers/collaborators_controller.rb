@@ -3,13 +3,13 @@ class CollaboratorsController < ApplicationController
   before_action :load_project
   before_action :load_collaborator, only: :create
   before_action :build_collaboration, only: :create
-  after_action :notify_users, only: :create
 
   def index
   end
 
   def create
     if @collaboration.save
+      notify_users
       render :create
     else
       render 'errors/failed', status: 400

@@ -4,13 +4,13 @@ class CommentsController < ApplicationController
   before_action :load_card
   before_action :build_comment, only: :create
   before_action :load_comment, only: :destroy
-  after_action :notify_users, only: :create
 
   authorize_resource
 
   def create
     if @card.save
       @resources << @comment
+      notify_users
       render :create, locals: { card_order: @card.comments.length - 1 }
     else
       @message = @comment.errors.messages || { "Error:": "Something's wrong" }

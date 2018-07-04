@@ -5,7 +5,6 @@ class ProjectsController < ApplicationController
   before_action :load_project, only: [:edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
-  after_action :notify_users, only: [:create, :update]
 
   authorize_resource
 
@@ -32,6 +31,7 @@ class ProjectsController < ApplicationController
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
+      notify_users
       redirect_to edit_project_url(id: @project, owner_name: @owner)
     else
       render :new
@@ -70,6 +70,7 @@ class ProjectsController < ApplicationController
 
       @project.updated_at = DateTime.now.in_time_zone
       if @project.update parameters
+        notify_users
         respond_to do |format|
           format.json { render :update }
           format.html { redirect_to project_path(@project, owner_name: @owner) }
