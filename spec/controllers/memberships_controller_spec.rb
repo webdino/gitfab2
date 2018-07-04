@@ -53,8 +53,8 @@ describe MembershipsController, type: :controller do
         sign_in user
         group = Group.create name: 'foo'
         membership = user.memberships.create group_id: group.id
-        xhr :post, :create, user_id: user.id, id: membership.id,
-                            membership: membership_params, format: :json
+        patch :update, user_id: user.id, id: membership.id,
+                       membership: membership_params, format: :json
       end
       it_behaves_like 'render template', 'failed'
     end
