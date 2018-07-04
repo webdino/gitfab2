@@ -13,7 +13,7 @@ class NotificationsController < ApplicationController
     if @notification.destroy
       render :destroy
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -22,6 +22,7 @@ class NotificationsController < ApplicationController
       @notification.was_read = true
       @notification.save
     end
+    render body: nil
   end
 
   def mark_all_as_read

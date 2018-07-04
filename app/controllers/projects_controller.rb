@@ -72,7 +72,7 @@ class ProjectsController < ApplicationController
       if @project.update parameters
         notify_users_on_update(@project, @owner)
         respond_to do |format|
-          format.json { render :update }
+          format.json { render json: { success: true } }
           format.html { redirect_to project_path(@project, owner_name: @owner) }
         end
       else
@@ -99,7 +99,7 @@ class ProjectsController < ApplicationController
         format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
       end
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

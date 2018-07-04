@@ -203,12 +203,10 @@ describe ProjectsController, type: :controller do
                 xhr :patch, :update, group_id: project.owner.slug, id: project.id, new_owner_name: 'unexisted_user_slug'
               end
             end
-            it "should renders 'errors/failed' with 400" do
+            it do
               aggregate_failures do
-                is_expected.to render_template 'errors/failed'
                 is_expected.to have_http_status(400)
-                json = JSON.parse(subject.body)
-                expect(json['success']).to eq false
+                expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
               end
             end
           end

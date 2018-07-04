@@ -23,7 +23,7 @@ class StatesController < ApplicationController
     if @state.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -31,15 +31,15 @@ class StatesController < ApplicationController
     if @state.update(state_params)
       render :update
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     if @state.destroy
-      render :destroy
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

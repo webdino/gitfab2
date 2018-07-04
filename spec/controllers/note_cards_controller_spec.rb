@@ -59,10 +59,10 @@ describe NoteCardsController, type: :controller do
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
         xhr :post, :create, user_id: user, project_id: project, note_card: { title: '', description: '' }
       end
-      it "should render 'errors/failed' with 400" do
+      it do
         aggregate_failures do
-          is_expected.to render_template 'errors/failed'
           is_expected.to have_http_status(400)
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
         end
       end
     end
@@ -106,10 +106,10 @@ describe NoteCardsController, type: :controller do
         xhr :patch, :update, user_id: user, project_id: project,
                              id: note_card.id, note_card: { title: '', description: '' }
       end
-      it "should render 'errors/failed' with 400" do
+      it do
         aggregate_failures do
-          is_expected.to render_template 'errors/failed'
           is_expected.to have_http_status(400)
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
         end
       end
     end

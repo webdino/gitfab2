@@ -10,7 +10,7 @@ class MembersController < ApplicationController
       membership.save
       render :create
     else
-      render 'errors/failed'
+      render json: { success: false }
     end
   end
 

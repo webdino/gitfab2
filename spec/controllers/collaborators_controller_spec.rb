@@ -30,7 +30,7 @@ describe CollaboratorsController, type: :controller do
         end
         it do
           is_expected.to have_http_status(400)
-                    .and render_template 'errors/failed'
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
         end
       end
     end

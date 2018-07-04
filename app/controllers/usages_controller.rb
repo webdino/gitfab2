@@ -20,7 +20,7 @@ class UsagesController < ApplicationController
       @project.save!
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -31,15 +31,15 @@ class UsagesController < ApplicationController
       @project.save!
       render :update
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     if @usage.destroy
-      render :destroy
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

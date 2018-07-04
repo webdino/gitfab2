@@ -11,8 +11,7 @@ class MembershipsController < ApplicationController
     if @membership.save
       render 'create'
     else
-      @message = 'create error'
-      render 'failed'
+      render json: { success: false, message: 'create error' }
     end
   end
 
@@ -20,15 +19,13 @@ class MembershipsController < ApplicationController
     if @membership.update membership_params
       render 'update'
     else
-      @message = 'update error'
-      render 'failed'
+      render json: { success: false, message: 'update error' }
     end
   end
 
   def destroy
     if @membership.group.members.length == 1 && @membership.group.projects.length > 0
-      @message = 'This group still has projects.'
-      render 'failed'
+      render json: { success: false, message: 'This group still has projects.' }
     else
       @membership.destroy
     end

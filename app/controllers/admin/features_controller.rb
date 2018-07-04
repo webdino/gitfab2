@@ -12,7 +12,7 @@ class Admin::FeaturesController < Admin::ApplicationController
     if @feature.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

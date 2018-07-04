@@ -25,7 +25,7 @@ describe TagsController, type: :controller do
       xhr :delete, :destroy, user_id: project.owner, project_id: project, id: tag.id
       project.reload
     end
-    it { expect(response).to render_template :destroy }
+    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     it { expect(project.tags.count).to eq 0 }
     it { expect(project.draft).not_to include('tag-to-be-deleted') }
   end

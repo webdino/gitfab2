@@ -82,7 +82,7 @@ describe AnnotationsController, type: :controller do
       xhr :delete, :destroy, owner_name: user, project_id: project,
                              state_id: state.id, id: annotation.id
     end
-    it { is_expected.to render_template :destroy }
+    it {  expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
   end
 
   describe 'POST #to_state' do

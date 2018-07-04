@@ -12,15 +12,15 @@ class TagsController < ApplicationController
       @resources = [@owner, @project, @tag]
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     if @tag.destroy
-      render :destroy
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

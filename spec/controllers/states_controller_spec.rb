@@ -51,7 +51,7 @@ describe StatesController, type: :controller do
         xhr :post, :create, user_id: project.owner, project_id: project,
                             state: { type: '', title: 'foo', description: 'bar' }
       end
-      it { is_expected.to render_template 'errors/failed' }
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
     end
   end
 
@@ -79,7 +79,7 @@ describe StatesController, type: :controller do
                              project_id: project.id, id: state.id,
                              state: { type: '', title: 'foo', description: 'bar' }
       end
-      it { is_expected.to render_template 'errors/failed' }
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
     end
   end
 
@@ -90,7 +90,7 @@ describe StatesController, type: :controller do
         xhr :delete, :destroy, owner_name: project.owner,
                                project_id: project.name, id: state.id
       end
-      it { is_expected.to render_template :destroy }
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     end
   end
 

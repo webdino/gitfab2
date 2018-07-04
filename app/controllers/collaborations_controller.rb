@@ -12,13 +12,13 @@ class CollaborationsController < ApplicationController
     if @collaboration.save
       render :create
     else
-      render :failed
+      render json: { success: false }
     end
   end
 
   def destroy
     @collaboration.destroy
-    render :destroy
+    render json: { success: true, id: @collaboration.id }
   end
 
   private

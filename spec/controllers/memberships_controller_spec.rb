@@ -31,7 +31,7 @@ describe MembershipsController, type: :controller do
         xhr :post, :create, user_id: user.id,
                             membership: { group_id: 'unexisted_group' }, format: :json
       end
-      it_behaves_like 'render template', 'failed'
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'create error' }) }
     end
   end
 
@@ -47,6 +47,7 @@ describe MembershipsController, type: :controller do
       end
       it { is_expected.to render_template :update }
     end
+
     context 'with invalid params' do
       let(:membership_params) { { role: 'unknown_role' } }
       before do
@@ -56,7 +57,7 @@ describe MembershipsController, type: :controller do
         patch :update, user_id: user.id, id: membership.id,
                        membership: membership_params, format: :json
       end
-      it_behaves_like 'render template', 'failed'
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'update error' }) }
     end
   end
 

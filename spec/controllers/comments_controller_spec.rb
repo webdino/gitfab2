@@ -24,6 +24,7 @@ describe CommentsController, type: :controller do
         end
       end
     end
+
     context 'with invalid parameters' do
       before do
         note_card = FactoryBot.create(:note_card, note: project.note)
@@ -32,10 +33,10 @@ describe CommentsController, type: :controller do
         xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
                             note_card_id: note_card.id, comment: { body: '' }
       end
-      it "should render 'failed' with 400" do
+      it do
         aggregate_failures do
-          is_expected.to render_template 'failed'
           is_expected.to have_http_status(400)
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: { body: ["can't be blank"] } })
         end
       end
     end
@@ -50,6 +51,6 @@ describe CommentsController, type: :controller do
                              note_card_id: note_card.id, id: comment.id
     end
     it { expect(note_card.comments.size).to eq 0 }
-    it { is_expected.to render_template :destroy }
+    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true  }) }
   end
 end

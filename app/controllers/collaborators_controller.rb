@@ -9,7 +9,7 @@ class CollaboratorsController < ApplicationController
     collaborator_id = params[:collaborator_name]
     @collaborator = ProjectOwner.friendly_first(collaborator_id)
     unless @collaborator
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
       return
     end
 
@@ -18,7 +18,7 @@ class CollaboratorsController < ApplicationController
       notify_users(@project, @collaborator)
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

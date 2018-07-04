@@ -20,7 +20,7 @@ class NoteCardsController < ApplicationController
     if @note_card.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -38,7 +38,7 @@ class NoteCardsController < ApplicationController
     if @note_card.update auto_linked_params
       render :update
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -46,7 +46,7 @@ class NoteCardsController < ApplicationController
     if @note_card.destroy
       render :destroy
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

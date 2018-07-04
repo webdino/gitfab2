@@ -60,6 +60,6 @@ describe UsagesController, type: :controller do
       xhr :delete, :destroy, owner_name: owner.to_param,
                              project_id: project, id: usage.id
     end
-    it { is_expected.to render_template :destroy }
+    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
   end
 end

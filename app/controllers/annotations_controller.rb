@@ -24,7 +24,7 @@ class AnnotationsController < ApplicationController
     if @annotation.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -33,15 +33,15 @@ class AnnotationsController < ApplicationController
     if @annotation.update auto_linked_params
       render :update
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     if @annotation.destroy
-      render :destroy
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 

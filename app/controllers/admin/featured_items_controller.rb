@@ -14,12 +14,13 @@ class Admin::FeaturedItemsController < Admin::ApplicationController
     if @item.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     @item.destroy
+    render body: nil
   end
 
   private

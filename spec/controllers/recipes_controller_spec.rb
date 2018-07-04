@@ -48,7 +48,7 @@ describe RecipesController, type: :controller do
         card2.reload
         card3.reload
       end
-      it { is_expected.to render_template :update }
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
       it { expect(card1.position).to be 3 }
       it { expect(card2.position).to be 2 }
       it { expect(card3.position).to be 1 }

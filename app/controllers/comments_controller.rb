@@ -14,15 +14,15 @@ class CommentsController < ApplicationController
       render :create, locals: { card_order: @card.comments.length - 1 }
     else
       @message = @comment.errors.messages || { "Error:": "Something's wrong" }
-      render 'failed', message: @message, status: 400
+      render json: { success: false, message: @message }, status: 400
     end
   end
 
   def destroy
     if @comment.destroy
-      render :destroy
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
