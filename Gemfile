@@ -65,7 +65,7 @@ end
 
 group :development do
   gem 'meta_request'
-  gem 'web-console', '~> 2.0'
+  gem 'web-console'
 end
 
 gem 'ridgepole'
