@@ -9,7 +9,7 @@ describe User do
   let(:project) { FactoryBot.create :user_project }
   let(:group) { FactoryBot.create :group }
 
-  # #623 local test could pass, but travis was faild.
+  # #623 local test could pass, but travis was failed.
   # describe "#groups" do
   #  let(:user_joining_groups){FactoryBot.create_list :group, 3}
   #  before do

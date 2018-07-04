@@ -6,12 +6,12 @@
   - if user_signed_in?
     == render "dashboard"
   - else
-    - if session["auth.faild.error"].present?
+    - if session["auth.failed.error"].present?
       #error_explanation
         h2
           'Login error:
-          == session["auth.faild.error"]
-          - session.delete("auth.faild.error")
+          == session["auth.failed.error"]
+          - session.delete("auth.failed.error")
 
     - unless @is_searching
 

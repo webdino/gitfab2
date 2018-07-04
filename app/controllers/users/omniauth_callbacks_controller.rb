@@ -9,7 +9,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       end
     else
       session['devise.github_data'] = request.env['omniauth.auth']
-      session['auth.faild.error'] = @user.errors.full_messages
+      session['auth.failed.error'] = @user.errors.full_messages
       redirect_to root_path
     end
   end
