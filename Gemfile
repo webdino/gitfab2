@@ -65,10 +65,14 @@ group :development, :test do
   gem 'bullet'
 end
 
+group :development do
+  gem 'meta_request'
+  gem 'web-console', '~> 2.0'
+end
+
 gem 'ridgepole'
 gem 'mysql2', '~> 0.3.21'
 gem 'acts_as_list'
 gem 'delayed_job_active_record'
 gem 'database_rewinder', group: [:test]
 gem 'after_commit_action'
-gem 'web-console', '~> 2.0', group: :development
