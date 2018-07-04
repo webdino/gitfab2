@@ -4,6 +4,6 @@ FactoryBot.define do
   factory :membership do
     user
     group
-    role 'MyString'
+    role 'admin'
   end
 end
