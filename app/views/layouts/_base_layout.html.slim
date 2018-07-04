@@ -3,8 +3,8 @@ html
   head
     title
       == content_for?(:title) ? yield(:title) : "Fabble"
-    == content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all", "data-turbolinks-track" => true)
-    == content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application", "data-turbolinks-track" => true)
+    == content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all")
+    == content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application")
     == content_for?(:ogp) ? yield(:ogp) : nil
     == csrf_meta_tags
   body

@@ -1,7 +1,7 @@
 - content_for :stylesheets do
-  == stylesheet_link_tag "groups", "data-turbolinks-track" => true
+  == stylesheet_link_tag "groups"
 - content_for :javascript do
-  == javascript_include_tag "groups", "data-turbolinks-track" => true
+  == javascript_include_tag "groups"
 - content_for :ogp do
   - if @group.present? && @group.persisted?
     - title = "#{@group.name} on Fabble"

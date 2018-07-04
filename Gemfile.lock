@@ -201,9 +201,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-slick-rails (1.5.9.1)
       railties (>= 3.1)
-    jquery-turbolinks (2.0.2)
-      railties (>= 3.1.0)
-      turbolinks
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     jquery-validation-rails (1.16.0)
@@ -420,8 +417,6 @@ GEM
     tilt (2.0.8)
     tins (1.16.3)
     truncate_html (0.9.3)
-    turbolinks (2.5.3)
-      coffee-rails
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     uglifier (4.1.14)
@@ -472,7 +467,6 @@ DEPENDENCIES
   jquery-colorbox-rails
   jquery-rails
   jquery-slick-rails
-  jquery-turbolinks
   jquery-ui-rails
   jquery-validation-rails
   kaminari
@@ -503,7 +497,6 @@ DEPENDENCIES
   stl!
   stl2gif!
   truncate_html
-  turbolinks (~> 2.5, >= 2.5.3)
   uglifier
   unicorn
   web-console (~> 2.0)

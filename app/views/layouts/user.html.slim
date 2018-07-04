@@ -1,7 +1,7 @@
 - content_for :stylesheets do
-  == stylesheet_link_tag "user", "data-turbolinks-track" => true
+  == stylesheet_link_tag "user"
 - content_for :javascript do
-  == javascript_include_tag "user", "data-turbolinks-track" => true
+  == javascript_include_tag "user"
 - content_for :ogp do
   - if @user.persisted?
     - title = "#{@user.name} on Fabble"

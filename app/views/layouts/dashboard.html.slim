@@ -1,7 +1,7 @@
 - content_for :stylesheet do
-  == stylesheet_link_tag "dashboard", media: "all", "data-turbolinks-track" => true
+  == stylesheet_link_tag "dashboard", media: "all"
 - content_for :javascript do
-  == javascript_include_tag "dashboard", "data-turbolinks-track" => true
+  == javascript_include_tag "dashboard"
 - content_for :ogp do
   - if @owner.present? && @owner.persisted?
     - title = "#{@owner.name} on Fabble"
