@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
-      notify_users
+      notify_users_on_create(@project, @owner)
       redirect_to edit_project_url(id: @project, owner_name: @owner)
     else
       render :new
@@ -70,7 +70,7 @@ class ProjectsController < ApplicationController
 
       @project.updated_at = DateTime.now.in_time_zone
       if @project.update parameters
-        notify_users
+        notify_users_on_update(@project, @owner)
         respond_to do |format|
           format.json { render :update }
           format.html { redirect_to project_path(@project, owner_name: @owner) }
@@ -120,25 +120,6 @@ class ProjectsController < ApplicationController
     render 'relation_tree', format: 'json'
   end
 
-  def notify_users
-    if action_name == 'update'
-      users = @project.notifiable_users current_user
-      url = project_path @project, owner_name: @owner
-      if params[:new_owner_name]
-        return
-      else
-        body = "#{@project.title} was updated by #{current_user.name}."
-      end
-      @project.notify users, current_user, url, body if users.length > 0
-    elsif action_name == 'create' && params[:original_project_id]
-      original_project = Project.find params[:original_project_id]
-      users = @project.notifiable_users current_user, original_project
-      url = project_path @project, owner_name: @owner
-      body = "#{original_project.title} was forked by #{current_user.name}."
-      @project.notify users, current_user, url, body if users.length > 0
-    end
-  end
-
   private
 
   def project_params
@@ -168,5 +149,28 @@ class ProjectsController < ApplicationController
       collaboration = collaborator.collaborations.where('project_id' => @project.id).first
       collaboration.destroy
     end
+  end
+
+  def notify_users_on_create(project, owner)
+    return unless params[:original_project_id]
+
+    original_project = Project.find(params[:original_project_id])
+    users = project.notifiable_users(current_user, original_project)
+    return if users.blank?
+
+    url = project_path(project, owner_name: owner)
+    body = "#{original_project.title} was forked by #{current_user.name}."
+    @project.notify(users, current_user, url, body)
+  end
+
+  def notify_users_on_update(project, owner)
+    return if params[:new_owner_name]
+
+    users = project.notifiable_users current_user
+    return if users.blank?
+
+    url = project_path(project, owner_name: owner)
+    body = "#{project.title} was updated by #{current_user.name}."
+    project.notify(users, current_user, url, body)
   end
 end

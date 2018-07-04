@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   def create
     if @card.save
       @resources << @comment
-      notify_users
+      notify_users(@project, @card)
       render :create, locals: { card_order: @card.comments.length - 1 }
     else
       @message = @comment.errors.messages || { "Error:": "Something's wrong" }
@@ -24,18 +24,6 @@ class CommentsController < ApplicationController
     else
       render 'errors/failed', status: 400
     end
-  end
-
-  def notify_users
-    users = @project.notifiable_users current_user
-    if @card.class.name == 'Card::NoteCard'
-      url = project_note_note_card_path owner_name: @project.owner.slug, project_id: @project.name, id: @card.id
-      body = "#{current_user.name} commented on your memo of #{@project.title}."
-    else
-      url = project_path @project, owner_name: @project.owner.slug
-      body = "#{current_user.name} commented on your recipe of #{@project.title}."
-    end
-    @project.notify users, current_user, url, body if users.length > 0
   end
 
   private
@@ -79,5 +67,19 @@ class CommentsController < ApplicationController
     if params[:comment]
       params.require(:comment).permit Comment.updatable_columns
     end
+  end
+
+  def notify_users(project, card)
+    users = project.notifiable_users(current_user)
+    return if users.blank?
+
+    if card.class.name == 'Card::NoteCard'
+      url = project_note_note_card_path(owner_name: project.owner.slug, project_id: project.name, id: card.id)
+      body = "#{current_user.name} commented on your memo of #{project.title}."
+    else
+      url = project_path(project, owner_name: project.owner.slug)
+      body = "#{current_user.name} commented on your recipe of #{project.title}."
+    end
+    project.notify(users, current_user, url, body)
   end
 end

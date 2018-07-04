@@ -9,18 +9,11 @@ class CollaboratorsController < ApplicationController
 
   def create
     if @collaboration.save
-      notify_users
+      notify_users(@project, @collaborator)
       render :create
     else
       render 'errors/failed', status: 400
     end
-  end
-
-  def notify_users
-    users = @project.notifiable_users current_user
-    url = project_path owner_name: @project.owner.slug, id: @project.name
-    body = "#{@collaborator.name} was added as a collaborator of your project #{@project.title}."
-    @project.notify users, current_user, url, body if users.length > 0
   end
 
   private
@@ -41,5 +34,14 @@ class CollaboratorsController < ApplicationController
 
   def build_collaboration
     @collaboration = @collaborator.collaborations.build project_id: @project.id
+  end
+
+  def notify_users(project, collaborator)
+    users = project.notifiable_users(current_user)
+    return if users.blank?
+
+    url = project_path(owner_name: project.owner.slug, id: project.name)
+    body = "#{collaborator.name} was added as a collaborator of your project #{project.title}."
+    project.notify(users, current_user, url, body)
   end
 end
