@@ -1,13 +1,19 @@
 class CollaboratorsController < ApplicationController
   before_action :load_owner
   before_action :load_project
-  before_action :load_collaborator, only: :create
-  before_action :build_collaboration, only: :create
 
   def index
   end
 
   def create
+    collaborator_id = params[:collaborator_name]
+    @collaborator = ProjectOwner.friendly_first(collaborator_id)
+    unless @collaborator
+      render 'errors/failed', status: 400
+      return
+    end
+
+    @collaboration = @collaborator.collaborations.build(project_id: @project.id)
     if @collaboration.save
       notify_users(@project, @collaborator)
       render :create
@@ -25,15 +31,6 @@ class CollaboratorsController < ApplicationController
 
   def load_project
     @project = @owner.projects.friendly.find params[:project_id]
-  end
-
-  def load_collaborator
-    collaborator_id = params[:collaborator_name]
-    @collaborator = ProjectOwner.friendly_first(collaborator_id)
-  end
-
-  def build_collaboration
-    @collaboration = @collaborator.collaborations.build project_id: @project.id
   end
 
   def notify_users(project, collaborator)
