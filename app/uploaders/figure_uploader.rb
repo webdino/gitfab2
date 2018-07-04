@@ -24,7 +24,7 @@ class FigureUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    'fallback/blank.png'
+    '/images/fallback/blank.png'
   end
 
   def play_btn_path

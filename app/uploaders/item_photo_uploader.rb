@@ -16,7 +16,7 @@ class ItemPhotoUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    'fallback/noimage_240x180.png'
+    '/images/fallback/noimage_240x180.png'
   end
 
   def extension_white_list
