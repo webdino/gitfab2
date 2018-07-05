@@ -5,7 +5,6 @@
  *= require_tree ./shared
  *= require_tree ./layouts
  *= require_tree ./projects
- *= require jquery.ui.selectable
  *= require jquery.colorbox-example3
  *= require ./card
  *= require select2

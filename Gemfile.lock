@@ -189,8 +189,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-slick-rails (1.5.9.1)
       railties (>= 3.1)
-    jquery-ui-rails (4.2.1)
-      railties (>= 3.2.16)
     jquery-validation-rails (1.16.0)
     json (2.1.0)
     jwt (1.5.6)
@@ -450,7 +448,6 @@ DEPENDENCIES
   jquery-colorbox-rails
   jquery-rails
   jquery-slick-rails
-  jquery-ui-rails
   jquery-validation-rails
   kaminari
   meta_request

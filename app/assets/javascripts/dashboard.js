@@ -1,5 +1,4 @@
 //= require jquery
-//= require jquery.ui.sortable
 //= require jquery_ujs
 //= require_tree ./helpers
 //= require tabby/buoy
