@@ -47,12 +47,6 @@ gem 'sass-rails'
 gem 'select2-rails'
 gem 'uglifier'
 
-# Deploy
-gem 'capistrano', require: false
-gem 'capistrano-rvm', require: false
-gem 'capistrano-bundler', require: false
-gem 'capistrano-rails', require: false
-
 group :development, :test do
   gem 'better_errors'
   gem 'bullet'
@@ -71,6 +65,12 @@ end
 group :development do
   gem 'meta_request'
   gem 'web-console'
+
+  # Deploy
+  gem 'capistrano', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
 end
 
 group :test do
