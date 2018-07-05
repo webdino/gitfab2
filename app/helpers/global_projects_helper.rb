@@ -23,16 +23,6 @@ module GlobalProjectsHelper
     groups
   end
 
-  def all_tags(list)
-    tags = []
-    if list.present?
-      list.each do |tag_name|
-        tags.push tag_name
-      end
-    end
-    tags
-  end
-
   def selected_tags(list, length)
     tags = []
     if list.present? && list.length >= length
