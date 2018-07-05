@@ -2,65 +2,75 @@ source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '4.2.10'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
-gem 'jquery-rails'
+
+gem 'acts_as_list'
+gem 'after_commit_action'
+gem 'cancancan'
+gem 'carrierwave'
+gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
+gem 'delayed_job_active_record'
+gem 'devise'
+gem 'exception_notification'
+gem 'friendly_id'
 gem 'jbuilder'
-gem 'sanitize'
+gem 'kaminari'
 gem 'mini_magick'
+gem 'nested_form'
+gem 'nokogiri'
+gem 'omniauth-github'
+gem 'rails_autolink'
+gem 'ransack'
+gem 'remotipart'
+gem 'sanitize'
+gem 'slack-notifier'
+gem 'slim-rails'
+gem 'stl', github: 'oshimaryo/stl-ruby'
+gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
+gem 'truncate_html'
 gem 'unicorn'
+
+# DB
+gem 'mysql2', '~> 0.3.21'
+gem 'ridgepole'
+
+# Frontend
+gem 'autoprefixer-rails'
+gem 'coffee-rails'
+gem 'compass-rails'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-colorbox-rails'
+gem 'jquery-slick-rails'
+gem 'jquery-validation-rails'
+gem 'mini_racer'
+gem 'sass-rails'
+gem 'select2-rails'
+gem 'uglifier'
+
+# Deploy
 gem 'capistrano', '~> 3.1.0'
 gem 'capistrano-rvm'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
-gem 'capistrano-clockwork', github: 'oshimaryo/capistrano-clockwork'
-gem 'devise'
-gem 'mini_racer'
-gem 'carrierwave'
-gem 'slim-rails'
-gem 'ransack'
-gem 'remotipart'
-gem 'cancancan'
-gem 'nested_form'
-gem 'jquery-ui-rails'
-gem 'kaminari'
-gem 'nokogiri'
-gem 'omniauth-github'
-gem 'select2-rails'
-gem 'autoprefixer-rails'
-gem 'jquery-slick-rails'
-gem 'jquery-colorbox-rails'
-gem 'jquery-validation-rails'
-gem 'compass-rails'
-gem 'exception_notification'
-gem 'slack-notifier'
-gem 'rails_autolink'
-gem 'stl', github: 'oshimaryo/stl-ruby'
-gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
 
-# gem 'capistrano3-delayed-job'
-gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
-
-gem 'friendly_id'
-
-gem 'truncate_html'
+# clockwork
 gem 'clockwork'
+gem 'capistrano-clockwork', github: 'oshimaryo/capistrano-clockwork'
 gem 'daemons', '>= 1.2.0'
 
 group :development, :test do
-  gem 'spring'
-  gem 'spring-commands-rspec'
+  gem 'better_errors'
+  gem 'bullet'
+  gem 'coveralls', require: false
+  gem 'delayed_job_web'
+  gem 'factory_bot_rails'
+  gem 'rack-mini-profiler'
   gem 'rspec-rails'
   gem 'rubocop', require: false
-  gem 'factory_bot_rails'
-  gem 'better_errors'
-  gem 'rack-mini-profiler'
   gem 'slim_lint'
-  gem 'coveralls', require: false
   gem 'simplecov', require: false
-  gem 'delayed_job_web'
-  gem 'bullet'
+  gem 'spring'
+  gem 'spring-commands-rspec'
 end
 
 group :development do
@@ -68,9 +78,7 @@ group :development do
   gem 'web-console'
 end
 
-gem 'ridgepole'
-gem 'mysql2', '~> 0.3.21'
-gem 'acts_as_list'
-gem 'delayed_job_active_record'
-gem 'database_rewinder', group: [:test]
-gem 'after_commit_action'
+group :test do
+  gem 'database_rewinder'
+end
+
