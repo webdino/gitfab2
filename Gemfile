@@ -48,10 +48,10 @@ gem 'select2-rails'
 gem 'uglifier'
 
 # Deploy
-gem 'capistrano', '~> 3.1.0'
-gem 'capistrano-rvm'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
+gem 'capistrano', require: false
+gem 'capistrano-rvm', require: false
+gem 'capistrano-bundler', require: false
+gem 'capistrano-rails', require: false
 
 group :development, :test do
   gem 'better_errors'
