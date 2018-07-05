@@ -53,11 +53,6 @@ gem 'capistrano-rvm'
 gem 'capistrano-bundler'
 gem 'capistrano-rails'
 
-# clockwork
-gem 'clockwork'
-gem 'capistrano-clockwork', github: 'oshimaryo/capistrano-clockwork'
-gem 'daemons', '>= 1.2.0'
-
 group :development, :test do
   gem 'better_errors'
   gem 'bullet'
