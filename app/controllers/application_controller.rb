@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include ErrorHandling
   protect_from_forgery with: :exception
 
   unless Rails.env.development?
@@ -8,7 +7,9 @@ class ApplicationController < ActionController::Base
     rescue_from ActionController::RoutingError, with: :render_404
   end
 
-  handle_as_unauthorized CanCan::AccessDenied
+  rescue_from CanCan::AccessDenied do
+    render file: "public/401.html", status: :unauthorized
+  end
 
   before_action :verify_name
   after_action :store_location
