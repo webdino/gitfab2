@@ -37,12 +37,8 @@ gem 'autoprefixer-rails'
 gem 'coffee-rails'
 gem 'compass-rails'
 gem 'jquery-rails'
-gem 'jquery-colorbox-rails'
-gem 'jquery-slick-rails'
-gem 'jquery-validation-rails'
 gem 'mini_racer'
 gem 'sass-rails'
-gem 'select2-rails'
 gem 'uglifier'
 
 group :development, :test do

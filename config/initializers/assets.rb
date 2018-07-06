@@ -1,4 +1,3 @@
-Rails.application.config.assets.paths += %w("/vendor/assets/javascripts")
 Rails.application.config.assets.precompile += %w(
     application.js
     groups.js    groups.css
