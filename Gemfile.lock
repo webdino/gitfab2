@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/lardawge/carrierwave_backgrounder.git
-  revision: bff7bc3954b9184157812f948b9a6a4f64ff36d3
-  ref: bff7bc3954b9184157812f948b9a6a4f64ff36d3
-  specs:
-    carrierwave_backgrounder (0.4.2)
-      carrierwave (~> 0.5)
-
-GIT
   remote: https://github.com/oshimaryo/stl-ruby.git
   revision: 907c63e99227e3f2748e2ff38277ab56b7067fc6
   specs:
@@ -400,7 +392,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   carrierwave
-  carrierwave_backgrounder!
   coffee-rails
   coveralls
   database_rewinder
