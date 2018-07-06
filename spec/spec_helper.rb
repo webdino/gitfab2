@@ -27,7 +27,6 @@ RSpec.configure do |config|
   config.include ControllerMacros::InstanceMethods, :type => :controller
 
   config.before(:suite) do
-    FactoryBot.lint
     DatabaseRewinder.clean_all
   end
 
