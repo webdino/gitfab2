@@ -1,13 +1,9 @@
-$icons-sprite-dimensions: true;
 @import "mixins/clearfix";
 @import "mixins/clickable";
 @import "mixins/rows";
 @import "mixins/variables";
 @import "mixins/slick";
 @import "_project_variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 #basic-informations {
   @include cf;
@@ -80,7 +76,7 @@ $icons-sprite-dimensions: true;
                 color: $common-text-color;
               }
               .delete-tag {
-                @include icons-sprite(delete_tag);
+                background: image-url("icons/delete_tag") no-repeat;
                 display: inline-block;
                 position: relative;
                 top: -5px;
@@ -182,7 +178,7 @@ $icons-sprite-dimensions: true;
         }
       }
       #add-collaborator-btn {
-        @include icons-sprite(add-member);
+        background: image-url("icons/add-member") no-repeat;
         display: inline-block;
         position: relative;
         top: 4px;
@@ -293,7 +289,7 @@ $icons-sprite-dimensions: true;
 $tool_size: 75px;
 
 #project-edit-btn {
-  @include icons-sprite(edit-project);
+  background: image-url("icons/edit-project") no-repeat;
   position: absolute;
   top: 110px;
   right: 0;
@@ -328,31 +324,31 @@ $tool_size: 75px;
     border-bottom: 1px solid $common-basic-color;
   }
   #slideshow-btn {
-    @include icons-sprite(slideshow);
+    background: image-url("icons/slideshow") no-repeat;
   }
   #print-btn {
-    @include icons-sprite(print);
+    background: image-url("icons/print") no-repeat;
     margin-top: 10px;
     height: $tool_size + 10px;
   }
   #fork-btn {
-    @include icons-sprite(fork);
+    background: image-url("icons/fork") no-repeat;
     height: $tool_size + 20px;
   }
   #share-button {
-    @include icons-sprite(share);
+    background: image-url("icons/share") no-repeat;
     margin: 5px 0;
     padding: 5px 0;
     height: $tool_size;
   }
   #card-order-tools {
     .order-change-btn {
-      @include icons-sprite(change_order);
+      background: image-url("icons/change_order") no-repeat;
       display: block;
     }
     .order-commit-btn {
       display: none;
-      @include icons-sprite(commit_order);
+      background: image-url("icons/commit_order") no-repeat;
     }
 
     &.order-changing {
@@ -421,12 +417,16 @@ $tool_size: 75px;
   background: $common-background-color;
   border-radius: 5px;
   .twitter-btn {
-    @include icons-sprite(twitter_100);
+    background: image-url("icons/twitter_100") no-repeat;
+    width: 100px;
+    height: 100px;
     display: inline-block;
     padding-right: 10px;
   }
   .fb-btn {
-    @include icons-sprite(fb_100);
+    background: image-url("icons/fb_100") no-repeat;
+    width: 100px;
+    height: 100px;
     display: inline-block;
   }
 }

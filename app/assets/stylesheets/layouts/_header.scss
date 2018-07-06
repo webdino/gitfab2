@@ -1,9 +1,5 @@
-$icons-sprite-dimensions: true;
 @import "mixins/clearfix";
 @import "mixins/variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 #layouts-header{
   margin-bottom: 35px;
@@ -25,7 +21,9 @@ $icons-sprite-dimensions: true;
     margin-left: 10px;
     padding-top: 7px;
     .logo {
-      @include icons-sprite(logo);
+      background: image-url("icons/logo") no-repeat;
+      width: 79px;
+      height: 23px;
       display: block;
     }
   }
@@ -94,16 +92,24 @@ $icons-sprite-dimensions: true;
         height: 32px;
       }
       .create-project {
-        @include icons-sprite(create_project);
+        background: image-url("icons/create_project") no-repeat;
+        width: 32px;
+        height: 32px;
       }
       .show-notifications {
-        @include icons-sprite(notifications);
+        background: image-url("icons/notifications") no-repeat;
+        width: 32px;
+        height: 32px;
       }
       .settings {
-        @include icons-sprite(settings);
+        background: image-url("icons/settings") no-repeat;
+        width: 32px;
+        height: 32px;
       }
       .logout {
-        @include icons-sprite(logout);
+        background: image-url("icons/logout") no-repeat;
+        width: 32px;
+        height: 32px;
       }
       .notifications-badge {
         position: absolute;
@@ -168,7 +174,9 @@ $icons-sprite-dimensions: true;
         font-size: 14px;
         color: $common-btn-text-color;
         &:before {
-          @include icons-sprite(mark_as_read);
+          background: image-url("icons/mark_as_read") no-repeat;
+          width: 32px;
+          height: 32px;
           display: inline-block;
           vertical-align: top;
           margin-top: -12px;

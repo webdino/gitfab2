@@ -1,8 +1,4 @@
-$icons-sprite-dimensions: true;
 @import "mixins/variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 #link-to-relation-tree {
   margin: -35px 0 35px;
@@ -13,7 +9,9 @@ $icons-sprite-dimensions: true;
     width: 960px;
     height: 44px;
     .forked-icon {
-      @include icons-sprite(forked);
+      background: image-url("icons/forked") no-repeat;
+      width: 30px;
+      height: 30px;
       display: inline-block;
       margin-top: 8px;
     }

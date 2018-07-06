@@ -1,9 +1,5 @@
-$icons-sprite-dimensions: true;
 @import "mixins/clearfix";
 @import "mixins/variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 #index {
   $white_border: 1px solid white;
@@ -91,11 +87,15 @@ $icons-sprite-dimensions: true;
         text-align: right;
         .sign-up-btn {
           display: inline-block;
-          @include icons-sprite(signup);
+          background: image-url("icons/signup") no-repeat;
+          height: 181px;
+          width: 181px;
         }
         .sign-up-btn-jp {
           display: inline-block;
-          @include icons-sprite(signup_jp);
+          background: image-url("icons/signup_jp") no-repeat;
+          height: 181px;
+          width: 181px;
         }
       }
     }
@@ -224,13 +224,19 @@ $icons-sprite-dimensions: true;
             background-color: $common-background-color;
           }
           .create_project {
-            @include icons-sprite(create_project_m);
+            background: image-url("icons/create_project_m") no-repeat white;
+            height: 67px;
+            width: 67px;
           }
           .create_group {
-            @include icons-sprite(create_group_m);
+            background: image-url("icons/create_group_m") no-repeat white;
+            height: 67px;
+            width: 67px;
           }
           .edit_profile {
-            @include icons-sprite(edit_profile_m);
+            background: image-url("icons/edit_profile_m") no-repeat white;
+            height: 65px;
+            width: 65px;
           }
         }
         .title {

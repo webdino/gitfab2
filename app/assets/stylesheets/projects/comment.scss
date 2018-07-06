@@ -1,10 +1,6 @@
-$icons-sprite-dimensions: true;
 @import "mixins/clearfix";
 @import "mixins/clickable";
 @import "mixins/variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 .show-comments-btn {
   @include clickable;
@@ -12,7 +8,9 @@ $icons-sprite-dimensions: true;
   margin: 0 5px;
   min-width: 40px;
   .comment-icon {
-    @include icons-sprite(comment-icon);
+    background: image-url("icons/comment-icon") no-repeat;
+    width: 25px;
+    height: 20px;
     display: inline-block;
   }
   .count {
@@ -35,7 +33,9 @@ $icons-sprite-dimensions: true;
   background: $common-light-blue;
   .close-comments-btn {
     display: none;
-    @include icons-sprite(close-comments);
+    background: image-url("icons/close-comments") no-repeat;
+    width: 28px;
+    height: 29px;
   }
   &:not(.in-notecard){
     border-radius: 10px;

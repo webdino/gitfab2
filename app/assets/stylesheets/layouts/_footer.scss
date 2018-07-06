@@ -1,8 +1,4 @@
-$icons-sprite-dimensions: true;
 @import "mixins/variables";
-@import "compass/utilities/sprites";
-@import "icons/*.png";
-@include all-icons-sprites;
 
 #layouts-footer{
   width: 100%;
@@ -49,17 +45,25 @@ $icons-sprite-dimensions: true;
       padding: 0;
     }
     .sfc-logo {
-      @include icons-sprite(sfc_logo);
+      background: image-url("icons/sfc_logo") no-repeat;
+      width: 60px;
+      height: 60px;
     }
     .webdino-japan-logo {
-      @include icons-sprite(webdino_japan_logo);
+      background: image-url("icons/webdino_japan_logo") no-repeat;
+      width: 150px;
+      height: 37px;
     }
     .adobe-standard-logo {
-      @include icons-sprite(adobe_standard_logo);
+      background: image-url("icons/adobe_standard_logo") no-repeat;
+      width: 72px;
+      height: 99px;
       margin-bottom: 0;
     }
     .trotec-logo {
-      @include icons-sprite(trotec_logo);
+      background: image-url("icons/trotec_logo") no-repeat;
+      width: 150px;
+      height: 75px;
     }
     .supporter {
       line-height: 2em;

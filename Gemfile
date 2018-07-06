@@ -35,7 +35,6 @@ gem 'ridgepole'
 # Frontend
 gem 'autoprefixer-rails'
 gem 'coffee-rails'
-gem 'compass-rails'
 gem 'jquery-rails'
 gem 'mini_racer'
 gem 'sass-rails'
