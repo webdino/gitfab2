@@ -28,7 +28,7 @@ gem 'truncate_html'
 gem 'unicorn'
 
 # DB
-gem 'mysql2', '~> 0.3.21'
+gem 'mysql2', '~> 0.4.0'
 gem 'ridgepole'
 
 # Frontend

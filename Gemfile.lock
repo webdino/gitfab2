@@ -196,7 +196,7 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mustache (1.0.5)
-    mysql2 (0.3.21)
+    mysql2 (0.4.10)
     nested_form (0.3.2)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -406,7 +406,7 @@ DEPENDENCIES
   meta_request
   mini_magick
   mini_racer
-  mysql2 (~> 0.3.21)
+  mysql2 (~> 0.4.0)
   nested_form
   nokogiri
   omniauth-github
