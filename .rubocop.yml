@@ -27,6 +27,9 @@ ClassAndModuleChildren:
 GuardClause:
   MinBodyLength: 4
 
+Layout/ExtraSpacing:
+  Enabled: false
+
 Lint/AmbiguousOperator:
   Exclude:
     - 'app/controllers/concerns/error_handling.rb'
@@ -63,4 +66,10 @@ Style/SignalException:
     - 'app/controllers/application_controller.rb'
 
 Style/RaiseArgs:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/WordArray:
   Enabled: false
