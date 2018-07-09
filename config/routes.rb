@@ -17,7 +17,6 @@ Gitfab2::Application.routes.draw do
 
   if Rails.env.development? || Rails.env.test?
     match 'su' => 'development#su', via: :post
-    match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
