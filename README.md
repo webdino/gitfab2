@@ -40,8 +40,7 @@ Dockerコンテナを起動してから
 
 ```bash
 $ bundle exec rake db:create
-$ bundle exec ridgepole -c config/database.yml -E development --apply -f db/schemas/Schemafile
-$ bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
+$ bundle exec rake db:migrate
 ```
 
 ### Run Server

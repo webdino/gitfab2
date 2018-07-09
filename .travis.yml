@@ -6,6 +6,8 @@ rvm:
   - 2.4.4
 services:
   - mysql
+env:
+  - RAILS_ENV=test
 before_script:
   - |
     echo -e "[mysqld]
@@ -14,8 +16,7 @@ before_script:
     innodb_file_format=Barracuda" | sudo tee /etc/mysql/conf.d/travis.cnf
   - sudo /etc/init.d/mysql restart
   - cp config/database.ymls/travis.yml config/database.yml
-  - RAILS_ENV=test bundle exec rake db:create
-  - bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
+  - bundle exec rake db:create && bundle exec rake db:migrate
 before_install:
   - gem update bundler
 notifications:

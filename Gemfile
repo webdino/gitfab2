@@ -14,6 +14,7 @@ gem 'friendly_id'
 gem 'jbuilder'
 gem 'kaminari'
 gem 'mini_magick'
+gem 'mysql2', '~> 0.4.0'
 gem 'nested_form'
 gem 'nokogiri'
 gem 'omniauth-github'
@@ -26,10 +27,6 @@ gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
 gem 'truncate_html'
 gem 'unicorn'
-
-# DB
-gem 'mysql2', '~> 0.4.0'
-gem 'ridgepole'
 
 # Frontend
 gem 'autoprefixer-rails'
