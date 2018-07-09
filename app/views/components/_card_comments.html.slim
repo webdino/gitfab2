@@ -7,7 +7,7 @@
       == render "comments/comment", comment: comment, resources: resources << comment, i: i
       - resources.delete(comment)
 
-  - if signed_in? && card.persisted?
+  - if current_user && card.persisted?
     - resources << Comment.new
     == form_for resources, html: {class: "comment-form"}, remote: true do |f|
       .left

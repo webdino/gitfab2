@@ -19,7 +19,9 @@ Gitfab2::Application.routes.draw do
     match 'su' => 'development#su', via: :post
   end
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  get '/users/auth/:provider/callback', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+
   match 'home' => 'owner_projects#index', via: :get
   match 'search' => 'global_projects#index', via: :get
 

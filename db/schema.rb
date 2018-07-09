@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709060906) do
+ActiveRecord::Schema.define(version: 20180709062141) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -235,25 +235,18 @@ ActiveRecord::Schema.define(version: 20180709060906) do
   add_index "tags", ["user_id"], name: "index_tags_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",               limit: 255, default: "", null: false
-    t.string   "encrypted_password",  limit: 255
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",       limit: 4,   default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",  limit: 255
-    t.string   "last_sign_in_ip",     limit: 255
-    t.string   "provider",            limit: 255
-    t.string   "uid",                 limit: 255
-    t.string   "slug",                limit: 255
-    t.string   "name",                limit: 255
-    t.string   "fullname",            limit: 255
-    t.string   "avatar",              limit: 255
-    t.string   "url",                 limit: 255
-    t.string   "location",            limit: 255
-    t.string   "authority",           limit: 255
-    t.integer  "projects_count",      limit: 4,   default: 0,  null: false
-    t.string   "oldid",               limit: 255
+    t.string   "email",          limit: 255, default: "", null: false
+    t.string   "provider",       limit: 255
+    t.string   "uid",            limit: 255
+    t.string   "slug",           limit: 255
+    t.string   "name",           limit: 255
+    t.string   "fullname",       limit: 255
+    t.string   "avatar",         limit: 255
+    t.string   "url",            limit: 255
+    t.string   "location",       limit: 255
+    t.string   "authority",      limit: 255
+    t.integer  "projects_count", limit: 4,   default: 0,  null: false
+    t.string   "oldid",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

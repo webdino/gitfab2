@@ -14,19 +14,19 @@ class ApplicationController < ActionController::Base
   before_action :verify_name
   after_action :store_location
 
+  def current_user
+    @current_user ||= begin
+      return unless session[:su]
+      User.readonly.find_by(id: session[:su])
+    end
+  end
+  helper_method :current_user
+
   private
 
   def verify_name
-    if user_signed_in? && current_user.name.blank?
+    if current_user && current_user.name.blank?
       redirect_to [:edit, current_user]
-    end
-  end
-
-  def current_user
-    if session[:su]
-      User.find session[:su]
-    else
-      super
     end
   end
 

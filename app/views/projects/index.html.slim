@@ -41,7 +41,7 @@
       .relation-wrapper
         - if @owner.is_a? Group
           h2.title Members
-          - if signed_in? && current_user.is_admin_of?(@owner)
+          - if current_user && current_user.is_admin_of?(@owner)
             == link_to image_tag("create-group.png", alt: "Edit group"), [:edit, @owner], class: "create-group-btn"
           ul.members
             - @owner.members.each do |member|
@@ -53,7 +53,7 @@
 
         - elsif @owner.groups.any?
           h2.title GROUPS
-          - if signed_in? && current_user == @owner
+          - if current_user && current_user == @owner
             == link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
           ul.groups
             - @owner.groups.each do |group|

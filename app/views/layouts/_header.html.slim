@@ -10,10 +10,10 @@ section#layouts-header
 
           / TODO: add clear btn
 
-      - unless user_signed_in?
+      - unless current_user
         #sign-in
-          == link_to "Sign in with Github", user_github_omniauth_authorize_path
-      - if user_signed_in? && current_user.name
+          == link_to "Sign in with Github", "/auth/github"
+      - if current_user && current_user.name
         #tools
           .user
             .avatar
@@ -30,6 +30,6 @@ section#layouts-header
                   .inner
                     == unread_notifications_count
             == link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
-            == link_to "", destroy_user_session_path, method: :delete, title: "Logout", class: "icon logout"
+            == link_to "", "/logout", method: :delete, title: "Logout", class: "icon logout"
 
         #notifications-index.hidden

@@ -30,7 +30,7 @@ section#basic-informations
           ul.tags
             - @project.tags.each do |tag|
               == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
-          - if signed_in?
+          - if current_user
             == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
               == f.text_field :name, class: "textfield"
               == f.submit "Add", class: "btn"
@@ -110,7 +110,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
     #card-order-tools
       == link_to "", "#", class: "order-change-btn"
       == link_to "", "#", class: "order-commit-btn"
-  - if signed_in?
+  - if current_user
     == link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
   - unless @project.is_private
     == link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
@@ -119,7 +119,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
 
   .hidden
     #fork-destinations
-      - if signed_in?
+      - if current_user
         == render "projects/fork_destination", owner: current_user, project: @project
         - current_user.groups.each do |group|
           - if can? :manage, group

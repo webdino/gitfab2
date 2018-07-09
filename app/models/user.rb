@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
-  devise :omniauthable, omniauth_providers: [:github]
-  devise :database_authenticatable, :rememberable, :trackable, :validatable
   mount_uploader :avatar, AvatarUploader
 
   has_many :memberships, dependent: :destroy
@@ -49,15 +47,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      data = session['devise.github_data']
-      if data && data['extra']['raw_info'] && user.email.blank?
-        user.email = data['email']
-      end
-    end
-  end
-
   def join_to(group)
     memberships.find_or_create_by group_id: group.id
   end
@@ -82,11 +71,10 @@ class User < ActiveRecord::Base
 
   class << self
     def find_for_github_oauth(auth)
-      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
         user.provider = auth.provider
         user.uid = auth.uid
         user.email = auth.info.email
-        user.password = Devise.friendly_token[0, 20]
         user.name = auth.info.nickname
         user.fullname = auth.info.name
         user.remote_avatar_url = auth.info.image
