@@ -49,6 +49,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'annotate'
   gem 'meta_request'
   gem 'web-console'
 
