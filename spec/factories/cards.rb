@@ -30,46 +30,12 @@ FactoryBot.define do
     type Card::RecipeCard.name
     sequence(:title) { |n| "RecipeCard #{n}" }
     recipe
-
-    after(:create) do |recipe_card|
-      FactoryBot.create(:annotation, annotatable: recipe_card)
-      FactoryBot.create(:annotation, annotatable: recipe_card)
-      FactoryBot.create(:annotation, annotatable: recipe_card)
-      FactoryBot.create(:annotation, annotatable: recipe_card)
-      FactoryBot.create(:annotation, annotatable: recipe_card)
-
-      # 順番変更のテストのため
-      # 順番がID通りにならないようにする
-      recipe_card.annotations.to_a.shuffle
-        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-      recipe_card.annotations.to_a.shuffle
-        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-      recipe_card.annotations.reload
-    end
   end
 
   factory :state, class: Card::State, parent: :card do
     type Card::State.name
     sequence(:title) { |n| "State #{n}" }
     recipe
-
-    after(:create) do |state|
-      FactoryBot.create(:annotation, annotatable: state)
-      FactoryBot.create(:annotation, annotatable: state)
-      FactoryBot.create(:annotation, annotatable: state)
-      FactoryBot.create(:annotation, annotatable: state)
-      FactoryBot.create(:annotation, annotatable: state)
-
-      # 順番変更のテストのため
-      # 順番がID通りにならないようにする
-      state.annotations.to_a.shuffle
-        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-      state.annotations.to_a.shuffle
-        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-      state.annotations.reload
-    end
   end
 
   factory :usage, class: Card::Usage, parent: :card do

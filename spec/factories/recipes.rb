@@ -3,29 +3,5 @@
 FactoryBot.define do
   factory :recipe do
     association :project, factory: :user_project
-
-    after(:create) do |recipe|
-      FactoryBot.create(:state, recipe: recipe)
-      FactoryBot.create(:state, recipe: recipe)
-      FactoryBot.create(:state, recipe: recipe)
-      FactoryBot.create(:state, recipe: recipe)
-      FactoryBot.create(:state, recipe: recipe)
-
-      FactoryBot.create(:recipe_card, recipe: recipe)
-      FactoryBot.create(:recipe_card, recipe: recipe)
-      FactoryBot.create(:recipe_card, recipe: recipe)
-      FactoryBot.create(:recipe_card, recipe: recipe)
-      FactoryBot.create(:recipe_card, recipe: recipe)
-
-      # 順番変更のテストのため
-      # 順番がID通りにならないようにする
-      recipe.states.to_a.shuffle
-            .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-      recipe.recipe_cards.to_a.shuffle
-            .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-      recipe.states.reload
-      recipe.recipe_cards.reload
-    end
   end
 end

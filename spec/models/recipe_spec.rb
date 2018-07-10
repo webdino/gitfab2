@@ -15,16 +15,26 @@ describe Recipe do
     end
 
     describe 'statesを複製する' do
-      let(:recipe) { FactoryBot.create(:recipe) }
-      subject(:dupped_recipe) do
-        recipe.dup_document.tap(&:save!)
+      subject(:dupped_recipe) { recipe.dup_document.tap(&:save!) }
+
+      let(:recipe) do
+        FactoryBot.create(:recipe) do |recipe|
+          FactoryBot.create_list(:state, state_count, recipe: recipe)
+        end
       end
+      let(:state_count) { 5 }
+
       it '数を維持すること' do
-        expect(dupped_recipe.states.size).to eq(recipe.states.size)
+        expect(dupped_recipe.states.count).to eq(state_count)
       end
       it '順番・内容を維持すること' do
-        expect(Card::State.where(id: dupped_recipe.states.pluck(:id)).order(:position).map(&:title))
-          .to eq(Card::State.where(id: recipe.states.pluck(:id)).order(:position).map(&:title))
+        recipe.states.to_a.shuffle
+          .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+        recipe.states.reload
+
+        actual   = Card::State.where(id: dupped_recipe.states.pluck(:id)).order(:position).map(&:title)
+        expected = Card::State.where(id: recipe       .states.pluck(:id)).order(:position).map(&:title)
+        expect(actual).to eq(expected)
       end
       it '複製であること' do
         expect(dupped_recipe.states.map(&:id)).to_not eq(recipe.states.map(&:id))
@@ -32,13 +42,18 @@ describe Recipe do
     end
 
     describe 'recipe_cardsを複製しない' do
-      let(:recipe) { FactoryBot.create(:recipe) }
-      subject(:dupped_recipe) do
-        recipe.dup_document.tap(&:save!)
+      subject(:dupped_recipe) { recipe.dup_document.tap(&:save!) }
+
+      let(:recipe) do
+        FactoryBot.create(:recipe) do |recipe|
+          FactoryBot.create_list(:recipe_card, recipe_card_count, recipe: recipe)
+        end
       end
+      let(:recipe_card_count) { 3 }
+
       it '複製先では空であること' do
-        expect(recipe.recipe_cards.size).to_not eq(0)
-        expect(dupped_recipe.recipe_cards.size).to eq(0)
+        expect(recipe.recipe_cards.count).to eq(recipe_card_count)
+        expect(dupped_recipe.recipe_cards.count).to eq(0)
       end
     end
   end

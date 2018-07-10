@@ -19,23 +19,6 @@ FactoryBot.define do
     trait :soft_destroyed do
       is_deleted true
     end
-
-    after(:create) do |project|
-      FactoryBot.create(:usage, project: project)
-      FactoryBot.create(:usage, project: project)
-      FactoryBot.create(:usage, project: project)
-      FactoryBot.create(:usage, project: project)
-      FactoryBot.create(:usage, project: project)
-
-      # 順番変更のテストのため
-      # 順番がID通りにならないようにする
-      project.usages.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-      project.usages.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-      project.usages.reload
-    end
   end
 
   factory :user_project, parent: :project do

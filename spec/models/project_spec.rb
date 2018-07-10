@@ -46,10 +46,11 @@ describe Project do
     end
 
     describe 'usagesを複製しない' do
-      let(:recipe) { FactoryBot.create(:recipe) }
+      before { FactoryBot.create_list(:usage, usage_count, project: project) }
+      let(:usage_count) { 3 }
       it '複製先では空であること' do
-        expect(project.usages.size).to_not eq(0)
-        expect(derivative_project.usages.size).to eq(0)
+        expect(project.usages.count).to eq(usage_count)
+        expect(derivative_project.usages.count).to eq(0)
       end
     end
   end

@@ -23,8 +23,9 @@ describe Note do
     end
 
     it 'note_cardsを複製すること' do
+      FactoryBot.create_list(:note_card, 3, note: note)
       note_dupped = note.dup_document
-      expect(note_dupped.note_cards.size).to eq(note.note_cards.size)
+      expect(note_dupped.note_cards.size).to eq(3)
       expect(note_dupped.note_cards[0].id).to_not eq(note.note_cards[0].id)
     end
   end
