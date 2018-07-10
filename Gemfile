@@ -65,5 +65,6 @@ end
 
 group :test do
   gem 'database_rewinder'
+  gem 'rails-controller-testing'
 end
 
