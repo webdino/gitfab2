@@ -38,6 +38,11 @@ class Card < ActiveRecord::Base
   accepts_nested_attributes_for :attachments
 
   validates :type, presence: true
+  validate do
+    if title.blank? && description.blank?
+      errors.add(:base, "cannot make empty card.")
+    end
+  end
 
   def dup_document
     dup_klass = type.present? ? type.constantize : Card
