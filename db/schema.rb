@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711022016) do
+ActiveRecord::Schema.define(version: 20180711025217) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -136,17 +136,16 @@ ActiveRecord::Schema.define(version: 20180711022016) do
   add_index "groups", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   create_table "likes", force: :cascade do |t|
-    t.integer  "liker_id",     limit: 4,   null: false
-    t.string   "likable_type", limit: 255, null: false
-    t.integer  "likable_id",   limit: 4,   null: false
-    t.string   "oldid",        limit: 255
+    t.integer  "user_id",    limit: 4,   null: false
+    t.integer  "project_id", limit: 4,   null: false
+    t.string   "oldid",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "likes", ["likable_type", "likable_id", "liker_id"], name: "index_likes_unique", unique: true, using: :btree
-  add_index "likes", ["likable_type", "likable_id"], name: "index_likes_likable", using: :btree
-  add_index "likes", ["liker_id"], name: "index_likes_liker_id", using: :btree
+  add_index "likes", ["project_id", "user_id"], name: "index_likes_unique", unique: true, using: :btree
+  add_index "likes", ["project_id"], name: "index_likes_likable", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_liker_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer  "group_id",   limit: 4
@@ -259,7 +258,7 @@ ActiveRecord::Schema.define(version: 20180711022016) do
   add_foreign_key "comments", "users", name: "fk_comments_user_id"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
   add_foreign_key "featured_items", "features", name: "fk_featured_items_feature_id"
-  add_foreign_key "likes", "users", column: "liker_id", name: "fk_likes_liker_id"
+  add_foreign_key "likes", "users", name: "fk_likes_liker_id"
   add_foreign_key "notes", "projects", name: "fk_notes_project_id"
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"

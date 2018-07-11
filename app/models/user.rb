@@ -35,6 +35,7 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
+  has_many :likes, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id

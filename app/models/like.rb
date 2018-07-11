@@ -2,35 +2,34 @@
 #
 # Table name: likes
 #
-#  id           :integer          not null, primary key
-#  likable_type :string(255)      not null
-#  oldid        :string(255)
-#  created_at   :datetime
-#  updated_at   :datetime
-#  likable_id   :integer          not null
-#  liker_id     :integer          not null
+#  id         :integer          not null, primary key
+#  oldid      :string(255)
+#  created_at :datetime
+#  updated_at :datetime
+#  project_id :integer          not null
+#  user_id    :integer          not null
 #
 # Indexes
 #
-#  index_likes_likable   (likable_type,likable_id)
-#  index_likes_liker_id  (liker_id)
-#  index_likes_unique    (likable_type,likable_id,liker_id) UNIQUE
+#  index_likes_likable   (project_id)
+#  index_likes_liker_id  (user_id)
+#  index_likes_unique    (project_id,user_id) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_likes_liker_id  (liker_id => users.id)
+#  fk_likes_liker_id  (user_id => users.id)
 #
 
 class Like < ActiveRecord::Base
   include Contributable
 
-  belongs_to :liker, class_name: 'User', required: true
-  belongs_to :likable, polymorphic: true, counter_cache: :likes_count, required: true
-  validates_uniqueness_of :liker_id, scope: :likable
+  belongs_to :user, required: true
+  belongs_to :project, required: true, counter_cache: :likes_count
+  validates :user_id, uniqueness: { scope: :project }
 
   class << self
     def updatable_columns
-      [:_destroy, :id, :liker_id]
+      [:_destroy, :id, :user_id]
     end
   end
 end
