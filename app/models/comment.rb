@@ -5,7 +5,6 @@
 #  id               :integer          not null, primary key
 #  body             :text(65535)
 #  commentable_type :string(255)      not null
-#  likes_count      :integer          default(0), not null
 #  oldid            :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
@@ -25,7 +24,6 @@
 
 class Comment < ActiveRecord::Base
   include Contributable
-  include Likable
 
   belongs_to :user, required: true
   # TODO: required: true が付けられるかどうか要検討

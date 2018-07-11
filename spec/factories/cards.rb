@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: cards
@@ -7,7 +6,6 @@
 #  id               :integer          not null, primary key
 #  annotatable_type :string(255)
 #  description      :text(4294967295)
-#  likes_count      :integer          default(0), not null
 #  oldid            :string(255)
 #  position         :integer          default(0), not null
 #  title            :string(255)
@@ -32,7 +30,6 @@
 #  fk_cards_project_id  (project_id => projects.id)
 #  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
-
 
 FactoryBot.define do
   factory :card do

@@ -5,7 +5,6 @@
 #  id               :integer          not null, primary key
 #  annotatable_type :string(255)
 #  description      :text(4294967295)
-#  likes_count      :integer          default(0), not null
 #  oldid            :string(255)
 #  position         :integer          default(0), not null
 #  title            :string(255)
@@ -35,7 +34,6 @@ class Card < ActiveRecord::Base
   include Attachable
   include Figurable
   include Contributable
-  include Likable
   include Commentable
   include CardDecorator
 

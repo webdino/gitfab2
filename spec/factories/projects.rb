@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: projects
@@ -30,7 +29,6 @@
 #  index_projects_slug_owner      (slug,owner_type,owner_id) UNIQUE
 #  index_projects_updated_at      (updated_at)
 #
-
 
 FactoryBot.define do
   factory :project do

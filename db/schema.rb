@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709062141) do
+ActiveRecord::Schema.define(version: 20180711022016) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 20180709062141) do
     t.string   "title",            limit: 255
     t.text     "description",      limit: 4294967295
     t.string   "type",             limit: 255,                    null: false
-    t.integer  "likes_count",      limit: 4,          default: 0, null: false
     t.integer  "position",         limit: 4,          default: 0, null: false
     t.integer  "recipe_id",        limit: 4
     t.integer  "note_id",          limit: 4
@@ -64,11 +63,10 @@ ActiveRecord::Schema.define(version: 20180709062141) do
   add_index "collaborations", ["project_id"], name: "index_collaborations_project_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4,                 null: false
-    t.integer  "commentable_id",   limit: 4,                 null: false
-    t.string   "commentable_type", limit: 255,               null: false
+    t.integer  "user_id",          limit: 4,     null: false
+    t.integer  "commentable_id",   limit: 4,     null: false
+    t.string   "commentable_type", limit: 255,   null: false
     t.text     "body",             limit: 65535
-    t.integer  "likes_count",      limit: 4,     default: 0, null: false
     t.string   "oldid",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe Comment do
-  it_behaves_like 'Likable', :comment
   it_behaves_like 'Contributable', :comment
 
   describe 'attributes' do
