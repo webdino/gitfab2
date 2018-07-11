@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 describe Recipe do
+  it_behaves_like 'DraftInterfaceTest', FactoryBot.create(:recipe)
+
   let(:u_project) { FactoryBot.create :user_project }
   let(:u_project_recipe) { u_project.recipe }
   let(:g_project) { FactoryBot.create :group_project }
@@ -56,10 +58,5 @@ describe Recipe do
         expect(dupped_recipe.recipe_cards.count).to eq(0)
       end
     end
-  end
-
-  describe '#generate_draft' do
-    recipe = FactoryBot.create(:recipe)
-    it_behaves_like 'DraftGenerator', recipe
   end
 end

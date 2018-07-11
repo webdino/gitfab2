@@ -27,7 +27,6 @@
 class User < ActiveRecord::Base
   include ProjectOwner
   include Collaborator
-  include DraftGenerator
 
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -46,6 +45,12 @@ class User < ActiveRecord::Base
   validates :name, presence: true, if: -> { self.persisted? }
   validates :name, unique_owner_name: true,
                    name_format: true, if: -> { name.present? }
+
+  concerning :Draft do
+    def generate_draft
+      "#{name}\n#{fullname}\n#{url}\n#{location}"
+    end
+  end
 
   def is_system_admin?
     authority == 'admin'
@@ -85,10 +90,6 @@ class User < ActiveRecord::Base
       end
     end
     is_in_collaborated_group
-  end
-
-  def generate_draft
-    "#{name}\n#{fullname}\n#{url}\n#{location}"
   end
 
   class << self

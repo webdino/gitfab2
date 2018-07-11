@@ -3,6 +3,7 @@
 describe User do
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user
+  it_behaves_like 'DraftInterfaceTest', FactoryBot.create(:user)
 
   let(:user) { FactoryBot.create :user }
   let(:project) { FactoryBot.create :user_project }
@@ -171,10 +172,5 @@ describe User do
     it { expect(user.is_in_collaborated_group?(project_collaborated_by_user)).to be_falsey }
     it { expect(user.is_in_collaborated_group?(project_collaborated_by_group)).to be_truthy }
     it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be_falsey }
-  end
-
-  describe '#generate_draft' do
-    user = FactoryBot.create(:user)
-    it_behaves_like 'DraftGenerator', user
   end
 end

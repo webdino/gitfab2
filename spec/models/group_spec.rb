@@ -3,6 +3,7 @@
 describe Group do
   it_behaves_like 'Collaborator', :group
   it_behaves_like 'ProjectOwner', :user
+  it_behaves_like 'DraftInterfaceTest', FactoryBot.create(:group)
 
   let(:user1) { FactoryBot.create :user }
   let(:user2) { FactoryBot.create :user }
@@ -28,10 +29,5 @@ describe Group do
       end.all?
     end
     it { is_expected.to be true }
-  end
-
-  describe '#generate_draft' do
-    group = FactoryBot.create(:group)
-    it_behaves_like 'DraftGenerator', group
   end
 end
