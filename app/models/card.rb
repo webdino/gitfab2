@@ -30,11 +30,13 @@
 #
 
 class Card < ActiveRecord::Base
-  include Attachable
   include Figurable
   include Contributable
   include Commentable
   include CardDecorator
+
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments
 
   validates :type, presence: true
 
