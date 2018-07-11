@@ -4,7 +4,6 @@
 #
 #  id            :integer          not null, primary key
 #  name          :string(255)
-#  oldid         :string(255)
 #  taggable_type :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime

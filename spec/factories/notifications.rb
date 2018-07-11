@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: notifications
@@ -8,7 +7,6 @@
 #  body               :string(255)
 #  notificatable_type :string(255)
 #  notificatable_url  :string(255)
-#  oldid              :string(255)
 #  was_read           :boolean          default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime
@@ -25,7 +23,6 @@
 #  fk_notifications_notified_id  (notified_id => users.id)
 #  fk_notifications_notifier_id  (notifier_id => users.id)
 #
-
 
 FactoryBot.define do
   factory :notification do

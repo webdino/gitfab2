@@ -6,7 +6,6 @@
 #  avatar         :string(255)
 #  location       :string(255)
 #  name           :string(255)
-#  oldid          :string(255)
 #  projects_count :integer          default(0), not null
 #  slug           :string(255)
 #  url            :string(255)

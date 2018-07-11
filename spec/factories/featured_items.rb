@@ -1,11 +1,9 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: featured_items
 #
 #  id               :integer          not null, primary key
-#  oldid            :string(255)
 #  url              :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime
@@ -20,7 +18,6 @@
 #
 #  fk_featured_items_feature_id  (feature_id => features.id)
 #
-
 
 FactoryBot.define do
   factory :featured_item do

@@ -11,7 +11,6 @@
 #  license     :integer
 #  likes_count :integer          default(0), not null
 #  name        :string(255)      not null
-#  oldid       :string(255)
 #  owner_type  :string(255)      not null
 #  scope       :string(255)
 #  slug        :string(255)

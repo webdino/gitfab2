@@ -6,7 +6,6 @@
 #  content        :string(255)
 #  figurable_type :string(255)
 #  link           :string(255)
-#  oldid          :string(255)
 #  created_at     :datetime
 #  updated_at     :datetime
 #  figurable_id   :integer

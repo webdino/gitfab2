@@ -4,7 +4,6 @@
 #
 #  id                 :integer          not null, primary key
 #  contributable_type :string(255)      not null
-#  oldid              :string(255)
 #  created_at         :datetime
 #  updated_at         :datetime
 #  contributable_id   :integer          not null

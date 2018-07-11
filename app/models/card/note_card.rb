@@ -5,7 +5,6 @@
 #  id               :integer          not null, primary key
 #  annotatable_type :string(255)
 #  description      :text(4294967295)
-#  oldid            :string(255)
 #  position         :integer          default(0), not null
 #  title            :string(255)
 #  type             :string(255)      not null

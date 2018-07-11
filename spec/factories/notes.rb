@@ -1,12 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: notes
 #
 #  id         :integer          not null, primary key
 #  num_cards  :integer          default(0), not null
-#  oldid      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #  project_id :integer
@@ -20,7 +18,6 @@
 #
 #  fk_notes_project_id  (project_id => projects.id)
 #
-
 
 FactoryBot.define do
   factory :note do

@@ -1,12 +1,10 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: tags
 #
 #  id            :integer          not null, primary key
 #  name          :string(255)
-#  oldid         :string(255)
 #  taggable_type :string(255)
 #  created_at    :datetime
 #  updated_at    :datetime
@@ -22,7 +20,6 @@
 #
 #  fk_tags_user_id  (user_id => users.id)
 #
-
 
 FactoryBot.define do
   factory :tag do

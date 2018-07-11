@@ -9,7 +9,6 @@
 #  fullname       :string(255)
 #  location       :string(255)
 #  name           :string(255)
-#  oldid          :string(255)
 #  projects_count :integer          default(0), not null
 #  provider       :string(255)
 #  slug           :string(255)

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: attachments
@@ -11,7 +10,6 @@
 #  description     :string(255)
 #  kind            :string(255)
 #  link            :text(65535)
-#  oldid           :string(255)
 #  title           :text(65535)
 #  created_at      :datetime
 #  updated_at      :datetime
@@ -22,7 +20,6 @@
 #
 #  index_attachments_attachable  (attachable_type,attachable_id)
 #
-
 
 FactoryBot.define do
   factory :attachment do

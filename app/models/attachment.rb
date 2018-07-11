@@ -9,7 +9,6 @@
 #  description     :string(255)
 #  kind            :string(255)
 #  link            :text(65535)
-#  oldid           :string(255)
 #  title           :text(65535)
 #  created_at      :datetime
 #  updated_at      :datetime

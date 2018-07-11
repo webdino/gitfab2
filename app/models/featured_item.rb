@@ -3,7 +3,6 @@
 # Table name: featured_items
 #
 #  id               :integer          not null, primary key
-#  oldid            :string(255)
 #  url              :string(255)
 #  created_at       :datetime
 #  updated_at       :datetime

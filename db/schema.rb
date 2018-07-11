@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711025217) do
+ActiveRecord::Schema.define(version: 20180711044529) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "description",     limit: 255
     t.string   "kind",            limit: 255
     t.string   "content_tmp",     limit: 255
-    t.string   "oldid",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,7 +39,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "project_id",       limit: 4
     t.string   "annotatable_type", limit: 255
     t.integer  "annotatable_id",   limit: 4
-    t.string   "oldid",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -54,7 +52,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "owner_type", limit: 255
     t.integer  "owner_id",   limit: 4
     t.integer  "project_id", limit: 4,   null: false
-    t.string   "oldid",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,7 +64,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "commentable_id",   limit: 4,     null: false
     t.string   "commentable_type", limit: 255,   null: false
     t.text     "body",             limit: 65535
-    t.string   "oldid",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -80,7 +76,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "contributor_id",     limit: 4,   null: false
     t.integer  "contributable_id",   limit: 4,   null: false
     t.string   "contributable_type", limit: 255, null: false
-    t.string   "oldid",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -92,7 +87,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "feature_id",       limit: 4
     t.string   "target_object_id", limit: 255
     t.string   "url",              limit: 255
-    t.string   "oldid",            limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,7 +97,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "class_name", limit: 255
     t.string   "name",       limit: 255,             null: false
     t.integer  "category",   limit: 4,   default: 0, null: false
-    t.string   "oldid",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -113,7 +106,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "figurable_type", limit: 255
     t.integer  "figurable_id",   limit: 4
     t.string   "link",           limit: 255
-    t.string   "oldid",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -127,7 +119,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "url",            limit: 255
     t.string   "location",       limit: 255
     t.integer  "projects_count", limit: 4,   default: 0, null: false
-    t.string   "oldid",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -136,9 +127,8 @@ ActiveRecord::Schema.define(version: 20180711025217) do
   add_index "groups", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   create_table "likes", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4,   null: false
-    t.integer  "project_id", limit: 4,   null: false
-    t.string   "oldid",      limit: 255
+    t.integer  "user_id",    limit: 4, null: false
+    t.integer  "project_id", limit: 4, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -151,7 +141,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "group_id",   limit: 4
     t.integer  "user_id",    limit: 4
     t.string   "role",       limit: 255, default: "editor"
-    t.string   "oldid",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -160,8 +149,7 @@ ActiveRecord::Schema.define(version: 20180711025217) do
 
   create_table "notes", force: :cascade do |t|
     t.integer  "project_id", limit: 4
-    t.integer  "num_cards",  limit: 4,   default: 0, null: false
-    t.string   "oldid",      limit: 255
+    t.integer  "num_cards",  limit: 4, default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -176,7 +164,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "notificatable_type", limit: 255
     t.string   "body",               limit: 255
     t.boolean  "was_read",                       default: false
-    t.string   "oldid",              limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -198,7 +185,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.integer  "license",     limit: 4
     t.integer  "original_id", limit: 4
     t.integer  "likes_count", limit: 4,     default: 0,     null: false
-    t.string   "oldid",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -211,7 +197,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
 
   create_table "recipes", force: :cascade do |t|
     t.integer  "project_id", limit: 4
-    t.string   "oldid",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -223,7 +208,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "taggable_type", limit: 255
     t.integer  "taggable_id",   limit: 4
     t.string   "name",          limit: 255
-    t.string   "oldid",         limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -243,7 +227,6 @@ ActiveRecord::Schema.define(version: 20180711025217) do
     t.string   "location",       limit: 255
     t.string   "authority",      limit: 255
     t.integer  "projects_count", limit: 4,   default: 0,  null: false
-    t.string   "oldid",          limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

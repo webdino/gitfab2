@@ -3,7 +3,6 @@
 # Table name: collaborations
 #
 #  id         :integer          not null, primary key
-#  oldid      :string(255)
 #  owner_type :string(255)
 #  created_at :datetime
 #  updated_at :datetime

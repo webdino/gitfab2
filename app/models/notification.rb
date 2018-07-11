@@ -6,7 +6,6 @@
 #  body               :string(255)
 #  notificatable_type :string(255)
 #  notificatable_url  :string(255)
-#  oldid              :string(255)
 #  was_read           :boolean          default(FALSE)
 #  created_at         :datetime
 #  updated_at         :datetime

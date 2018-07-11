@@ -3,7 +3,6 @@
 # Table name: recipes
 #
 #  id         :integer          not null, primary key
-#  oldid      :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #  project_id :integer

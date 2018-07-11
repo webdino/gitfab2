@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: groups
@@ -8,7 +7,6 @@
 #  avatar         :string(255)
 #  location       :string(255)
 #  name           :string(255)
-#  oldid          :string(255)
 #  projects_count :integer          default(0), not null
 #  slug           :string(255)
 #  url            :string(255)
@@ -20,7 +18,6 @@
 #  index_users_on_name  (name) UNIQUE
 #  index_users_on_slug  (slug) UNIQUE
 #
-
 
 FactoryBot.define do
   factory :group do

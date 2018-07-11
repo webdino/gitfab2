@@ -1,11 +1,9 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: collaborations
 #
 #  id         :integer          not null, primary key
-#  oldid      :string(255)
 #  owner_type :string(255)
 #  created_at :datetime
 #  updated_at :datetime
@@ -17,7 +15,6 @@
 #  index_collaborations_owner       (owner_type,owner_id)
 #  index_collaborations_project_id  (project_id)
 #
-
 
 FactoryBot.define do
   factory :collaboration do
