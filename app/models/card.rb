@@ -33,7 +33,6 @@ class Card < ActiveRecord::Base
   include Figurable
   include Contributable
   include Commentable
-  include CardDecorator
 
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments
@@ -51,6 +50,10 @@ class Card < ActiveRecord::Base
 
   def is_taggable?
     self.is_a? Taggable
+  end
+
+  def htmlclass
+    type.split(/::/).last.underscore
   end
 
   class << self
