@@ -212,7 +212,6 @@ class InitSchema < ActiveRecord::Migration
       t.datetime "updated_at"
     end
 
-    add_index "projects", ["likes_count"], name: "index_projects_on_likes_count", using: :btree
     add_index "projects", ["original_id"], name: "index_projects_original_id", using: :btree
     add_index "projects", ["owner_type", "owner_id"], name: "index_projects_owner", using: :btree
     add_index "projects", ["slug", "owner_type", "owner_id"], name: "index_projects_slug_owner", unique: true, using: :btree

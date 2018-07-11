@@ -21,11 +21,10 @@
 #
 # Indexes
 #
-#  index_projects_on_likes_count  (likes_count)
-#  index_projects_original_id     (original_id)
-#  index_projects_owner           (owner_type,owner_id)
-#  index_projects_slug_owner      (slug,owner_type,owner_id) UNIQUE
-#  index_projects_updated_at      (updated_at)
+#  index_projects_original_id  (original_id)
+#  index_projects_owner        (owner_type,owner_id)
+#  index_projects_slug_owner   (slug,owner_type,owner_id) UNIQUE
+#  index_projects_updated_at   (updated_at)
 #
 
 class Project < ActiveRecord::Base
