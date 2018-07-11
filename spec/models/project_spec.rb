@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe Project do
-  it_behaves_like 'Likable', :user_project
   it_behaves_like 'Figurable', :user_project
   it_behaves_like 'Contributable', :user_project
   it_behaves_like 'Commentable', :user_project

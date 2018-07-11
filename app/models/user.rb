@@ -27,7 +27,6 @@
 
 class User < ActiveRecord::Base
   include ProjectOwner
-  include Liker
   include Collaborator
   include DraftGenerator
 
@@ -76,10 +75,6 @@ class User < ActiveRecord::Base
 
   def join_to(group)
     memberships.find_or_create_by group_id: group.id
-  end
-
-  def liked_projects
-    Project.joins(:likes).merge(Like.where(liker: self))
   end
 
   def is_in_collaborated_group?(project)

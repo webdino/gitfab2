@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 describe User do
-  it_behaves_like 'Liker', :user
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user
 
@@ -44,22 +43,6 @@ describe User do
       collaboration.project
     end
     it { is_expected.to eq project }
-  end
-
-  describe '#liked_projects' do
-    let!(:project_a) { FactoryBot.create :project, owner: user }
-    let!(:project_b) { FactoryBot.create :project, owner: user }
-    let!(:project_not_like) { FactoryBot.create :project, owner: user }
-    let!(:comment_a) { FactoryBot.create :comment, commentable: project_not_like }
-    before do
-      FactoryBot.create :like, liker_id: user.id, likable: project_a
-      FactoryBot.create :like, liker_id: user.id, likable: project_b
-      FactoryBot.create :like, liker_id: user.id, likable: comment_a
-    end
-
-    it do
-      expect(user.liked_projects.to_a).to contain_exactly(project_a, project_b)
-    end
   end
 
   describe '#is_system_admin?' do

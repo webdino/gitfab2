@@ -34,7 +34,6 @@ class Project < ActiveRecord::Base
   include Commentable
   include Contributable
   include Taggable
-  include Likable
   include Notificatable
   include AfterCommitAction
 
@@ -44,6 +43,7 @@ class Project < ActiveRecord::Base
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
   belongs_to :owner, polymorphic: true, required: true
+  has_many :likes, as: :likable, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe, dependent: :destroy
   has_one :note, dependent: :destroy
