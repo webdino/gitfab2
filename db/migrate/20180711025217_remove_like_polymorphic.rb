@@ -7,7 +7,7 @@ class RemoveLikePolymorphic < ActiveRecord::Migration
   end
 
   def down
-    add_column :likes, :likable_type, :string, null: false
+    add_column :likes, :likable_type, :string
     rename_column :likes, :project_id, :likable_id
     rename_column :likes, :user_id, :liker_id
   end
