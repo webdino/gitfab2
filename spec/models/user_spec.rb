@@ -65,34 +65,34 @@ describe User do
     let(:someone_else) { FactoryBot.create :user }
     let!(:project_owned) { FactoryBot.create :project, owner: user }
     let!(:project_not_owned) { FactoryBot.create :project, owner: someone_else }
-    it { expect(user.is_owner_of?(project_owned)).to be_truthy }
-    it { expect(user.is_owner_of?(project_not_owned)).to be_falsey }
+    it { expect(user.is_owner_of?(project_owned)).to be true }
+    it { expect(user.is_owner_of?(project_not_owned)).to be false }
   end
 
   describe '#is_contributor_of?(project)' do
     let!(:project_contributed) { FactoryBot.create :project, owner: user }
     let!(:project_not_contributed) { FactoryBot.create :project, owner: user }
     before { FactoryBot.create(:contribution, contributor: user, contributable: project_contributed) }
-    it { expect(user.is_contributor_of?(project_contributed)).to be_truthy }
-    it { expect(user.is_contributor_of?(project_not_contributed)).to be_falsey }
+    it { expect(user.is_contributor_of?(project_contributed)).to be true }
+    it { expect(user.is_contributor_of?(project_not_contributed)).to be false }
   end
 
   describe '#is_admin_of?(group)' do
     let!(:group_administered) { FactoryBot.create :group }
     let!(:group_not_membered) { FactoryBot.create :group }
     before { FactoryBot.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }
-    it { expect(user.is_admin_of?(group_administered)).to be_truthy }
-    it { expect(user.is_admin_of?(group_not_membered)).to be_falsey }
-    it { expect(user.is_admin_of?(nil)).to be_falsey }
+    it { expect(user.is_admin_of?(group_administered)).to be true }
+    it { expect(user.is_admin_of?(group_not_membered)).to be false }
+    it { expect(user.is_admin_of?(nil)).to be false }
   end
 
   describe '#is_editor_of?(group)' do
     let!(:group_administered) { FactoryBot.create :group }
     let!(:group_not_membered) { FactoryBot.create :group }
     before { FactoryBot.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }
-    it { expect(user.is_editor_of?(group_administered)).to be_falsey }
-    it { expect(user.is_editor_of?(group_not_membered)).to be_falsey }
-    it { expect(user.is_editor_of?(nil)).to be_falsey }
+    it { expect(user.is_editor_of?(group_administered)).to be false }
+    it { expect(user.is_editor_of?(group_not_membered)).to be false }
+    it { expect(user.is_editor_of?(nil)).to be false }
   end
 
   describe 'ユーザーをeditorとしてグループに追加するとき' do
@@ -107,16 +107,16 @@ describe User do
         FactoryBot.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor])
       end
       it "role: 'editor'として登録されること" do
-        expect(user.is_admin_of?(group_membered)).to be_falsey
-        expect(user.is_editor_of?(group_membered)).to be_truthy
+        expect(user.is_admin_of?(group_membered)).to be false
+        expect(user.is_editor_of?(group_membered)).to be true
       end
     end
 
     context 'グループにadminが存在していない場合' do
       before { FactoryBot.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor]) }
       it "role: 'admin'として登録されること" do
-        expect(user.is_admin_of?(group_membered)).to be_truthy
-        expect(user.is_editor_of?(group_membered)).to be_falsey
+        expect(user.is_admin_of?(group_membered)).to be true
+        expect(user.is_editor_of?(group_membered)).to be false
       end
     end
   end
@@ -169,8 +169,8 @@ describe User do
       user.collaborate!(project_collaborated_by_user)
       group.collaborate!(project_collaborated_by_group)
     end
-    it { expect(user.is_in_collaborated_group?(project_collaborated_by_user)).to be_falsey }
-    it { expect(user.is_in_collaborated_group?(project_collaborated_by_group)).to be_truthy }
-    it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be_falsey }
+    it { expect(user.is_in_collaborated_group?(project_collaborated_by_user)).to be false }
+    it { expect(user.is_in_collaborated_group?(project_collaborated_by_group)).to be true }
+    it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be false }
   end
 end

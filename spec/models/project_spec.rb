@@ -56,7 +56,7 @@ describe Project do
 
   describe '#change_owner!(owner)' do
     it 'returns true' do
-      expect(project.change_owner!(user1)).to be_truthy
+      expect(project.change_owner!(user1)).to be true
     end
 
     it 'changes to other user.' do

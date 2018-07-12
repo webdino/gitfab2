@@ -22,12 +22,12 @@ shared_examples 'Collaborator' do |*factory_args|
     end
 
     it 'レシーバがprojectをコラボしているなら真を返すこと' do
-      expect(collaborator.is_collaborator_of?(project)).to be_truthy
+      expect(collaborator.is_collaborator_of?(project)).to be true
     end
 
     it 'レシーバがprojectをコラボしていないなら偽を返すこと' do
       not_collaborated_project = FactoryBot.create(:user_project)
-      expect(collaborator.is_collaborator_of?(not_collaborated_project)).to be_falsey
+      expect(collaborator.is_collaborator_of?(not_collaborated_project)).to be false
     end
   end
 
