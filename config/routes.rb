@@ -59,9 +59,7 @@ Gitfab2::Application.routes.draw do
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
       end
-      resource :note, only: :update do
-        resources :note_cards, only: [:create, :update], concerns: :comments
-      end
+      resources :note_cards, only: [:create, :update], concerns: :comments
       resources :usages, only: [:create, :update]
     end
   end
@@ -83,9 +81,7 @@ Gitfab2::Application.routes.draw do
 
   resources :projects, path: '/:owner_name', except: [:create, :update] do
     resources :collaborators, except: [:create, :update]
-    resource :note, only: :show do
-      resources :note_cards, except: [:create, :update]
-    end
+    resources :note_cards, except: [:create, :update]
     resource :recipe, only: :show do
       resources :states, except: [:create, :update], concerns: :card_features_for_link
       resources :states do

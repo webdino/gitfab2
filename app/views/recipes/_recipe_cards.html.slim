@@ -3,7 +3,7 @@
     .tab.active
       'Recipe
       == "(#{@project.recipe.states.length})"
-  == link_to project_note_path(@project, owner_name: @owner.slug) do
+  == link_to project_note_cards_path(@project, owner_name: @owner.slug) do
     .tab
       'Memos
       == "(#{@project.note.note_cards.length})"

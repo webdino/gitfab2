@@ -12,7 +12,7 @@ main#note-cards-show
       .tab
         'Recipe
         == "(#{@project.recipe.states.length})"
-    == link_to project_note_path(@project, owner_name: @owner.slug) do
+    == link_to project_note_cards_path(@project, owner_name: @owner.slug) do
       .tab.active
         'Memos
         == "(#{@project.note.note_cards.length})"
@@ -23,7 +23,7 @@ main#note-cards-show
         h1
           'Memo
         - if can? :edit, @project
-          - new_url = new_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+          - new_url = new_project_note_card_path(owner_name: @owner.slug, project_id: @project.name)
           == link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
     - card = @note_card
@@ -50,8 +50,8 @@ main#note-cards-show
                 .control
                   - if can? :manage, card
                     span.edit
-                      - delete_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                      - edit_url = edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                      - delete_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                      - edit_url = edit_project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
                       == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
                       == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 
@@ -66,12 +66,12 @@ main#note-cards-show
 
       footer
         - unless defined?(is_template)
-          == render "components/card_comments", card: card, resources: [@owner, @project, :note, card]
+          == render "components/card_comments", card: card, resources: [@owner, @project, card]
 
         .inner
           / TODO: implement pager
 
-  == render "notes/templates"
+  == render "note_cards/templates"
 
 - content_for :bottom do
   coffee:

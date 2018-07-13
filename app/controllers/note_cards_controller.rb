@@ -9,6 +9,10 @@ class NoteCardsController < ApplicationController
   before_action :update_contribution, only: [:create, :update]
   after_action :update_project, only: [:create, :update, :destroy]
 
+  def index
+    @note_cards = @note.note_cards
+  end
+
   def new
   end
 
@@ -101,7 +105,7 @@ class NoteCardsController < ApplicationController
     @project.updated_at = DateTime.now.in_time_zone
     @project.save!
     users = @project.notifiable_users current_user
-    url = project_note_note_card_path owner_name: @project.owner.slug,
+    url = project_note_card_path owner_name: @project.owner.slug,
                                       project_id: @project.name,
                                       id: @note_card.id
     if action_name == 'update' && current_user

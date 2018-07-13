@@ -21,13 +21,13 @@ article class="card note_card" id="#{card.id}"
           .control
             - if can? :manage, card
               span.edit
-                - delete_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                - edit_url = edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                - delete_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                - edit_url = edit_project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
                 == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
                 == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 
         .description
-          - note_card_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+          - note_card_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
           == truncate_html Sanitize.clean(card.description, Sanitize::Config::RELAXED), length: 220, omission: link_to("…", note_card_url)
       .right
         - if card.figures.present? && card.figures.first.content.present?

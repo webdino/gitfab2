@@ -5,13 +5,13 @@ li.project
         ' private project
     - if project.title.present?
       - if is_note
-        == link_to project.title, project_note_path(project.owner, project), class: "title"
+        == link_to project.title, project_note_cards_path(project.owner, project), class: "title"
       - else
         == link_to project.title, project_path(project.owner, project), class: "title"
 
     - else
       - if is_note
-        == link_to "no title", project_note_path(project.owner, project), class: "title"
+        == link_to "no title", project_note_cards_path(project.owner, project), class: "title"
       - else
         == link_to "no title", project_path(project.owner, project), class: "title"
 
@@ -52,7 +52,7 @@ li.project
   .image-container
     - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)
       - if is_note
-        == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
+        == link_to image_tag(project.thumbnail), project_note_cards_path(project.owner, project), class: "image"
       - else
         == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
 

@@ -16,7 +16,6 @@ linters:
       - 'app/views/components/_card_figures.html.slim'
       - 'app/views/global_projects/_*.html.slim'
       - 'app/views/note_cards/show.html.slim'
-      - 'app/views/notes/_note_cards.html.slim'
       - 'app/views/projects/_basic_informations.html.slim'
       - 'app/views/recipes/_recipe_cards.html.slim'
       - 'app/views/states/_state.html.slim'

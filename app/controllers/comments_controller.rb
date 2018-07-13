@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def load_card
     if params[:note_card_id]
       @card = @project.note.note_cards.find params[:note_card_id]
-      @resources = [@owner, @project, :note, @card]
+      @resources = [@owner, @project, @card]
     elsif params[:annotation_id]
       @state = @project.recipe.states.find params[:state_id]
       @card = @state.annotations.find params[:annotation_id]
@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     return if users.blank?
 
     if card.class.name == 'Card::NoteCard'
-      url = project_note_note_card_path(owner_name: project.owner.slug, project_id: project.name, id: card.id)
+      url = project_note_card_path(owner_name: project.owner.slug, project_id: project.name, id: card.id)
       body = "#{current_user.name} commented on your memo of #{project.title}."
     else
       url = project_path(project, owner_name: project.owner.slug)
