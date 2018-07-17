@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180711044529) do
+ActiveRecord::Schema.define(version: 20180712080601) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20180711044529) do
     t.string   "type",             limit: 255,                    null: false
     t.integer  "position",         limit: 4,          default: 0, null: false
     t.integer  "recipe_id",        limit: 4
-    t.integer  "note_id",          limit: 4
     t.integer  "project_id",       limit: 4
     t.string   "annotatable_type", limit: 255
     t.integer  "annotatable_id",   limit: 4
@@ -44,7 +43,6 @@ ActiveRecord::Schema.define(version: 20180711044529) do
   end
 
   add_index "cards", ["annotatable_type", "annotatable_id"], name: "index_cards_annotatable", using: :btree
-  add_index "cards", ["note_id"], name: "index_cards_note_id", using: :btree
   add_index "cards", ["project_id"], name: "index_cards_project_id", using: :btree
   add_index "cards", ["recipe_id"], name: "index_cards_recipe_id", using: :btree
 
@@ -147,16 +145,6 @@ ActiveRecord::Schema.define(version: 20180711044529) do
 
   add_index "memberships", ["group_id", "user_id"], name: "index_users_on_group_id_user_id", unique: true, using: :btree
 
-  create_table "notes", force: :cascade do |t|
-    t.integer  "project_id", limit: 4
-    t.integer  "num_cards",  limit: 4, default: 0, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "notes", ["num_cards"], name: "index_notes_num_cards", using: :btree
-  add_index "notes", ["project_id"], name: "index_notes_project_id", using: :btree
-
   create_table "notifications", force: :cascade do |t|
     t.integer  "notifier_id",        limit: 4
     t.integer  "notified_id",        limit: 4
@@ -234,14 +222,12 @@ ActiveRecord::Schema.define(version: 20180711044529) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
-  add_foreign_key "cards", "notes", name: "fk_cards_note_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "cards", "recipes", name: "fk_cards_recipe_id"
   add_foreign_key "comments", "users", name: "fk_comments_user_id"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
   add_foreign_key "featured_items", "features", name: "fk_featured_items_feature_id"
   add_foreign_key "likes", "users", name: "fk_likes_liker_id"
-  add_foreign_key "notes", "projects", name: "fk_notes_project_id"
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
   add_foreign_key "recipes", "projects", name: "fk_recipes_project_id"

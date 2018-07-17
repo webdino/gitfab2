@@ -39,7 +39,6 @@ Layout/EmptyLinesAroundClassBody:
     - 'app/models/featured_item.rb'
     - 'app/models/figure.rb'
     - 'app/models/group.rb'
-    - 'app/models/note.rb'
     - 'app/models/notification.rb'
 
 # Offense count: 5

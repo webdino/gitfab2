@@ -11,7 +11,7 @@ describe CommentsController, type: :controller do
   describe 'POST create' do
     context 'with valid parameters' do
       before do
-        note_card = FactoryBot.create(:note_card, note: project.note)
+        note_card = FactoryBot.create(:note_card, project: project)
 
         sign_in user1
         xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
@@ -27,7 +27,7 @@ describe CommentsController, type: :controller do
 
     context 'with invalid parameters' do
       before do
-        note_card = FactoryBot.create(:note_card, note: project.note)
+        note_card = FactoryBot.create(:note_card, project: project)
 
         sign_in user1
         xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
@@ -43,7 +43,7 @@ describe CommentsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    let(:note_card) { FactoryBot.create(:note_card, note: project.note) }
+    let(:note_card) { FactoryBot.create(:note_card, project: project) }
     let(:comment) { FactoryBot.create(:comment, user: user1, commentable: note_card) }
     before do
       sign_in project.owner

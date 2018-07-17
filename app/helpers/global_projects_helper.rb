@@ -4,7 +4,7 @@ module GlobalProjectsHelper
     all_featured_projects = Feature.projects
     all_featured_projects.each do |project_group|
       ids = project_group.featured_items.pluck(:target_object_id)
-      featured_projects = Project.includes(:figures, :owner, recipe: :states, note: :note_cards)
+      featured_projects = Project.includes(:figures, :owner, :note_cards, recipe: :states)
                                  .where(id: ids).order(likes_count: :desc)
       project_groups[project_group.name] = featured_projects
     end

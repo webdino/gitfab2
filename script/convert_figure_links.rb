@@ -15,5 +15,5 @@ Project.all.each do |project|
     state.annotations.each {|annotation| convert(annotation)}
   end
   project.usages.each {|usage| convert(usage)}
-  project.note.note_cards.each {|card| convert(card)}
+  project.note_cards.each {|card| convert(card)}
 end

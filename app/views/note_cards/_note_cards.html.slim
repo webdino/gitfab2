@@ -6,7 +6,7 @@
   == link_to project_note_cards_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Memos
-      == "(#{@project.note.note_cards.length})"
+      == "(#{@project.note_cards.length})"
 
 section#note-cards
   .top
@@ -18,7 +18,7 @@ section#note-cards
         == link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
   ul#note-card-list.card-list
-    - @note.note_cards.each do |card|
+    - @project.note_cards.each do |card|
       li.note-card-wrapper
         == render "note_cards/note_card", card: card, owner: @owner, project: @project
 

@@ -39,7 +39,7 @@ class CommentsController < ApplicationController
 
   def load_card
     if params[:note_card_id]
-      @card = @project.note.note_cards.find params[:note_card_id]
+      @card = @project.note_cards.find(params[:note_card_id])
       @resources = [@owner, @project, @card]
     elsif params[:annotation_id]
       @state = @project.recipe.states.find params[:state_id]

@@ -10,6 +10,24 @@ describe Project do
   let(:user1) { FactoryBot.create :user }
   let(:user2) { FactoryBot.create :user }
 
+  describe '.noted' do
+    subject { Project.noted }
+
+    let!(:project1) do
+      FactoryBot.create(:project) do |project|
+        FactoryBot.create(:note_card, project: project)
+      end
+    end
+    let!(:project2) { FactoryBot.create(:project) }
+    let!(:project3) do
+      FactoryBot.create(:project) do |project|
+        FactoryBot.create(:note_card, project: project)
+      end
+    end
+
+    it { is_expected.to match_array([project1, project3]) }
+  end
+
   describe '#collaborators' do
     before do
       user1.collaborations.create project: project

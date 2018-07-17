@@ -15,7 +15,7 @@ main#note-cards-show
     == link_to project_note_cards_path(@project, owner_name: @owner.slug) do
       .tab.active
         'Memos
-        == "(#{@project.note.note_cards.length})"
+        == "(#{@project.note_cards.length})"
 
   section#note-card
     .top

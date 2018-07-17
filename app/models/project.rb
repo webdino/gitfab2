@@ -42,15 +42,15 @@ class Project < ActiveRecord::Base
   belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
   belongs_to :owner, polymorphic: true, required: true
   has_many :likes, dependent: :destroy
+  has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe, dependent: :destroy
-  has_one :note, dependent: :destroy
 
   before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
-  after_create :create_recipe_and_note
+  after_create -> { create_recipe unless recipe }
   after_create :update_projects_count_created
   after_update :update_projects_count
   after_destroy :update_projects_count_destroyed
@@ -59,7 +59,10 @@ class Project < ActiveRecord::Base
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
 
-  scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
+  scope :noted, -> do
+    note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
+    joins(:note_cards).where(cards: { id: note_cards_sql })
+  end
   scope :ordered_by_owner, -> { order('owner_id ASC') }
   scope :published, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
 
@@ -207,11 +210,6 @@ class Project < ActiveRecord::Base
 
   def ensure_a_figure_exists
     figures.create if figures.none?
-  end
-
-  def create_recipe_and_note
-    create_recipe unless recipe
-    create_note unless note
   end
 
   def generate_draft

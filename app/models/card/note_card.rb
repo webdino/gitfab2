@@ -11,30 +11,24 @@
 #  created_at       :datetime
 #  updated_at       :datetime
 #  annotatable_id   :integer
-#  note_id          :integer
 #  project_id       :integer
 #  recipe_id        :integer
 #
 # Indexes
 #
 #  index_cards_annotatable  (annotatable_type,annotatable_id)
-#  index_cards_note_id      (note_id)
 #  index_cards_project_id   (project_id)
 #  index_cards_recipe_id    (recipe_id)
 #
 # Foreign Keys
 #
-#  fk_cards_note_id     (note_id => notes.id)
 #  fk_cards_project_id  (project_id => projects.id)
 #  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
 
 class Card::NoteCard < Card
   include Taggable
-  belongs_to :note, required: true
-
-  after_create -> { note.increment!(:num_cards) }
-  after_destroy -> { note.decrement!(:num_cards) }
+  belongs_to :project, required: true
 
   class << self
     def updatable_columns

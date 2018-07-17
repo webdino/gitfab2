@@ -21,7 +21,7 @@ Project.all.each do |project|
   project.usages.each do |usage|
     usage.contributions.each {|contribution| convert(contribution)}
   end
-  project.note.note_cards do |card|
+  project.note_cards do |card|
     card.contributions.each {|contribution| convert(contribution)}
   end
 end

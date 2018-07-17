@@ -3,14 +3,13 @@ class NoteCardsController < ApplicationController
 
   before_action :load_owner
   before_action :load_project
-  before_action :load_note
   before_action :load_note_card, only: [:show, :edit, :update, :destroy]
   before_action :build_note_card, only: [:new, :create]
   before_action :update_contribution, only: [:create, :update]
   after_action :update_project, only: [:create, :update, :destroy]
 
   def index
-    @note_cards = @note.note_cards
+    @note_cards = @project.note_cards
   end
 
   def new
@@ -67,17 +66,13 @@ class NoteCardsController < ApplicationController
     not_found if @project.blank?
   end
 
-  def load_note
-    @note = @project.note
-  end
-
   def load_note_card
-    @note_card = @note.note_cards.find params[:id]
+    @note_card = @project.note_cards.find(params[:id])
     not_found if @note_card.blank?
   end
 
   def build_note_card
-    @note_card = @note.note_cards.build note_card_params
+    @note_card = @project.note_cards.build(note_card_params)
   end
 
   def note_card_params

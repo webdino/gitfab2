@@ -25,13 +25,13 @@ class Ability
       card.recipe && is_project_editor?(card.recipe.project, user)
     end
     can :manage, Card::NoteCard do |card|
-      card.note && is_project_editor?(card.note.project, user)
+      card.project && is_project_editor?(card.project, user)
     end
     can :read, Card::State do |card|
       can? :read, card.recipe.project
     end
     can :read, Card::NoteCard do |card|
-      can? :read, card.note.project
+      can? :read, card.project
     end
     can :manage, Project do |project|
       !project.is_deleted && is_project_manager?(project, user)
@@ -52,9 +52,6 @@ class Ability
       else
         !project.is_private ? true : is_project_editor?(project, user)
       end
-    end
-    can :read, Note do |note|
-      can? :read, note.project
     end
     can :update, Recipe do |recipe|
       user.is_member_of? recipe.owner if recipe.owner_type == Group.name

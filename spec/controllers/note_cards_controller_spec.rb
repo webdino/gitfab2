@@ -4,8 +4,8 @@ describe NoteCardsController, type: :controller do
   render_views
 
   let(:project) { FactoryBot.create :user_project }
-  let(:note_card) { project.note.note_cards.create title: 'foo', description: 'bar' }
-  let(:new_note_card) { project.note.note_cards.build title: 'foo', description: 'bar' }
+  let(:note_card) { project.note_cards.create title: 'foo', description: 'bar' }
+  let(:new_note_card) { project.note_cards.build title: 'foo', description: 'bar' }
   let(:user) { project.owner }
 
   subject { response }
@@ -34,7 +34,7 @@ describe NoteCardsController, type: :controller do
       end
       it { is_expected.to render_template :create }
       it 'has 1 note_card' do
-        expect(project.note.note_cards.size).to eq 1
+        expect(project.note_cards.size).to eq 1
       end
     end
     context 'with attachments' do
@@ -46,7 +46,7 @@ describe NoteCardsController, type: :controller do
         project.reload
       end
       it "has 1 attachment of kind 'material'" do
-        note_card = project.note.note_cards.first
+        note_card = project.note_cards.first
         aggregate_failures do
           expect(note_card.attachments.size).to eq 1
           expect(note_card.attachments.first.kind).to eq('material')
@@ -80,7 +80,7 @@ describe NoteCardsController, type: :controller do
           note_card.reload
         end
         it { is_expected.to render_template :update }
-        it { expect(project.note.note_cards.first.title).to eq title_to_change }
+        it { expect(project.note_cards.first.title).to eq title_to_change }
       end
       context 'with a title and a description' do
         before do
@@ -91,7 +91,7 @@ describe NoteCardsController, type: :controller do
         it { is_expected.to render_template :update }
         it 'should change both a title and a description' do
           aggregate_failures do
-            note_card = project.note.note_cards.first
+            note_card = project.note_cards.first
             expect(note_card.title).to eq title_to_change
             expect(note_card.description).to eq description_to_change
           end
@@ -123,7 +123,7 @@ describe NoteCardsController, type: :controller do
     end
     it { is_expected.to render_template :destroy }
     it 'has 0 note_cards' do
-      expect(project.note.note_cards.size).to eq 0
+      expect(project.note_cards.size).to eq 0
     end
   end
 end
