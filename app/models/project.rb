@@ -5,8 +5,8 @@
 #  id          :integer          not null, primary key
 #  description :text(65535)
 #  draft       :text(65535)
-#  is_deleted  :boolean          default(FALSE)
-#  is_private  :boolean          default(FALSE)
+#  is_deleted  :boolean          default(FALSE), not null
+#  is_private  :boolean          default(FALSE), not null
 #  license     :integer
 #  likes_count :integer          default(0), not null
 #  name        :string(255)      not null
@@ -64,7 +64,7 @@ class Project < ActiveRecord::Base
     joins(:note_cards).where(cards: { id: note_cards_sql })
   end
   scope :ordered_by_owner, -> { order('owner_id ASC') }
-  scope :published, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
+  scope :published, -> { where(is_private: false, is_deleted: false) }
 
   accepts_nested_attributes_for :usages
 

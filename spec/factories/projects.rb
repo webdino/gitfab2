@@ -6,8 +6,8 @@
 #  id          :integer          not null, primary key
 #  description :text(65535)
 #  draft       :text(65535)
-#  is_deleted  :boolean          default(FALSE)
-#  is_private  :boolean          default(FALSE)
+#  is_deleted  :boolean          default(FALSE), not null
+#  is_private  :boolean          default(FALSE), not null
 #  license     :integer
 #  likes_count :integer          default(0), not null
 #  name        :string(255)      not null

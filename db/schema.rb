@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180712080601) do
+ActiveRecord::Schema.define(version: 20180717060440) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -164,8 +164,8 @@ ActiveRecord::Schema.define(version: 20180712080601) do
     t.string   "title",       limit: 255,                   null: false
     t.text     "description", limit: 65535
     t.text     "draft",       limit: 65535
-    t.boolean  "is_private",                default: false
-    t.boolean  "is_deleted",                default: false
+    t.boolean  "is_private",                default: false, null: false
+    t.boolean  "is_deleted",                default: false, null: false
     t.string   "owner_type",  limit: 255,                   null: false
     t.integer  "owner_id",    limit: 4,                     null: false
     t.string   "slug",        limit: 255
