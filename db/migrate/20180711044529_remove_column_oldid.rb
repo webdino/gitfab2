@@ -1,4 +1,4 @@
-class RemoveColumnOldid < ActiveRecord::Migration
+class RemoveColumnOldid < ActiveRecord::Migration[4.2]
   def change
     remove_column :attachments, :oldid, :string
     remove_column :cards, :oldid, :string

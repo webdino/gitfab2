@@ -1,4 +1,4 @@
-class DropNotes < ActiveRecord::Migration
+class DropNotes < ActiveRecord::Migration[4.2]
   def up
     # Migrate notes.project_id to cards.project_id
     ActiveRecord::Base.connection.execute(<<~SQL)

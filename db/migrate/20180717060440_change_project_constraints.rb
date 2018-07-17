@@ -1,4 +1,4 @@
-class ChangeProjectConstraints < ActiveRecord::Migration
+class ChangeProjectConstraints < ActiveRecord::Migration[4.2]
   def change
     ActiveRecord::Base.connection.execute(<<~SQL)
       UPDATE projects SET is_deleted = false WHERE is_deleted IS NULL

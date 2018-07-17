@@ -1,4 +1,4 @@
-class DropDeviseColumnFromUsers < ActiveRecord::Migration
+class DropDeviseColumnFromUsers < ActiveRecord::Migration[4.2]
   def change
     remove_column :users, "encrypted_password", :string, limit: 255
     remove_column :users, "remember_created_at", :datetime

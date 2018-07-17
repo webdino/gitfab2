@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,209 +12,194 @@
 
 ActiveRecord::Schema.define(version: 20180719073517) do
 
-  create_table "attachments", force: :cascade do |t|
-    t.string   "content",         limit: 255
-    t.string   "attachable_type", limit: 255,   null: false
-    t.integer  "attachable_id",   limit: 4,     null: false
-    t.string   "markup_id",       limit: 255
+  create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "content"
+    t.string   "attachable_type",               null: false
+    t.integer  "attachable_id",                 null: false
+    t.string   "markup_id"
     t.text     "link",            limit: 65535
     t.text     "title",           limit: 65535
-    t.string   "description",     limit: 255
-    t.string   "kind",            limit: 255
-    t.string   "content_tmp",     limit: 255
+    t.string   "description"
+    t.string   "kind"
+    t.string   "content_tmp"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable", using: :btree
   end
 
-  add_index "attachments", ["attachable_type", "attachable_id"], name: "index_attachments_attachable", using: :btree
-
-  create_table "cards", force: :cascade do |t|
-    t.string   "title",         limit: 255
+  create_table "cards", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "title"
     t.text     "description",   limit: 4294967295
-    t.string   "type",          limit: 255,                    null: false
-    t.integer  "position",      limit: 4,          default: 0, null: false
-    t.integer  "recipe_id",     limit: 4
-    t.integer  "project_id",    limit: 4
-    t.integer  "annotation_id", limit: 4
+    t.string   "type",                                         null: false
+    t.integer  "position",                         default: 0, null: false
+    t.integer  "recipe_id"
+    t.integer  "project_id"
+    t.integer  "annotation_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["annotation_id"], name: "index_cards_on_annotation_id", using: :btree
+    t.index ["project_id"], name: "index_cards_project_id", using: :btree
+    t.index ["recipe_id"], name: "index_cards_recipe_id", using: :btree
   end
 
-  add_index "cards", ["annotation_id"], name: "index_cards_on_annotation_id", using: :btree
-  add_index "cards", ["project_id"], name: "index_cards_project_id", using: :btree
-  add_index "cards", ["recipe_id"], name: "index_cards_recipe_id", using: :btree
-
-  create_table "collaborations", force: :cascade do |t|
-    t.string   "owner_type", limit: 255
-    t.integer  "owner_id",   limit: 4
-    t.integer  "project_id", limit: 4,   null: false
+  create_table "collaborations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "owner_type"
+    t.integer  "owner_id"
+    t.integer  "project_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["owner_type", "owner_id"], name: "index_collaborations_owner", using: :btree
+    t.index ["project_id"], name: "index_collaborations_project_id", using: :btree
   end
 
-  add_index "collaborations", ["owner_type", "owner_id"], name: "index_collaborations_owner", using: :btree
-  add_index "collaborations", ["project_id"], name: "index_collaborations_project_id", using: :btree
-
-  create_table "comments", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4,     null: false
-    t.integer  "card_id",    limit: 4,     null: false
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "user_id",                  null: false
+    t.integer  "card_id",                  null: false
     t.text     "body",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["card_id"], name: "fk_rails_c8dff2752a", using: :btree
+    t.index ["user_id"], name: "index_comments_user_id", using: :btree
   end
 
-  add_index "comments", ["card_id"], name: "fk_rails_c8dff2752a", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_user_id", using: :btree
+  create_table "contributions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "contributor_id", null: false
+    t.integer  "card_id",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["card_id"], name: "fk_rails_934cb2529a", using: :btree
+    t.index ["contributor_id"], name: "index_contributions_contributor_id", using: :btree
+  end
 
-  create_table "contributions", force: :cascade do |t|
-    t.integer  "contributor_id", limit: 4, null: false
-    t.integer  "card_id",        limit: 4, null: false
+  create_table "featured_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "feature_id"
+    t.string   "target_object_id"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["feature_id"], name: "index_featured_items_feature_id", using: :btree
+  end
+
+  create_table "features", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "class_name"
+    t.string   "name",                   null: false
+    t.integer  "category",   default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "contributions", ["card_id"], name: "fk_rails_934cb2529a", using: :btree
-  add_index "contributions", ["contributor_id"], name: "index_contributions_contributor_id", using: :btree
-
-  create_table "featured_items", force: :cascade do |t|
-    t.integer  "feature_id",       limit: 4
-    t.string   "target_object_id", limit: 255
-    t.string   "url",              limit: 255
+  create_table "figures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "content"
+    t.string   "figurable_type"
+    t.integer  "figurable_id"
+    t.string   "link"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["figurable_type", "figurable_id"], name: "index_figures_figurable", using: :btree
   end
 
-  add_index "featured_items", ["feature_id"], name: "index_featured_items_feature_id", using: :btree
-
-  create_table "features", force: :cascade do |t|
-    t.string   "class_name", limit: 255
-    t.string   "name",       limit: 255,             null: false
-    t.integer  "category",   limit: 4,   default: 0, null: false
+  create_table "groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "name"
+    t.string   "avatar"
+    t.string   "slug"
+    t.string   "url"
+    t.string   "location"
+    t.integer  "projects_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
+    t.index ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   end
 
-  create_table "figures", force: :cascade do |t|
-    t.string   "content",        limit: 255
-    t.string   "figurable_type", limit: 255
-    t.integer  "figurable_id",   limit: 4
-    t.string   "link",           limit: 255
+  create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "project_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["project_id", "user_id"], name: "index_likes_unique", unique: true, using: :btree
+    t.index ["project_id"], name: "index_likes_likable", using: :btree
+    t.index ["user_id"], name: "index_likes_liker_id", using: :btree
   end
 
-  add_index "figures", ["figurable_type", "figurable_id"], name: "index_figures_figurable", using: :btree
-
-  create_table "groups", force: :cascade do |t|
-    t.string   "name",           limit: 255
-    t.string   "avatar",         limit: 255
-    t.string   "slug",           limit: 255
-    t.string   "url",            limit: 255
-    t.string   "location",       limit: 255
-    t.integer  "projects_count", limit: 4,   default: 0, null: false
+  create_table "memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.string   "role",       default: "editor"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["group_id", "user_id"], name: "index_users_on_group_id_user_id", unique: true, using: :btree
   end
 
-  add_index "groups", ["name"], name: "index_users_on_name", unique: true, using: :btree
-  add_index "groups", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
-
-  create_table "likes", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4, null: false
-    t.integer  "project_id", limit: 4, null: false
+  create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "notifier_id"
+    t.integer  "notified_id"
+    t.string   "notificatable_url"
+    t.string   "notificatable_type"
+    t.string   "body"
+    t.boolean  "was_read",           default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["notified_id"], name: "index_notifications_on_notified_id", using: :btree
+    t.index ["notifier_id"], name: "index_notifications_on_notifier_id", using: :btree
   end
 
-  add_index "likes", ["project_id", "user_id"], name: "index_likes_unique", unique: true, using: :btree
-  add_index "likes", ["project_id"], name: "index_likes_likable", using: :btree
-  add_index "likes", ["user_id"], name: "index_likes_liker_id", using: :btree
-
-  create_table "memberships", force: :cascade do |t|
-    t.integer  "group_id",   limit: 4
-    t.integer  "user_id",    limit: 4
-    t.string   "role",       limit: 255, default: "editor"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "memberships", ["group_id", "user_id"], name: "index_users_on_group_id_user_id", unique: true, using: :btree
-
-  create_table "notifications", force: :cascade do |t|
-    t.integer  "notifier_id",        limit: 4
-    t.integer  "notified_id",        limit: 4
-    t.string   "notificatable_url",  limit: 255
-    t.string   "notificatable_type", limit: 255
-    t.string   "body",               limit: 255
-    t.boolean  "was_read",                       default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "notifications", ["notified_id"], name: "index_notifications_on_notified_id", using: :btree
-  add_index "notifications", ["notifier_id"], name: "index_notifications_on_notifier_id", using: :btree
-
-  create_table "projects", force: :cascade do |t|
-    t.string   "name",        limit: 255,                   null: false
-    t.string   "title",       limit: 255,                   null: false
+  create_table "projects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "name",                                      null: false
+    t.string   "title",                                     null: false
     t.text     "description", limit: 65535
     t.text     "draft",       limit: 65535
     t.boolean  "is_private",                default: false, null: false
     t.boolean  "is_deleted",                default: false, null: false
-    t.string   "owner_type",  limit: 255,                   null: false
-    t.integer  "owner_id",    limit: 4,                     null: false
-    t.string   "slug",        limit: 255
-    t.string   "scope",       limit: 255
-    t.integer  "license",     limit: 4
-    t.integer  "original_id", limit: 4
-    t.integer  "likes_count", limit: 4,     default: 0,     null: false
+    t.string   "owner_type",                                null: false
+    t.integer  "owner_id",                                  null: false
+    t.string   "slug"
+    t.string   "scope"
+    t.integer  "license"
+    t.integer  "original_id"
+    t.integer  "likes_count",               default: 0,     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["original_id"], name: "index_projects_original_id", using: :btree
+    t.index ["owner_type", "owner_id"], name: "index_projects_owner", using: :btree
+    t.index ["slug", "owner_type", "owner_id"], name: "index_projects_slug_owner", unique: true, using: :btree
+    t.index ["updated_at"], name: "index_projects_updated_at", using: :btree
   end
 
-  add_index "projects", ["original_id"], name: "index_projects_original_id", using: :btree
-  add_index "projects", ["owner_type", "owner_id"], name: "index_projects_owner", using: :btree
-  add_index "projects", ["slug", "owner_type", "owner_id"], name: "index_projects_slug_owner", unique: true, using: :btree
-  add_index "projects", ["updated_at"], name: "index_projects_updated_at", using: :btree
-
-  create_table "recipes", force: :cascade do |t|
-    t.integer  "project_id", limit: 4
+  create_table "recipes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["project_id"], name: "index_recipes_project_id", using: :btree
   end
 
-  add_index "recipes", ["project_id"], name: "index_recipes_project_id", using: :btree
-
-  create_table "tags", force: :cascade do |t|
-    t.integer  "user_id",    limit: 4
-    t.integer  "project_id", limit: 4
-    t.string   "name",       limit: 255
+  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.integer  "user_id"
+    t.integer  "project_id"
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["project_id"], name: "fk_rails_2f90b9163e", using: :btree
+    t.index ["user_id"], name: "index_tags_user_id", using: :btree
   end
 
-  add_index "tags", ["project_id"], name: "fk_rails_2f90b9163e", using: :btree
-  add_index "tags", ["user_id"], name: "index_tags_user_id", using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email",          limit: 255, default: "", null: false
-    t.string   "provider",       limit: 255
-    t.string   "uid",            limit: 255
-    t.string   "slug",           limit: 255
-    t.string   "name",           limit: 255
-    t.string   "fullname",       limit: 255
-    t.string   "avatar",         limit: 255
-    t.string   "url",            limit: 255
-    t.string   "location",       limit: 255
-    t.string   "authority",      limit: 255
-    t.integer  "projects_count", limit: 4,   default: 0,  null: false
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+    t.string   "email",          default: "", null: false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "slug"
+    t.string   "name"
+    t.string   "fullname"
+    t.string   "avatar"
+    t.string   "url"
+    t.string   "location"
+    t.string   "authority"
+    t.integer  "projects_count", default: 0,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
+    t.index ["slug"], name: "index_users_on_slug", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
-  add_index "users", ["slug"], name: "index_users_on_slug", unique: true, using: :btree
 
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "cards", "recipes", name: "fk_cards_recipe_id"

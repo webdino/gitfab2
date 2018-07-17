@@ -1,7 +1,7 @@
-class InitSchema < ActiveRecord::Migration
+class InitSchema < ActiveRecord::Migration[4.2]
   def up
     # Migrate from ridgepole gem
-    return if (ActiveRecord::Base.connection.data_sources - ["schema_migrations"]).present?
+    return if (ActiveRecord::Base.connection.data_sources - ["schema_migrations", "ar_internal_metadata"]).present?
 
     create_table "attachments", force: :cascade, options: 'ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC' do |t|
       t.string   "content",         limit: 255
