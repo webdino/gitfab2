@@ -1,0 +1,34 @@
+$(function() {
+  $(".project-form").validate();
+  $("#project_title").focus();
+
+  $(document).on("submit", ".project-form", function() {
+    const action = $("#project_owner_id").val();
+    $(".project-form").attr("action", action);
+  });
+
+  $(document).on("change", "select#project_group_id", function() {
+    $("#new_project").attr("action", $(this).val());
+  });
+
+  $("#delete-btn").click(() => confirm("Are you sure to remove this project?"));
+
+  $(document).on("click", "#recipes-new .submit", function(event) {
+    event.preventDefault();
+    $("form.project-form").submit();
+  });
+
+  $(document).on("click", ".license img", function(event) {
+    if ($(this).hasClass('unselectable')) {
+      alert('You cannot choose this license because of Creative Commons license restriction of the original content.');
+    } else {
+      $(".license img").removeClass("selected");
+      const target = $(this);
+      target.addClass("selected");
+      const value = target.attr("id").substring("license-".length);
+      $("#project_license").val(value);
+    }
+  });
+
+  $(document).on("submit", "#new_project.new_project", () => $('#loading-bar').show());
+});
