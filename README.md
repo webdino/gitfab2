@@ -47,18 +47,6 @@ $ bundle exec rake db:migrate
 
 ```bash
 $ bundle exec rails s
-[DEPRECATION] requiring "RMagick" is deprecated. Use "rmagick" instead
-warning: parser/current is loading parser/ruby21, which recognizes
-warning: 2.1.6-compliant syntax, but you are running 2.1.2.
-warning: please see https://github.com/whitequark/parser#compatibility-with-ruby-mri.
-=> Booting WEBrick
-=> Rails 4.1.16 application starting in development on http://0.0.0.0:3000
-=> Run `rails server -h` for more startup options
-=> Notice: server is listening on all interfaces (0.0.0.0). Consider using 127.0.0.1 (--binding option)
-=> Ctrl-C to shutdown server
-[2017-11-01 14:47:18] INFO  WEBrick 1.3.1
-[2017-11-01 14:47:19] INFO  ruby 2.1.2 (2014-05-08) [x86_64-linux]
-[2017-11-01 14:47:19] INFO  WEBrick::HTTPServer#start: pid=6533 port=3000
 ```
 
 Open http://localhost:3000 in your browser.
