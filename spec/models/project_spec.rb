@@ -167,24 +167,15 @@ describe Project do
 
   describe '#thumbnail' do
     context 'YouTube動画が設定されている時' do
-      before do
-        allow(project.figures.first).to receive_messages(link: 'hogehoge')
-      end
+      before { project.figures.first.update(link: 'hogehoge') }
       it '動画サムネイルURLを返すこと' do
         expect(project.thumbnail).to eq('https://img.youtube.com/vi/hogehoge/mqdefault.jpg')
       end
     end
     context '画像が設定されている時' do
-      let(:figure_content_small_url) { 'http://test.host/small.jpg' }
-      before do
-        uploader_content = double('content', small: figure_content_small_url)
-        allow(project.figures.first).to receive_messages(
-          link: nil,
-          content: uploader_content
-        )
-      end
+      before { project.figures.first.update(link: nil, content: fixture_file_upload('images/image.jpg')) }
       it '画像サムネイルURLを返すこと' do
-        expect(project.thumbnail).to eq(figure_content_small_url)
+        expect(project.thumbnail).to eq("/uploads/figure/content/#{project.figures.first.id}/small_image.jpg")
       end
     end
     context '画像・動画が設定されていない時' do

@@ -157,7 +157,7 @@ class Project < ActiveRecord::Base
     if figures.first.link.present?
       'https://img.youtube.com/vi/' + figures.first.link.split('/').last + '/mqdefault.jpg'
     elsif figures.first.content.present?
-      figures.first.content.small
+      figures.first.content.small.url
     else
       'fallback/blank.png'
     end
