@@ -164,7 +164,7 @@ class Project < ActiveRecord::Base
   def collaborators
     users = User.joins(:collaborations).where('collaborations.project_id' => id)
     groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
-    users.concat groups
+    users + groups
   end
 
   def licenses
