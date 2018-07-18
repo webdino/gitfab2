@@ -14,8 +14,12 @@ describe CommentsController, type: :controller do
         note_card = FactoryBot.create(:note_card, project: project)
 
         sign_in user1
-        xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
-                            note_card_id: note_card.id, comment: { body: 'foo' }
+        post :create,
+          params: {
+            user_id: project.owner.to_param, project_id: project.id,
+            note_card_id: note_card.id, comment: { body: 'foo' }
+          },
+          xhr: true
       end
       it 'should render create with ok(200)' do
         aggregate_failures do
@@ -30,8 +34,12 @@ describe CommentsController, type: :controller do
         note_card = FactoryBot.create(:note_card, project: project)
 
         sign_in user1
-        xhr :post, :create, user_id: project.owner.to_param, project_id: project.id,
-                            note_card_id: note_card.id, comment: { body: '' }
+        post :create,
+          params: {
+            user_id: project.owner.to_param, project_id: project.id,
+            note_card_id: note_card.id, comment: { body: '' }
+          },
+          xhr: true
       end
       it do
         aggregate_failures do
@@ -47,8 +55,9 @@ describe CommentsController, type: :controller do
     let(:comment) { FactoryBot.create(:comment, user: user1, card: note_card) }
     before do
       sign_in project.owner
-      xhr :delete, :destroy, user_id: project.owner.to_param, project_id: project.id,
-                             note_card_id: note_card.id, id: comment.id
+      delete :destroy,
+        params: { user_id: project.owner.to_param, project_id: project.id, note_card_id: note_card.id, id: comment.id },
+        xhr: true
     end
     it { expect(note_card.comments.size).to eq 0 }
     it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true  }) }

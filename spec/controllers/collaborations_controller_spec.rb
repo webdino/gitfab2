@@ -12,8 +12,7 @@ describe CollaborationsController, type: :controller do
   describe 'POST create' do
     before do
       sign_in project.owner
-      xhr :post, :create, user_id: project.owner.to_param,
-                          collaboration: collaboration_params
+      post :create, params: { user_id: project.owner.to_param, collaboration: collaboration_params }, xhr: true
     end
 
     context 'for user project' do
@@ -34,8 +33,7 @@ describe CollaborationsController, type: :controller do
     let(:collaboration) { user1.collaborations.create project_id: project.id }
     before do
       sign_in user1
-      xhr :delete, :destroy, user_id: user1.to_param, project_id: project.id,
-                             id: collaboration.id
+      delete :destroy, params: { user_id: user1.to_param, project_id: project.id, id: collaboration.id }, xhr: true
     end
     it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true, id: collaboration.id }) }
   end

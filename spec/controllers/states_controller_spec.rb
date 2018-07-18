@@ -12,14 +12,14 @@ describe StatesController, type: :controller do
   describe 'GET new' do
     before do
       sign_in project.owner
-      xhr :get, :new, owner_name: project.owner.name, project_id: project.name
+      get :new, params: { owner_name: project.owner.name, project_id: project.name }, xhr: true
     end
     it { is_expected.to render_template :_card_form }
   end
 
   describe 'GET show' do
     before do
-      xhr :get, :show, owner_name: project.owner.slug, project_id: project.name, id: state.id
+      get :show, params: { owner_name: project.owner.slug, project_id: project.name, id: state.id }, xhr: true
     end
     it { is_expected.to render_template :show, formats: :json }
   end
@@ -27,7 +27,7 @@ describe StatesController, type: :controller do
   describe 'GET edit' do
     before do
       sign_in project.owner
-      xhr :get, :edit, owner_name: project.owner, project_id: project, id: state
+      get :edit, params: { owner_name: project.owner, project_id: project, id: state }, xhr: true
     end
     it { is_expected.to render_template :edit }
   end
@@ -36,8 +36,12 @@ describe StatesController, type: :controller do
     context 'with proper values' do
       before do
         sign_in project.owner
-        xhr :post, :create, user_id: project.owner, project_id: project,
-                            state: { type: Card::State.name, title: 'foo', description: 'bar' }
+        post :create,
+          params: {
+            user_id: project.owner, project_id: project,
+            state: { type: Card::State.name, title: 'foo', description: 'bar' }
+          },
+          xhr: true
         project.reload
       end
       it { is_expected.to render_template :create }
@@ -48,8 +52,12 @@ describe StatesController, type: :controller do
     context 'with invalid values' do
       before do
         sign_in project.owner
-        xhr :post, :create, user_id: project.owner, project_id: project,
-                            state: { type: '', title: 'foo', description: 'bar' }
+        post :create,
+          params: {
+            user_id: project.owner, project_id: project,
+            state: { type: '', title: 'foo', description: 'bar' }
+          },
+          xhr: true
       end
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
     end
@@ -61,9 +69,12 @@ describe StatesController, type: :controller do
 
       before do
         sign_in project.owner
-        xhr :patch, :update, user_id: project.owner,
-                             project_id: project.id, id: state.id,
-                             state: { title: 'new_title', description: 'new_desc' }
+        patch :update,
+          params: {
+            user_id: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
       end
       it 'should have new title and new description' do
         state.reload
@@ -75,9 +86,12 @@ describe StatesController, type: :controller do
     context 'with invalid values' do
       before do
         sign_in project.owner
-        xhr :patch, :update, user_id: project.owner,
-                             project_id: project.id, id: state.id,
-                             state: { type: '', title: 'foo', description: 'bar' }
+        patch :update,
+          params: {
+            user_id: project.owner, project_id: project.id, id: state.id,
+            state: { type: '', title: 'foo', description: 'bar' }
+          },
+          xhr: true
       end
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
     end
@@ -87,8 +101,7 @@ describe StatesController, type: :controller do
     context 'by who can manage the state' do
       before do
         sign_in project.owner
-        xhr :delete, :destroy, owner_name: project.owner,
-                               project_id: project.name, id: state.id
+        delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
       end
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     end
@@ -98,8 +111,9 @@ describe StatesController, type: :controller do
     let(:state_2) { project.recipe.states.create type: Card::State.name, description: 'bar' }
     before do
       sign_in project.owner
-      xhr :post, :to_annotation, owner_name: project.owner,
-                                 project_id: project.name, state_id: state_2.id, dst_state_id: state.id
+      post :to_annotation,
+        params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+        xhr: true
       project.reload
     end
     it 'creates an annotation from a state' do

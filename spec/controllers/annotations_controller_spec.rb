@@ -12,7 +12,7 @@ describe AnnotationsController, type: :controller do
     before do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: 'foo'
-      xhr :get, :new, owner_name: user, project_id: project, state_id: state.id
+      get :new, params: { owner_name: user, project_id: project, state_id: state.id }, xhr: true
     end
     it { is_expected.to render_template :new }
   end
@@ -22,8 +22,9 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
-      xhr :get, :edit, owner_name: user, project_id: project,
-                       state_id: state.id, id: annotation.id
+      get :edit, params: {
+        owner_name: user, project_id: project, state_id: state.id, id: annotation.id
+      }, xhr: true
     end
     it { is_expected.to render_template :edit }
   end
@@ -33,8 +34,9 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
-      xhr :get, :show, owner_name: user, project_id: project,
-                       state_id: state.id, id: annotation.id
+      get :show,
+        params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+        xhr: true
     end
     it { is_expected.to render_template :show }
   end
@@ -44,8 +46,9 @@ describe AnnotationsController, type: :controller do
       before do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: 'foo'
-        xhr :post, :create, user_id: user, project_id: project,
-                            state_id: state.id, annotation: { description: 'ann' }
+        post :create,
+          params: { user_id: user, project_id: project, state_id: state.id, annotation: { description: 'ann' } },
+          xhr: true
       end
       it { is_expected.to render_template :create }
     end
@@ -57,8 +60,12 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: 'foo'
         annotation = state.annotations.create description: 'ann'
-        xhr :patch, :update, user_id: user, project_id: project,
-                             state_id: state.id, id: annotation.id, annotation: { description: '_ann' }
+        patch :update,
+          params: {
+            user_id: user, project_id: project, state_id: state.id,
+            id: annotation.id, annotation: { description: '_ann' }
+          },
+          xhr: true
       end
       it { is_expected.to render_template :update }
     end
@@ -67,8 +74,12 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: 'foo'
         annotation = state.annotations.create description: 'ann'
-        xhr :patch, :update, user_id: user, project_id: project,
-                             state_id: state.id, id: annotation.id, annotation: { type: nil, description: '_ann' }
+        patch :update,
+          params: {
+            user_id: user, project_id: project, state_id: state.id,
+            id: annotation.id, annotation: { type: nil, description: '_ann' }
+          },
+          xhr: true
       end
       it { expect(response.status).to eq(400) }
     end
@@ -79,8 +90,9 @@ describe AnnotationsController, type: :controller do
       sign_in user
       state = project.recipe.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
-      xhr :delete, :destroy, owner_name: user, project_id: project,
-                             state_id: state.id, id: annotation.id
+      delete :destroy,
+        params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+        xhr: true
     end
     it {  expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
   end
@@ -92,8 +104,9 @@ describe AnnotationsController, type: :controller do
     #     sign_in user
     #     state = project.recipe.states.create type: Card::State.name, description: "foo"
     #     annotation = state.annotations.create description: "ann"
-    #     xhr :get, :to_state, owner_name: user.slug, project_id: project,
-    #       state_id: state.id, annotation_id: annotation.id
+    #     get :to_state,
+    #       params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: annotation.id },
+    #       xhr: true
     #   end
     #   it{expect(project.recipe.states.first.annotations.length).to eq(0)}
     # end
@@ -102,8 +115,9 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: 'foo'
         state.annotations.create description: 'ann'
-        xhr :get, :to_state, owner_name: user.slug, project_id: project,
-                             state_id: state.id, annotation_id: 'unexisted_id'
+        get :to_state,
+          params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: 'unexisted_id' },
+          xhr: true
       end
       it { expect(response.status).to eq(404) }
     end

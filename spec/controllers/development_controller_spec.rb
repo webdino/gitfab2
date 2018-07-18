@@ -10,7 +10,7 @@ describe DevelopmentController, type: :controller do
     before do
       sign_in user
       allow(controller.request).to receive(:referer).and_return('/foo.html')
-      post :su, user_id: other.id
+      post :su, params: { user_id: other.id }
     end
     it { expect(response).to redirect_to '/foo.html' }
   end

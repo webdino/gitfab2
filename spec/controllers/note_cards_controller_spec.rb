@@ -11,25 +11,19 @@ describe NoteCardsController, type: :controller do
   subject { response }
 
   describe 'GET new' do
-    before do
-      xhr :get, :new, owner_name: user, project_id: project
-    end
+    before { get :new, params: { owner_name: user, project_id: project }, xhr: true }
     it { is_expected.to render_template :new }
   end
 
   describe 'GET edit' do
-    before do
-      xhr :get, :edit, owner_name: user, project_id: project,
-                       id: note_card.id
-    end
+    before { get :edit, params: { owner_name: user, project_id: project, id: note_card.id }, xhr: true }
     it { is_expected.to render_template :edit }
   end
 
   describe 'POST create' do
     context 'without attachments' do
       before do
-        xhr :post, :create, user_id: user, project_id: project,
-                            note_card: new_note_card.attributes
+        post :create, params: { user_id: user, project_id: project, note_card: new_note_card.attributes }, xhr: true
         project.reload
       end
       it { is_expected.to render_template :create }
@@ -39,10 +33,12 @@ describe NoteCardsController, type: :controller do
     end
     context 'with attachments' do
       before do
-        xhr :post, :create, user_id: user, project_id: project,
-                            note_card: new_note_card.attributes.merge(
-                              attachments_attributes: [FactoryBot.attributes_for(:attachment_material)]
-                            )
+        post :create, params: {
+          user_id: user, project_id: project,
+          note_card: new_note_card.attributes.merge(
+            attachments_attributes: [FactoryBot.attributes_for(:attachment_material)]
+          )
+        }, xhr: true
         project.reload
       end
       it "has 1 attachment of kind 'material'" do
@@ -57,7 +53,9 @@ describe NoteCardsController, type: :controller do
       before do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
-        xhr :post, :create, user_id: user, project_id: project, note_card: { title: '', description: '' }
+        post :create,
+          params: { user_id: user, project_id: project, note_card: { title: '', description: '' } },
+          xhr: true
       end
       it do
         aggregate_failures do
@@ -75,8 +73,9 @@ describe NoteCardsController, type: :controller do
 
       context 'with a title only' do
         before do
-          xhr :patch, :update, user_id: user, project_id: project,
-                               id: note_card.id, note_card: { title: title_to_change }
+          patch :update,
+            params: { user_id: user, project_id: project, id: note_card.id, note_card: { title: title_to_change } },
+            xhr: true
           note_card.reload
         end
         it { is_expected.to render_template :update }
@@ -84,8 +83,12 @@ describe NoteCardsController, type: :controller do
       end
       context 'with a title and a description' do
         before do
-          xhr :patch, :update, user_id: user, project_id: project,
-                               id: note_card.id, note_card: { title: title_to_change, description: description_to_change }
+          patch :update,
+            params: {
+              user_id: user, project_id: project, id: note_card.id,
+              note_card: { title: title_to_change, description: description_to_change }
+            },
+            xhr: true
           note_card.reload
         end
         it { is_expected.to render_template :update }
@@ -103,8 +106,9 @@ describe NoteCardsController, type: :controller do
       before do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
-        xhr :patch, :update, user_id: user, project_id: project,
-                             id: note_card.id, note_card: { title: '', description: '' }
+        patch :update,
+          params: { user_id: user, project_id: project, id: note_card.id, note_card: { title: '', description: '' } },
+          xhr: true
       end
       it do
         aggregate_failures do
@@ -117,8 +121,7 @@ describe NoteCardsController, type: :controller do
 
   describe 'DELETE destroy' do
     before do
-      xhr :delete, :destroy, owner_name: user, project_id: project,
-                             id: note_card.id
+      delete :destroy, params: { owner_name: user, project_id: project, id: note_card.id }, xhr: true
       project.reload
     end
     it { is_expected.to render_template :destroy }

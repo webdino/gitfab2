@@ -10,7 +10,7 @@ describe CollaboratorsController, type: :controller do
   let(:user_2) { FactoryBot.create :user }
 
   describe 'GET index' do
-    before { get :index, owner_name: project.owner.name, project_id: project }
+    before { get :index, params: { owner_name: project.owner.name, project_id: project } }
     it { is_expected.to render_template :index }
   end
 
@@ -19,14 +19,18 @@ describe CollaboratorsController, type: :controller do
       context 'with valid parameters' do
         before do
           sign_in project.owner
-          xhr :post, :create, user_id: project.owner, project_id: project, collaborator_name: user_2.slug
+          post :create,
+            params: { user_id: project.owner, project_id: project, collaborator_name: user_2.slug },
+            xhr: true
         end
         it { is_expected.to render_template :create }
       end
       context 'with invalid parameters' do
         before do
           sign_in project.owner
-          xhr :post, :create, user_id: project.owner, project_id: project, collaborator_name: 'unknownuser'
+          post :create,
+            params: { user_id: project.owner, project_id: project, collaborator_name: 'unknownuser' },
+            xhr: true
         end
         it do
           is_expected.to have_http_status(400)

@@ -21,7 +21,7 @@ describe GroupsController, type: :controller do
     before do
       sign_in user
       user.memberships.create group_id: group.id
-      get :show, id: group.id
+      get :show, params: { id: group.id }
     end
     it { is_expected.to render_template :show }
   end
@@ -37,7 +37,7 @@ describe GroupsController, type: :controller do
   describe 'POST create' do
     before do
       sign_in user
-      post :create, group: group_params
+      post :create, params: { group: group_params }
     end
     context 'with valid params' do
       let(:group_params) { FactoryBot.build(:group).attributes }
@@ -53,7 +53,7 @@ describe GroupsController, type: :controller do
     before do
       sign_in user
       user.memberships.create group_id: group.id
-      get :edit, id: group.id
+      get :edit, params: { id: group.id }
     end
     it { is_expected.to render_template :edit }
   end
@@ -64,7 +64,7 @@ describe GroupsController, type: :controller do
       before do
         sign_in user
         user.memberships.create group_id: group.id
-        patch :update, id: group.id, group: group_params
+        patch :update, params: { id: group.id, group: group_params }
       end
       context 'with valid params' do
         it_behaves_like 'redirected'
@@ -81,7 +81,7 @@ describe GroupsController, type: :controller do
         @orig_group = group.dup
         sign_in other
         other.memberships.create group_id: group.id
-        patch :update, id: group.id, group: group_params
+        patch :update, params: { id: group.id, group: group_params }
       end
       it_behaves_like 'unauthorized'
     end
@@ -92,7 +92,7 @@ describe GroupsController, type: :controller do
       before do
         sign_in user
         user.memberships.create group_id: group.id
-        delete :destroy, id: group.id
+        delete :destroy, params: { id: group.id }
       end
       it_behaves_like 'redirected'
     end
@@ -101,7 +101,7 @@ describe GroupsController, type: :controller do
         sign_in other
         user.memberships.create group_id: group.id
         other.memberships.create group_id: group.id
-        delete :destroy, id: group.id
+        delete :destroy, params: { id: group.id }
       end
       it_behaves_like 'unauthorized'
     end

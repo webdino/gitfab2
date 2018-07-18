@@ -17,9 +17,7 @@ describe RecipesController, type: :controller do
 
   describe 'GET show' do
     shared_examples "a request rendering 'show' template" do
-      before do
-        get :show, owner_name: project.owner.name, project_id: project.name
-      end
+      before { get :show, params: { owner_name: project.owner.name, project_id: project.name } }
       it { is_expected.to render_template :show }
     end
     include_context 'with a user project' do
@@ -36,12 +34,16 @@ describe RecipesController, type: :controller do
       let(:card2) { project.recipe.states.create description: 'foo', position: 2 }
       let(:card3) { project.recipe.states.create description: 'foo', position: 3 }
       before do
-        xhr :patch, :update, user_id: project.owner.name, project_id: project.name,
-                             recipe: { states_attributes: [
-                               { id: card1.id, position: 3 },
-                               { id: card2.id, position: 2 },
-                               { id: card3.id, position: 1 }
-                             ] }
+        patch :update,
+          params: {
+            user_id: project.owner.name, project_id: project.name,
+            recipe: { states_attributes: [
+              { id: card1.id, position: 3 },
+              { id: card2.id, position: 2 },
+              { id: card3.id, position: 1 }
+            ] }
+          },
+          xhr: true
         card1.reload
         card2.reload
         card3.reload

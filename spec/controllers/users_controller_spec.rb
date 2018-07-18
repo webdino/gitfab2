@@ -14,14 +14,14 @@ describe UsersController, type: :controller do
 
   describe 'GET edit' do
     before do
-      get :edit, id: user
+      get :edit, params: { id: user }
     end
     it { is_expected.to render_template :edit }
   end
 
   describe 'PATCH update' do
     before do
-      patch :update, id: user, user: { name: 'foo' }
+      patch :update, params: { id: user, user: { name: 'foo' } }
       user.reload
     end
     it { is_expected.to redirect_to edit_user_path(user) }
@@ -29,7 +29,7 @@ describe UsersController, type: :controller do
 
   describe 'DELETE destroy' do
     before do
-      delete :destroy, id: user
+      delete :destroy, params: { id: user }
     end
     it { is_expected.to redirect_to root_path }
   end

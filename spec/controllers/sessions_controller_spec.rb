@@ -1,6 +1,6 @@
 RSpec.describe SessionsController, type: :controller do
   describe "POST #create" do
-    subject { get :create, provider: "github" }
+    subject { get :create, params: { provider: "github" } }
 
     before { request.env["omniauth.auth"] = auth_hash }
     let(:auth_hash) do

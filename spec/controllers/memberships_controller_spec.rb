@@ -9,7 +9,7 @@ describe MembershipsController, type: :controller do
     before do
       sign_in user
       Group.create name: 'foo'
-      get :index, user_id: user.id
+      get :index, params: { user_id: user.id }
     end
     it { is_expected.to render_template :index }
   end
@@ -19,8 +19,7 @@ describe MembershipsController, type: :controller do
       before do
         sign_in user
         group = Group.create name: 'foo'
-        xhr :post, :create, user_id: user.id,
-                            membership: { group_id: group.id.to_s }, format: :json
+        post :create, params: { user_id: user.id, membership: { group_id: group.id.to_s } }, format: :json, xhr: true
       end
       it_behaves_like 'success'
       it_behaves_like 'render template', 'create'
@@ -28,8 +27,7 @@ describe MembershipsController, type: :controller do
     context 'with invalid params' do
       before do
         sign_in user
-        xhr :post, :create, user_id: user.id,
-                            membership: { group_id: 'unexisted_group' }, format: :json
+        post :create, params: { user_id: user.id, membership: { group_id: 'unexisted_group' } }, format: :json, xhr: true
       end
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'create error' }) }
     end
@@ -42,8 +40,7 @@ describe MembershipsController, type: :controller do
         sign_in user
         group = Group.create name: 'foo'
         membership = user.memberships.create group_id: group.id
-        patch :update, user_id: user.id, id: membership.id,
-                       membership: membership_params, format: :json
+        patch :update, params: { user_id: user.id, id: membership.id, membership: membership_params }, format: :json
       end
       it { is_expected.to render_template :update }
     end
@@ -54,8 +51,7 @@ describe MembershipsController, type: :controller do
         sign_in user
         group = Group.create name: 'foo'
         membership = user.memberships.create group_id: group.id
-        patch :update, user_id: user.id, id: membership.id,
-                       membership: membership_params, format: :json
+        patch :update, params: { user_id: user.id, id: membership.id, membership: membership_params }, format: :json
       end
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'update error' }) }
     end
@@ -67,8 +63,7 @@ describe MembershipsController, type: :controller do
         sign_in user
         group = Group.create name: 'foo'
         membership = user.memberships.create group_id: group.id
-        delete :destroy, user_id: user.id,
-                         id: membership.id, format: :json
+        delete :destroy, params: { user_id: user.id, id: membership.id }, format: :json
       end
       it { is_expected.to render_template :destroy }
     end

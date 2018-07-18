@@ -5,28 +5,28 @@ describe GlobalProjectsController, type: :controller do
 
   describe 'GET index' do
     context 'without queries' do
-      before { xhr :get, :index }
+      before { get :index, xhr: true }
       it { expect(response).to render_template :index }
     end
     context 'with a querie' do
-      before { xhr :get, :index, q: 'foo' }
+      before { get :index, params: { q: 'foo' }, xhr: true }
       it { expect(response).to render_template :index }
     end
 
     context 'with multi queries' do
-      before { xhr :get, :index, q: 'foo bar' }
+      before { get :index, params: { q: 'foo bar' }, xhr: true }
       it { expect(response).to render_template :index }
     end
 
     context 'with empty queries' do
-      before { xhr :get, :index, q: '' }
+      before { get :index, params: { q: '' }, xhr: true }
       it { expect(response).to render_template :index }
     end
   end
 
   shared_examples_for '検索結果' do |query|
     it do
-      get :index, q: query
+      get :index, params: { q: query }
       expect(assigns(:projects)).to include(public_user_project, public_group_project)
 
       aggregate_failures do
@@ -39,7 +39,7 @@ describe GlobalProjectsController, type: :controller do
 
   shared_examples_for '検索結果(public user project only)' do |query|
     it do
-      get :index, q: query
+      get :index, params: { q: query }
       expect(assigns(:projects)).to include(public_user_project)
 
       aggregate_failures do
@@ -53,7 +53,7 @@ describe GlobalProjectsController, type: :controller do
 
   shared_examples_for '検索結果(public group project only)' do |query|
     it do
-      get :index, q: query
+      get :index, params: { q: query }
       expect(assigns(:projects)).to include(public_group_project)
 
       aggregate_failures do

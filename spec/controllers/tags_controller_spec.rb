@@ -9,7 +9,9 @@ describe TagsController, type: :controller do
   describe 'POST create' do
     before do
       sign_in user
-      xhr :post, :create, user_id: project.owner, project_id: project, tag: { name: 'foo', user_id: user.id }
+      post :create,
+        params: { user_id: project.owner, project_id: project, tag: { name: 'foo', user_id: user.id } },
+        xhr: true
       project.reload
     end
     it_behaves_like 'success'
@@ -22,7 +24,7 @@ describe TagsController, type: :controller do
     before do
       tag = project.tags.create!(name: 'tag-to-be-deleted', user: user)
       sign_in user
-      xhr :delete, :destroy, user_id: project.owner, project_id: project, id: tag.id
+      delete :destroy, params: { user_id: project.owner, project_id: project, id: tag.id }, xhr: true
       project.reload
     end
     it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }

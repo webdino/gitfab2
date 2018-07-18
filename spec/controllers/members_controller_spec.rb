@@ -8,7 +8,7 @@ describe MembersController, type: :controller do
 
   describe 'POST create' do
     before do
-      xhr :post, :create, group_id: group.id, member_name: user.name
+      post :create, params: { group_id: group.id, member_name: user.name }, xhr: true
       user.reload
     end
     it { is_expected.to render_template :create }
