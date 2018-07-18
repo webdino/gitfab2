@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '4.2.10'
 
-gem 'acts_as_list'
 gem 'after_commit_action'
 gem 'cancancan'
 gem 'carrierwave'
@@ -33,6 +32,10 @@ gem 'jquery-rails'
 gem 'mini_racer'
 gem 'sass-rails'
 gem 'uglifier'
+
+# このコミット(0.9.10)以降、テストがたまに落ちるようになる
+# https://github.com/swanandp/acts_as_list/commit/4066ebf96e1020fa3d51cfd7ee26fd267877ad97
+gem 'acts_as_list', '0.9.9'
 
 group :development, :test do
   gem 'better_errors'
