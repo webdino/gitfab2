@@ -11,9 +11,8 @@
 #
 # Indexes
 #
-#  fk_rails_c8dff2752a        (card_id)
-#  index_comments_created_at  (created_at)
-#  index_comments_user_id     (user_id)
+#  fk_rails_c8dff2752a     (card_id)
+#  index_comments_user_id  (user_id)
 #
 # Foreign Keys
 #

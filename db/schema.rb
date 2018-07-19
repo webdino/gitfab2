@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719053717) do
+ActiveRecord::Schema.define(version: 20180719073517) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -65,7 +65,6 @@ ActiveRecord::Schema.define(version: 20180719053717) do
   end
 
   add_index "comments", ["card_id"], name: "fk_rails_c8dff2752a", using: :btree
-  add_index "comments", ["created_at"], name: "index_comments_created_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_user_id", using: :btree
 
   create_table "contributions", force: :cascade do |t|
