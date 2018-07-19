@@ -9,7 +9,7 @@ describe DevelopmentController, type: :controller do
   describe 'POST su' do
     before do
       sign_in user
-      allow(controller.request).to receive(:referer).and_return('/foo.html')
+      request.env['HTTP_REFERER'] = '/foo.html'
       post :su, params: { user_id: other.id }
     end
     it { expect(response).to redirect_to '/foo.html' }
