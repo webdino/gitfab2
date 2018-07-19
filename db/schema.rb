@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180717060440) do
+ActiveRecord::Schema.define(version: 20180719015347) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -191,15 +191,14 @@ ActiveRecord::Schema.define(version: 20180717060440) do
   add_index "recipes", ["project_id"], name: "index_recipes_project_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.integer  "user_id",       limit: 4
-    t.string   "taggable_type", limit: 255
-    t.integer  "taggable_id",   limit: 4
-    t.string   "name",          limit: 255
+    t.integer  "user_id",    limit: 4
+    t.integer  "project_id", limit: 4
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tags", ["taggable_type", "taggable_id"], name: "index_tags_taggable", using: :btree
+  add_index "tags", ["project_id"], name: "fk_rails_2f90b9163e", using: :btree
   add_index "tags", ["user_id"], name: "index_tags_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
@@ -231,5 +230,6 @@ ActiveRecord::Schema.define(version: 20180717060440) do
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
   add_foreign_key "recipes", "projects", name: "fk_recipes_project_id"
+  add_foreign_key "tags", "projects"
   add_foreign_key "tags", "users", name: "fk_tags_user_id"
 end

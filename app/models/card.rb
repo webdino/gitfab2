@@ -50,10 +50,6 @@ class Card < ActiveRecord::Base
     end
   end
 
-  def is_taggable?
-    self.is_a? Taggable
-  end
-
   def htmlclass
     type.split(/::/).last.underscore
   end

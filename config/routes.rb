@@ -42,10 +42,6 @@ Gitfab2::Application.routes.draw do
     resources :comments, only: [:create, :destroy]
   end
 
-  concern :tags do
-    resources :tags, only: [:create, :destroy]
-  end
-
   resources :owners, only: [:index]
 
   concern :owner do
@@ -54,12 +50,13 @@ Gitfab2::Application.routes.draw do
       get 'recipe_cards_list'
       get 'relation_tree'
     end
-    resources :projects, only: [:create, :update], concerns: :tags do
+    resources :projects, only: [:create, :update] do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
       end
       resources :note_cards, only: [:create, :update], concerns: :comments
+      resources :tags, only: [:create, :destroy]
       resources :usages, only: [:create, :update]
     end
   end

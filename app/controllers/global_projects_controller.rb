@@ -23,7 +23,7 @@ class GlobalProjectsController < ApplicationController
     end
 
     selected_tags_length = 30
-    @all_tags = Tag.where(taggable_type: 'Project').where.not(name: '').group(:name).order('COUNT(id) DESC').pluck(:name)
+    @all_tags = Tag.where.not(name: '').group(:name).order('COUNT(id) DESC').pluck(:name)
     @selected_tags = view_context.selected_tags @all_tags, selected_tags_length
 
     @selected_tools = view_context.selected_tools

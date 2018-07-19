@@ -11,12 +11,6 @@ describe Card::State do
     it { expect(Card::State).to be_respond_to(:ordered_by_position) }
   end
 
-  describe '#is_taggable?' do
-    let(:state) { FactoryBot.build :state }
-    subject { state.is_taggable? }
-    it { is_expected.to be false }
-  end
-
   describe '#to_annotation!(parent_state)' do
     let!(:state) { FactoryBot.create(:state) }
     let!(:parent_state) { FactoryBot.create(:state) }

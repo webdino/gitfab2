@@ -57,10 +57,6 @@
         == af.text_field :markup_id, class: :markup_id
         == af.file_field :content, class: :content
       == f.link_to_add "Add a Attachments", :attachments, id: "add-attachment"
-    - if resources.last.is_taggable?
-      'Tags
-      == f.fields_for :tags do |tf|
-        == tf.text_field :name
     .invalid-form-error-message
     == f.submit "Submit", class: "submit btn"
     == link_to "Cancel", "", class: "cancel-btn btn"

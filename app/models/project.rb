@@ -31,18 +31,18 @@ class Project < ActiveRecord::Base
   include Figurable
   include Commentable
   include Contributable
-  include Taggable
   include Notificatable
   include AfterCommitAction
 
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
-  has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
   belongs_to :owner, polymorphic: true, required: true
+  has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   has_many :likes, dependent: :destroy
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
+  has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_one :recipe, dependent: :destroy
 

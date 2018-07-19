@@ -10,12 +10,6 @@ describe Card::Annotation do
     it { expect(Card::Annotation).to be_respond_to(:ordered_by_position) }
   end
 
-  describe '#is_taggable?' do
-    let(:annotation) { FactoryBot.create(:annotation) }
-    subject { annotation.is_taggable? }
-    it { is_expected.to be false }
-  end
-
   describe '#to_state!(recipe)' do
     let!(:annotation) { FactoryBot.create(:annotation) }
     let!(:recipe) { FactoryBot.create(:recipe) }
