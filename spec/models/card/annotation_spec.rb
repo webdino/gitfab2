@@ -3,7 +3,7 @@
 describe Card::Annotation do
   it_behaves_like 'Card', :annotation
   it_behaves_like 'Orderable', :annotation
-  it_behaves_like 'Orderable Scoped incrementation', [:annotation], :annotatable
+  it_behaves_like 'Orderable Scoped incrementation', [:annotation], :annotation_id
 
   describe '.ordered_by_position' do
     let(:annotation) { FactoryBot.create(:annotation) }

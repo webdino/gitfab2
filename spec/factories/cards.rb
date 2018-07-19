@@ -3,23 +3,22 @@
 #
 # Table name: cards
 #
-#  id               :integer          not null, primary key
-#  annotatable_type :string(255)
-#  description      :text(4294967295)
-#  position         :integer          default(0), not null
-#  title            :string(255)
-#  type             :string(255)      not null
-#  created_at       :datetime
-#  updated_at       :datetime
-#  annotatable_id   :integer
-#  project_id       :integer
-#  recipe_id        :integer
+#  id            :integer          not null, primary key
+#  description   :text(4294967295)
+#  position      :integer          default(0), not null
+#  title         :string(255)
+#  type          :string(255)      not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  annotation_id :integer
+#  project_id    :integer
+#  recipe_id     :integer
 #
 # Indexes
 #
-#  index_cards_annotatable  (annotatable_type,annotatable_id)
-#  index_cards_project_id   (project_id)
-#  index_cards_recipe_id    (recipe_id)
+#  index_cards_on_annotation_id  (annotation_id)
+#  index_cards_project_id        (project_id)
+#  index_cards_recipe_id         (recipe_id)
 #
 # Foreign Keys
 #
@@ -44,13 +43,7 @@ FactoryBot.define do
   factory :annotation, class: Card::Annotation, parent: :card do
     type Card::Annotation.name
     sequence(:title) { |n| "Annotation #{n}" }
-
-    after(:build) do |annotation|
-      # TODO: annotation.annotatable がnilであることを許容するのか要確認
-      annotatable = annotation.annotatable || FactoryBot.build(:state)
-      annotatable.annotations << annotation
-      annotatable.save!
-    end
+    association :card, factory: :state
   end
 
   factory :recipe_card, class: Card::RecipeCard, parent: :card do

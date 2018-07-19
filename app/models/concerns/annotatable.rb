@@ -4,7 +4,7 @@ module Annotatable
     has_many :annotations,
              ->{ order(:position) },
              class_name: 'Card::Annotation',
-             as: :annotatable,
+             foreign_key: :annotation_id,
              dependent: :destroy
     accepts_nested_attributes_for :annotations
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719042659) do
+ActiveRecord::Schema.define(version: 20180719053717) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -30,19 +30,18 @@ ActiveRecord::Schema.define(version: 20180719042659) do
   add_index "attachments", ["attachable_type", "attachable_id"], name: "index_attachments_attachable", using: :btree
 
   create_table "cards", force: :cascade do |t|
-    t.string   "title",            limit: 255
-    t.text     "description",      limit: 4294967295
-    t.string   "type",             limit: 255,                    null: false
-    t.integer  "position",         limit: 4,          default: 0, null: false
-    t.integer  "recipe_id",        limit: 4
-    t.integer  "project_id",       limit: 4
-    t.string   "annotatable_type", limit: 255
-    t.integer  "annotatable_id",   limit: 4
+    t.string   "title",         limit: 255
+    t.text     "description",   limit: 4294967295
+    t.string   "type",          limit: 255,                    null: false
+    t.integer  "position",      limit: 4,          default: 0, null: false
+    t.integer  "recipe_id",     limit: 4
+    t.integer  "project_id",    limit: 4
+    t.integer  "annotation_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "cards", ["annotatable_type", "annotatable_id"], name: "index_cards_annotatable", using: :btree
+  add_index "cards", ["annotation_id"], name: "index_cards_on_annotation_id", using: :btree
   add_index "cards", ["project_id"], name: "index_cards_project_id", using: :btree
   add_index "cards", ["recipe_id"], name: "index_cards_recipe_id", using: :btree
 

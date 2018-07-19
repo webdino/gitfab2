@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Card::State do
-  it_behaves_like 'Annotable', :state
+  it_behaves_like 'Annotatable', :state
   it_behaves_like 'Card', :state
   it_behaves_like 'Orderable', :state
   it_behaves_like 'Orderable Scoped incrementation', [:state], :recipe

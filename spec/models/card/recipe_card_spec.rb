@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Card::RecipeCard do
-  it_behaves_like 'Annotable', :recipe_card
+  it_behaves_like 'Annotatable', :recipe_card
   it_behaves_like 'Card', :recipe_card
   it_behaves_like 'Orderable', :recipe_card
   it_behaves_like 'Orderable Scoped incrementation', [:recipe_card], :recipe

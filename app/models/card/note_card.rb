@@ -2,23 +2,22 @@
 #
 # Table name: cards
 #
-#  id               :integer          not null, primary key
-#  annotatable_type :string(255)
-#  description      :text(4294967295)
-#  position         :integer          default(0), not null
-#  title            :string(255)
-#  type             :string(255)      not null
-#  created_at       :datetime
-#  updated_at       :datetime
-#  annotatable_id   :integer
-#  project_id       :integer
-#  recipe_id        :integer
+#  id            :integer          not null, primary key
+#  description   :text(4294967295)
+#  position      :integer          default(0), not null
+#  title         :string(255)
+#  type          :string(255)      not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#  annotation_id :integer
+#  project_id    :integer
+#  recipe_id     :integer
 #
 # Indexes
 #
-#  index_cards_annotatable  (annotatable_type,annotatable_id)
-#  index_cards_project_id   (project_id)
-#  index_cards_recipe_id    (recipe_id)
+#  index_cards_on_annotation_id  (annotation_id)
+#  index_cards_project_id        (project_id)
+#  index_cards_recipe_id         (recipe_id)
 #
 # Foreign Keys
 #
