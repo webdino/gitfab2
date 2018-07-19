@@ -27,12 +27,5 @@
 #
 
 class Card::NoteCard < Card
-  include Taggable
   belongs_to :project, required: true
-
-  class << self
-    def updatable_columns
-      super + [:tag]
-    end
-  end
 end
