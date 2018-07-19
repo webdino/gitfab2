@@ -69,12 +69,12 @@ describe User do
     it { expect(user.is_owner_of?(project_not_owned)).to be false }
   end
 
-  describe '#is_contributor_of?(project)' do
-    let!(:project_contributed) { FactoryBot.create :project, owner: user }
-    let!(:project_not_contributed) { FactoryBot.create :project, owner: user }
-    before { FactoryBot.create(:contribution, contributor: user, contributable: project_contributed) }
-    it { expect(user.is_contributor_of?(project_contributed)).to be true }
-    it { expect(user.is_contributor_of?(project_not_contributed)).to be false }
+  describe '#is_contributor_of?' do
+    let!(:contributed_card) { FactoryBot.create(:card) }
+    let!(:not_contributed_card) { FactoryBot.create(:card) }
+    before { FactoryBot.create(:contribution, contributor: user, card: contributed_card) }
+    it { expect(user.is_contributor_of?(contributed_card)).to be true }
+    it { expect(user.is_contributor_of?(not_contributed_card)).to be false }
   end
 
   describe '#is_admin_of?(group)' do

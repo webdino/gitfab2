@@ -60,8 +60,8 @@ class User < ActiveRecord::Base
     self == project.owner
   end
 
-  def is_contributor_of?(target)
-    target.contributions.each do |contribution|
+  def is_contributor_of?(card)
+    card.contributions.each do |contribution|
       return true if contribution.contributor_id == self.id
     end
     false

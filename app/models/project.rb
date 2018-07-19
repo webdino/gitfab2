@@ -30,7 +30,6 @@
 class Project < ActiveRecord::Base
   include Figurable
   include Commentable
-  include Contributable
   include Notificatable
   include AfterCommitAction
 

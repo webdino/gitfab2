@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 describe Comment do
-  it_behaves_like 'Contributable', :comment
-
   describe 'attributes' do
     let(:comment) { FactoryBot.create(:comment) }
     it { expect(comment).to be_respond_to(:body) }

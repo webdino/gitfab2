@@ -22,8 +22,6 @@
 #
 
 class Comment < ActiveRecord::Base
-  include Contributable
-
   belongs_to :user, required: true
   # TODO: required: true が付けられるかどうか要検討
   belongs_to :commentable, polymorphic: true

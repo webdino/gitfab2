@@ -28,11 +28,11 @@
 
 class Card < ActiveRecord::Base
   include Figurable
-  include Contributable
   include Commentable
 
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments
+  has_many :contributions, dependent: :destroy
 
   validates :type, presence: true
   validate do

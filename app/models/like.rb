@@ -20,8 +20,6 @@
 #
 
 class Like < ActiveRecord::Base
-  include Contributable
-
   belongs_to :user, required: true
   belongs_to :project, required: true, counter_cache: :likes_count
   validates :user_id, uniqueness: { scope: :project }

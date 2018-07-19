@@ -232,7 +232,6 @@ Rails/InverseOf:
     - 'app/models/concerns/attachable.rb'
     - 'app/models/concerns/collaborator.rb'
     - 'app/models/concerns/commentable.rb'
-    - 'app/models/concerns/contributable.rb'
     - 'app/models/concerns/figurable.rb'
     - 'app/models/concerns/project_owner.rb'
     - 'app/models/recipe.rb'
