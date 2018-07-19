@@ -44,7 +44,7 @@ describe CommentsController, type: :controller do
 
   describe 'DELETE destroy' do
     let(:note_card) { FactoryBot.create(:note_card, project: project) }
-    let(:comment) { FactoryBot.create(:comment, user: user1, commentable: note_card) }
+    let(:comment) { FactoryBot.create(:comment, user: user1, card: note_card) }
     before do
       sign_in project.owner
       xhr :delete, :destroy, user_id: project.owner.to_param, project_id: project.id,

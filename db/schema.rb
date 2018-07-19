@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719034710) do
+ActiveRecord::Schema.define(version: 20180719042659) do
 
   create_table "attachments", force: :cascade do |t|
     t.string   "content",         limit: 255
@@ -58,15 +58,14 @@ ActiveRecord::Schema.define(version: 20180719034710) do
   add_index "collaborations", ["project_id"], name: "index_collaborations_project_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
-    t.integer  "user_id",          limit: 4,     null: false
-    t.integer  "commentable_id",   limit: 4,     null: false
-    t.string   "commentable_type", limit: 255,   null: false
-    t.text     "body",             limit: 65535
+    t.integer  "user_id",    limit: 4,     null: false
+    t.integer  "card_id",    limit: 4,     null: false
+    t.text     "body",       limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_commentable", using: :btree
+  add_index "comments", ["card_id"], name: "fk_rails_c8dff2752a", using: :btree
   add_index "comments", ["created_at"], name: "index_comments_created_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_user_id", using: :btree
 
@@ -222,6 +221,7 @@ ActiveRecord::Schema.define(version: 20180719034710) do
 
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "cards", "recipes", name: "fk_cards_recipe_id"
+  add_foreign_key "comments", "cards"
   add_foreign_key "comments", "users", name: "fk_comments_user_id"
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"

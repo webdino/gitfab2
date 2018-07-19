@@ -2,7 +2,6 @@
 
 describe Project do
   it_behaves_like 'Figurable', :user_project
-  it_behaves_like 'Commentable', :user_project
 
   let(:project) { FactoryBot.create :user_project }
   let(:user1) { FactoryBot.create :user }

@@ -3,7 +3,7 @@
   .close-comments-btn
 
   ul.comments
-    - card.comments.includes(:commentable).each_with_index do |comment, i|
+    - card.comments.each_with_index do |comment, i|
       == render "comments/comment", comment: comment, resources: resources << comment, i: i
       - resources.delete(comment)
 

@@ -29,7 +29,6 @@
 
 class Project < ActiveRecord::Base
   include Figurable
-  include Commentable
   include Notificatable
   include AfterCommitAction
 

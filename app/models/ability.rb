@@ -69,7 +69,7 @@ class Ability
       user.persisted?
     end
     can :destroy, Comment do |comment|
-      comment.user_id == user.slug || (can? :manage, comment.commentable)
+      comment.user_id == user.slug || (can? :manage, comment.card)
     end
     can :create, Like do |_like|
       user.persisted?

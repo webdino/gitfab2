@@ -28,10 +28,10 @@
 
 class Card < ActiveRecord::Base
   include Figurable
-  include Commentable
 
   has_many :attachments, as: :attachable, dependent: :destroy
   accepts_nested_attributes_for :attachments
+  has_many :comments, dependent: :destroy
   has_many :contributions, dependent: :destroy
 
   validates :type, presence: true

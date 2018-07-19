@@ -2,7 +2,6 @@
 
 shared_examples 'Card' do |*factory_args|
   it_behaves_like 'Figurable', *factory_args
-  it_behaves_like 'Commentable', *factory_args
 
   describe '#dup_document' do
     let(:card) { FactoryBot.create(*factory_args) }
