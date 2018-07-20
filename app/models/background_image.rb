@@ -7,11 +7,7 @@ class BackgroundImage
   class << self
     def find
       return unless exists?
-      file = ActionDispatch::Http::UploadedFile.new(
-        filename: basename,
-        type: 'image/jpeg',
-        tempfile: File.open(path)
-      )
+      file = Rack::Test::UploadedFile.new(path, 'image/jpeg')
       new(file: file)
     end
 

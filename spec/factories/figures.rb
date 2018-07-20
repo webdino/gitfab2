@@ -37,10 +37,9 @@ FactoryBot.define do
 
     factory :content_figure do
       content do
-        ActionDispatch::Http::UploadedFile.new(
-          filename: 'figure.png',
-          type: 'image/png',
-          tempfile: File.open(Rails.root.join('spec', 'fixtures', 'images', 'figure.png'))
+        Rack::Test::UploadedFile.new(
+          Rails.root.join('spec', 'fixtures', 'images', 'figure.png'),
+          'image/png'
         )
       end
     end
