@@ -1,4 +1,4 @@
-class RemovePolymorphicFromTags < ActiveRecord::Migration
+class RemovePolymorphicFromTags < ActiveRecord::Migration[4.2]
   def up
     remove_index :tags, name: :index_tags_taggable
     remove_column :tags, :taggable_type

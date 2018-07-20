@@ -1,4 +1,4 @@
-class RemovePolymorphicFromComments < ActiveRecord::Migration
+class RemovePolymorphicFromComments < ActiveRecord::Migration[4.2]
   def up
     remove_index :comments, name: :index_comments_commentable
     remove_column :comments, :commentable_type

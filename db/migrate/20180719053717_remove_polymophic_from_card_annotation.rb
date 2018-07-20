@@ -1,4 +1,4 @@
-class RemovePolymophicFromCardAnnotation < ActiveRecord::Migration
+class RemovePolymophicFromCardAnnotation < ActiveRecord::Migration[4.2]
   def up
     remove_index :cards, name: :index_cards_annotatable
     remove_column :cards, :annotatable_type

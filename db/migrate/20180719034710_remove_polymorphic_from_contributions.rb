@@ -1,4 +1,4 @@
-class RemovePolymorphicFromContributions < ActiveRecord::Migration
+class RemovePolymorphicFromContributions < ActiveRecord::Migration[4.2]
   def up
     remove_index :contributions, name: :index_contributions_contributable
     remove_column :contributions, :contributable_type
