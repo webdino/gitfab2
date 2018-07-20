@@ -48,12 +48,8 @@ class StatesController < ApplicationController
     if state.blank?
       not_found
     else
-      annotation = nil
-      Card.transaction do
-
-        dst_state = @recipe.states.find params[:dst_state_id]
-        annotation = state.to_annotation!(dst_state)
-      end
+      parent_state = @recipe.states.find(params[:dst_state_id])
+      annotation = state.to_annotation!(parent_state)
       render json: {'$oid' => annotation.id}
     end
   end

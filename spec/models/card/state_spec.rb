@@ -11,19 +11,18 @@ describe Card::State do
     it { expect(Card::State).to be_respond_to(:ordered_by_position) }
   end
 
-  describe '#to_annotation!(parent_state)' do
-    let!(:state) { FactoryBot.create(:state) }
-    let!(:parent_state) { FactoryBot.create(:state) }
-    describe '内容を維持してAnnotationとして作りなおす' do
-      subject!(:new_annotation) { state.to_annotation!(parent_state) }
-      it { expect(new_annotation).to be_an_instance_of(Card::Annotation) }
-      it { expect(new_annotation.title).to eq(state.title) }
-      it { expect(state).to be_destroyed }
-    end
-    it 'parent_stateのannotationsに追加する' do
-      expect do
-        state.to_annotation!(parent_state)
-      end.to change { parent_state.annotations.reload.count }
+  describe '#to_annotation!' do
+    subject { state.to_annotation!(parent_state) }
+
+    let(:state) { FactoryBot.create(:state) }
+    let(:parent_state) { FactoryBot.create(:state) }
+    let(:recipe) { state.recipe }
+
+    it { is_expected.to be_an_instance_of(Card::Annotation) }
+    it do
+      expect{ subject }.to change{ state.type }.from(Card::State.name).to(Card::Annotation.name)
+                      .and change{ parent_state.annotations.count }.by(1)
+                      .and change{ recipe.states.count }.by(-1)
     end
   end
 end

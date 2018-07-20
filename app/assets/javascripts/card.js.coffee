@@ -266,13 +266,13 @@ $ ->
             li.addClass "annotation-wrapper"
             li.append card
             $("#" + dst_state_id + " .annotation-list").append li
+            $("#" + state_id).closest(".state-wrapper").remove()
 
             article_id = $(data.html).find(".slick").closest("article").attr "id"
             selector = "#" + article_id + " .slick"
             card.replaceWith data.html
             setupFigureSlider selector
             $("#loading").hide()
-            $("#" + state_id).closest(".state-wrapper").remove()
             checkStateConvertiblity()
             setStateIndex()
             markup()

@@ -50,10 +50,7 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      state = nil
-      Card.transaction do
-        state = annotation.to_state!(@recipe)
-      end
+      state = annotation.to_state!(@recipe)
       render json: {'$oid' => state.id}
     end
   end

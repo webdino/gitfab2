@@ -40,24 +40,9 @@ class Card::State < Card
     end
   end
 
-  # StateをAnnotationに変換
-  # 基底のCardクラスとしてdupした上でAnnotationとしてparent_stateの子に設定する
   def to_annotation!(parent_state)
-    annotation = nil
-    transaction do
-      Card.uncached do
-        card = self.class.lock.find(id).tap{ |c| c.type = Card.name }.becomes(Card)
-        # annotation = card.dup_document.becomes(Card::Annotation) キャストすると未保存のRelation(figuresなど)が失われる
-        new_card = card.dup_document
-        new_card.type = Card::Annotation.name
-        new_card.save! # relation保存
-        annotation = Card::Annotation.find(new_card.id)
-        parent_state.annotations << annotation
-        parent_state.save!
-      end
-      destroy
-    end
-    annotation.reload
+    update!(type: Card::Annotation.name, annotation_id: parent_state.id)
+    Card::Annotation.find(id)
   end
 end
 

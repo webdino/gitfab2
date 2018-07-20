@@ -10,19 +10,23 @@ describe Card::Annotation do
     it { expect(Card::Annotation).to be_respond_to(:ordered_by_position) }
   end
 
-  describe '#to_state!(recipe)' do
+  describe '#to_state!' do
+    subject { annotation.to_state!(recipe) }
+
     let!(:annotation) { FactoryBot.create(:annotation) }
     let!(:recipe) { FactoryBot.create(:recipe) }
-    describe '内容を維持してStateとして作りなおす' do
-      subject!(:new_state) { annotation.to_state!(recipe) }
-      it { expect(new_state).to be_an_instance_of(Card::State) }
-      it { expect(new_state.title).to eq(annotation.title) }
-      it { expect(annotation).to be_destroyed }
+
+    it { is_expected.to be_an_instance_of(Card::State) }
+    it do
+      expect{ subject }.to change{ annotation.type }.from(Card::Annotation.name).to(Card::State.name)
+                      .and change{ recipe.states.count }.by(1)
+                      .and change{ Card::Annotation.count }.by(-1)
     end
-    it 'recipeのstatesに追加する' do
-      expect do
-        annotation.to_state!(recipe)
-      end.to change { recipe.states.reload.count }
+
+    describe 'position' do
+      before { FactoryBot.create_list(:state, state_count, recipe: recipe) }
+      let(:state_count) { 2 }
+      it { expect(subject.position).to eq state_count + 1 }
     end
   end
 end
