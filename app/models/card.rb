@@ -25,7 +25,7 @@
 #  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
 
-class Card < ActiveRecord::Base
+class Card < ApplicationRecord
   include Figurable
 
   has_many :attachments, as: :attachable, dependent: :destroy

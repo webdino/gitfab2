@@ -20,7 +20,7 @@
 #  fk_rails_...         (card_id => cards.id)
 #
 
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
   belongs_to :card, required: true
   belongs_to :user, required: true
 

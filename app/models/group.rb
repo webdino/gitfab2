@@ -18,7 +18,7 @@
 #  index_users_on_slug  (slug) UNIQUE
 #
 
-class Group < ActiveRecord::Base
+class Group < ApplicationRecord
   UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
 
   include ProjectOwner

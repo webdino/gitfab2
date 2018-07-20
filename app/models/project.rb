@@ -27,7 +27,7 @@
 #  index_projects_updated_at   (updated_at)
 #
 
-class Project < ActiveRecord::Base
+class Project < ApplicationRecord
   include Figurable
   include Notificatable
   include AfterCommitAction

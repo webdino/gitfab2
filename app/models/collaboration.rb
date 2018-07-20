@@ -15,7 +15,7 @@
 #  index_collaborations_project_id  (project_id)
 #
 
-class Collaboration < ActiveRecord::Base
+class Collaboration < ApplicationRecord
   belongs_to :owner, polymorphic: true, required: true
   belongs_to :project, required: true
 end

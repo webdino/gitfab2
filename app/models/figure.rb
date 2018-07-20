@@ -15,7 +15,7 @@
 #  index_figures_figurable  (figurable_type,figurable_id)
 #
 
-class Figure < ActiveRecord::Base
+class Figure < ApplicationRecord
 
   mount_uploader :content, FigureUploader
   # TODO: required: true を付けられるかどうか要検討

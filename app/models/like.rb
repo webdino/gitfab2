@@ -19,7 +19,7 @@
 #  fk_likes_liker_id  (user_id => users.id)
 #
 
-class Like < ActiveRecord::Base
+class Like < ApplicationRecord
   belongs_to :user, required: true
   belongs_to :project, required: true, counter_cache: :likes_count
   validates :user_id, uniqueness: { scope: :project }

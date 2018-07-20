@@ -24,7 +24,7 @@
 #  index_users_on_slug   (slug) UNIQUE
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   include ProjectOwner
   include Collaborator
 

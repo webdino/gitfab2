@@ -10,7 +10,7 @@
 #  updated_at :datetime
 #
 
-class Feature < ActiveRecord::Base
+class Feature < ApplicationRecord
   TARGET_CLASS = { Project: 'Project', Group: 'Group', User: 'User' }
 
   scope :projects, -> { where class_name: 'Project' }

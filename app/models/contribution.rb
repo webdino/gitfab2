@@ -19,7 +19,7 @@
 #  fk_rails_...                     (card_id => cards.id)
 #
 
-class Contribution < ActiveRecord::Base
+class Contribution < ApplicationRecord
   belongs_to :contributor, class_name: 'User', required: true
   belongs_to :card, required: true
 end

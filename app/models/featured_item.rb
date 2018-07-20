@@ -18,7 +18,7 @@
 #  fk_featured_items_feature_id  (feature_id => features.id)
 #
 
-class FeaturedItem < ActiveRecord::Base
+class FeaturedItem < ApplicationRecord
 
   belongs_to :feature, required: true
 

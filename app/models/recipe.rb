@@ -16,7 +16,7 @@
 #  fk_recipes_project_id  (project_id => projects.id)
 #
 
-class Recipe < ActiveRecord::Base
+class Recipe < ApplicationRecord
   belongs_to :project, required: true
   has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy, inverse_of: :recipe
   has_many :recipe_cards, ->{ order(:position) }, class_name: 'Card::RecipeCard', dependent: :destroy

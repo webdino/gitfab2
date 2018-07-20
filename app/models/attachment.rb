@@ -20,7 +20,7 @@
 #  index_attachments_attachable  (attachable_type,attachable_id)
 #
 
-class Attachment < ActiveRecord::Base
+class Attachment < ApplicationRecord
   mount_uploader :content, AttachmentUploader
 
   # TODO: require: true を付けるかどうか要検討

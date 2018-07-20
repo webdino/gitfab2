@@ -20,7 +20,7 @@
 #  fk_tags_user_id  (user_id => users.id)
 #
 
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   belongs_to :user, required: true
   belongs_to :project, required: true
 
