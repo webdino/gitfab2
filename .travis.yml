@@ -20,7 +20,7 @@ before_script:
     innodb_file_format=Barracuda" | sudo tee /etc/mysql/conf.d/travis.cnf
   - sudo /etc/init.d/mysql restart
   - cp config/database.ymls/travis.yml config/database.yml
-  - bundle exec rake db:schema:load
+  - bundle exec rake db:create && bundle exec rake db:schema:load
 before_install:
   - gem update bundler
 notifications:
