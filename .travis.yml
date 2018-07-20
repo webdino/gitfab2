@@ -3,11 +3,15 @@ sudo: required
 cache: bundler
 language: ruby
 rvm:
-  - 2.4.4
+  - 2.5.1
+  - ruby-head
 services:
   - mysql
 env:
   - RAILS_ENV=test
+matrix:
+  allow_failures:
+    - rvm: ruby-head
 before_script:
   - |
     echo -e "[mysqld]
