@@ -23,9 +23,11 @@
 class Attachment < ApplicationRecord
   mount_uploader :content, AttachmentUploader
 
-  # TODO: require: true を付けるかどうか要検討
-  # required: true を付けるとNoteCardsController のspecが落ちる
-  belongs_to :attachable, polymorphic: true
+  # TODO: optional: trueをとる
+  # `accepts_nested_attributes_for :attachments`で親のcreateと同時に子のAttachmentのcreateをすると、
+  # 親のIDがまだ存在しないことによってエラーになってしまう。
+  # `accepts_nested_attributes_for :attachments`をやめたい。
+  belongs_to :attachable, polymorphic: true, optional: true
 
   def dup_document
     dup.tap do |doc|

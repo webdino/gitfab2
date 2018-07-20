@@ -19,8 +19,7 @@
 #
 
 class FeaturedItem < ApplicationRecord
-
-  belongs_to :feature, required: true
+  belongs_to :feature
 
   class << self
     def updatable_columns

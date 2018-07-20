@@ -16,6 +16,6 @@
 #
 
 class Collaboration < ApplicationRecord
-  belongs_to :owner, polymorphic: true, required: true
-  belongs_to :project, required: true
+  belongs_to :owner, polymorphic: true
+  belongs_to :project
 end

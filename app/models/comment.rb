@@ -21,8 +21,8 @@
 #
 
 class Comment < ApplicationRecord
-  belongs_to :card, required: true
-  belongs_to :user, required: true
+  belongs_to :card
+  belongs_to :user
 
   validates :body, presence: true
 

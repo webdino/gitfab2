@@ -21,8 +21,8 @@
 #
 
 class Tag < ApplicationRecord
-  belongs_to :user, required: true
-  belongs_to :project, required: true
+  belongs_to :user
+  belongs_to :project
 
   concerning :Draft do
     def generate_draft

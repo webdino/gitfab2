@@ -20,16 +20,8 @@
 
 FactoryBot.define do
   factory :figure do
-    # TODO: figurable はnil になりうるのかどうか要確認
-    figurable nil
+    figurable factory: :project
     link nil
-
-    after(:build) do |figure|
-      # TODO: figurable はnil になりうるのかどうか要確認
-      figurable = figure.figurable || FactoryBot.build(:user_project)
-      figurable.figures << figure
-      figurable.save!
-    end
 
     factory :link_figure do
       sequence(:link) { |n| "http://test.host/link/#{n}.png" }

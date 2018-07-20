@@ -20,8 +20,8 @@
 #
 
 class Like < ApplicationRecord
-  belongs_to :user, required: true
-  belongs_to :project, required: true, counter_cache: :likes_count
+  belongs_to :user
+  belongs_to :project, counter_cache: :likes_count
   validates :user_id, uniqueness: { scope: :project }
 
   class << self

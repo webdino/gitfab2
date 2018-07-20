@@ -17,8 +17,8 @@
 class Membership < ApplicationRecord
   ROLE = { admin: 'admin', editor: 'editor' }
 
-  belongs_to :user, required: true
-  belongs_to :group, required: true
+  belongs_to :user
+  belongs_to :group
 
   after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
   # after_destroy -> { group.destroy }, if: -> { group && group.members.none? }

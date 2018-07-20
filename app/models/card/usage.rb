@@ -26,7 +26,7 @@
 #
 
 class Card::Usage < Card
-  belongs_to :project, required: true
+  belongs_to :project
   acts_as_list scope: :project
   class << self
     def updatable_columns

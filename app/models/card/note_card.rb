@@ -26,5 +26,5 @@
 #
 
 class Card::NoteCard < Card
-  belongs_to :project, required: true
+  belongs_to :project
 end
