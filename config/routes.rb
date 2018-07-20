@@ -1,4 +1,4 @@
-Gitfab2::Application.routes.draw do
+Rails.application.routes.draw do
   match 'about' => 'static_pages#about', via: :get
   match 'terms' => 'static_pages#terms', via: :get
   match 'privacy' => 'static_pages#privacy', via: :get
