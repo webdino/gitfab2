@@ -26,9 +26,14 @@
 #
 
 class Card::State < Card
-  include Annotatable
   belongs_to :recipe
   acts_as_list scope: :recipe
+
+  has_many :annotations, ->{ order(:position) },
+                        class_name: 'Card::Annotation',
+                        foreign_key: :annotation_id,
+                        dependent: :destroy
+  accepts_nested_attributes_for :annotations
 
   scope :ordered_by_position, -> { order('position ASC') }
 
@@ -43,6 +48,12 @@ class Card::State < Card
   def to_annotation!(parent_state)
     update!(type: Card::Annotation.name, annotation_id: parent_state.id)
     Card::Annotation.find(id)
+  end
+
+  def dup_document
+    super.tap do |doc|
+      doc.annotations = annotations.map(&:dup_document)
+    end
   end
 end
 

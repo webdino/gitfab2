@@ -84,7 +84,6 @@ Layout/SpaceBeforeBlockBraces:
     - 'app/controllers/annotations_controller.rb'
     - 'app/models/card/annotation.rb'
     - 'app/models/card/state.rb'
-    - 'app/models/concerns/annotatable.rb'
     - 'app/models/recipe.rb'
 
 # Offense count: 2
@@ -228,7 +227,6 @@ Rails/HttpStatus:
 # Include: app/models/**/*.rb
 Rails/InverseOf:
   Exclude:
-    - 'app/models/concerns/annotatable.rb'
     - 'app/models/concerns/attachable.rb'
     - 'app/models/concerns/collaborator.rb'
     - 'app/models/concerns/figurable.rb'

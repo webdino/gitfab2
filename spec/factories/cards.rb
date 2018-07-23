@@ -43,7 +43,7 @@ FactoryBot.define do
   factory :annotation, class: Card::Annotation, parent: :card do
     type Card::Annotation.name
     sequence(:title) { |n| "Annotation #{n}" }
-    association :card, factory: :state
+    state
   end
 
   factory :state, class: Card::State, parent: :card do

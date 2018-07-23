@@ -19,7 +19,7 @@ class Ability
       user.persisted?
     end
     can :manage, Card::Annotation do |annotation|
-      user.is_contributor_of?(annotation) || can?(:manage, annotation.card)
+      user.is_contributor_of?(annotation) || can?(:manage, annotation.state)
     end
     can :manage, Card::State do |card|
       card.recipe && is_project_editor?(card.recipe.project, user)
