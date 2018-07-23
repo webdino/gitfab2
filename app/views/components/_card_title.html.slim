@@ -2,16 +2,10 @@ h2.title
   - if card.instance_of?(Card::NoteCard)
     == link_to card.title, project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
   - elsif card.instance_of?(Card::State)
-    - if card.title.present?
-      == card.title
-    - else
-      == "State #{card.position}"
+    = link_to (card.title || "State #{card.position}"), "##{card.id}", id: card.id
 
   - elsif card.instance_of?(Card::Annotation)
-    - if card.title.present?
-      == card.title
-    - else
-      == "Annotation without title"
+    = link_to (card.title || "Annotation without title"), "##{card.id}", id: card.id
 
   - else
     == card.title
