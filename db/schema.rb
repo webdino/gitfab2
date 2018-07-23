@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723031303) do
+ActiveRecord::Schema.define(version: 20180723052734) do
 
   create_table "attachments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
     t.string "content"
@@ -159,6 +159,7 @@ ActiveRecord::Schema.define(version: 20180723031303) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["is_private", "is_deleted"], name: "index_projects_on_is_private_and_is_deleted"
     t.index ["original_id"], name: "index_projects_original_id"
     t.index ["owner_type", "owner_id"], name: "index_projects_owner"
     t.index ["slug", "owner_type", "owner_id"], name: "index_projects_slug_owner", unique: true

@@ -22,10 +22,11 @@
 #
 # Indexes
 #
-#  index_projects_original_id  (original_id)
-#  index_projects_owner        (owner_type,owner_id)
-#  index_projects_slug_owner   (slug,owner_type,owner_id) UNIQUE
-#  index_projects_updated_at   (updated_at)
+#  index_projects_on_is_private_and_is_deleted  (is_private,is_deleted)
+#  index_projects_original_id                   (original_id)
+#  index_projects_owner                         (owner_type,owner_id)
+#  index_projects_slug_owner                    (slug,owner_type,owner_id) UNIQUE
+#  index_projects_updated_at                    (updated_at)
 #
 
 FactoryBot.define do
