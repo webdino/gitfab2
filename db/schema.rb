@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723052734) do
+ActiveRecord::Schema.define(version: 2018_07_23_052734) do
 
-  create_table "attachments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
     t.string "attachable_type", null: false
     t.integer "attachable_id", null: false
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
   end
 
-  create_table "cards", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "cards", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "title"
     t.text "description", limit: 4294967295
     t.string "type", null: false
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["state_id"], name: "index_cards_on_state_id"
   end
 
-  create_table "collaborations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "collaborations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "owner_type"
     t.integer "owner_id"
     t.integer "project_id", null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["project_id"], name: "index_collaborations_project_id"
   end
 
-  create_table "comments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "card_id", null: false
     t.text "body"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["user_id"], name: "index_comments_user_id"
   end
 
-  create_table "contributions", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "contributions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "contributor_id", null: false
     t.integer "card_id", null: false
     t.datetime "created_at"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["contributor_id"], name: "index_contributions_contributor_id"
   end
 
-  create_table "featured_items", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "featured_items", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "feature_id"
     t.string "target_object_id"
     t.string "url"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["feature_id"], name: "index_featured_items_feature_id"
   end
 
-  create_table "features", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "features", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "class_name"
     t.string "name", null: false
     t.integer "category", default: 0, null: false
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.datetime "updated_at"
   end
 
-  create_table "figures", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "figures", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
     t.string "figurable_type"
     t.integer "figurable_id"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["figurable_type", "figurable_id"], name: "index_figures_figurable"
   end
 
-  create_table "groups", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "groups", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
     t.string "avatar"
     t.string "slug"
@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
-  create_table "likes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "likes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "project_id", null: false
     t.datetime "created_at"
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["user_id"], name: "index_likes_liker_id"
   end
 
-  create_table "memberships", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "memberships", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "group_id"
     t.integer "user_id"
     t.string "role", default: "editor"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["group_id", "user_id"], name: "index_users_on_group_id_user_id", unique: true
   end
 
-  create_table "notifications", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "notifications", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "notifier_id"
     t.integer "notified_id"
     t.string "notificatable_url"
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["notifier_id"], name: "index_notifications_on_notifier_id"
   end
 
-  create_table "projects", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "projects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "title", null: false
     t.text "description"
@@ -166,14 +166,14 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["updated_at"], name: "index_projects_updated_at"
   end
 
-  create_table "recipes", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "recipes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["project_id"], name: "index_recipes_project_id"
   end
 
-  create_table "tags", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id"
     t.integer "project_id"
     t.string "name"
@@ -183,7 +183,7 @@ ActiveRecord::Schema.define(version: 20180723052734) do
     t.index ["user_id"], name: "index_tags_user_id"
   end
 
-  create_table "users", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
+  create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "provider"
     t.string "uid"
