@@ -44,7 +44,7 @@ group :development, :test do
   gem 'bullet'
   gem 'coveralls', require: false
   gem 'factory_bot_rails'
-  gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'slim_lint'
