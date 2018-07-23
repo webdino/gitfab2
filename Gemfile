@@ -3,7 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 5.1.0'
 
-gem 'after_commit_action'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'exception_notification'

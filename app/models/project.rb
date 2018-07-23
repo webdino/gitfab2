@@ -31,7 +31,6 @@
 class Project < ApplicationRecord
   include Figurable
   include Notificatable
-  include AfterCommitAction
 
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
@@ -50,9 +49,7 @@ class Project < ApplicationRecord
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
   after_create -> { create_recipe unless recipe }
-  after_create :update_projects_count_created
-  after_update :update_projects_count
-  after_destroy :update_projects_count_destroyed
+  after_commit -> { owner.update_column(:projects_count, owner.update_projects_count) }
 
   validates :name, presence: true, name_format: true
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
@@ -226,65 +223,5 @@ class Project < ApplicationRecord
 
   def should_generate_new_friendly_id?
     name_changed? || super
-  end
-
-  def update_projects_count_created
-    return true if is_private? || is_deleted?
-    execute_after_commit do
-      owner.increment!(:projects_count)
-    end
-    true
-  end
-
-  def update_projects_count
-    return true unless is_private_changed? || is_deleted_changed?
-    private_to_public = is_private_was && !is_private
-    public_to_private = !is_private_was && is_private
-    now_soft_destroyed = !is_deleted_was && is_deleted
-    now_soft_restored = is_deleted_was && !is_deleted
-
-    operations = []
-
-    unless now_soft_restored
-      if private_to_public
-        operations << :increment
-      end
-      if public_to_private
-        operations << :decrement
-      end
-    end
-
-    unless is_private
-      if now_soft_destroyed
-        operations << :decrement
-      end
-      if now_soft_restored
-        operations << :increment
-      end
-    end
-
-    operations.each do |operation|
-      case operation
-        when :increment
-          execute_after_commit do
-            owner.increment!(:projects_count)
-          end
-        when :decrement
-          execute_after_commit do
-            owner.decrement!(:projects_count)
-          end
-      end
-    end
-
-    true
-  end
-
-  def update_projects_count_destroyed
-    return true if is_private?
-    return true if is_deleted?
-    execute_after_commit do
-      owner.decrement!(:projects_count)
-    end
-    true
   end
 end
