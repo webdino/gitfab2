@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180719073517) do
+ActiveRecord::Schema.define(version: 20180723031303) do
 
   create_table "attachments", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
     t.string "content"
@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(version: 20180719073517) do
     t.integer "position", default: 0, null: false
     t.integer "recipe_id"
     t.integer "project_id"
-    t.integer "annotation_id"
+    t.integer "state_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["annotation_id"], name: "index_cards_on_annotation_id"
     t.index ["project_id"], name: "index_cards_project_id"
     t.index ["recipe_id"], name: "index_cards_recipe_id"
+    t.index ["state_id"], name: "index_cards_on_state_id"
   end
 
   create_table "collaborations", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
