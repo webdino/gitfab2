@@ -1,5 +1,5 @@
 li.membership
-  == link_to image_tag(membership.user.avatar.small, class: "avatar"), projects_path(owner_name: membership.user.slug)
+  == link_to image_tag(membership.user.avatar.small.url, class: "avatar"), projects_path(owner_name: membership.user.slug)
   .name
     == link_to membership.user.name, projects_path(owner_name: membership.user.slug)
   - if can?(:manage, membership) && membership.user != current_user

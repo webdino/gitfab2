@@ -50,7 +50,7 @@
                 - figure = ff.object
                 li.figure
                   - if figure.content.present?
-                    == image_tag figure.content.small
+                    == image_tag figure.content.small.url
                     .btns
                       .edit.btn
                         'edit

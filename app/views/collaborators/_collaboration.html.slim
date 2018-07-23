@@ -1,6 +1,6 @@
 li.collaboration
   span.avatar
-    == image_tag collaboration.owner.avatar.thumb
+    == image_tag collaboration.owner.avatar.thumb.url
   span.name
     == collaboration.owner.name
   - if can? :manage, collaboration

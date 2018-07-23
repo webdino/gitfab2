@@ -43,7 +43,7 @@ section#basic-informations
           ul.slides.slick
             - @project.figures.each do |figure|
               li
-                == image_tag figure.content.medium, href: figure.content.url, data: {groupname: "top-image"}, class: "top-image"
+                == image_tag figure.content.medium.url, data: {groupname: "top-image"}, class: "top-image"
 
       - elsif @project.figures.first.link.present?
         figure.visual
@@ -53,14 +53,14 @@ section#basic-informations
       .title Owner & Collaborators
       .owner
         == link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
-          .thumb style="background-image: url('#{@owner.avatar.small}')"
+          .thumb style="background-image: url('#{@owner.avatar.small.url}')"
 
       - if @project.collaborators.present?
         ul.collaborators
           - @project.collaborators.each do |collaborator|
             li.collaborator
               == link_to projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
-                .thumb style="background-image: url('#{collaborator.avatar.small}')"
+                .thumb style="background-image: url('#{collaborator.avatar.small.url}')"
 
       - if can? :manage, @project
         == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"

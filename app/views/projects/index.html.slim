@@ -4,7 +4,7 @@
 #projects-index
   .left
     .image-wrapper
-      .owner-avatar style="background-image: url('#{@owner.avatar}')"
+      .owner-avatar style="background-image: url('#{@owner.avatar.url}')"
 
     .wrapper
       .owner-name
@@ -47,7 +47,7 @@
             - @owner.members.each do |member|
               == link_to projects_path(member) do
                 li.member
-                  == image_tag member.avatar, class: "member-avatar", name: "#{member.name}"
+                  == image_tag member.avatar.url, class: "member-avatar", name: "#{member.name}"
                   .name
                     == member.name
 
@@ -59,7 +59,7 @@
             - @owner.groups.each do |group|
               == link_to projects_path(group) do
                 li.group
-                  == image_tag group.avatar, class: "group-avatar", name: "#{group.name}"
+                  == image_tag group.avatar.url, class: "group-avatar", name: "#{group.name}"
                   .name
                     == group.name
 

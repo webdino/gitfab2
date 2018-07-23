@@ -4,7 +4,7 @@
     .user
       == link_to [:edit, current_user] do
         .inner
-          == image_tag current_user.avatar.thumb, class: "avatar"
+          == image_tag current_user.avatar.thumb.url, class: "avatar"
           .name
             == current_user.name
 
@@ -17,6 +17,6 @@
         == link_to [:edit, group] do
           li.group
             .inner
-              == image_tag group.avatar.thumb, class: "avatar"
+              == image_tag group.avatar.thumb.url, class: "avatar"
               .name
                 == group.name

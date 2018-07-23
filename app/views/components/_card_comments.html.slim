@@ -11,7 +11,7 @@
     - resources << Comment.new
     == form_for resources, html: {class: "comment-form"}, remote: true do |f|
       .left
-        == image_tag current_user.avatar.thumb, class: "avatar"
+        == image_tag current_user.avatar.thumb.url, class: "avatar"
       .right
         == f.hidden_field :user_id, value: current_user.slug
         == f.text_area :body, maxlength: 300, size: "40x4", class: "comment-editor"

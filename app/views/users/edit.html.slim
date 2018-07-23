@@ -17,7 +17,7 @@ main#users-edit
             li == msg
 
     .left
-      == image_tag @user.avatar, id: "user-avatar"
+      == image_tag @user.avatar.url, id: "user-avatar"
 
     .right
       == f.file_field :avatar, id: "user-avatar-form"

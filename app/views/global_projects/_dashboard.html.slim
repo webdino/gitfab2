@@ -22,7 +22,7 @@
       li.link.your-projects
         == link_to(projects_path(owner_name: current_user.slug)) do
           .image-wrapper
-            == image_tag current_user.avatar.small, class: "image"
+            == image_tag current_user.avatar.small.url, class: "image"
           .title See Your Projects
 
     - unless @is_searching

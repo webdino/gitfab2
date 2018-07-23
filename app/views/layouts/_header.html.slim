@@ -17,7 +17,7 @@ section#layouts-header
         #tools
           .user
             .avatar
-              == link_to image_tag(current_user.avatar.thumb, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
+              == link_to image_tag(current_user.avatar.thumb.url, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
             .name
               == link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box

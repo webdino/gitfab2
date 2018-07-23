@@ -1,5 +1,5 @@
 li.group
-  == link_to image_tag(group.avatar.small, class: "avatar"), recipes_path(owner_name: group.slug)
+  == link_to image_tag(group.avatar.small.url, class: "avatar"), recipes_path(owner_name: group.slug)
   .name
     == link_to group.name, recipes_path(owner_name: group.slug)
   == link_to "Leave group", [group, current_user.membership_in(group)], method: :delete, remote: true, class: "leave-btn btn"

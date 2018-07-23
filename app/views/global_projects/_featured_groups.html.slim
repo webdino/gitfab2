@@ -5,7 +5,7 @@
         == link_to projects_path(group) do
           li.group
             .image-wrapper
-              == image_tag group.avatar, class: "image"
+              == image_tag group.avatar.url, class: "image"
 
             .title
               == group.name

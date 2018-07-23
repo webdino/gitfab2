@@ -13,7 +13,7 @@ li.project
       .title-large
         == link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
     == link_to projects_path(project.owner), alt: project.owner.name, title: project.owner.name, class: "user" do
-      .icon style="background-image: url('#{project.owner.avatar.thumb}')"
+      .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"
 
   .inner
     - if project.figures.present?

@@ -10,7 +10,7 @@
         - @group.errors.full_messages.each do |msg|
           li == msg
   .left
-    == image_tag @group.avatar, id: "group-avatar"
+    == image_tag @group.avatar.url, id: "group-avatar"
 
   .right
     == f.file_field :avatar, id: "group-avatar-form"

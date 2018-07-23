@@ -4,9 +4,7 @@
   == javascript_include_tag "groups"
 - content_for :ogp do
   - if @group.present? && @group.persisted?
-    - title = "#{@group.name} on Fabble"
-    - image = @group.avatar.present? ? "#{@group.avatar}" : nil
-    == render partial: "components/base_ogp", locals: {title: title, image: image}
+    == render partial: "components/base_ogp", locals: {title: "#{@group.name} on Fabble", image: @group.avatar&.url}
   - else
     == render partial: "components/base_ogp"
 
