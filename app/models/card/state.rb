@@ -35,7 +35,7 @@ class Card::State < Card
                         dependent: :destroy
   accepts_nested_attributes_for :annotations
 
-  scope :ordered_by_position, -> { order('position ASC') }
+  scope :ordered_by_position, -> { order(:position) }
 
   class << self
     def updatable_columns

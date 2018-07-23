@@ -29,7 +29,7 @@ class Card::Annotation < Card
   belongs_to :state, class_name: "Card::State", foreign_key: :state_id
   acts_as_list scope: :state
 
-  scope :ordered_by_position, -> { order('position ASC') }
+  scope :ordered_by_position, -> { order(:position) }
 
   class << self
     def updatable_columns

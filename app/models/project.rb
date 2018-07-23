@@ -59,7 +59,7 @@ class Project < ApplicationRecord
     note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
     joins(:note_cards).where(cards: { id: note_cards_sql })
   end
-  scope :ordered_by_owner, -> { order('owner_id ASC') }
+  scope :ordered_by_owner, -> { order(:owner_id) }
   scope :published, -> { where(is_private: false, is_deleted: false) }
 
   accepts_nested_attributes_for :usages

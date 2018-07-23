@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    @projects = @owner.projects.includes(:owner, :tags, :figures, :note_cards, recipe: :states).order('updated_at DESC')
+    @projects = @owner.projects.includes(:owner, :tags, :figures, :note_cards, recipe: :states).order(updated_at: :desc)
     render layout: 'dashboard'
   end
 
