@@ -46,12 +46,6 @@ FactoryBot.define do
     association :card, factory: :state
   end
 
-  factory :recipe_card, class: Card::RecipeCard, parent: :card do
-    type Card::RecipeCard.name
-    sequence(:title) { |n| "RecipeCard #{n}" }
-    recipe
-  end
-
   factory :state, class: Card::State, parent: :card do
     type Card::State.name
     sequence(:title) { |n| "State #{n}" }

@@ -42,21 +42,5 @@ describe Recipe do
         expect(dupped_recipe.states.map(&:id)).to_not eq(recipe.states.map(&:id))
       end
     end
-
-    describe 'recipe_cardsを複製しない' do
-      subject(:dupped_recipe) { recipe.dup_document.tap(&:save!) }
-
-      let(:recipe) do
-        FactoryBot.create(:recipe) do |recipe|
-          FactoryBot.create_list(:recipe_card, recipe_card_count, recipe: recipe)
-        end
-      end
-      let(:recipe_card_count) { 3 }
-
-      it '複製先では空であること' do
-        expect(recipe.recipe_cards.count).to eq(recipe_card_count)
-        expect(dupped_recipe.recipe_cards.count).to eq(0)
-      end
-    end
   end
 end
