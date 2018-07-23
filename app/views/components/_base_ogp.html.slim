@@ -15,7 +15,7 @@ meta property="og:type" content="article"
 - if local_assigns[:image].present?
   meta property="og:image" content="#{image}"
 - else
-  meta property="og:image" content="#{asset_path('logo.png')}"
+  meta property="og:image" content="#{asset_path('/images/logo.png')}"
 
 - if local_assigns[:video].present?
   meta property="og:video" content="#{video}"
