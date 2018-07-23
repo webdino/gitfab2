@@ -41,8 +41,9 @@ describe Card::State do
       expect(dupped_card.annotations.count).to eq(annotation_count)
     end
     it '順番・内容を維持すること' do
-      card.annotations.to_a.shuffle
-        .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+      card.annotations.to_a.shuffle.each.with_index(1) do |annotation, i|
+        annotation.update_column(:position, i)
+      end
       card.annotations.reload
 
       actual   = Card::Annotation.where(id: dupped_card.annotations.pluck(:id)).order(:position).map(&:title)

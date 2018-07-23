@@ -30,8 +30,9 @@ describe Recipe do
         expect(dupped_recipe.states.count).to eq(state_count)
       end
       it '順番・内容を維持すること' do
-        recipe.states.to_a.shuffle
-          .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
+        recipe.states.to_a.shuffle.each.with_index(1) do |state, i|
+          state.update_column(:position, i)
+        end
         recipe.states.reload
 
         actual   = Card::State.where(id: dupped_recipe.states.pluck(:id)).order(:position).map(&:title)

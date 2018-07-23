@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 5.2.0'
 
+gem 'acts_as_list'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'exception_notification'
@@ -29,10 +30,6 @@ gem 'jquery-rails'
 gem 'mini_racer'
 gem 'sass-rails'
 gem 'uglifier'
-
-# このコミット(0.9.10)以降、テストがたまに落ちるようになる
-# https://github.com/swanandp/acts_as_list/commit/4066ebf96e1020fa3d51cfd7ee26fd267877ad97
-gem 'acts_as_list', '0.9.9'
 
 gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
