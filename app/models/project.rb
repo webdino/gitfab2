@@ -155,7 +155,7 @@ class Project < ApplicationRecord
     elsif figures.first.content.present?
       figures.first.content.small.url
     else
-      'fallback/blank.png'
+      '/images/fallback/blank.png'
     end
   end
 

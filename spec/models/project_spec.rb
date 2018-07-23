@@ -177,7 +177,7 @@ describe Project do
     end
     context '画像・動画が設定されていない時' do
       it '規定のURLを返すこと' do
-        expect(project.thumbnail).to eq('fallback/blank.png')
+        expect(project.thumbnail).to eq('/images/fallback/blank.png')
       end
     end
   end
