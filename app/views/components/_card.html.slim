@@ -1,7 +1,8 @@
 article class="card #{card.htmlclass}" data-position="#{card.position}" id="#{card.id}"
   .card-content
     == render "components/card_figures", card: card
-    == render "components/card_title", card: card
+    h2.title
+      = link_to card.title, "#usage-#{card.id}", id: "usage-#{card.id}"
     == render "components/card_contributors", card: card
     == render "components/card_description", card: card
     == render "components/card_attachments", card: card

@@ -4,7 +4,8 @@ article class="card note_card" id="#{card.id}"
   .article-column
     .card-content
       .left
-        == render "components/card_title", card: card
+        h2.title
+          = link_to card.title, project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
         .meta
           .postedby
 

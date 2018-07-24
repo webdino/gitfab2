@@ -5,7 +5,8 @@ article class="card state" data-position="#{card.position}" id="#{card.id}"
   .article-column
     .card-content
       .header
-        == render "components/card_title", card: card
+        h2.title
+          = link_to (card.title || "State #{card.position}"), "#state-#{card.id}", id: "state-#{card.id}"
         .control
           - if can? :manage, card
             - edit_url = edit_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, recipe: @project.recipe, id: card.id)
