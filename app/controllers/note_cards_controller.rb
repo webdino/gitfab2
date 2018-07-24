@@ -47,7 +47,7 @@ class NoteCardsController < ApplicationController
 
   def destroy
     if @note_card.destroy
-      render :destroy
+      render json: { success: true }
     else
       render json: { success: false }, status: 400
     end

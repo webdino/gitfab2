@@ -124,9 +124,9 @@ describe NoteCardsController, type: :controller do
       delete :destroy, params: { owner_name: user, project_id: project, id: note_card.id }, xhr: true
       project.reload
     end
-    it { is_expected.to render_template :destroy }
+    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     it 'has 0 note_cards' do
-      expect(project.note_cards.size).to eq 0
+      expect(project.note_cards.count).to eq 0
     end
   end
 end
