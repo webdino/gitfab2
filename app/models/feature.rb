@@ -18,6 +18,7 @@ class Feature < ApplicationRecord
   scope :users, -> { where class_name: 'User' }
 
   has_many :featured_items, dependent: :destroy
+  accepts_nested_attributes_for :featured_items
 
   class << self
     def updatable_columns

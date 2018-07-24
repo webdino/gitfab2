@@ -39,6 +39,8 @@ class User < ApplicationRecord
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id
 
+  accepts_nested_attributes_for :memberships, allow_destroy: true
+
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true, if: -> { self.persisted? }
   validates :name, unique_owner_name: true,
@@ -103,7 +105,7 @@ class User < ApplicationRecord
     end
 
     def updatable_columns
-      [:avatar, :url, :location]
+      [:avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
     end
   end
 

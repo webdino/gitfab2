@@ -339,6 +339,10 @@
           color: $common-btn-text-color;
         }
       }
+
+      .update-state {
+        display: none;
+      }
     }
     &:first-of-type {
       h1.number {

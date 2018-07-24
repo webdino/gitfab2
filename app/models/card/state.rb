@@ -33,12 +33,15 @@ class Card::State < Card
                         class_name: 'Card::Annotation',
                         foreign_key: :state_id,
                         dependent: :destroy
+  accepts_nested_attributes_for :annotations
 
   scope :ordered_by_position, -> { order(:position) }
 
   class << self
     def updatable_columns
-      super + [:position]
+      super + [:position, :move_to,
+               annotations_attributes: Card::Annotation.updatable_columns
+              ]
     end
   end
 
