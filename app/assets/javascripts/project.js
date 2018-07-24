@@ -22,7 +22,6 @@
 //= require threejs/STLLoader
 //= require_tree ./helpers
 //= require_tree ./jquery
-//= require ./stl_viewer
 //= require d3
 //= require ./recipe
 //= require ./project_form
