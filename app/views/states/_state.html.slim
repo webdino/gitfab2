@@ -40,11 +40,3 @@ article class="card state" data-position="#{card.position}" id="#{card.id}"
         "data-list" => "##{card.id} .annotation-list",
         "data-classname" => "annotation-wrapper",
         "data-template" => "#annotation-template"
-
-  .update-state
-    == nested_form_for [@owner, @project, :recipe, card], remote: true do |f|
-      == f.fields_for :annotations do |ff|
-        == ff.text_field :position, class: "position", "data-id" => ff.object.id
-        == ff.hidden_field :id, class: "id"
-      == f.link_to_add "Add Annotation Order", :annotations, class: "add-annotation-order"
-      == f.submit "submit", class: "submit-annotation-order"

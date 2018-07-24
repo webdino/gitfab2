@@ -62,8 +62,6 @@ class Project < ApplicationRecord
   scope :ordered_by_owner, -> { order(:owner_id) }
   scope :published, -> { where(is_private: false, is_deleted: false) }
 
-  accepts_nested_attributes_for :usages
-
   paginates_per 12
 
   # このプロジェクトを owner のプロジェクトとしてフォークする
@@ -196,7 +194,6 @@ class Project < ApplicationRecord
   class << self
     def updatable_columns
       [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
-       usages_attributes: Card::Usage.updatable_columns,
        figures_attributes: Figure.updatable_columns
       ]
     end
