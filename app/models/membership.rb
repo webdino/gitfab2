@@ -29,10 +29,4 @@ class Membership < ApplicationRecord
       Membership::ROLE[role] == self.role
     end
   end
-
-  class << self
-    def updatable_columns
-      [:id, :group_id, :role, :_destroy]
-    end
-  end
 end

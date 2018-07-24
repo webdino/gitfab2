@@ -105,7 +105,7 @@ class User < ApplicationRecord
     end
 
     def updatable_columns
-      [:avatar, :url, :location, memberships_attributes: Membership.updatable_columns]
+      [:avatar, :url, :location]
     end
   end
 
