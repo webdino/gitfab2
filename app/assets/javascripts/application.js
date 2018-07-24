@@ -17,5 +17,4 @@
 //= require jquery.validate.additional-methods
 //= require masonry.pkgd.min
 //= require ./notifications
-//= require ./maintenance
 //= require_tree .

@@ -37,5 +37,4 @@
 //= require ./change_owner
 //= require ./basic_informations
 //= require ./notifications
-//= require ./maintenance
 //= require select2
