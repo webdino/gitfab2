@@ -41,7 +41,7 @@ ruby:
   - unless defined? note_card_show
     - if card.class.to_s.underscore.include? "note"
       figure class = "#{card.class.to_s.underscore}"
-        == image_tag("fallback/blank.png")
+        = image_tag("/images/fallback/blank.png")
 
   - if stl_file_num > 0
     figure
