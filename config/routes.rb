@@ -63,7 +63,7 @@ Rails.application.routes.draw do
 
   resources :users, concerns: :owner do
     resources :collaborations
-    resources :memberships
+    resources :memberships, only: [:index, :destroy]
     resources :notifications do
       get 'mark_all_as_read', on: :collection
     end

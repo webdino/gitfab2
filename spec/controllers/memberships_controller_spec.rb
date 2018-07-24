@@ -2,7 +2,6 @@
 
 describe MembershipsController, type: :controller do
   let(:user) { FactoryBot.create :user }
-  let(:other) { FactoryBot.create :user }
   subject { response }
 
   describe 'GET index' do
@@ -12,49 +11,6 @@ describe MembershipsController, type: :controller do
       get :index, params: { user_id: user.id }
     end
     it { is_expected.to render_template :index }
-  end
-
-  describe 'POST create' do
-    context 'with valid params' do
-      before do
-        sign_in user
-        group = Group.create name: 'foo'
-        post :create, params: { user_id: user.id, membership: { group_id: group.id.to_s } }, format: :json, xhr: true
-      end
-      it_behaves_like 'success'
-      it_behaves_like 'render template', 'create'
-    end
-    context 'with invalid params' do
-      before do
-        sign_in user
-        post :create, params: { user_id: user.id, membership: { group_id: 'unexisted_group' } }, format: :json, xhr: true
-      end
-      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'create error' }) }
-    end
-  end
-
-  describe 'PATCH update' do
-    context 'with invalid params' do
-      let(:membership_params) { { role: 'editor' } }
-      before do
-        sign_in user
-        group = Group.create name: 'foo'
-        membership = user.memberships.create group_id: group.id
-        patch :update, params: { user_id: user.id, id: membership.id, membership: membership_params }, format: :json
-      end
-      it { is_expected.to render_template :update }
-    end
-
-    context 'with invalid params' do
-      let(:membership_params) { { role: 'unknown_role' } }
-      before do
-        sign_in user
-        group = Group.create name: 'foo'
-        membership = user.memberships.create group_id: group.id
-        patch :update, params: { user_id: user.id, id: membership.id, membership: membership_params }, format: :json
-      end
-      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: 'update error' }) }
-    end
   end
 
   describe 'DELETE destroy' do
