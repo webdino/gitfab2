@@ -1,36 +1,25 @@
 # frozen_string_literal: true
 
 describe UsersController, type: :controller do
-  # render_views
-
-  subject { response }
-
   let(:user) { FactoryBot.create :user }
 
   describe 'GET index' do
-    before { get :index }
-    it { is_expected.to render_template :index }
+    subject { get :index, format: :json }
+    it { is_expected.to be_successful }
   end
 
   describe 'GET edit' do
-    before do
-      get :edit, params: { id: user }
-    end
+    subject { get :edit, params: { id: user } }
     it { is_expected.to render_template :edit }
   end
 
   describe 'PATCH update' do
-    before do
-      patch :update, params: { id: user, user: { name: 'foo' } }
-      user.reload
-    end
-    it { is_expected.to redirect_to edit_user_path(user) }
+    subject { patch :update, params: { id: user, user: { name: 'foo' } } }
+    it { is_expected.to redirect_to edit_user_path(user.reload) }
   end
 
   describe 'DELETE destroy' do
-    before do
-      delete :destroy, params: { id: user }
-    end
+    subject { delete :destroy, params: { id: user } }
     it { is_expected.to redirect_to root_path }
   end
 end
