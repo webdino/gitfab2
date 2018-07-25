@@ -42,9 +42,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
   validates :email, presence: true, uniqueness: true
-  validates :name, presence: true, if: -> { self.persisted? }
-  validates :name, unique_owner_name: true,
-                   name_format: true, if: -> { name.present? }
+  validates :name, unique_owner_name: true, name_format: true
 
   concerning :Draft do
     def generate_draft

@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
     render file: "public/401.html", status: :unauthorized
   end
 
-  before_action :verify_name
   after_action :store_location
 
   def current_user
@@ -28,12 +27,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def verify_name
-    if current_user && current_user.name.blank?
-      redirect_to [:edit, current_user]
-    end
-  end
 
   def current_ability
     @current_ability ||= Ability.new(current_user, params)

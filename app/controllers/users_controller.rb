@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   layout 'user'
 
-  before_action :verify_name, except: [:edit, :update]
-
   def index
     @users = User.order(:name) # TODO: ユーザー名による絞り込み
   end
