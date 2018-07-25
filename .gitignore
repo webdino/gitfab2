@@ -45,3 +45,5 @@ _cho*
 Gemfile.local
 Gemfile.local.lock
 .envrc
+
+node_modules
