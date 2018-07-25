@@ -32,7 +32,7 @@ class Group < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  validates :name, presence: true, uniqueness: true, unique_owner_name: true, name_format: true
+  validates :name, presence: true, unique_owner_name: true, name_format: true
 
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
