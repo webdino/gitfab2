@@ -22,8 +22,7 @@ main#users-edit
     .right
       == f.file_field :avatar, id: "user-avatar-form"
       == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-      p style="width: 330px; margin-bottom: 15px; padding: 10px; border: 1px solid #FFF; border-radius: 5px; font-size: 22px; color:#999;"
-        == @user.name
+      == f.text_field :name, placeholder: "Name", class: "text-form"
       == f.url_field :url, placeholder: "URL", class: "text-form"
       == f.text_field :location, placeholder: "Location", class: "text-form"
 

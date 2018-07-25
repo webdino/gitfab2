@@ -103,10 +103,6 @@ class User < ApplicationRecord
         user.remote_avatar_url = auth.info.image
       end
     end
-
-    def updatable_columns
-      [:avatar, :url, :location]
-    end
   end
 
   private
