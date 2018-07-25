@@ -10,7 +10,7 @@ class RemovePolymorphicFromTags < ActiveRecord::Migration[4.2]
     remove_foreign_key :tags, :projects
     rename_column :tags, :project_id, :taggable_id
     add_column :tags, :taggable_type, :string
-    ActiveRecord::Base.connection.execute("UPDATE tags SET taggable_type = 'Project'")
+    execute("UPDATE tags SET taggable_type = 'Project'")
     add_index :tags, [:taggable_type, :taggable_id], name: :index_tags_taggable
   end
 end

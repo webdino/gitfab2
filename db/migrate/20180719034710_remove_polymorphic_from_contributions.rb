@@ -10,7 +10,7 @@ class RemovePolymorphicFromContributions < ActiveRecord::Migration[4.2]
     remove_foreign_key :contributions, :cards
     rename_column :contributions, :card_id, :contributable_id
     add_column :contributions, :contributable_type, :string
-    ActiveRecord::Base.connection.execute("UPDATE contributions SET contributable_type = 'Card'")
+    execute("UPDATE contributions SET contributable_type = 'Card'")
     change_column_null :contributions, :contributable_type, false
     add_index :contributions, [:contributable_type, :contributable_id], name: :index_contributions_contributable
   end

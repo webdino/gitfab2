@@ -1,7 +1,7 @@
 class DropNotes < ActiveRecord::Migration[4.2]
   def up
     # Migrate notes.project_id to cards.project_id
-    ActiveRecord::Base.connection.execute(<<~SQL)
+    execute(<<~SQL)
       UPDATE cards
       INNER JOIN notes ON cards.note_id = notes.id
       SET cards.project_id = notes.project_id

@@ -10,7 +10,7 @@ class RemovePolymophicFromCardAnnotation < ActiveRecord::Migration[4.2]
     remove_index :cards, :annotation_id
     rename_column :cards, :annotation_id, :annotatable_id
     add_column :cards, :annotatable_type, :string
-    ActiveRecord::Base.connection.execute(<<~SQL)
+    execute(<<~SQL)
       UPDATE cards SET annotatable_type = 'Card'
       WHERE annotatable_id IS NOT NULL
     SQL

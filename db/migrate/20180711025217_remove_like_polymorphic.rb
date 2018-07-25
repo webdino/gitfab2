@@ -1,6 +1,6 @@
 class RemoveLikePolymorphic < ActiveRecord::Migration[4.2]
   def up
-    ActiveRecord::Base.connection.execute("DELETE FROM likes WHERE likable_type <> 'Project'")
+    execute("DELETE FROM likes WHERE likable_type <> 'Project'")
     remove_column :likes, :likable_type
     rename_column :likes, :likable_id, :project_id
     rename_column :likes, :liker_id, :user_id
