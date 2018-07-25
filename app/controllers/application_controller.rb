@@ -36,9 +36,9 @@ class ApplicationController < ActionController::Base
 
   def store_location
     return unless request.get?
-    if request.path != '/users/auth/github' && request.path != '/users/sign_out' && !request.xhr?
-      session[:previous_url] = request.fullpath
-    end
+    return if request.xhr?
+    return if ['/users/auth/github', '/users/sign_out'].include?(request.path)
+    session[:previous_url] = request.fullpath
   end
 
   def not_found
