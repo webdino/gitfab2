@@ -111,6 +111,19 @@ ActiveRecord::Schema.define(version: 2018_08_01_034032) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  create_table "identities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", comment: "認証情報", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "provider"
+    t.string "uid"
+    t.string "email"
+    t.string "name"
+    t.string "nickname"
+    t.text "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_identities_on_user_id"
+  end
+
   create_table "likes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "project_id", null: false
@@ -209,6 +222,7 @@ ActiveRecord::Schema.define(version: 2018_08_01_034032) do
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
   add_foreign_key "featured_items", "features", name: "fk_featured_items_feature_id"
+  add_foreign_key "identities", "users"
   add_foreign_key "likes", "users", name: "fk_likes_liker_id"
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"

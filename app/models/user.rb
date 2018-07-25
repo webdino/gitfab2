@@ -33,6 +33,7 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
+  has_many :identities, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
