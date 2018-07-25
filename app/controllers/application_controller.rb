@@ -22,6 +22,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def current_user=(user)
+    session[:su] = user&.id
+    @current_user = user
+  end
+
   private
 
   def verify_name

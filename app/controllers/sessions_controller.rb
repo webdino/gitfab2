@@ -2,8 +2,7 @@ class SessionsController < ApplicationController
   def create
     user = User.find_for_github_oauth(request.env['omniauth.auth'])
     if user.persisted?
-      session[:su] = user.id
-      @current_user = user
+      self.current_user = user
       redirect_to session[:previous_url] || root_path
     else
       session['auth.failed.error'] = user.errors.full_messages
@@ -12,8 +11,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    @current_user = nil
-    session.delete(:su)
+    self.current_user = nil
     redirect_to root_path
   end
 end
