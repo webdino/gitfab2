@@ -198,8 +198,6 @@ ActiveRecord::Schema.define(version: 2018_08_01_034032) do
 
   create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "email"
-    t.string "provider"
-    t.string "uid"
     t.string "slug"
     t.string "name"
     t.string "fullname"
