@@ -77,7 +77,7 @@ describe User do
     it { expect(user.is_contributor_of?(not_contributed_card)).to be false }
   end
 
-  describe '#is_admin_of?(group)' do
+  describe '#is_admin_of?' do
     let!(:group_administered) { FactoryBot.create :group }
     let!(:group_not_membered) { FactoryBot.create :group }
     before { FactoryBot.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }
@@ -86,7 +86,7 @@ describe User do
     it { expect(user.is_admin_of?(nil)).to be false }
   end
 
-  describe '#is_editor_of?(group)' do
+  describe '#is_editor_of?' do
     let!(:group_administered) { FactoryBot.create :group }
     let!(:group_not_membered) { FactoryBot.create :group }
     before { FactoryBot.create(:membership, group: group_administered, user: user, role: Membership::ROLE[:admin]) }

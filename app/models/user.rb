@@ -69,11 +69,19 @@ class User < ApplicationRecord
     memberships.find_by group_id: group.id
   end
 
-  [:admin, :editor, :member].each do |role|
-    define_method "is_#{role}_of?" do |group|
-      return false unless group
-      group.send(role.to_s.pluralize).include? self
-    end
+  def is_admin_of?(group)
+    return false unless group
+    group.admins.exists?(id)
+  end
+
+  def is_editor_of?(group)
+    return false unless group
+    group.editors.exists?(id)
+  end
+
+  def is_member_of?(group)
+    return false unless group
+    group.members.exists?(id)
   end
 
   def join_to(group)
