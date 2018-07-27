@@ -1,6 +1,10 @@
 dist: trusty
 sudo: required
-cache: bundler
+cache:
+  bundler: true
+  derectories:
+    - node_modules
+
 language: ruby
 rvm:
   - 2.5.1
@@ -26,6 +30,10 @@ before_install:
 notifications:
   slack:
     secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
+install:
+  - bundle install
+  - nvm install 10.7.0
+  - npm install
 script:
   - bundle exec rubocop --fail-level=W
   - bundle exec rspec

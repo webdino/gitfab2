@@ -5,4 +5,3 @@
 //= require helpers/lang
 //= require global_project
 //= require notifications
-//= require maintenance

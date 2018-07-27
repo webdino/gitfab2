@@ -20,6 +20,7 @@ gem 'ransack'
 gem 'sanitize'
 gem 'slack-notifier'
 gem 'slim-rails'
+gem 'sprockets-commoner'
 gem 'truncate_html'
 gem 'unicorn'
 

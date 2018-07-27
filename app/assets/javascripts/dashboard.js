@@ -5,5 +5,4 @@
 //= require tabby/tabby
 //= require select2
 //= require ./notifications
-//= require ./maintenance
 //= require ./features

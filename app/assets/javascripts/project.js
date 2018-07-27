@@ -22,7 +22,6 @@
 //= require threejs/STLLoader
 //= require_tree ./helpers
 //= require_tree ./jquery
-//= require ./stl_viewer
 //= require d3
 //= require ./recipe
 //= require ./project_form
@@ -38,5 +37,4 @@
 //= require ./change_owner
 //= require ./basic_informations
 //= require ./notifications
-//= require ./maintenance
 //= require select2

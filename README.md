@@ -9,6 +9,7 @@ gitfab2 [![Build Status](https://travis-ci.org/mozilla-japan/gitfab2.svg?branch=
 - Docker Compose 1.16 or later
 - direnv
 - rbenv
+- node.js
 
 ### Installation
 
@@ -18,6 +19,7 @@ $ cd gitfab2
 $ rbenv install `cat .ruby-version`
 $ gem install bundler --no-document
 $ bundle install
+$ npm install
 $ cp config/database.ymls/development.yml config/database.yml
 $ cp .envrc.sample .envrc
 $ vi .envrc
@@ -56,6 +58,16 @@ Open http://localhost:3000 in your browser.
 
 ```bash
 $ bundle exec rspec
+```
+
+### Install node.js on CentOS 7
+- CentOS 7.5
+- node.js 10.7.0
+
+```bash
+$ curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+$ yum install -y gcc-c++ make nodejs
+$ npm install
 ```
 
 ## License
