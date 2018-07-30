@@ -11,6 +11,7 @@ $(function() {
     if (filtered_attachments.length === 0) {
       container.removeClass("has-data");
       $("#making-list .inner").removeClass("has-data");
+      return
     }
     container.addClass("has-data");
     $("#making-list .inner").addClass("has-data");
