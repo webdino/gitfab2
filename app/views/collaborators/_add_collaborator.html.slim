@@ -1,11 +1,11 @@
 - if can? :manage, project
   - if @owner.is_a? User
     - create_path = user_project_collaborators_path(user_id: project.owner, project_id: project.id, owner_name: project.owner.slug)
-    == form_tag create_path, remote: true, id: "new_collaboration"
-      == select_tag :collaborator_name
-      == submit_tag "Add", class: "add-collaborator-btn btn"
+    = form_tag create_path, remote: true, id: "new_collaboration"
+      = select_tag :collaborator_name
+      = submit_tag "Add", class: "add-collaborator-btn btn"
   - else
     - create_path = group_project_collaborators_path(group_id: project.owner, project_id: project.id, owner_name: project.owner.slug)
-    == form_tag create_path, remote: true, id: "new_collaboration"
-      == select_tag :collaborator_name
-      == submit_tag "Add", class: "add-collaborator-btn btn"
+    = form_tag create_path, remote: true, id: "new_collaboration"
+      = select_tag :collaborator_name
+      = submit_tag "Add", class: "add-collaborator-btn btn"

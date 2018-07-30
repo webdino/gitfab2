@@ -2,4 +2,4 @@
   - card.contributions.each do |contribution|
     - contributor = User.where(id: contribution.contributor_id).first
     - if contributor.present?
-      == link_to image_tag(contributor.avatar.thumb.url), projects_path(owner_name: contributor.slug), class: "contributor", title: contributor.name
+      = link_to image_tag(contributor.avatar.thumb.url), projects_path(owner_name: contributor.slug), class: "contributor", title: contributor.name

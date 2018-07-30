@@ -2,34 +2,34 @@ section#layouts-header
   .inner
     .container
       #logo
-        == link_to "", root_path, class: "logo"
+        = link_to "", root_path, class: "logo"
 
       #search-box
-        == form_tag :search, method: :get do
-          == text_field_tag :q, nil, placeholder: "Search", id: "search-form"
+        = form_tag :search, method: :get do
+          = text_field_tag :q, nil, placeholder: "Search", id: "search-form"
 
           / TODO: add clear btn
 
       - unless current_user
         #sign-in
-          == link_to "Sign in with Github", "/auth/github"
+          = link_to "Sign in with Github", "/auth/github"
       - if current_user && current_user.name
         #tools
           .user
             .avatar
-              == link_to image_tag(current_user.avatar.thumb.url, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
+              = link_to image_tag(current_user.avatar.thumb.url, class: "avator-thumb"), projects_path(owner_name: current_user.slug)
             .name
-              == link_to current_user.name, projects_path(owner_name: current_user.slug)
+              = link_to current_user.name, projects_path(owner_name: current_user.slug)
           .box
-            == link_to "", new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-project"
+            = link_to "", new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-project"
 
-            == link_to user_notifications_path(current_user), remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
+            = link_to user_notifications_path(current_user), remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
               - unread_notifications_count = current_user.my_notifications.where(was_read: false).count
               - if unread_notifications_count > 0
                 .notifications-badge
                   .inner
-                    == unread_notifications_count
-            == link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
-            == link_to "", "/logout", method: :delete, title: "Logout", class: "icon logout"
+                    = unread_notifications_count
+            = link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
+            = link_to "", "/logout", method: :delete, title: "Logout", class: "icon logout"
 
         #notifications-index.hidden

@@ -7,9 +7,9 @@
       - @notifications.each do |notification|
         li.notification
           .container
-            == link_to image_tag(notification.notifier.avatar.thumb.url, class: "avatar"), projects_path(notification.notifier), class: "avatar-wrapper"
+            = link_to image_tag(notification.notifier.avatar.thumb.url, class: "avatar"), projects_path(notification.notifier), class: "avatar-wrapper"
             - notified_object_url = "/users/#{notification.notified.slug}/notifications/#{notification.id}"
-            == link_to notification.body, notification.notificatable_url, class: "body", data: {url: notified_object_url}
+            = link_to notification.body, notification.notificatable_url, class: "body", data: {url: notified_object_url}
     - else
       li.notification
         .container

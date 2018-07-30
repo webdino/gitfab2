@@ -1,12 +1,12 @@
 #groups-index
-  == link_to "+ Create new group", [:new, :group], class: "btn"
+  = link_to "+ Create new group", [:new, :group], class: "btn"
 
   #groups-list
     h1
       'Groups
     ul#groups
       - current_user.groups.each do |group|
-        == render "group", group: group
+        = render "group", group: group
 
 
 - content_for :bottom do

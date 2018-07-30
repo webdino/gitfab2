@@ -7,8 +7,8 @@
 #groups-edit
   #edit-profile
     h1.page-title
-      == "#{@group.name} Public Profile"
-    == render "form"
+      = "#{@group.name} Public Profile"
+    = render "form"
 
   #edit-members
     .inner
@@ -16,9 +16,9 @@
        'Members
       ul#members
         - @group.members.each do |member|
-          == render "membership", membership: member.membership_in(@group)
+          = render "membership", membership: member.membership_in(@group)
 
-      == render "add_member", group: @group
+      = render "add_member", group: @group
 
 - content_for :bottom
 

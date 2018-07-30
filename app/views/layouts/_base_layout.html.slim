@@ -2,17 +2,17 @@ doctype html
 html
   head
     title
-      == content_for?(:title) ? yield(:title) : "Fabble"
-    == content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all")
-    == content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application")
-    == content_for?(:ogp) ? yield(:ogp) : nil
-    == csrf_meta_tags
+      = content_for?(:title) ? yield(:title) : "Fabble"
+    = content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all")
+    = content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application")
+    = content_for?(:ogp) ? yield(:ogp) : nil
+    = csrf_meta_tags
   body
-    == render "components/analytics"
-    == render "layouts/header"
-    == content_for?(:content) ? yield(:content) : yield
-    == render "layouts/footer"
-    == content_for?(:bottom) ? yield(:bottom) : nil
+    = render "components/analytics"
+    = render "layouts/header"
+    = content_for?(:content) ? yield(:content) : yield
+    = render "layouts/footer"
+    = content_for?(:bottom) ? yield(:bottom) : nil
     - if Rails.application.secrets.ga_tracking_id
       script{async src=("https://www.googletagmanager.com/gtag/js?id=#{ Rails.application.secrets.ga_tracking_id }")}
       javascript:
@@ -25,7 +25,7 @@ html
 
     - if Rails.env.development?
       hr
-        == form_tag "/su" do
-          == select_tag "user_id", options_from_collection_for_select(User.all, :id, :name)
-          == submit_tag "su"
-          == submit_tag "reset"
+        = form_tag "/su" do
+          = select_tag "user_id", options_from_collection_for_select(User.all, :id, :name)
+          = submit_tag "su"
+          = submit_tag "reset"

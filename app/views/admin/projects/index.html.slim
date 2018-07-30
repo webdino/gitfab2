@@ -1,8 +1,8 @@
 #admin-projects-index
   h1.title Edit Projects
-  == form_tag admin_projects_path, method: :get do
-    == search_field_tag(:q, params[:q])
-    == submit_tag('Search')
+  = form_tag admin_projects_path, method: :get do
+    = search_field_tag(:q, params[:q])
+    = submit_tag('Search')
   table.projects
     thead
       tr
@@ -16,9 +16,9 @@
     - @projects.each do |project|
       tr.project
         td
-          == project.path
+          = project.path
         td
-          == project.is_private ? '-' : link_to('Open', project_path(project.owner, project))
+          = project.is_private ? '-' : link_to('Open', project_path(project.owner, project))
         td
-          == link_to('Manage', admin_project_path(project.id))
-  == paginate(@projects)
+          = link_to('Manage', admin_project_path(project.id))
+  = paginate(@projects)

@@ -4,29 +4,29 @@
 main#users-edit
   h1
     'Public Profile
-  p#notice == notice
+  p#notice = notice
 
-  == form_for @user, url: user_path(id: @user.id) do |f|
+  = form_for @user, url: user_path(id: @user.id) do |f|
     - if @user.errors.any?
       #error_explanation
         h2
-          == pluralize(@user.errors.count, "error")
+          = pluralize(@user.errors.count, "error")
           'prohibited this user from being saved:
         ul
           - @user.errors.full_messages.each do |msg|
-            li == msg
+            li = msg
 
     .left
-      == image_tag @user.avatar.url, id: "user-avatar"
+      = image_tag @user.avatar.url, id: "user-avatar"
 
     .right
-      == f.file_field :avatar, id: "user-avatar-form"
-      == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-      == f.text_field :name, placeholder: "Name", class: "text-form"
-      == f.url_field :url, placeholder: "URL", class: "text-form"
-      == f.text_field :location, placeholder: "Location", class: "text-form"
+      = f.file_field :avatar, id: "user-avatar-form"
+      = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+      = f.text_field :name, placeholder: "Name", class: "text-form"
+      = f.url_field :url, placeholder: "URL", class: "text-form"
+      = f.text_field :location, placeholder: "Location", class: "text-form"
 
-    == f.submit "Save", id: "submit", class: "btn"
+    = f.submit "Save", id: "submit", class: "btn"
 
 - content_for :bottom
 

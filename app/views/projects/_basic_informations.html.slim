@@ -5,7 +5,7 @@ section#basic-informations
 
   section.header
     h1.title
-      == @project.title
+      = @project.title
 
     section.meta
       .left
@@ -14,7 +14,7 @@ section#basic-informations
             span.index
               'Created Date:
             span.value
-              == " #{@project.created_at.strftime '%Y-%m-%d'}" if @project.created_at
+              = " #{@project.created_at.strftime '%Y-%m-%d'}" if @project.created_at
 
           span.slash
             '/
@@ -22,19 +22,19 @@ section#basic-informations
             span.index
               'updated date:
             span.value
-              == " #{@project.updated_at.strftime '%Y-%m-%d'}" if @project.updated_at
+              = " #{@project.updated_at.strftime '%Y-%m-%d'}" if @project.updated_at
 
         .line
           label
-            == "Tags:"
+            = "Tags:"
           ul.tags
             - @project.tags.each do |tag|
-              == render "tags/tag", tag: tag, resources: [@owner, @project, tag]
+              = render "tags/tag", tag: tag, resources: [@owner, @project, tag]
           - if current_user
-            == form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
-              == f.text_field :name, class: "textfield"
-              == f.submit "Add", class: "btn"
-            == link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
+            = form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
+              = f.text_field :name, class: "textfield"
+              = f.submit "Add", class: "btn"
+            = link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
 
   section.body
     - if @project.figures.present?
@@ -43,7 +43,7 @@ section#basic-informations
           ul.slides.slick
             - @project.figures.each do |figure|
               li
-                == image_tag figure.content.medium.url, data: {groupname: "top-image"}, class: "top-image"
+                = image_tag figure.content.medium.url, data: {groupname: "top-image"}, class: "top-image"
 
       - elsif @project.figures.first.link.present?
         figure.visual
@@ -52,20 +52,20 @@ section#basic-informations
     section.members
       .title Owner & Collaborators
       .owner
-        == link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
+        = link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
           .thumb style="background-image: url('#{@owner.avatar.small.url}')"
 
       - if @project.collaborators.present?
         ul.collaborators
           - @project.collaborators.each do |collaborator|
             li.collaborator
-              == link_to projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
+              = link_to projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
                 .thumb style="background-image: url('#{collaborator.avatar.small.url}')"
 
       - if can? :manage, @project
-        == link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
+        = link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
     .hidden
-      == render "collaborators/list"
+      = render "collaborators/list"
 
     section.license
       ruby:
@@ -90,7 +90,7 @@ section#basic-informations
         text += link_to(license_texts[index], url) + ' license.'
 
       .title License
-      == link_to image_tag(image, class: 'license-image'), url, target: '_blank'
+      = link_to image_tag(image, class: 'license-image'), url, target: '_blank'
       .text
         == text
 
@@ -100,39 +100,39 @@ section#basic-informations
         == Sanitize.clean auto_link(simple_format(@project.description), sanitize: false), Sanitize::Config::CARD
 
 - if can? :manage, @project
-  == link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
+  = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
 
 section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
   - if @recipe.present?
-    == link_to "", "#", id: "slideshow-btn"
-  == link_to "", "#", id: "print-btn"
+    = link_to "", "#", id: "slideshow-btn"
+  = link_to "", "#", id: "print-btn"
   - if can? :edit, @project
     #card-order-tools
-      == link_to "", "#", class: "order-change-btn"
-      == link_to "", "#", class: "order-commit-btn"
+      = link_to "", "#", class: "order-change-btn"
+      = link_to "", "#", class: "order-commit-btn"
   - if current_user
-    == link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
+    = link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
   - unless @project.is_private
-    == link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
+    = link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
   - if @recipe.present?
-    == render "projects/recipe_cards_list"
+    = render "projects/recipe_cards_list"
 
   .hidden
     #fork-destinations
       - if current_user
-        == render "projects/fork_destination", owner: current_user, project: @project
+        = render "projects/fork_destination", owner: current_user, project: @project
         - current_user.groups.each do |group|
           - if can? :manage, group
-            == render "projects/fork_destination", owner: group, project: @project
+            = render "projects/fork_destination", owner: group, project: @project
 
     #share-destinations
       .container
         - url = "https://fabble.cc" + project_path(@owner, @project)
-        == link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
-        == link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
+        = link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
+        = link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
 
   #pointer
 
 
-      / == link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
-      / == render "projects/change_owner", project: @project
+      / = link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
+      / = render "projects/change_owner", project: @project

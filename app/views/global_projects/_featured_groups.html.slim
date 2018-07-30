@@ -2,28 +2,28 @@
   .container
     ul.groups
       - @featured_groups.each do |group|
-        == link_to projects_path(group) do
+        = link_to projects_path(group) do
           li.group
             .image-wrapper
-              == image_tag group.avatar.url, class: "image"
+              = image_tag group.avatar.url, class: "image"
 
             .title
-              == group.name
+              = group.name
             .meta
               div
                 span.place
-                  == group.location
+                  = group.location
                 span
               div
                 span.members
-                  == "Members: #{group.members.length}"
+                  = "Members: #{group.members.length}"
 
                 span |
                 span.projects
-                  == "Projects: #{group.projects.length}"
+                  = "Projects: #{group.projects.length}"
 
             .description
-            / == group.description.truncate(300) #TODO: implement group.description
+            / = group.description.truncate(300) #TODO: implement group.description
 
   .label.lang-en
     'Tags & Keywords

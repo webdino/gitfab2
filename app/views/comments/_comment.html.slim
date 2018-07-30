@@ -5,22 +5,22 @@ ruby:
 
 li.comment
   .left
-    == link_to avatar_image, user_url, title: user.name
+    = link_to avatar_image, user_url, title: user.name
   .right
     .wrapper
       .header
         span.number.header-content
-          == format "No.%03d", i + 1
+          = format "No.%03d", i + 1
         span.owner.header-content
-          == link_to user.slug, user_url
+          = link_to user.slug, user_url
 
         span.created-at.header-content
-          == "Posted date: "
+          = "Posted date: "
           span.date
-            == comment.created_at.strftime '%Y.%m.%d.%H.%M'
+            = comment.created_at.strftime '%Y.%m.%d.%H.%M'
 
         - if can? :destroy, comment
           span.comment-tools
-            == link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
+            = link_to "delete", resources, method: :delete, remote: true, class: "btn delete-btn delete-comment"
       .body
         == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED

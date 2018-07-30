@@ -6,7 +6,7 @@
       - project_url = project_path(@owner.slug, @project)
       - @recipe.states.ordered_by_position.each do |state|
         - state_position_path = project_url + "##{state.id}"
-        == link_to "", state_position_path, class: "state-link"
+        = link_to "", state_position_path, class: "state-link"
         - state.annotations.ordered_by_position.each do |annotation|
           - annotation_position_path = project_url + "##{annotation.id}"
-          == link_to "", annotation_position_path, class: "annotation-link"
+          = link_to "", annotation_position_path, class: "annotation-link"

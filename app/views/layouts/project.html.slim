@@ -1,7 +1,7 @@
 - content_for :stylesheet do
-  == stylesheet_link_tag "project", media: "all"
+  = stylesheet_link_tag "project", media: "all"
 - content_for :javascript do
-  == javascript_include_tag "project"
+  = javascript_include_tag "project"
 - content_for :ogp do
 
   - if @project.persisted?
@@ -21,18 +21,18 @@
         end
       end
 
-    == render partial: "components/base_ogp", locals: {title: title, description: description, image: image, video: video}
+    = render partial: "components/base_ogp", locals: {title: title, description: description, image: image, video: video}
 
   - else
-    == render partial: "components/base_ogp"
+    = render partial: "components/base_ogp"
 
 - content_for :content do
   - has_origin = @project.original.present?
   - has_derivatives = @project.derivatives.present?
   - if has_origin || has_derivatives
-    == render "projects/relations"
+    = render "projects/relations"
 
   #content.project-layout
-    == yield
-  == render "recipes/facebook"
-== render "layouts/base_layout"
+    = yield
+  = render "recipes/facebook"
+= render "layouts/base_layout"

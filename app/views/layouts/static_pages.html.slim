@@ -1,12 +1,12 @@
 - content_for :stylesheet do
-  == stylesheet_link_tag "static_pages", media: "all"
+  = stylesheet_link_tag "static_pages", media: "all"
 - content_for :javascript do
-  == javascript_include_tag "static_pages"
+  = javascript_include_tag "static_pages"
 - content_for :ogp do
-  == render partial: "components/base_ogp"
+  = render partial: "components/base_ogp"
 
 - content_for :content do
   #content
-    == yield
-    == yield :utils
-== render "layouts/base_layout"
+    = yield
+    = yield :utils
+= render "layouts/base_layout"

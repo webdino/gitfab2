@@ -4,13 +4,13 @@
 
 #index
   - if current_user
-    == render "dashboard"
+    = render "dashboard"
   - else
     - if session["auth.failed.error"].present?
       #error_explanation
         h2
           'Login error:
-          == session["auth.failed.error"]
+          = session["auth.failed.error"]
           - session.delete("auth.failed.error")
 
     - unless @is_searching
@@ -30,7 +30,7 @@
             .sub-copy
               'New Platform to Share Fab Projects all over the world
           .sign-up
-            == link_to "", "/auth/github", class: "sign-up-btn"
+            = link_to "", "/auth/github", class: "sign-up-btn"
 
         .container.lang-jp
           .text
@@ -39,25 +39,25 @@
             .sub-copy
               '世界中のFabプロジェクトのためのプラットフォーム
           .sign-up
-            == link_to "", "/auth/github", class: "sign-up-btn-jp"
+            = link_to "", "/auth/github", class: "sign-up-btn-jp"
 
         .label.lang-en
           'About
         .label.lang-jp
           'Fabble の特長
 
-      == render "functions"
-      == render "occasions"
+      = render "functions"
+      = render "occasions"
 
   - if @is_searching
-    == render "searched_projects"
-    == render "tags_and_keywords"
+    = render "searched_projects"
+    = render "tags_and_keywords"
 
   - else
-    == render "featured_projects"
-    == render "featured_groups"
-    == render "tags_and_keywords"
-    == render "reciped_projects"
+    = render "featured_projects"
+    = render "featured_groups"
+    = render "tags_and_keywords"
+    = render "reciped_projects"
 
   - unless current_user
-    == render "sign_up_pane"
+    = render "sign_up_pane"

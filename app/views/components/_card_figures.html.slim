@@ -14,23 +14,23 @@ ruby:
           - card.figures.each do |figure|
             li
               - if defined? note_card_show
-                == image_tag figure.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
+                = image_tag figure.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
               - else
-                == image_tag figure.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+                = image_tag figure.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
 
           - card.attachments.each do |attachment|
             - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
 
               li
                 - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                  == image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
+                  = image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
 
     - else
       figure
         - if defined? note_card_show
-          == image_tag card.figures.first.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
+          = image_tag card.figures.first.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
         - else
-          == image_tag card.figures.first.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+          = image_tag card.figures.first.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
 
 
   - elsif card.figures.first.link.present?
@@ -50,4 +50,4 @@ ruby:
           - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
             li
               - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                == image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
+                = image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"

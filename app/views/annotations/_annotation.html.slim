@@ -11,22 +11,22 @@ article class="card annotation" data-position="#{annotation.position}" id="#{ann
         = link_to (annotation.title || "Annotation without title"), "#annotation-#{annotation.id}", id: "annotation-#{annotation.id}"
       .control
         - if can? :manage, annotation
-          == link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
-          == link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-          == link_to "Convert to State", convert_url, class: "to-state btn"
+          = link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
+          = link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+          = link_to "Convert to State", convert_url, class: "to-state btn"
           .order-tools
-            == link_to "", "#", class: "order-up-btn"
-            == link_to "", "#", class: "order-down-btn"
+            = link_to "", "#", class: "order-up-btn"
+            = link_to "", "#", class: "order-down-btn"
 
         .show-comments-btn
           .comment-icon.icon
           .count
-            == annotation.comments.length
-        == render "components/card_contributors", card: annotation
+            = annotation.comments.length
+        = render "components/card_contributors", card: annotation
 
     .body
-      == render "components/card_description", card: annotation
-      == render "components/card_figures", card: annotation
-      == render "components/card_attachments", card: annotation
+      = render "components/card_description", card: annotation
+      = render "components/card_figures", card: annotation
+      = render "components/card_attachments", card: annotation
     .footer
-      == render "components/card_comments", card: annotation, resources: [@owner, @project, :recipe, parent, annotation]
+      = render "components/card_comments", card: annotation, resources: [@owner, @project, :recipe, parent, annotation]

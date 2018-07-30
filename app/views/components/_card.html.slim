@@ -1,15 +1,15 @@
 article class="card #{card.htmlclass}" data-position="#{card.position}" id="#{card.id}"
   .card-content
-    == render "components/card_figures", card: card
+    = render "components/card_figures", card: card
     h2.title
       = link_to card.title, "#usage-#{card.id}", id: "usage-#{card.id}"
-    == render "components/card_contributors", card: card
-    == render "components/card_description", card: card
-    == render "components/card_attachments", card: card
+    = render "components/card_contributors", card: card
+    = render "components/card_description", card: card
+    = render "components/card_attachments", card: card
     - if can? :manage, card
       footer
-        == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-        == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+        = link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+        = link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
         - if card.htmlclass == "annotation"
           - convert_url = project_recipe_state_annotation_to_state_path(owner_name: @owner.slug, project_id: @project.name, state_id: parent.id, annotation_id: card.id)
-          == link_to "convert to state", convert_url, class: "to-state btn"
+          = link_to "convert to state", convert_url, class: "to-state btn"

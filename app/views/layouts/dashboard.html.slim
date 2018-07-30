@@ -1,15 +1,15 @@
 - content_for :stylesheet do
-  == stylesheet_link_tag "dashboard", media: "all"
+  = stylesheet_link_tag "dashboard", media: "all"
 - content_for :javascript do
-  == javascript_include_tag "dashboard"
+  = javascript_include_tag "dashboard"
 - content_for :ogp do
   - if @owner.present? && @owner.persisted?
-    == render partial: "components/base_ogp", locals: {title: "#{@owner.name} on Fabble", image: @owner.avatar&.url}
+    = render partial: "components/base_ogp", locals: {title: "#{@owner.name} on Fabble", image: @owner.avatar&.url}
   - else
-    == render partial: "components/base_ogp"
+    = render partial: "components/base_ogp"
 
 - content_for :content do
   #content
-    == yield
-    == yield :utils
-== render "layouts/base_layout"
+    = yield
+    = yield :utils
+= render "layouts/base_layout"

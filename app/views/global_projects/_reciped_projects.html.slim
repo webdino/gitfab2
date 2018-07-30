@@ -2,9 +2,9 @@
   .container
     ul#reciped-projects.projects
       - @projects.each do |project|
-        == render "project", project: project
+        = render "project", project: project
 
     - if @projects.present? && @projects.length > 12
 
       .more
-        == link_to "→ More Projects", "/?page=2&q=", class: "more-projects"
+        = link_to "→ More Projects", "/?page=2&q=", class: "more-projects"

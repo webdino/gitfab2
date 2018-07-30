@@ -6,4 +6,4 @@
     - @owner.contributed_projects.each do |project|
       - unless can? :read, project
         - next
-      == render "project", project: project, is_note: false
+      = render "project", project: project, is_note: false

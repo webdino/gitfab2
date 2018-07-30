@@ -1,16 +1,16 @@
 - content_for :stylesheets do
-  == stylesheet_link_tag "groups"
+  = stylesheet_link_tag "groups"
 - content_for :javascript do
-  == javascript_include_tag "groups"
+  = javascript_include_tag "groups"
 - content_for :ogp do
   - if @group.present? && @group.persisted?
-    == render partial: "components/base_ogp", locals: {title: "#{@group.name} on Fabble", image: @group.avatar&.url}
+    = render partial: "components/base_ogp", locals: {title: "#{@group.name} on Fabble", image: @group.avatar&.url}
   - else
-    == render partial: "components/base_ogp"
+    = render partial: "components/base_ogp"
 
 - content_for :content do
   #content
-    == render partial: "layouts/setting_links"
-    == yield
+    = render partial: "layouts/setting_links"
+    = yield
 
-== render partial: "layouts/base_layout"
+= render partial: "layouts/base_layout"

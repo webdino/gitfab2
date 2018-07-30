@@ -5,17 +5,17 @@
     - @project.owner.name + "/" + @project.title + " : Memos/Notecard"
 
 main#note-cards-show
-  == render "projects/basic_informations"
+  = render "projects/basic_informations"
 
   #tabs
-    == link_to project_path(@project, owner_name: @owner.slug) do
+    = link_to project_path(@project, owner_name: @owner.slug) do
       .tab
         'Recipe
-        == "(#{@project.recipe.states.length})"
-    == link_to project_note_cards_path(@project, owner_name: @owner.slug) do
+        = "(#{@project.recipe.states.length})"
+    = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
       .tab.active
         'Memos
-        == "(#{@project.note_cards.length})"
+        = "(#{@project.note_cards.length})"
 
   section#note-card
     .top
@@ -24,7 +24,7 @@ main#note-cards-show
           'Memo
         - if can? :edit, @project
           - new_url = new_project_note_card_path(owner_name: @owner.slug, project_id: @project.name)
-          == link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+          = link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
     - card = @note_card
     - if card.present?
@@ -34,7 +34,7 @@ main#note-cards-show
           .article-column
             .card-content
               h2.title
-                == card.title
+                = card.title
               .meta
                 .postedby
                   ruby:
@@ -43,30 +43,30 @@ main#note-cards-show
                     datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
 
                   - if author.present?
-                    == "posted by #{link} on #{datetime}"
+                    = "posted by #{link} on #{datetime}"
                   - else
-                    == "posted on #{datetime}"
+                    = "posted on #{datetime}"
 
                 .control
                   - if can? :manage, card
                     span.edit
                       - delete_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
                       - edit_url = edit_project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                      == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-                      == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+                      = link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+                      = link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 
           .first-column
             .horizontal-border.black.f-left
           .article-column
             .card-content
-              == render "components/card_figures", card: card, note_card_show: true
-              == render "components/card_description", card: card
-              == render "components/card_attachments", card: card
+              = render "components/card_figures", card: card, note_card_show: true
+              = render "components/card_description", card: card
+              = render "components/card_attachments", card: card
 
       footer
-        == render "components/card_comments", card: card, resources: [@owner, @project, card]
+        = render "components/card_comments", card: card, resources: [@owner, @project, card]
 
-  == render "note_cards/templates"
+  = render "note_cards/templates"
 
 - content_for :bottom do
   coffee:
