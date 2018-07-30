@@ -11,8 +11,6 @@ $(function() {
     $("#new_project").attr("action", $(this).val());
   });
 
-  $("#delete-btn").click(() => confirm("Are you sure to remove this project?"));
-
   $(document).on("click", "#recipes-new .submit", function(event) {
     event.preventDefault();
     $("form.project-form").submit();

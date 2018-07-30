@@ -142,4 +142,4 @@
       == link_to "Update Project", "#", class: "submit btn update"
       == f.submit value: "Update Project", id: "submit-btn"
       == link_to "Cancel", project_path(owner_name: @owner.slug, id: @project), class: "cancel btn"
-      == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project), method: :delete, class: "btn", id: "delete-btn"
+      == link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }

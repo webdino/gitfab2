@@ -61,4 +61,4 @@ li.project
         - edit_url = edit_project_path(project, owner_name: project.owner.slug)
         - delete_url = project_path(project.owner.slug, project)
         == link_to "edit", edit_url, class: "edit btn"
-        == link_to "delete", delete_url, method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
+        == link_to "delete", delete_url, method: "delete", class: "delete btn", data: { confirm: "Are you sure to delete this project?" }
