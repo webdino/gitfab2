@@ -67,8 +67,3 @@ main#note-cards-show
         = render "components/card_comments", card: card
 
   = render "note_cards/templates"
-
-- content_for :bottom do
-  coffee:
-    $ ->
-      $("#facebook-wrapper").css "display", "none"

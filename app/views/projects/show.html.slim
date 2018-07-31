@@ -10,12 +10,4 @@ main#recipes-show data-url="#{recipe_url}" data-owner="#{@project.owner.name}" d
   #loading
     = image_tag "loading.gif"
 
-  #stl-viewer
-    .container
-
-- content_for :bottom do
-  coffee:
-    $ ->
-      $("#facebook-wrapper").css "display", "block"
-
 .modal#loading-bar style="display: none;"
