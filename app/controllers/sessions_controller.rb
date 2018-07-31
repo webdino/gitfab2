@@ -1,12 +1,13 @@
 class SessionsController < ApplicationController
   def create
-    user = User.find_for_github_oauth(request.env['omniauth.auth'])
-    if user.persisted?
-      self.current_user = user
+    auth = request.env["omniauth.auth"]
+    identity = Identity.find_or_create_with_omniauth(auth)
+
+    if identity.user
+      self.current_user = identity.user
       redirect_to session[:previous_url] || root_path
     else
-      session['auth.failed.error'] = user.errors.full_messages
-      redirect_to root_path
+      redirect_to new_user_path(token: identity.encrypted_id)
     end
   end
 

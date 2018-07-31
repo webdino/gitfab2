@@ -29,6 +29,8 @@ class User < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  attr_accessor :encrypted_identity_id # OAuth認証時に使用
+
   mount_uploader :avatar, AvatarUploader
 
   has_many :identities, dependent: :destroy
@@ -94,19 +96,6 @@ class User < ApplicationRecord
       end
     end
     is_in_collaborated_group
-  end
-
-  class << self
-    def find_for_github_oauth(auth)
-      find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
-        user.provider = auth.provider
-        user.uid = auth.uid
-        user.email = auth.info.email
-        user.name = auth.info.nickname
-        user.fullname = auth.info.name
-        user.remote_avatar_url = auth.info.image
-      end
-    end
   end
 
   private

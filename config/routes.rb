@@ -61,7 +61,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:index, :edit, :update, :destroy], concerns: :owner do
+  resources :users, except: :show, concerns: :owner do
     resources :collaborations
     resources :memberships, only: [:index, :destroy]
     resources :notifications do
