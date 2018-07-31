@@ -12,7 +12,7 @@ section#layouts-header
 
       - unless current_user
         #sign-in
-          = link_to "Sign in with Github", "/auth/github"
+          = link_to "Sign in", sessions_path
       - if current_user && current_user.name
         #tools
           .user
