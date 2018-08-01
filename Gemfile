@@ -37,7 +37,6 @@ gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3
 gem 'mathn' # Used in geometry gem in stl gem
 
 group :development, :test do
-  gem 'better_errors'
   gem 'bullet'
   gem 'coveralls', require: false
   gem 'factory_bot_rails'
@@ -52,6 +51,8 @@ end
 
 group :development do
   gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'meta_request'
   gem 'web-console'
 
