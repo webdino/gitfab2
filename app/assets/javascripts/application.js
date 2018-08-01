@@ -1,4 +1,4 @@
-import 'babel-polyfill'
+import 'babel-polyfill/dist/polyfill'
 //= require jquery
 //= require jquery_ujs
 //= require jquery_nested_form
