@@ -6,7 +6,7 @@
 #  id             :integer          not null, primary key
 #  authority      :string(255)
 #  avatar         :string(255)
-#  email          :string(255)      default(""), not null
+#  email          :string(255)
 #  fullname       :string(255)
 #  location       :string(255)
 #  name           :string(255)
@@ -28,7 +28,6 @@
 FactoryBot.define do
   factory :user do
     name { "user-#{SecureRandom.hex 10}" }
-    email { "#{SecureRandom.uuid}@example.com" }
   end
 
   factory :administrator, parent: :user do

@@ -5,7 +5,7 @@
 #  id             :integer          not null, primary key
 #  authority      :string(255)
 #  avatar         :string(255)
-#  email          :string(255)      default(""), not null
+#  email          :string(255)
 #  fullname       :string(255)
 #  location       :string(255)
 #  name           :string(255)
@@ -41,7 +41,6 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
-  validates :email, presence: true, uniqueness: true
   validates :name, unique_owner_name: true, name_format: true
 
   concerning :Draft do
