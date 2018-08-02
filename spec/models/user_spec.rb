@@ -122,6 +122,42 @@ describe User do
     it { expect(user.password_auth?).to be false }
   end
 
+  describe '#is_project_manager?' do
+    subject { user.is_project_manager?(project) }
+
+    context 'When the user is admin of the project' do
+      let(:project) { FactoryBot.create(:group_project) }
+      before { allow(user).to receive(:is_admin_of?).and_return(true) }
+      it { is_expected.to be true }
+    end
+
+    context 'When the user is owner of the project' do
+      before { allow(user).to receive(:is_owner_of?).and_return(true) }
+      it { is_expected.to be true }
+    end
+
+    context 'When the user is collaborator of the project' do
+      before { allow(user).to receive(:is_collaborator_of?).and_return(true) }
+      it { is_expected.to be true }
+    end
+
+    context 'When the user is NOT admin of the project' do
+      let(:project) { FactoryBot.create(:group_project) }
+      before { allow(user).to receive(:is_admin_of?).and_return(false) }
+      it { is_expected.to be false }
+    end
+
+    context 'When the user is NOT owner of the project' do
+      before { allow(user).to receive(:is_owner_of?).and_return(false) }
+      it { is_expected.to be false }
+    end
+
+    context 'When the user is NOT collaborator of the project' do
+      before { allow(user).to receive(:is_collaborator_of?).and_return(false) }
+      it { is_expected.to be false }
+    end
+  end
+
   describe 'ユーザーをeditorとしてグループに追加するとき' do
     let!(:group_membered) { FactoryBot.create :group }
 

@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     end
     resources :tags, only: :create
     resources :usages, only: [:new, :create, :edit, :update, :destroy]
+    resources :project_comments, only: [:create, :destroy]
     post :fork
     get 'recipe_cards_list'
     get 'relation_tree'

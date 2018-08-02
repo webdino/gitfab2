@@ -156,6 +156,16 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
     t.index ["notifier_id"], name: "index_notifications_on_notifier_id"
   end
 
+  create_table "project_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.text "body", null: false
+    t.integer "user_id", null: false
+    t.integer "project_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_comments_on_project_id"
+    t.index ["user_id"], name: "index_project_comments_on_user_id"
+  end
+
   create_table "projects", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name", null: false
     t.string "title", null: false
@@ -225,6 +235,8 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
   add_foreign_key "likes", "users", name: "fk_likes_liker_id"
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
+  add_foreign_key "project_comments", "projects"
+  add_foreign_key "project_comments", "users"
   add_foreign_key "recipes", "projects", name: "fk_recipes_project_id"
   add_foreign_key "tags", "projects"
   add_foreign_key "tags", "users", name: "fk_tags_user_id"
