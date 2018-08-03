@@ -2,18 +2,19 @@
 #
 # Table name: users
 #
-#  id             :integer          not null, primary key
-#  authority      :string(255)
-#  avatar         :string(255)
-#  email          :string(255)
-#  fullname       :string(255)
-#  location       :string(255)
-#  name           :string(255)
-#  projects_count :integer          default(0), not null
-#  slug           :string(255)
-#  url            :string(255)
-#  created_at     :datetime
-#  updated_at     :datetime
+#  id              :integer          not null, primary key
+#  authority       :string(255)
+#  avatar          :string(255)
+#  email           :string(255)
+#  fullname        :string(255)
+#  location        :string(255)
+#  name            :string(255)
+#  password_digest :string(255)
+#  projects_count  :integer          default(0), not null
+#  slug            :string(255)
+#  url             :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
 #
 # Indexes
 #
@@ -50,6 +51,17 @@ class User < ApplicationRecord
     end
   end
 
+  def self.create_from_identity(identity, user_attrs = {})
+    user = identity.build_user(user_attrs)
+    transaction do
+      user.save!
+      identity.save!
+    end
+    user
+  rescue ActiveRecord::RecordInvalid
+    user
+  end
+
   def is_system_admin?
     authority == 'admin'
   end
@@ -62,6 +74,10 @@ class User < ApplicationRecord
     card.contributions.each do |contribution|
       return true if contribution.contributor_id == self.id
     end
+    false
+  end
+
+  def password_auth?
     false
   end
 

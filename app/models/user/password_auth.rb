@@ -1,4 +1,3 @@
-# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: users
@@ -24,12 +23,18 @@
 #  index_users_on_slug   (slug) UNIQUE
 #
 
-FactoryBot.define do
-  factory :user do
-    name { "user-#{SecureRandom.hex 10}" }
+# frozen_string_literal: true
+
+class User::PasswordAuth < User
+  has_secure_password
+
+  validates :password, length: { minimum: 6 }
+
+  def self.model_name
+    User.model_name
   end
 
-  factory :administrator, parent: :user do
-    authority 'admin'
+  def password_auth?
+    true
   end
 end

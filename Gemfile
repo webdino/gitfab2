@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 gem 'rails', '~> 5.2.0'
 
 gem 'acts_as_list'
+gem 'bcrypt', require: false
 gem 'cancancan'
 gem 'carrierwave'
 gem 'exception_notification'

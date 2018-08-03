@@ -6,28 +6,40 @@ class UsersController < ApplicationController
   end
 
   def new
-    identity = Identity.find_by_encrypted_id(params[:token])
-    @user = User.new(
-      name: identity.nickname,
-      fullname: identity.name,
-      remote_avatar_url: identity.image,
-      encrypted_identity_id: params[:token]
-    )
+    @user =
+      if params[:token].present?
+        # OAuth Sign up
+        identity = Identity.find_by_encrypted_id(params[:token])
+        User.new(
+          name: identity.nickname,
+          fullname: identity.name,
+          remote_avatar_url: identity.image,
+          encrypted_identity_id: params[:token]
+        )
+      else
+        # Name/Password Sign up
+        User::PasswordAuth.new
+      end
     render :new, layout: "application"
   end
 
   def create
-    identity = Identity.find_by_encrypted_id(user_params[:encrypted_identity_id])
-    @user = User.new(
-      user_params.reverse_merge({
-        email: identity.email,
-        fullname: identity.name,
-        remote_avatar_url: (identity.image unless user_params[:avatar_cache])
-      })
-    )
+    @user =
+      if user_params[:encrypted_identity_id].present?
+        identity = Identity.find_by_encrypted_id(user_params[:encrypted_identity_id])
+        User.create_from_identity(
+          identity,
+          user_params.reverse_merge({
+            email: identity.email,
+            fullname: identity.name,
+            remote_avatar_url: (identity.image unless user_params[:avatar_cache])
+          })
+        )
+      else
+        User::PasswordAuth.create(user_params)
+      end
 
-    if @user.save
-      @user.identities << identity
+    if @user.errors.blank?
       self.current_user = @user
       redirect_to root_path
     else
@@ -57,6 +69,6 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :url, :location, :avatar, :avatar_cache, :encrypted_identity_id)
+      params.require(:user).permit(:name, :url, :location, :avatar, :avatar_cache, :password, :password_confirmation, :encrypted_identity_id)
     end
 end

@@ -4,10 +4,32 @@ describe User do
   it_behaves_like 'Collaborator', :user
   it_behaves_like 'ProjectOwner', :user
   it_behaves_like 'DraftInterfaceTest', FactoryBot.create(:user)
+  it_behaves_like 'Sign up Interface', User.new
 
   let(:user) { FactoryBot.create :user }
   let(:project) { FactoryBot.create :user_project }
   let(:group) { FactoryBot.create :group }
+
+  describe '.create_from_identity' do
+    subject { User.create_from_identity(identity, attributes) }
+    let(:identity) { FactoryBot.create(:identity, user: nil) }
+
+    context 'with valid attributes' do
+      let(:attributes) { FactoryBot.attributes_for(:user) }
+      it { is_expected.to be_kind_of User }
+      it do
+        expect{ subject }.to change{ User.count }.by(1)
+                        .and change{ identity.user }
+      end
+    end
+
+    context 'with invalid attributes' do
+      let(:attributes) { FactoryBot.attributes_for(:user, name: nil) }
+      it { is_expected.to be_kind_of User }
+      it { expect{ subject }.not_to change{ User.count } }
+      it { expect{ subject }.not_to change{ identity.reload.user } }
+    end
+  end
 
   # #623 local test could pass, but travis was failed.
   # describe "#groups" do
@@ -93,6 +115,11 @@ describe User do
     it { expect(user.is_editor_of?(group_administered)).to be false }
     it { expect(user.is_editor_of?(group_not_membered)).to be false }
     it { expect(user.is_editor_of?(nil)).to be false }
+  end
+
+  describe '#password_auth?' do
+    let(:user) { User.new }
+    it { expect(user.password_auth?).to be false }
   end
 
   describe 'ユーザーをeditorとしてグループに追加するとき' do

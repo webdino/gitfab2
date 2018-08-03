@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_01_034032) do
+ActiveRecord::Schema.define(version: 2018_08_02_082456) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(version: 2018_08_01_034032) do
     t.integer "projects_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string "password_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
