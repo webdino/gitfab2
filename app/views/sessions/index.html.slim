@@ -1,3 +1,17 @@
+div style="margin-bottom: 50px;"
+  h2 Sign in
+  div
+    = flash[:alert]
+    = form_with(model: @form, url: sessions_path, scope: "sign_in", local: true) do |f|
+      div
+        = f.label :name
+        = f.text_field :name, placeholder: "Name"
+      div
+        = f.label :password
+        = f.password_field :password, placeholder: "Password"
+      div
+        = f.submit "Sign in"
+
 ul
   li
     = link_to "Sign in with GitHub", "/auth/github"

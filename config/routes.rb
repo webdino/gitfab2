@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     match 'su' => 'development#su', via: :post
   end
 
-  resources :sessions, only: :index
+  resources :sessions, only: [:index, :create]
   get '/users/auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
