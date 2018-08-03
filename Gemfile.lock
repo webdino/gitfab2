@@ -68,7 +68,7 @@ GEM
       rake (>= 10.4, < 13.0)
     arel (9.0.0)
     ast (2.4.0)
-    autoprefixer-rails (9.0.0)
+    autoprefixer-rails (9.1.0)
       execjs
     better_errors (2.4.0)
       coderay (>= 1.0.0)
@@ -362,7 +362,7 @@ GEM
     truncate_html (0.9.3)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.16)
+    uglifier (4.1.17)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.4.0)
     unicorn (5.4.1)
