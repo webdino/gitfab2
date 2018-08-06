@@ -2,7 +2,7 @@ dist: trusty
 sudo: required
 cache:
   bundler: true
-  derectories:
+  directories:
     - node_modules
 
 language: ruby
