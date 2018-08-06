@@ -28,7 +28,6 @@ gem 'unicorn'
 gem 'autoprefixer-rails'
 gem 'coffee-rails'
 gem 'jquery-rails'
-gem 'mini_racer'
 gem 'sass-rails'
 gem 'uglifier'
 
