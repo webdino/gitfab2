@@ -131,4 +131,37 @@ describe UsersController, type: :controller do
       is_expected.to redirect_to root_path
     end
   end
+
+  describe 'PATCH #update_password' do
+    subject { patch :update_password, params: params }
+    let(:params) { { user_id: user.name, password: password, password_confirmation: password_confirmation, current_password: current_password } }
+    let(:password) { 'password' }
+    let(:password_confirmation) { password }
+    let(:current_password) { 'current_password' }
+    let(:user) do
+      attrs = FactoryBot.attributes_for(:user).merge(password: current_password, password_confirmation: current_password)
+      User::PasswordAuth.create(attrs)
+    end
+
+    context 'with wrong current password' do
+      let(:params) { { current_password: 'wrong_password', user_id: user.name, password: password, password_confirmation: password_confirmation } }
+      it do
+        is_expected.to be_successful
+        expect(flash.now[:alert]).to eq '現在のパスワードが間違っています'
+      end
+    end
+
+    context 'with correct current password' do
+      context 'when password and password_confirmation are the same' do
+        it { is_expected.to redirect_to edit_user_path(id: user.name) }
+        it { expect{ subject }.to change{ user.reload.password_digest } }
+      end
+
+      context 'when password and password_confirmation are not the same' do
+        let(:password_confirmation) { 'wrong_password' }
+        it { is_expected.to be_successful }
+        it { expect{ subject }.not_to change{ user.reload.password_digest } }
+      end
+    end
+  end
 end

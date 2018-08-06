@@ -66,6 +66,27 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def update_password
+    user = User::PasswordAuth.find_by!(name: params[:user_id])
+
+    unless user.authenticate(params[:current_password])
+      flash.now[:alert] = "現在のパスワードが間違っています"
+      @user = User.find_by(name: params[:user_id])
+      render :edit
+      return
+    end
+
+    if user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+      flash[:success] = "パスワードを更新しました"
+      redirect_to edit_user_path(id: user.name)
+    else
+      flash.now[:alert] = "パスワードの更新に失敗しました"
+      @update_password_error_messages = user.errors.full_messages
+      @user = User.find_by(name: params[:user_id])
+      render :edit
+    end
+  end
+
   private
 
     def user_params

@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     resources :notifications do
       get 'mark_all_as_read', on: :collection
     end
+    patch :update_password
   end
 
   resources :groups, concerns: :owner do
