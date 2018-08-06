@@ -38,3 +38,5 @@
 //= require ./basic_informations
 //= require ./notifications
 //= require select2
+
+import 'babel-polyfill/dist/polyfill'

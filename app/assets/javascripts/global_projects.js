@@ -5,3 +5,5 @@
 //= require helpers/lang
 //= require global_project
 //= require notifications
+
+import 'babel-polyfill/dist/polyfill'

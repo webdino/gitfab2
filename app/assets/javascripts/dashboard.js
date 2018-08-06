@@ -6,3 +6,5 @@
 //= require select2
 //= require ./notifications
 //= require ./features
+
+import 'babel-polyfill/dist/polyfill'
