@@ -12,7 +12,7 @@ rvm:
 services:
   - mysql
 env:
-  - RAILS_ENV=test
+  - RAILS_ENV=test CI=true
 matrix:
   allow_failures:
     - rvm: ruby-head

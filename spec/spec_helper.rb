@@ -4,16 +4,20 @@ require 'rspec/rails'
 require 'database_rewinder'
 
 require 'simplecov'
-require 'coveralls'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
-])
-SimpleCov.start do
-  add_filter '.bundle/'
+if ENV['CI']
+  require 'coveralls'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+  ])
+  SimpleCov.start do
+    add_filter '.bundle/'
+  end
+  Coveralls.wear!
+else
+  SimpleCov.start
 end
-Coveralls.wear!
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
