@@ -27,9 +27,6 @@ before_script:
   - bundle exec rake db:create && bundle exec rake db:schema:load
 before_install:
   - gem update bundler
-notifications:
-  slack:
-    secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
 install:
   - bundle install
   - nvm install 10.7.0
