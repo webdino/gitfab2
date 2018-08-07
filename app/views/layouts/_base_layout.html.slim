@@ -2,17 +2,17 @@ doctype html
 html
   head
     title
-      = content_for?(:title) ? yield(:title) : "Fabble"
-    = content_for?(:stylesheet) ? yield(:stylesheet) : stylesheet_link_tag("dashboard", media: "all")
-    = content_for?(:javascript) ? yield(:javascript) : javascript_include_tag("application")
-    = content_for?(:ogp) ? yield(:ogp) : nil
+      = content_for(:title) || "Fabble"
+    = content_for(:stylesheet) || stylesheet_link_tag("dashboard", media: "all")
+    = content_for(:javascript) || javascript_include_tag("application")
+    = content_for(:ogp)
     = csrf_meta_tags
   body
     = render "components/analytics"
     = render "layouts/header"
-    = content_for?(:content) ? yield(:content) : yield
+    = content_for(:content)
     = render "layouts/footer"
-    = content_for?(:bottom) ? yield(:bottom) : nil
+    = content_for(:bottom)
     - if Rails.application.secrets.ga_tracking_id
       script{async src=("https://www.googletagmanager.com/gtag/js?id=#{ Rails.application.secrets.ga_tracking_id }")}
       javascript:
