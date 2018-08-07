@@ -1,5 +1,4 @@
-- content_for :title do
-  - "Edit Profile"
+- content_for(:title, "Edit Profile")
 
 = render partial: "form", locals: { user: @user }
 

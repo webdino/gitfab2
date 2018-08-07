@@ -1,8 +1,8 @@
-- content_for :title do
+- content_for(:title) do
   - if @note_card.present?
-    - @project.owner.name + "/" + @project.title + " : Memos/" + @note_card.title
+    - "#{@project.owner.name}/#{@project.title} : Memos/#{@note_card.title}"
   - else
-    - @project.owner.name + "/" + @project.title + " : Memos/Notecard"
+    - "#{@project.owner.name}/#{@project.title} : Memos/Notecard"
 
 main#note-cards-show
   = render "projects/basic_informations"

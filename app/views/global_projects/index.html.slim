@@ -1,6 +1,5 @@
 - if @is_searching
-  - content_for :title do
-    - "Search : " + request.url.split("q=").last
+  - content_for(:title, "Search : #{request.url.split('q=').last}")
 
 #index
   - if current_user

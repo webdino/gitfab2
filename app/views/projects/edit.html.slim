@@ -1,5 +1,4 @@
-- content_for :title do
-  - @project.owner.name + "/" + @project.title + " : Edit"
+- content_for(:title, "#{@project.owner.name}/#{@project.title} : Edit")
 
 main#recipes-edit
   = render "form", page: "edit"

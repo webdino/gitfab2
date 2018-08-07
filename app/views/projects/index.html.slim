@@ -1,5 +1,4 @@
-- content_for :title do
-  - @owner.slug + " (" + @owner.name + ") : Project list"
+- content_for(:title, "#{@owner.slug} (#{@owner.name}) : Project list")
 
 #projects-index
   .left

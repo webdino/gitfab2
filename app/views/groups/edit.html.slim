@@ -1,8 +1,4 @@
-- content_for :title do
-  - if @group.name.present?
-    - "Edit " + @group.name
-  - else
-    - "Edit Group"
+- content_for(:title, @group.name.present? ? "Edit #{@group.name}" : "Edit Group")
 
 #groups-edit
   #edit-profile

@@ -1,5 +1,5 @@
-- content_for :title do
-  - @project.owner.name + "/" + @project.title + " : Recipe"
+- content_for(:title, "#{@project.owner.name}/#{@project.title} : Recipe")
+
 - recipe_url = "/#{@project.owner.name}/#{@project.name}/recipe"
 main#recipes-show data-url="#{recipe_url}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
   = render "projects/basic_informations"
