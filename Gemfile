@@ -38,13 +38,10 @@ gem 'mathn' # Used in geometry gem in stl gem
 
 group :development, :test do
   gem 'bullet'
-  gem 'coveralls', require: false
   gem 'factory_bot_rails'
-  gem 'rack-mini-profiler', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'slim_lint'
-  gem 'simplecov', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
 end
@@ -54,6 +51,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'rack-mini-profiler', require: false
   gem 'web-console'
 
   # Deploy
@@ -64,7 +62,9 @@ group :development do
 end
 
 group :test do
+  gem 'coveralls', require: false
   gem 'database_rewinder'
   gem 'rails-controller-testing'
+  gem 'simplecov', require: false
 end
 
