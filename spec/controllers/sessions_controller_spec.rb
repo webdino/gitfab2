@@ -63,7 +63,15 @@ RSpec.describe SessionsController, type: :controller do
 
         context "with valid params" do
           let(:params) { { sign_in: { name: user.name, password: 'password' } } }
-          it { is_expected.to redirect_to root_path }
+
+          context "when user have password" do
+            it { is_expected.to redirect_to root_path }
+          end
+
+          context "when user do not have password" do
+            let(:user) { FactoryBot.create(:user, password_digest: nil) }
+            it { is_expected.to be_successful }
+          end
         end
 
         context "with invalid params" do

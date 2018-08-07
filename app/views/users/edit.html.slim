@@ -22,7 +22,8 @@ div
     div
       = f.label :password_confirmation
       = f.password_field :password_confirmation
-    div
-      = f.label :current_password, "現在のパスワード"
-      = f.password_field :current_password
+    - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
+      div
+        = f.label :current_password, "現在のパスワード"
+        = f.password_field :current_password
     = f.submit "Update password"
