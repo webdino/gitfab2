@@ -37,7 +37,7 @@ class Identity < ApplicationRecord
   end
 
   def self.crypt
-    ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base)
+    ActiveSupport::MessageEncryptor.new(Rails.application.secret_key_base[0..31])
   end
 
   def self.find_by_encrypted_id(encrypted_id)
