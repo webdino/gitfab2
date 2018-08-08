@@ -62,6 +62,15 @@ class Project < ApplicationRecord
   scope :ordered_by_owner, -> { order(:owner_id) }
   scope :published, -> { where(is_private: false, is_deleted: false) }
 
+  # draft全文検索
+  scope :search_draft, -> (text) do
+    projects = all
+    text.split(/\p{space}+/).each do |word|
+      projects = projects.where("#{table_name}.draft LIKE ?", "%#{word}%")
+    end
+    projects
+  end
+
   accepts_nested_attributes_for :usages
 
   paginates_per 12

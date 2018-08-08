@@ -3,7 +3,7 @@ class Admin::ProjectsController < Admin::ApplicationController
 
   def index
     @projects = Project.published
-    @projects = @projects.ransack(draft_cont_all: params[:q].split(/\p{space}+/)).result if params[:q]
+    @projects = @projects.search_draft(params[:q]) if params[:q]
     @projects = @projects.page(params[:page])
   end
 

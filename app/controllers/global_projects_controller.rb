@@ -7,7 +7,7 @@ class GlobalProjectsController < ApplicationController
 
     if q.present?
       query = q.force_encoding 'utf-8'
-      @projects = published_projects.ransack(draft_cont_all: query.split(/\p{space}+/)).result.page(params[:page])
+      @projects = published_projects.search_draft(query).page(params[:page])
       @is_searching = true
       @query = query
 

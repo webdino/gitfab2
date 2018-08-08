@@ -25,6 +25,18 @@ describe Project do
     it { is_expected.to match_array([project1, project3]) }
   end
 
+  describe '.search_draft' do
+    let!(:project1) { FactoryBot.create(:project, title: '私はその人を常に先生と呼んでいた。') }
+    let!(:project2) { FactoryBot.create(:project, description: 'だからここでもただ先生と書くだけで本名は打ち明けない。') }
+    let!(:project3) do
+      owner = FactoryBot.create(:user, fullname: '先生')
+      FactoryBot.create(:project, owner: owner, description: 'その方が私にとって自然だからである。')
+    end
+
+    it { expect(Project.search_draft('先生')).to match_array [project1, project2, project3] }
+    it { expect(Project.search_draft('先生 　その')).to match_array [project1, project3] }
+  end
+
   describe '#collaborators' do
     before do
       user1.collaborations.create project: project
