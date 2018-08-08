@@ -9,6 +9,9 @@ language: ruby
 rvm:
   - 2.5.1
   - ruby-head
+gemfile:
+  - Gemfile
+  - gemfiles/Gemfile-master
 services:
   - mysql
 env:
@@ -16,6 +19,7 @@ env:
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - gemfile: gemfiles/Gemfile-master
 before_script:
   - |
     echo -e "[mysqld]
