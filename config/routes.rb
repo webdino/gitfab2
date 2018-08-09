@@ -81,7 +81,7 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:create, :update] do
     resources :collaborators, except: [:create, :update]
     resources :note_cards, except: [:create, :update]
-    resource :recipe, only: :show do
+    resource :recipe do
       resources :states, except: [:create, :update], concerns: :card_features_for_link
       resources :states do
         get 'to_annotation'

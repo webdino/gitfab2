@@ -3,11 +3,12 @@
 - recipe_url = "/#{@project.owner.name}/#{@project.name}/recipe"
 main#recipes-show data-url="#{recipe_url}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
   = render "projects/basic_informations"
-  = render "recipes/recipe_cards"
-  = render "recipes/usages"
-  = render "recipes/templates"
-  = render "recipes/state_convert_dialog"
-  = render "recipes/loading"
+  = render "projects/recipe_cards"
+  = render "projects/usages"
+  = render "projects/templates"
+  = render "projects/state_convert_dialog"
+  #loading
+    = image_tag "loading.gif"
 
   #stl-viewer
     .container

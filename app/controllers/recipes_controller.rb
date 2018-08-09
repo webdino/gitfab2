@@ -5,12 +5,6 @@ class RecipesController < ApplicationController
 
   authorize_resource parent: Project.name
 
-  def show
-    load_owner
-    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find params[:project_id]
-    load_recipe
-  end
-
   def update
     load_owner
     load_project

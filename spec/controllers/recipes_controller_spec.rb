@@ -15,19 +15,6 @@ describe RecipesController, type: :controller do
     let(:project) { g_project }
   end
 
-  describe 'GET show' do
-    shared_examples "a request rendering 'show' template" do
-      before { get :show, params: { owner_name: project.owner.name, project_id: project.name } }
-      it { is_expected.to render_template :show }
-    end
-    include_context 'with a user project' do
-      include_examples "a request rendering 'show' template"
-    end
-    include_context 'with a group project' do
-      include_examples "a request rendering 'show' template"
-    end
-  end
-
   describe 'PATCH update' do
     shared_examples 'a request to re-order states' do
       let(:card1) { project.recipe.states.create description: 'foo', position: 1 }

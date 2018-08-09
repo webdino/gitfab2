@@ -14,12 +14,9 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = @owner.projects
-                     .includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find params[:id]
+    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find(params[:id])
     not_found if @project.blank?
-
     @recipe = @project.recipe
-    render 'recipes/show'
   end
 
   def new

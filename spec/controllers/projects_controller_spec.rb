@@ -25,7 +25,7 @@ describe ProjectsController, type: :controller do
         before do
           get :show, params: { owner_name: project.owner.slug, id: project.name }
         end
-        it { is_expected.to render_template 'recipes/show' }
+        it { is_expected.to render_template 'projects/show' }
       end
       describe 'GET new' do
         before do
