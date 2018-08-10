@@ -213,7 +213,7 @@ Rails/HttpStatus:
     - 'app/controllers/annotations_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/collaborators_controller.rb'
-    - 'app/controllers/comments_controller.rb'
+    - 'app/controllers/card_comments_controller.rb'
     - 'app/controllers/note_cards_controller.rb'
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/projects_controller.rb'

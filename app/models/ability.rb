@@ -65,10 +65,10 @@ class Ability
     can :manage, Collaboration do |collabo|
       can? :manage, collabo.project
     end
-    can :create, Comment do
+    can :create, CardComment do
       user.persisted?
     end
-    can :destroy, Comment do |comment|
+    can :destroy, CardComment do |comment|
       comment.user_id == user.slug || (can? :manage, comment.card)
     end
     can :create, Like do |_like|

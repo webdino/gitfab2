@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_02_082456) do
+ActiveRecord::Schema.define(version: 2018_08_10_031932) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 2018_08_02_082456) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
+  end
+
+  create_table "card_comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "card_id", null: false
+    t.text "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["card_id"], name: "fk_rails_c8dff2752a"
+    t.index ["user_id"], name: "index_comments_user_id"
   end
 
   create_table "cards", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -50,16 +60,6 @@ ActiveRecord::Schema.define(version: 2018_08_02_082456) do
     t.datetime "updated_at"
     t.index ["owner_type", "owner_id"], name: "index_collaborations_owner"
     t.index ["project_id"], name: "index_collaborations_project_id"
-  end
-
-  create_table "comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "card_id", null: false
-    t.text "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["card_id"], name: "fk_rails_c8dff2752a"
-    t.index ["user_id"], name: "index_comments_user_id"
   end
 
   create_table "contributions", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -214,10 +214,10 @@ ActiveRecord::Schema.define(version: 2018_08_02_082456) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  add_foreign_key "card_comments", "cards"
+  add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "cards", "recipes", name: "fk_cards_recipe_id"
-  add_foreign_key "comments", "cards"
-  add_foreign_key "comments", "users", name: "fk_comments_user_id"
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
   add_foreign_key "featured_items", "features", name: "fk_featured_items_feature_id"

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # == Schema Information
 #
 # Table name: comments
@@ -20,17 +21,10 @@
 #  fk_rails_...         (card_id => cards.id)
 #
 
-class Comment < ApplicationRecord
-  belongs_to :card
-  belongs_to :user
-
-  validates :body, presence: true
-
-  scope :created_at_desc, -> { order 'created_at DESC' }
-
-  class << self
-    def updatable_columns
-      [:_destroy, :body, :user_id]
-    end
+FactoryBot.define do
+  factory :card_comment do
+    sequence(:body) { |n| "Comment##{n}" }
+    association :user
+    card
   end
 end

@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class CardCommentsController < ApplicationController
   before_action :load_owner
   before_action :load_project
   before_action :load_card
@@ -64,8 +64,8 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    if params[:comment]
-      params.require(:comment).permit Comment.updatable_columns
+    if params[:card_comment]
+      params.require(:card_comment).permit CardComment.updatable_columns
     end
   end
 

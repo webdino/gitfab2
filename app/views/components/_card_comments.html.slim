@@ -4,11 +4,11 @@
 
   ul.comments
     - card.comments.order(:id).each_with_index do |comment, i|
-      = render "comments/comment", comment: comment, resources: resources << comment, i: i
+      = render "card_comments/comment", comment: comment, resources: resources << comment, i: i
       - resources.delete(comment)
 
   - if current_user && card.persisted?
-    - resources << Comment.new
+    - resources << CardComment.new
     = form_for resources, html: {class: "comment-form"}, remote: true do |f|
       .left
         = image_tag current_user.avatar.thumb.url, class: "avatar"

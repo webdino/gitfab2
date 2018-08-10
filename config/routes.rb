@@ -40,7 +40,7 @@ Rails.application.routes.draw do
   end
 
   concern :comments do
-    resources :comments, only: [:create, :destroy]
+    resources :card_comments, only: [:create, :destroy]
   end
 
   resources :owners, only: [:index]

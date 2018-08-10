@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-describe CommentsController, type: :controller do
+describe CardCommentsController, type: :controller do
   render_views
 
   let(:user1) { FactoryBot.create :user }
@@ -17,7 +17,7 @@ describe CommentsController, type: :controller do
         post :create,
           params: {
             user_id: project.owner.to_param, project_id: project.id,
-            note_card_id: note_card.id, comment: { body: 'foo' }
+            note_card_id: note_card.id, card_comment: { body: 'foo' }
           },
           xhr: true
       end
@@ -37,7 +37,7 @@ describe CommentsController, type: :controller do
         post :create,
           params: {
             user_id: project.owner.to_param, project_id: project.id,
-            note_card_id: note_card.id, comment: { body: '' }
+            note_card_id: note_card.id, card_comment: { body: '' }
           },
           xhr: true
       end
@@ -52,7 +52,7 @@ describe CommentsController, type: :controller do
 
   describe 'DELETE destroy' do
     let(:note_card) { FactoryBot.create(:note_card, project: project) }
-    let(:comment) { FactoryBot.create(:comment, user: user1, card: note_card) }
+    let(:comment) { FactoryBot.create(:card_comment, user: user1, card: note_card) }
     before do
       sign_in project.owner
       delete :destroy,
