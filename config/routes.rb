@@ -47,11 +47,6 @@ Rails.application.routes.draw do
 
   concern :owner do
     resources :projects do
-      get 'potential_owners'
-      get 'recipe_cards_list'
-      get 'relation_tree'
-    end
-    resources :projects, only: [:create, :update] do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
@@ -59,6 +54,9 @@ Rails.application.routes.draw do
       resources :note_cards, only: [:create, :update], concerns: :comments
       resources :tags, only: [:create, :destroy]
       resources :usages, only: [:create, :update]
+      get 'potential_owners'
+      get 'recipe_cards_list'
+      get 'relation_tree'
     end
   end
 

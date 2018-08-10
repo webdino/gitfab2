@@ -35,22 +35,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def fork
-    original_project = Project.find params[:original_project_id]
-    @project = original_project.fork_for! @owner
-    if original_project.present? && @project.present?
-      redirect_to project_path(id: @project, owner_name: @owner)
-    end
-  end
-
-  def destroy
-    if @project.soft_destroy
-      redirect_to projects_path(owner_name: @project.owner)
-    else
-      render 'error/failed', status: 400
-    end
-  end
-
   def edit
   end
 
@@ -81,22 +65,11 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def change_owner
-    project = Project.friendly.find params[:id]
-    # ownerが見つからなかった場合にnilを返したいのでProjectOwner.friendly_firstを使用
-    new_owner = ProjectOwner.friendly_first(params[:new_owner_name])
-    if new_owner.present? && project.change_owner!(new_owner)
-      if project.collaborators.include?(new_owner)
-        old_collaboration = new_owner.collaboration_in project
-        old_collaboration.destroy
-      end
-      new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
-      respond_to do |format|
-        format.html { redirect_to projects_path(new_owner.slug) }
-        format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
-      end
+  def destroy
+    if @project.soft_destroy
+      redirect_to projects_path(owner_name: @project.owner)
     else
-      render json: { success: false }, status: 400
+      render 'error/failed', status: 400
     end
   end
 
@@ -169,5 +142,32 @@ class ProjectsController < ApplicationController
     url = project_path(project, owner_name: owner)
     body = "#{project.title} was updated by #{current_user.name}."
     project.notify(users, current_user, url, body)
+  end
+
+  def fork
+    original_project = Project.find params[:original_project_id]
+    @project = original_project.fork_for! @owner
+    if original_project.present? && @project.present?
+      redirect_to project_path(id: @project, owner_name: @owner)
+    end
+  end
+
+  def change_owner
+    project = Project.friendly.find params[:id]
+    # ownerが見つからなかった場合にnilを返したいのでProjectOwner.friendly_firstを使用
+    new_owner = ProjectOwner.friendly_first(params[:new_owner_name])
+    if new_owner.present? && project.change_owner!(new_owner)
+      if project.collaborators.include?(new_owner)
+        old_collaboration = new_owner.collaboration_in project
+        old_collaboration.destroy
+      end
+      new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
+      respond_to do |format|
+        format.html { redirect_to projects_path(new_owner.slug) }
+        format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
+      end
+    else
+      render json: { success: false }, status: 400
+    end
   end
 end
