@@ -1,11 +1,6 @@
+language: ruby
 dist: trusty
 sudo: required
-cache:
-  bundler: true
-  directories:
-    - node_modules
-
-language: ruby
 rvm:
   - 2.5.1
   - ruby-head
@@ -14,6 +9,10 @@ gemfile:
   - gemfiles/Gemfile-master
 services:
   - mysql
+cache:
+  bundler: true
+  directories:
+    - node_modules
 env:
   - RAILS_ENV=test CI=true
 matrix:
