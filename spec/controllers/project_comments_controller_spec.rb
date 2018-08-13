@@ -88,7 +88,7 @@ describe ProjectCommentsController, type: :controller do
 
     it { expect{ subject }.to change(ProjectComment, :count).by(-1) }
 
-    context 'when the comment could not be deleted' do
+    context 'when user could not delete a comment' do
       before { allow_any_instance_of(ProjectComment).to receive(:destroy).and_return(false) }
 
       it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comments") }
@@ -109,7 +109,14 @@ describe ProjectCommentsController, type: :controller do
         project_comment
       end
 
+      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comments") }
+
       it { expect{ subject }.to change(ProjectComment, :count).by(0) }
+
+      it do
+        subject
+        expect(flash[:alert]).to eq 'You can not delete a comment'
+      end
     end
   end
 

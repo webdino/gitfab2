@@ -1,26 +1,29 @@
 class ProjectCommentsController < ApplicationController
   def create
     project = Project.find(params[:project_id])
-    @project_comment = project.project_comments.build(project_comment_params)
-    @project_comment.user = current_user
+    project_comment = project.project_comments.build(project_comment_params)
+    project_comment.user = current_user
 
-    if @project_comment.save
+    if project_comment.save
       notify_users(project)
-      redirect_to project_path(project.owner.name, project, anchor: "project-comment-#{@project_comment.id}")
+      redirect_to project_path(project.owner.name, project, anchor: "project-comment-#{project_comment.id}")
     else
       redirect_to project_path(project.owner.name, project, anchor: "project-comment-form"),
-                  alert: @project_comment.errors.full_messages,
-                  flash: { project_comment_body: @project_comment.body }
+                  alert: project_comment.errors.full_messages,
+                  flash: { project_comment_body: project_comment.body }
     end
   end
 
   def destroy
-    @project_comment = ProjectComment.find(params[:id])
-    project = @project_comment.project
+    project_comment = ProjectComment.find(params[:id])
+    project = project_comment.project
 
-    return unless project.manageable_by?(current_user)
+    unless project.manageable_by?(current_user)
+      redirect_to project_path(project.owner.name, project, anchor: "project-comments"),
+                  alert: 'You can not delete a comment' and return
+    end
 
-    if @project_comment.destroy
+    if project_comment.destroy
       redirect_to project_path(project.owner.name, project, anchor: "project-comments")
     else
       redirect_to project_path(project.owner.name, project, anchor: "project-comments"),

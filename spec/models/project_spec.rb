@@ -202,17 +202,17 @@ describe Project do
     let(:project) { FactoryBot.create(:user_project, owner: user, is_deleted: is_deleted) }
     let(:is_deleted) { false }
 
-    context 'When the project is deleted' do
+    context 'when the project is deleted' do
       let(:is_deleted) { true }
       it { is_expected.to be false }
     end
 
-    context 'When the project is managed by the user' do
+    context 'when user is a project manager' do
       before { allow(user).to receive(:is_project_manager?).and_return(true) }
       it { is_expected.to be true }
     end
 
-    context 'When the project is NOT managed by the user' do
+    context 'when user is NOT a project manager' do
       before { allow(user).to receive(:is_project_manager?).and_return(false) }
       it { is_expected.to be false }
     end
