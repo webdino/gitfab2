@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: comments
+# Table name: card_comments
 #
 #  id         :integer          not null, primary key
 #  body       :text(65535)
