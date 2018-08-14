@@ -32,7 +32,7 @@ before_script:
 before_install:
   - gem update bundler
 install:
-  - bundle install --path vendor/bundle
+  - bundle install --path vendor/bundle --jobs=3 --retry=3
   - nvm install 10.7.0
   - npm install
 script:
