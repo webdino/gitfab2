@@ -10,6 +10,6 @@ module ProjectOwner
   end
 
   def update_projects_count
-    projects.published.count
+    update_column(:projects_count, projects.published.count)
   end
 end

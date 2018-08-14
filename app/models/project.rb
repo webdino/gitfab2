@@ -49,7 +49,7 @@ class Project < ApplicationRecord
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
   after_create -> { create_recipe unless recipe }
-  after_commit -> { owner.update_column(:projects_count, owner.update_projects_count) }
+  after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
