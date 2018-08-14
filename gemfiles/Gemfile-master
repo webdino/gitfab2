@@ -38,7 +38,6 @@ gem 'mathn' # Used in geometry gem in stl gem
 group :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails'
-  gem 'rubocop', require: false
   gem 'slim_lint'
   gem 'coveralls', require: false
   gem 'database_rewinder'
