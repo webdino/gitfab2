@@ -12,6 +12,7 @@ services:
 cache:
   bundler: true
   directories:
+    - /home/travis/.rvm/
     - node_modules
 env:
   - RAILS_ENV=test CI=true
