@@ -39,7 +39,7 @@ main#note-cards-show
                 .postedby
                   ruby:
                     author = card.contributions.length > 0 ? User.find(card.contributions[0].contributor_id) : @project.owner
-                    link = author.present? ? link_to(image_tag(author.avatar.thumb.url) + author.name, projects_path(owner_name: author.slug)) : ""
+                    link = author.present? ? link_to(image_tag(author.avatar.thumb.url) + author.name, owner_path(owner_name: author.slug)) : ""
                     datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
 
                   - if author.present?

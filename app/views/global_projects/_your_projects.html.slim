@@ -7,6 +7,6 @@
 
     - if current_user.projects.present? && current_user.projects.length > 3
       .more
-        = link_to "→ More Projects", projects_path(current_user.slug), class: "more-projects"
+        = link_to "→ More Projects", owner_path(owner_name: current_user.slug), class: "more-projects"
   .label
     'Featured Projects

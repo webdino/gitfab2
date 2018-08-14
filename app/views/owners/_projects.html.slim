@@ -21,16 +21,16 @@
     /   = link_to "Contribution", "#", data: {tab: "#contribution-tab"}
 
   .tabs-content
-    = render "project_tab"
-    = render "note_tab"
-    = render "collaboration_tab"
+    = render partial: "project_tab"
+    = render partial: "note_tab"
+    = render partial: "collaboration_tab"
 
-content_for :bottom
+- content_for :bottom
   coffee:
     tabby.init {
-      toggleActiveClass: 'active',
-      contentActiveClass: 'active',
-      initClass: 'js-tabby',
-      callbackBefore: (toggle, tabID ) -> {},
-      callbackAfter: ( toggle, tabID ) -> {}
+      toggleActiveClass : 'active',
+      contentActiveClass : 'active',
+      initClass : 'js-tabby',
+      callbackBefore : (toggle, tabID) -> {},
+      callbackAfter : (toggle, tabID) -> {}
     }

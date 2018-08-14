@@ -52,14 +52,14 @@ section#basic-informations
     section.members
       .title Owner & Collaborators
       .owner
-        = link_to projects_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
+        = link_to owner_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
           .thumb style="background-image: url('#{@owner.avatar.small.url}')"
 
       - if @project.collaborators.present?
         ul.collaborators
           - @project.collaborators.each do |collaborator|
             li.collaborator
-              = link_to projects_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
+              = link_to owner_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
                 .thumb style="background-image: url('#{collaborator.avatar.small.url}')"
 
       - if can? :manage, @project
@@ -74,7 +74,7 @@ section#basic-informations
         image = 'cc/' + license + '.png'
         url = 'https://creativecommons.org/licenses/' + license + '/4.0'
         project_members = @project.collaborators.unshift @project.owner
-        project_member_links = project_members.map{|member| link_to(member.name, projects_path(member.slug))}
+        project_member_links = project_members.map{|member| link_to(member.name, owner_path(owner_name: member.slug))}
 
         license_texts = [
           'Creative Commons - Attribution',

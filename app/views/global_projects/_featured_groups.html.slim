@@ -2,7 +2,7 @@
   .container
     ul.groups
       - @featured_groups.each do |group|
-        = link_to projects_path(group) do
+        = link_to owner_path(owner_name: group.slug) do
           li.group
             .image-wrapper
               = image_tag group.avatar.url, class: "image"

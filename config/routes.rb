@@ -44,9 +44,10 @@ Rails.application.routes.draw do
   end
 
   resources :owners, only: [:index]
+  resource :owners, path: '/:owner_name', as: :owner, only: :show
 
   concern :owner do
-    resources :projects do
+    resources :projects, except: :index do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
@@ -76,7 +77,7 @@ Rails.application.routes.draw do
 
   resources :global_projects, only: :index
 
-  resources :projects, path: '/:owner_name', except: [:create, :update] do
+  resources :projects, path: '/:owner_name', except: [:index, :create, :update] do
     resources :collaborators, except: [:create, :update]
     resources :note_cards, except: [:create, :update]
     resource :recipe do

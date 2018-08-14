@@ -11,16 +11,6 @@ describe ProjectsController, type: :controller do
   %w[user group].each do |owner_type|
     let(:project) { send "#{owner_type}_project" }
     context "with a project owned by a #{owner_type}" do
-      describe 'GET index' do
-        context 'with owner name' do
-          before { get :index, params: { owner_name: project.owner.slug } }
-          it { is_expected.to render_template :index }
-        end
-        context 'with owner id' do
-          before { get :index, params: { "#{owner_type}_id": project.owner.slug } }
-          it { is_expected.to render_template :index }
-        end
-      end
       describe 'GET show' do
         before do
           get :show, params: { owner_name: project.owner.slug, id: project.name }
@@ -42,7 +32,7 @@ describe ProjectsController, type: :controller do
             sign_in user_project.owner
             delete :destroy, params: { owner_name: project.owner.slug, id: project.id }
           end
-          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
+          it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
         end
         context 'with collaborators' do
           let(:user) { FactoryBot.create :user }
@@ -56,7 +46,7 @@ describe ProjectsController, type: :controller do
             user.reload
             group.reload
           end
-          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
+          it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
           it 'has 0 collaborations' do
             aggregate_failures do
               expect(user.collaborations.size).to eq 0
@@ -168,7 +158,7 @@ describe ProjectsController, type: :controller do
               end
               user.reload
             end
-            it { is_expected.to redirect_to projects_path(owner_name: user) }
+            it { is_expected.to redirect_to owner_path(owner_name: user.slug) }
             it 'has 0 collaborations' do
               expect(user.collaborations.size).to eq 0
             end
@@ -187,7 +177,7 @@ describe ProjectsController, type: :controller do
               end
               group.reload
             end
-            it { is_expected.to redirect_to projects_path(owner_name: group) }
+            it { is_expected.to redirect_to owner_path(owner_name: group.slug) }
             it 'has 0 collaborations' do
               expect(group.collaborations.size).to eq 0
             end

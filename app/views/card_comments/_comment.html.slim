@@ -1,6 +1,6 @@
 ruby:
   user = User.find(comment.user_id)
-  user_url = projects_path(owner_name: user.slug)
+  user_url = owner_path(owner_name: user.slug)
   avatar_image = image_tag(user.avatar.thumb.url, class: 'avatar')
 
 li.comment

@@ -32,9 +32,9 @@
             'Project Owner
           - options = []
           - @owner.groups.to_a.push(@owner).each do |o|
-            - action = o.instance_of?(Group) ? group_projects_path(group_id: o.slug) : user_projects_path(user_id: o.slug)
+            - action = o.instance_of?(Group) ? owner_path(owner_name: o.slug) : user_projects_path(user_id: o.slug)
             - options.push [o.name, action]
-          = f.select :owner_id, options, selected: user_projects_path(user_id: current_user.slug)
+          = f.select :owner_id, options, selected: owner_path(owner_name: current_user.slug)
 
     #project-summary
       - if page == "edit"

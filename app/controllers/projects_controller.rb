@@ -8,11 +8,6 @@ class ProjectsController < ApplicationController
 
   authorize_resource
 
-  def index
-    @projects = @owner.projects.includes(:owner, :tags, :figures, :note_cards, recipe: :states).order(updated_at: :desc)
-    render layout: 'dashboard'
-  end
-
   def show
     @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find(params[:id])
     not_found if @project.blank?
@@ -67,7 +62,7 @@ class ProjectsController < ApplicationController
 
   def destroy
     if @project.soft_destroy
-      redirect_to projects_path(owner_name: @project.owner)
+      redirect_to owner_path(owner_name: @project.owner.slug)
     else
       render 'error/failed', status: 400
     end
@@ -163,7 +158,7 @@ class ProjectsController < ApplicationController
       end
       new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
       respond_to do |format|
-        format.html { redirect_to projects_path(new_owner.slug) }
+        format.html { redirect_to owner_path(owner_name: new_owner.slug) }
         format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
       end
     else
