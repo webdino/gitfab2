@@ -105,8 +105,7 @@ class ProjectsController < ApplicationController
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
     owner_id.downcase!
-    @owner = ProjectOwner.friendly_first(owner_id)
-    not_found if @owner.blank?
+    @owner = Owner.find(owner_id)
   end
 
   def delete_collaborations
@@ -149,8 +148,7 @@ class ProjectsController < ApplicationController
 
   def change_owner
     project = Project.friendly.find params[:id]
-    # ownerが見つからなかった場合にnilを返したいのでProjectOwner.friendly_firstを使用
-    new_owner = ProjectOwner.friendly_first(params[:new_owner_name])
+    new_owner = Owner.find_by(params[:new_owner_name])
     if new_owner.present? && project.change_owner!(new_owner)
       if project.collaborators.include?(new_owner)
         old_collaboration = new_owner.collaboration_in project

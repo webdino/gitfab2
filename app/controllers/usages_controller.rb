@@ -47,8 +47,7 @@ class UsagesController < ApplicationController
 
   def load_owner
     owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = ProjectOwner.friendly_first(owner_id)
-    not_found if @owner.blank?
+    @owner = Owner.find(owner_id)
   end
 
   def load_project

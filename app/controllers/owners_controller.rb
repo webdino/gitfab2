@@ -4,7 +4,7 @@ class OwnersController < ApplicationController
   end
 
   def show
-    @owner = ProjectOwner.friendly_first(params[:owner_name])
+    @owner = Owner.find(params[:owner_name])
     @projects = @owner.projects.includes(:owner, :tags, :figures, :note_cards, recipe: :states).order(updated_at: :desc)
     render layout: 'dashboard'
   end
