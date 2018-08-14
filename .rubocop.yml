@@ -30,6 +30,16 @@ GuardClause:
 Layout/ExtraSpacing:
   Enabled: false
 
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: rails
+
 Lint/AmbiguousOperator:
   Exclude:
     - 'app/controllers/concerns/error_handling.rb'
@@ -50,9 +60,14 @@ Lint/UselessSetterCall:
 
 Metrics/ClassLength:
   Max: 180
+  Exclude:
+    - 'db/migrate/**'
 
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'db/migrate/**'
+    - 'db/schema.rb'
 
 PredicateName:
   NamePrefixBlacklist:
@@ -60,6 +75,13 @@ PredicateName:
 
 Style/AsciiComments:
   Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
 
 Style/SignalException:
   Exclude:

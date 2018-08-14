@@ -23,22 +23,22 @@ class CollaborationsController < ApplicationController
 
   private
 
-  def collaboration_params
-    if params[:collaboration].present?
-      params.require(:collaboration).permit [:project_id]
+    def collaboration_params
+      if params[:collaboration].present?
+        params.require(:collaboration).permit [:project_id]
+      end
     end
-  end
 
-  def build_collaboration
-    @collaboration = @owner.collaborations.build collaboration_params
-  end
+    def build_collaboration
+      @collaboration = @owner.collaborations.build collaboration_params
+    end
 
-  def load_collaboration
-    @collaboration = @owner.collaborations.find params[:id]
-  end
+    def load_collaboration
+      @collaboration = @owner.collaborations.find params[:id]
+    end
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = Owner.find(owner_id)
-  end
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      @owner = Owner.find(owner_id)
+    end
 end

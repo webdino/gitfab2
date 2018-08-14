@@ -16,15 +16,15 @@ class MembersController < ApplicationController
 
   private
 
-  def member_params
-    params.require(:member).permit [:name] if params[:member]
-  end
+    def member_params
+      params.require(:member).permit [:name] if params[:member]
+    end
 
-  def load_group
-    @group = Group.find params[:group_id]
-  end
+    def load_group
+      @group = Group.find params[:group_id]
+    end
 
-  def load_user
-    @user = User.friendly.find params[:member_name]
-  end
+    def load_user
+      @user = User.friendly.find params[:member_name]
+    end
 end

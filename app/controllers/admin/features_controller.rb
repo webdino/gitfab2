@@ -28,11 +28,11 @@ class Admin::FeaturesController < Admin::ApplicationController
 
   private
 
-  def load_feature
-    @feature = Feature.find params[:id]
-  end
+    def load_feature
+      @feature = Feature.find params[:id]
+    end
 
-  def feature_params
-    params.require(:feature).permit(Feature.updatable_columns)
-  end
+    def feature_params
+      params.require(:feature).permit(Feature.updatable_columns)
+    end
 end

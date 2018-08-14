@@ -29,11 +29,11 @@ class UsersController < ApplicationController
         identity = Identity.find_by_encrypted_id(user_params[:encrypted_identity_id])
         User.create_from_identity(
           identity,
-          user_params.reverse_merge({
+          user_params.reverse_merge(
             email: identity.email,
             fullname: identity.name,
             remote_avatar_url: (identity.image unless user_params[:avatar_cache])
-          })
+          )
         )
       else
         User::PasswordAuth.create(user_params)
@@ -90,6 +90,9 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :url, :location, :avatar, :avatar_cache, :password, :password_confirmation, :encrypted_identity_id)
+      params.require(:user).permit(
+        :name, :url, :location, :avatar, :avatar_cache,
+        :password, :password_confirmation, :encrypted_identity_id
+      )
     end
 end

@@ -34,24 +34,24 @@ class NotificationsController < ApplicationController
 
   private
 
-  def load_user
-    owner_id = params[:owner_name] || params[:user_id]
-    @user = User.friendly.find owner_id
-  end
-
-  def delete_read_notifications
-    @user.my_notifications.each do |notification|
-      notification.delete if notification.was_read_before 1.hour
+    def load_user
+      owner_id = params[:owner_name] || params[:user_id]
+      @user = User.friendly.find owner_id
     end
-  end
 
-  def load_notification
-    @notification = Notification.find params[:id]
-  end
-
-  def notification_params
-    if params[:notificaion]
-      params.require(:notification).permit Notification.updatable_columns
+    def delete_read_notifications
+      @user.my_notifications.each do |notification|
+        notification.delete if notification.was_read_before 1.hour
+      end
     end
-  end
+
+    def load_notification
+      @notification = Notification.find params[:id]
+    end
+
+    def notification_params
+      if params[:notificaion]
+        params.require(:notification).permit Notification.updatable_columns
+      end
+    end
 end

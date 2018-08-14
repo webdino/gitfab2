@@ -38,7 +38,7 @@ class GlobalProjectsController < ApplicationController
       all_featured_projects.each do |project_group|
         ids = project_group.featured_items.select(:target_object_id)
         featured_projects = Project.includes(:figures, :owner, :note_cards, recipe: :states)
-                              .where(id: ids).order(likes_count: :desc)
+                                   .where(id: ids).order(likes_count: :desc)
         project_groups[project_group.name] = featured_projects
       end
       project_groups.to_a
@@ -56,7 +56,7 @@ class GlobalProjectsController < ApplicationController
 
     def selected_tools
       tools = []
-      file_path = "#{Rails.root}/config/selected-tools.yml"
+      file_path = Rails.root.join("config", "selected-tools.yml")
       list = YAML.load_file file_path
       if list.present?
         list.each do |tool_name|
@@ -68,7 +68,7 @@ class GlobalProjectsController < ApplicationController
 
     def selected_materials
       materials = []
-      file_path = "#{Rails.root}/config/selected-materials.yml"
+      file_path = Rails.root.join("config", "selected-materials.yml")
       list = YAML.load_file file_path
       if list.present?
         list.each do |material_name|

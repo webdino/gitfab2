@@ -47,22 +47,22 @@ class GroupsController < ApplicationController
 
   private
 
-  def group_params
-    if params[:group]
-      params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params
+    def group_params
+      if params[:group]
+        params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params
+      end
     end
-  end
 
-  def additional_params
-    [:id, member_ids: []]
-  end
+    def additional_params
+      [:id, member_ids: []]
+    end
 
-  def build_group
-    @group = Group.new group_params
-    not_found if @group.blank?
-  end
+    def build_group
+      @group = Group.new group_params
+      not_found if @group.blank?
+    end
 
-  def load_group
-    @group = Group.friendly.find params[:id]
-  end
+    def load_group
+      @group = Group.friendly.find params[:id]
+    end
 end

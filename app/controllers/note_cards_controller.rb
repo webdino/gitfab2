@@ -36,7 +36,8 @@ class NoteCardsController < ApplicationController
     # {"title"=>"_foo", "description"=>""}
     # validationをかけているので、ここで有無を判別する
     if note_card_params[:description].present?
-      auto_linked_params[:description] = view_context.auto_link note_card_params[:description], html: { target: '_blank' }
+      description = view_context.auto_link(note_card_params[:description], html: { target: '_blank' })
+      auto_linked_params[:description] = description
     end
     if @note_card.update auto_linked_params
       render :update
@@ -55,59 +56,61 @@ class NoteCardsController < ApplicationController
 
   private
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = Owner.find(owner_id)
-  end
-
-  def load_project
-    @project = @owner.projects.friendly.find params[:project_id]
-    not_found if @project.blank?
-  end
-
-  def load_note_card
-    @note_card = @project.note_cards.find(params[:id])
-    not_found if @note_card.blank?
-  end
-
-  def build_note_card
-    @note_card = @project.note_cards.build(note_card_params)
-  end
-
-  def note_card_params
-    if params[:note_card]
-      params.require(:note_card).permit Card::NoteCard.updatable_columns
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      @owner = Owner.find(owner_id)
     end
-  end
 
-  def update_contribution
-    return unless current_user
-    @note_card.contributions.each do |contribution|
-      if contribution.contributor_id == current_user.id
-        contribution.updated_at = DateTime.now.in_time_zone
-        return
+    def load_project
+      @project = @owner.projects.friendly.find params[:project_id]
+      not_found if @project.blank?
+    end
+
+    def load_note_card
+      @note_card = @project.note_cards.find(params[:id])
+      not_found if @note_card.blank?
+    end
+
+    def build_note_card
+      @note_card = @project.note_cards.build(note_card_params)
+    end
+
+    def note_card_params
+      if params[:note_card]
+        params.require(:note_card).permit Card::NoteCard.updatable_columns
       end
     end
-    contribution = @note_card.contributions.new
-    contribution.contributor_id = current_user.id
-    contribution.created_at = DateTime.now.in_time_zone
-    contribution.updated_at = DateTime.now.in_time_zone
-  end
 
-  def update_project
-    return unless @_response.response_code == 200
-    @project.updated_at = DateTime.now.in_time_zone
-    @project.save!
-    users = @project.notifiable_users current_user
-    url = project_note_card_path owner_name: @project.owner.slug,
-                                      project_id: @project.name,
-                                      id: @note_card.id
-    if action_name == 'update' && current_user
-      body = "#{current_user.name} update a memo, '#{@note_card.title}' in #{@project.title}."
-      @project.notify users, current_user, url, body if users.length > 0
-    elsif action_name == 'create' && current_user
-      body = "#{current_user.name} create a new memo, '#{@note_card.title}' in #{@project.title}."
-      @project.notify users, current_user, url, body if users.length > 0
+    def update_contribution
+      return unless current_user
+      @note_card.contributions.each do |contribution|
+        if contribution.contributor_id == current_user.id
+          contribution.updated_at = DateTime.now.in_time_zone
+          return
+        end
+      end
+      contribution = @note_card.contributions.new
+      contribution.contributor_id = current_user.id
+      contribution.created_at = DateTime.now.in_time_zone
+      contribution.updated_at = DateTime.now.in_time_zone
     end
-  end
+
+    def update_project
+      return unless @_response.response_code == 200
+      @project.updated_at = DateTime.now.in_time_zone
+      @project.save!
+      users = @project.notifiable_users current_user
+      url = project_note_card_path(
+        owner_name: @project.owner.slug,
+        project_id: @project.name,
+        id: @note_card.id
+      )
+      if action_name == 'update' && current_user
+        body = "#{current_user.name} update a memo, '#{@note_card.title}' in #{@project.title}."
+        @project.notify users, current_user, url, body if users.length > 0
+      elsif action_name == 'create' && current_user
+        body = "#{current_user.name} create a new memo, '#{@note_card.title}' in #{@project.title}."
+        @project.notify users, current_user, url, body if users.length > 0
+      end
+    end
 end

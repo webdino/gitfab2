@@ -25,17 +25,17 @@ class Admin::FeaturedItemsController < Admin::ApplicationController
 
   private
 
-  def load_feature
-    @feature = Feature.find params[:feature_id]
-  end
-
-  def load_item
-    @item = FeaturedItem.find params[:id]
-  end
-
-  def item_params
-    if params[:featured_item]
-      params.require(:featured_item).permit(FeaturedItem.updatable_columns)
+    def load_feature
+      @feature = Feature.find params[:feature_id]
     end
-  end
+
+    def load_item
+      @item = FeaturedItem.find params[:id]
+    end
+
+    def item_params
+      if params[:featured_item]
+        params.require(:featured_item).permit(FeaturedItem.updatable_columns)
+      end
+    end
 end

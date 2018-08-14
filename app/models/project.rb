@@ -212,24 +212,24 @@ class Project < ApplicationRecord
 
   private
 
-  def ensure_a_figure_exists
-    figures.create if figures.none?
-  end
-
-  def generate_draft
-    lines = [name, title, description, owner.generate_draft]
-    tags.each do |t|
-      lines << t.generate_draft
+    def ensure_a_figure_exists
+      figures.create if figures.none?
     end
-    lines << recipe.generate_draft if recipe
-    lines.join("\n")
-  end
 
-  def set_draft
-    self.draft = generate_draft
-  end
+    def generate_draft
+      lines = [name, title, description, owner.generate_draft]
+      tags.each do |t|
+        lines << t.generate_draft
+      end
+      lines << recipe.generate_draft if recipe
+      lines.join("\n")
+    end
 
-  def should_generate_new_friendly_id?
-    name_changed? || super
-  end
+    def set_draft
+      self.draft = generate_draft
+    end
+
+    def should_generate_new_friendly_id?
+      name_changed? || super
+    end
 end

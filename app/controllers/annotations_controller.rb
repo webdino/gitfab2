@@ -57,73 +57,73 @@ class AnnotationsController < ApplicationController
 
   private
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    owner_id.downcase!
-    @owner = Owner.find(owner_id)
-  end
-
-  def load_project
-    @project = @owner.projects.friendly.find params[:project_id]
-    not_found if @project.blank?
-  end
-
-  def load_recipe
-    @recipe = @project.recipe
-  end
-
-  def load_state
-    if params['state_id']
-      @state = @recipe.states.find params['state_id']
-      not_found if @state.blank?
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      owner_id.downcase!
+      @owner = Owner.find(owner_id)
     end
-  end
 
-  def load_annotation
-    @annotation ||= @state.annotations.find params[:id]
-    not_found if @annotation.blank?
-  end
-
-  def build_annotation
-    @annotation = @state.annotations.build annotation_params
-  end
-
-  def annotation_params
-    if params[:annotation]
-      params.require(:annotation).permit Card::Annotation.updatable_columns
+    def load_project
+      @project = @owner.projects.friendly.find params[:project_id]
+      not_found if @project.blank?
     end
-  end
 
-  def save_current_users_contribution
-    return @annotation.contributions.find_all{|contribution|
-      contribution.contributor_id == current_user.id
-    }.map{|contribution|
+    def load_recipe
+      @recipe = @project.recipe
+    end
+
+    def load_state
+      if params['state_id']
+        @state = @recipe.states.find params['state_id']
+        not_found if @state.blank?
+      end
+    end
+
+    def load_annotation
+      @annotation ||= @state.annotations.find params[:id]
+      not_found if @annotation.blank?
+    end
+
+    def build_annotation
+      @annotation = @state.annotations.build annotation_params
+    end
+
+    def annotation_params
+      if params[:annotation]
+        params.require(:annotation).permit Card::Annotation.updatable_columns
+      end
+    end
+
+    def save_current_users_contribution
+      return @annotation.contributions.find_all{|contribution|
+        contribution.contributor_id == current_user.id
+      }.map{|contribution|
+        contribution.updated_at = DateTime.now.in_time_zone
+        contribution
+      }[0]
+    end
+
+    def create_new_contribution
+      contribution = @annotation.contributions.new
+      contribution.contributor_id = current_user.id
+      contribution.created_at = DateTime.now.in_time_zone
       contribution.updated_at = DateTime.now.in_time_zone
-      contribution
-    }[0]
-  end
+      return contribution
+    end
 
-  def create_new_contribution
-    contribution = @annotation.contributions.new
-    contribution.contributor_id = current_user.id
-    contribution.created_at = DateTime.now.in_time_zone
-    contribution.updated_at = DateTime.now.in_time_zone
-    return contribution
-  end
+    def update_contribution
+      return nil unless current_user
+      return save_current_users_contribution || create_new_contribution
+    end
 
-  def update_contribution
-    return nil unless current_user
-    return save_current_users_contribution || create_new_contribution
-  end
+    def update_project
+      return unless @_response.response_code == 200
+      @project.updated_at = DateTime.now.in_time_zone
+      @project.save!
 
-  def update_project
-    return unless @_response.response_code == 200
-    @project.updated_at = DateTime.now.in_time_zone
-    @project.save!
-
-    users = @project.notifiable_users current_user
-    url = project_path @project, owner_name: @project.owner.slug
-    body = "#{current_user.name} updated the recipe of #{@project.title}."
-    @project.notify users, current_user, url, body if users.length > 0
-  end
+      users = @project.notifiable_users current_user
+      url = project_path @project, owner_name: @project.owner.slug
+      body = "#{current_user.name} updated the recipe of #{@project.title}."
+      @project.notify users, current_user, url, body if users.length > 0
+    end
 end

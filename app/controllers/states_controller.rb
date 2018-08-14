@@ -56,56 +56,56 @@ class StatesController < ApplicationController
 
   private
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    owner_id.downcase!
-    @owner = Owner.find(owner_id)
-  end
-
-  def load_project
-    @project = @owner.projects.friendly.find params[:project_id]
-    not_found if @project.blank?
-  end
-
-  def load_recipe
-    @recipe = @project.recipe
-  end
-
-  def load_state
-    @state ||= @recipe.states.find(params[:id])
-    not_found if @state.blank?
-  end
-
-  def build_state
-    @state = @recipe.states.build state_params
-  end
-
-  def state_params
-    (params[:state] || ActionController::Parameters.new).permit Card::State.updatable_columns
-  end
-
-  def update_contribution
-    return unless current_user
-    @state.contributions.each do |contribution|
-      if contribution.contributor_id == current_user.id
-        contribution.updated_at = DateTime.now.in_time_zone
-        return
-      end
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      owner_id.downcase!
+      @owner = Owner.find(owner_id)
     end
-    contribution = @state.contributions.new
-    contribution.contributor_id = current_user.id
-    contribution.created_at = DateTime.now.in_time_zone
-    contribution.updated_at = DateTime.now.in_time_zone
-  end
 
-  def update_project
-    return unless @_response.response_code == 200
-    @project.updated_at = DateTime.now.in_time_zone
-    @project.save!
+    def load_project
+      @project = @owner.projects.friendly.find params[:project_id]
+      not_found if @project.blank?
+    end
 
-    users = @project.notifiable_users current_user
-    url = project_path @project, owner_name: @project.owner.slug
-    body = "#{current_user.name} updated the recipe of #{@project.title}."
-    @project.notify users, current_user, url, body if users.length > 0
-  end
+    def load_recipe
+      @recipe = @project.recipe
+    end
+
+    def load_state
+      @state ||= @recipe.states.find(params[:id])
+      not_found if @state.blank?
+    end
+
+    def build_state
+      @state = @recipe.states.build state_params
+    end
+
+    def state_params
+      (params[:state] || ActionController::Parameters.new).permit Card::State.updatable_columns
+    end
+
+    def update_contribution
+      return unless current_user
+      @state.contributions.each do |contribution|
+        if contribution.contributor_id == current_user.id
+          contribution.updated_at = DateTime.now.in_time_zone
+          return
+        end
+      end
+      contribution = @state.contributions.new
+      contribution.contributor_id = current_user.id
+      contribution.created_at = DateTime.now.in_time_zone
+      contribution.updated_at = DateTime.now.in_time_zone
+    end
+
+    def update_project
+      return unless @_response.response_code == 200
+      @project.updated_at = DateTime.now.in_time_zone
+      @project.save!
+
+      users = @project.notifiable_users current_user
+      url = project_path @project, owner_name: @project.owner.slug
+      body = "#{current_user.name} updated the recipe of #{@project.title}."
+      @project.notify users, current_user, url, body if users.length > 0
+    end
 end

@@ -16,7 +16,7 @@ class Admin::ProjectsController < Admin::ApplicationController
 
   private
 
-  def load_project
-    @project = Project.friendly.find(params[:id])
-  end
+    def load_project
+      @project = Project.friendly.find(params[:id])
+    end
 end

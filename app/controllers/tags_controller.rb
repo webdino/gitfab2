@@ -26,32 +26,32 @@ class TagsController < ApplicationController
 
   private
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = Owner.find(owner_id)
-  end
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      @owner = Owner.find(owner_id)
+    end
 
-  def load_project
-    @project = @owner.projects.friendly.find params[:project_id]
-  end
+    def load_project
+      @project = @owner.projects.friendly.find params[:project_id]
+    end
 
-  def build_tag
-    tag = @project.tags.build
-    tag_parameter = tag_params
-    tag.name = Sanitize.clean(tag_parameter[:name]).strip
-    tag.user = current_user
-    @tag = tag
-  end
+    def build_tag
+      tag = @project.tags.build
+      tag_parameter = tag_params
+      tag.name = Sanitize.clean(tag_parameter[:name]).strip
+      tag.user = current_user
+      @tag = tag
+    end
 
-  def load_tag
-    @tag = @project.tags.find params[:id]
-  end
+    def load_tag
+      @tag = @project.tags.find params[:id]
+    end
 
-  def update_draft!
-    @project.update_draft!
-  end
+    def update_draft!
+      @project.update_draft!
+    end
 
-  def tag_params
-    params.require(:tag).permit Tag.updatable_columns if params[:tag]
-  end
+    def tag_params
+      params.require(:tag).permit Tag.updatable_columns if params[:tag]
+    end
 end

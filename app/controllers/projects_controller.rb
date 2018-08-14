@@ -9,7 +9,8 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def show
-    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project]).friendly.find(params[:id])
+    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
+                     .friendly.find(params[:id])
     not_found if @project.blank?
     @recipe = @project.recipe
   end
@@ -104,60 +105,60 @@ class ProjectsController < ApplicationController
 
   private
 
-  def project_params
-    if params[:project]
-      params.require(:project).permit(Project.updatable_columns)
-    end
-  end
-
-  def build_project
-    @project = @owner.projects.build project_params
-  end
-
-  def load_project
-    @project = @owner.projects.friendly.find params[:id]
-    not_found if @project.blank?
-  end
-
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    owner_id.downcase!
-    @owner = Owner.find(owner_id)
-  end
-
-  def delete_collaborations
-    @project.collaborators.each do |collaborator|
-      collaboration = collaborator.collaborations.where('project_id' => @project.id).first
-      collaboration.destroy
-    end
-  end
-
-  def notify_users_on_update(project, owner)
-    return if params[:new_owner_name]
-
-    users = project.notifiable_users current_user
-    return if users.blank?
-
-    url = project_path(project, owner_name: owner)
-    body = "#{project.title} was updated by #{current_user.name}."
-    project.notify(users, current_user, url, body)
-  end
-
-  def change_owner
-    project = Project.friendly.find params[:id]
-    new_owner = Owner.find_by(params[:new_owner_name])
-    if new_owner.present? && project.change_owner!(new_owner)
-      if project.collaborators.include?(new_owner)
-        old_collaboration = new_owner.collaboration_in project
-        old_collaboration.destroy
+    def project_params
+      if params[:project]
+        params.require(:project).permit(Project.updatable_columns)
       end
-      new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
-      respond_to do |format|
-        format.html { redirect_to owner_path(owner_name: new_owner.slug) }
-        format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
-      end
-    else
-      render json: { success: false }, status: 400
     end
-  end
+
+    def build_project
+      @project = @owner.projects.build project_params
+    end
+
+    def load_project
+      @project = @owner.projects.friendly.find params[:id]
+      not_found if @project.blank?
+    end
+
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      owner_id.downcase!
+      @owner = Owner.find(owner_id)
+    end
+
+    def delete_collaborations
+      @project.collaborators.each do |collaborator|
+        collaboration = collaborator.collaborations.where('project_id' => @project.id).first
+        collaboration.destroy
+      end
+    end
+
+    def notify_users_on_update(project, owner)
+      return if params[:new_owner_name]
+
+      users = project.notifiable_users current_user
+      return if users.blank?
+
+      url = project_path(project, owner_name: owner)
+      body = "#{project.title} was updated by #{current_user.name}."
+      project.notify(users, current_user, url, body)
+    end
+
+    def change_owner
+      project = Project.friendly.find params[:id]
+      new_owner = Owner.find_by(params[:new_owner_name])
+      if new_owner.present? && project.change_owner!(new_owner)
+        if project.collaborators.include?(new_owner)
+          old_collaboration = new_owner.collaboration_in project
+          old_collaboration.destroy
+        end
+        new_owner_projects_path = 'https://' + request.raw_host_with_port + '/' + new_owner.slug
+        respond_to do |format|
+          format.html { redirect_to owner_path(owner_name: new_owner.slug) }
+          format.js { render js: "window.location.replace('" + new_owner_projects_path + "')" }
+        end
+      else
+        render json: { success: false }, status: 400
+      end
+    end
 end
