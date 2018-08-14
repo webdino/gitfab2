@@ -1,5 +1,6 @@
 $(document).on("click", ".fork-btn", function(event) {
   event.preventDefault();
+  $('#loading-bar').show();
   const form = $(this).find("form");
   form.submit();
 });

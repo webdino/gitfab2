@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   layout 'project'
 
-  before_action :load_owner
+  before_action :load_owner, except: [:fork]
   before_action :load_project, only: [:edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
@@ -18,12 +18,10 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    return fork if params[:original_project_id]
     slug = project_params[:title]
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
-      notify_users_on_create(@project, @owner)
       redirect_to edit_project_url(id: @project, owner_name: @owner)
     else
       render :new
@@ -66,6 +64,25 @@ class ProjectsController < ApplicationController
     else
       render 'error/failed', status: 400
     end
+  end
+
+  def fork
+    owner = Owner.find(params[:owner_id])
+    original_project = Project.friendly.find(params[:project_id])
+    project = original_project.fork_for!(owner)
+    path = project_path(owner.slug, project.slug)
+
+    notifiable_users = original_project.notifiable_users(current_user)
+    if notifiable_users.present?
+      project.notify(
+        notifiable_users,
+        current_user,
+        path,
+        "#{original_project.title} was forked by #{current_user.name}."
+      )
+    end
+
+    redirect_to path
   end
 
   def potential_owners
@@ -115,18 +132,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def notify_users_on_create(project, owner)
-    return unless params[:original_project_id]
-
-    original_project = Project.find(params[:original_project_id])
-    users = project.notifiable_users(current_user, original_project)
-    return if users.blank?
-
-    url = project_path(project, owner_name: owner)
-    body = "#{original_project.title} was forked by #{current_user.name}."
-    @project.notify(users, current_user, url, body)
-  end
-
   def notify_users_on_update(project, owner)
     return if params[:new_owner_name]
 
@@ -136,14 +141,6 @@ class ProjectsController < ApplicationController
     url = project_path(project, owner_name: owner)
     body = "#{project.title} was updated by #{current_user.name}."
     project.notify(users, current_user, url, body)
-  end
-
-  def fork
-    original_project = Project.find params[:original_project_id]
-    @project = original_project.fork_for! @owner
-    if original_project.present? && @project.present?
-      redirect_to project_path(id: @project, owner_name: @owner)
-    end
   end
 
   def change_owner

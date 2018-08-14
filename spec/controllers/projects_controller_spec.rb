@@ -84,37 +84,6 @@ describe ProjectsController, type: :controller do
           end
           it { is_expected.to render_template :new }
         end
-        context 'when forking' do
-          let(:forker) { FactoryBot.create :user }
-          before do
-            sign_in forker
-            user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
-            user_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
-            user_project.reload
-            post :create, params: { user_id: forker.slug, original_project_id: user_project.id }
-          end
-          it { is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
-          it 'has 1 states and 1 annotation' do
-            aggregate_failures do
-              recipe_states = Project.last.recipe.states
-              expect(recipe_states.size).to eq 1
-              expect(recipe_states.first.annotations.size).to eq 1
-            end
-          end
-        end
-        context 'when forking with a wrong parameter' do
-          let(:forker) { FactoryBot.create :user }
-          let!(:original_project) { FactoryBot.create :user_project }
-
-          before do
-            sign_in forker
-            original_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
-            original_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
-            original_project.reload
-            post :create, params: { user_id: forker.slug, original_project_id: 'wrongparameter' }
-          end
-          it { is_expected.to have_http_status(404) }
-        end
       end
       describe 'GET potential_owners' do
         before do
@@ -234,5 +203,14 @@ describe ProjectsController, type: :controller do
         end
       end
     end
+  end
+
+  describe 'POST #fork' do
+    subject { post :fork, params: { project_id: project.slug, owner_id: user.slug } }
+    let(:user) { FactoryBot.create(:user) }
+    let!(:project) { FactoryBot.create(:project) }
+    before { sign_in user }
+    it { is_expected.to redirect_to project_path(user, Project.last) }
+    it { expect{ subject }.to change{ Project.count }.by(1) }
   end
 end

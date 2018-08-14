@@ -88,4 +88,8 @@ Rails.application.routes.draw do
     end
     resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
   end
+
+  resources :projects, only: [] do
+    post :fork
+  end
 end

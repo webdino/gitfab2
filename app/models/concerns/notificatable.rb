@@ -13,9 +13,8 @@ module Notificatable
       end
     end
 
-    def notifiable_users(current_user, original_project = nil)
-      project = original_project.present? ? original_project : self
-      users = (project.managers + project.collaborate_users).uniq
+    def notifiable_users(current_user)
+      users = (managers + collaborate_users).uniq
       users.delete current_user
       users
     end
