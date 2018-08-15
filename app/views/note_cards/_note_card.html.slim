@@ -15,7 +15,7 @@ article class="card note_card" id="#{card.id}"
               link = author.present? ? link_to(author.name, owner_path(owner_name: author.slug)): ""
 
             - if author.present?
-              = "posted by #{link} on #{datetime}"
+              == "posted by #{link} on #{datetime}"
             - else
               = "posted on #{datetime}"
 
