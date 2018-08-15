@@ -2,5 +2,5 @@
 #link-to-origin
   .wrapper
     .forked-icon
-    - origin_url = project_path(original_project.owner.slug, original_project)
+    - origin_url = project_path(original_project)
     = link_to "This project was forked from #{original_project.title}.", origin_url, class: "link"

@@ -18,7 +18,7 @@
         td
           = project.path
         td
-          = project.is_private ? '-' : link_to('Open', project_path(project.owner, project))
+          = project.is_private ? '-' : link_to('Open', project_path(project))
         td
           = link_to('Manage', admin_project_path(project.id))
   = paginate(@projects)

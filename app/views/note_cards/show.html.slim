@@ -8,7 +8,7 @@ main#note-cards-show
   = render "projects/basic_informations"
 
   #tabs
-    = link_to project_path(@project, owner_name: @owner.slug) do
+    = link_to project_path(@project) do
       .tab
         'Recipe
         = "(#{@project.recipe.states.length})"

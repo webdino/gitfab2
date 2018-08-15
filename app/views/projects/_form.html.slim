@@ -99,7 +99,7 @@
               'License
             = f.hidden_field :license
             - license_index = f.object.license.nil? ? 3 : f.object.license
-            - parent_license_index = @project.original.nil? ? 0 : @project.original.license
+            - parent_license_index = @project.original&.license || 0
             - @project.licenses.each_with_index do |license, index|
               - clazz = index == license_index ? "selected" : ""
               - clazz += " unselectable" if index < parent_license_index
@@ -141,5 +141,5 @@
     - else
       = link_to "Update Project", "#", class: "submit btn update"
       = f.submit value: "Update Project", id: "submit-btn"
-      = link_to "Cancel", project_path(owner_name: @owner.slug, id: @project), class: "cancel btn"
-      = link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }
+      = link_to "Cancel", project_path(@project), class: "cancel btn"
+      = link_to "Delete Project", project_path(@project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }

@@ -37,7 +37,7 @@ class CollaboratorsController < ApplicationController
       users = project.notifiable_users(current_user)
       return if users.blank?
 
-      url = project_path(owner_name: project.owner.slug, id: project.name)
+      url = project_path(project)
       body = "#{collaborator.name} was added as a collaborator of your project #{project.title}."
       project.notify(users, current_user, url, body)
     end
