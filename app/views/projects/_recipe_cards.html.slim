@@ -1,5 +1,5 @@
 #tabs
-  = link_to project_path(@project) do
+  = link_to project_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Recipe
       = "(#{@project.recipe.states.length})"

@@ -21,7 +21,7 @@ section#layouts-header
             .name
               = link_to current_user.name, owner_path(owner_name: current_user.slug)
           .box
-            = link_to "", new_project_path, title: "Create Project", class: "icon create-project"
+            = link_to "", new_project_path(owner_name: current_user.slug), title: "Create Project", class: "icon create-project"
 
             = link_to user_notifications_path(current_user), remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
               - unread_notifications_count = current_user.my_notifications.where(was_read: false).count

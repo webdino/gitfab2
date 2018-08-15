@@ -3,15 +3,15 @@ li.project
     - if project.figures.present?
       - if project.figures.first.content.present? || project.figures.first.link.present?
         figure.visual
-          = link_to image_tag(project.thumbnail, class: "thumb"), project_path(project), class: "thumb-wrapper"
+          = link_to image_tag(project.thumbnail, class: "thumb"), project_path(project.owner, project), class: "thumb-wrapper"
 
       - else
         .title-large
-          = link_to project.title.truncate(40), project_path(project), class: "block"
+          = link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
 
     - else
       .title-large
-        = link_to project.title.truncate(40), project_path(project), class: "block"
+        = link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
     = link_to owner_path(owner_name: project.owner.slug), alt: project.owner.name, title: project.owner.name, class: "user" do
       .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"
 
@@ -19,7 +19,7 @@ li.project
     - if project.figures.present?
       - if project.figures.first.content.present? || project.figures.first.link.present?
         .title-small
-          = link_to project.title.truncate(40), project_path(project)
+          = link_to project.title.truncate(40), project_path(project.owner, project)
       - else
         .spacer
     - else

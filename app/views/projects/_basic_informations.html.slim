@@ -83,7 +83,7 @@ section#basic-informations
           'Creative Commons - Attribution-NonCommercial-ShareAlike'
         ]
 
-        text = link_to(@project.title, project_path(@project)) + ' by '
+        text = link_to(@project.title, project_path(@project.owner, @project)) + ' by '
         project_member_links.map{|link| text += link + ', '}
         text.chop!.chop!
         text += ' is licensed under the '
@@ -100,7 +100,7 @@ section#basic-informations
         == Sanitize.clean auto_link(simple_format(@project.description), sanitize: false), Sanitize::Config::CARD
 
 - if can? :manage, @project
-  = link_to "", edit_project_path(@project), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
+  = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
 
 section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
   - if @recipe.present?
@@ -127,7 +127,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
 
     #share-destinations
       .container
-        - url = "https://fabble.cc" + project_path(@project)
+        - url = "https://fabble.cc" + project_path(@owner, @project)
         = link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
         = link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
 

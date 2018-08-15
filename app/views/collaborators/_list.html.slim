@@ -14,4 +14,4 @@
       - @project.collaborators.each do |collaborator|
         = render "collaborators/collaboration", collaboration: collaborator.collaboration_in(@project)
 
-    = link_to "Back", project_path(@project), class: "back-btn btn"
+    = link_to "Back", project_path(@project, owner_name: @project.owner.slug), class: "back-btn btn"

@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   layout 'project'
 
+  before_action :load_owner, except: [:fork]
   before_action :load_project, only: [:edit, :update, :destroy]
   before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
@@ -8,9 +9,9 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def show
-    @project = Project.includes(usages: [:attachments, :figures, :contributions, :project])
-                      .friendly.find(params[:id])
-    @owner = @project.owner
+    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
+                     .friendly.find(params[:id])
+    not_found if @project.blank?
     @recipe = @project.recipe
   end
 
@@ -22,9 +23,8 @@ class ProjectsController < ApplicationController
     slug = slug.gsub(/\W|\s/, 'x').downcase
     @project.name = slug
     if @project.save
-      redirect_to edit_project_url(@project)
+      redirect_to edit_project_url(id: @project, owner_name: @owner)
     else
-      @owner = @project.owner
       render :new
     end
   end
@@ -45,10 +45,10 @@ class ProjectsController < ApplicationController
 
       @project.updated_at = DateTime.now.in_time_zone
       if @project.update parameters
-        notify_users_on_update(@project)
+        notify_users_on_update(@project, @owner)
         respond_to do |format|
           format.json { render json: { success: true } }
-          format.html { redirect_to project_path(@project) }
+          format.html { redirect_to project_path(@project, owner_name: @owner) }
         end
       else
         respond_to do |format|
@@ -71,7 +71,7 @@ class ProjectsController < ApplicationController
     owner = Owner.find(params[:owner_id])
     original_project = Project.friendly.find(params[:project_id])
     project = original_project.fork_for!(owner)
-    path = project_path(project)
+    path = project_path(owner.slug, project.slug)
 
     notifiable_users = original_project.notifiable_users(current_user)
     if notifiable_users.present?
@@ -87,19 +87,18 @@ class ProjectsController < ApplicationController
   end
 
   def potential_owners
-    @project = Project.friendly.find(params[:project_id])
+    @project = @owner.projects.friendly.find params[:project_id]
     render 'potential_owners', format: 'json'
   end
 
   def recipe_cards_list
-    @project = Project.friendly.find(params[:project_id])
-    @owner = @project.owner
+    @project = @owner.projects.friendly.find params[:project_id]
     @recipe = @project.recipe
     render 'recipe_cards_list'
   end
 
   def relation_tree
-    @project = Project.friendly.find(params[:project_id])
+    @project = @owner.projects.friendly.find params[:project_id]
     @root = @project.root(@project)
     render 'relation_tree', format: 'json'
   end
@@ -113,11 +112,18 @@ class ProjectsController < ApplicationController
     end
 
     def build_project
-      @project = current_user.projects.build(project_params)
+      @project = @owner.projects.build project_params
     end
 
     def load_project
-      @project = Project.friendly.find(params[:id])
+      @project = @owner.projects.friendly.find params[:id]
+      not_found if @project.blank?
+    end
+
+    def load_owner
+      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
+      owner_id.downcase!
+      @owner = Owner.find(owner_id)
     end
 
     def delete_collaborations
@@ -127,13 +133,13 @@ class ProjectsController < ApplicationController
       end
     end
 
-    def notify_users_on_update(project)
+    def notify_users_on_update(project, owner)
       return if params[:new_owner_name]
 
       users = project.notifiable_users current_user
       return if users.blank?
 
-      url = project_path(project)
+      url = project_path(project, owner_name: owner)
       body = "#{project.title} was updated by #{current_user.name}."
       project.notify(users, current_user, url, body)
     end

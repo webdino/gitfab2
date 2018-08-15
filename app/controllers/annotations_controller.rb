@@ -122,7 +122,8 @@ class AnnotationsController < ApplicationController
       @project.save!
 
       users = @project.notifiable_users current_user
+      url = project_path @project, owner_name: @project.owner.slug
       body = "#{current_user.name} updated the recipe of #{@project.title}."
-      @project.notify users, current_user, project_path(@project), body if users.length > 0
+      @project.notify users, current_user, url, body if users.length > 0
     end
 end

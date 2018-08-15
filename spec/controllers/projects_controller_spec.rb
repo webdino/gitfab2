@@ -71,7 +71,7 @@ describe ProjectsController, type: :controller do
             sign_in user
             post :create, params: { user_id: user.slug, project: new_project.attributes }
           end
-          it { is_expected.to redirect_to(edit_project_url(Project.last)) }
+          it { is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
         end
         context 'when newly creating with wrong parameters' do
           let(:user) { FactoryBot.create :user }
@@ -188,7 +188,7 @@ describe ProjectsController, type: :controller do
                 patch :update, params: { group_id: project.owner.slug, id: project.id, project: { description: '_proj' } }
               end
             end
-            it { is_expected.to redirect_to project_path(project) }
+            it { is_expected.to redirect_to project_path(owner_name: project.owner.slug, id: project) }
           end
           context 'raising error by invalid title' do
             before do
@@ -210,7 +210,7 @@ describe ProjectsController, type: :controller do
     let(:user) { FactoryBot.create(:user) }
     let!(:project) { FactoryBot.create(:project) }
     before { sign_in user }
-    it { is_expected.to redirect_to project_path(Project.last) }
+    it { is_expected.to redirect_to project_path(user, Project.last) }
     it { expect{ subject }.to change{ Project.count }.by(1) }
   end
 end
