@@ -10,13 +10,13 @@ describe ProjectCommentsController, type: :controller do
     context 'with valid parameters' do
       let(:params) do
         {
-          owner_name: project.owner.name,
+          owner_name: project.owner.slug,
           project_id: project.id,
           project_comment: { body: 'valid' }
         }
       end
 
-      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comment-#{ProjectComment.last.id}") }
+      it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comment-#{ProjectComment.last.id}") }
 
       it { expect{ subject }.to change(ProjectComment, :count).by(1) }
 
@@ -29,13 +29,13 @@ describe ProjectCommentsController, type: :controller do
     context 'with invalid params' do
       let(:params) do
         {
-          owner_name: project.owner.name,
+          owner_name: project.owner.slug,
           project_id: project.id,
           project_comment: { body: nil }
         }
       end
 
-      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comment-form") }
+      it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comment-form") }
 
       it { expect{ subject }.to change(ProjectComment, :count).by(0) }
 
@@ -48,13 +48,13 @@ describe ProjectCommentsController, type: :controller do
     context 'When body length is over than 300 chars' do
       let(:params) do
         {
-          owner_name: project.owner.name,
+          owner_name: project.owner.slug,
           project_id: project.id,
           project_comment: { body: 'a'*301 }
         }
       end
 
-      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comment-form") }
+      it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comment-form") }
 
       it { expect{ subject }.to change(ProjectComment, :count).by(0) }
 
@@ -70,7 +70,7 @@ describe ProjectCommentsController, type: :controller do
 
     let(:params) do
       {
-        owner_name: project.owner.name,
+        owner_name: project.owner.slug,
         project_id: project.id,
         id: project_comment.id
       }
@@ -84,14 +84,14 @@ describe ProjectCommentsController, type: :controller do
       project_comment
     end
 
-    it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comments") }
+    it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comments") }
 
     it { expect{ subject }.to change(ProjectComment, :count).by(-1) }
 
     context 'when user could not delete a comment' do
       before { allow_any_instance_of(ProjectComment).to receive(:destroy).and_return(false) }
 
-      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comments") }
+      it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comments") }
 
       it { expect{ subject }.to change(ProjectComment, :count).by(0) }
 
@@ -109,7 +109,7 @@ describe ProjectCommentsController, type: :controller do
         project_comment
       end
 
-      it { is_expected.to redirect_to project_path(project.owner.name, project, anchor: "project-comments") }
+      it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comments") }
 
       it { expect{ subject }.to change(ProjectComment, :count).by(0) }
 
@@ -128,7 +128,7 @@ describe ProjectCommentsController, type: :controller do
 
     before do
       sign_in user
-      post :create, params: { owner_name: project.owner.name,
+      post :create, params: { owner_name: project.owner.slug,
                               project_id: project.id,
                               project_comment: { body: 'valid' } }
     end
@@ -137,7 +137,7 @@ describe ProjectCommentsController, type: :controller do
       is_expected.to have_attributes(
         notifier_id: user.id,
         notified_id: project.owner.id,
-        notificatable_url: project_path(project.owner.name, project),
+        notificatable_url: project_path(project, owner_name: project.owner.slug),
         notificatable_type: 'Project',
         body: "#{user.name} commented on #{project.title}."
       )

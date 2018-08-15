@@ -6,9 +6,9 @@ class ProjectCommentsController < ApplicationController
 
     if project_comment.save
       notify_users(project)
-      redirect_to project_path(project.owner.name, project, anchor: "project-comment-#{project_comment.id}")
+      redirect_to project_path(project.owner.slug, project, anchor: "project-comment-#{project_comment.id}")
     else
-      redirect_to project_path(project.owner.name, project, anchor: "project-comment-form"),
+      redirect_to project_path(project.owner.slug, project, anchor: "project-comment-form"),
                   alert: project_comment.errors.full_messages,
                   flash: { project_comment_body: project_comment.body }
     end
@@ -19,14 +19,14 @@ class ProjectCommentsController < ApplicationController
     project = project_comment.project
 
     unless project.manageable_by?(current_user)
-      redirect_to project_path(project.owner.name, project, anchor: "project-comments"),
+      redirect_to project_path(project.owner.slug, project, anchor: "project-comments"),
                   alert: 'You can not delete a comment' and return
     end
 
     if project_comment.destroy
-      redirect_to project_path(project.owner.name, project, anchor: "project-comments")
+      redirect_to project_path(project.owner.slug, project, anchor: "project-comments")
     else
-      redirect_to project_path(project.owner.name, project, anchor: "project-comments"),
+      redirect_to project_path(project.owner.slug, project, anchor: "project-comments"),
                   alert: 'Comment could not be deleted'
     end
   end
