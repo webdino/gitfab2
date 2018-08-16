@@ -1,9 +1,8 @@
 class ProjectsController < ApplicationController
   layout 'project'
 
-  before_action :load_owner, except: [:fork]
+  before_action :load_owner, except: [:create, :fork]
   before_action :load_project, only: [:edit, :update, :destroy]
-  before_action :build_project, only: [:new, :create]
   before_action :delete_collaborations, only: :destroy
 
   authorize_resource
@@ -16,14 +15,17 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @project = current_user.projects.build
   end
 
   def create
-    slug = project_params[:title]
-    slug = slug.gsub(/\W|\s/, 'x').downcase
+    @owner = Owner.find_by(params[:project][:owner_id]) || current_user
+    @project = @owner.projects.build(project_params)
+    slug = project_params[:title].gsub(/\W|\s/, 'x').downcase
     @project.name = slug
+
     if @project.save
-      redirect_to edit_project_url(id: @project, owner_name: @owner)
+      redirect_to edit_project_path(id: @project, owner_name: @owner)
     else
       render :new
     end
@@ -109,10 +111,6 @@ class ProjectsController < ApplicationController
       if params[:project]
         params.require(:project).permit(Project.updatable_columns)
       end
-    end
-
-    def build_project
-      @project = @owner.projects.build project_params
     end
 
     def load_project

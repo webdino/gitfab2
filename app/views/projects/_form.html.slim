@@ -1,4 +1,5 @@
-= nested_form_for [@owner, @project], html: {class: "project-form"} do |f|
+- url = @project.new_record? ? projects_path : project_path(@project.owner, @project)
+= nested_form_for @project, url: url, html: {class: "project-form"} do |f|
   - if @project.errors.any?
     #error_explanation
       h2
@@ -8,11 +9,8 @@
         - @project.errors.full_messages.each do |msg|
           li = msg
   #basic-information
-    - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
-      h1.page-title Create Project
-    - else
-
-      h1.page-title Update Project
+    h1.page-title
+      = @project.new_record? ? "Create Project" : "Update Project"
 
     .title
       .left
@@ -22,7 +20,7 @@
           'Project Title
         = f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "60", autofocus: true
 
-    - if @project.new_record? && @owner.is_a?(User) && @owner.groups.any?
+    - if @project.new_record? && current_user.groups.any?
       / TODO: make changing project owner enabled via project/update
       #owner
         .left
@@ -30,11 +28,8 @@
         .right
           .form-title
             'Project Owner
-          - options = []
-          - @owner.groups.to_a.push(@owner).each do |o|
-            - action = o.instance_of?(Group) ? owner_path(owner_name: o.slug) : user_projects_path(user_id: o.slug)
-            - options.push [o.name, action]
-          = f.select :owner_id, options, selected: owner_path(owner_name: current_user.slug)
+          - options = current_user.groups.to_a.push(current_user).map{ |o| [o.name, o.slug] }
+          = f.select :owner_id, options, selected: current_user.slug
 
     #project-summary
       - if page == "edit"

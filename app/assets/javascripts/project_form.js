@@ -2,11 +2,6 @@ $(function() {
   $(".project-form").validate();
   $("#project_title").focus();
 
-  $(document).on("submit", ".project-form", function() {
-    const action = $("#project_owner_id").val();
-    $(".project-form").attr("action", action);
-  });
-
   $(document).on("change", "select#project_group_id", function() {
     $("#new_project").attr("action", $(this).val());
   });
