@@ -70,14 +70,14 @@ class ProjectsController < ApplicationController
   end
 
   def fork
-    owner = Owner.find(params[:owner_id])
-    original_project = Project.friendly.find(params[:project_id])
-    project = original_project.fork_for!(owner)
-    path = project_path(owner.slug, project.slug)
+    target_owner = Owner.find(params[:owner_id])
+    original_project = Owner.find(params[:owner_name]).projects.friendly.find(params[:project_id])
+    forked_project = original_project.fork_for!(target_owner)
+    path = project_path(target_owner, forked_project)
 
     notifiable_users = original_project.notifiable_users(current_user)
     if notifiable_users.present?
-      project.notify(
+      forked_project.notify(
         notifiable_users,
         current_user,
         path,

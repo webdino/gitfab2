@@ -191,11 +191,11 @@ describe ProjectsController, type: :controller do
   end
 
   describe 'POST #fork' do
-    subject { post :fork, params: { project_id: project.slug, owner_id: user.slug } }
-    let(:user) { FactoryBot.create(:user) }
+    subject { post :fork, params: { owner_name: project.owner, project_id: project, owner_id: target_owner.slug } }
+    let(:target_owner) { FactoryBot.create(:user) }
     let!(:project) { FactoryBot.create(:project) }
-    before { sign_in user }
-    it { is_expected.to redirect_to project_path(user, Project.last) }
+    before { sign_in target_owner }
+    it { is_expected.to redirect_to project_path(target_owner, Project.last) }
     it { expect{ subject }.to change{ Project.count }.by(1) }
   end
 end
