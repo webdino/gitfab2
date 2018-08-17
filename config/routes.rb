@@ -26,17 +26,6 @@ Rails.application.routes.draw do
   match 'home' => 'owner_projects#index', via: :get
   match 'search' => 'global_projects#index', via: :get
 
-  concern :card_features_for_form do
-    resources :annotations, only: [:create, :update]
-  end
-
-  concern :card_features_for_link do
-    resources :annotations, except: [:create, :update]
-    resources :annotations do
-      get 'to_state'
-    end
-  end
-
   resources :cards, only: [] do
     resources :card_comments, only: :create
   end
@@ -49,7 +38,9 @@ Rails.application.routes.draw do
     resources :projects, only: [] do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
-        resources :states, only: [:create, :update], concerns: :card_features_for_form
+        resources :states, only: [:create, :update] do
+          resources :annotations, only: [:create, :update]
+        end
       end
       resources :note_cards, only: [:create, :update]
       resources :tags, only: [:create, :destroy]
@@ -80,7 +71,11 @@ Rails.application.routes.draw do
     resources :collaborators, except: [:create, :update]
     resources :note_cards, except: [:create, :update]
     resource :recipe do
-      resources :states, except: [:create, :update], concerns: :card_features_for_link
+      resources :states, except: [:create, :update] do
+        resources :annotations, except: [:create, :update] do
+          get 'to_state'
+        end
+      end
       resources :states do
         get 'to_annotation'
       end
