@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   layout 'project'
 
-  before_action :load_owner, except: [:create, :fork]
+  before_action :load_owner, except: [:new, :create, :fork]
   before_action :load_project, only: [:edit, :update, :destroy]
   before_action :delete_collaborations, only: :destroy
 

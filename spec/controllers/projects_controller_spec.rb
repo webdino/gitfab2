@@ -21,7 +21,7 @@ describe ProjectsController, type: :controller do
         before do
           user_project.owner.memberships.create group_id: group_project.owner.id
           sign_in user_project.owner
-          get :new, params: { owner_name: project.owner.slug, id: project.id }
+          get :new
         end
         it { is_expected.to render_template :new }
       end
