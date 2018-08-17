@@ -44,14 +44,10 @@ class StatesController < ApplicationController
   end
 
   def to_annotation
-    state = @recipe.states.find params[:state_id]
-    if state.blank?
-      not_found
-    else
-      parent_state = @recipe.states.find(params[:dst_state_id])
-      annotation = state.to_annotation!(parent_state)
-      render json: {'$oid' => annotation.id}
-    end
+    state = @recipe.states.find(params[:state_id])
+    parent_state = @recipe.states.find(params[:dst_state_id])
+    annotation = state.to_annotation!(parent_state)
+    render json: {'$oid' => annotation.id}
   end
 
   private
@@ -63,8 +59,7 @@ class StatesController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find params[:project_id]
-      not_found if @project.blank?
+      @project = @owner.projects.friendly.find(params[:project_id])
     end
 
     def load_recipe
@@ -73,7 +68,6 @@ class StatesController < ApplicationController
 
     def load_state
       @state ||= @recipe.states.find(params[:id])
-      not_found if @state.blank?
     end
 
     def build_state

@@ -58,8 +58,7 @@ class GroupsController < ApplicationController
     end
 
     def build_group
-      @group = Group.new group_params
-      not_found if @group.blank?
+      @group = Group.new(group_params)
     end
 
     def load_group

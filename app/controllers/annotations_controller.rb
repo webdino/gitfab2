@@ -64,8 +64,7 @@ class AnnotationsController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find params[:project_id]
-      not_found if @project.blank?
+      @project = @owner.projects.friendly.find(params[:project_id])
     end
 
     def load_recipe
@@ -74,14 +73,12 @@ class AnnotationsController < ApplicationController
 
     def load_state
       if params['state_id']
-        @state = @recipe.states.find params['state_id']
-        not_found if @state.blank?
+        @state = @recipe.states.find(params['state_id'])
       end
     end
 
     def load_annotation
-      @annotation ||= @state.annotations.find params[:id]
-      not_found if @annotation.blank?
+      @annotation ||= @state.annotations.find(params[:id])
     end
 
     def build_annotation

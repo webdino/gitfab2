@@ -39,10 +39,6 @@ class ApplicationController < ActionController::Base
       session[:previous_url] = request.fullpath
     end
 
-    def not_found
-      raise ActionController::RoutingError.new('Not Found')
-    end
-
     def render_401(_exception = nil)
       render file: Rails.root.join('public/401.html'), status: 401, layout: false, content_type: 'text/html'
     end

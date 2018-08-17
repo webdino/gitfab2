@@ -10,7 +10,6 @@ class ProjectsController < ApplicationController
   def show
     @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
-    not_found if @project.blank?
     @recipe = @project.recipe
   end
 
@@ -114,8 +113,7 @@ class ProjectsController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find params[:id]
-      not_found if @project.blank?
+      @project = @owner.projects.friendly.find(params[:id])
     end
 
     def load_owner

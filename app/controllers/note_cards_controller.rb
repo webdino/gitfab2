@@ -62,13 +62,11 @@ class NoteCardsController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find params[:project_id]
-      not_found if @project.blank?
+      @project = @owner.projects.friendly.find(params[:project_id])
     end
 
     def load_note_card
       @note_card = @project.note_cards.find(params[:id])
-      not_found if @note_card.blank?
     end
 
     def build_note_card

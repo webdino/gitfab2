@@ -51,13 +51,11 @@ class UsagesController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find params[:project_id]
-      not_found if @project.blank?
+      @project = @owner.projects.friendly.find(params[:project_id])
     end
 
     def load_usage
-      @usage = @project.usages.find params[:id]
-      not_found if @usage.blank?
+      @usage = @project.usages.find(params[:id])
     end
 
     def build_usage
