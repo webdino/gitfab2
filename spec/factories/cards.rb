@@ -28,12 +28,12 @@
 
 FactoryBot.define do
   factory :card do
-    type Card.name
-    description 'description'
+    type { Card.name }
+    description { 'description' }
   end
 
   factory :note_card, class: Card::NoteCard, parent: :card do
-    type Card::NoteCard.name
+    type { Card::NoteCard.name }
     # title, descriptionはpresence: true
     sequence(:title) { |n| "NoteCard #{n}" }
     sequence(:description) { |n| "Description for NoteCard #{n}" }
@@ -41,19 +41,19 @@ FactoryBot.define do
   end
 
   factory :annotation, class: Card::Annotation, parent: :card do
-    type Card::Annotation.name
+    type { Card::Annotation.name }
     sequence(:title) { |n| "Annotation #{n}" }
     state
   end
 
   factory :state, class: Card::State, parent: :card do
-    type Card::State.name
+    type { Card::State.name }
     sequence(:title) { |n| "State #{n}" }
     recipe
   end
 
   factory :usage, class: Card::Usage, parent: :card do
-    type Card::Usage.name
+    type { Card::Usage.name }
     sequence(:title) { |n| "Usage #{n}" }
     association :project, factory: :user_project
   end

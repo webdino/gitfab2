@@ -22,7 +22,7 @@
 FactoryBot.define do
   factory :featured_item do
     feature
-    target_object_id nil
-    url nil
+    target_object_id { nil }
+    url { nil }
   end
 end

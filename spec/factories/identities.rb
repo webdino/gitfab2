@@ -27,10 +27,10 @@
 FactoryBot.define do
   factory :identity do
     user
-    provider "github"
-    uid "1234567"
-    email "example@example.com"
-    name "Tatsuya Itakura"
-    nickname "itkrt2y"
+    provider { "github" }
+    uid { "1234567" }
+    email { "example@example.com" }
+    name { "Tatsuya Itakura" }
+    nickname { "itkrt2y" }
   end
 end

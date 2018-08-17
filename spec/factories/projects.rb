@@ -35,18 +35,18 @@ FactoryBot.define do
     name { "project-#{SecureRandom.hex 10}" }
     title { SecureRandom.uuid }
     description { SecureRandom.uuid }
-    is_deleted false
+    is_deleted { false }
 
     trait :public do
-      is_private false
+      is_private { false }
     end
 
     trait :private do
-      is_private true
+      is_private { true }
     end
 
     trait :soft_destroyed do
-      is_deleted true
+      is_deleted { true }
     end
   end
 

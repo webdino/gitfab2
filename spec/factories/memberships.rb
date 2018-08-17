@@ -19,6 +19,6 @@ FactoryBot.define do
   factory :membership do
     user
     group
-    role 'admin'
+    role { 'admin' }
   end
 end

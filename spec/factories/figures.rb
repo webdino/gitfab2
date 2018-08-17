@@ -21,7 +21,7 @@
 FactoryBot.define do
   factory :figure do
     figurable factory: :project
-    link nil
+    link { nil }
 
     factory :link_figure do
       sequence(:link) { |n| "http://test.host/link/#{n}.png" }

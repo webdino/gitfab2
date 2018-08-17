@@ -30,6 +30,6 @@ FactoryBot.define do
   end
 
   factory :administrator, parent: :user do
-    authority 'admin'
+    authority { 'admin' }
   end
 end
