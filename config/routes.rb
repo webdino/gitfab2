@@ -67,7 +67,6 @@ Rails.application.routes.draw do
   resources :collaborations, only: :destroy
   resources :projects, only: [:new, :create]
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
-    resources :collaborators, only: :index
     resources :collaborations, only: :create
     resources :note_cards, except: [:create, :update]
     resource :recipe do
