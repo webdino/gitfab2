@@ -1,6 +1,0 @@
-#change-owner data-url="/users/#{project.owner.name}/projects/#{project.name}/potential_owners"
-  h1 Change Project Owner
-  - if can? :manage, project
-    = form_tag [@owner, @project], method: "patch", remote: true, id: "change_owner"
-      = select_tag :owner_name
-      = submit_tag "submit", class: "btn"

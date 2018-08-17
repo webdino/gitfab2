@@ -44,7 +44,6 @@ Rails.application.routes.draw do
       resources :note_cards, only: [:create, :update]
       resources :tags, only: [:create, :destroy]
       resources :usages, only: [:create, :update]
-      get 'potential_owners'
       get 'recipe_cards_list'
       get 'relation_tree'
     end

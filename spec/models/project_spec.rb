@@ -81,21 +81,6 @@ describe Project do
     end
   end
 
-  describe '#change_owner!(owner)' do
-    it 'returns true' do
-      expect(project.change_owner!(user1)).to be true
-    end
-
-    it 'changes to other user.' do
-      expect { project.change_owner!(user1) }.to change { project.owner }.to(user1)
-    end
-
-    it 'changes to other group.' do
-      group = FactoryBot.create(:group)
-      expect { project.change_owner!(group) }.to change { project.owner }.to(group)
-    end
-  end
-
   describe '#managers' do
     context 'ownerがUserのとき' do
       let(:project) { FactoryBot.create(:user_project) }
@@ -111,39 +96,6 @@ describe Project do
       end
       it 'Groupのメンバーであること' do
         expect(project.managers).to contain_exactly(user1, user2)
-      end
-    end
-  end
-
-  describe '#potential_owners' do
-    context 'ownerがUserのとき' do
-      let(:project) { FactoryBot.create(:user_project) }
-      let(:owner) { project.owner }
-      let(:group_a) { FactoryBot.create(:group) }
-      let(:group_b) { FactoryBot.create(:group) }
-      let(:collaborate_user) { FactoryBot.create(:user) }
-      before do
-        owner.memberships.create(group_id: group_a.id, role: 'admin')
-        owner.memberships.create(group_id: group_b.id, role: 'editor')
-        collaborate_user.collaborate!(project)
-      end
-      it '所属グループ + collaborators' do
-        expect(project.potential_owners).to contain_exactly(group_a, group_b, collaborate_user)
-      end
-    end
-    context 'ownerがGroupのとき' do
-      let(:project) { FactoryBot.create(:group_project) }
-      let(:owner) { project.owner }
-      let(:group_user_a) { FactoryBot.create(:user) }
-      let(:group_user_b) { FactoryBot.create(:user) }
-      let(:collaborate_user) { FactoryBot.create(:user) }
-      before do
-        group_user_a.memberships.create(group_id: owner.id, role: 'admin')
-        group_user_b.memberships.create(group_id: owner.id, role: 'editor')
-        collaborate_user.collaborate!(project)
-      end
-      it 'グループのメンバー + collaborators' do
-        expect(project.potential_owners).to contain_exactly(group_user_a, group_user_b, collaborate_user)
       end
     end
   end

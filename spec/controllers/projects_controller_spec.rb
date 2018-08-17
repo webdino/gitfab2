@@ -85,18 +85,7 @@ describe ProjectsController, type: :controller do
           it { is_expected.to render_template :new }
         end
       end
-      describe 'GET potential_owners' do
-        before do
-          user_project.owner.memberships.create group_id: group_project.owner.id
-          sign_in user_project.owner
-          if owner_type == 'user'
-            get :potential_owners, params: { user_id: project.owner.slug, project_id: project.slug }, xhr: true
-          else
-            get :potential_owners, params: { group_id: project.owner.slug, project_id: project.slug }, xhr: true
-          end
-        end
-        it { is_expected.to render_template 'potential_owners' }
-      end
+
       describe 'GET recipe_cards_list' do
         before do
           user_project.owner.memberships.create group_id: group_project.owner
@@ -111,80 +100,23 @@ describe ProjectsController, type: :controller do
       end
 
       describe 'PATCH update' do
-        subject { patch :update, params: params, xhr: xhr }
-        let(:xhr) { false }
+        subject { patch :update, params: params }
 
-        context 'transfering project ownership by #change_owner' do
-          let(:params) { { owner_name: project.owner, id: project, new_owner_name: owner } }
+        let(:params) { { owner_name: project.owner, id: project.id, project: project_params } }
 
-          before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
-            sign_in user_project.owner
-          end
-
-          context 'to user' do
-            let(:owner) do
-              FactoryBot.create(:user) do |user|
-                user.collaborations.create(project_id: project.id)
-              end
-            end
-            it { is_expected.to redirect_to owner_path(owner_name: owner.slug) }
-            it 'has 0 collaborations' do
-              subject
-              expect(owner.collaborations.size).to eq 0
-            end
-            specify 'group is no longer a collaborator' do
-              subject
-              expect(owner.is_collaborator_of?(project)).to eq false
-            end
-          end
-
-          context 'to group' do
-            let!(:owner) do
-              FactoryBot.create(:group) do |group|
-                group.collaborations.create(project_id: project.id)
-              end
-            end
-            it { is_expected.to redirect_to owner_path(owner_name: owner) }
-            it 'has 0 collaborations' do
-              subject
-              expect(owner.collaborations.size).to eq 0
-            end
-            specify 'group is no longer a collaborator' do
-              subject
-              expect(owner.is_collaborator_of?(project)).to eq false
-            end
-          end
-
-          context 'raising error by an unexisted user' do
-            let(:params) { { owner_name: project.owner, id: project, new_owner_name: 'unexisted_user_slug' } }
-            let(:xhr) { true }
-
-            it do
-              aggregate_failures do
-                is_expected.to have_http_status(400)
-                expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
-              end
-            end
-          end
+        before do
+          user_project.owner.memberships.create group_id: group_project.owner.id
+          sign_in user_project.owner
         end
 
-        context 'for normal update' do
-          let(:params) { { owner_name: project.owner, id: project.id, project: project_params } }
+        context 'success' do
+          let(:project_params) { { description: '_proj' } }
+          it { is_expected.to redirect_to project_path(owner_name: project.owner, id: project) }
+        end
 
-          before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
-            sign_in user_project.owner
-          end
-
-          context 'success' do
-            let(:project_params) { { description: '_proj' } }
-            it { is_expected.to redirect_to project_path(owner_name: project.owner, id: project) }
-          end
-          context 'raising error by invalid title' do
-            let(:project_params) { { title: '' } }
-            it { is_expected.to render_template :edit }
-          end
+        context 'raising error by invalid title' do
+          let(:project_params) { { title: '' } }
+          it { is_expected.to render_template :edit }
         end
       end
     end

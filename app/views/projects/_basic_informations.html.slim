@@ -130,9 +130,3 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
         - url = "https://fabble.cc" + project_path(@owner, @project)
         = link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
         = link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
-
-  #pointer
-
-
-      / = link_to "Change project owner", "#change-owner", class: "btn change-owner-btn"
-      / = render "projects/change_owner", project: @project

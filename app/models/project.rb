@@ -100,18 +100,6 @@ class Project < ApplicationRecord
     end
   end
 
-  def change_owner!(owner)
-    self.owner = owner
-    self.save!
-    #   if project.collaborators.include?(new_owner)
-    #     old_collaboration = new_owner.collaboration_in project
-    #     old_collaboration.destroy
-    #   end
-    # else
-    #   return false
-    # end
-  end
-
   def managers
     users = []
     if owner.is_a? User
@@ -132,25 +120,6 @@ class Project < ApplicationRecord
       end
     end
     users
-  end
-
-  # TODO: This function should have less than 10 line.
-  def potential_owners
-    owner_list = []
-    owner = self.owner
-    if owner.instance_of?(User)
-      owner.memberships.each do |membership|
-        owner_list.push membership.group
-      end
-    else
-      owner.members.each do |member|
-        owner_list.push member
-      end
-    end
-    collaborators.each do |collaborator|
-      owner_list.push collaborator
-    end
-    owner_list
   end
 
   def root project
