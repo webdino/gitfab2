@@ -3,7 +3,7 @@ class Ability
 
   # TODO: This initialize function is too long to read,
   #   so it should be divided to multiple fucntions.
-  def initialize(user, params)
+  def initialize(user)
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Membership do |membership|

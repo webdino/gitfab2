@@ -28,10 +28,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-    def current_ability
-      @current_ability ||= Ability.new(current_user, params)
-    end
-
     def store_location
       return unless request.get?
       return if request.xhr?
