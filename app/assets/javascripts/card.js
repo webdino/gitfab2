@@ -492,7 +492,7 @@ $(function() {
   const fixCommentFormAction = function(li) {
     const card = li.find(".card");
     const card_id = card.attr("id");
-    const comment_form = card.find("#new_comment");
+    const comment_form = card.find(".comment-form");
     const comment_form_action = comment_form.attr("action");
     const new_comment_form_action = comment_form_action.replace(/\/states\/.+\/comments/, `/states/${card_id}/comments`);
     comment_form.attr("action", new_comment_form_action);
