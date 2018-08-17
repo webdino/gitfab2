@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   concern :card_features_for_form do
     resources :annotations, only: [:create, :update], concerns: :comments
-    resources :derivative_cards, only: [:create, :update]
   end
 
   concern :card_features_for_link do
@@ -36,7 +35,6 @@ Rails.application.routes.draw do
     resources :annotations do
       get 'to_state'
     end
-    resources :derivative_cards, except: [:create, :update]
   end
 
   concern :comments do
