@@ -37,6 +37,10 @@ class Card::Annotation < Card
     end
   end
 
+  def project
+    state.project
+  end
+
   def to_state!(recipe)
     update!(
       type: Card::State.name,

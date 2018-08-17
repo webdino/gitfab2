@@ -45,6 +45,10 @@ class Card::State < Card
     end
   end
 
+  def project
+    recipe.project
+  end
+
   def to_annotation!(parent_state)
     update!(type: Card::Annotation.name, state_id: parent_state.id)
     Card::Annotation.find(id)

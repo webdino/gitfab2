@@ -65,9 +65,6 @@ class Ability
     can :manage, Collaboration do |collabo|
       can? :manage, collabo.project
     end
-    can :create, CardComment do
-      user.persisted?
-    end
     can :destroy, CardComment do |comment|
       comment.user_id == user.id || (can? :manage, comment.card)
     end

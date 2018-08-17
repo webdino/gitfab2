@@ -1,65 +1,63 @@
 # frozen_string_literal: true
 
 describe CardCommentsController, type: :controller do
-  render_views
+  describe 'POST #create' do
+    subject { post :create, params: { card_id: card.id, body: body }, xhr: true }
 
-  let(:user1) { FactoryBot.create :user }
-  let(:project) { FactoryBot.create :user_project }
+    let(:card) { FactoryBot.create(:note_card) }
+    let(:user) { FactoryBot.create(:user) }
+    before { sign_in(user) }
 
-  subject { response }
-
-  describe 'POST create' do
     context 'with valid parameters' do
-      before do
-        note_card = FactoryBot.create(:note_card, project: project)
+      let(:body) { 'valid' }
 
-        sign_in user1
-        post :create,
-          params: {
-            user_id: project.owner.to_param, project_id: project.id,
-            note_card_id: note_card.id, card_comment: { body: 'foo' }
-          },
-          xhr: true
+      it 'renders create with ok(200)' do
+        is_expected.to have_http_status(:ok)
+                  .and render_template :create
       end
-      it 'should render create with ok(200)' do
-        aggregate_failures do
-          is_expected.to have_http_status(:ok)
-          is_expected.to render_template :create
-        end
-      end
+      it { expect{ subject }.to change{ CardComment.count }.by(1) }
     end
 
     context 'with invalid parameters' do
-      before do
-        note_card = FactoryBot.create(:note_card, project: project)
+      let(:body) { '' }
 
-        sign_in user1
-        post :create,
-          params: {
-            user_id: project.owner.to_param, project_id: project.id,
-            note_card_id: note_card.id, card_comment: { body: '' }
-          },
-          xhr: true
-      end
       it do
-        aggregate_failures do
-          is_expected.to have_http_status(400)
-          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false, message: { body: ["can't be blank"] } })
-        end
+        is_expected.to have_http_status(400)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: false, message: { body: ["can't be blank"] } })
       end
+      it { expect{ subject }.not_to change{ CardComment.count } }
     end
   end
 
-  describe 'DELETE destroy' do
-    let(:note_card) { FactoryBot.create(:note_card, project: project) }
-    let(:comment) { FactoryBot.create(:card_comment, user: user1, card: note_card) }
-    before do
-      sign_in project.owner
-      delete :destroy,
-        params: { user_id: project.owner.to_param, project_id: project.id, note_card_id: note_card.id, id: comment.id },
-        xhr: true
+  describe 'DELETE #destroy' do
+    subject { delete :destroy, params: { id: comment.id }, xhr: true }
+
+    let!(:comment) { FactoryBot.create(:card_comment, user: user) }
+    let(:user) { FactoryBot.create(:user) }
+
+    before { sign_in(current_user) }
+
+    context 'user can delete a comment' do
+      let(:current_user) { user }
+
+      it do
+        is_expected.to have_http_status(:ok)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: true })
+      end
+      it { expect{ subject }.to change{ CardComment.count }.by(-1) }
     end
-    it { expect(note_card.comments.size).to eq 0 }
-    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true  }) }
+
+    context 'user cannot delete a comment' do
+      let(:current_user) { FactoryBot.create(:user) }
+
+      it do
+        is_expected.to have_http_status(400)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: false })
+      end
+      it { expect{ subject }.not_to change{ CardComment.count } }
+    end
   end
 end

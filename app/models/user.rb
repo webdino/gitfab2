@@ -34,6 +34,7 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
+  has_many :card_comments
   has_many :identities, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :memberships, dependent: :destroy

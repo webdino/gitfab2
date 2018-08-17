@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 shared_examples 'Card' do |*factory_args|
+  let(:card) { FactoryBot.create(*factory_args) }
+
   it_behaves_like 'Figurable', *factory_args
 
   describe '#dup_document' do
-    let(:card) { FactoryBot.create(*factory_args) }
-
     it do
       expect(card).to be_respond_to(:dup_document)
     end
@@ -37,5 +37,9 @@ shared_examples 'Card' do |*factory_args|
       expect(dupped_card.attachments).to_not eq(card.attachments)
       expect(dupped_card.attachments.size).to eq(card.attachments.size)
     end
+  end
+
+  describe '#project' do
+    it { expect(card.project).to be_kind_of(Project) }
   end
 end

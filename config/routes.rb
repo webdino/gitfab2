@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   match 'search' => 'global_projects#index', via: :get
 
   concern :card_features_for_form do
-    resources :annotations, only: [:create, :update], concerns: :comments
+    resources :annotations, only: [:create, :update]
   end
 
   concern :card_features_for_link do
@@ -37,9 +37,10 @@ Rails.application.routes.draw do
     end
   end
 
-  concern :comments do
-    resources :card_comments, only: [:create, :destroy]
+  resources :cards, only: [] do
+    resources :card_comments, only: :create
   end
+  resources :card_comments, only: :destroy
 
   resources :owners, only: [:index]
   resource :owners, path: '/:owner_name', as: :owner, only: :show
@@ -48,9 +49,9 @@ Rails.application.routes.draw do
     resources :projects, only: [] do
       resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
-        resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
+        resources :states, only: [:create, :update], concerns: :card_features_for_form
       end
-      resources :note_cards, only: [:create, :update], concerns: :comments
+      resources :note_cards, only: [:create, :update]
       resources :tags, only: [:create, :destroy]
       resources :usages, only: [:create, :update]
       get 'potential_owners'
