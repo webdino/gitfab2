@@ -8,8 +8,6 @@ linters:
     max: 160
     exclude:
       - 'app/views/annotations/_annotation.html.slim'
-      - 'app/views/collaborations/_collaboration.html.slim'
-      - 'app/views/collaborators/_add_collaborator.html.slim'
       - 'app/views/components/_card.html.slim'
       - 'app/views/components/_card_attachments.html.slim'
       - 'app/views/components/_card_contributors.html.slim'

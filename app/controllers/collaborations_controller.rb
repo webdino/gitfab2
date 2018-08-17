@@ -1,44 +1,44 @@
 class CollaborationsController < ApplicationController
-  before_action :load_owner
-  before_action :load_collaboration, only: :destroy
-  before_action :build_collaboration, only: :create
-
-  authorize_resource
-
-  def index
-  end
-
   def create
+    collaborator = Owner.find_by(params[:collaborator_name])
+    unless collaborator
+      render json: { success: false }, status: 400
+      return
+    end
+
+    project = Owner.find(params[:owner_name]).projects.friendly.find(params[:project_id])
+    @collaboration = collaborator.collaborations.build(project: project)
     if @collaboration.save
+      notify_users(project, collaborator)
       render :create
     else
-      render json: { success: false }
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
-    @collaboration.destroy
-    render json: { success: true, id: @collaboration.id }
+    collaboration = Collaboration.find(params[:id])
+    if can?(:destroy, collaboration) && collaboration.destroy
+      render json: { success: true, id: collaboration.id }
+    else
+      render json: { success: false }, status: :bad_request
+    end
   end
 
   private
 
     def collaboration_params
-      if params[:collaboration].present?
-        params.require(:collaboration).permit [:project_id]
-      end
+      params.require(:collaboration).permit(:project_id)
     end
 
-    def build_collaboration
-      @collaboration = @owner.collaborations.build collaboration_params
-    end
+    def notify_users(project, collaborator)
+      users = project.notifiable_users(current_user)
+      return if users.blank?
 
-    def load_collaboration
-      @collaboration = @owner.collaborations.find params[:id]
-    end
-
-    def load_owner
-      owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-      @owner = Owner.find(owner_id)
+      project.notify(
+        users, current_user,
+        project_path(project.owner, project),
+        "#{collaborator.name} was added as a collaborator of #{project.title}."
+      )
     end
 end

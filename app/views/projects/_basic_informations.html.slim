@@ -65,7 +65,7 @@ section#basic-informations
       - if can? :manage, @project
         = link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
     .hidden
-      = render "collaborators/list"
+      = render "collaborations/list"
 
     section.license
       ruby:

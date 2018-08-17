@@ -36,7 +36,6 @@ Rails.application.routes.draw do
 
   concern :owner do
     resources :projects, only: [] do
-      resources :collaborators, only: [:create, :update]
       resource :recipe, only: :update do
         resources :states, only: [:create, :update] do
           resources :annotations, only: [:create, :update]
@@ -52,7 +51,6 @@ Rails.application.routes.draw do
   end
 
   resources :users, except: :show, concerns: :owner do
-    resources :collaborations
     resources :memberships, only: [:index, :destroy]
     resources :notifications do
       get 'mark_all_as_read', on: :collection
@@ -61,15 +59,16 @@ Rails.application.routes.draw do
   end
 
   resources :groups, concerns: :owner do
-    resources :collaborations
     resources :members
   end
 
   resources :global_projects, only: :index
 
+  resources :collaborations, only: :destroy
   resources :projects, only: [:new, :create]
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
-    resources :collaborators, except: [:create, :update]
+    resources :collaborators, only: :index
+    resources :collaborations, only: :create
     resources :note_cards, except: [:create, :update]
     resource :recipe do
       resources :states, except: [:create, :update] do
