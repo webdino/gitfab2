@@ -2,4 +2,4 @@
   ul.project-list
     - @owner.projects.noted.order(updated_at: :desc).each do |project|
       - if can? :read, project
-        = render "projects/project", project: project, is_note: true
+        = render "project", project: project, is_note: true
