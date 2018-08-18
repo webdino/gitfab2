@@ -36,14 +36,8 @@ Rails.application.routes.draw do
 
   concern :owner do
     resources :projects, only: [] do
-      resource :recipe, only: :update do
-        resources :states, only: [:create, :update] do
-          resources :annotations, only: [:create, :update]
-        end
-      end
-      resources :note_cards, only: [:create, :update]
+      resource :recipe, only: :update
       resources :tags, only: [:create, :destroy]
-      resources :usages, only: [:create, :update]
     end
   end
 
@@ -65,18 +59,16 @@ Rails.application.routes.draw do
   resources :projects, only: [:new, :create]
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
-    resources :note_cards, except: [:create, :update]
+    resources :note_cards
     resource :recipe do
-      resources :states, except: [:create, :update] do
-        resources :annotations, except: [:create, :update] do
+      resources :states do
+        resources :annotations do
           get 'to_state'
         end
-      end
-      resources :states do
         get 'to_annotation'
       end
     end
-    resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
+    resources :usages
     post :fork
     get 'recipe_cards_list'
     get 'relation_tree'

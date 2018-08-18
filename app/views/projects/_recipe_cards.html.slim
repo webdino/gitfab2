@@ -28,9 +28,9 @@ section#recipe-cards
       .inner
         h2 Making
     ul#recipe-card-list.card-list
-      - @recipe.states.includes(:annotations, :attachments, :comments, :contributions, :figures).ordered_by_position.each do |card|
-        li class="card-wrapper #{card.htmlclass}-wrapper"
-          = render "states/state", card: card, owner: @owner, project: @project
+      - @recipe.states.includes(:annotations, :attachments, :comments, :contributions, :figures).ordered_by_position.each do |state|
+        li class="card-wrapper #{state.htmlclass}-wrapper"
+          = render "states/state", state: state, owner: @owner, project: @project
 
     .article-column.sp
       - if can? :edit, @project

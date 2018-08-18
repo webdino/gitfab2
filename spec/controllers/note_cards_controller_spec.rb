@@ -23,7 +23,7 @@ describe NoteCardsController, type: :controller do
   describe 'POST create' do
     context 'without attachments' do
       before do
-        post :create, params: { user_id: user, project_id: project, note_card: new_note_card.attributes }, xhr: true
+        post :create, params: { owner_name: user, project_id: project, note_card: new_note_card.attributes }, xhr: true
         project.reload
       end
       it { is_expected.to render_template :create }
@@ -34,7 +34,7 @@ describe NoteCardsController, type: :controller do
     context 'with attachments' do
       before do
         post :create, params: {
-          user_id: user, project_id: project,
+          owner_name: user, project_id: project,
           note_card: new_note_card.attributes.merge(
             attachments_attributes: [FactoryBot.attributes_for(:attachment_material)]
           )
@@ -54,7 +54,7 @@ describe NoteCardsController, type: :controller do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
         post :create,
-          params: { user_id: user, project_id: project, note_card: { title: '', description: '' } },
+          params: { owner_name: user, project_id: project, note_card: { title: '', description: '' } },
           xhr: true
       end
       it do
@@ -74,7 +74,7 @@ describe NoteCardsController, type: :controller do
       context 'with a title only' do
         before do
           patch :update,
-            params: { user_id: user, project_id: project, id: note_card.id, note_card: { title: title_to_change } },
+            params: { owner_name: user, project_id: project, id: note_card.id, note_card: { title: title_to_change } },
             xhr: true
           note_card.reload
         end
@@ -85,7 +85,7 @@ describe NoteCardsController, type: :controller do
         before do
           patch :update,
             params: {
-              user_id: user, project_id: project, id: note_card.id,
+              owner_name: user, project_id: project, id: note_card.id,
               note_card: { title: title_to_change, description: description_to_change }
             },
             xhr: true
@@ -107,7 +107,7 @@ describe NoteCardsController, type: :controller do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
         patch :update,
-          params: { user_id: user, project_id: project, id: note_card.id, note_card: { title: '', description: '' } },
+          params: { owner_name: user, project_id: project, id: note_card.id, note_card: { title: '', description: '' } },
           xhr: true
       end
       it do

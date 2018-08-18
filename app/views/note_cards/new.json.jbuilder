@@ -1,2 +1,1 @@
-json.html (render 'components/card_form',
-                  resources: [@owner, @project, @note_card])
+json.html (render 'components/card_form', model: @note_card, url: project_note_cards_path(@owner, @project))

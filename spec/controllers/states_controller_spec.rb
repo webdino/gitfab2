@@ -12,14 +12,14 @@ describe StatesController, type: :controller do
   describe 'GET new' do
     before do
       sign_in project.owner
-      get :new, params: { owner_name: project.owner.name, project_id: project.name }, xhr: true
+      get :new, params: { owner_name: project.owner, project_id: project.name }, xhr: true
     end
     it { is_expected.to render_template :_card_form }
   end
 
   describe 'GET show' do
     before do
-      get :show, params: { owner_name: project.owner.slug, project_id: project.name, id: state.id }, xhr: true
+      get :show, params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
     end
     it { is_expected.to render_template :show, formats: :json }
   end
@@ -38,7 +38,7 @@ describe StatesController, type: :controller do
         sign_in project.owner
         post :create,
           params: {
-            user_id: project.owner, project_id: project,
+            owner_name: project.owner, project_id: project,
             state: { type: Card::State.name, title: 'foo', description: 'bar' }
           },
           xhr: true
@@ -54,7 +54,7 @@ describe StatesController, type: :controller do
         sign_in project.owner
         post :create,
           params: {
-            user_id: project.owner, project_id: project,
+            owner_name: project.owner, project_id: project,
             state: { type: '', title: 'foo', description: 'bar' }
           },
           xhr: true
@@ -71,7 +71,7 @@ describe StatesController, type: :controller do
         sign_in project.owner
         patch :update,
           params: {
-            user_id: project.owner, project_id: project.id, id: state.id,
+            owner_name: project.owner, project_id: project.id, id: state.id,
             state: { title: 'new_title', description: 'new_desc' }
           },
           xhr: true
@@ -88,7 +88,7 @@ describe StatesController, type: :controller do
         sign_in project.owner
         patch :update,
           params: {
-            user_id: project.owner, project_id: project.id, id: state.id,
+            owner_name: project.owner, project_id: project.id, id: state.id,
             state: { type: '', title: 'foo', description: 'bar' }
           },
           xhr: true

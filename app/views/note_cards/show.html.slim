@@ -43,7 +43,7 @@ main#note-cards-show
                     datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
 
                   - if author.present?
-                    = "posted by #{link} on #{datetime}"
+                    == "posted by #{link} on #{datetime}"
                   - else
                     = "posted on #{datetime}"
 

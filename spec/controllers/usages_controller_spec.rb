@@ -30,7 +30,7 @@ describe UsagesController, type: :controller do
     before do
       sign_in owner
       project.usages.destroy_all
-      post :create, params: { user_id: owner.to_param, project_id: project.name, usage: { title: 'title' } }, xhr: true
+      post :create, params: { owner_name: owner, project_id: project.name, usage: { title: 'title' } }, xhr: true
       project.reload
     end
     it { is_expected.to render_template :create }
@@ -44,7 +44,7 @@ describe UsagesController, type: :controller do
       sign_in owner
       usage = FactoryBot.create(:usage, project: project, title: 'foo', description: 'bar')
       patch :update,
-        params: { user_id: owner.to_param, project_id: project, id: usage.id, usage: { title: 'title' } },
+        params: { owner_name: owner, project_id: project, id: usage.id, usage: { title: 'title' } },
         xhr: true
     end
     it { is_expected.to render_template :update }

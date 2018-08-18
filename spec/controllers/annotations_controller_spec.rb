@@ -47,7 +47,7 @@ describe AnnotationsController, type: :controller do
         sign_in user
         state = project.recipe.states.create type: Card::State.name, description: 'foo'
         post :create,
-          params: { user_id: user, project_id: project, state_id: state.id, annotation: { description: 'ann' } },
+          params: { owner_name: user, project_id: project, state_id: state.id, annotation: { description: 'ann' } },
           xhr: true
       end
       it { is_expected.to render_template :create }
@@ -62,7 +62,7 @@ describe AnnotationsController, type: :controller do
         annotation = state.annotations.create description: 'ann'
         patch :update,
           params: {
-            user_id: user, project_id: project, state_id: state.id,
+            owner_name: user, project_id: project, state_id: state.id,
             id: annotation.id, annotation: { description: '_ann' }
           },
           xhr: true
@@ -76,7 +76,7 @@ describe AnnotationsController, type: :controller do
         annotation = state.annotations.create description: 'ann'
         patch :update,
           params: {
-            user_id: user, project_id: project, state_id: state.id,
+            owner_name: user, project_id: project, state_id: state.id,
             id: annotation.id, annotation: { type: nil, description: '_ann' }
           },
           xhr: true

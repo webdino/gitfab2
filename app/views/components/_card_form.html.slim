@@ -1,4 +1,4 @@
-= nested_form_for resources, html: {class: "card-form", "data-type" => "json"}, remote: true do |f|
+= nested_form_for model, url: url , html: {class: "card-form", "data-type" => "json"}, remote: true do |f|
   #inner_content class="#{f.object.id}"
     = f.hidden_field :type
     = f.text_field :title, class: "validate card-title", placeholder: "Title", maxlength: "60", autofocus: true
