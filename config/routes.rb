@@ -60,16 +60,16 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
     resources :note_cards
-    resource :recipe do
-      resources :states do
-        resources :annotations do
+    resource :recipe, only: [] do
+      resources :states, except: :index do
+        resources :annotations, except: :index do
           get 'to_state'
         end
         get 'to_annotation'
       end
     end
     resources :tags, only: :create
-    resources :usages
+    resources :usages, only: [:new, :create, :edit, :update, :destroy]
     post :fork
     get 'recipe_cards_list'
     get 'relation_tree'
