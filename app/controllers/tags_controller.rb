@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   def create
-    project = Owner.find(params[:owner_name]).projects.friendly.find(params[:project_id])
+    project = Project.find_with(params[:owner_name], params[:project_id])
     @tag = project.tags.build(tag_params)
     if can?(:create, @tag) && @tag.save
       project.update_draft!

@@ -6,7 +6,7 @@ class CollaborationsController < ApplicationController
       return
     end
 
-    project = Owner.find(params[:owner_name]).projects.friendly.find(params[:project_id])
+    project = Project.find_with(params[:owner_name], params[:project_id])
     @collaboration = collaborator.collaborations.build(project: project)
     if @collaboration.save
       notify_users(project, collaborator)

@@ -37,6 +37,15 @@ describe Project do
     it { expect(Project.search_draft('先生 　その')).to match_array [project1, project3] }
   end
 
+  describe '.find_with' do
+    let!(:project) { FactoryBot.create(:project, name: 'my-project', owner: owner) }
+    let!(:owner) { FactoryBot.create(:user, name: 'itkrt2y') }
+
+    it { expect(Project.find_with(owner.slug, project.slug)).to eq project }
+    it { expect{ Project.find_with('wrong', project.slug) }.to raise_error(ActiveRecord::RecordNotFound) }
+    it { expect{ Project.find_with(owner.slug, 'wrong') }.to raise_error(ActiveRecord::RecordNotFound) }
+  end
+
   describe '#collaborators' do
     before do
       user1.collaborations.create project: project
