@@ -90,11 +90,7 @@ describe ProjectsController, type: :controller do
         before do
           user_project.owner.memberships.create group_id: group_project.owner
           sign_in user_project.owner
-          if owner_type == 'user'
-            get :recipe_cards_list, params: { user_id: project.owner, project_id: project }, xhr: true
-          else
-            get :recipe_cards_list, params: { group_id: project.owner, project_id: project }, xhr: true
-          end
+          get :recipe_cards_list, params: { owner_name: project.owner, project_id: project }, xhr: true
         end
         it { is_expected.to render_template 'recipe_cards_list' }
       end

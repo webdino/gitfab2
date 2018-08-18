@@ -9,3 +9,14 @@
  *= require ./card
  *= require select2
  */
+
+/* ref: https://www.itsupportguides.com/knowledge-base/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ */
+:target:before {
+  content: "";
+  display: block;
+  height: 30px;
+  margin: -30px 0 0;
+}
+.anchor {
+  outline: none;
+}

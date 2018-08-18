@@ -115,7 +115,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
   - unless @project.is_private
     = link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
   - if @recipe.present?
-    = render "projects/recipe_cards_list"
+    = render partial: "recipe_cards_list", locals: { recipe: @recipe, owner: @owner, project: @project }
 
   .hidden
     #fork-destinations

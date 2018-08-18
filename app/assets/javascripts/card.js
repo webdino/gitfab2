@@ -77,10 +77,9 @@ $(function() {
     if ($("#recipes-show").length < 1) { return; }
     const owner_id = $("#recipes-show").data("owner");
     const project_id = $("#recipes-show").data("project");
-    const recipe_cards_index_url = `/users/${owner_id}/projects/${project_id}/recipe_cards_list`;
     $.ajax({
       type: "GET",
-      url: recipe_cards_index_url,
+      url: `/${owner_id}/${project_id}/recipe_cards_list`,
       dataType: "json",
       success(data) {
         $("#recipe-cards-list").replaceWith(data.html);
