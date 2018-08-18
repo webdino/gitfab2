@@ -53,12 +53,6 @@ class Ability
         !project.is_private ? true : is_project_editor?(project, user)
       end
     end
-    can :update, Recipe do |recipe|
-      user.is_member_of? recipe.owner if recipe.owner_type == Group.name
-    end
-    can :read, Recipe do |recipe|
-      can? :read, recipe.project
-    end
     can :manage, Attachment do |pa|
       can? :update, pa.recipe
     end

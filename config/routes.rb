@@ -34,13 +34,7 @@ Rails.application.routes.draw do
   resources :owners, only: [:index]
   resource :owners, path: '/:owner_name', as: :owner, only: :show
 
-  concern :owner do
-    resources :projects, only: [] do
-      resource :recipe, only: :update
-    end
-  end
-
-  resources :users, except: :show, concerns: :owner do
+  resources :users, except: :show do
     resources :memberships, only: [:index, :destroy]
     resources :notifications do
       get 'mark_all_as_read', on: :collection
@@ -48,7 +42,7 @@ Rails.application.routes.draw do
     patch :update_password
   end
 
-  resources :groups, concerns: :owner do
+  resources :groups do
     resources :members
   end
 
@@ -60,7 +54,7 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
     resources :note_cards
-    resource :recipe, only: [] do
+    resource :recipe, only: :update do
       resources :states, except: :index do
         resources :annotations, except: :index do
           get 'to_state'
