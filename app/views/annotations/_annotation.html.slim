@@ -29,4 +29,4 @@ article class="card annotation" data-position="#{annotation.position}" id="#{ann
       = render "components/card_figures", card: annotation
       = render "components/card_attachments", card: annotation
     .footer
-      = render "components/card_comments", card: annotation, resources: [@owner, @project, :recipe, parent, annotation]
+      = render "components/card_comments", card: annotation

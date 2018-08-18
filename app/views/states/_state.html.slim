@@ -29,7 +29,7 @@ article class="card state" data-position="#{state.position}" id="#{state.id}"
         = render "components/card_attachments", card: state
 
       .footer
-        = render "components/card_comments", card: state, resources: [@owner, @project, :recipe, state]
+        = render "components/card_comments", card: state
 
     ul.annotation-list
       - state.annotations.includes(:attachments, :comments, :contributions, :figures).ordered_by_position.each do |annotation|
