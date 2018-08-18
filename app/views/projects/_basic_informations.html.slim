@@ -29,9 +29,9 @@ section#basic-informations
             = "Tags:"
           ul.tags
             - @project.tags.each do |tag|
-              = render "tags/tag", tag: tag, resources: [@owner, @project, tag]
+              = render "tags/tag", tag: tag
           - if current_user
-            = form_for [@owner, @project, Tag.new], html: {id: "tag-form"}, remote: true do |f|
+            = form_with(scope: :tag, url: project_tags_path(@owner, @project), html: {id: "tag-form"}) do |f|
               = f.text_field :name, class: "textfield"
               = f.submit "Add", class: "btn"
             = link_to "Add Tag", "#", class: "btn", id: "show-tag-form"

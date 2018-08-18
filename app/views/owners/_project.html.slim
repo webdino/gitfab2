@@ -47,7 +47,6 @@ li.project
         = "#{project.description}"
 
     .horizontal-border.basic-color.m-b-5
-    = render "projects/tags", project: project
 
   .image-container
     - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)

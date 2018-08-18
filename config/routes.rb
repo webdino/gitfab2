@@ -37,7 +37,6 @@ Rails.application.routes.draw do
   concern :owner do
     resources :projects, only: [] do
       resource :recipe, only: :update
-      resources :tags, only: [:create, :destroy]
     end
   end
 
@@ -57,6 +56,7 @@ Rails.application.routes.draw do
 
   resources :collaborations, only: :destroy
   resources :projects, only: [:new, :create]
+  resources :tags, only: :destroy
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
     resources :note_cards
@@ -68,6 +68,7 @@ Rails.application.routes.draw do
         get 'to_annotation'
       end
     end
+    resources :tags, only: :create
     resources :usages
     post :fork
     get 'recipe_cards_list'

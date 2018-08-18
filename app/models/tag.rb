@@ -29,10 +29,4 @@ class Tag < ApplicationRecord
       name.to_s
     end
   end
-
-  class << self
-    def updatable_columns
-      [:_destroy, :name, :user_id]
-    end
-  end
 end
