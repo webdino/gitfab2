@@ -14,13 +14,5 @@
     = link_to link_text, "#project-relation-tree", class: "link show-project-relation-tree-link"
 
 .hidden
-
-  - if @project.owner_type == "User"
-    - url = root_url.chop + user_project_relation_tree_path(@project.owner, @project) + ".json"
-    - url = url.gsub "http://", "//"
-  - else
-    - url = root_url.chop + group_project_relation_tree_path(@project.owner, @project) + ".json"
-    - url = url.gsub "http://", "//"
-
-  #project-relation-tree data-url="#{url}"
+  #project-relation-tree data-url="#{project_relation_tree_path(@project.owner, @project)}.json"
     h1.title Project Relation Tree

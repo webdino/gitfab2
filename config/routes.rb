@@ -44,7 +44,6 @@ Rails.application.routes.draw do
       resources :note_cards, only: [:create, :update]
       resources :tags, only: [:create, :destroy]
       resources :usages, only: [:create, :update]
-      get 'relation_tree'
     end
   end
 
@@ -80,5 +79,6 @@ Rails.application.routes.draw do
     resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
     post :fork
     get 'recipe_cards_list'
+    get 'relation_tree'
   end
 end

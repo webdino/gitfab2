@@ -151,6 +151,7 @@ $(document).on("click", ".show-project-relation-tree-link", function(event) {
 });
 
 window.showLink = function(d) {
+  debugger;
   if ((d.url === "http://fabble.cc") || (d.url === "https://fabble.cc")) {
     alert("You cannot see this project.");
   } else {
