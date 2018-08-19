@@ -1,5 +1,5 @@
 $(function() {
-  $(document).on("ajax:success", ".delete-comment", function(xhr, data) {
+  $(document).on("ajax:success", ".delete-comment", function() {
     const link = $(this);
     const li = link.closest("li");
     const comments = li.closest("ul");
@@ -8,16 +8,16 @@ $(function() {
     countDownComment(comments);
   });
 
-  $(document).on("ajax:success", ".comment-form", function(xhr, data) {
+  $(document).on("ajax:success", ".comment-form", function(event) {
     const form = $(this);
     const comments = form.siblings(".comments");
-    comments.append(data.html);
+    comments.append(event.detail[0].html);
     form.find("#comment_body").val("");
     countUpComment(comments);
   });
 
-  $(document).on("ajax:error", ".comment-form, .delete-comment", function(event, xhr, status, error) {
-    const { message } = JSON.parse(xhr.responseText);
+  $(document).on("ajax:error", ".comment-form, .delete-comment", function(event) {
+    const { message } = JSON.parse(event.detail[2].responseText);
     let msg = '';
     for (let key in message) {
       const value = message[key];

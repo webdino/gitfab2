@@ -12,7 +12,8 @@
 
 - content_for :bottom do
   coffee:
-    $(document).on "ajax:success", ".leave-btn", (xhr, data) ->
+    $(document).on "ajax:success", ".leave-btn", (event) ->
+      data = event.detail[0]
       if data.success == false
         alert data.message
       else

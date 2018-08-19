@@ -16,8 +16,8 @@
 
 - content_for :bottom do
   coffee:
-    $(document).on "ajax:success", "#new_membership", (event, data) ->
-      $("#members").append data.html
+    $(document).on "ajax:success", "#new_membership", (event) ->
+      $("#members").append event.detail[0].html
       $("input#membership_user_id").val ""
 
     $(document).on "click", ".remove-member-btn", (event) ->
@@ -31,5 +31,5 @@
         style = "visible"
       $(event.target).siblings("input[type=submit]").css "visibility", style
 
-    $(document).on "ajax:success", ".edit_membership", (event, data) ->
-      $(event.target).closest("li.membership").replaceWith data.html
+    $(document).on "ajax:success", ".edit_membership", (event) ->
+      $(event.target).closest("li.membership").replaceWith event.detail[0].html

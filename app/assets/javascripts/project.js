@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery_nested_form
 //= require jquery.slick
 //= require jquery.validate

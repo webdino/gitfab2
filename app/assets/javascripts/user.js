@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require select2
 //= require notifications
 

@@ -27,7 +27,7 @@
       event.preventDefault()
       $("#group-avatar-form").trigger "click"
 
-    $(document).on "change", "#group-avatar-form", (event, data, status) ->
+    $(document).on "change", "#group-avatar-form", (event) ->
       file = event.target.files[0]
       reader = new FileReader()
       reader.onload = ->
@@ -35,7 +35,7 @@
 
       reader.readAsDataURL file
 
-    $(document).on "change", ".membership-role", (event, data) ->
+    $(document).on "change", ".membership-role", (event) ->
       event.preventDefault()
       $(this).submit()
 
@@ -43,6 +43,6 @@
       event.preventDefault
       $(this).closest("li").remove()
 
-    $(document).on "ajax:success", "#new_member", (event, data) ->
-      $("#members").append data.html
+    $(document).on "ajax:success", "#new_member", (event) ->
+      $("#members").append event.detail[0].html
       clearSelect2Value()

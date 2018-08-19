@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery_nested_form
 //= require jquery.validate
 //= require jquery.validate.additional-methods

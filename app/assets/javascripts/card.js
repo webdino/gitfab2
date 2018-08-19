@@ -119,8 +119,8 @@ $(function() {
 
   $(document).on("ajax:beforeSend", ".delete-card", () => confirm("Are you sure to remove this item?"));
 
-  $(document).on("ajax:error", ".new-card, .edit-card, .delete-card", function(event, xhr, status, error) {
-    alert(error.message);
+  $(document).on("ajax:error", ".new-card, .edit-card, .delete-card", function(event) {
+    alert(event.detail[0].message);
     event.preventDefault();
   });
 
@@ -136,7 +136,8 @@ $(function() {
     $.colorbox.close();
   });
 
-  $(document).on("ajax:success", ".new-card", function(xhr, data) {
+  $(document).on("ajax:success", ".new-card", function(event) {
+    const data = event.detail[0];
     const link = $(this);
     const list = $(link.attr("data-list"));
     const template = $(link.attr("data-template") + " > :first");
@@ -154,28 +155,29 @@ $(function() {
       wait4save($(this), card);
       li.append(card);
       list.append(li);
-  }).bind("ajax:success", function(xhr, data) {
-      updateCard(card, data);
+    }).bind("ajax:success", function(event) {
+      updateCard(card, event.detail[0]);
       if (li.hasClass("state-wrapper")) { fixCommentFormAction(li); }
-    }).bind("ajax:error", function(xhr, status, error) {
+    }).bind("ajax:error", function(event) {
       li.remove();
-      alert(status);
+      alert(event.detail[1]);
     });
   });
 
-  $(document).on("ajax:success", ".edit-card", function(xhr, data) {
+  $(document).on("ajax:success", ".edit-card", function(event) {
+    const data = event.detail[0];
     const li = $(this).closest("li");
     const card = $(li).children().first();
     formContainer.html(data.html);
     setupNicEditor();
     setTimeout(focusOnTitle, 1);
     formContainer.find("form")
-    .bind("submit", function(e) {
+    .bind("submit", function() {
       wait4save($(this), card);
-  }).bind("ajax:success", function(xhr, data) {
-      updateCard(card, data);
+    }).bind("ajax:success", function(event) {
+      updateCard(card, event.detail[0]);
       if (li.hasClass("state-wrapper")) { fixCommentFormAction(li); }
-    }).bind("ajax:error", (e, xhr, status, error) => alert(status));
+    }).bind("ajax:error", event => alert(event.detail[1]));
   });
 
   $(document).on("ajax:success", ".new-card, .edit-card", function() {
@@ -193,7 +195,7 @@ $(function() {
     });
   });
 
-  $(document).on("ajax:success", ".delete-card", function(xhr, data) {
+  $(document).on("ajax:success", ".delete-card", function() {
     const link = $(this);
     const li = link.closest("li");
     li.remove();

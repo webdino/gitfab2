@@ -1,5 +1,5 @@
 $(function() {
-  $(document).on("ajax:success", ".show-notifications", (event, data, status) => $("#notifications-index").replaceWith(data.html));
+  $(document).on("ajax:success", ".show-notifications", event => $("#notifications-index").replaceWith(event.detail[0].html));
 
   $(document).click(() => $("#notifications-index").addClass("hidden"));
 

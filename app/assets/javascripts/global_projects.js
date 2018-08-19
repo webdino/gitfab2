@@ -1,5 +1,5 @@
 //= require jquery
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery_nested_form
 //= require masonry.pkgd.min
 //= require helpers/lang
