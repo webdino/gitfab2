@@ -6,7 +6,7 @@ rvm:
   - ruby-head
 gemfile:
   - Gemfile
-  - gemfiles/Gemfile-master
+  - gemfiles/rails-master.gemfile
 services:
   - mysql
 cache:
@@ -19,7 +19,7 @@ env:
 matrix:
   allow_failures:
     - rvm: ruby-head
-    - gemfile: gemfiles/Gemfile-master
+    - gemfile: gemfiles/rails-master.gemfile
 before_script:
   - |
     echo -e "[mysqld]
