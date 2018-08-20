@@ -20,7 +20,8 @@ class ProjectCommentsController < ApplicationController
 
     unless project.manageable_by?(current_user)
       redirect_to project_path(project.owner.slug, project, anchor: "project-comments"),
-                  alert: 'You can not delete a comment' and return
+                  alert: 'You can not delete a comment'
+      return
     end
 
     if project_comment.destroy

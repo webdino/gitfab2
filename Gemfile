@@ -40,7 +40,6 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop', require: false
-  gem 'slim_lint'
   gem 'spring'
   gem 'spring-commands-rspec'
 end
