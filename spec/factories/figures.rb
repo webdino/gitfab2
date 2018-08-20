@@ -21,19 +21,18 @@
 FactoryBot.define do
   factory :figure do
     figurable factory: :project
-    link { nil }
+  end
 
-    factory :link_figure do
-      sequence(:link) { |n| "http://test.host/link/#{n}.png" }
-    end
+  factory :link_figure, parent: :figure do
+    sequence(:link) { |n| "http://test.host/link/#{n}.png" }
+  end
 
-    factory :content_figure do
-      content do
-        Rack::Test::UploadedFile.new(
-          Rails.root.join('spec', 'fixtures', 'images', 'figure.png'),
-          'image/png'
-        )
-      end
+  factory :content_figure, parent: :figure do
+    content do
+      Rack::Test::UploadedFile.new(
+        Rails.root.join('spec', 'fixtures', 'images', 'figure.png'),
+        'image/png'
+      )
     end
   end
 end
