@@ -4,7 +4,6 @@ class UsagesController < ApplicationController
   before_action :build_usage, only: [:new, :create]
   before_action :load_usage, only: [:edit, :update, :destroy]
   before_action :update_contribution, only: [:create, :update]
-  after_action :update_project, only: [:create, :update, :destroy]
 
   authorize_resource class: Card::Usage.name
 
@@ -16,8 +15,7 @@ class UsagesController < ApplicationController
 
   def create
     if @usage.save
-      @project.updated_at = DateTime.now.in_time_zone
-      @project.save!
+      @project.touch
       render :create
     else
       render json: { success: false }, status: 400
@@ -27,8 +25,7 @@ class UsagesController < ApplicationController
   def update
     auto_linked_params = usage_params
     if @usage.update auto_linked_params
-      @project.updated_at = DateTime.now.in_time_zone
-      @project.save!
+      @project.touch
       render :update
     else
       render json: { success: false }, status: 400
@@ -37,6 +34,7 @@ class UsagesController < ApplicationController
 
   def destroy
     if @usage.destroy
+      @project.touch
       render json: { success: true }
     else
       render json: { success: false }, status: 400
@@ -80,12 +78,5 @@ class UsagesController < ApplicationController
       contribution.contributor_id = current_user.id
       contribution.created_at = DateTime.now.in_time_zone
       contribution.updated_at = DateTime.now.in_time_zone
-    end
-
-    def update_project
-      if @_response.response_code == 200
-        @project.updated_at = DateTime.now.in_time_zone
-        @project.save!
-      end
     end
 end

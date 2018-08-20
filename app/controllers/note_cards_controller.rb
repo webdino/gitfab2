@@ -6,7 +6,7 @@ class NoteCardsController < ApplicationController
   before_action :load_note_card, only: [:show, :edit, :update, :destroy]
   before_action :build_note_card, only: [:new, :create]
   before_action :update_contribution, only: [:create, :update]
-  after_action :update_project, only: [:create, :update, :destroy]
+  after_action :notify, only: [:create, :update]
 
   def index
     @note_cards = @project.note_cards
@@ -21,6 +21,7 @@ class NoteCardsController < ApplicationController
   def create
     @note_card.description = view_context.auto_link @note_card.description, html: { target: '_blank' }
     if @note_card.save
+      @project.touch
       render :create
     else
       render json: { success: false }, status: 400
@@ -40,6 +41,7 @@ class NoteCardsController < ApplicationController
       auto_linked_params[:description] = description
     end
     if @note_card.update auto_linked_params
+      @project.touch
       render :update
     else
       render json: { success: false }, status: 400
@@ -48,6 +50,7 @@ class NoteCardsController < ApplicationController
 
   def destroy
     if @note_card.destroy
+      @project.touch
       render json: { success: true }
     else
       render json: { success: false }, status: 400
@@ -93,10 +96,8 @@ class NoteCardsController < ApplicationController
       contribution.updated_at = DateTime.now.in_time_zone
     end
 
-    def update_project
+    def notify
       return unless @_response.response_code == 200
-      @project.updated_at = DateTime.now.in_time_zone
-      @project.save!
       users = @project.notifiable_users current_user
       url = project_note_card_path(
         owner_name: @project.owner.slug,
