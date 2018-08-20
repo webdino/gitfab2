@@ -40,7 +40,6 @@ class ProjectsController < ApplicationController
       parameters[:name] = parameters[:name].downcase
     end
 
-    @project.updated_at = DateTime.now.in_time_zone
     if @project.update parameters
       notify_users_on_update(@project, @owner)
       respond_to do |format|

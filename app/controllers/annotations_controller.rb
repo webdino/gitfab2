@@ -115,8 +115,7 @@ class AnnotationsController < ApplicationController
 
     def update_project
       return unless @_response.response_code == 200
-      @project.updated_at = DateTime.now.in_time_zone
-      @project.save!
+      @project.touch
 
       users = @project.notifiable_users current_user
       url = project_path @project, owner_name: @project.owner.slug
