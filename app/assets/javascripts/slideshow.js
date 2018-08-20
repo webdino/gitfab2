@@ -135,9 +135,7 @@ class Slideshow {
     const slideshow = $(".slideshow");
     const description = slideshow.find(".description.without-figures");
     const top = (slideshow.height() - description.height()) / 2;
-    description.animate({
-      "top": "top", top
-    }, 150);
+    description.animate({ top: top }, 150);
   };
 }
 
