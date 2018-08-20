@@ -8,7 +8,7 @@ ruby:
 
 - if card.figures.present?
   - if card.figures.first.content.present?
-    - if card.figures.length + stl_file_num > 1
+    - if card.figures.count + stl_file_num > 1
       figure
         ul.slides.slick
           - card.figures.each do |figure|

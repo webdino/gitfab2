@@ -21,7 +21,7 @@ article class="card annotation" data-position="#{annotation.position}" id="#{ann
         .show-comments-btn
           .comment-icon.icon
           .count
-            = annotation.comments.length
+            = annotation.comments.count
         = render "components/card_contributors", card: annotation
 
     .body

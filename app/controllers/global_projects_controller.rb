@@ -17,7 +17,7 @@ class GlobalProjectsController < ApplicationController
 
     else
       @projects = published_projects.page(params[:page]).order(updated_at: :desc)
-      @featured_project_groups = Feature.projects.length >= 3 ? featured_project_groups : []
+      @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
       @featured_groups = Group.includes(:members, :projects).order(projects_count: :desc).limit(3)
       @is_searching = false
     end

@@ -16,11 +16,11 @@
                 span
               div
                 span.members
-                  = "Members: #{group.members.length}"
+                  = "Members: #{group.members.count}"
 
                 span |
                 span.projects
-                  = "Projects: #{group.projects.length}"
+                  = "Projects: #{group.projects.count}"
 
             .description
             / = group.description.truncate(300) #TODO: implement group.description

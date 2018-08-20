@@ -3,11 +3,11 @@
 
 #link-to-relation-tree
   - if has_origin && has_derivatives
-    - link_text = "This Project was forked from #{@project.original.owner.slug}/#{@project.original.title}, and was forked  #{@project.derivatives.length} times. See the project relations."
+    - link_text = "This Project was forked from #{@project.original.owner.slug}/#{@project.original.title}, and was forked  #{@project.derivatives.count} times. See the project relations."
   - elsif has_origin
     - link_text = "This project was forked from #{@project.original.owner.slug}/#{@project.original.title}."
   - elsif has_derivatives
-    - link_text = "This Project was forked #{@project.derivatives.length} times. See the project relations."
+    - link_text = "This Project was forked #{@project.derivatives.count} times. See the project relations."
 
   .wrapper
     .forked-icon
