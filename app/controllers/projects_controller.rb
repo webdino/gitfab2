@@ -49,7 +49,7 @@ class ProjectsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.json { render 'error/failed', status: 400 }
+        format.json { render json: { success: false }, status: 400 }
         format.html { render :edit, status: 400 }
       end
     end
