@@ -49,14 +49,6 @@ Layout/MultilineArrayBraceLayout:
     - 'app/models/card/state.rb'
     - 'app/models/project.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: symmetrical, new_line, same_line
-Layout/MultilineMethodCallBraceLayout:
-  Exclude:
-    - 'app/views/annotations/state_annotation.json.jbuilder'
-
 # Offense count: 4
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, EnforcedStyleForEmptyBraces.
