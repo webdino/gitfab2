@@ -42,6 +42,7 @@ class Project < ApplicationRecord
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
   has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
+  has_many :project_comments, dependent: :destroy
   has_one :recipe, dependent: :destroy
 
   before_save :set_draft
@@ -179,6 +180,10 @@ class Project < ApplicationRecord
 
   def update_draft!
     update!(draft: generate_draft)
+  end
+
+  def manageable_by?(user)
+    !is_deleted && user.is_project_manager?(self)
   end
 
   class << self

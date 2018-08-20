@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
     @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
     @recipe = @project.recipe
+    @project_comments = @project.project_comments.order(:id)
   end
 
   def new

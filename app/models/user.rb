@@ -41,6 +41,7 @@ class User < ApplicationRecord
   has_many :groups, through: :memberships
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id
+  has_many :project_comments, dependent: :destroy
 
   accepts_nested_attributes_for :memberships, allow_destroy: true
 
@@ -99,6 +100,13 @@ class User < ApplicationRecord
   def is_member_of?(group)
     return false unless group
     group.members.exists?(id)
+  end
+
+  def is_project_manager?(project)
+    if project.owner_type == Group.name
+      is_admin_of = is_admin_of?(project.owner)
+    end
+    is_admin_of || is_owner_of?(project) || is_collaborator_of?(project)
   end
 
   def join_to(group)

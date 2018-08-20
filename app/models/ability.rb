@@ -33,6 +33,7 @@ class Ability
     can :read, Card::NoteCard do |card|
       can? :read, card.project
     end
+    # TODO: Project#manageable_by? に同様のロジックを移動、将来的にこれは削除予定
     can :manage, Project do |project|
       !project.is_deleted && is_project_manager?(project, user)
     end
@@ -87,6 +88,7 @@ class Ability
 
   private
 
+  # TODO: User#is_project_manager? に同様のロジックを移動、将来的にこれは削除予定
   def is_project_manager?(project, user)
     if project.owner_type == Group.name
       is_admin_of = user.is_admin_of? project.owner
