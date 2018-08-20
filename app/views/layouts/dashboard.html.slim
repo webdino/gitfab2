@@ -4,7 +4,8 @@
   = javascript_include_tag "dashboard"
 - content_for :ogp do
   - if @owner.present? && @owner.persisted?
-    = render partial: "components/base_ogp", locals: {title: "#{@owner.name} on Fabble", image: @owner.avatar&.url}
+    = render partial: "components/base_ogp",
+             locals: { title: "#{@owner.name} on Fabble", image: "#{request.base_url}#{@owner.avatar.url}" }
   - else
     = render partial: "components/base_ogp"
 

@@ -141,6 +141,12 @@ class Project < ApplicationRecord
     end
   end
 
+  def thumbnail_url(asset_host)
+    thumbnail.yield_self do |path|
+      path.start_with?('https') ? path : "#{asset_host}#{path}"
+    end
+  end
+
   def collaborators
     users = User.joins(:collaborations).where('collaborations.project_id' => id)
     groups = Group.joins(:collaborations).where('collaborations.project_id' => id)

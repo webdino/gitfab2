@@ -13,16 +13,16 @@
       video = nil
       if @project.figures.present?
         if @project.figures.first.content.present?
-          image = "#{@project.figures.first.content}"
+          image = "#{request.base_url}#{@project.figures.first.content.url}"
           video = nil
         elsif @project.figures.first.link.present?
-          image = @project.thumbnail
+          image = @project.thumbnail_url(request.base_url)
           video = @project.figures.first.link
         end
       end
 
-    = render partial: "components/base_ogp", locals: {title: title, description: description, image: image, video: video}
-
+    = render partial: "components/base_ogp",
+             locals: {title: title, description: description, image: image, video: video}
   - else
     = render partial: "components/base_ogp"
 

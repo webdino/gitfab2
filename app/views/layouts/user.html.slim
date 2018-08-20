@@ -4,9 +4,8 @@
   = javascript_include_tag "user"
 - content_for :ogp do
   - if @user.persisted?
-    - title = "#{@user.name} on Fabble"
-    - image = @user.avatar.present? ? "#{@user.avatar}" : nil
-    = render partial: "components/base_ogp", locals: {title: title, image: image}
+    = render partial: "components/base_ogp",
+             locals: { title: "#{@user.name} on Fabble", image: "#{request.base_url}#{@user.avatar.url}" }
   - else
     = render partial: "components/base_ogp"
 

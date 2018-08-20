@@ -155,6 +155,24 @@ describe Project do
     end
   end
 
+  describe '#thumbnail_url' do
+    subject{ project.thumbnail_url(asset_host)}
+    let(:asset_host) { 'https://sample.com' }
+    let(:project) { FactoryBot.create(:project) }
+    let(:figure) { project.figures.first }
+
+    context 'YouTube動画が設定されている時' do
+      before { figure.update!(link: link) }
+      let(:link) { 'https://www.youtube.com/embed/sample' }
+      it { is_expected.to eq 'https://img.youtube.com/vi/sample/mqdefault.jpg' }
+    end
+
+    context 'YouTube動画が設定されていない時' do
+      before { figure.update!(link: nil, content: fixture_file_upload('images/image.jpg')) }
+      it { is_expected.to eq "#{asset_host}#{figure.content.small.url}" }
+    end
+  end
+
   it '#licenses' do
     expect(project.licenses).to contain_exactly('by', 'by-sa', 'by-nc', 'by-nc-sa')
   end
