@@ -2,20 +2,14 @@ meta property="og:site_name" content="Fabble"
 meta property="og:email" content="support@fabble.cc"
 meta property="og:type" content="article"
 
-- if local_assigns[:title].present?
-  meta property="og:title" content="#{title}"
-- else
-  meta property="og:title" content="Fabble"
+- title = local_assigns[:title] || 'Fabble'
+meta property="og:title" content="#{title}"
 
-- if local_assigns[:description].present?
-  meta property="og:description" content="#{description}"
-- else
-  meta property="og:description" content="New Platform to Share Fab Projects all over the world"
+- description = local_assigns[:description] || 'New Platform to Share Fab Projects all over the world'
+meta property="og:description" content="#{description}"
 
-- if local_assigns[:image].present?
-  meta property="og:image" content="#{image}"
-- else
-  meta property="og:image" content="#{asset_url('/images/logo.png')}"
+- image = local_assigns[:image] || asset_url('/images/logo.png')
+meta property="og:image" content="#{image}"
 
 - if local_assigns[:video].present?
   meta property="og:video" content="#{video}"
