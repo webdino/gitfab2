@@ -109,6 +109,7 @@
           font-family: $common-novelsans-light;
           font-size: 12px;
           line-height: 19px;
+          word-wrap: break-word;
           a {
             color: $common-dark-blue;
           }
