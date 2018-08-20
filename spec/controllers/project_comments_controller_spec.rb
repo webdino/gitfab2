@@ -77,12 +77,9 @@ describe ProjectCommentsController, type: :controller do
     end
 
     let!(:project) { FactoryBot.create(:project) }
-    let(:project_comment) { FactoryBot.create(:project_comment, user: FactoryBot.create(:user), project: project, body: 'valid') }
+    let!(:project_comment) { FactoryBot.create(:project_comment, user: FactoryBot.create(:user), project: project, body: 'valid') }
 
-    before do
-      sign_in project.owner
-      project_comment
-    end
+    before { sign_in project.owner }
 
     it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comments") }
 
@@ -104,10 +101,7 @@ describe ProjectCommentsController, type: :controller do
     context 'when current user can not manage the project' do
       let(:not_manager) { FactoryBot.create(:user) }
 
-      before do
-        sign_in not_manager
-        project_comment
-      end
+      before { sign_in not_manager }
 
       it { is_expected.to redirect_to project_path(project.owner.slug, project, anchor: "project-comments") }
 
