@@ -6,11 +6,6 @@ $(function() {
     $("#new_project").attr("action", $(this).val());
   });
 
-  $(document).on("click", "#recipes-new .submit", function(event) {
-    event.preventDefault();
-    $("form.project-form").submit();
-  });
-
   $(document).on("click", ".license img", function(event) {
     if ($(this).hasClass('unselectable')) {
       alert('You cannot choose this license because of Creative Commons license restriction of the original content.');

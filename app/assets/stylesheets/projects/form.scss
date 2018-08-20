@@ -314,31 +314,19 @@ form.project-form {
   }
   .buttons {
     margin: 55px 90px;
-    #submit-btn {
-      display: none;
-    }
     .submit {
       width: 180px;
       height: 40px;
-      padding: 5px 0 0 15px;
       background: $common-basic-color;
       border: none;
       color: $common-btn-text-color;
       font-size: 18px;
-      &:before {
-        content: url("/images/project/submit.png");
+      .icon {
         position: relative;
         top: 6px;
-        left: 2px;
-        padding-right: 20px;
-      };
-    }
-    .update:before {
-      content: url("/images/project/update_project.png");
-      position: relative;
-      top: 6px;
-      left: 2px;
-      padding-right: 10px;
+        left: 4px;
+        padding-right: 15px;
+      }
     }
 
     .cancel {

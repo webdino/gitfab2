@@ -130,11 +130,13 @@
 
   .buttons
     - if @project.new_record?
-      = link_to "Create Project", "#", class: "submit btn"
-      = f.submit value: "", id: "submit-btn"
+      = f.button type: "submit", class: "submit btn"
+        span.icon= image_tag("/images/project/submit.png")
+        'Create Project
       = link_to "Cancel", :back, class: "cancel btn"
     - else
-      = link_to "Update Project", "#", class: "submit btn update"
-      = f.submit value: "Update Project", id: "submit-btn"
+      = f.button type: "submit", class: "submit btn"
+        span.icon= image_tag("/images/project/update_project.png")
+        'Update Project
       = link_to "Cancel", project_path(owner_name: @owner.slug, id: @project), class: "cancel btn"
       = link_to "Delete Project", project_path(owner_name: @owner.slug, id: @project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }
