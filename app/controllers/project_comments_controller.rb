@@ -18,7 +18,7 @@ class ProjectCommentsController < ApplicationController
     project_comment = ProjectComment.find(params[:id])
     project = project_comment.project
 
-    unless project.manageable_by?(current_user)
+    unless project_comment.manageable_by?(current_user)
       redirect_to project_path(project.owner.slug, project, anchor: "project-comments"),
                   alert: 'You can not delete a comment'
       return

@@ -25,4 +25,8 @@ class ProjectComment < ApplicationRecord
   belongs_to :project
 
   validates :body, presence: true, length: { maximum: 300 }
+
+  def manageable_by?(user)
+    self.user == user || project.manageable_by?(user)
+  end
 end
