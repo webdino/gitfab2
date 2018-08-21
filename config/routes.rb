@@ -31,6 +31,10 @@ Rails.application.routes.draw do
   end
   resources :card_comments, only: :destroy
 
+  resources :groups do
+    resources :members
+  end
+
   resources :owners, only: [:index]
   resource :owners, path: '/:owner_name', as: :owner, only: :show
 
@@ -40,10 +44,6 @@ Rails.application.routes.draw do
       get 'mark_all_as_read', on: :collection
     end
     patch :update_password
-  end
-
-  resources :groups do
-    resources :members
   end
 
   resources :global_projects, only: :index
