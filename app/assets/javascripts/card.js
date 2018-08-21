@@ -16,26 +16,6 @@ const descriptionText = function() {
   }
 };
 
-const validateForm = function(event, is_note_card_form) {
-  if (!is_note_card_form) {
-    if (descriptionText().length > 300) {
-      alert("Description text should be less than 300.");
-      event.preventDefault();
-    }
-  }
-
-  let validated = false;
-  $(".card-form:first-child .validate").each(function(index, element) {
-    if (($(element).val() !== "") || ($(element).text() !== "")) {
-      validated = true;
-    }
-  });
-  if (!validated) {
-    alert("You cannot make empty card.");
-    event.preventDefault();
-  }
-};
-
 const focusOnTitle = () => $(".card-title").first().focus();
 
 const hideTemplateForms = function() {
@@ -125,15 +105,30 @@ $(function() {
   });
 
   $(document).on("click", ".card-form .submit", function(event) {
-    const is_note_card_form = $(this).closest("form").attr("id").match(new RegExp("note_card", "g"));
-    validateForm(event, is_note_card_form);
-  });
+    event.preventDefault();
 
-  $(document).on("submit", ".card-form", function() {
-    $(this).find(".submit")
-    .off()
-    .fadeTo(80, 0.01);
-    $.colorbox.close();
+    const form = $(this).closest("form");
+
+    const is_note_card_form = form.attr("id").match(new RegExp("note_card", "g"));
+    if (!is_note_card_form && descriptionText().length > 300) {
+      alert("Description text should be less than 300.");
+      return;
+    }
+
+    let validated = false;
+    $(".card-form:first-child .validate").each(function(index, element) {
+      if (($(element).val() !== "") || ($(element).text() !== "")) {
+        validated = true;
+      }
+    });
+
+    if (validated) {
+      Rails.fire(form[0], "submit");
+      $(this).find(".submit").off().fadeTo(80, 0.01);
+      $.colorbox.close();
+    } else {
+      alert("You cannot make empty card.");
+    }
   });
 
   $(document).on("ajax:success", ".new-card", function(event) {
