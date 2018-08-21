@@ -35,9 +35,6 @@ Rails.application.routes.draw do
     resources :members
   end
 
-  resources :owners, only: [:index]
-  resource :owners, path: '/:owner_name', as: :owner, only: :show
-
   resources :users, except: :show do
     resources :memberships, only: [:index, :destroy]
     resources :notifications do
@@ -69,4 +66,7 @@ Rails.application.routes.draw do
     get 'recipe_cards_list'
     get 'relation_tree'
   end
+
+  resources :owners, only: :index
+  resource :owners, path: '/:owner_name', as: :owner, only: :show
 end
