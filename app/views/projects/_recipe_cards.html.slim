@@ -37,7 +37,7 @@ section#recipe-cards
         - new_url = new_project_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name)
         = link_to "Add State", new_url, remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper", "data-template" => "#state-template"
 
-    = nested_form_for @recipe, url: project_path(@owner, @project), remote: true do |f|
+    = nested_form_for @recipe, url: project_recipe_path(@owner, @project), remote: true do |f|
       = f.fields_for :states do |ff|
         = ff.text_field :position, class: "position", "data-id" => ff.object.id
         = ff.hidden_field :id, class: "id"
