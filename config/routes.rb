@@ -51,13 +51,12 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
     resources :note_cards
-    resource :recipe, only: :update do
-      resources :states, except: :index do
-        resources :annotations, except: :index do
-          get 'to_state'
-        end
-        get 'to_annotation'
+    resource :recipe, only: :update
+    resources :states, except: :index do
+      resources :annotations, except: :index do
+        get 'to_state'
       end
+      get 'to_annotation'
     end
     resources :tags, only: :create
     resources :usages, only: [:new, :create, :edit, :update, :destroy]

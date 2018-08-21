@@ -1,7 +1,6 @@
 - content_for(:title, "#{@project.owner.name}/#{@project.title} : Recipe")
 
-- recipe_url = "/#{@project.owner.name}/#{@project.name}/recipe"
-main#recipes-show data-url="#{recipe_url}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
+main#recipes-show data-url="#{project_path(@project.owner, @project)}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
   = render "projects/basic_informations"
   = render "projects/recipe_cards"
   = render "projects/usages"

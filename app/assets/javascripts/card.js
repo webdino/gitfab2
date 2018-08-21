@@ -275,12 +275,11 @@ $(function() {
     const dst_state = $(`.state[data-position=${dst_data_position}]`);
     const dst_state_id = dst_state.attr("id");
 
-    const recipe_url = $("#recipes-show").data("url");
+    const project_url = $("#recipes-show").data("url");
     const state_id = $("#state-convert-dialog").data("target");
-    const convert_url = recipe_url + "/states/" + state_id + "/to_annotation";
 
     $.ajax({
-      url: convert_url,
+      url: `${project_url}/states/${state_id}/to_annotation`,
       type: "GET",
       data: {
               dst_position: dst_data_position,
@@ -289,7 +288,6 @@ $(function() {
       dataType: "json",
       success(data) {
         const new_annotation_id = data.$oid;
-        const new_annotation_url = recipe_url + "/states/" + dst_state_id + "/annotations/" + new_annotation_id;
         $.colorbox.close();
         const loading = $("#loading");
         const img = loading.find("img");
@@ -299,7 +297,7 @@ $(function() {
         loading.show();
 
         $.ajax({
-          url: new_annotation_url,
+          url: `${project_url}/states/${dst_state_id}/annotations/${new_annotation_id}`,
           type: "GET",
           dataType: "json",
           success(data) {
@@ -338,7 +336,7 @@ $(function() {
   $(document).on("click", ".to-state", function(event) {
     event.preventDefault();
     const convert_url = $(this).attr("href");
-    const recipe_url = $("#recipes-show").data("url");
+    const project_url = $("#recipes-show").data("url");
     const annotation_id = $(this).closest(".annotation").attr("id");
 
     $.ajax({
@@ -347,7 +345,6 @@ $(function() {
       dataType: "json",
       success(data) {
         const new_state_id = data.$oid;
-        const new_state_url = recipe_url + "/states/" + new_state_id;
         const loading = $("#loading");
         const img = loading.find("img");
         const left = (loading.width() - img.width()) / 2;
@@ -356,7 +353,7 @@ $(function() {
         loading.show();
 
         $.ajax({
-          url: new_state_url,
+          url: `${project_url}/states/${new_state_id}`,
           type: "GET",
           dataType: "json",
           success(data) {
