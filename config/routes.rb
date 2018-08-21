@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   end
   resources :card_comments, only: :destroy
 
-  resources :groups do
+  resources :groups, except: :show do
     resources :members
   end
 

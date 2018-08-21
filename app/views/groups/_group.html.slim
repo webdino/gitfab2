@@ -1,5 +1,5 @@
 li.group
-  = link_to image_tag(group.avatar.small.url, class: "avatar"), group_path(group)
+  = link_to image_tag(group.avatar.small.url, class: "avatar"), edit_group_path(group)
   .name
     = link_to group.name, edit_group_path(group)
   = link_to "Leave group", user_membership_path(current_user, current_user.membership_in(group)),

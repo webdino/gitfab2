@@ -17,15 +17,6 @@ describe GroupsController, type: :controller do
     it { is_expected.to render_template :index }
   end
 
-  describe 'GET show' do
-    before do
-      sign_in user
-      user.memberships.create group_id: group.id
-      get :show, params: { id: group.id }
-    end
-    it { is_expected.to render_template :show }
-  end
-
   describe 'GET new' do
     before do
       sign_in user
