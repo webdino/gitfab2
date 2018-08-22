@@ -51,7 +51,6 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
     resources :collaborations, only: :create
     resources :note_cards
-    resource :recipe, only: :update
     resources :states, except: :index do
       resources :annotations, except: :index do
         get 'to_state'
@@ -62,6 +61,7 @@ Rails.application.routes.draw do
     resources :usages, only: [:new, :create, :edit, :update, :destroy]
     resources :project_comments, only: [:create, :destroy]
     post :fork
+    patch :change_order
     get 'recipe_cards_list'
     get 'relation_tree'
   end

@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   layout 'project'
 
-  before_action :load_owner, except: [:new, :create, :fork]
+  before_action :load_owner, except: [:new, :create, :fork, :change_order]
   before_action :load_project, only: [:edit, :update, :destroy]
   before_action :delete_collaborations, only: :destroy
 
@@ -89,6 +89,16 @@ class ProjectsController < ApplicationController
     @project = @owner.projects.friendly.find(params[:project_id])
     @root = @project.root(@project)
     render 'relation_tree', format: 'json'
+  end
+
+  def change_order
+    project = Project.find_with(params[:owner_name], params[:project_id])
+    parameters = params.require(:project).permit(states_attributes: [:id, :position])
+    if can?(:update, project) && project.update(parameters)
+      render json: { success: true }
+    else
+      render json: { success: false }, status: 400
+    end
   end
 
   private
