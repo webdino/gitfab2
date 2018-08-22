@@ -12,7 +12,7 @@ def convert contribution
 end
 
 Project.all.each do |project|
-  project.recipe.states.each do |state|
+  project.states.each do |state|
     state.contributions.each {|contribution| convert(contribution)}
     state.annotations.each do |annotation|
       annotation.contributions.each {|contribution| convert(contribution)}

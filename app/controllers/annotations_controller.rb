@@ -1,7 +1,6 @@
 class AnnotationsController < ApplicationController
   before_action :load_owner
   before_action :load_project
-  before_action :load_recipe
   before_action :load_state
   before_action :load_annotation, only: [:edit, :show, :update, :destroy]
   before_action :build_annotation, only: [:new, :create]
@@ -50,7 +49,7 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      state = annotation.to_state!(@recipe)
+      state = annotation.to_state!(@project.recipe)
       render json: {'$oid' => state.id}
     end
   end
@@ -67,13 +66,9 @@ class AnnotationsController < ApplicationController
       @project = @owner.projects.friendly.find(params[:project_id])
     end
 
-    def load_recipe
-      @recipe = @project.recipe
-    end
-
     def load_state
       if params['state_id']
-        @state = @recipe.states.find(params['state_id'])
+        @state = @project.states.find(params['state_id'])
       end
     end
 

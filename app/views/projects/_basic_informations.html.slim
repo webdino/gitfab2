@@ -103,8 +103,7 @@ section#basic-informations
   = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
 
 section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
-  - if @recipe.present?
-    = link_to "", "#", id: "slideshow-btn"
+  = link_to "", "#", id: "slideshow-btn"
   = link_to "", "#", id: "print-btn"
   - if can? :edit, @project
     #card-order-tools
@@ -114,8 +113,7 @@ section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
     = link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
   - unless @project.is_private
     = link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
-  - if @recipe.present?
-    = render partial: "recipe_cards_list", locals: { recipe: @recipe, owner: @owner, project: @project }
+  = render "projects/recipe_cards_list", owner: @owner, project: @project
 
   .hidden
     #fork-destinations

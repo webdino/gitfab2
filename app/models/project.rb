@@ -45,6 +45,10 @@ class Project < ApplicationRecord
   has_many :project_comments, dependent: :destroy
   has_one :recipe, dependent: :destroy
 
+  # TODO: Recipeは消す予定。段階的に移行するため`through: :recipe`している
+  has_many :states, ->{ order(:position) }, through: :recipe, class_name: 'Card::State', dependent: :destroy
+  accepts_nested_attributes_for :states
+
   before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }

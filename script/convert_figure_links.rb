@@ -10,7 +10,7 @@ end
 
 Project.all.each do |project|
   convert(project)
-  project.recipe.states.each do |state|
+  project.states.each do |state|
     convert(state)
     state.annotations.each {|annotation| convert(annotation)}
   end

@@ -10,7 +10,6 @@ class ProjectsController < ApplicationController
   def show
     @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
-    @recipe = @project.recipe
     @project_comments = @project.project_comments.order(:id)
   end
 
@@ -83,7 +82,6 @@ class ProjectsController < ApplicationController
 
   def recipe_cards_list
     @project = @owner.projects.friendly.find(params[:project_id])
-    @recipe = @project.recipe
     render 'recipe_cards_list'
   end
 

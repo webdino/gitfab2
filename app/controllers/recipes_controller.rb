@@ -1,9 +1,8 @@
 class RecipesController < ApplicationController
   def update
     project = Project.find_with(params[:owner_name], params[:project_id])
-    recipe = project.recipe
 
-    if can?(:update, project) && recipe.update(recipe_params)
+    if can?(:update, project) && project.update(recipe_params)
       project.touch
       render json: { success: true }
     else

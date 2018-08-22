@@ -3,6 +3,5 @@
     .selector-column
       .selector
     .index-column
-      - path = project_path(owner, project)
-      - recipe.states.ordered_by_position.each do |state|
-        = link_to "", "#{path}#state-#{state.id}", class: "state-link"
+      - project.states.ordered_by_position.each do |state|
+        = link_to "", "#{project_path(owner, project)}#state-#{state.id}", class: "state-link"

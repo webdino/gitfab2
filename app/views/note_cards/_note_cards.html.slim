@@ -2,7 +2,7 @@
   = link_to project_path(@project, owner_name: @owner.slug) do
     .tab
       'Recipe
-      = "(#{@project.recipe.states.count})"
+      = "(#{@project.states.count})"
   = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Memos

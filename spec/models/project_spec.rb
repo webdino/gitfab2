@@ -70,8 +70,8 @@ describe Project do
 
     it 'プロジェクトと複製先のstateの数が同じであること' do
       aggregate_failures do
-        expect(project.recipe.states.size).to eq 2
-        expect(derivative_project.recipe.states.size).to eq 2
+        expect(project.states.count).to eq 2
+        expect(derivative_project.states.count).to eq 2
       end
     end
 

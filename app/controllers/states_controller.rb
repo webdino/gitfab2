@@ -1,7 +1,6 @@
 class StatesController < ApplicationController
   before_action :load_owner
   before_action :load_project
-  before_action :load_recipe
   before_action :build_state, only: [:new, :create]
   before_action :load_state, only: [:edit, :show, :update, :destroy]
   before_action :update_contribution, only: [:create, :update]
@@ -44,8 +43,8 @@ class StatesController < ApplicationController
   end
 
   def to_annotation
-    state = @recipe.states.find(params[:state_id])
-    parent_state = @recipe.states.find(params[:dst_state_id])
+    state = @project.states.find(params[:state_id])
+    parent_state = @project.states.find(params[:dst_state_id])
     annotation = state.to_annotation!(parent_state)
     render json: {'$oid' => annotation.id}
   end
@@ -62,16 +61,12 @@ class StatesController < ApplicationController
       @project = @owner.projects.friendly.find(params[:project_id])
     end
 
-    def load_recipe
-      @recipe = @project.recipe
-    end
-
     def load_state
-      @state ||= @recipe.states.find(params[:id])
+      @state ||= @project.states.find(params[:id])
     end
 
     def build_state
-      @state = @recipe.states.build state_params
+      @state = @project.recipe.states.build(state_params)
     end
 
     def state_params
