@@ -13,6 +13,6 @@ class RecipesController < ApplicationController
   private
 
     def recipe_params
-      params.require(:recipe).permit(states_attributes: [:id, :position])
+      params.require(:project).permit(states_attributes: [:id, :position])
     end
 end

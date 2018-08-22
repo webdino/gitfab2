@@ -49,7 +49,7 @@ $(function() {
   $(document).on("click", ".order-commit-btn", function(event) {
     event.preventDefault();
     const states = $("#recipe-card-list .card.state");
-    const forms = $(".edit_recipe .fields");
+    const forms = $(".order-change-form .fields");
     forms.remove();
     for (let index = 0; index < states.length; index++) {
       let state = states[index];
@@ -58,7 +58,7 @@ $(function() {
       let position = index + 1;
       state.attr("data-position", position);
       $("#add-card-order").click();
-      const field = $(".edit_recipe .fields:last");
+      const field = $(".order-change-form .fields:last");
       let positionForm = field.find(".position");
       positionForm.val(position);
       let idForm = field.find(".id");
@@ -90,7 +90,7 @@ $(function() {
     $("#submit-card-order").click();
   });
 
-  $(document).on("ajax:success", ".edit_recipe", function() {
+  $(document).on("ajax:success", ".order-change-form", function() {
     $("#recipe-card-list").removeClass("order-changing");
     $("#card-order-tools").removeClass("order-changing");
     $("#recipe-card-list").trigger("card-order-changed");

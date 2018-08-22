@@ -7,7 +7,7 @@ describe RecipesController, type: :controller do
         params: {
           owner_name: project.owner,
           project_id: project,
-          recipe: {
+          project: {
             states_attributes: [
               { id: card1.id, position: 3 },
               { id: card2.id, position: 2 },
