@@ -10,6 +10,9 @@ section#layouts-header
 
           / TODO: add clear btn
 
+      #all-projects-link
+        = link_to "All Projects", search_path
+
       - unless current_user
         #sign-in
           = link_to "Sign in", sessions_path

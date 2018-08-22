@@ -17,6 +17,7 @@
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery/jquery.selection
+//= require masonry.pkgd.min
 //= require nicedit/nicEdit
 //= require three
 //= require threejs/STLLoader
@@ -35,6 +36,7 @@
 //= require ./tag
 //= require ./collaborator
 //= require ./basic_informations
+//= require ./projects
 //= require ./notifications
 //= require select2
 

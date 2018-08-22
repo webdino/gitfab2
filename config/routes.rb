@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     put 'background' => 'background#update'
   end
 
-  root 'global_projects#index'
+  root 'projects#index'
 
   if Rails.env.development? || Rails.env.test?
     match 'su' => 'development#su', via: :post
@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
 
   match 'home' => 'owner_projects#index', via: :get
-  match 'search' => 'global_projects#index', via: :get
+  match 'search' => 'projects#search', via: :get
 
   resources :cards, only: [] do
     resources :card_comments, only: :create
@@ -43,12 +43,10 @@ Rails.application.routes.draw do
     patch :update_password
   end
 
-  resources :global_projects, only: :index
-
   resources :collaborations, only: :destroy
   resources :projects, only: [:new, :create]
   resources :tags, only: :destroy
-  resources :projects, path: '/:owner_name', except: [:index, :new, :create] do
+  resources :projects, path: '/:owner_name', except: [:index, :new, :create, :search] do
     resources :collaborations, only: :create
     resources :note_cards
     resources :states, except: :index do
