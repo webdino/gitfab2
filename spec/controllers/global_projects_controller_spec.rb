@@ -180,7 +180,7 @@ describe GlobalProjectsController, type: :controller do
     end
   end
 
-  describe 'Search projects by recipe' do
+  describe 'Search projects by project' do
     shared_context 'projects' do
       let!(:public_user_project) { FactoryBot.create(:user_project, :public) }
       let!(:public_group_project) { FactoryBot.create(:group_project, :public) }
@@ -193,15 +193,19 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
+        state_attributes = FactoryBot.attributes_for(:state, description: 'sample')
         [public_user_project, public_group_project,
          private_user_project, deleted_user_project].each do |project|
-          FactoryBot.create(:state, description: 'sample', recipe: project.recipe)
+          project.states.create!(state_attributes)
         end
 
-        FactoryBot.create(:state, description: 'zample', recipe: one_of_the_project.recipe)
+        state_attributes[:description] = 'zample'
+        one_of_the_project.states.create!(state_attributes)
 
         [public_user_project, public_group_project,
-         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
+         private_user_project, deleted_user_project, one_of_the_project].each do |project|
+          project.update_draft!
+        end
       end
 
       include_examples '検索結果', 'sample'
@@ -211,11 +215,13 @@ describe GlobalProjectsController, type: :controller do
       include_context 'projects'
 
       before do
+        state_attributes = FactoryBot.attributes_for(:state, description: 'foobar')
         [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
-          FactoryBot.create(:state, description: 'foobar', recipe: project.recipe)
+          project.states.create!(state_attributes)
         end
 
-        FactoryBot.create(:state, description: 'foo', recipe: one_of_the_project.recipe)
+        state_attributes[:description] = 'foo'
+        one_of_the_project.states.create!(state_attributes)
 
         [public_user_project, public_group_project,
          private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)

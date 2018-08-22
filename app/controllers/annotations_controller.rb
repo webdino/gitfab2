@@ -49,7 +49,7 @@ class AnnotationsController < ApplicationController
     if annotation.blank?
       render_404
     else
-      state = annotation.to_state!(@project.recipe)
+      state = annotation.to_state!(@project)
       render json: {'$oid' => state.id}
     end
   end

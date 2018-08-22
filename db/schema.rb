@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_10_031932) do
+ActiveRecord::Schema.define(version: 2018_08_20_102730) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -42,13 +42,11 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
     t.text "description", limit: 4294967295
     t.string "type", null: false
     t.integer "position", default: 0, null: false
-    t.integer "recipe_id"
     t.integer "project_id"
     t.integer "state_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["project_id"], name: "index_cards_project_id"
-    t.index ["recipe_id"], name: "index_cards_recipe_id"
     t.index ["state_id"], name: "index_cards_on_state_id"
   end
 
@@ -189,13 +187,6 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
     t.index ["updated_at"], name: "index_projects_updated_at"
   end
 
-  create_table "recipes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.integer "project_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["project_id"], name: "index_recipes_project_id"
-  end
-
   create_table "tags", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id"
     t.integer "project_id"
@@ -227,7 +218,6 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
   add_foreign_key "card_comments", "cards"
   add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
-  add_foreign_key "cards", "recipes", name: "fk_cards_recipe_id"
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
   add_foreign_key "featured_items", "features", name: "fk_featured_items_feature_id"
@@ -237,7 +227,6 @@ ActiveRecord::Schema.define(version: 2018_08_10_031932) do
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
   add_foreign_key "project_comments", "projects"
   add_foreign_key "project_comments", "users"
-  add_foreign_key "recipes", "projects", name: "fk_recipes_project_id"
   add_foreign_key "tags", "projects"
   add_foreign_key "tags", "users", name: "fk_tags_user_id"
 end

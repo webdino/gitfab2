@@ -11,7 +11,7 @@ describe AnnotationsController, type: :controller do
   describe 'GET #new' do
     before do
       sign_in user
-      state = project.recipe.states.create type: Card::State.name, description: 'foo'
+      state = project.states.create type: Card::State.name, description: 'foo'
       get :new, params: { owner_name: user, project_id: project, state_id: state.id }, xhr: true
     end
     it { is_expected.to render_template :new }
@@ -20,7 +20,7 @@ describe AnnotationsController, type: :controller do
   describe 'GET #edit' do
     before do
       sign_in user
-      state = project.recipe.states.create type: Card::State.name, description: 'foo'
+      state = project.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
       get :edit, params: {
         owner_name: user, project_id: project, state_id: state.id, id: annotation.id
@@ -32,7 +32,7 @@ describe AnnotationsController, type: :controller do
   describe 'GET #show' do
     before do
       sign_in user
-      state = project.recipe.states.create type: Card::State.name, description: 'foo'
+      state = project.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
       get :show,
         params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
@@ -45,7 +45,7 @@ describe AnnotationsController, type: :controller do
     describe 'with correct parameters' do
       before do
         sign_in user
-        state = project.recipe.states.create type: Card::State.name, description: 'foo'
+        state = project.states.create type: Card::State.name, description: 'foo'
         post :create,
           params: { owner_name: user, project_id: project, state_id: state.id, annotation: { description: 'ann' } },
           xhr: true
@@ -58,7 +58,7 @@ describe AnnotationsController, type: :controller do
     describe 'with correct parameters' do
       before do
         sign_in user
-        state = project.recipe.states.create type: Card::State.name, description: 'foo'
+        state = project.states.create type: Card::State.name, description: 'foo'
         annotation = state.annotations.create description: 'ann'
         patch :update,
           params: {
@@ -72,7 +72,7 @@ describe AnnotationsController, type: :controller do
     describe 'with incorrect parameters' do
       before do
         sign_in user
-        state = project.recipe.states.create type: Card::State.name, description: 'foo'
+        state = project.states.create type: Card::State.name, description: 'foo'
         annotation = state.annotations.create description: 'ann'
         patch :update,
           params: {
@@ -88,7 +88,7 @@ describe AnnotationsController, type: :controller do
   describe 'DELETE #destroy' do
     before do
       sign_in user
-      state = project.recipe.states.create type: Card::State.name, description: 'foo'
+      state = project.states.create type: Card::State.name, description: 'foo'
       annotation = state.annotations.create description: 'ann'
       delete :destroy,
         params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
@@ -102,18 +102,18 @@ describe AnnotationsController, type: :controller do
     # describe "with correct parameters" do
     #   before do
     #     sign_in user
-    #     state = project.recipe.states.create type: Card::State.name, description: "foo"
+    #     state = project.states.create type: Card::State.name, description: "foo"
     #     annotation = state.annotations.create description: "ann"
     #     get :to_state,
     #       params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: annotation.id },
     #       xhr: true
     #   end
-    #   it{expect(project.recipe.states.first.annotations.length).to eq(0)}
+    #   it{expect(project.states.first.annotations.length).to eq(0)}
     # end
     describe 'with incorrect parameters' do
       before do
         sign_in user
-        state = project.recipe.states.create type: Card::State.name, description: 'foo'
+        state = project.states.create type: Card::State.name, description: 'foo'
         state.annotations.create description: 'ann'
         get :to_state,
           params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: 'unexisted_id' },

@@ -40,20 +40,15 @@ class Project < ApplicationRecord
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   has_many :likes, dependent: :destroy
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
+  has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy
   has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
-  has_one :recipe, dependent: :destroy
-
-  # TODO: Recipeは消す予定。段階的に移行するため`through: :recipe`している
-  has_many :states, ->{ order(:position) }, through: :recipe, class_name: 'Card::State', dependent: :destroy
-  accepts_nested_attributes_for :states
 
   before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
   after_create :ensure_a_figure_exists
-  after_create -> { create_recipe unless recipe }
   after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
@@ -76,6 +71,7 @@ class Project < ApplicationRecord
     projects
   end
 
+  accepts_nested_attributes_for :states
   accepts_nested_attributes_for :usages
 
   paginates_per 12
@@ -86,26 +82,22 @@ class Project < ApplicationRecord
 
   # このプロジェクトを owner のプロジェクトとしてフォークする
   def fork_for!(owner)
-    # 整合性を保つため1トランザクション内でデータを準備
-    transaction do
-      dup.tap do |project|
-        project.owner = owner
-        project.original = self
-        names = owner.projects.pluck :name
-        new_project_name = name.dup
-        if names.include? new_project_name
-          new_project_name << '-1'
-          new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
-        end
-        project.name = new_project_name
-        project.recipe = recipe.dup_document
-        project.figures = figures.map(&:dup_document)
-        project.likes = [] # reset counter
-        project.usages = []
-
-        project.save!
-        project.recipe.save!
+    dup.tap do |project|
+      project.owner = owner
+      project.original = self
+      names = owner.projects.pluck :name
+      new_project_name = name.dup
+      if names.include? new_project_name
+        new_project_name << '-1'
+        new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
       end
+      project.name = new_project_name
+      project.states = states.map(&:dup_document)
+      project.figures = figures.map(&:dup_document)
+      project.likes = [] # reset counter
+      project.usages = []
+
+      project.save!
     end
   end
 
@@ -206,10 +198,12 @@ class Project < ApplicationRecord
 
     def generate_draft
       lines = [name, title, description, owner.generate_draft]
+      states.each do |state|
+        lines << ActionController::Base.helpers.strip_tags(state.description)
+      end
       tags.each do |t|
         lines << t.generate_draft
       end
-      lines << recipe.generate_draft if recipe
       lines.join("\n")
     end
 

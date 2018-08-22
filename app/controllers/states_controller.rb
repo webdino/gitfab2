@@ -66,7 +66,7 @@ class StatesController < ApplicationController
     end
 
     def build_state
-      @state = @project.recipe.states.build(state_params)
+      @state = @project.states.build(state_params)
     end
 
     def state_params

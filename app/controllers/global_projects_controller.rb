@@ -3,7 +3,7 @@ class GlobalProjectsController < ApplicationController
 
   def index
     q = params[:q]
-    published_projects = Project.published.includes(:figures, :owner, :note_cards, recipe: :states)
+    published_projects = Project.published.includes(:figures, :owner, :note_cards, :states)
 
     if q.present?
       query = q.force_encoding 'utf-8'
@@ -37,7 +37,7 @@ class GlobalProjectsController < ApplicationController
       all_featured_projects = Feature.projects
       all_featured_projects.each do |project_group|
         ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.includes(:figures, :owner, :note_cards, recipe: :states)
+        featured_projects = Project.includes(:figures, :owner, :note_cards, :states)
                                    .where(id: ids).order(likes_count: :desc)
         project_groups[project_group.name] = featured_projects
       end

@@ -59,10 +59,8 @@ describe Project do
     let(:forker) { FactoryBot.create :user }
     let(:derivative_project) { project.fork_for! forker }
     before do
-      project.recipe.states.create type: Card::State.name,
-                                   title: 'a state', description: 'desc a'
-      project.recipe.states.create type: Card::State.name,
-                                   title: 'b state', description: 'desc b'
+      project.states.create!(type: Card::State.name, title: 'a state', description: 'desc a')
+      project.states.create!(type: Card::State.name, title: 'b state', description: 'desc b')
       project.reload
     end
     it { expect(derivative_project.owner).to eq forker }
@@ -199,7 +197,7 @@ describe Project do
       tag2 = project.tags.build(name: 'tag2', user_id: owner.id)
       tag2.save!
       project.update_draft!
-      expect(project.draft).to eq <<~EOS
+      expect(project.draft).to eq <<~EOS.chomp
         name
         title
         description

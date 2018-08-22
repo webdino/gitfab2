@@ -3,7 +3,7 @@
 describe Card::State do
   it_behaves_like 'Card', :state
   it_behaves_like 'Orderable', :state
-  it_behaves_like 'Orderable Scoped incrementation', [:state], :recipe
+  it_behaves_like 'Orderable Scoped incrementation', [:state], :project
 
   describe '.ordered_by_position' do
     let(:state) { FactoryBot.build :state }
@@ -15,13 +15,13 @@ describe Card::State do
 
     let(:state) { FactoryBot.create(:state) }
     let(:parent_state) { FactoryBot.create(:state) }
-    let(:recipe) { state.recipe }
+    let(:project) { state.project }
 
     it { is_expected.to be_an_instance_of(Card::Annotation) }
     it do
       expect{ subject }.to change{ state.type }.from(Card::State.name).to(Card::Annotation.name)
                       .and change{ parent_state.annotations.count }.by(1)
-                      .and change{ recipe.states.count }.by(-1)
+                      .and change{ project.states.count }.by(-1)
     end
   end
 

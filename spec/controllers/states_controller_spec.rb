@@ -4,7 +4,7 @@ describe StatesController, type: :controller do
   render_views
 
   let(:project) { FactoryBot.create :user_project }
-  let(:state) { project.recipe.states.create type: Card::State.name, description: 'foo' }
+  let(:state) { project.states.create type: Card::State.name, description: 'foo' }
   let(:new_state) { FactoryBot.build :state }
 
   subject { response }
@@ -65,7 +65,7 @@ describe StatesController, type: :controller do
 
   describe 'PATCH update' do
     context 'when updating the card itself' do
-      let!(:state) { project.recipe.states.create type: Card::State.name, description: 'foo' }
+      let!(:state) { project.states.create type: Card::State.name, description: 'foo' }
 
       before do
         sign_in project.owner
@@ -108,7 +108,7 @@ describe StatesController, type: :controller do
   end
 
   describe 'POST to_annotation' do
-    let(:state_2) { project.recipe.states.create type: Card::State.name, description: 'bar' }
+    let(:state_2) { project.states.create type: Card::State.name, description: 'bar' }
     before do
       sign_in project.owner
       post :to_annotation,

@@ -10,19 +10,16 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  project_id  :integer
-#  recipe_id   :integer
 #  state_id    :integer
 #
 # Indexes
 #
 #  index_cards_on_state_id  (state_id)
 #  index_cards_project_id   (project_id)
-#  index_cards_recipe_id    (recipe_id)
 #
 # Foreign Keys
 #
 #  fk_cards_project_id  (project_id => projects.id)
-#  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
 
 class Card::Annotation < Card
@@ -41,11 +38,11 @@ class Card::Annotation < Card
     state.project
   end
 
-  def to_state!(recipe)
+  def to_state!(project)
     update!(
       type: Card::State.name,
-      recipe_id: recipe.id,
-      position: Card::State.where(recipe_id: recipe.id).maximum(:position).to_i + 1
+      project_id: project.id,
+      position: Card::State.where(project_id: project.id).maximum(:position).to_i + 1
     )
     Card::State.find(id)
   end

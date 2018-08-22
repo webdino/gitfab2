@@ -11,19 +11,16 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  project_id  :integer
-#  recipe_id   :integer
 #  state_id    :integer
 #
 # Indexes
 #
 #  index_cards_on_state_id  (state_id)
 #  index_cards_project_id   (project_id)
-#  index_cards_recipe_id    (recipe_id)
 #
 # Foreign Keys
 #
 #  fk_cards_project_id  (project_id => projects.id)
-#  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
 
 FactoryBot.define do
@@ -49,7 +46,7 @@ FactoryBot.define do
   factory :state, class: Card::State, parent: :card do
     type { Card::State.name }
     sequence(:title) { |n| "State #{n}" }
-    recipe
+    project
   end
 
   factory :usage, class: Card::Usage, parent: :card do

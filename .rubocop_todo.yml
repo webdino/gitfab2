@@ -58,7 +58,6 @@ Layout/SpaceBeforeBlockBraces:
   Exclude:
     - 'app/controllers/annotations_controller.rb'
     - 'app/models/card/state.rb'
-    - 'app/models/recipe.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -187,7 +186,6 @@ Rails/HttpStatus:
     - 'app/controllers/note_cards_controller.rb'
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/projects_controller.rb'
-    - 'app/controllers/recipes_controller.rb'
     - 'app/controllers/states_controller.rb'
     - 'app/controllers/tags_controller.rb'
     - 'app/controllers/usages_controller.rb'
@@ -241,7 +239,6 @@ Style/DateTime:
     - 'app/controllers/annotations_controller.rb'
     - 'app/controllers/note_cards_controller.rb'
     - 'app/controllers/projects_controller.rb'
-    - 'app/controllers/recipes_controller.rb'
     - 'app/controllers/states_controller.rb'
     - 'app/controllers/usages_controller.rb'
 
@@ -296,7 +293,6 @@ Style/IfUnlessModifier:
     - 'app/controllers/note_cards_controller.rb'
     - 'app/controllers/notifications_controller.rb'
     - 'app/controllers/projects_controller.rb'
-    - 'app/controllers/recipes_controller.rb'
     - 'app/controllers/usages_controller.rb'
     - 'app/models/card.rb'
     - 'app/models/user.rb'

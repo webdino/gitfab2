@@ -145,9 +145,9 @@ describe ProjectsController, type: :controller do
     end
 
     let!(:project) { FactoryBot.create(:project, updated_at: 1.day.ago) }
-    let(:card1) { project.recipe.states.create!(description: 'foo', position: 1) }
-    let(:card2) { project.recipe.states.create!(description: 'foo', position: 2) }
-    let(:card3) { project.recipe.states.create!(description: 'foo', position: 3) }
+    let(:card1) { project.states.create!(description: 'foo', position: 1) }
+    let(:card2) { project.states.create!(description: 'foo', position: 2) }
+    let(:card3) { project.states.create!(description: 'foo', position: 3) }
 
     before { sign_in(project.owner) }
 

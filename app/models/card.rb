@@ -10,19 +10,16 @@
 #  created_at  :datetime
 #  updated_at  :datetime
 #  project_id  :integer
-#  recipe_id   :integer
 #  state_id    :integer
 #
 # Indexes
 #
 #  index_cards_on_state_id  (state_id)
 #  index_cards_project_id   (project_id)
-#  index_cards_recipe_id    (recipe_id)
 #
 # Foreign Keys
 #
 #  fk_cards_project_id  (project_id => projects.id)
-#  fk_cards_recipe_id   (recipe_id => recipes.id)
 #
 
 class Card < ApplicationRecord

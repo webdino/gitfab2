@@ -22,13 +22,13 @@ class Ability
       user.is_contributor_of?(annotation) || can?(:manage, annotation.state)
     end
     can :manage, Card::State do |card|
-      card.recipe && is_project_editor?(card.recipe.project, user)
+      can? :manage, card.project
     end
     can :manage, Card::NoteCard do |card|
       card.project && is_project_editor?(card.project, user)
     end
     can :read, Card::State do |card|
-      can? :read, card.recipe.project
+      can? :read, card.project
     end
     can :read, Card::NoteCard do |card|
       can? :read, card.project
@@ -54,8 +54,8 @@ class Ability
         !project.is_private ? true : is_project_editor?(project, user)
       end
     end
-    can :manage, Attachment do |pa|
-      can? :update, pa.recipe
+    can :manage, Attachment do |attachment|
+      can? :update, attachment.attachable
     end
     can :manage, Collaboration do |collabo|
       can? :manage, collabo.project
