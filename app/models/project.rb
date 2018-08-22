@@ -40,7 +40,7 @@ class Project < ApplicationRecord
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   has_many :likes, dependent: :destroy
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
-  has_many :states, ->{ order(:position) }, class_name: 'Card::State', dependent: :destroy
+  has_many :states, class_name: 'Card::State', dependent: :destroy
   has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
