@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   layout 'groups'
 
   before_action :build_group, only: [:new, :create]
-  before_action :load_group, only: [:show, :edit, :update, :destroy]
+  before_action :load_group, only: [:edit, :update, :destroy]
 
   authorize_resource
 
