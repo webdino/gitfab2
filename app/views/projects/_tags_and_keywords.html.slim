@@ -1,0 +1,44 @@
+#tags-and-keywords
+  .container
+    .left
+      .tags-wrapper
+        h1.title
+          'Tags
+        .tags.selected-tags
+          - @selected_tags.each do |tag_name|
+            .tag
+              = link_to tag_name, "/search?q=#{tag_name}"
+
+          .show-all.btn
+            'Show All Tags
+
+        .tags.all-tags
+          - @all_tags.each do |tag_name|
+            .tag
+              = link_to tag_name, "/search?q=#{tag_name}"
+
+          .show-selected.btn
+            'Show Selected Tags
+
+    .right
+      .materials-wrapper
+        h1.title
+          'Materials
+        .materials
+          - @selected_materials.each do |material_name|
+            .material
+              = link_to material_name, "/search?q=#{material_name}"
+
+      .tools-wrapper
+        h1.title
+          'Tools
+        .tools
+          - @selected_tools.each do |tool_name|
+            .tool
+              = link_to tool_name, "/search?q=#{tool_name}"
+
+  - if current_page?(controller: 'projects', action: 'index')
+    .label.lang-en
+      'Recent Projects
+    .label.lang-jp
+      '最近のプロジェクト

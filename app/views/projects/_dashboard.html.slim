@@ -2,7 +2,7 @@
   .container
     ul.links
       li.link.create-project
-        = link_to new_project_path do
+        = link_to new_project_path(owner_name: current_user.slug) do
           .image-wrapper
             .image.create_project
           .title Create New Project
@@ -25,6 +25,8 @@
             = image_tag current_user.avatar.small.url, class: "image"
           .title See Your Projects
 
-    - unless @is_searching
-      .label
+    - if current_page?(controller: 'projects', action: 'index')
+      .label.lang-en
         'Featured Projects
+      .label.lang-jp
+        '注目のプロジェクト

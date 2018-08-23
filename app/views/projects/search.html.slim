@@ -1,0 +1,18 @@
+- content_for(:title, "Search : #{request.url.split('q=').last}")
+
+#index
+  - if current_user
+    = render partial: "dashboard"
+  - else
+    - if session["auth.failed.error"].present?
+      #error_explanation
+        h2
+          'Login error:
+          = session["auth.failed.error"]
+          - session.delete("auth.failed.error")
+
+  = render partial: "searched_projects"
+  = render partial: "tags_and_keywords"
+
+  - unless current_user
+    = render partial: "sign_up_pane"

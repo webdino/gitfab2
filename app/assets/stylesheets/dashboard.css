@@ -2,6 +2,7 @@
  *= require_self
  *= require_tree ./shared
  *= require_tree ./layouts
+ *= require_tree ./owners
  *= require_tree ./projects
  *= require_tree ./users
  *= require_tree ./groups

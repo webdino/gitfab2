@@ -4,6 +4,7 @@
  *= require slick-theme
  *= require_tree ./shared
  *= require_tree ./layouts
+ *= require_tree ./mixins
  *= require_tree ./projects
  *= require jquery.colorbox-example3
  *= require ./card

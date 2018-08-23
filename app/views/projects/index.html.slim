@@ -1,0 +1,51 @@
+#index
+  - if current_user
+    = render partial: "dashboard"
+  - else
+    - if session["auth.failed.error"].present?
+      #error_explanation
+        h2
+          'Login error:
+          = session["auth.failed.error"]
+          - session.delete("auth.failed.error")
+
+    #lang
+      span.lang.en.is-selected EN
+      span
+        '/
+      span.lang.jp JP
+
+    #splash-wrapper style="background: url(#{BackgroundImage.find&.request_uri || image_path('background.jpg')}) center center no-repeat"
+      .container.lang-en
+        .text
+          h1.main-copy
+            'Making stories of Making something
+          .sub-copy
+            'New Platform to Share Fab Projects all over the world
+        .sign-up
+          = link_to "", sessions_path, class: "sign-up-btn"
+
+      .container.lang-jp
+        .text
+          h1.main-copy
+            'つくる・つたえる
+          .sub-copy
+            '世界中のFabプロジェクトのためのプラットフォーム
+        .sign-up
+          = link_to "", sessions_path, class: "sign-up-btn-jp"
+
+      .label.lang-en
+        'About
+      .label.lang-jp
+        'Fabble の特長
+
+    = render partial: "functions"
+    = render partial: "occasions"
+
+  = render partial: "featured_projects"
+  = render partial: "featured_groups"
+  = render partial: "tags_and_keywords"
+  = render partial: "recent_projects"
+
+  - unless current_user
+    = render partial: "sign_up_pane"
