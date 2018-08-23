@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  match 'about' => 'static_pages#about', via: :get
-  match 'terms' => 'static_pages#terms', via: :get
-  match 'privacy' => 'static_pages#privacy', via: :get
+  get 'about', to: 'static_pages#about'
+  get 'terms', to: 'static_pages#terms'
+  get 'privacy', to: 'static_pages#privacy'
 
   namespace :admin do
     root 'dashboard#index'
@@ -9,21 +9,21 @@ Rails.application.routes.draw do
       resources :featured_items
     end
     resources :projects, via: %i(get put delete)
-    get 'background' => 'background#index', as: :background
-    put 'background' => 'background#update'
+    get 'background', to: 'background#index', as: :background
+    put 'background', to: 'background#update'
   end
 
   root 'projects#index'
 
   if Rails.env.development? || Rails.env.test?
-    match 'su' => 'development#su', via: :post
+    post 'su', to: 'development#su'
   end
 
   resources :sessions, only: [:index, :create]
   get '/users/auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  match 'search' => 'projects#search', via: :get
+  get 'search', to: 'projects#search'
 
   resources :cards, only: [] do
     resources :card_comments, only: :create
