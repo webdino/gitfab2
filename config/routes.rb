@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   get '/users/auth/:provider/callback', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  match 'home' => 'owner_projects#index', via: :get
   match 'search' => 'projects#search', via: :get
 
   resources :cards, only: [] do
