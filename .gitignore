@@ -49,3 +49,5 @@ Gemfile.local.lock
 node_modules
 
 gemfiles/*.lock
+
+public/javascripts/dist/
