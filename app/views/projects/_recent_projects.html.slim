@@ -3,8 +3,3 @@
     ul#recent-projects.projects
       - @projects.each do |project|
         = render "project", project: project
-
-    - if @projects.present? && @projects.count > 12
-
-      .more
-        = link_to "→ More Projects", "/?page=2&q=", class: "more-projects"
