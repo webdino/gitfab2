@@ -5,6 +5,7 @@ set :repo_url, 'https://github.com/webdino/gitfab2.git'
 set :rvm_type, :system
 set :rvm_ruby_version, '2.5.1'
 set :assets_roles, [:web, :app]
+set :npm_flags, '--silent --no-progress' # Not use --production to install devDependencies
 
 if ENV['DEPLOY_BRANCH']
   set :branch, ENV['DEPLOY_BRANCH']

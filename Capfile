@@ -6,4 +6,4 @@ require "capistrano/rails"
 require "capistrano/scm/git"
 install_plugin Capistrano::SCM::Git
 #require "capistrano/delayed-job"
-Dir.glob("lib/capistrano/tasks/*.cap").map &:import
+Dir.glob("lib/capistrano/tasks/*.rake").each{ |task| import(task) }
