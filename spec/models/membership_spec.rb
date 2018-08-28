@@ -38,4 +38,25 @@ describe Membership do
       it { is_expected.to eq true }
     end
   end
+
+  describe 'after_destroy' do
+    group = FactoryBot.create(:group)
+    membership = FactoryBot.create(:membership, group: group)
+
+    context 'when group has no members' do
+      before { allow(group).to receive_message_chain(:members, :none?).and_return(true) }
+      it do
+        expect(group).to receive(:soft_destroy!)
+        membership.destroy
+      end
+    end
+
+    context 'when group has some members' do
+      before { allow(group).to receive_message_chain(:members, :none?).and_return(false) }
+      it do
+        expect(group).not_to receive(:soft_destroy!)
+        membership.destroy
+      end
+    end
+  end
 end

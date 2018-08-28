@@ -1,6 +1,7 @@
 - content_for(:title, "Edit Profile")
 
 #users-edit
+
   = render partial: "form", locals: { user: @user }
 
   .panel
@@ -44,3 +45,6 @@
         - else
           = link_to_facebook_sign_in
 
+  .panel
+    h1 アカウントを削除する
+    = link_to "Delete", user_path, method: :delete, class: "btn", id: "delete-btn", data: { confirm: "本当にアカウントを削除しますか?" }

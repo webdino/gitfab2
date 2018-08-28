@@ -20,6 +20,7 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
+  after_destroy -> { group.soft_destroy! }, if: -> { group.members.none? }
   validates :role, presence: true, inclusion: { in: ROLE.values }
 
   Membership::ROLE.keys.each do |role|

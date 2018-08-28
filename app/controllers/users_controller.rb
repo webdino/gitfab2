@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   layout 'user'
 
   def index
-    @users = User.order(:name) # TODO: ユーザー名による絞り込み
+    @users = User.active.order(:name) # TODO: ユーザー名による絞り込み
   end
 
   def new
@@ -55,9 +55,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(current_user.id)
-    @user.destroy
+    user = User.find(current_user.id)
+    user.resign!
+    self.current_user = nil
     redirect_to root_path
+  rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordNotDestroyed
+    redirect_to edit_user_path, flash: { alert: 'User has not been deleted.' }
   end
 
   def update_password
