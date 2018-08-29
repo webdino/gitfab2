@@ -48,7 +48,6 @@ class Project < ApplicationRecord
   before_save :set_draft
 
   after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
-  after_create :ensure_a_figure_exists
   after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
@@ -129,12 +128,15 @@ class Project < ApplicationRecord
   end
 
   def thumbnail
-    if figures.first.link.present?
-      'https://img.youtube.com/vi/' + figures.first.link.split('/').last + '/mqdefault.jpg'
-    elsif figures.first.content.present?
-      figures.first.content.small.url
+    figure = figures.first
+    return thumbnail_fallback_path unless figure
+
+    if figure.link.present?
+      "https://img.youtube.com/vi/#{figures.first.link.split('/').last}/mqdefault.jpg"
+    elsif figure.content.present?
+      figure.content.small.url
     else
-      '/images/fallback/blank.png'
+      thumbnail_fallback_path
     end
   end
 
@@ -142,6 +144,10 @@ class Project < ApplicationRecord
     thumbnail.yield_self do |path|
       path.start_with?('https') ? path : "#{asset_host}#{path}"
     end
+  end
+
+  def thumbnail_fallback_path
+    "/images/fallback/blank.png"
   end
 
   def collaborators
@@ -191,10 +197,6 @@ class Project < ApplicationRecord
   end
 
   private
-
-    def ensure_a_figure_exists
-      figures.create if figures.none?
-    end
 
     def generate_draft
       lines = [name, title, description, owner.generate_draft]
