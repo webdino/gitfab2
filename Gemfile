@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 5.2.0'
 
+gem 'active_decorator'
 gem 'acts_as_list'
 gem 'bcrypt', require: false
 gem 'cancancan'

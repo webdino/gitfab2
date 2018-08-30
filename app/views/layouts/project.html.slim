@@ -3,28 +3,7 @@
 - content_for :javascript do
   = javascript_include_tag "project"
 - content_for :ogp do
-
-  - if @project&.persisted?
-
-    ruby:
-      title = "#{@project.title} by #{@project.owner.name}"
-      description = @project.description
-      image = nil
-      video = nil
-      if @project.figures.present?
-        if @project.figures.first.content.present?
-          image = "#{request.base_url}#{@project.figures.first.content.url}"
-          video = nil
-        elsif @project.figures.first.link.present?
-          image = @project.thumbnail_url(request.base_url)
-          video = @project.figures.first.link
-        end
-      end
-
-    = render partial: "components/base_ogp",
-             locals: {title: title, description: description, image: image, video: video}
-  - else
-    = render partial: "components/base_ogp"
+  = render partial: "components/base_ogp", locals: { model: @project }
 
 - content_for :content do
   - if @project&.original.present? || @project&.derivatives.present?
