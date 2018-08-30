@@ -69,8 +69,7 @@ section#basic-informations
 
     section.license
       ruby:
-        index = @project.license.nil? ? 3 : @project.license
-        license = @project.licenses[index]
+        license = @project.licenses[@project.license]
         image = 'cc/' + license + '.png'
         url = 'https://creativecommons.org/licenses/' + license + '/4.0'
         project_members = @project.collaborators.unshift @project.owner
@@ -87,7 +86,7 @@ section#basic-informations
         project_member_links.map{|link| text += link + ', '}
         text.chop!.chop!
         text += ' is licensed under the '
-        text += link_to(license_texts[index], url) + ' license.'
+        text += link_to(license_texts[@project.license], url) + ' license.'
 
       .title License
       = link_to image_tag(image, class: 'license-image'), url, target: '_blank'

@@ -7,7 +7,7 @@
 #  draft       :text(65535)
 #  is_deleted  :boolean          default(FALSE), not null
 #  is_private  :boolean          default(FALSE), not null
-#  license     :integer
+#  license     :integer          not null
 #  likes_count :integer          default(0), not null
 #  name        :string(255)      not null
 #  owner_type  :string(255)      not null
@@ -53,6 +53,7 @@ class Project < ApplicationRecord
   validates :name, presence: true, name_format: true
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
+  validates :license, presence: true
 
   scope :noted, -> do
     note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")

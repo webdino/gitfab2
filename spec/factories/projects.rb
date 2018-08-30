@@ -8,7 +8,7 @@
 #  draft       :text(65535)
 #  is_deleted  :boolean          default(FALSE), not null
 #  is_private  :boolean          default(FALSE), not null
-#  license     :integer
+#  license     :integer          not null
 #  likes_count :integer          default(0), not null
 #  name        :string(255)      not null
 #  owner_type  :string(255)      not null
@@ -35,6 +35,7 @@ FactoryBot.define do
     name { "project-#{SecureRandom.hex 10}" }
     title { SecureRandom.uuid }
     description { SecureRandom.uuid }
+    license { 3 }
     is_deleted { false }
 
     trait :public do

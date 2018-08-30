@@ -93,10 +93,9 @@
             .form-title
               'License
             = f.hidden_field :license
-            - license_index = f.object.license.nil? ? 3 : f.object.license
             - parent_license_index = @project.original.nil? ? 0 : @project.original.license
             - @project.licenses.each_with_index do |license, index|
-              - clazz = index == license_index ? "selected" : ""
+              - clazz = index == f.object.license ? "selected" : ""
               - clazz += " unselectable" if index < parent_license_index
               - image = "cc/" + license + ".png"
               = image_tag(image, class: "#{clazz}", id: "license-#{index}")
