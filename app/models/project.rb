@@ -49,10 +49,7 @@ class Project < ApplicationRecord
 
   before_save :set_draft
 
-  after_initialize -> do
-    self.name ||= SecureRandom.uuid
-    self.license ||= 'by'
-  end, if: -> { new_record? && name.blank? }
+  after_initialize -> { self.license ||= 'by' }
 
   after_commit -> { owner.update_projects_count }
 
