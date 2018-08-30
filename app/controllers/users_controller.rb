@@ -48,20 +48,20 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.friendly.find(params[:id])
+    @user = User.find(current_user.id)
   end
 
   def update
-    @user = User.friendly.find(params[:id])
+    @user = User.find(current_user.id)
     if @user.update(user_params)
-      redirect_to [:edit, @user], notice: 'User profile was successfully updated.'
+      redirect_to edit_user_path, notice: 'User profile was successfully updated.'
     else
       render action: 'edit'
     end
   end
 
   def destroy
-    @user = User.friendly.find(params[:id])
+    @user = User.find(current_user.id)
     @user.destroy
     redirect_to root_path
   end
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 
     if user.update(password: params[:password], password_confirmation: params[:password_confirmation])
       flash[:success] = "パスワードを更新しました"
-      redirect_to edit_user_path(id: user.name)
+      redirect_to edit_user_path
     else
       flash.now[:alert] = "パスワードの更新に失敗しました"
       @update_password_error_messages = user.errors.full_messages

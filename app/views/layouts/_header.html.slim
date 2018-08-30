@@ -32,7 +32,7 @@ section#layouts-header
                 .notifications-badge
                   .inner
                     = unread_notifications_count
-            = link_to "", edit_user_path(current_user), title: "Setting", class: "icon settings"
+            = link_to "", edit_user_path, title: "Setting", class: "icon settings"
             = link_to "", "/logout", method: :delete, title: "Logout", class: "icon logout"
 
         #notifications-index.hidden

@@ -97,20 +97,22 @@ describe UsersController, type: :controller do
   end
 
   describe 'GET edit' do
-    subject { get :edit, params: { id: user } }
+    subject { get :edit }
     let(:user) { FactoryBot.create(:user) }
+    before { sign_in(user) }
     it { is_expected.to be_successful }
   end
 
   describe 'PATCH update' do
-    subject { patch :update, params: { id: user, user: user_params } }
+    subject { patch :update, params: { user: user_params } }
     let(:user) { FactoryBot.create(:user, name: 'before') }
+    before { sign_in(user) }
 
     context 'with valid params' do
       let(:user_params) { { name: 'after' } }
       it do
         expect{ subject }.to change{ user.reload.name }.from('before').to('after')
-        is_expected.to redirect_to edit_user_path(user)
+        is_expected.to redirect_to edit_user_path
       end
     end
 
@@ -126,6 +128,8 @@ describe UsersController, type: :controller do
   describe 'DELETE destroy' do
     subject { delete :destroy, params: { id: user } }
     let!(:user) { FactoryBot.create(:user) }
+    before { sign_in(user) }
+
     it do
       expect{ subject }.to change{ User.count }.by(-1)
       is_expected.to redirect_to root_path
@@ -139,7 +143,7 @@ describe UsersController, type: :controller do
       let(:user) { FactoryBot.create(:user, password_digest: nil) }
       let(:params) { { user_id: user.name, password: 'password', password_confirmation: 'password' } }
 
-      it { is_expected.to redirect_to edit_user_path(id: user.name) }
+      it { is_expected.to redirect_to edit_user_path }
       it { expect{ subject }.to change{ user.reload.password_digest }.from(nil).to(String) }
     end
 
@@ -164,7 +168,7 @@ describe UsersController, type: :controller do
 
         context 'when password and password_confirmation are the same' do
           let(:password_confirmation) { password }
-          it { is_expected.to redirect_to edit_user_path(id: user.name) }
+          it { is_expected.to redirect_to edit_user_path }
           it { expect{ subject }.to change{ user.reload.password_digest } }
         end
 
