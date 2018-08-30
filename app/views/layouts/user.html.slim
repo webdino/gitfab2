@@ -2,8 +2,6 @@
   = stylesheet_link_tag "user"
 - content_for :javascript do
   = javascript_include_tag "user"
-- content_for :ogp do
-  = render partial: "components/base_ogp", locals: { model: @user }
 
 - content_for :content do
   #content

@@ -2,8 +2,6 @@
   = stylesheet_link_tag "groups"
 - content_for :javascript do
   = javascript_include_tag "groups"
-- content_for :ogp do
-  = render partial: "components/base_ogp", locals: { model: @group }
 
 - content_for :content do
   #content
