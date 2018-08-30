@@ -35,7 +35,7 @@ FactoryBot.define do
     name { "project-#{SecureRandom.hex 10}" }
     title { SecureRandom.uuid }
     description { SecureRandom.uuid }
-    license { 3 }
+    license { Project.licenses.keys.sample }
     is_deleted { false }
 
     trait :public do

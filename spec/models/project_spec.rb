@@ -7,6 +7,10 @@ describe Project do
   let(:user1) { FactoryBot.create :user }
   let(:user2) { FactoryBot.create :user }
 
+  it '.licenses' do
+    expect(Project.licenses).to eq({ 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 })
+  end
+
   describe '.noted' do
     subject { Project.noted }
 
@@ -176,10 +180,6 @@ describe Project do
   describe '#thumbnail_fallback_path' do
     let(:project) { Project.new }
     it { expect(project.thumbnail_fallback_path).to eq '/images/fallback/blank.png' }
-  end
-
-  it '#licenses' do
-    expect(project.licenses).to contain_exactly('by', 'by-sa', 'by-nc', 'by-nc-sa')
   end
 
   describe '#update_draft!' do

@@ -68,30 +68,10 @@ section#basic-informations
       = render "collaborations/list"
 
     section.license
-      ruby:
-        license = @project.licenses[@project.license]
-        image = 'cc/' + license + '.png'
-        url = 'https://creativecommons.org/licenses/' + license + '/4.0'
-        project_members = @project.collaborators.unshift @project.owner
-        project_member_links = project_members.map{|member| link_to(member.name, owner_path(owner_name: member.slug))}
-
-        license_texts = [
-          'Creative Commons - Attribution',
-          'Creative Commons - Attribution-ShareAlike',
-          'Creative Commons - Attribution-NonCommercial',
-          'Creative Commons - Attribution-NonCommercial-ShareAlike'
-        ]
-
-        text = link_to(@project.title, project_path(@project.owner, @project)) + ' by '
-        project_member_links.map{|link| text += link + ', '}
-        text.chop!.chop!
-        text += ' is licensed under the '
-        text += link_to(license_texts[@project.license], url) + ' license.'
-
       .title License
-      = link_to image_tag(image, class: 'license-image'), url, target: '_blank'
+      = link_to image_tag("cc/#{@project.license}.png", class: 'license-image'), @project.license_url, target: '_blank'
       .text
-        == text
+        == @project.license_message
 
     section.description
       .title Summary

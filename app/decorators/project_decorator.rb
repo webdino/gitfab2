@@ -1,4 +1,13 @@
+# frozen_string_literal: true
+
 module ProjectDecorator
+  LICENSE_NAMES = {
+    "by" => "Creative Commons - Attribution",
+    "by-sa" => "Creative Commons - Attribution-ShareAlike",
+    "by-nc" => "Creative Commons - Attribution-NonCommercial",
+    "by-nc-sa" => "Creative Commons - Attribution-NonCommercial-ShareAlike"
+  }
+
   def first_figure
     @first_figure ||= figures.first
   end
@@ -17,5 +26,20 @@ module ProjectDecorator
 
   def ogp_video
     first_figure&.link
+  end
+
+  def parent_license_index
+    original ? Project.licenses[original.license] : 0
+  end
+
+  def license_url
+    "https://creativecommons.org/licenses/#{license}/4.0"
+  end
+
+  def license_message
+    project_link = link_to(title, project_path(owner, self))
+    member_links = collaborators.unshift(owner).map{ |member| link_to(member.name, owner_path(member)) }.join(", ")
+    license_link = link_to(LICENSE_NAMES[license], license_url, target: "_blank")
+    "#{project_link} by #{member_links} is licensed under the #{license_link} license."
   end
 end

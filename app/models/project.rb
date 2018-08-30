@@ -45,9 +45,15 @@ class Project < ApplicationRecord
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
 
+  enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
+
   before_save :set_draft
 
-  after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
+  after_initialize -> do
+    self.name ||= SecureRandom.uuid
+    self.license ||= 'by'
+  end, if: -> { new_record? && name.blank? }
+
   after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
@@ -155,10 +161,6 @@ class Project < ApplicationRecord
     users = User.joins(:collaborations).where('collaborations.project_id' => id)
     groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
     users + groups
-  end
-
-  def licenses
-    ['by', 'by-sa', 'by-nc', 'by-nc-sa']
   end
 
   def soft_destroy

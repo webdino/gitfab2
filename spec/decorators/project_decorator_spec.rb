@@ -45,4 +45,26 @@ describe ProjectDecorator do
     let!(:figure) { FactoryBot.create(:link_figure, figurable: project) }
     it { expect(project.ogp_video).to eq figure.link }
   end
+
+  describe "#parent_license_index" do
+    subject { project.parent_license_index }
+
+    context "when forked project" do
+      let(:original) { FactoryBot.create(:project, license: "by-nc") }
+      before { project.update!(original: original) }
+      it { is_expected.to eq Project.licenses[original.license] }
+    end
+
+    context "when original project" do
+      it { is_expected.to eq 0 }
+    end
+  end
+
+  describe "#license_url" do
+    let!(:project) { Project.new(license: license).extend(ProjectDecorator) }
+    let(:license) { "by-nc" }
+    it { expect(project.license_url).to eq "https://creativecommons.org/licenses/#{license}/4.0" }
+  end
+
+  describe "#license_message"
 end
