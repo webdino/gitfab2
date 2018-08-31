@@ -19,6 +19,8 @@ class Figure < ApplicationRecord
   mount_uploader :content, FigureUploader
   belongs_to :figurable, polymorphic: true
 
+  before_save :format_youtube_link
+
   def dup_document
     dup.tap do |doc|
       doc.content = content&.file
@@ -30,4 +32,16 @@ class Figure < ApplicationRecord
       [:id, :link, :content, :_destroy]
     end
   end
+
+  private
+
+    # YouTubeのURLを埋め込み可能な形式に置き換える
+    def format_youtube_link
+      return if link.nil? || !link.include?("youtube.com")
+      query = URI(link).query
+      return unless query
+      youtube_id = CGI::parse(query)["v"][0]
+      return unless youtube_id
+      self.link = "https://www.youtube.com/embed/#{youtube_id}"
+    end
 end

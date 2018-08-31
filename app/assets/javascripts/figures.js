@@ -5,13 +5,6 @@ $(function() {
   const YOUTUBE_WATCH_URL_REGEXP = new RegExp(`https?:\\/\\/(?:(?:youtu\\.be\\/)|(?:www\\.)?(?:youtube\\.com\\/watch\\?v=))([^&]{${YOUTUBE_ID_LENGTH},})(&\\S*)?$`);
   const VIDEOID_MATCH_INDEX = 1;
 
-  const embedVideo = function(url) {
-    const matched = url.match(YOUTUBE_WATCH_URL_REGEXP);
-    const video_id = matched[VIDEOID_MATCH_INDEX];
-    const embed_url = YOUTUBE_EMBED_URL_BASE + video_id;
-    $(".card-figure-link").last().val(embed_url);
-  };
-
   const getVideoOf = function(object) {
     const id = object === "card" ? "#inner_content" : "main#recipes-edit";
     const url = $(".card-figure-link").last().val();
@@ -115,27 +108,6 @@ $(function() {
     const figures = figure_list.find(".figure");
     figures.each((index, element) => $(element).find(".delete.btn").find("a").trigger("click"));
     figure_list.removeClass("hide-add-buttons");
-  });
-
-  $(document).on("click", "#inner_content .submit", function(event) {
-    const url = $(".card-figure-link:visible").last().val();
-    if (url) {
-      event.preventDefault();
-      embedVideo(url);
-      $(event.target).submit();
-    }
-  });
-
-  $(document).on("click", "main#recipes-edit .submit", function(event) {
-    const url = $(".card-figure-link:visible").last().val();
-    if (url) {
-      event.preventDefault();
-      embedVideo(url);
-      $("form.project-form").submit();
-    } else {
-      event.preventDefault();
-      $("form.project-form").submit();
-    }
   });
 
   $(document).on("keyup change", "#inner_content .card-figure-link", () => getVideoOf("card"));
