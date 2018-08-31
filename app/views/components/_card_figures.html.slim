@@ -10,7 +10,7 @@ ruby:
   - if card.figures.first.content.present?
     - if card.figures.count + stl_file_num > 1
       figure
-        ul.slides.slick
+        ul.slick
           - card.figures.each do |figure|
             li
               - if defined? note_card_show
@@ -45,7 +45,7 @@ ruby:
 
   - if stl_file_num > 0
     figure
-      ul.slides.slick
+      ul.slick
         - card.attachments.each do |attachment|
           - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
             li
