@@ -1,9 +1,0 @@
-- if can? :manage, group
-  #new-membership
-    h2.title
-      'Add Member
-
-    = form_tag group_members_path(group_id: group.id), method: "post", id: "new_member", remote: true
-    = select_tag :member_name
-    = select_tag :role, options_for_select(Membership::ROLE)
-    = submit_tag "add", id: "add-btn", class: "btn"
