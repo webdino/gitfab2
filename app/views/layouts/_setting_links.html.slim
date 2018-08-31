@@ -2,7 +2,7 @@
   .user-account.account
     h1.title ACCOUNT
     .user
-      = link_to [:edit, current_user] do
+      = link_to edit_user_path do
         .inner
           = image_tag current_user.avatar.thumb.url, class: "avatar"
           .name
