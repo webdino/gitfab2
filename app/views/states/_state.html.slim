@@ -6,7 +6,7 @@ article class="card state" data-position="#{state.position}" id="#{state.id}"
     .card-content
       .header
         h2.title
-          = link_to (state.title || "State #{state.position}"), "#state-#{state.id}", id: "state-#{state.id}", class: "anchor"
+          = link_to (state.title.presence || "State #{state.position}"), "#state-#{state.id}", id: "state-#{state.id}", class: "anchor"
         .control
           - if can? :manage, state
             - edit_url = edit_project_state_path(owner_name: @owner.slug, project_id: @project.name, id: state.id)

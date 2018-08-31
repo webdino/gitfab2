@@ -8,7 +8,7 @@ article class="card annotation" data-position="#{annotation.position}" id="#{ann
   .card-content
     .header
       h2.title
-        = link_to (annotation.title || "Annotation without title"), "#annotation-#{annotation.id}", id: "annotation-#{annotation.id}"
+        = link_to (annotation.title.presence || "Annotation without title"), "#annotation-#{annotation.id}", id: "annotation-#{annotation.id}"
       .control
         - if can? :manage, annotation
           = link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
