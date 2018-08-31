@@ -4,7 +4,7 @@
       .slick
         - card.figures.each do |figure|
           - if defined? note_card_show
-            = image_tag figure.content.medium.url, data: {groupname: card.id}, class: card.id
+            = image_tag figure.content.medium.url, data: {groupname: card.id}, class: "clickable-img #{card.id}"
           - else
             = image_tag figure.content.small.url, data: {groupname: card.id}, class: "clickable-img #{card.id}"
 

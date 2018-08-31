@@ -1,9 +1,14 @@
 @import "mixins/clearfix";
+@import "mixins/clickable";
 @import "mixins/variables";
 @import "mixins/slick";
 @import "projects/_project_variables";
 
 #note-cards {
+  .clickable-img {
+    @include clickable;
+    width: 100%;
+  }
   width: $content_width;
   a:not(.btn) {
     color: $common-basic-color;
