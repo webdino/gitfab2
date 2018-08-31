@@ -1,37 +1,17 @@
-ruby:
-  stl_file_num = 0
-  card.attachments.each do |attachment|
-    if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-      stl_file_num += 1
-    end
-  end
-
 - if card.figures.present?
   - if card.figures.first.content.present?
-    - if card.figures.count + stl_file_num > 1
-      figure
-        ul.slick
-          - card.figures.each do |figure|
-            li
-              - if defined? note_card_show
-                = image_tag figure.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
-              - else
-                = image_tag figure.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+    figure
+      .slick
+        - card.figures.each do |figure|
+          - if defined? note_card_show
+            = image_tag figure.content.medium.url, data: {groupname: card.id}, class: card.id
+          - else
+            = image_tag figure.content.small.url, data: {groupname: card.id}, class: "clickable-img #{card.id}"
 
-          - card.attachments.each do |attachment|
-            - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-
-              li
-                - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                  = image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
-
-    - else
-      figure
-        - if defined? note_card_show
-          = image_tag card.figures.first.content.medium.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
-        - else
-          = image_tag card.figures.first.content.small.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
-
+        - card.attachments.each do |attachment|
+          - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+            - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
+              = image_tag attachment.content.tmp.url, data: {stl: attachment.content.url}, class: "clickable-img #{card.id} stl"
 
   - elsif card.figures.first.link.present?
     figure
@@ -43,11 +23,18 @@ ruby:
       figure class = "#{card.class.to_s.underscore}"
         = image_tag("/images/fallback/blank.png")
 
+  ruby:
+    stl_file_num = 0
+    card.attachments.each do |attachment|
+      if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+        stl_file_num += 1
+      end
+    end
+
   - if stl_file_num > 0
     figure
-      ul.slick
+      .slick
         - card.attachments.each do |attachment|
           - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-            li
-              - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                = image_tag attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
+            - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
+              = image_tag attachment.content.tmp.url, data: {stl: attachment.content.url}, class: "clickable-img #{card.id} stl"
