@@ -18,11 +18,6 @@
       iframe src="#{card.figures.first.link}"
 
 - else
-  - unless defined? note_card_show
-    - if card.class.to_s.underscore.include? "note"
-      figure class = "#{card.class.to_s.underscore}"
-        = image_tag("/images/fallback/blank.png")
-
   ruby:
     stl_file_num = 0
     card.attachments.each do |attachment|
