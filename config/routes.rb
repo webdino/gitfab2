@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   end
 
   resources :users, except: [:show, :edit, :update, :destroy] do
-    resources :memberships, only: [:index, :destroy]
+    resources :memberships, only: [:index, :update, :destroy]
     resources :notifications do
       get 'mark_all_as_read', on: :collection
     end

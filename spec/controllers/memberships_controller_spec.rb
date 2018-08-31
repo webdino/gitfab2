@@ -13,6 +13,29 @@ describe MembershipsController, type: :controller do
     it { is_expected.to render_template :index }
   end
 
+  describe 'PATCH update' do
+    subject { patch :update, params: { user_id: user.id, id: membership.id, membership: params } }
+    let(:membership) { FactoryBot.create(:membership) }
+    let(:user) { membership.user }
+    before { sign_in user }
+
+    context 'with valid params' do
+      let(:params) { { role: 'admin' } }
+      it do
+        subject
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true })
+      end
+    end
+
+    context 'with valid params' do
+      let(:params) { { role: 'invalid' } }
+      it do
+        subject
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
+      end
+    end
+  end
+
   describe 'DELETE destroy' do
     context 'when a user destroyed own membership' do
       before do

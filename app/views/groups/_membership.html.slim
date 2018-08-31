@@ -4,7 +4,7 @@ li.membership
     = link_to membership.user.name, owner_path(owner_name: membership.user.slug)
   - if can?(:manage, membership) && membership.user != current_user
     = link_to "remove", [membership.user, membership], method: :delete, remote: true, class: "remove-member-btn btn"
-    = form_for [membership.user, membership], remote: true do |f|
+    = form_for [membership.user, membership], method: :patch, remote: true do |f|
       = f.hidden_field :user_id, value: membership.user.name
       = f.select :role, Membership::ROLE, {selected: membership.role}, class: "membership-role", "data-persisted-role" => membership.role
       = f.submit "apply"

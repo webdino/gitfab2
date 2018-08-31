@@ -43,8 +43,7 @@
       reader.readAsDataURL file
 
     $(document).on "change", ".membership-role", (event) ->
-      event.preventDefault()
-      $(this).submit()
+      Rails.fire(event.target.form, "submit")
 
     $(document).on "click", ".remove-member-btn", (event) ->
       event.preventDefault
