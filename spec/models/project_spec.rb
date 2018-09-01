@@ -137,6 +137,21 @@ describe Project do
     end
   end
 
+  describe '#is_fork?' do
+    subject { project.is_fork? }
+    let(:project) { Project.new(original_id: original_id) }
+
+    context 'when original project' do
+      let(:original_id) { nil }
+      it { is_expected.to be false }
+    end
+
+    context 'when forked project' do
+      let(:original_id) { 1 }
+      it { is_expected.to be true }
+    end
+  end
+
   describe '#thumbnail' do
     context 'YouTube動画が設定されている時' do
       before { FactoryBot.create(:figure, figurable: project, link: link) }

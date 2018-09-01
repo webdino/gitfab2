@@ -78,9 +78,9 @@ section#basic-informations
         == Sanitize.clean auto_link(simple_format(@project.description), sanitize: false), Sanitize::Config::CARD
 
 - if can? :manage, @project
-  = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.original_id.present?}", id: "project-edit-btn"
+  = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.is_fork?}", id: "project-edit-btn"
 
-section.tools class="#{'forked-project-tools' if @project.original_id.present?}"
+section.tools class="#{'forked-project-tools' if @project.is_fork?}"
   = link_to "", "#", id: "slideshow-btn"
   = link_to "", "#", id: "print-btn"
   - if can? :edit, @project

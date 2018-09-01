@@ -131,6 +131,10 @@ class Project < ApplicationRecord
     root project.original
   end
 
+  def is_fork?
+    !!original_id
+  end
+
   def thumbnail
     figure = figures.first
     return thumbnail_fallback_path unless figure
