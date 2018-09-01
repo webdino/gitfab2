@@ -1,9 +1,8 @@
 class MembersController < ApplicationController
-  before_action :load_group
-  before_action :load_user
-
   def create
-    membership = @user.join_to(@group)
+    @group = Group.find(params[:group_id])
+    user = User.friendly.find(params[:member_name])
+    membership = user.join_to(@group)
     if membership
       @member = membership.user
       membership.role = params[:role]
@@ -13,18 +12,4 @@ class MembersController < ApplicationController
       render json: { success: false }
     end
   end
-
-  private
-
-    def member_params
-      params.require(:member).permit [:name] if params[:member]
-    end
-
-    def load_group
-      @group = Group.find params[:group_id]
-    end
-
-    def load_user
-      @user = User.friendly.find params[:member_name]
-    end
 end
