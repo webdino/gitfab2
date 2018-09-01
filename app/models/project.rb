@@ -122,29 +122,6 @@ class Project < ApplicationRecord
     !!original_id
   end
 
-  def thumbnail
-    figure = figures.first
-    return thumbnail_fallback_path unless figure
-
-    if figure.link.present?
-      "https://img.youtube.com/vi/#{figures.first.link.split('/').last}/mqdefault.jpg"
-    elsif figure.content.present?
-      figure.content.small.url
-    else
-      thumbnail_fallback_path
-    end
-  end
-
-  def thumbnail_url(asset_host)
-    thumbnail.yield_self do |path|
-      path.start_with?('https') ? path : "#{asset_host}#{path}"
-    end
-  end
-
-  def thumbnail_fallback_path
-    "/images/fallback/blank.png"
-  end
-
   def collaborators
     users = User.joins(:collaborations).where('collaborations.project_id' => id)
     groups = Group.joins(:collaborations).where('collaborations.project_id' => id)

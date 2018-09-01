@@ -42,4 +42,21 @@ module ProjectDecorator
     license_link = link_to(LICENSE_NAMES[license], license_url, target: "_blank")
     "#{project_link} by #{member_links} is licensed under the #{license_link} license."
   end
+
+  def thumbnail
+    figure = figures.first
+    return thumbnail_fallback_path unless figure
+
+    if figure.link.present?
+      "https://img.youtube.com/vi/#{figure.link.split('/').last}/mqdefault.jpg"
+    elsif figure.content.present?
+      figure.content.small.url
+    else
+      thumbnail_fallback_path
+    end
+  end
+
+  def thumbnail_fallback_path
+    "/images/fallback/blank.png"
+  end
 end

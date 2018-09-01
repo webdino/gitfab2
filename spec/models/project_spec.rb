@@ -152,51 +152,6 @@ describe Project do
     end
   end
 
-  describe '#thumbnail' do
-    context 'YouTube動画が設定されている時' do
-      before { FactoryBot.create(:figure, figurable: project, link: link) }
-      let(:link) { 'figure_link' }
-      it '動画サムネイルURLを返すこと' do
-        expect(project.thumbnail).to eq("https://img.youtube.com/vi/#{link}/mqdefault.jpg")
-      end
-    end
-
-    context '画像が設定されている時' do
-      let!(:figure) { FactoryBot.create(:content_figure, figurable: project) }
-      it '画像サムネイルURLを返すこと' do
-        expect(project.thumbnail).to eq("/uploads/figure/content/#{figure.id}/small_figure.png")
-      end
-    end
-
-    context '画像・動画が設定されていない時' do
-      it '規定のURLを返すこと' do
-        expect(project.thumbnail).to eq('/images/fallback/blank.png')
-      end
-    end
-  end
-
-  describe '#thumbnail_url' do
-    subject{ project.thumbnail_url(asset_host)}
-    let(:asset_host) { 'https://sample.com' }
-    let(:project) { FactoryBot.create(:project) }
-
-    context 'YouTube動画が設定されている時' do
-      let!(:figure) { FactoryBot.create(:figure, figurable: project, link: link) }
-      let(:link) { 'https://www.youtube.com/embed/sample' }
-      it { is_expected.to eq 'https://img.youtube.com/vi/sample/mqdefault.jpg' }
-    end
-
-    context 'YouTube動画が設定されていない時' do
-      let!(:figure) { FactoryBot.create(:figure, figurable: project, content: fixture_file_upload('images/image.jpg')) }
-      it { is_expected.to eq "#{asset_host}#{figure.content.small.url}" }
-    end
-  end
-
-  describe '#thumbnail_fallback_path' do
-    let(:project) { Project.new }
-    it { expect(project.thumbnail_fallback_path).to eq '/images/fallback/blank.png' }
-  end
-
   describe '#update_draft!' do
     let!(:owner) { FactoryBot.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
     let!(:project) { FactoryBot.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }

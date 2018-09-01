@@ -67,4 +67,31 @@ describe ProjectDecorator do
   end
 
   describe "#license_message"
+
+  describe "#thumbnail" do
+    context "YouTube動画が設定されている時" do
+      before { FactoryBot.create(:figure, figurable: project, link: link) }
+      let(:link) { "figure_link" }
+      it "動画サムネイルURLを返すこと" do
+        expect(project.thumbnail).to eq("https://img.youtube.com/vi/#{link}/mqdefault.jpg")
+      end
+    end
+
+    context "画像が設定されている時" do
+      let!(:figure) { FactoryBot.create(:content_figure, figurable: project) }
+      it "画像サムネイルURLを返すこと" do
+        expect(project.thumbnail).to eq("/uploads/figure/content/#{figure.id}/small_figure.png")
+      end
+    end
+
+    context "画像・動画が設定されていない時" do
+      it "規定のURLを返すこと" do
+        expect(project.thumbnail).to eq("/images/fallback/blank.png")
+      end
+    end
+  end
+
+  describe "#thumbnail_fallback_path" do
+    it { expect(project.thumbnail_fallback_path).to eq "/images/fallback/blank.png" }
+  end
 end
