@@ -111,11 +111,11 @@ describe Project do
     end
   end
 
-  describe '#root(project)' do
+  describe '#root' do
     context '自身がルートのとき' do
       let(:project) { FactoryBot.create(:user_project, original: nil) }
       it '自身を返すこと' do
-        expect(project.root(project)).to eq(project)
+        expect(project.root).to eq(project)
       end
     end
 
@@ -123,7 +123,7 @@ describe Project do
       let(:root_project) { FactoryBot.create(:user_project, original: nil) }
       let(:project) { FactoryBot.create(:user_project, original: root_project) }
       it '親を返すこと' do
-        expect(project.root(project)).to eq(root_project)
+        expect(project.root).to eq(root_project)
       end
     end
 
@@ -132,7 +132,7 @@ describe Project do
       let(:parent_project) { FactoryBot.create(:user_project, original: root_project) }
       let(:project) { FactoryBot.create(:user_project, original: parent_project) }
       it 'ルートを返すこと' do
-        expect(project.root(project)).to eq(root_project)
+        expect(project.root).to eq(root_project)
       end
     end
   end

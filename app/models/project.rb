@@ -105,30 +105,17 @@ class Project < ApplicationRecord
   end
 
   def managers
-    users = []
-    if owner.is_a? User
-      users << owner
-    else
-      users += owner.members
-    end
-    users
+    owner.is_a?(User) ? [owner] : owner.members
   end
 
   def collaborate_users
-    users = []
-    collaborators.each do |collaborator|
-      if collaborator.is_a? User
-        users << collaborator
-      else
-        users += collaborator.members
-      end
-    end
-    users
+    collaborators.map do |collaborator|
+      collaborator.is_a?(User) ? collaborator : collaborator.members
+    end.flatten
   end
 
-  def root project
-    return project if project.original.blank? || Project.where(id: project.original_id).length == 0
-    root project.original
+  def root
+    original&.root || self
   end
 
   def is_fork?
