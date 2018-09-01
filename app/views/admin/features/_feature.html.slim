@@ -13,7 +13,7 @@ li.feature
   - if feature.class_name == "Project"
     = form_for [:admin, feature, FeaturedItem.new], html: {class: "item-form"}, remote: true do |ff|
       .title Add New Project
-      = ff.select :target_object_id, Project.all.where(is_private: false).map { |p| ["/#{p.owner.slug}/#{p.title}", p.id] }, {}, class: "item-selection"
+      = ff.select :target_object_id, Project.includes(:owner).where(is_private: false).map { |p| ["/#{p.owner.slug}/#{p.title}", p.id] }, {}, class: "item-selection"
       = ff.hidden_field :url, class: "item-name"
       = ff.submit
 

@@ -4,7 +4,7 @@ class Admin::FeaturesController < Admin::ApplicationController
   #  authorize_resource
 
   def index
-    @features = Feature.all
+    @features = Feature.includes(:featured_items)
   end
 
   def create
