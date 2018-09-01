@@ -51,12 +51,14 @@ describe Project do
   end
 
   describe '#collaborators' do
-    before do
-      user1.collaborations.create project: project
-      user2.collaborations.create project: project
-    end
     subject { project.collaborators }
-    it { is_expected.to eq [user1, user2] }
+    let(:group) { FactoryBot.create(:group) }
+    before do
+      user1.collaborations.create(project: project)
+      user2.collaborations.create(project: project)
+      group.collaborations.create(project: project)
+    end
+    it { is_expected.to contain_exactly(user1, user2, group) }
   end
 
   describe '#fork_for!' do

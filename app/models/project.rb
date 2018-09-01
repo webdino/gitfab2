@@ -37,6 +37,7 @@ class Project < ApplicationRecord
 
   belongs_to :original, class_name: 'Project', inverse_of: :derivatives, optional: true
   belongs_to :owner, polymorphic: true
+  has_many :collaborations
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
   has_many :likes, dependent: :destroy
   has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
@@ -123,9 +124,7 @@ class Project < ApplicationRecord
   end
 
   def collaborators
-    users = User.joins(:collaborations).where('collaborations.project_id' => id)
-    groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
-    users + groups
+    collaborations.map(&:owner)
   end
 
   def soft_destroy
