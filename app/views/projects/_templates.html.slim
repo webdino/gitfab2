@@ -2,6 +2,6 @@ aside#templates
   section#state-template
     = render "states/state", state: Card::State.new(id: -1)
   section#annotation-template
-    = render "annotations/annotation", annotation: Card::Annotation.new(id: -1), parent: Card::State.new(id: -1)
+    = render "annotations/annotation", annotation: Card::Annotation.new(id: -1), state: Card::State.new(id: -1)
   section#usage-template
     = render "usages/usage", usage: Card::Usage.new(id: -1)
