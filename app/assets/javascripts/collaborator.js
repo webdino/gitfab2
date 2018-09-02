@@ -4,8 +4,7 @@ $(function() {
     clearSelect2Value();
   });
 
-  $(document).on("click", ".remove-collaboration-btn", function(event) {
-    event.preventDefault;
+  $(document).on("ajax:success", ".remove-collaboration-btn", function() {
     $(this).closest("li").remove();
   });
 });
