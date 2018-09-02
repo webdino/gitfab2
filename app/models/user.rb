@@ -73,10 +73,7 @@ class User < ApplicationRecord
   end
 
   def is_contributor_of?(card)
-    card.contributions.each do |contribution|
-      return true if contribution.contributor_id == self.id
-    end
-    false
+    card.contributions.exists?(contributor_id: id)
   end
 
   def password_auth?
