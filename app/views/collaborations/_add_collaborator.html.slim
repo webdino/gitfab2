@@ -1,4 +1,0 @@
-- if can? :manage, project
-  = form_with url: project_collaborations_path(project.owner, project), id: "new_collaboration"
-    = select_tag :collaborator_name
-    = submit_tag "Add", class: "add-collaborator-btn btn"
