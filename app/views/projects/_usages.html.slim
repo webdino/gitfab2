@@ -8,7 +8,7 @@ section#usages
         li
           - delete_url = project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id)
           - edit_url = edit_project_usage_path(owner_name: @owner.slug, project_id: @project.name, id: usage.id)
-          = render "components/card", card: usage, delete_url: delete_url, edit_url: edit_url
+          = render "components/usage", card: usage, delete_url: delete_url, edit_url: edit_url
 
     - if current_user
       - new_url = new_project_usage_path(owner_name: @owner.slug, project_id: @project.name)
