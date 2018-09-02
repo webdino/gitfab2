@@ -29,6 +29,7 @@ class Card < ApplicationRecord
   accepts_nested_attributes_for :attachments
   has_many :comments, class_name: "CardComment", dependent: :destroy
   has_many :contributions, dependent: :destroy
+  has_many :contributors, through: :contributions, class_name: "User"
 
   validates :type, presence: true
   validate do

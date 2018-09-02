@@ -10,7 +10,7 @@ article class="card note_card" id="#{card.id}"
           .postedby
 
             ruby:
-              author = card.contributions.length > 0 ? User.find(card.contributions[0].contributor_id) : @project.owner
+              author = card.contributors.first || @project.owner
               datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
               link = author.present? ? link_to(author.name, owner_path(owner_name: author.slug)): ""
 
