@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   resources :card_comments, only: :destroy
 
   resources :groups, except: :show do
-    resources :members
+    resources :members, only: :create
   end
 
   resources :notifications, only: [:index, :update] do
