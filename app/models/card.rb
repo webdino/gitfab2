@@ -39,11 +39,10 @@ class Card < ApplicationRecord
   end
 
   def dup_document
-    dup_klass = type.present? ? type.constantize : Card
-    becomes(dup_klass).dup.tap do |doc|
-      doc.figures = figures.map(&:dup_document)
-      doc.attachments = attachments.map(&:dup_document)
-      doc.comments = []
+    dup.tap do |card|
+      card.figures = figures.map(&:dup_document)
+      card.attachments = attachments.map(&:dup_document)
+      card.comments = []
     end
   end
 
