@@ -13,13 +13,6 @@ class ProjectsController < ApplicationController
     @projects = published_projects.page(params[:page]).order(updated_at: :desc)
     @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
     @featured_groups = Group.includes(:members, :projects).order(projects_count: :desc).limit(3)
-
-    selected_tags_length = 30
-    @all_tags = Tag.where.not(name: '').group(:name).order(Arel.sql('COUNT(id) DESC')).pluck(:name)
-    @selected_tags = selected_tags(@all_tags, selected_tags_length)
-
-    @selected_tools = selected_tools
-    @selected_materials = selected_materials
   end
 
   def show
@@ -127,13 +120,6 @@ class ProjectsController < ApplicationController
     else
       @projects = published_projects.page(params[:page]).order(updated_at: :desc)
     end
-
-    selected_tags_length = 30
-    @all_tags = Tag.where.not(name: '').group(:name).order(Arel.sql('COUNT(id) DESC')).pluck(:name)
-    @selected_tags = selected_tags(@all_tags, selected_tags_length)
-
-    @selected_tools = selected_tools
-    @selected_materials = selected_materials
   end
 
   private
@@ -180,39 +166,5 @@ class ProjectsController < ApplicationController
         project_groups[project_group.name] = featured_projects
       end
       project_groups.to_a
-    end
-
-    def selected_tags(list, length)
-      tags = []
-      if list.present? && list.length >= length
-        list.slice(0, length).each do |tag_name|
-          tags.push tag_name
-        end
-      end
-      tags
-    end
-
-    def selected_tools
-      tools = []
-      file_path = Rails.root.join("config", "selected-tools.yml")
-      list = YAML.load_file file_path
-      if list.present?
-        list.each do |tool_name|
-          tools.push tool_name
-        end
-      end
-      tools
-    end
-
-    def selected_materials
-      materials = []
-      file_path = Rails.root.join("config", "selected-materials.yml")
-      list = YAML.load_file file_path
-      if list.present?
-        list.each do |material_name|
-          materials.push material_name
-        end
-      end
-      materials
     end
 end
