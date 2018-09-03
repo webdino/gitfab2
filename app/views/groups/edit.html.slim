@@ -45,8 +45,7 @@
     $(document).on "change", ".membership-role", (event) ->
       Rails.fire(event.target.form, "submit")
 
-    $(document).on "click", ".remove-member-btn", (event) ->
-      event.preventDefault
+    $(document).on "ajax:success", ".remove-member-btn", () ->
       $(this).closest("li").remove()
 
     $(document).on "ajax:success", "#new_member", (event) ->

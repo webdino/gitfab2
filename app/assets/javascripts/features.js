@@ -14,9 +14,8 @@ $(function() {
     list.append(event.detail[0].html);
   });
 
-  $(document).on("click", ".remove-btn", function() {
-    const li = $(this).closest("li");
-    li.remove();
+  $(document).on("ajax:success", ".remove-btn", function() {
+    $(this).closest("li").remove();
   });
 
   $(".item-selection").select2();
