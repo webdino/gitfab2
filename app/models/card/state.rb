@@ -36,9 +36,7 @@ class Card::State < Card
 
   class << self
     def updatable_columns
-      super + [:position, :move_to,
-               annotations_attributes: Card::Annotation.updatable_columns
-              ]
+      super + [:position, annotations_attributes: Card::Annotation.updatable_columns]
     end
   end
 

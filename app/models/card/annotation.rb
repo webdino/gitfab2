@@ -30,7 +30,7 @@ class Card::Annotation < Card
 
   class << self
     def updatable_columns
-      super + [:position, :move_to]
+      super + [:position]
     end
   end
 
