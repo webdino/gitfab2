@@ -26,7 +26,7 @@ section#layouts-header
           .box
             = link_to "", new_project_path, title: "Create Project", class: "icon create-project"
 
-            = link_to user_notifications_path(current_user), remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
+            = link_to notifications_path, remote: true, format: :json, title: "Notifications", class: "icon show-notifications" do
               - unread_notifications_count = current_user.my_notifications.where(was_read: false).count
               - if unread_notifications_count > 0
                 .notifications-badge

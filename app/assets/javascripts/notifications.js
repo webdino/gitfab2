@@ -20,7 +20,7 @@ $(function() {
       type: "GET",
       url,
       dataType: "json",
-      success(data) {
+      success() {
         $(".notifications-badge").hide();
       },
       error(data) {

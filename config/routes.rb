@@ -34,11 +34,12 @@ Rails.application.routes.draw do
     resources :members
   end
 
+  resources :notifications, only: [:index, :update] do
+    get 'mark_all_as_read', on: :collection
+  end
+
   resources :users, except: [:show, :edit, :update, :destroy] do
     resources :memberships, only: [:index, :update, :destroy]
-    resources :notifications do
-      get 'mark_all_as_read', on: :collection
-    end
     patch :update_password
   end
   resource :user, only: [:edit, :update, :destroy]

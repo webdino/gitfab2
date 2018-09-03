@@ -81,9 +81,6 @@ class Ability
     can :destroy, Tag do |_tag|
       user.persisted?
     end
-    can :manage, Notification do |notification|
-      user == notification.notified || notification.notifier
-    end
   end
 
   private
