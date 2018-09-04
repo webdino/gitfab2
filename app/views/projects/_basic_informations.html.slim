@@ -63,8 +63,27 @@ section#basic-informations
 
       - if can? :manage, @project
         = link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
-    .hidden
-      = render "collaborations/list"
+        .hidden
+          #collaborators-index
+            .inner
+              h1 Project Owner & Collaborators
+              = form_with url: project_collaborations_path(@project.owner, @project), id: "new_collaboration"
+              = select_tag :collaborator_name
+              = submit_tag "Add", class: "add-collaborator-btn btn"
+
+              h2 Owner
+              #owner
+                span.avatar
+                  = image_tag @project.owner.avatar.small.url
+                span.name
+                  = @project.owner.name
+
+              h2 Collaborator
+              ul#collaborations
+                - @project.collaborators.each do |collaborator|
+                  = render "collaborations/collaboration", collaboration: collaborator.collaboration_in(@project)
+
+              = link_to "Back", project_path(@project, owner_name: @project.owner.slug), class: "back-btn btn"
 
     section.license
       .title License
