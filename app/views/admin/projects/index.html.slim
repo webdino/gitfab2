@@ -16,7 +16,7 @@
     - @projects.each do |project|
       tr.project
         td
-          = project.path
+          = project.title_with_owner_name
         td
           = project.is_private ? '-' : link_to('Open', project_path(project.owner, project))
         td

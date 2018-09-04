@@ -2,7 +2,7 @@
   h1.title Manage Project
 
   h2.title-2
-    = @project.path
+    = @project.title_with_owner_name
 
   p
     = link_to(project_path(@project.owner, @project), project_path(@project.owner, @project))
@@ -37,7 +37,7 @@
       th
         'フォーク元
       td
-        = @project.original ? link_to(@project.original.path, [:admin, @project]) : '-'
+        = @project.original ? link_to(@project.original.title_with_owner_name, [:admin, @project]) : '-'
 
 
   = button_to('削除', admin_project_path(@project.id), method: :delete, data: {confirm: '本当に削除しますか？'})

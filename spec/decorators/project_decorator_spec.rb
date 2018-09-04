@@ -12,6 +12,10 @@ describe ProjectDecorator do
   let(:owner) { FactoryBot.create(:user, name: owner_name) }
   let(:owner_name) { "owner-name" }
 
+  describe "#title_with_owner_name" do
+    it { expect(project.title_with_owner_name).to eq "#{owner_name}/#{title}" }
+  end
+
   describe "#first_figure" do
     before do
       FactoryBot.create(:figure, figurable: project)

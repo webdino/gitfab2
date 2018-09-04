@@ -8,6 +8,10 @@ module ProjectDecorator
     "by-nc-sa" => "Creative Commons - Attribution-NonCommercial-ShareAlike"
   }
 
+  def title_with_owner_name
+    "#{owner.name}/#{title}"
+  end
+
   def first_figure
     @first_figure ||= figures.first
   end

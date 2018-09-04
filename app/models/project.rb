@@ -150,10 +150,6 @@ class Project < ApplicationRecord
     update!(is_deleted: false)
   end
 
-  def path
-    [owner.name, title].join('/')
-  end
-
   def update_draft!
     update!(draft: generate_draft)
   end

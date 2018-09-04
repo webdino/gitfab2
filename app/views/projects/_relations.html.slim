@@ -1,8 +1,8 @@
 #link-to-relation-tree
   - if project.original.present? && project.derivatives.present?
-    - link_text = "This Project was forked from #{project.original.owner.slug}/#{project.original.title}, and was forked  #{project.derivatives.count} times. See the project relations."
+    - link_text = "This Project was forked from #{project.original.title_with_owner_name}, and was forked  #{project.derivatives.count} times. See the project relations."
   - elsif project.original.present?
-    - link_text = "This project was forked from #{project.original.owner.slug}/#{project.original.title}."
+    - link_text = "This project was forked from #{project.original.title_with_owner_name}."
   - elsif project.derivatives.present?
     - link_text = "This Project was forked #{project.derivatives.count} times. See the project relations."
 
