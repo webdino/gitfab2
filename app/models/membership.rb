@@ -21,7 +21,6 @@ class Membership < ApplicationRecord
   belongs_to :group
 
   after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
-  after_destroy -> { group.destroy }, if: -> { group.members.none? }
   validates :role, presence: true, inclusion: { in: ROLE.values }
 
   Membership::ROLE.keys.each do |role|
