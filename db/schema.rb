@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2018_09_24_061610) do
     t.integer "projects_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean "is_deleted", default: false, null: false
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end

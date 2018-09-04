@@ -84,8 +84,11 @@
       }
     }
 
-    #new-membership {
+    #new-membership, #delete-group {
       margin-top: 55px;
+    }
+
+    #new-membership {
       #s2id_member_name {
         margin: 20px 0px;
         font-family: $common-novelsans-semibold;
@@ -107,6 +110,17 @@
         @include clickable;
         font-size: 12px;
         background: $common-basic-color;
+        border: none;
+      }
+    }
+
+    #delete-group {
+      #delete-btn {
+        @include clickable;
+        margin: 60px 0 20px;
+        padding: 5px 68px;
+        font-size: 18px;
+        color: $common-btn-text-color;
         border: none;
       }
     }

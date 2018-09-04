@@ -4,6 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  avatar         :string(255)
+#  is_deleted     :boolean          default(FALSE), not null
 #  location       :string(255)
 #  name           :string(255)
 #  projects_count :integer          default(0), not null
@@ -43,6 +44,17 @@ class Group < ApplicationRecord
   concerning :Draft do
     def generate_draft
       "#{name}\n#{url}\n#{location}"
+    end
+  end
+
+  def deletable?
+    projects.none? || projects.pluck(:is_deleted).all?
+  end
+
+  def soft_destroy!
+    transaction do
+      update!(is_deleted: true)
+      collaborations.destroy_all
     end
   end
 

@@ -9,7 +9,7 @@
   #edit-members
     .inner
       h1.title
-       'Members
+        'Members
       ul#members
         - @group.members.each do |member|
           = render "membership", membership: member.membership_in(@group)
@@ -23,7 +23,12 @@
           = select_tag :role, options_for_select(Membership::ROLE)
           = submit_tag "add", id: "add-btn", class: "btn"
 
-- content_for :bottom
+        #delete-group
+          h2.title
+            'Delete this group
+          = link_to "Delete", group_path(@group), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to delete this group?" }
+
+        - content_for :bottom
 
   coffee:
     $(document).on "click", "#group-avatar", (event) ->
