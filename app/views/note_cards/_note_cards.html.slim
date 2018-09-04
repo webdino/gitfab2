@@ -2,11 +2,11 @@
   = link_to project_path(@project, owner_name: @owner.slug) do
     .tab
       'Recipe
-      = "(#{@project.states.count})"
+      = "(#{@project.states_count})"
   = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
     .tab.active
       'Memos
-      = "(#{@project.note_cards.count})"
+      = "(#{@project.note_cards_count})"
 
 section#note-cards
   .top

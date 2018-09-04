@@ -34,12 +34,12 @@ li.project
         span.recipe
           span.index Steps:
           span.value
-            = " #{project.states.count} / "
+            = " #{project.states_count} / "
 
         span.note
           span.index Memos:
           span.value
-            = " #{project.note_cards.count}"
+            = " #{project.note_cards_count}"
 
     - if project.description.present?
       .horizontal-border.basic-color.m-b-5

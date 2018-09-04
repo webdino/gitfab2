@@ -2,15 +2,16 @@
 #
 # Table name: cards
 #
-#  id          :integer          not null, primary key
-#  description :text(4294967295)
-#  position    :integer          default(0), not null
-#  title       :string(255)
-#  type        :string(255)      not null
-#  created_at  :datetime
-#  updated_at  :datetime
-#  project_id  :integer
-#  state_id    :integer
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
 #
 # Indexes
 #
@@ -23,7 +24,7 @@
 #
 
 class Card::State < Card
-  belongs_to :project
+  belongs_to :project, counter_cache: :states_count
   acts_as_list scope: :project
 
   has_many :annotations, ->{ order(:position) },
@@ -41,7 +42,10 @@ class Card::State < Card
   end
 
   def to_annotation!(parent_state)
-    update!(type: Card::Annotation.name, state_id: parent_state.id)
+    transaction do
+      update!(type: Card::Annotation.name, state_id: parent_state.id)
+      project.decrement!(:states_count)
+    end
     Card::Annotation.find(id)
   end
 

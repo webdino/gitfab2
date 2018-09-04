@@ -2,15 +2,16 @@
 #
 # Table name: cards
 #
-#  id          :integer          not null, primary key
-#  description :text(4294967295)
-#  position    :integer          default(0), not null
-#  title       :string(255)
-#  type        :string(255)      not null
-#  created_at  :datetime
-#  updated_at  :datetime
-#  project_id  :integer
-#  state_id    :integer
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
 #
 # Indexes
 #
@@ -39,11 +40,15 @@ class Card::Annotation < Card
   end
 
   def to_state!(project)
-    update!(
-      type: Card::State.name,
-      project_id: project.id,
-      position: Card::State.where(project_id: project.id).maximum(:position).to_i + 1
-    )
+    transaction do
+      update!(
+        type: Card::State.name,
+        project_id: project.id,
+        position: Card::State.where(project_id: project.id).maximum(:position).to_i + 1
+      )
+      project.increment!(:states_count)
+    end
+
     Card::State.find(id)
   end
 end

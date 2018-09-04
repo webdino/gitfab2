@@ -46,7 +46,7 @@ describe StatesController, type: :controller do
       end
       it { is_expected.to render_template :create }
       it 'has 1 state' do
-        expect(project.states.count).to eq 1
+        expect(project.states_count).to eq 1
       end
     end
     context 'with invalid values' do
@@ -118,7 +118,7 @@ describe StatesController, type: :controller do
     end
     it 'creates an annotation from a state' do
       aggregate_failures '1 state, 1 annotation' do
-        expect(project.states.count).to eq 1
+        expect(project.states_count).to eq 1
         expect(project.states.first.annotations.count).to eq 1
       end
     end

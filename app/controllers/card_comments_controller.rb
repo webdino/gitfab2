@@ -5,7 +5,7 @@ class CardCommentsController < ApplicationController
 
     if comment.save
       notify_users(card)
-      render :create, locals: { comment: comment, card_order: card.comments.count - 1 }
+      render :create, locals: { comment: comment, card_order: card.comments_count - 1 }
     else
       message = comment.errors.messages.presence || { "Error:": "Something's wrong" }
       render json: { success: false, message: message }, status: 400

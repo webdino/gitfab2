@@ -2,15 +2,16 @@
 #
 # Table name: cards
 #
-#  id          :integer          not null, primary key
-#  description :text(4294967295)
-#  position    :integer          default(0), not null
-#  title       :string(255)
-#  type        :string(255)      not null
-#  created_at  :datetime
-#  updated_at  :datetime
-#  project_id  :integer
-#  state_id    :integer
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
 #
 # Indexes
 #
@@ -23,5 +24,5 @@
 #
 
 class Card::Usage < Card
-  belongs_to :project
+  belongs_to :project, counter_cache: :usages_count
 end

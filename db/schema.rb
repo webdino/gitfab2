@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_30_072654) do
+ActiveRecord::Schema.define(version: 2018_09_04_033951) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2018_08_30_072654) do
     t.integer "state_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "comments_count", default: 0, null: false
     t.index ["project_id"], name: "index_cards_project_id"
     t.index ["state_id"], name: "index_cards_on_state_id"
   end
@@ -180,6 +181,9 @@ ActiveRecord::Schema.define(version: 2018_08_30_072654) do
     t.integer "likes_count", default: 0, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer "states_count", default: 0, null: false
+    t.integer "usages_count", default: 0, null: false
+    t.integer "note_cards_count", default: 0, null: false
     t.index ["is_private", "is_deleted"], name: "index_projects_on_is_private_and_is_deleted"
     t.index ["original_id"], name: "index_projects_original_id"
     t.index ["owner_type", "owner_id"], name: "index_projects_owner"

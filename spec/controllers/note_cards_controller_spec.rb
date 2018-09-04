@@ -126,7 +126,7 @@ describe NoteCardsController, type: :controller do
     end
     it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     it 'has 0 note_cards' do
-      expect(project.note_cards.count).to eq 0
+      expect(project.note_cards_count).to eq 0
     end
   end
 end

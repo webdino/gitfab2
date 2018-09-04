@@ -74,8 +74,8 @@ describe Project do
 
     it 'プロジェクトと複製先のstateの数が同じであること' do
       aggregate_failures do
-        expect(project.states.count).to eq 2
-        expect(derivative_project.states.count).to eq 2
+        expect(project.states_count).to eq 2
+        expect(derivative_project.states_count).to eq 2
       end
     end
 
@@ -88,8 +88,8 @@ describe Project do
       before { FactoryBot.create_list(:usage, usage_count, project: project) }
       let(:usage_count) { 3 }
       it '複製先では空であること' do
-        expect(project.usages.count).to eq(usage_count)
-        expect(derivative_project.usages.count).to eq(0)
+        expect(project.usages_count).to eq(usage_count)
+        expect(derivative_project.usages_count).to eq(0)
       end
     end
   end

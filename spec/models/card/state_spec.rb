@@ -21,7 +21,7 @@ describe Card::State do
     it do
       expect{ subject }.to change{ state.type }.from(Card::State.name).to(Card::Annotation.name)
                       .and change{ parent_state.annotations.count }.by(1)
-                      .and change{ project.states.count }.by(-1)
+                      .and change{ project.states_count }.by(-1)
     end
   end
 

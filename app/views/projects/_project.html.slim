@@ -34,8 +34,8 @@ li.project
 
     .status
       .recipes
-        = "#{project.states.count} Steps /"
+        = "#{project.states_count} Steps /"
       .notes
-        = "#{project.note_cards.count} Memos"
+        = "#{project.note_cards_count} Memos"
       .since
         = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at

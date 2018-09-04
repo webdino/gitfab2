@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    published_projects = Project.published.includes(:figures, :owner, :note_cards, :states)
+    published_projects = Project.published.includes(:figures, :owner)
 
     @projects = published_projects.page(params[:page]).order(updated_at: :desc)
     @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
@@ -110,7 +110,7 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    published_projects = Project.published.includes(:figures, :owner, :note_cards, :states)
+    published_projects = Project.published.includes(:figures, :owner)
     q = params[:q]
 
     if q.present?
@@ -161,8 +161,7 @@ class ProjectsController < ApplicationController
       all_featured_projects = Feature.projects
       all_featured_projects.each do |project_group|
         ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.includes(:figures, :owner, :note_cards, :states)
-                                   .where(id: ids).order(likes_count: :desc)
+        featured_projects = Project.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
         project_groups[project_group.name] = featured_projects
       end
       project_groups.to_a

@@ -19,7 +19,7 @@ describe Card::Annotation do
     it { is_expected.to be_an_instance_of(Card::State) }
     it do
       expect{ subject }.to change{ annotation.type }.from(Card::Annotation.name).to(Card::State.name)
-                      .and change{ project.states.count }.by(1)
+                      .and change{ project.states_count }.by(1)
                       .and change{ Card::Annotation.count }.by(-1)
     end
 

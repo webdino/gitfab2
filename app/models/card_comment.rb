@@ -21,7 +21,7 @@
 #
 
 class CardComment < ApplicationRecord
-  belongs_to :card
+  belongs_to :card, counter_cache: :comments_count
   belongs_to :user
 
   validates :body, presence: true
