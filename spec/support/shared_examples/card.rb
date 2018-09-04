@@ -37,6 +37,12 @@ shared_examples 'Card' do |*factory_args|
       expect(dupped_card.attachments).to_not eq(card.attachments)
       expect(dupped_card.attachments.size).to eq(card.attachments.size)
     end
+
+    it 'コメントは複製しないこと' do
+      FactoryBot.create(:card_comment, card: card)
+      expect(dupped_card.comments).to eq []
+      expect(dupped_card.comments_count).to eq 0
+    end
   end
 
   describe '#project' do

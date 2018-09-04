@@ -43,6 +43,7 @@ class Card < ApplicationRecord
     dup.tap do |card|
       card.figures = figures.map(&:dup_document)
       card.attachments = attachments.map(&:dup_document)
+      card.comments_count = 0
       card.comments = []
     end
   end
