@@ -110,16 +110,12 @@ class ProjectsController < ApplicationController
   end
 
   def search
-    published_projects = Project.published.includes(:figures, :owner)
-    q = params[:q]
-
-    if q.present?
-      query = q.force_encoding 'utf-8'
-      @projects = published_projects.search_draft(query).page(params[:page])
-      @query = query
-    else
-      @projects = published_projects.page(params[:page]).order(updated_at: :desc)
+    @projects = Project.published.includes(:figures, :owner)
+    if params[:q].present?
+      @query = params[:q].force_encoding('utf-8')
+      @projects = @projects.search_draft(@query)
     end
+    @projects = @projects.order(updated_at: :desc).page(params[:page])
   end
 
   private
