@@ -11,7 +11,22 @@
           = session["auth.failed.error"]
           - session.delete("auth.failed.error")
 
-  = render partial: "searched_projects"
+  #searched.projects-wrapper
+    .container
+      h2.title
+        ="Searched Projects: #{@query}"
+      ul#searched-projects.projects
+        - @projects.each do |project|
+          = render "project", project: project
+      = paginate @projects
+
+      - if @projects.blank?
+        .notice
+          = "We couldn't find projects matching '#{@query}'."
+
+    .label
+      'Tags & Keywords
+
   = render partial: "tags_and_keywords"
 
   - unless current_user
