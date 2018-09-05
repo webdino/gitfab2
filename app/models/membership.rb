@@ -28,4 +28,8 @@ class Membership < ApplicationRecord
       Membership::ROLE[role] == self.role
     end
   end
+
+  def deletable?
+    (role == 'admin' && group.admins.count > 1) || role == 'editor'
+  end
 end
