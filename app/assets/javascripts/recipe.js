@@ -39,23 +39,4 @@ $(function() {
     makeAttachmentsList($("a.blueprint"), $("#blueprint-list"));
     makeAttachmentsList($("a.attachment"), $("#references"));
   });
-
-  $(document).on("click", "figure img:not(.stl)", function() {
-    const selector = `.${$(this).data("groupname")}`;
-    $(selector).colorbox({
-      className: "color-box-image-slideshow",
-      rel: "photo-slideshow",
-      maxWidth: "90%",
-      maxHeight: "90%"
-    });
-  });
 });
-
-$(window).on("load" , () =>
-  $('.slick').slick({
-    adaptiveHeight: true,
-    dots: true,
-    infinite: true,
-    speed: 300
-  })
-);

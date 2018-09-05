@@ -39,10 +39,35 @@ section#basic-informations
   section.body
     - if @project.figures.present?
       - if @project.figures.first.content.present?
-        figure.visual
-          .slick
-            - @project.figures.each do |figure|
-              = image_tag figure.content.medium.url, data: {groupname: "top-image"}, class: "top-image"
+        - figures = @project.figures.to_a
+        figure.visual.carousel.slide data-ride="carousel" data-interval="false" id="carousel-#{@project.id}"
+          ol.carousel-indicators
+            - figures.count.times do |i|
+              li data-target="#carousel-#{@project.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+          .carousel-inner data-toggle="modal" data-target="#modal-#{@project.id}"
+            - figures.each_with_index do |figure, i|
+              div class="carousel-item #{'active' if i.zero?}"
+                = image_tag figure.content.medium.url, class: "d-block w-100 top-image"
+          a.carousel-control-prev href="#carousel-#{@project.id}" role="button" data-slide="prev"
+            span.carousel-control-prev-icon aria-hidden="true"
+          a.carousel-control-next href="#carousel-#{@project.id}" role="button" data-slide="next"
+            span.carousel-control-next-icon aria-hidden="true"
+
+        .modal tabindex="-1" role="dialog" id="modal-#{@project.id}"
+          .modal-dialog.modal-dialog-centered role="document"
+            .modal-content
+              .carousel.slide data-ride="carousel" data-interval="false" id="carousel-modal-#{@project.id}"
+                ol.carousel-indicators
+                  - figures.count.times do |i|
+                    li data-target="#carousel-#{@project.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+                .carousel-inner
+                  - figures.each_with_index do |figure, i|
+                    div class="carousel-item #{'active' if i.zero?}"
+                      = image_tag figure.content.medium.url, class: "d-block w-100"
+                a.carousel-control-prev href="#carousel-modal-#{@project.id}" role="button" data-slide="prev"
+                  span.carousel-control-prev-icon aria-hidden="true"
+                a.carousel-control-next href="#carousel-modal-#{@project.id}" role="button" data-slide="next"
+                  span.carousel-control-next-icon aria-hidden="true"
 
       - elsif @project.figures.first.link.present?
         figure.visual

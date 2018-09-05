@@ -9,6 +9,7 @@
  *= require jquery.colorbox-example3
  *= require ./card
  *= require select2
+ *= require bootstrap_custom
  */
 
 /* ref: https://www.itsupportguides.com/knowledge-base/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ */

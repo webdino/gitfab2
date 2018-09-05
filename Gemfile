@@ -6,6 +6,7 @@ gem 'rails', '~> 5.2.0'
 gem 'active_decorator'
 gem 'acts_as_list'
 gem 'bcrypt', require: false
+gem 'bootstrap'
 gem 'cancancan'
 gem 'carrierwave'
 gem 'exception_notification'

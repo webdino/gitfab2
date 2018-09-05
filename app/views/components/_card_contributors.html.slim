@@ -1,3 +1,5 @@
 .contributors
   - card.contributors.each do |contributor|
-    = link_to image_tag(contributor.avatar.thumb.url), owner_path(contributor), class: "contributor", title: contributor.name
+    = link_to image_tag(contributor.avatar.thumb.url, class: "rounded-circle", width: 25, height: 25),
+              owner_path(contributor),
+              class: "contributor", title: contributor.name

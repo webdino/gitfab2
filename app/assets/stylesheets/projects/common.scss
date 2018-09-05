@@ -37,12 +37,6 @@ article.card .title {
     float: right;
     .contributor {
       margin-left: 10px;
-      img {
-        border-radius: 20px;
-        border: 2px solid $common-gray;
-        width: 20px;
-        height: 20px;
-      }
     }
   }
 }
@@ -73,18 +67,4 @@ article.card .title {
   background-color: $common-background-color;
   border-radius: 5px;
   padding: 10px 0;
-}
-
-.modal {
-  display:    none;
-  position:   fixed;
-  z-index:    9999;
-  top:        0;
-  left:       0;
-  height:     100%;
-  width:      100%;
-  background: $common-modal-background-color
-              url(image-path(#{$modal-img}))
-              50% 50%
-              no-repeat;
 }

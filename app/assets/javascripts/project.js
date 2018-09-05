@@ -10,7 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require ./bootstrap_custom
 //= require rails-ujs
 //= require jquery_nested_form
 //= require jquery.slick
