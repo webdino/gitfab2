@@ -6,9 +6,7 @@ section#layouts-header
 
       #search-box
         = form_tag :search, method: :get do
-          = text_field_tag :q, nil, placeholder: "Search", id: "search-form"
-
-          / TODO: add clear btn
+          = text_field_tag :q, params[:q], placeholder: "Search", id: "search-form"
 
       #all-projects-link
         = link_to "All Projects", search_path
