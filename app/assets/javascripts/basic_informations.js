@@ -152,8 +152,3 @@ window.showLink = function(d) {
 };
 
 window.children = d => d["children"];
-
-window.clearSelect2Value = function() {
-  $("#s2id_user_name").select2("val","");
-  $("input#user_name").val("");
-};

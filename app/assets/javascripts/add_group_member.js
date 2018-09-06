@@ -22,8 +22,3 @@ $(() =>
       }
       }
   }));
-
-window.clearSelect2Value = function() {
-  $("#s2id_member").select2("val", "");
-  $("input#membership_user_id").val("");
-};
