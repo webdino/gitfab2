@@ -45,13 +45,6 @@ $(function() {
     className: "colorbox-bg-transparent"
   });
 
-  $("#add-collaborator-btn").colorbox({
-    inline: true,
-    width: "auto",
-    height: "auto",
-    className: "colorbox-bg-transparent"
-  });
-
   $(".colorbox-link").colorbox({
     inline: true,
     width: "auto",

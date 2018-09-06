@@ -12,6 +12,9 @@
  *= require bootstrap_custom
  */
 
+.clickable { cursor: pointer; }
+.clickable:hover { opacity: 0.8; }
+
 /* ref: https://www.itsupportguides.com/knowledge-base/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ */
 :target:before {
   content: "";

@@ -87,28 +87,30 @@ section#basic-informations
                 .thumb style="background-image: url('#{collaborator.avatar.small.url}')"
 
       - if can? :manage, @project
-        = link_to "", "#collaborators-index", id: "add-collaborator-btn", class: "btn colorbox-link"
-        .hidden
-          #collaborators-index
-            .inner
-              h1 Project Owner & Collaborators
-              = form_with url: project_collaborations_path(@project.owner, @project), id: "new_collaboration"
-              = select_tag :collaborator_name
-              = submit_tag "Add", class: "add-collaborator-btn btn"
+        = image_tag("icons/add-member", class: "rounded-circle clickable", data: { toggle: "modal", target: "#add-collaborator-modal" })
+        .modal#add-collaborator-modal tabindex="-1" role="dialog"
+          .modal-dialog.modal-dialog-centered.modal-lg role="document"
+            .modal-content
+              #collaborators-index
+                h1 Project Owner & Collaborators
+                section
+                  = form_with url: project_collaborations_path(@project.owner, @project), id: "new_collaboration"
+                  = select_tag :collaborator_name
+                  = submit_tag "Add", class: "add-collaborator-btn btn"
 
-              h2 Owner
-              #owner
-                span.avatar
-                  = image_tag @project.owner.avatar.small.url
-                span.name
-                  = @project.owner.name
+                h2 Owner
+                section#owner
+                  = image_tag @project.owner.avatar.small.url, width: 40, height: 40, class: "rounded-circle"
+                  span.name
+                    = @project.owner.name
 
-              h2 Collaborator
-              ul#collaborations
-                - @project.collaborators.each do |collaborator|
-                  = render "collaborations/collaboration", collaboration: collaborator.collaboration_in(@project)
+                h2 Collaborator
+                section
+                  ul#collaborations
+                    - @project.collaborators.each do |collaborator|
+                      = render "collaborations/collaboration", collaboration: collaborator.collaboration_in(@project)
 
-              = link_to "Back", project_path(@project, owner_name: @project.owner.slug), class: "back-btn btn"
+                = link_to "Back", project_path(@project, owner_name: @project.owner.slug), class: "back-btn btn"
 
     section.license
       .title License

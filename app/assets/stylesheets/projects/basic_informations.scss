@@ -177,17 +177,6 @@
           }
         }
       }
-      #add-collaborator-btn {
-        background: image-url("icons/add-member") no-repeat;
-        display: inline-block;
-        position: relative;
-        top: 4px;
-        margin: 0;
-        padding: 0;
-        width: 72px;
-        height: 72px;
-        border-radius: 72px;
-      }
     }
     .license {
       margin-top: 30px;
@@ -238,53 +227,72 @@
 }
 
 #collaborators-index {
-  background-color: $common-background-color;
-  width: 960px;
-  .inner {
-    margin: 20px;
-    padding: 20px 0;
+  margin: 0 20px;
+  padding: 20px 0;
+  h1 {
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+  h2 {
+    margin: 20px 0 10px;
+    font-size: 22px;
+  }
+  section {
+    margin-bottom: 30px;
+  }
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 24px;
-    }
-    h2 {
-      margin-bottom: 10px;
-      font-size: 16px;
-    }
-    #new_collaboration {
-      margin-bottom: 20px;
-      #s2id_user_name {
-        margin-right: 10px;
+  #new_collaboration {
+    margin-bottom: 20px;
+    #s2id_collaborator_name {
+      margin: 10px 20px 20px 0px;
+      padding: 1px 0;
+      font-family: $common-novelsans-semibold;
+      font-size: 14px;
+      .select2-choice {
+        background-color: $common-background-color;
       }
     }
-    #owner, .collaboration {
-      margin-bottom: 10px;
-      .avatar {
-        img {
-          width: 30px;
-        }
-      }
-      .name {
-        position: relative;
-        vertical-align: top;
-        margin-left: 5px;
-        top: 6px;
-        height: 24px
-      }
-      .remove-collaboration-btn {
-        vertical-align: top;
-        margin-top: 3px;
-        margin-left: 5px;
-      }
-    }
-    #collaborations {
-      margin-bottom: 20px;
-    }
+  }
+  .add-collaborator-btn {
+    vertical-align: top;
+    height: 28px;
+    margin-left: 10px;
+    color: $common-btn-text-color;
+    background-color: $common-basic-color;
+    border: none;
+  }
 
+  #owner, .collaboration {
+    margin-bottom: 10px;
+    width: 240px;
+    display: inline-block;
+
+    .name {
+      position: relative;
+      vertical-align: top;
+      margin-left: 5px;
+      top: 14px;
+      height: 24px;
+      font-size: 15px;
+    }
+    .remove-collaboration-btn {
+      vertical-align: top;
+      margin-top: 3px;
+      margin-left: 5px;
+      padding: 0;
+      border-radius: 18px;
+      width: 18px;
+      height: 18px;
+      text-align: center;
+    }
+  }
+  .back-btn {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    font-size: 18px;
   }
 }
-
 
 $tool_size: 75px;
 
