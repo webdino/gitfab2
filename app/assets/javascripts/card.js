@@ -99,8 +99,6 @@ $(function() {
 
   $(document).on("click", ".modal .cancel-btn", () => { $(".modal").modal("hide") });
 
-  $(document).on("ajax:beforeSend", ".delete-card", () => confirm("Are you sure to remove this item?"));
-
   $(document).on("ajax:error", ".new-card, .edit-card, .delete-card", function(event) {
     alert(event.detail[0].message);
     event.preventDefault();

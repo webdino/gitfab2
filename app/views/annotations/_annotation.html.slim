@@ -8,7 +8,7 @@ article class="card annotation" data-position="#{annotation.position}" id="#{ann
           = link_to "Edit", edit_project_state_annotation_path(@owner, @project, state, annotation), remote: true,
                             class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
           = link_to "Delete", project_state_annotation_path(@owner, @project, state, annotation), remote: true,
-                              method: :delete, class: "btn delete-card", "data-container" => ".card"
+                              method: :delete, class: "btn delete-card", data: { container: ".card", confirm: "Are you sure to remove this item?" }
           = link_to "Convert to State", project_state_annotation_to_state_path(@owner, @project, state, annotation),
                                         class: "to-state btn"
           .order-tools

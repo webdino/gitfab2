@@ -12,7 +12,7 @@ article class="card state" data-position="#{state.position}" id="#{state.id}"
             - edit_url = edit_project_state_path(owner_name: @owner.slug, project_id: @project.name, id: state.id)
             - delete_url = project_state_path(owner_name: @owner.slug, project_id: @project.name, id: state.id)
             = link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
-            = link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+            = link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", data: { container: ".card", confirm: "Are you sure to remove this item?" }
             = link_to "Convert to Annotation", "#", class: "btn convert-card"
             .order-tools
               = link_to "", "#", class: "order-up-btn"
