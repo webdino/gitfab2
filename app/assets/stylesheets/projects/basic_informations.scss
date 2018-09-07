@@ -338,12 +338,6 @@ section.tools {
     margin-top: 10px;
     height: $tool_size + 10px;
   }
-  #share-button {
-    background: image-url("icons/share") no-repeat;
-    margin: 5px 0;
-    padding: 5px 0;
-    height: $tool_size;
-  }
   #card-order-tools {
     .order-change-btn {
       background: image-url("icons/change_order") no-repeat;
@@ -412,25 +406,6 @@ section.tools {
         }
       }
     }
-  }
-}
-
-#share-destinations {
-  padding: 20px 40px;
-  background: $common-background-color;
-  border-radius: 5px;
-  .twitter-btn {
-    background: image-url("icons/twitter_100") no-repeat;
-    width: 100px;
-    height: 100px;
-    display: inline-block;
-    padding-right: 10px;
-  }
-  .fb-btn {
-    background: image-url("icons/fb_100") no-repeat;
-    width: 100px;
-    height: 100px;
-    display: inline-block;
   }
 }
 

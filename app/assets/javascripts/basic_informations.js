@@ -44,13 +44,6 @@ $(function() {
     height: "auto",
     className: "colorbox-bg-transparent"
   });
-
-  $(".colorbox-link").colorbox({
-    inline: true,
-    width: "auto",
-    height: "auto",
-    className: "colorbox-bg-transparent"
-  });
 });
 
 $(document).on("click", ".select2-container", event => $(".dropdown-wrapper").first().append($(".select2-dropdown").first()));
