@@ -7,7 +7,7 @@ main#recipes-show data-url="#{project_path(@project.owner, @project)}" data-owne
   = render "projects/project_comments"
   = render "projects/templates"
   = render "projects/state_convert_dialog"
-  #loading
-    = image_tag "loading.gif"
 
-.modal#loading-bar style="display: none;"
+.modal#modal-loading tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered.justify-content-md-center role="document"
+    = image_tag "loading"

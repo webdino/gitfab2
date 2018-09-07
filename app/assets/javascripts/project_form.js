@@ -17,6 +17,4 @@ $(function() {
       $("#project_license").val(value);
     }
   });
-
-  $(document).on("submit", "#new_project.new_project", () => $('#loading-bar').show());
 });

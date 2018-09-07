@@ -1,8 +1,8 @@
 $(document).on("click", ".fork-btn", function(event) {
   event.preventDefault();
-  $('#loading-bar').show();
-  const form = $(this).find("form");
-  form.submit();
+  $(".modal").modal("hide");
+  $("#modal-loading").modal("show");
+  $(this).find("form").submit();
 });
 
 $(document).on("click", "#print-btn", function(event) {

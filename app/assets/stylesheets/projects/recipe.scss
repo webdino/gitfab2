@@ -488,21 +488,3 @@
     margin: 20px 0;
   }
 }
-
-#loading {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: auto;
-  height: auto;
-  overflow-x: auto;
-  overflow-y: scroll;
-  background-color: $common-modal-background-color;
-
-  img {
-    position: absolute;
-  }
-}

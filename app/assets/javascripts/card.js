@@ -284,12 +284,8 @@ $(function() {
       success(data) {
         const new_annotation_id = data.$oid;
         $.colorbox.close();
-        const loading = $("#loading");
-        const img = loading.find("img");
-        const left = (loading.width() - img.width()) / 2;
-        const top = (loading.height() - img.height()) / 2;
-        $(img).css("left", left + "px").css("top", top + "px");
-        loading.show();
+        const loading = $("#modal-loading");
+        loading.modal("show");
 
         $.ajax({
           url: `${project_url}/states/${dst_state_id}/annotations/${new_annotation_id}`,
@@ -310,7 +306,7 @@ $(function() {
             const selector = `#${article_id} .slick`;
             card.replaceWith(data.html);
             setupFigureSlider(selector);
-            $("#loading").hide();
+            loading.modal('hide');
             checkStateConvertiblity();
             setStateIndex();
             markup();
@@ -340,12 +336,8 @@ $(function() {
       dataType: "json",
       success(data) {
         const new_state_id = data.$oid;
-        const loading = $("#loading");
-        const img = loading.find("img");
-        const left = (loading.width() - img.width()) / 2;
-        const top = (loading.height() - img.height()) / 2;
-        $(img).css("left", left + "px").css("top", top + "px");
-        loading.show();
+        const loading = $("#modal-loading");
+        loading.modal("show");
 
         $.ajax({
           url: `${project_url}/states/${new_state_id}`,
@@ -365,7 +357,7 @@ $(function() {
             const selector = `#${article_id} .slick`;
             card.replaceWith(data.html);
             setupFigureSlider(selector);
-            $("#loading").hide();
+            loading.modal('hide');
             $(`#${annotation_id}`).closest("li").remove();
             checkStateConvertiblity();
             setStateIndex();
