@@ -1,6 +1,5 @@
 @import "mixins/clearfix";
 @import "mixins/clickable";
-@import "mixins/rows";
 @import "mixins/variables";
 @import "mixins/slick";
 @import "_project_variables";
@@ -339,10 +338,6 @@ section.tools {
     margin-top: 10px;
     height: $tool_size + 10px;
   }
-  #fork-btn {
-    background: image-url("icons/fork") no-repeat;
-    height: $tool_size + 20px;
-  }
   #share-button {
     background: image-url("icons/share") no-repeat;
     margin: 5px 0;
@@ -440,16 +435,14 @@ section.tools {
 }
 
 #fork-destinations {
-  $popup_width: 360px;
-  @include spacing-row($popup_width, 20px, 3);
-  width: $popup_width;
-  min-height: 442px;
-  padding: 20px 40px;
-  background: $common-background-color;
   border-radius: 5px;
+  padding: 10px;
+
   .fork-destination {
+    display: inline-block;
+    margin: 15px;
+
     .dest-name {
-      margin-top: $common-margin;
       margin-bottom: 4px;
       white-space: nowrap;
       overflow: hidden;

@@ -134,21 +134,25 @@ section.tools class="#{'forked-project-tools' if @project.is_fork?}"
       = link_to "", "#", class: "order-change-btn"
       = link_to "", "#", class: "order-commit-btn"
   - if current_user
-    = link_to "", "#fork-destinations", id: "fork-btn", class: "colorbox-link"
+    = image_tag("icons/fork", id: "fork-btn", class: "clickable", data: { toggle: "modal", target: "#fork-modal" })
   - unless @project.is_private
     = link_to "", "#share-destinations", id: "share-button", class: "colorbox-link"
   = render "projects/recipe_cards_list", owner: @owner, project: @project
 
   .hidden
-    #fork-destinations
-      - if current_user
-        = render "projects/fork_destination", owner: current_user, project: @project
-        - current_user.groups.each do |group|
-          - if can? :manage, group
-            = render "projects/fork_destination", owner: group, project: @project
-
     #share-destinations
       .container
         - url = "https://fabble.cc" + project_path(@owner, @project)
         = link_to "", "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank", class: "twitter-btn"
         = link_to "", "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;", class: "fb-btn"
+
+- if current_user
+  .modal tabindex="-1" role="dialog" id="fork-modal"
+    .modal-dialog.modal-dialog-centered role="document"
+      .modal-content
+        .modal-body
+          #fork-destinations
+            = render "projects/fork_destination", owner: current_user, project: @project
+            - current_user.groups.each do |group|
+              - if can? :manage, group
+                = render "projects/fork_destination", owner: group, project: @project
