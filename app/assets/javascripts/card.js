@@ -20,7 +20,7 @@ const focusOnTitle = () => $(".card-title").first().focus();
 
 const hideTemplateForms = function() {
   $("#card-form-container").css("display", "none");
-  $("#state-convert-dialog").css("display", "none");
+  $("#state-convert-modal").modal("hide");
 };
 
 $(function() {
@@ -96,6 +96,8 @@ $(function() {
     return result;
   });
     //11 TODO: Show annotations index of focused status
+
+  $(document).on("click", ".modal .cancel-btn", () => { $(".modal").modal("hide") });
 
   $(document).on("ajax:beforeSend", ".delete-card", () => confirm("Are you sure to remove this item?"));
 
@@ -233,8 +235,9 @@ $(function() {
     const src_data_position = state.data("position");
     const state_id = state.attr("id");
     if ($(".state").length > 2) {
-      $("#state-convert-dialog .src").text(src_data_position);
-      $("#state-convert-dialog").data("target", state_id);
+      const state_convert_modal = $("#state-convert-modal");
+      state_convert_modal.find(".src").text(src_data_position);
+      state_convert_modal.data("target", state_id);
 
       const select = $("#target_state");
       select.empty();
@@ -249,29 +252,21 @@ $(function() {
         }
       });
 
-      const state_convert_dialog = $("#state-convert-dialog");
-      state_convert_dialog.css("display", "block");
-      $.colorbox({
-        inline: true,
-        href: state_convert_dialog,
-        width: "auto",
-        maxHeight: "90%",
-        opacity: 0.6
-      });
-
+      state_convert_modal.modal("show");
     } else {
       alert("First, make 2 or more state.");
     }
   });
 
-  $(document).on("click", "#state-convert-dialog .ok-btn", function(event) {
+  $(document).on("click", "#state-convert-modal .ok-btn", function(event) {
     event.preventDefault();
     const dst_data_position = $("#target_state").val();
     const dst_state = $(`.state[data-position=${dst_data_position}]`);
     const dst_state_id = dst_state.attr("id");
 
     const project_url = $("#recipes-show").data("url");
-    const state_id = $("#state-convert-dialog").data("target");
+    const state_convert_modal = $("#state-convert-modal");
+    const state_id = state_convert_modal.data("target");
 
     $.ajax({
       url: `${project_url}/states/${state_id}/to_annotation`,
@@ -283,7 +278,7 @@ $(function() {
       dataType: "json",
       success(data) {
         const new_annotation_id = data.$oid;
-        $.colorbox.close();
+        state_convert_modal.modal("hide");
         const loading = $("#modal-loading");
         loading.modal("show");
 

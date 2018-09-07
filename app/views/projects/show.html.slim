@@ -6,8 +6,22 @@ main#recipes-show data-url="#{project_path(@project.owner, @project)}" data-owne
   = render "projects/usages"
   = render "projects/project_comments"
   = render "projects/templates"
-  = render "projects/state_convert_dialog"
 
 .modal#modal-loading tabindex="-1" role="dialog"
   .modal-dialog.modal-dialog-centered.justify-content-md-center role="document"
     = image_tag "loading"
+
+.modal#state-convert-modal tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered role="document"
+    .modal-content
+      .modal-body
+        .text
+          'Convert State
+          p.src.d-inline
+          '&nbsp;to Annotation.
+          p Select the numebr of the state to annotate.
+        = select_tag "target_state"
+        .ok-btn.btn
+          'OK
+        .cancel-btn.btn
+          'cancel

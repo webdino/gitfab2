@@ -472,14 +472,7 @@
   }
 }
 
-#state-convert-dialog {
-  display: none;
-  padding: 10px 20px;
-  background: $common-background-color;
-  border-radius: 5px;
-  .src {
-    display: inline;
-  }
+#state-convert-modal {
   .text {
     line-height: 1.75;
   }
