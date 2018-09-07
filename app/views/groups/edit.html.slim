@@ -50,4 +50,4 @@
 
     $(document).on "ajax:success", "#new_member", (event) ->
       $("#members").append event.detail[0].html
-      clearSelect2Value()
+      $("#member_name").val(null).trigger("change");
