@@ -16,4 +16,8 @@
 - content_for :bottom do
   coffee:
     $(document).on "ajax:success", ".leave-btn", () ->
-      $(this).closest("li").remove()
+      data = event.detail[0]
+      if data.success == false
+        alert data.message
+      else
+        $(this).closest("li").remove()

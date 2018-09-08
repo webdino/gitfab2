@@ -19,7 +19,7 @@ class MembershipsController < ApplicationController
     if @membership.deletable?
       @membership.destroy
     else
-      render json: { success: false, message: 'You can not leave this group.' }
+      render json: { success: false, message: 'You can not remove this member.' }
     end
   end
 end
