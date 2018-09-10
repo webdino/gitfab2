@@ -37,20 +37,13 @@ $(function() {
       }
     }
   });
-
-  $(".show-project-relation-tree-link").colorbox({
-    inline: true,
-    width: "auto",
-    height: "auto",
-    className: "colorbox-bg-transparent"
-  });
 });
 
 $(document).on("click", ".select2-container", event => $(".dropdown-wrapper").first().append($(".select2-dropdown").first()));
 
 $(document).on("click", ".select2-dropdown", event => event.stopPropagation());
 
-$(document).on("click", ".show-project-relation-tree-link", function(event) {
+$(document).on("click", ".show-project-relation-tree-link", function() {
   $("#project-relation-tree svg").remove();
   const width = $(window).width() - 100;
   const height = $(window).height() - 160;

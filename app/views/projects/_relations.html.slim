@@ -8,8 +8,11 @@
 
   .wrapper
     .forked-icon
-    = link_to link_text, "#project-relation-tree", class: "link show-project-relation-tree-link"
+    = link_to link_text, "", class: "link show-project-relation-tree-link", data: { target: "#modal-project-relation-tree", toggle: "modal"}
 
-.hidden
-  #project-relation-tree data-url="#{project_relation_tree_path(project.owner, project, format: :json)}"
-    h1.title Project Relation Tree
+.modal#modal-project-relation-tree tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered role="document" style="max-width: 97%"
+    .modal-content
+      .modal-body
+        #project-relation-tree data-url="#{project_relation_tree_path(project.owner, project, format: :json)}"
+          h1.title Project Relation Tree
