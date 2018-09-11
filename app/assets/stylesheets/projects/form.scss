@@ -8,6 +8,65 @@
   margin-bottom: $common-margin-for-footer;
 }
 
+.form-panel {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 40px;
+  max-width: 480px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+  .form-panel-title {
+    margin-bottom: 1.0em;
+    font-family: $common-novelsans-semibold;
+    font-size: 2.0rem;
+    text-align: center;
+  }
+  hr {
+    margin: 48px 0;
+    border-top: 1px solid #999999;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  font-family: $common-novelsans-semibold;
+  label {
+    display: inline-block;
+    margin-bottom: .5rem;
+  }
+  .form-control {
+    display: block;
+    box-sizing: border-box;
+    padding: 0 .5rem;
+    border: 1px solid #999999;
+    border-radius: 5px;
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+  }
+  .btn {
+    box-sizing: border-box;
+    border: none;
+    width: 100%;
+    height: 44px;
+    font-size: 17px;
+    line-height: 44px;
+    text-align: center;
+    background-color: #aaa;
+    transition: all 0.25s;
+    &:hover {
+      color: #fff;
+    }
+    &.primary {
+      background-color: #52C3F1;
+      &:hover {
+        background-color: rgb(137, 219, 252);
+      }
+    }
+  }
+}
+
 form.project-form {
   font-family: $common-novelsans-semibold;
   .page-title {

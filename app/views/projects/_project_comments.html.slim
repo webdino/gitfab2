@@ -27,13 +27,13 @@ section#project-comments
                   == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED
       - if current_user
         = form_with(scope: :project_comment, url: project_project_comments_path(@project.owner, @project.id), id: 'project-comment-form', class: 'comment-form', local: true) do |f|
-          / TODO: 要デザイン修正
-          - if flash[:alert]
-            div style="color: red;"
-              - flash[:alert].each do |message|
-                = message
-          .left
-            = image_tag current_user.avatar.thumb.url, class: "avatar"
-          .right
-            = f.text_area :body, size: "40x4", class: "comment-editor", value: flash[:project_comment_body]
-            .actions = f.submit "comment", class: "btn"
+          .columns
+            .left
+              = image_tag current_user.avatar.thumb.url, class: "avatar"
+            .right
+              - if flash[:alert]
+                div.alert.alert-danger
+                  - flash[:alert].each do |message|
+                    = message
+              = f.text_area :body, size: "40x4", class: "comment-editor", value: flash[:project_comment_body]
+              .actions = f.submit "comment", class: "btn"

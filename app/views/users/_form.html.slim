@@ -1,4 +1,4 @@
-main#users-edit
+main.panel
   h1
     'Public Profile
 
@@ -14,19 +14,31 @@ main#users-edit
   = form_for user, html: { multipart: true } do |f|
     = f.hidden_field :encrypted_identity_id
 
-    .left
-      = image_tag user.avatar.url, id: "user-avatar"
-      = f.file_field :avatar, id: "user-avatar-form"
-      = f.hidden_field :avatar_cache
-    .right
-      = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-      = f.text_field :name, placeholder: "Name", class: "text-form"
-      - if user.password_auth?
-        = f.password_field :password, placeholder: "Password", class: "text-form"
-        = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "text-form"
-      = f.url_field :url, placeholder: "URL", class: "text-form"
-      = f.text_field :location, placeholder: "Location", class: "text-form"
-    = f.submit id: "submit", class: "btn"
+    .columns
+      .left
+        = image_tag user.avatar.url, id: "user-avatar"
+        = f.file_field :avatar, id: "user-avatar-form"
+        = f.hidden_field :avatar_cache
+      .right
+        = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+        div.form-group
+          = f.label :name
+          = f.text_field :name, placeholder: "Name", class: "form-control"
+        - if user.password_auth?
+          div.form-group
+            = f.label :password
+            = f.password_field :password, placeholder: "Password", class: "form-control"
+          div.form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
+        div.form-group
+          = f.label :url
+          = f.url_field :url, placeholder: "URL", class: "form-control"
+        div.form-group
+          = f.label :location
+          = f.text_field :location, placeholder: "Location", class: "form-control"
+    div.form-group
+      = f.submit id: "submit", class: "btn primary"
 
 - content_for :bottom
   coffee:
