@@ -19,9 +19,21 @@
   margin-bottom: 14px;
   padding: 1.0rem;
   border-radius: 5px;
-  &.alert-warning {
+  &.alert-primary {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  &.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  &.alert-danger {
     background-color: #f8d7da;
     color: #721c24;
+  }
+  &.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
   }
 }
 

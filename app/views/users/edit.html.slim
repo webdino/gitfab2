@@ -6,13 +6,12 @@
   div.panel
     h1 パスワード変更
     - if flash[:success]
-      div= flash[:success]
+      div.alert.alert-success= flash[:success]
     - if flash[:alert]
-      div style="color: red;"
-        = flash[:alert]
+      div.alert.alert-danger= flash[:alert]
     ul
       - @update_password_error_messages&.each do |message|
-        li= message
+        li.alert.alert-danger= message
 
     = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
       div.form-group
@@ -22,8 +21,8 @@
         = f.label :password_confirmation
         = f.password_field :password_confirmation, class: "form-control"
       - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
-        div
+        div.form-group
           = f.label :current_password, "現在のパスワード"
-          = f.password_field :current_password
+          = f.password_field :current_password, class: "form-control"
       div.form-group
         = f.submit "Update password", class: "btn primary"
