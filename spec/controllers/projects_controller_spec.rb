@@ -34,7 +34,7 @@ describe ProjectsController, type: :controller do
       end
       describe 'GET new' do
         before do
-          user_project.owner.memberships.create group_id: group_project.owner.id
+          user_project.owner.memberships.create(group_id: group_project.owner.id, role: 'admin')
           sign_in user_project.owner
           get :new
         end
@@ -43,7 +43,7 @@ describe ProjectsController, type: :controller do
       describe 'DELETE destroy' do
         context 'without collaborators' do
           before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
+            user_project.owner.memberships.create(group_id: group_project.owner.id, role: 'admin')
             sign_in user_project.owner
             delete :destroy, params: { owner_name: project.owner.slug, id: project.id }
           end
@@ -53,7 +53,7 @@ describe ProjectsController, type: :controller do
           let(:user) { FactoryBot.create :user }
           let(:group) { FactoryBot.create :group }
           before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
+            user_project.owner.memberships.create(group_id: group_project.owner.id, role: 'admin')
             sign_in user_project.owner
             user.collaborations.create project_id: project
             group.collaborations.create project_id: project
@@ -72,7 +72,7 @@ describe ProjectsController, type: :controller do
       end
       describe 'GET edit' do
         before do
-          user_project.owner.memberships.create group_id: group_project.owner.id
+          user_project.owner.memberships.create(group_id: group_project.owner.id, role: 'admin')
           sign_in user_project.owner
           get :edit, params: { owner_name: project.owner.slug, id: project.id }
         end
@@ -103,7 +103,7 @@ describe ProjectsController, type: :controller do
 
       describe 'GET recipe_cards_list' do
         before do
-          user_project.owner.memberships.create group_id: group_project.owner
+          user_project.owner.memberships.create(group_id: group_project.owner, role: 'admin')
           sign_in user_project.owner
           get :recipe_cards_list, params: { owner_name: project.owner, project_id: project }, xhr: true
         end
@@ -116,7 +116,7 @@ describe ProjectsController, type: :controller do
         let(:params) { { owner_name: project.owner, id: project.id, project: project_params } }
 
         before do
-          user_project.owner.memberships.create group_id: group_project.owner.id
+          user_project.owner.memberships.create(group_id: group_project.owner.id, role: 'admin')
           sign_in user_project.owner
         end
 

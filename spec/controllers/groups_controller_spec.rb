@@ -41,60 +41,99 @@ describe GroupsController, type: :controller do
   end
 
   describe 'GET edit' do
-    before do
-      sign_in user
-      user.memberships.create group_id: group.id
-      get :edit, params: { id: group.id }
+    subject { get :edit, params: { id: group } }
+
+    describe 'as an admin' do
+      before do
+        user.memberships.create(group: group, role: 'admin')
+        sign_in user
+      end
+
+      it { is_expected.to have_http_status :success }
+      it { is_expected.to render_template :edit }
     end
-    it { is_expected.to render_template :edit }
+
+    describe 'as an editor' do
+      before do
+        user.memberships.create(group: group, role: 'admin')
+        sign_in other
+        other.memberships.create(group: group, role: 'editor')
+      end
+
+      it { is_expected.to have_http_status :unauthorized }
+    end
   end
 
   describe 'PATCH update' do
-    let(:group_params) { { name: 'updated' } }
+    subject { patch :update, params: { id: group, group: group_params } }
+
     describe 'as an admin' do
       before do
         sign_in user
-        user.memberships.create group_id: group.id
-        patch :update, params: { id: group.id, group: group_params }
+        user.memberships.create(group_id: group.id, role: 'admin')
       end
+
       context 'with valid params' do
-        it_behaves_like 'redirected'
+        let(:group_params) { { name: 'updated' } }
+
+        it { is_expected.to have_http_status :redirect }
+        it 'updates a group' do
+          expect { subject }.to change { group.reload.name }
+        end
       end
+
       context 'with invalid params' do
         let(:group_params) { { name: nil } }
-        it_behaves_like 'success'
-        it_behaves_like 'render template', 'edit'
+
+        it { is_expected.to have_http_status :success }
+        it { is_expected.to render_template :edit }
+        it 'does NOT update a group' do
+          expect { subject }.not_to change { group.reload.name }
+        end
       end
     end
+
     describe 'as an editor' do
+      let(:group_params) { { name: 'updated' } }
+
       before do
-        user.memberships.create group_id: group.id
-        @orig_group = group.dup
+        user.memberships.create(group: group, role: 'admin')
         sign_in other
-        other.memberships.create group_id: group.id
-        patch :update, params: { id: group.id, group: group_params }
+        other.memberships.create(group: group, role: 'editor')
       end
-      it_behaves_like 'unauthorized'
+
+      it 'does NOT update a group' do
+        expect { subject }.not_to change { group.reload.name }
+      end
+
+      it { is_expected.to have_http_status :unauthorized }
     end
   end
 
   describe 'DELETE destroy' do
+    subject { delete :destroy, params: { id: group } }
+
     describe 'as an admin' do
+      let!(:group) { FactoryBot.create :group }
+
       before do
         sign_in user
-        user.memberships.create group_id: group.id
-        delete :destroy, params: { id: group.id }
+        user.memberships.create(group_id: group.id, role: 'admin')
       end
-      it_behaves_like 'redirected'
+
+      it { is_expected.to have_http_status :redirect }
+      it { expect{ subject }.to change{ Group.count }.by(-1) }
     end
+
     describe 'as an editor' do
       before do
         sign_in other
-        user.memberships.create group_id: group.id
-        other.memberships.create group_id: group.id
-        delete :destroy, params: { id: group.id }
+        user.memberships.create(group_id: group.id, role: 'admin')
+        other.memberships.create(group_id: group.id, role: 'editor')
       end
-      it_behaves_like 'unauthorized'
+
+      it { is_expected.to have_http_status :unauthorized }
+      it { expect{ subject }.to change{ Group.count }.by(0) }
     end
   end
 end

@@ -40,7 +40,7 @@ describe MembershipsController, type: :controller do
     subject { delete :destroy, params: { user_id: user.id, id: membership.id } }
 
     let!(:group) { FactoryBot.create(:group)}
-    let!(:membership) { user.memberships.create(group: group) }
+    let!(:membership) { user.memberships.create(group: group, role: 'admin') }
 
     before { sign_in user }
 
