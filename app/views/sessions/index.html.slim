@@ -1,6 +1,6 @@
-.card-form
+.form-panel
   div
-    h2.form-title Sign in
+    h2.form-panel-title Sign in
     div
       = flash[:alert]
       = form_with(model: @form, url: sessions_path, scope: "sign_in", local: true) do |f|

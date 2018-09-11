@@ -1,28 +1,29 @@
 - content_for(:title, "Edit Profile")
 
-= render partial: "form", locals: { user: @user }
+#users-edit
+  = render partial: "form", locals: { user: @user }
 
-/ TODO: デザイン修正
-div
-  h1 パスワード変更
-  - if flash[:success]
-    div= flash[:success]
-  - if flash[:alert]
-    div style="color: red;"
-      = flash[:alert]
-  ul
-    - @update_password_error_messages&.each do |message|
-      li= message
+  div.panel
+    h1 パスワード変更
+    - if flash[:success]
+      div= flash[:success]
+    - if flash[:alert]
+      div style="color: red;"
+        = flash[:alert]
+    ul
+      - @update_password_error_messages&.each do |message|
+        li= message
 
-  = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
-    div
-      = f.label :password
-      = f.password_field :password
-    div
-      = f.label :password_confirmation
-      = f.password_field :password_confirmation
-    - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
-      div
-        = f.label :current_password, "現在のパスワード"
-        = f.password_field :current_password
-    = f.submit "Update password"
+    = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
+      div.form-group
+        = f.label :password
+        = f.password_field :password, class: "form-control"
+      div.form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control"
+      - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
+        div
+          = f.label :current_password, "現在のパスワード"
+          = f.password_field :current_password
+      div.form-group
+        = f.submit "Update password", class: "btn primary"

@@ -8,7 +8,7 @@
   margin-bottom: $common-margin-for-footer;
 }
 
-.card-form {
+.form-panel {
   box-sizing: border-box;
   margin: 0 auto;
   padding: 40px;
@@ -16,17 +16,16 @@
   width: 100%;
   background-color: #fff;
   border-radius: 2px;
+  .form-panel-title {
+    margin-bottom: 1.0em;
+    font-family: $common-novelsans-semibold;
+    font-size: 2.0rem;
+    text-align: center;
+  }
   hr {
     margin: 48px 0;
     border-top: 1px solid #999999;
   }
-}
-
-.form-title {
-  margin-bottom: 1.0em;
-  font-family: $common-novelsans-semibold;
-  font-size: 2.0rem;
-  text-align: center;
 }
 
 .form-group {
@@ -60,9 +59,9 @@
       color: #fff;
     }
     &.primary {
-      background-color: #3ba3fe;
+      background-color: #52C3F1;
       &:hover {
-        background-color: #67b8ff;
+        background-color: rgb(137, 219, 252);
       }
     }
   }
