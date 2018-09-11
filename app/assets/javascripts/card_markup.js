@@ -10,6 +10,7 @@ $(function() {
 
     removePane() {
       modalpane.hide();
+      $(document).on("focusin.modal");
       if (this.pane) {
         this.pane.remove();
         this.pane = null;
@@ -19,6 +20,7 @@ $(function() {
 
     addPane() {
       $(".nicEdit-main").blur();
+      $(document).off("focusin.modal");
       modalpane.show();
 
       let container = new bkElement("div")

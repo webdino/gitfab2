@@ -53,12 +53,10 @@ $(function() {
     const is_image_list = (iframe.length === 0) || iframe.is(":hidden");
     if (is_image_list) {
       last_figure.find(".card-figure-content").trigger("click");
-      if ($("#colorbox").length > 0) { setTimeout($.colorbox.resize, 100); }
     } else if (confirm("When you add an image, the youtube movie on this card will be removed. Are you sure?")) {
       removeAllFigures(figures, figures_length);
       last_figure.find(".card-figure-link").hide();
       last_figure.find(".card-figure-content").trigger("click");
-      if ($("#colorbox").length > 0) { setTimeout($.colorbox.resize, 100); }
     } else {
       event.preventDefault();
     }
@@ -71,7 +69,6 @@ $(function() {
       const tmp_img = new Image;
       tmp_img.src = reader.result;
       $(event.target).siblings("img").attr("src", tmp_img.src);
-      if ($("#colorbox").length > 0) { setTimeout($.colorbox.resize, 100); }
     };
     reader.readAsDataURL(file);
   });
@@ -88,7 +85,6 @@ $(function() {
       last_figure.find(".edit").hide();
       last_figure.find("img").hide();
       figure_list.addClass("hide-add-buttons");
-      if ($("#colorbox").length > 0) { setTimeout($.colorbox.resize, 100); }
     } else {
       event.preventDefault();
     }

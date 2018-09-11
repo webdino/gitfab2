@@ -34,7 +34,7 @@
       = f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
       .remove-all-figures.btn
         'Remove all figures
-    = f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength: "300"
+    = f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength: "300", style: "width: 100%;"
 
     - unless f.object.class.name.include? "Note"
       .text-length
@@ -59,4 +59,5 @@
       = f.link_to_add "Add a Attachments", :attachments, id: "add-attachment"
     .invalid-form-error-message
     = f.submit "Submit", class: "submit btn"
-    = link_to "Cancel", "", class: "cancel-btn btn"
+    button.cancel-btn.btn type="button"
+      'Cacnel

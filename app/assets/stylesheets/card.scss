@@ -1,19 +1,11 @@
 @import "mixins/variables";
 
 #card-form-container {
-  display: none;
-  width: $recipe_main_width;
   background-color: $common-background-color;
   border: $common-border;
   border-radius: 4px;
 
   $content_width: $recipe_main_width - 48px;
-
-  #inner_content {
-    width: 100%;
-    padding: 24px;
-    box-sizing: border-box;
-  }
 
   ul.figures {
     li.figure {

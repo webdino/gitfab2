@@ -1,4 +1,3 @@
-//= require jquery.colorbox
 let editor = null;
 
 const setupNicEditor = function() {
@@ -18,11 +17,6 @@ const descriptionText = function() {
 
 const focusOnTitle = () => $(".card-title").first().focus();
 
-const hideTemplateForms = function() {
-  $("#card-form-container").css("display", "none");
-  $("#state-convert-modal").modal("hide");
-};
-
 $(function() {
   $.rails.ajax = function(option) {
     option.xhr =  function() {
@@ -35,10 +29,6 @@ $(function() {
     };
     return $.ajax(option);
   };
-
-  const formContainer = $(document.createElement("div"));
-  formContainer.attr("id", "card-form-container");
-  formContainer.appendTo(document.body);
 
   let cards_top = [];
 
@@ -97,7 +87,13 @@ $(function() {
   });
     //11 TODO: Show annotations index of focused status
 
-  $(document).on("click", ".modal .cancel-btn", () => { $(".modal").modal("hide") });
+  $(document).on("click", ".modal:not(#modal-card-form) .cancel-btn", () => { $(".modal").modal("hide") });
+  $(document).on("click", "#modal-card-form .cancel-btn", function(event) {
+    if (confirm("Are you sure to discard all changes on this dialog?")) {
+      $(".modal").modal("hide")
+    }
+  });
+
 
   $(document).on("ajax:error", ".new-card, .edit-card, .delete-card", function(event) {
     alert(event.detail[0].message);
@@ -125,7 +121,7 @@ $(function() {
     if (validated) {
       Rails.fire(form[0], "submit");
       $(this).find(".submit").off().fadeTo(80, 0.01);
-      $.colorbox.close();
+      $(".modal").modal("hide");
     } else {
       alert("You cannot make empty card.");
     }
@@ -141,6 +137,7 @@ $(function() {
     li.addClass("card-wrapper");
     li.addClass(className);
     let card = null;
+    const formContainer = $("#card-form-container");
     formContainer.html(data.html);
     setupNicEditor();
     setTimeout(focusOnTitle, 500);
@@ -163,6 +160,7 @@ $(function() {
     const data = event.detail[0];
     const li = $(this).closest("li");
     const card = $(li).children().first();
+    const formContainer = $("#card-form-container");
     formContainer.html(data.html);
     setupNicEditor();
     setTimeout(focusOnTitle, 1);
@@ -176,18 +174,7 @@ $(function() {
   });
 
   $(document).on("ajax:success", ".new-card, .edit-card", function() {
-    const form_object = $("#card-form-container");
-    form_object.css("display", "block");
-    $.colorbox({
-      inline: true,
-      href: form_object,
-      width: "auto",
-      maxHeight: "90%",
-      opacity: 0.6,
-      overlayClose: false,
-      trapFocus: false,
-      className: "colorbox-card-form"
-    });
+    $("#modal-card-form").modal("show");
   });
 
   $(document).on("ajax:success", ".delete-card", function() {
@@ -201,21 +188,7 @@ $(function() {
     reloadRecipeCardsList();
   });
 
-  $(document).on("click", "#cboxClose", function(event) {
-    event.preventDefault();
-    $.colorbox.close();
-    hideTemplateForms();
-  });
-
   $(document).on("card-order-changed", "#recipe-card-list", event => setStateIndex());
-
-  $(document).on("click", "#cboxOverlay.colorbox-card-form", function(event) {
-    event.preventDefault();
-    if (confirm("Are you sure to discard all changes on this dialog?")) {
-      $.colorbox.close();
-      hideTemplateForms();
-    }
-  });
 
   $(document).on("keyup", "#inner_content .nicEdit-main", function(event) {
     const description_text_length = descriptionText().length;
@@ -450,7 +423,7 @@ $(function() {
     });
 
   const updateCard = function(card, data) {
-    formContainer.empty();
+    $("#card-form-container").empty();
     const article_id = $(data.html).find(".slick").closest("article").attr("id");
     const selector = `#${article_id} .slick`;
     card.replaceWith(data.html);
