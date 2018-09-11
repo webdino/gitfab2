@@ -1,15 +1,14 @@
 - @notifications = notifications if @notifications.nil?
 #notifications-index
-  .mark-all-as-read data-url="#{mark_all_as_read_user_notifications_path (current_user)}"
+  .mark-all-as-read data-url="#{mark_all_as_read_notifications_path}"
     .container Mark All as Read
   ul.notifications
-    - if @notifications.length > 0
+    - if @notifications.count > 0
       - @notifications.each do |notification|
         li.notification
           .container
-            == link_to image_tag(notification.notifier.avatar.thumb, class: "avatar"), projects_path(notification.notifier), class: "avatar-wrapper"
-            - notified_object_url = "/users/#{notification.notified.slug}/notifications/#{notification.id}"
-            == link_to notification.body, notification.notificatable_url, class: "body", data: {url: notified_object_url}
+            = link_to image_tag(notification.notifier.avatar.thumb.url, class: "avatar"), owner_path(notification.notifier), class: "avatar-wrapper"
+            = link_to notification.body, notification.notificatable_url, class: "body", data: {url: notification_path(notification)}
     - else
       li.notification
         .container

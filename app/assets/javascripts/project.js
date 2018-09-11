@@ -11,20 +11,19 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.ui.sortable
-//= require jquery_ujs
+//= require rails-ujs
 //= require jquery_nested_form
 //= require jquery.slick
 //= require jquery.validate
 //= require jquery.validate.additional-methods
-//= require_tree ../../../vendor/assets/javascripts/jquery
-//= require_tree ../../../vendor/assets/javascripts/nicedit
-//= require ../../../vendor/assets/javascripts/three
-//= require_tree ../../../vendor/assets/javascripts/threejs
+//= require jquery/jquery.selection
+//= require masonry.pkgd.min
+//= require nicedit/nicEdit
+//= require three
+//= require threejs/STLLoader
 //= require_tree ./helpers
 //= require_tree ./jquery
-//= require ./stl_viewer
-//= require ../../../vendor/assets/javascripts/d3
+//= require d3
 //= require ./recipe
 //= require ./project_form
 //= require ./card
@@ -36,8 +35,9 @@
 //= require ./comment
 //= require ./tag
 //= require ./collaborator
-//= require ./change_owner
 //= require ./basic_informations
+//= require ./projects
 //= require ./notifications
-//= require ./maintenance
 //= require select2
+
+import 'babel-polyfill/dist/polyfill'

@@ -1,57 +1,31 @@
 class TagsController < ApplicationController
-  before_action :load_owner
-  before_action :load_project
-  before_action :build_tag, only: :create
-  before_action :load_tag, only: :destroy
-  after_action :update_draft!, only: [:create, :destroy]
-
-  authorize_resource
-
   def create
-    if @tag.save
-      @resources = [@owner, @project, @tag]
+    project = Project.find_with(params[:owner_name], params[:project_id])
+    @tag = project.tags.build(tag_params)
+    if can?(:create, @tag) && @tag.save
+      project.update_draft!
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
-    if @tag.destroy
-      render :destroy
+    tag = Tag.find(params[:id])
+    if can?(:destroy, tag) && tag.destroy
+      tag.project.update_draft!
+      render json: { success: true }
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   private
 
-  def load_owner
-    owner_id = params[:owner_name] || params[:user_id] || params[:group_id]
-    @owner = ProjectOwner.friendly_first(owner_id)
-  end
-
-  def load_project
-    @project = @owner.projects.friendly.find params[:project_id]
-  end
-
-  def build_tag
-    tag = @project.tags.build
-    tag_parameter = tag_params
-    tag.name = Sanitize.clean(tag_parameter[:name]).strip
-    tag.user = current_user
-    @tag = tag
-  end
-
-  def load_tag
-    @tag = @project.tags.find params[:id]
-  end
-
-  def update_draft!
-    @project.update_draft!
-  end
-
-  def tag_params
-    params.require(:tag).permit Tag.updatable_columns if params[:tag]
-  end
+    def tag_params
+      parameters = params.require(:tag).permit(:name)
+      parameters[:name] = Sanitize.clean(parameters[:name]).strip
+      parameters[:user] = current_user
+      parameters
+    end
 end

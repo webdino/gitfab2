@@ -1,15 +1,28 @@
+# == Schema Information
+#
+# Table name: cards
+#
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
+#
+# Indexes
+#
+#  index_cards_on_state_id  (state_id)
+#  index_cards_project_id   (project_id)
+#
+# Foreign Keys
+#
+#  fk_cards_project_id  (project_id => projects.id)
+#
+
 class Card::NoteCard < Card
-  include Taggable
-  belongs_to :note, required: true
-
-  after_create -> { note.increment!(:num_cards) }
-  after_destroy -> { note.decrement!(:num_cards) }
-
-  validates :title, :description, presence: true
-
-  class << self
-    def updatable_columns
-      super + [:tag]
-    end
-  end
+  belongs_to :project, counter_cache: :note_cards_count
 end

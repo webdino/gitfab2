@@ -1,36 +1,54 @@
-class Card::Annotation < Card
-  # TODO: required: true を付けられるかどうか要検討
-  belongs_to :annotatable, polymorphic: true
-  acts_as_list scope: :annotatable
+# == Schema Information
+#
+# Table name: cards
+#
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
+#
+# Indexes
+#
+#  index_cards_on_state_id  (state_id)
+#  index_cards_project_id   (project_id)
+#
+# Foreign Keys
+#
+#  fk_cards_project_id  (project_id => projects.id)
+#
 
-  scope :ordered_by_position, -> { order('position ASC') }
+class Card::Annotation < Card
+  belongs_to :state, class_name: "Card::State", foreign_key: :state_id
+  acts_as_list scope: :state
+
+  scope :ordered_by_position, -> { order(:position) }
 
   class << self
     def updatable_columns
-      super + [:position, :move_to]
+      super + [:position]
     end
   end
 
-  # AnnotationをState変換
-  # 基底のCardクラスとしてdupした上でStateとしてrecipeの子に設定する
-  def to_state!(recipe)
-    state = nil
+  def project
+    state.project
+  end
+
+  def to_state!(project)
     transaction do
-      Card.uncached do
-        card = self.class.lock.find(id).tap{ |c| c.type = Card.name }.becomes(Card)
-        # state = card.dup_document.becomes(Card::State) キャストすると未保存のRelation(figuresなど)が失われる
-        new_card = card.dup_document
-        new_card.type = Card::State.name
-        new_card.save! # relation保存
-        state = Card::State.find(new_card.id)
-        recipe.states << state
-        recipe.states.each.with_index(1) do |st, index|
-          st.update_column :position, index
-        end
-        recipe.save!
-      end
-      destroy!
+      update!(
+        type: Card::State.name,
+        project_id: project.id,
+        position: Card::State.where(project_id: project.id).maximum(:position).to_i + 1
+      )
+      project.increment!(:states_count)
     end
-    state.reload
+
+    Card::State.find(id)
   end
 end

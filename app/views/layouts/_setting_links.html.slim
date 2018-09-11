@@ -2,21 +2,21 @@
   .user-account.account
     h1.title ACCOUNT
     .user
-      == link_to [:edit, current_user] do
+      = link_to edit_user_path do
         .inner
-          == image_tag current_user.avatar.thumb, class: "avatar"
+          = image_tag current_user.avatar.thumb.url, class: "avatar"
           .name
-            == current_user.name
+            = current_user.name
 
   .groups-account.account
     h1.title GROUPS
-    == link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
+    = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
 
     ul.groups
       - current_user.groups.each do |group|
-        == link_to [:edit, group] do
+        = link_to [:edit, group] do
           li.group
             .inner
-              == image_tag group.avatar.thumb, class: "avatar"
+              = image_tag group.avatar.thumb.url, class: "avatar"
               .name
-                == group.name
+                = group.name

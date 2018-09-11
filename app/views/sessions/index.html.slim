@@ -1,0 +1,20 @@
+.form-panel
+  div
+    h2.form-panel-title Sign in
+    div
+      = flash[:alert]
+      = form_with(model: @form, url: sessions_path, scope: "sign_in", local: true) do |f|
+        div.form-group
+          = f.label :name
+          = f.text_field :name, placeholder: "Name", class: "form-control"
+        div.form-group
+          = f.label :password
+          = f.password_field :password, placeholder: "Password", class: "form-control"
+        div.form-group
+          = f.submit "Sign in", class: "btn primary"
+  hr
+  ul
+    li.form-group
+      = link_to "Sign in with GitHub", "/auth/github", class: "btn"
+    li.form-group
+      = link_to "Sign up with Password", new_user_path, class: "btn"

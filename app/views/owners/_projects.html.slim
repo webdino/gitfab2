@@ -1,0 +1,36 @@
+#projects
+  ul.tabs.tab-hotizontal
+    li.active
+      - length = 0
+      - @owner.projects.each do |p|
+        - length += 1 if can? :read, p
+      = link_to "Project (#{length})", "#", data: {tab: "#project-tab"}
+    li
+      - length = 0
+      - @owner.projects.noted.each do |p|
+        - length += 1 if can? :read, p
+      = link_to "Memo (#{length})", "#", data: {tab: "#note-tab"}
+    li
+      - length = 0
+      - @owner.collaborations.each do |c|
+        - p = c.project
+        - length += 1 if can? :read, p
+      = link_to "Collaboration (#{length})", "#", data: {tab: "#collaboration-tab"}
+    / TODO: #486 Implement user.contributed_projects method in user.rb
+    / li
+    /   = link_to "Contribution", "#", data: {tab: "#contribution-tab"}
+
+  .tabs-content
+    = render partial: "project_tab"
+    = render partial: "note_tab"
+    = render partial: "collaboration_tab"
+
+- content_for :bottom
+  coffee:
+    tabby.init {
+      toggleActiveClass : 'active',
+      contentActiveClass : 'active',
+      initClass : 'js-tabby',
+      callbackBefore : (toggle, tabID) -> {},
+      callbackAfter : (toggle, tabID) -> {}
+    }

@@ -1,0 +1,140 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+@import "mixins/slick";
+@import "projects/_project_variables";
+
+#note-cards-show {
+  width: $content_width;
+  .top {
+    margin-left: $first_column_width;
+    padding-top: 1px;
+    width: $article_column_width;
+    background-color: $common-background-color;
+    .inner {
+      @include cf;
+      $margin: 10px;
+      width: $article_column_width - $margin * 2;
+      margin: 34px $margin 0;
+      border-top: $common-border;
+      h1 {
+        font-family: $common-novelsans-semibold;
+        font-weight: 500;
+        font-size: 22px;
+        line-height: $common-line-height;
+      }
+      .new-card {
+        float: right;
+        margin-top: -20px;
+      }
+    }
+  }
+  .note-card-wrapper {
+    @include cf;
+    height: auto;
+    .first-column {
+      display: block;
+      min-height: 10px;
+    }
+    .article-column {
+      display: block;
+      margin-right: 70px;
+      padding-bottom: 40px;
+      background-color: $common-background-color;
+      .card-content {
+        $note_card_width: 820px;
+        @include cf;
+        .title {
+          margin: 0 10px;
+          width: $note_card_width - 20px;
+          font-family: $common-novelsans-light;
+          font-size: 22px;
+          line-height: $common-line-height;
+        }
+        .meta {
+          margin: 0 10px;
+          width: $note_card_width - 20px;
+          font-family: $common-novelsans-semibold;
+          font-size: 14px;
+          line-height: $common-line-height;
+          .postedby {
+            display: inline-block;
+            width: 60%;
+            font-weight: normal;
+            img {
+              margin-right: 5px;
+              margin-bottom: -3px;
+              width: 16px;
+              height: 16px;
+            }
+          }
+          .control {
+            display: inline-block;
+            margin-top: 5px;
+            width: 40%;
+            text-align: right;
+          }
+        }
+
+        figure {
+          margin-left: 10px;
+          width: $note_card_width - 20px;
+          height: auto;
+          overflow: hidden;
+          border: none;
+          border-radius: 0;
+          box-shadow: none;
+          img {
+            width: 100%;
+          }
+          iframe {
+            width: 100%;
+            height: ($note_card_width - 20px) * 3 / 4;
+          }
+          @include slick(15px, 15px);
+          .slick {
+            width: $note_card_width - 20px;
+            height: auto;
+          }
+        }
+
+        .description {
+          margin: 10px;
+          width: $note_card_width - 20px;
+          font-family: $common-novelsans-light;
+          font-size: 16px;
+          line-height: 32px;
+          a {
+            color: $common-basic-color;
+          }
+          ul {
+            margin-left: 20px;
+            list-style-type: disc;
+          }
+          ol {
+            margin-left: 20px;
+          }
+        }
+      }
+    }
+  }
+  footer {
+    display:block;
+    margin-right: 70px;
+    margin-bottom: 60px;
+    margin-left: $first_column_width;
+    padding-top: 150px;
+    width: $article_column_width;
+    background-color: $common-background-color;
+    .inner {
+      $margin: 10px;
+      width: $article_column_width - $margin * 2;
+      margin: 0px $margin 0;
+      height: 60px;
+      border-top: $common-border;
+    }
+  }
+}
+
+#templates {
+  display: none;
+}

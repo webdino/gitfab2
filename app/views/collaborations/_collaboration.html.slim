@@ -1,5 +1,7 @@
 li.collaboration
-  == collaboration.owner.name
-  '|
+  span.avatar
+    = image_tag collaboration.owner.avatar.thumb.url
+  span.name
+    = collaboration.owner.name
   - if can? :manage, collaboration
-    == link_to "remove", [@collaboration.project.owner, collaboration], method: :delete, remote: true, class: "remove-collaboration-btn"
+    = link_to "x", collaboration_path(collaboration), method: :delete, remote: true, class: "remove-collaboration-btn btn"

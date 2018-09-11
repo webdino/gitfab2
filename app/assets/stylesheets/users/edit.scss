@@ -1,0 +1,65 @@
+@import "mixins/clickable";
+@import "mixins/variables";
+
+#users-edit {
+  float: right;
+  width: 730px;
+  margin: 20px 0px $common-margin-for-footer 0;
+  font-family: $common-novelsans-semibold;
+
+  .panel {
+    box-sizing: border-box;
+    float: none;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: $common-background-color;
+  }
+
+  #notice {
+    color: green;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    padding: 20px 0;
+    font-weight: normal;
+    font-size: 30px;
+  }
+
+  .columns {
+    display: flex;
+    justify-content: space-between;
+    .left {
+      width: 300px;
+      height: 300px;
+    }
+    .right {
+      width: 350px;
+    }
+  }
+
+  #user-avatar {
+    @include clickable;
+    width: 300px;
+    height: 300px;
+    border-radius: 300px;
+    border: 10px solid #D8D8D8;
+  }
+  #user-avatar-form {
+    display: none;
+  }
+  #upload-button {
+    margin: 20px 0 15px;
+    padding: 5px 10px;
+    color: $common-quiet-text-color;
+    background-color: $common-background-color;
+    border: 1px solid $common-gray;
+    &:before {
+      content: asset-url("edit_image_gray.png");
+      position: relative;
+      top: 3px;
+      padding-right: 5px;
+    }
+  }
+}

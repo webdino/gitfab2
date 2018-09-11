@@ -1,13 +1,18 @@
 # frozen_string_literal: true
+# == Schema Information
+#
+# Table name: features
+#
+#  id         :integer          not null, primary key
+#  category   :integer          default(0), not null
+#  class_name :string(255)
+#  name       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :feature do
-    after(:build) do |feature|
-      feature.featured_items << FactoryGirl.create(:featured_item, feature: feature)
-      feature.featured_items << FactoryGirl.create(:featured_item, feature: feature)
-      feature.featured_items << FactoryGirl.create(:featured_item, feature: feature)
-    end
-
     sequence(:name) { |n| "feature#{n}" }
   end
 end

@@ -1,50 +1,51 @@
-article class="card state" data-position="#{card.position}" id="#{card.id}"
+article class="card state" data-position="#{state.position}" id="#{state.id}"
   h1.number
   .arrow-column
     .arrow-head
   .article-column
     .card-content
       .header
-        == render "components/card_title", card: card
+        h2.title
+          = link_to (state.title.presence || "State #{state.position}"), "#state-#{state.id}", id: "state-#{state.id}", class: "anchor"
         .control
-          - if can? :manage, card
-            - edit_url = edit_project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, recipe: @project.recipe, id: card.id)
-            - delete_url = project_recipe_state_path(owner_name: @owner.slug, project_id: @project.name, recipe: @project.recipe, id: card.id)
-            == link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
-            == link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-            == link_to "Convert to Annotation", "#", class: "btn convert-card"
+          - if can? :manage, state
+            - edit_url = edit_project_state_path(owner_name: @owner.slug, project_id: @project.name, id: state.id)
+            - delete_url = project_state_path(owner_name: @owner.slug, project_id: @project.name, id: state.id)
+            = link_to "Edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card", "data-list" => "#recipe-card-list"
+            = link_to "Delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+            = link_to "Convert to Annotation", "#", class: "btn convert-card"
             .order-tools
-              == link_to "", "#", class: "order-up-btn"
-              == link_to "", "#", class: "order-down-btn"
+              = link_to "", "#", class: "order-up-btn"
+              = link_to "", "#", class: "order-down-btn"
 
           .show-comments-btn
             .comment-icon.icon
             .count
-              == card.comments.length
-          == render "components/card_contributors", card: card
+              = state.comments_count
+          = render "components/card_contributors", card: state
       .body
-        == render "components/card_description", card: card
-        == render "components/card_figures", card: card
-        == render "components/card_attachments", card: card
+        = render "components/card_description", card: state
+        = render "components/card_figures", card: state
+        = render "components/card_attachments", card: state
 
       .footer
-        == render "components/card_comments", card: card, resources: [@owner, @project, :recipe, card]
+        = render "components/card_comments", card: state
 
     ul.annotation-list
-      - card.annotations.includes(:annotatable, :attachments, :comments, :contributions, :figures).ordered_by_position.each do |annotation|
+      - state.annotations.includes(:attachments, :contributions, :figures).ordered_by_position.each do |annotation|
         li.card-wrapper.annotation-wrapper
-          == render "annotations/annotation", annotation: annotation, parent: card
-    - if signed_in?
-      - new_annotation_url = new_project_recipe_state_annotation_path(owner_name: @owner.slug, project_id: @project.name, state_id: card.id)
-      == link_to "Add Annotation", new_annotation_url, remote: true, class: "btn new-card",
-        "data-list" => "##{card.id} .annotation-list",
+          = render "annotations/annotation", annotation: annotation, state: state
+    - if current_user
+      = link_to "Add Annotation", new_project_state_annotation_path(@owner, @project, state),
+        remote: true, class: "btn new-card",
+        "data-list" => "##{state.id} .annotation-list",
         "data-classname" => "annotation-wrapper",
         "data-template" => "#annotation-template"
 
   .update-state
-    == nested_form_for [@owner, @project, :recipe, card], remote: true do |f|
-      == f.fields_for :annotations do |ff|
-        == ff.text_field :position, class: "position", "data-id" => ff.object.id
-        == ff.hidden_field :id, class: "id"
-      == f.link_to_add "Add Annotation Order", :annotations, class: "add-annotation-order"
-      == f.submit "submit", class: "submit-annotation-order"
+    = nested_form_for state, url: project_state_path(@owner, @project, state), remote: true do |f|
+      = f.fields_for :annotations do |ff|
+        = ff.text_field :position, class: "position", "data-id" => ff.object.id
+        = ff.hidden_field :id, class: "id"
+      = f.link_to_add "Add Annotation Order", :annotations, class: "add-annotation-order"
+      = f.submit "submit", class: "submit-annotation-order"

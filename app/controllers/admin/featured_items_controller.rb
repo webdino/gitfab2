@@ -1,7 +1,4 @@
-class Admin::FeaturedItemsController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::FeaturedItemsController < Admin::ApplicationController
   before_action :load_item, only: [:show, :destroy]
   before_action :load_feature, only: [:create, :update, :destroy]
 
@@ -17,27 +14,28 @@ class Admin::FeaturedItemsController < ApplicationController
     if @item.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
   def destroy
     @item.destroy
+    render body: nil
   end
 
   private
 
-  def load_feature
-    @feature = Feature.find params[:feature_id]
-  end
-
-  def load_item
-    @item = FeaturedItem.find params[:id]
-  end
-
-  def item_params
-    if params[:featured_item]
-      params.require(:featured_item).permit(FeaturedItem.updatable_columns)
+    def load_feature
+      @feature = Feature.find params[:feature_id]
     end
-  end
+
+    def load_item
+      @item = FeaturedItem.find params[:id]
+    end
+
+    def item_params
+      if params[:featured_item]
+        params.require(:featured_item).permit(FeaturedItem.updatable_columns)
+      end
+    end
 end

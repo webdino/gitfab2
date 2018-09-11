@@ -1,0 +1,72 @@
+@import "mixins/variables";
+
+#layouts-footer{
+  width: 100%;
+  background-color: $common-background-color;
+  .container {
+    display: block;
+    padding: 30px 0;
+    margin: 0px auto;
+    width: 960px;
+    text-align: center;
+    a {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-family: $common-novelsans-semibold;
+      color: $common-dark-gray;
+    }
+    .navi {
+      border-right: 1px solid $common-basic-color;
+      &:last-of-type {
+        border: none;
+      }
+    }
+    .copyright {
+      padding: 10px 10px;
+      font-size: 14px;
+      font-family: $common-novelsans-semibold;
+      color: $common-dark-gray;
+      a {
+        padding: 0;
+      }
+    }
+  }
+  #logos {
+    padding: 45px 0 0;
+    .desc {
+      padding: 5px 10px;
+      font-size: 14px;
+      font-family: $common-novelsans-semibold;
+      color: $common-dark-gray;
+    }
+    .logo {
+      display: block;
+      margin: 5px auto 30px;
+      padding: 0;
+    }
+    .sfc-logo {
+      background: image-url("icons/sfc_logo") no-repeat;
+      width: 60px;
+      height: 60px;
+    }
+    .webdino-japan-logo {
+      background: image-url("icons/webdino_japan_logo") no-repeat;
+      width: 150px;
+      height: 37px;
+    }
+    .adobe-standard-logo {
+      background: image-url("icons/adobe_standard_logo") no-repeat;
+      width: 72px;
+      height: 99px;
+      margin-bottom: 0;
+    }
+    .trotec-logo {
+      background: image-url("icons/trotec_logo") no-repeat;
+      width: 150px;
+      height: 75px;
+    }
+    .supporter {
+      line-height: 2em;
+    }
+  }
+}

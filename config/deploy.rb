@@ -1,11 +1,9 @@
 pid_file = '/tmp/unicorn_gitfab2.pid'
 
-lock '3.1.0'
-
 set :application, 'gitfab2'
 set :repo_url, 'https://github.com/webdino/gitfab2.git'
 set :rvm_type, :system
-set :rvm_ruby_version, '2.3.5'
+set :rvm_ruby_version, '2.5.1'
 set :assets_roles, [:web, :app]
 
 if ENV['DEPLOY_BRANCH']

@@ -1,67 +1,51 @@
-- content_for :title do
-  - @owner.slug + " (" + @owner.name + ") : Project list"
+#index
+  - if current_user
+    = render partial: "dashboard"
+  - else
+    - if session["auth.failed.error"].present?
+      #error_explanation
+        h2
+          'Login error:
+          = session["auth.failed.error"]
+          - session.delete("auth.failed.error")
 
-#projects-index
-  .left
-    .image-wrapper
-      .owner-avatar style="background-image: url('#{@owner.avatar}')"
+    #lang
+      span.lang.en.is-selected EN
+      span
+        '/
+      span.lang.jp JP
 
-    .wrapper
-      .owner-name
-        == @owner.name
+    #splash-wrapper style="background: url(#{BackgroundImage.find&.request_uri || image_path('background.jpg')}) center center no-repeat"
+      .container.lang-en
+        .text
+          h1.main-copy
+            'Making stories of Making something
+          .sub-copy
+            'New Platform to Share Fab Projects all over the world
+        .sign-up
+          = link_to "", sessions_path, class: "sign-up-btn"
 
-      .joined-on
-        span
-          'Joined on:
-        == @owner.created_at.strftime "%b %d, %Y"
+      .container.lang-jp
+        .text
+          h1.main-copy
+            'つくる・つたえる
+          .sub-copy
+            '世界中のFabプロジェクトのためのプラットフォーム
+        .sign-up
+          = link_to "", sessions_path, class: "sign-up-btn-jp"
 
-      .makes
-        .projects
-          span
-            'Project:
-          span.count
-            == "#{@owner.projects_count}"
+      .label.lang-en
+        'About
+      .label.lang-jp
+        'Fabble の特長
 
-        / TODO: #487 Implement user.contributions method in user.rb
-        / .contributions
-        /   == @owner.contributions.length
+    = render partial: "functions"
+    = render partial: "occasions"
 
-      - if @owner.url.present?
-        .url
-          span
-            'Website:
-          == link_to @owner.url, @owner.url
+  = render partial: "featured_projects"
+  = render partial: "featured_groups"
+  = render partial: "tags_and_keywords"
+  = render partial: "recent_projects"
 
-      - if @owner.location.present?
-        .location
-          span
-            'Location:
-          == @owner.location
-
-      .relation-wrapper
-        - if @owner.is_a? Group
-          h2.title Members
-          - if signed_in? && current_user.is_admin_of?(@owner)
-            == link_to image_tag("create-group.png", alt: "Edit group"), [:edit, @owner], class: "create-group-btn"
-          ul.members
-            - @owner.members.each do |member|
-              == link_to projects_path(member) do
-                li.member
-                  == image_tag member.avatar, class: "member-avatar", name: "#{member.name}"
-                  .name
-                    == member.name
-
-        - elsif @owner.groups.any?
-          h2.title GROUPS
-          - if signed_in? && current_user == @owner
-            == link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
-          ul.groups
-            - @owner.groups.each do |group|
-              == link_to projects_path(group) do
-                li.group
-                  == image_tag group.avatar, class: "group-avatar", name: "#{group.name}"
-                  .name
-                    == group.name
-
-  .right
-    == render "projects/projects"
+  - unless current_user
+    = render partial: "sign_up_pane"

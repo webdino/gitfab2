@@ -1,0 +1,70 @@
+@import "mixins/colors";
+
+#cboxLoadedContent {
+  background: none !important;
+  border: none !important;
+}
+
+#card-form-container {
+  border: none !important;
+}
+
+#cboxOverlay.colorbox-bg-transparent {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+// Overwrite style in
+// jquery-colorbox-rails-0.3.2/vendor/assets/stylesheets/jquery.colorbox-example3
+#colorbox, #cboxOverlay, #cboxWrapper {
+  z-index: 8888 !important;
+}
+
+#colorbox.colorbox-bg-transparent {
+  #cboxContent{
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: $common-background-color;
+  }
+}
+
+#colorbox #cboxClose {
+  z-index: 1;
+  top: 3%;
+  right: 3%;
+  width: 25px;
+  height: 25px;
+  background: asset-url("slideshow/close.png") no-repeat;
+  background-size: 25px;
+}
+
+.color-box-image-slideshow {
+  #cboxCurrent {
+    display: none !important;
+  }
+  #cboxPrevious, #cboxNext {
+    display: block;
+    top: calc(50% - 20px);
+    width: 60px;
+    height: 50px;
+    background: none;
+    font-size: 0;
+    &:before{
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: " ";
+    }
+  }
+  #cboxPrevious {
+    left: 3%;
+    &:before{
+      background: asset-url("slideshow/back.png") no-repeat;
+    }
+  }
+  #cboxNext {
+    right: 3%;
+    &:before{
+      background: asset-url("slideshow/next.png") no-repeat;
+    }
+  }
+}

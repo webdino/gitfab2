@@ -4,33 +4,34 @@ article class="card note_card" id="#{card.id}"
   .article-column
     .card-content
       .left
-        == render "components/card_title", card: card
+        h2.title
+          = link_to card.title, project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
         .meta
           .postedby
 
             ruby:
-              author = card.contributions.length > 0 ? User.find(card.contributions[0].contributor_id) : @project.owner
+              author = card.contributors.first || @project.owner
               datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
-              link = author.present? ? link_to(author.name, projects_path(owner_name: author.slug)): ""
+              link = author.present? ? link_to(author.name, owner_path(owner_name: author.slug)): ""
 
             - if author.present?
               == "posted by #{link} on #{datetime}"
             - else
-              == "posted on #{datetime}"
+              = "posted on #{datetime}"
 
           .control
             - if can? :manage, card
               span.edit
-                - delete_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                - edit_url = edit_project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                == link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
-                == link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
+                - delete_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                - edit_url = edit_project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                = link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
+                = link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 
         .description
-          - note_card_url = project_note_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+          - note_card_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
           == truncate_html Sanitize.clean(card.description, Sanitize::Config::RELAXED), length: 220, omission: link_to("…", note_card_url)
       .right
         - if card.figures.present? && card.figures.first.content.present?
-          == render "components/card_figures", card: card
+          = render "components/card_figures", card: card
 
-      == render "components/card_attachments", card: card
+      = render "components/card_attachments", card: card

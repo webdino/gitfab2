@@ -89,9 +89,10 @@
 
   $(document).on("ajax:aborted:file", "form", function() {
     form = $(this);
-    form.bind("ajax:beforeSend", function(e, xhr, settings) {
-      settings.fileuploadform = true;
-      settings.data = new FormData(this);
+    form.bind("ajax:beforeSend", function(event){
+      const options = event.detail[1];
+      options.fileuploadform = true;
+      options.data = new FormData(this);
     });
     $.rails.handleRemote(form);
     return false;

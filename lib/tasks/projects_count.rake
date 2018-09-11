@@ -5,7 +5,7 @@ namespace :projects_count do
       klass.find_each do |owner|
         owner.transaction do
           owner.lock!
-          owner.update_column(:projects_count, owner.projects.published.count)
+          owner.update_projects_count
         end
       end
     end

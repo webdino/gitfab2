@@ -1,42 +1,62 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe CollaborationsController, type: :controller do
   render_views
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:user2) { FactoryGirl.create :user }
-  let(:group1) { FactoryGirl.create :group, creator: user1 }
-  let(:project) { FactoryGirl.create :user_project }
-  let(:valid_attributes) { { project_id: project.id } }
-
   describe 'POST create' do
-    before do
-      sign_in project.owner
-      xhr :post, :create, user_id: project.owner.to_param,
-                          collaboration: collaboration_params
+    subject do
+      post :create,
+        params: { owner_name: project.owner, project_id: project, collaborator_name: collaborator_name },
+        xhr: true
     end
-    context 'for user project' do
-      context 'with valid params' do
-        let(:collaboration_params) { valid_attributes }
-        it_behaves_like 'success'
-        it_behaves_like 'render template', 'create'
+
+    let(:project) { FactoryBot.create(:project) }
+
+    before { sign_in(project.owner) }
+
+    context 'with valid params' do
+      let(:collaborator_name) { FactoryBot.create(:user).slug }
+      it do
+        is_expected.to be_successful
+                  .and render_template(:create)
       end
-      context 'with invalid params' do
-        let(:collaboration_params) { {} }
-        it_behaves_like 'unauthorized'
+      it { expect{ subject }.to change{ Collaboration.count }.by(1) }
+    end
+
+    context 'with invalid params' do
+      let(:collaborator_name) { 'not_exist' }
+      it do
+        is_expected.to have_http_status(:bad_request)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: false })
       end
+      it { expect{ subject }.not_to change{ Collaboration.count } }
     end
   end
 
   describe 'DELETE destroy' do
-    before do
-      collaboration = user1.collaborations.create project_id: project.id
-      sign_in user1
-      xhr :delete, :destroy, user_id: user1.to_param, project_id: project.id,
-                             id: collaboration.id
+    subject { delete :destroy, params: { id: collaboration.id }, xhr: true }
+    let(:collaboration) { FactoryBot.create(:collaboration) }
+    before { sign_in(collaboration.owner) }
+
+    context 'user can destroy a collaboration' do
+      it do
+        is_expected.to be_successful
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: true, id: collaboration.id })
+      end
+      it { expect{ subject }.to change{ Collaboration.count }.by(-1) }
     end
-    it_behaves_like 'render template', 'destroy'
+
+    context 'user cannot destroy a collaboration' do
+      before { collaboration.project.update!(is_deleted: true) }
+
+      it do
+        is_expected.to have_http_status(:bad_request)
+        response_body = JSON.parse(response.body, symbolize_names: true)
+        expect(response_body).to eq({ success: false })
+      end
+      it { expect{ subject }.not_to change{ Collaboration.count } }
+    end
   end
 end

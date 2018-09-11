@@ -1,0 +1,15 @@
+{
+  "name": "gitfab2",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": "10.7.0",
+    "npm": "6.1.0"
+  },
+  "dependencies": {
+    "babel-core": "6.26.3",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.7.0"
+  },
+  "private": true
+}

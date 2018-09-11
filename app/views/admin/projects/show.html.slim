@@ -2,42 +2,42 @@
   h1.title Manage Project
 
   h2.title-2
-    == @project.path
+    = @project.title_with_owner_name
 
   p
-    == link_to(project_path(@project.owner, @project), project_path(@project.owner, @project))
+    = link_to(project_path(@project.owner, @project), project_path(@project.owner, @project))
 
   table
     tr
       th
         'プロジェクト名
       td
-        == @project.name
+        = @project.name
     tr
       th
         'オーナー
       td
-        == @project.owner.name
+        = @project.owner.name
     tr
       th
         '作成日時
       td
-        == @project.created_at
+        = @project.created_at
     tr
       th
         'プライベート
       td
-        == @project.is_private ? 'はい' : 'いいえ'
+        = @project.is_private ? 'はい' : 'いいえ'
     tr
       th
         '削除済み
       td
-        == @project.is_deleted ? 'はい' : 'いいえ'
+        = @project.is_deleted ? 'はい' : 'いいえ'
     tr
       th
         'フォーク元
       td
-        == @project.original ? link_to(@project.original.path, [:admin, @project]) : '-'
+        = @project.original ? link_to(@project.original.title_with_owner_name, [:admin, @project]) : '-'
 
 
-  == button_to('削除', admin_project_path(@project.id), method: :delete, data: {confirm: '本当に削除しますか？'})
+  = button_to('削除', admin_project_path(@project.id), method: :delete, data: {confirm: '本当に削除しますか？'})

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 shared_examples 'success' do
   subject { response.status }
   it { is_expected.to eq 200 }

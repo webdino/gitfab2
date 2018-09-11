@@ -2,7 +2,7 @@
   - if project.tags.any?
     - project.tags.each do |tag|
       span.tag
-        == link_to tag.name, "#{search_path}?q=#{tag.name}"
+        = link_to tag.name, "#{search_path}?q=#{tag.name}"
   - else
     span
       'no tags

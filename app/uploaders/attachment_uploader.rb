@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 class AttachmentUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
@@ -32,31 +30,31 @@ class AttachmentUploader < CarrierWave::Uploader::Base
 
   private
 
-  def is_image?(file)
-    MiniMagick::Image.open(file.path)
-    return true
-  rescue => _e
-    return false
-  end
+    def is_image?(file)
+      MiniMagick::Image.open(file.path)
+      return true
+    rescue => _e
+      return false
+    end
 
-  def is_stl?(file)
-    file.filename[-4..-1] == '.stl'
-  end
+    def is_stl?(file)
+      file.filename[-4..-1] == '.stl'
+    end
 
-  def generate_png(_file)
-    stl = Stl2gif::Stl.new self.file.path
-    tmp_png_file = stl.to_png self.file.original_filename
-    image = MiniMagick::Image.read tmp_png_file
-    filepath = self.file.file.slice(0..-4) << 'png'
-    image.write filepath
-  end
+    def generate_png(_file)
+      stl = Stl2gif::Stl.new self.file.path
+      tmp_png_file = stl.to_png self.file.original_filename
+      image = MiniMagick::Image.read tmp_png_file
+      filepath = self.file.file.slice(0..-4) << 'png'
+      image.write filepath
+    end
 
-  def generate_gif(_file)
-    stl = Stl2gif::Stl.new self.file.path
-    stl.generate_frames
-    tmp_gif_file = stl.to_gif self.file.original_filename
-    image = MiniMagick::Image.read tmp_gif_file
-    filepath = self.file.file.slice(0..-4) << 'gif'
-    image.write filepath
-  end
+    def generate_gif(_file)
+      stl = Stl2gif::Stl.new self.file.path
+      stl.generate_frames
+      tmp_gif_file = stl.to_gif self.file.original_filename
+      image = MiniMagick::Image.read tmp_gif_file
+      filepath = self.file.file.slice(0..-4) << 'gif'
+      image.write filepath
+    end
 end

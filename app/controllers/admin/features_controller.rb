@@ -1,13 +1,10 @@
-class Admin::FeaturesController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::FeaturesController < Admin::ApplicationController
   before_action :load_feature, only: [:show, :update, :destroy]
 
   #  authorize_resource
 
   def index
-    @features = Feature.all
+    @features = Feature.includes(:featured_items)
   end
 
   def create
@@ -15,7 +12,7 @@ class Admin::FeaturesController < ApplicationController
     if @feature.save
       render :create
     else
-      render 'errors/failed', status: 400
+      render json: { success: false }, status: 400
     end
   end
 
@@ -31,11 +28,11 @@ class Admin::FeaturesController < ApplicationController
 
   private
 
-  def load_feature
-    @feature = Feature.find params[:id]
-  end
+    def load_feature
+      @feature = Feature.find params[:id]
+    end
 
-  def feature_params
-    params.require(:feature).permit(Feature.updatable_columns)
-  end
+    def feature_params
+      params.require(:feature).permit(Feature.updatable_columns)
+    end
 end

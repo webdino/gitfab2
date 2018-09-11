@@ -1,13 +1,32 @@
-class Like < ActiveRecord::Base
-  include Contributable
+# == Schema Information
+#
+# Table name: likes
+#
+#  id         :integer          not null, primary key
+#  created_at :datetime
+#  updated_at :datetime
+#  project_id :integer          not null
+#  user_id    :integer          not null
+#
+# Indexes
+#
+#  index_likes_likable   (project_id)
+#  index_likes_liker_id  (user_id)
+#  index_likes_unique    (project_id,user_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_likes_liker_id  (user_id => users.id)
+#
 
-  belongs_to :liker, class_name: 'User', required: true
-  belongs_to :likable, polymorphic: true, counter_cache: :likes_count, required: true
-  validates_uniqueness_of :liker_id, scope: :likable
+class Like < ApplicationRecord
+  belongs_to :user
+  belongs_to :project, counter_cache: :likes_count
+  validates :user_id, uniqueness: { scope: :project }
 
   class << self
     def updatable_columns
-      [:_destroy, :id, :liker_id]
+      [:_destroy, :id, :user_id]
     end
   end
 end

@@ -1,11 +1,38 @@
-dist: trusty
-sudo: false
-cache: bundler
 language: ruby
-rvm:
-  - 2.3.5
+dist: trusty
+sudo: required
+
+cache:
+  directories:
+    - $HOME/.rvm
+    - $HOME/.nvm
+    - vendor/bundle
+    - node_modules
+
 services:
   - mysql
+
+env: RAILS_ENV=test CI=true
+
+rvm:
+  - 2.5.1
+  - ruby-head
+gemfile:
+  - Gemfile
+  - gemfiles/rails-master.gemfile
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - gemfile: gemfiles/rails-master.gemfile
+
+before_install:
+  - gem update bundler --no-document
+install:
+  - bundle install --path vendor/bundle --jobs=3 --retry=3
+  - nvm install 10.7.0
+  - npm install
+
 before_script:
   - |
     echo -e "[mysqld]
@@ -14,13 +41,5 @@ before_script:
     innodb_file_format=Barracuda" | sudo tee /etc/mysql/conf.d/travis.cnf
   - sudo /etc/init.d/mysql restart
   - cp config/database.ymls/travis.yml config/database.yml
-  - RAILS_ENV=test bundle exec rake db:create
-  - bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
-before_install:
-  - gem update bundler
-notifications:
-  slack:
-    secure: <%= ENV["SLACK_NOTIFICATION_SECRET"] %>
-script:
-  - bundle exec rubocop --fail-level=W
-  - bundle exec rspec
+  - bundle exec rails db:create && bundle exec rails db:schema:load
+script: bundle exec rspec

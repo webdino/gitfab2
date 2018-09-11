@@ -1,10 +1,8 @@
-== content_for :stylesheet do
-  == stylesheet_link_tag "recipe", media: "all", "data-turbolinks-track" => true
-== content_for :javascript do
-  == javascript_include_tag "recipe", "data-turbolinks-track" => true
+= content_for :stylesheet do
+  = stylesheet_link_tag "recipe", media: "all"
+= content_for :javascript do
+  = javascript_include_tag "recipe"
 - content_for :content do
   #content.recipe-layout
-    == yield
-    == yield :utils
-  == render "recipes/facebook"
-== render "layouts/base_layout"
+    = yield
+= render "layouts/base_layout"

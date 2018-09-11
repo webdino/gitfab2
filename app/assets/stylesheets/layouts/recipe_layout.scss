@@ -1,0 +1,11 @@
+@import "mixins/clearfix";
+#content.recipe-layout {
+  @include cf;
+  main {
+    width: 720px;
+  }
+  #project-summary {
+    @include cf;
+    margin-bottom: 30px;
+  }
+}

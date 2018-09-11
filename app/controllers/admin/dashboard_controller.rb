@@ -1,6 +1,3 @@
-class Admin::DashboardController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::DashboardController < Admin::ApplicationController
   def index; end
 end

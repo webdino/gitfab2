@@ -1,2 +1,1 @@
-json.html (render 'projects/recipe_cards_list',
-                  resources: [@owner, @project, @recipe])
+json.html (render partial: 'recipe_cards_list', locals: { owner: @owner, project: @project })

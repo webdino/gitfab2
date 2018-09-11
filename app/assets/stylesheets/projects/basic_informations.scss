@@ -1,0 +1,500 @@
+@import "mixins/clearfix";
+@import "mixins/clickable";
+@import "mixins/rows";
+@import "mixins/variables";
+@import "mixins/slick";
+@import "_project_variables";
+
+#basic-informations {
+  @include cf;
+  $margin_width: 70px;
+  margin: 0 $margin-width 60px;
+  width: 960px - $margin-width * 2;
+  position: relative;
+
+  .private-project {
+    position: absolute;
+    top: 5px;
+    left: -60px;
+    padding: 5px;
+    height: 10px;
+    color: $common-label-text-color;
+    font-family: $common-novelsans-semibold;
+    font-size: 12px;
+    background: $common-basic-color;
+    border-radius: 5px;
+  }
+
+  .header {
+    $height: 40px;
+    min-height: $height;
+    .title {
+      margin: 0;
+      width: 100%;
+      height: auto;
+      min-height: $height;
+      font-family: $common-novelsans-light;
+      font-size: 25px;
+      font-weight: normal;
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+    .meta {
+      font-family: $common-novelsans-semibold;
+      font-size: 14px;
+      line-height: 1.2;
+      color: $common-text-color;
+
+      .left {
+        display: inline-block;
+        width: 630px;
+        height: 70px;
+        .dates {
+          margin-bottom: 5px;
+          .index {
+            color: $common-quiet-text-color;
+          }
+          .slash {
+            margin: 0 2px 0 5px;
+            color: $common-quiet-text-color;
+          }
+        }
+
+        .line {
+          margin-bottom: 5px;
+          label {
+            display: inline-block;
+            color: $common-quiet-text-color;
+          }
+          .tags {
+            display: inline-block;
+            .tag {
+              display: inline-block;
+              height: 25px;
+              margin-left: 10px;
+              a {
+                color: $common-text-color;
+              }
+              .delete-tag {
+                background: image-url("icons/delete_tag") no-repeat;
+                display: inline-block;
+                position: relative;
+                top: -5px;
+                margin-left: 0px;
+                width: 9px;
+                height: 9px;
+                cursor: pointer;
+              }
+            }
+          }
+          #tag-form {
+            display: none;
+            .btn {
+              border: none;
+              background-color: $common-basic-color;
+              color: $common-btn-text-color;
+            }
+          }
+          #show-tag-form {
+            display: inline-block;
+            margin-left: 10px;
+            background: $common-gray;
+            color: $common-btn-text-color;
+            .textfield {
+              width: 120px;
+            }
+          }
+        }
+      }
+      .right {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        width: 190px;
+        height: 70px;
+      }
+    }
+  }
+
+  .body {
+    width: 100%;
+    figure.visual {
+      margin: 0;
+      width: 100%;
+      height: 460px;
+      background-color: $common-light-gray;
+      overflow: hidden;
+      border: none;
+      border-radius: 0px;
+      box-shadow: none;
+      img {
+        @include clickable;
+        width: 100%;
+      }
+      iframe {
+        width: 100%;
+        height: 100%;
+      }
+      @include slick(5px, 5px);
+      .slick {
+        width: 100%;
+        max-height: 460px;
+      }
+    }
+    figure.visual>img {
+      width: 100%;
+    }
+
+    .members {
+      display: inline-block;
+      margin-top: 30px;
+      width: 100%;
+      .title {
+        font-family: $common-novelsans-semibold;
+        font-size: 14px;
+        color: $common-quiet-text-color;
+        text-decoration: underline;
+      }
+      .collaborators {
+        display: inline-block;
+      }
+      .owner, .collaborator {
+        margin-top: 20px;
+        display: inline-block;
+        margin-right: 20px;
+        .thumb-wrapper {
+          display: inline-block;
+          width: 64px;
+          height: 64px;
+          .thumb {
+            width: 64px;
+            height: 64px;
+            border-radius: 64px;
+            border: 4px solid white;
+            margin: -4px;
+            background-position: center;
+            background-size: cover;
+          }
+        }
+      }
+      #add-collaborator-btn {
+        background: image-url("icons/add-member") no-repeat;
+        display: inline-block;
+        position: relative;
+        top: 4px;
+        margin: 0;
+        padding: 0;
+        width: 72px;
+        height: 72px;
+        border-radius: 72px;
+      }
+    }
+    .license {
+      margin-top: 30px;
+      .title {
+        font-family: $common-novelsans-semibold;
+        font-size: 14px;
+        color: $common-quiet-text-color;
+        text-decoration: underline;
+      }
+      .license-image {
+        margin-top: 10px;
+        width: 96px;
+      }
+      .text {
+        font-family: $common-novelsans-light;
+        margin-top: 10px;
+        width: 100%;
+        font-size: 14px;
+        line-height: 1.2;
+        word-break: break-all;
+        a {
+          color: $common-dark-blue;
+        }
+      }
+    }
+    .description {
+      margin-top: 30px;
+      width: 100%;
+      .title {
+        font-family: $common-novelsans-semibold;
+        font-size: 14px;
+        color: $common-quiet-text-color;
+        text-decoration: underline;
+      }
+      .text {
+        font-family: $common-novelsans-light;
+        margin-top: 20px;
+        width: 100%;
+        font-size: 18px;
+        line-height: 32px;
+        word-break: break-all;
+        a {
+          color: $common-dark-blue;
+        }
+      }
+    }
+  }
+}
+
+#collaborators-index {
+  background-color: $common-background-color;
+  width: 960px;
+  .inner {
+    margin: 20px;
+    padding: 20px 0;
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+    h2 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    #new_collaboration {
+      margin-bottom: 20px;
+      #s2id_user_name {
+        margin-right: 10px;
+      }
+    }
+    #owner, .collaboration {
+      margin-bottom: 10px;
+      .avatar {
+        img {
+          width: 30px;
+        }
+      }
+      .name {
+        position: relative;
+        vertical-align: top;
+        margin-left: 5px;
+        top: 6px;
+        height: 24px
+      }
+      .remove-collaboration-btn {
+        vertical-align: top;
+        margin-top: 3px;
+        margin-left: 5px;
+      }
+    }
+    #collaborations {
+      margin-bottom: 20px;
+    }
+
+  }
+}
+
+
+$tool_size: 75px;
+
+#project-edit-btn {
+  background: image-url("icons/edit-project") no-repeat;
+  position: absolute;
+  top: 110px;
+  right: 0;
+  padding: 0 8px 0 0;
+  width: $tool_size;
+  height: $tool_size;
+  border-radius: 5px 0 0 5px;
+  background-repeat: no-repeat;
+  background-color: $common-gray;
+  &.forked-project-tools {
+    top: 154px;
+  }
+}
+
+section.tools {
+  position: fixed;
+  top: 215px;
+  right: 0;
+  padding-left: 8px;
+  width: $tool_size;
+  border-radius: 5px 0 0 5px;
+  background-color: $common-background-color;
+  &.forked-project-tools {
+    top: 259px;
+  }
+  #slideshow-btn, #print-btn, #fork-btn, .order-change-btn, .order-commit-btn, #share-button {
+    display: block;
+    width: $tool_size;
+    height: $tool_size + 10px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid $common-basic-color;
+  }
+  #slideshow-btn {
+    background: image-url("icons/slideshow") no-repeat;
+  }
+  #print-btn {
+    background: image-url("icons/print") no-repeat;
+    margin-top: 10px;
+    height: $tool_size + 10px;
+  }
+  #fork-btn {
+    background: image-url("icons/fork") no-repeat;
+    height: $tool_size + 20px;
+  }
+  #share-button {
+    background: image-url("icons/share") no-repeat;
+    margin: 5px 0;
+    padding: 5px 0;
+    height: $tool_size;
+  }
+  #card-order-tools {
+    .order-change-btn {
+      background: image-url("icons/change_order") no-repeat;
+      display: block;
+    }
+    .order-commit-btn {
+      display: none;
+      background: image-url("icons/commit_order") no-repeat;
+    }
+
+    &.order-changing {
+      .order-change-btn {
+        display: none;
+      }
+      .order-commit-btn {
+        display: block;
+      }
+    }
+  }
+  #recipe-cards-list {
+    display: block;
+    width: $tool_size;
+    height: auto;
+    cursor: pointer;
+    .container {
+      display: table;
+      width: 25px;
+      height: auto;
+      margin: 25px auto;
+      .selector-column {
+        display: table-cell;
+        vertical-align: top;
+        width: 7px;
+        .selector {
+          display: block;
+          margin-top: 1px;
+          width: 0;
+          height: 0;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-left: 7px solid $common-basic-color;
+        }
+      }
+      .index-column {
+        display: table-cell;
+        width: 10px;
+        .state-link {
+          display: block;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+        }
+        .annotation-link {
+          display: none;
+          margin-bottom: 5px;
+          width: 10px;
+          height: 10px;
+          background-repeat: no-repeat;
+          background-color: $common-basic-color;
+          border-radius: 10px;
+          &.is-opened {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+#share-destinations {
+  padding: 20px 40px;
+  background: $common-background-color;
+  border-radius: 5px;
+  .twitter-btn {
+    background: image-url("icons/twitter_100") no-repeat;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    padding-right: 10px;
+  }
+  .fb-btn {
+    background: image-url("icons/fb_100") no-repeat;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+  }
+}
+
+#fork-destinations {
+  $popup_width: 360px;
+  @include spacing-row($popup_width, 20px, 3);
+  width: $popup_width;
+  min-height: 442px;
+  padding: 20px 40px;
+  background: $common-background-color;
+  border-radius: 5px;
+  .fork-destination {
+    .dest-name {
+      margin-top: $common-margin;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .fork-btn {
+      @include clickable;
+      margin-bottom: $common-margin;
+      width: 100px;
+      height: 100px;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+}
+
+#tabs {
+  margin-top: $common-margin * 4;
+  margin-left: $first_column_width;
+  height: 28px;
+  a:nth-child(2) {
+    margin-left: $common-margin * 2;
+  }
+  .tab {
+    @include cf;
+    display: inline-block;
+    margin-top: 1px;
+    padding-top: 7px;
+    padding-left: $common-margin;
+    width: 390px;
+    height: 20px;
+    background-color: $inactive_tab_background;
+    font-family: $common-novelsans-semibold;
+    border-radius: 5px 5px 0 0;
+    .count {
+      display: inline-block;
+      margin-top: -2px;
+      margin-right: 10px;
+      float: right;
+      height: 20px;
+      vertical-align: top;
+    }
+    &.active {
+      margin-top: 0;
+      height: 21px;
+      background-color: $active_tab_background;
+    }
+    p {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+}
+
+.select2-dropdown {
+  z-index: 9999999 !important;
+}

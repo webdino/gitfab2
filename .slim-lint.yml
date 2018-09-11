@@ -8,17 +8,12 @@ linters:
     max: 160
     exclude:
       - 'app/views/annotations/_annotation.html.slim'
-      - 'app/views/collaborations/_collaboration.html.slim'
-      - 'app/views/collaborators/_add_collaborator.html.slim'
       - 'app/views/components/_card.html.slim'
       - 'app/views/components/_card_attachments.html.slim'
       - 'app/views/components/_card_contributors.html.slim'
       - 'app/views/components/_card_figures.html.slim'
-      - 'app/views/global_projects/_*.html.slim'
       - 'app/views/note_cards/show.html.slim'
-      - 'app/views/notes/_note_cards.html.slim'
       - 'app/views/projects/_basic_informations.html.slim'
-      - 'app/views/recipes/_recipe_cards.html.slim'
       - 'app/views/states/_state.html.slim'
       - 'app/views/static_pages/*.slim'
       - 'app/views/usages/_usage.html.slim'

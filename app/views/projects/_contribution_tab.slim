@@ -1,9 +1,0 @@
-#contribution-tab.tabs-pane
-  h2
-    'Contibuted Projects
-  ul.project-list
-    / TODO: #486 impmlement user.contributed_projects method in User.rb
-    - @owner.contributed_projects.each do |project|
-      - unless can? :read, project
-        - next
-      == render "project", project: project, is_note: false

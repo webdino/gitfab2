@@ -1,19 +1,19 @@
-- content_for :title do
-  - current_user.slug + " (" + current_user.name + ")'s group list"
+- content_for(:title, "#{current_user.slug} (#{current_user.name})'s group list")
 
 #groups-index
-  == link_to "+ Create new group", [:new, :group], class: "btn"
+  = link_to "+ Create new group", [:new, :group], class: "btn"
   #groups-list
     h1
       'Groups
     ul#groups
       - current_user.memberships.each do |ms|
-        == render "membership", membership: ms, group: ms.group
+        = render "membership", membership: ms, group: ms.group
 
 
 - content_for :bottom do
   coffee:
-    $(document).on "ajax:success", ".leave-btn", (xhr, data) ->
+    $(document).on "ajax:success", ".leave-btn", (event) ->
+      data = event.detail[0]
       if data.success == false
         alert data.message
       else

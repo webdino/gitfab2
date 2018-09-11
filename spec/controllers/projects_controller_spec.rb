@@ -1,39 +1,42 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe ProjectsController, type: :controller do
   render_views
 
   subject { response }
 
-  let(:user_project) { FactoryGirl.create :user_project }
-  let(:group_project) { FactoryGirl.create :group_project }
+  let(:user_project) { FactoryBot.create :user_project }
+  let(:group_project) { FactoryBot.create :group_project }
+
+  describe 'GET index' do
+    context 'without queries' do
+      subject { get :index }
+
+      before { FactoryBot.create_list(:project, 13, :public) }
+
+      it "gets 12 projects for the 1st page" do
+        subject
+        expect(assigns(:projects).count).to eq 12
+      end
+
+      it { is_expected.to render_template :index }
+    end
+  end
 
   %w[user group].each do |owner_type|
     let(:project) { send "#{owner_type}_project" }
     context "with a project owned by a #{owner_type}" do
-      describe 'GET index' do
-        context 'with owner name' do
-          before { get :index, owner_name: project.owner.slug }
-          it { is_expected.to render_template :index }
-        end
-        context 'with owner id' do
-          before { get :index, "#{owner_type}_id": project.owner.slug }
-          it { is_expected.to render_template :index }
-        end
-      end
       describe 'GET show' do
         before do
-          get :show, owner_name: project.owner.slug, id: project.name
+          get :show, params: { owner_name: project.owner.slug, id: project.name }
         end
-        it { is_expected.to render_template 'recipes/show' }
+        it { is_expected.to render_template 'projects/show' }
       end
       describe 'GET new' do
         before do
           user_project.owner.memberships.create group_id: group_project.owner.id
           sign_in user_project.owner
-          get :new, owner_name: project.owner.slug, id: project.id
+          get :new
         end
         it { is_expected.to render_template :new }
       end
@@ -42,23 +45,23 @@ describe ProjectsController, type: :controller do
           before do
             user_project.owner.memberships.create group_id: group_project.owner.id
             sign_in user_project.owner
-            delete :destroy, owner_name: project.owner.slug, id: project.id
+            delete :destroy, params: { owner_name: project.owner.slug, id: project.id }
           end
-          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
+          it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
         end
         context 'with collaborators' do
-          let(:user) { FactoryGirl.create :user }
-          let(:group) { FactoryGirl.create :group }
+          let(:user) { FactoryBot.create :user }
+          let(:group) { FactoryBot.create :group }
           before do
             user_project.owner.memberships.create group_id: group_project.owner.id
             sign_in user_project.owner
             user.collaborations.create project_id: project
             group.collaborations.create project_id: project
-            delete :destroy, owner_name: project.owner.slug, id: project.id
+            delete :destroy, params: { owner_name: project.owner.slug, id: project.id }
             user.reload
             group.reload
           end
-          it { is_expected.to redirect_to projects_path(owner_name: project.owner.slug) }
+          it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
           it 'has 0 collaborations' do
             aggregate_failures do
               expect(user.collaborations.size).to eq 0
@@ -71,178 +74,434 @@ describe ProjectsController, type: :controller do
         before do
           user_project.owner.memberships.create group_id: group_project.owner.id
           sign_in user_project.owner
-          get :edit, owner_name: project.owner.slug, id: project.id
+          get :edit, params: { owner_name: project.owner.slug, id: project.id }
         end
         it { is_expected.to render_template :edit }
       end
       describe 'POST create' do
         context 'when newly creating' do
-          let(:user) { FactoryGirl.create :user }
-          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
+          let(:user) { FactoryBot.create :user }
+          let(:new_project) { FactoryBot.build(:user_project, original: nil) }
           before do
             sign_in user
-            post :create, user_id: user.slug, project: new_project.attributes
+            post :create, params: { project: new_project.attributes.merge(owner_id: user.slug) }
           end
-          it { is_expected.to redirect_to(edit_project_url(id: assigns(:project), owner_name: user)) }
+          it { is_expected.to redirect_to(edit_project_path(id: assigns(:project), owner_name: user)) }
         end
         context 'when newly creating with wrong parameters' do
-          let(:user) { FactoryGirl.create :user }
-          let(:new_project) { FactoryGirl.build(:user_project, original: nil) }
+          let(:user) { FactoryBot.create :user }
+          let(:new_project) { FactoryBot.build(:user_project, original: nil) }
           before do
             sign_in user
             wrong_parameters = new_project.attributes
             wrong_parameters['title'] = ''
-            post :create, user_id: user.slug, project: wrong_parameters
+            post :create, params: { project: wrong_parameters.merge(owner_id: user.slug) }
           end
           it { is_expected.to render_template :new }
         end
-        context 'when forking' do
-          let(:forker) { FactoryGirl.create :user }
-          before do
-            sign_in forker
-            user_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
-            user_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
-            user_project.reload
-            post :create, user_id: forker.slug, original_project_id: user_project.id
-          end
-          it { is_expected.to redirect_to project_path(id: Project.last.name, owner_name: forker.slug) }
-          it 'has 1 states and 1 annotation' do
-            aggregate_failures do
-              recipe_states = Project.last.recipe.states
-              expect(recipe_states.size).to eq 1
-              expect(recipe_states.first.annotations.size).to eq 1
-            end
-          end
-        end
-        context 'when forking with a wrong parameter' do
-          let(:forker) { FactoryGirl.create :user }
-          let!(:original_project) { FactoryGirl.create :user_project }
+      end
 
-          before do
-            sign_in forker
-            original_project.recipe.states.create type: 'Card::State', title: 'sta1', description: 'desc1'
-            original_project.recipe.states.first.annotations.create title: 'ann1', description: 'anndesc1'
-            original_project.reload
-            post :create, user_id: forker.slug, original_project_id: 'wrongparameter'
-          end
-          it { is_expected.to have_http_status(404) }
-        end
-      end
-      describe 'GET potential_owners' do
-        before do
-          user_project.owner.memberships.create group_id: group_project.owner.id
-          sign_in user_project.owner
-          if owner_type == 'user'
-            xhr :get, :potential_owners, user_id: project.owner.slug, project_id: project.slug
-          else
-            xhr :get, :potential_owners, group_id: project.owner.slug, project_id: project.slug
-          end
-        end
-        it { is_expected.to render_template 'potential_owners' }
-      end
       describe 'GET recipe_cards_list' do
         before do
           user_project.owner.memberships.create group_id: group_project.owner
           sign_in user_project.owner
-          if owner_type == 'user'
-            xhr :get, :recipe_cards_list, user_id: project.owner, project_id: project
-          else
-            xhr :get, :recipe_cards_list, group_id: project.owner, project_id: project
-          end
+          get :recipe_cards_list, params: { owner_name: project.owner, project_id: project }, xhr: true
         end
         it { is_expected.to render_template 'recipe_cards_list' }
       end
 
       describe 'PATCH update' do
-        context 'transfering project ownership by #change_owner' do
-          before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
-            sign_in user_project.owner
-          end
-          context 'to user' do
-            let!(:user) { FactoryGirl.create(:user) }
-            before do
-              user.collaborations.create project_id: project.id
-              if owner_type == 'user'
-                patch :update, user_id: project.owner, id: project, new_owner_name: user
-              else
-                patch :update, group_id: project.owner, id: project, new_owner_name: user
-              end
-              user.reload
-            end
-            it { is_expected.to redirect_to projects_path(owner_name: user) }
-            it 'has 0 collaborations' do
-              expect(user.collaborations.size).to eq 0
-            end
-            specify 'group is no longer a collaborator' do
-              expect(user.is_collaborator_of?(project)).to eq false
-            end
-          end
-          context 'to group' do
-            let!(:group) { FactoryGirl.create :group }
-            before do
-              group.collaborations.create project_id: project.id
-              if owner_type == 'user'
-                patch :update, user_id: project.owner, id: project, new_owner_name: group
-              else
-                patch :update, group_id: project.owner, id: project, new_owner_name: group
-              end
-              group.reload
-            end
-            it { is_expected.to redirect_to projects_path(owner_name: group) }
-            it 'has 0 collaborations' do
-              expect(group.collaborations.size).to eq 0
-            end
-            specify 'group is no longer a collaborator' do
-              expect(group.is_collaborator_of?(project)).to eq false
-            end
-          end
-          context 'raising error by an unexisted user' do
-            before do
-              if owner_type == 'User'
-                xhr :patch, :update, user_id: project.owner.slug, id: project.id, new_owner_name: 'unexisted_user_slug'
-              else
-                xhr :patch, :update, group_id: project.owner.slug, id: project.id, new_owner_name: 'unexisted_user_slug'
-              end
-            end
-            it "should renders 'errors/failed' with 400" do
-              aggregate_failures do
-                is_expected.to render_template 'errors/failed'
-                is_expected.to have_http_status(400)
-                json = JSON.parse(subject.body)
-                expect(json['success']).to eq false
-              end
-            end
-          end
+        subject { patch :update, params: params }
+
+        let(:params) { { owner_name: project.owner, id: project.id, project: project_params } }
+
+        before do
+          user_project.owner.memberships.create group_id: group_project.owner.id
+          sign_in user_project.owner
         end
 
-        context 'for normal update' do
-          before do
-            user_project.owner.memberships.create group_id: group_project.owner.id
-            sign_in user_project.owner
-          end
-          context 'success' do
-            before do
-              if owner_type == 'user'
-                patch :update, user_id: project.owner.slug, id: project.id, project: { description: '_proj' }
-              else
-                patch :update, group_id: project.owner.slug, id: project.id, project: { description: '_proj' }
-              end
-            end
-            it { is_expected.to redirect_to project_path(owner_name: project.owner.slug, id: project) }
-          end
-          context 'raising error by invalid title' do
-            before do
-              if owner_type == 'user'
-                patch :update, user_id: project.owner.slug, id: project.id, project: { title: '' }
-              else
-                patch :update, group_id: project.owner.slug, id: project.id, project: { title: '' }
-              end
-            end
-            it { is_expected.to render_template :edit }
-          end
+        context 'success' do
+          let(:project_params) { { description: '_proj' } }
+          it { is_expected.to redirect_to project_path(owner_name: project.owner, id: project) }
+        end
+
+        context 'raising error by invalid title' do
+          let(:project_params) { { title: '' } }
+          it { is_expected.to render_template :edit }
         end
       end
+    end
+  end
+
+  describe 'POST #fork' do
+    subject { post :fork, params: { owner_name: project.owner, project_id: project, owner_id: target_owner.slug } }
+    let(:target_owner) { FactoryBot.create(:user) }
+    let!(:project) { FactoryBot.create(:project) }
+    before { sign_in target_owner }
+    it { is_expected.to redirect_to project_path(target_owner, Project.last) }
+    it { expect{ subject }.to change{ Project.count }.by(1) }
+  end
+
+  describe 'PATCH #update' do
+    subject do
+      patch :change_order,
+        params: {
+          owner_name: project.owner,
+          project_id: project,
+          project: {
+            states_attributes: [
+              { id: card1.id, position: 3 },
+              { id: card2.id, position: 2 },
+              { id: card3.id, position: 1 }
+            ]
+          }
+        },
+        xhr: true
+    end
+
+    let!(:project) { FactoryBot.create(:project, updated_at: 1.day.ago) }
+    let(:card1) { project.states.create!(description: 'foo', position: 1) }
+    let(:card2) { project.states.create!(description: 'foo', position: 2) }
+    let(:card3) { project.states.create!(description: 'foo', position: 3) }
+
+    before { sign_in(project.owner) }
+
+    it do
+      subject
+      expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true })
+    end
+
+    it 'updates card positions' do
+      subject
+      aggregate_failures do
+        expect(card1.reload.position).to eq 3
+        expect(card2.reload.position).to eq 2
+        expect(card3.reload.position).to eq 1
+      end
+    end
+
+    it "updates project's updated_at" do
+      expect{ subject }.to change{ project.reload.updated_at }
+    end
+  end
+
+  describe 'GET search' do
+    context 'with no queries' do
+      subject { get :search }
+
+      before { FactoryBot.create_list(:project, 13, :public) }
+
+      it 'gets 12 projects for the 1st page' do
+        subject
+        expect(assigns(:projects).count).to eq 12
+      end
+
+      it { is_expected.to render_template :search }
+    end
+  end
+
+  shared_examples_for '検索結果' do |query|
+    it do
+      get :search, params: { q: query }
+
+      expect(response).to render_template :search
+      expect(assigns(:projects)).to include(public_user_project, public_group_project)
+
+      aggregate_failures do
+        expect(assigns(:projects)).not_to include(private_user_project)
+        expect(assigns(:projects)).not_to include(deleted_user_project)
+        expect(assigns(:projects)).not_to include(one_of_the_project)
+      end
+    end
+  end
+
+  shared_examples_for '検索結果(public user project only)' do |query|
+    it do
+      get :search, params: { q: query }
+
+      expect(response).to render_template :search
+      expect(assigns(:projects)).to include(public_user_project)
+
+      aggregate_failures do
+        expect(assigns(:projects)).not_to include(public_group_project)
+        expect(assigns(:projects)).not_to include(private_user_project)
+        expect(assigns(:projects)).not_to include(deleted_user_project)
+        expect(assigns(:projects)).not_to include(one_of_the_project)
+      end
+    end
+  end
+
+  shared_examples_for '検索結果(public group project only)' do |query|
+    it do
+      get :search, params: { q: query }
+
+      expect(response).to render_template :search
+      expect(assigns(:projects)).to include(public_group_project)
+
+      aggregate_failures do
+        expect(assigns(:projects)).not_to include(public_user_project)
+        expect(assigns(:projects)).not_to include(private_user_project)
+        expect(assigns(:projects)).not_to include(deleted_user_project)
+        expect(assigns(:projects)).not_to include(one_of_the_project)
+      end
+    end
+  end
+
+  describe 'Search projects by name' do
+    shared_context 'projects with name' do |matched, unmatched|
+      # 公開プロジェクト
+      # デフォルトで公開になっているが明示的に
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, name: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, name: matched) }
+      # 非公開プロジェクト
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, name: matched) }
+      # 削除済みプロジェクト
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, name: matched) }
+      # クエリと一致しないプロジェクト
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, name: unmatched) }
+    end
+
+    context '完全一致' do
+      include_context 'projects with name', 'sample', 'zample'
+      include_examples '検索結果', 'sample'
+    end
+
+    context '部分一致' do
+      include_context 'projects with name', 'foobar', 'foo'
+      include_examples '検索結果', 'foo bar'
+    end
+  end
+
+  describe 'Search projects by title' do
+    shared_context 'projects with title' do |matched, unmatched|
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, title: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, title: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, title: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, title: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, title: unmatched) }
+    end
+
+    context '完全一致' do
+      include_context 'projects with title', 'sample', 'zample'
+      include_examples '検索結果', 'sample'
+    end
+
+    context '部分一致' do
+      include_context 'projects with title', 'foobar', 'foo'
+      include_examples '検索結果', 'foo bar'
+    end
+  end
+
+  describe 'Search projects by description' do
+    shared_context 'projects with description' do |matched, unmatched|
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, description: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, description: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, description: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, description: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, description: unmatched) }
+    end
+
+    context '完全一致' do
+      include_context 'projects with description', 'sample', 'zample'
+      include_examples '検索結果', 'sample'
+    end
+
+    context '部分一致' do
+      include_context 'projects with description', 'foobar', 'foo'
+      include_examples '検索結果', 'foo bar'
+    end
+  end
+
+  describe 'Search projects by tag' do
+    shared_context 'projects' do
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public) }
+    end
+
+    context '完全一致' do
+      let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample').attributes }
+      include_context 'projects'
+
+      before do
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
+          project.tags.create(tag_hash)
+        end
+
+        tag_hash['name'] = 'zample'
+        one_of_the_project.tags.create(tag_hash)
+
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
+      end
+
+      include_examples '検索結果', 'sample'
+    end
+
+    context '部分一致' do
+      let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar').attributes }
+      include_context 'projects'
+
+      before do
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
+          project.tags.create(tag_hash)
+        end
+
+        tag_hash['name'] = 'foo'
+        one_of_the_project.tags.create(tag_hash)
+
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
+      end
+
+      include_examples '検索結果', 'foo bar'
+    end
+  end
+
+  describe 'Search projects by project' do
+    shared_context 'projects' do
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public) }
+    end
+
+    context '完全一致' do
+      include_context 'projects'
+
+      before do
+        state_attributes = FactoryBot.attributes_for(:state, description: 'sample')
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project].each do |project|
+          project.states.create!(state_attributes)
+        end
+
+        state_attributes[:description] = 'zample'
+        one_of_the_project.states.create!(state_attributes)
+
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each do |project|
+          project.update_draft!
+        end
+      end
+
+      include_examples '検索結果', 'sample'
+    end
+
+    context '部分一致' do
+      include_context 'projects'
+
+      before do
+        state_attributes = FactoryBot.attributes_for(:state, description: 'foobar')
+        [public_user_project, public_group_project, private_user_project, deleted_user_project].each do |project|
+          project.states.create!(state_attributes)
+        end
+
+        state_attributes[:description] = 'foo'
+        one_of_the_project.states.create!(state_attributes)
+
+        [public_user_project, public_group_project,
+         private_user_project, deleted_user_project, one_of_the_project].each(&:update_draft!)
+      end
+
+      include_examples '検索結果', 'foo bar'
+    end
+  end
+
+  shared_context 'projects with owner' do
+    let!(:public_user_project) { FactoryBot.create(:user_project, :public, owner: user) }
+    let!(:public_group_project) { FactoryBot.create(:group_project, :public, owner: group) }
+    let!(:private_user_project) { FactoryBot.create(:user_project, :private, owner: user) }
+    let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, owner: user) }
+    let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, owner: one_of_the_users) }
+  end
+
+  describe 'Search projects by owner name' do
+    let!(:user) { FactoryBot.create(:user, name: 'sample-user') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, name: 'one-of-the-users') }
+    let!(:group) { FactoryBot.create(:group, name: 'sample-group') }
+
+    include_context 'projects with owner'
+
+    context '完全一致' do
+      # userとgroupで名前が重複できないのでどちらか一方だけが返ってくる結果を期待する
+      include_examples '検索結果(public user project only)', 'sample-user'
+      include_examples '検索結果(public group project only)', 'sample-group'
+    end
+
+    context '部分一致' do
+      include_examples '検索結果', 'sample'
+    end
+  end
+
+  describe 'Search projects by user fullname' do
+    let!(:user) { FactoryBot.create(:user, fullname: 'sample-user') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, fullname: 'one-of-the-users') }
+    # group has no fullnameなので今回のテスト対象ではないが
+    # shared_context内で必要なので用意する
+    let!(:group) { FactoryBot.create(:group, name: 'sample-group') }
+
+    include_context 'projects with owner'
+
+    # groupはfullnameを持っていないので、userだけが返ってくる結果を期待する
+    context '完全一致' do
+      include_examples '検索結果(public user project only)', 'sample-user'
+    end
+
+    context '部分一致' do
+      include_examples '検索結果(public user project only)', 'sample user'
+    end
+  end
+
+  describe 'Search projects by url' do
+    let!(:user) { FactoryBot.create(:user, url: 'https://sample.com') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, url: 'https://oneoftheusers.com') }
+    let!(:group) { FactoryBot.create(:group, url: 'https://sample.com') }
+
+    include_context 'projects with owner'
+
+    context '完全一致' do
+      include_examples '検索結果', 'https://sample.com'
+    end
+
+    context '部分一致' do
+      include_examples '検索結果', 'sample'
+    end
+  end
+
+  describe 'Search projects by location' do
+    let!(:user) { FactoryBot.create(:user, location: 'Tokyo,Japan') }
+    let!(:one_of_the_users) { FactoryBot.create(:user, location: 'Hachinohe,Japan') }
+    let!(:group) { FactoryBot.create(:group, location: 'Tokyo,Japan') }
+
+    include_context 'projects with owner'
+
+    context '完全一致' do
+      include_examples '検索結果', 'Tokyo,Japan'
+    end
+
+    context '部分一致' do
+      include_examples '検索結果', 'Tokyo Japan'
+    end
+  end
+
+  describe 'Search project by zenkaku-space or tab separated query' do
+    shared_context 'projects with name' do |matched, unmatched|
+      let!(:public_user_project) { FactoryBot.create(:user_project, :public, name: matched) }
+      let!(:public_group_project) { FactoryBot.create(:group_project, :public, name: matched) }
+      let!(:private_user_project) { FactoryBot.create(:user_project, :private, name: matched) }
+      let!(:deleted_user_project) { FactoryBot.create(:user_project, :soft_destroyed, name: matched) }
+      let!(:one_of_the_project) { FactoryBot.create(:user_project, :public, name: unmatched) }
+    end
+
+    context '部分一致' do
+      include_context 'projects with name', 'foobar', 'foo'
+      include_examples '検索結果', "foo　\tbar"
     end
   end
 end

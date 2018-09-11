@@ -1,0 +1,518 @@
+@import "mixins/clearfix";
+@import "mixins/clickable";
+@import "mixins/variables";
+@import "mixins/slick";
+@import "mixins/colorbox";
+@import "projects/_project_variables";
+
+#recipe-cards {
+  width: $first_column_width + $article_column_width;
+  margin-right: $first_column_width;
+  .clickable-img {
+    @include clickable;
+    width: 100%;
+  }
+  .top {
+    margin-left: $first_column_width;
+    padding-top: 1px;
+    width: $article_column_width;
+    background-color: $common-background-color;
+    .inner {
+      @include cf;
+      width: $article_column_width - $common-margin * 2;
+      margin: 34px $common-margin 0;
+    }
+  }
+  #making-list {
+    @include cf;
+    width: $first_column_width + $article_column_width;
+    margin-right: $first_column_width;
+    .top {
+      .inner {
+        width: $article_column_width - $common-margin * 4;
+        margin: $common-margin $common-margin*2 0;
+        border-top: $common-border;
+        h2 {
+          margin-top: 5px;
+          display: inline-block;
+          vertical-align: top;
+          width: 40%;
+          font-family: $common-novelsans-semibold;
+          font-size: 22px;
+          font-weight: normal;
+          line-height: $common-line-height;
+        }
+      }
+    }
+    .article-column.sp {
+      background-color: $common-background-color;
+      margin-top: -4px;
+      margin-left: $first_column_width;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-radius: 0 0 5px 5px;
+
+      .new-card {
+        margin-top: 20px;
+        margin-left: $common-margin * 2;
+        padding: 9px 0 6px;
+        width: $article_column_width - $common-margin * 4;
+        background-color: $common-basic-color;
+        font-size: 14px;
+        line-height: $common-line-height;
+        text-align: center;
+        color: $common-btn-text-color;
+      }
+    }
+  }
+
+  .bottom {
+    margin-bottom: 20px;
+    margin-left: $first_column_width;
+    width: $article_column_width;
+    background-color: $common-background-color;
+    border-radius: 5px;
+    .inner {
+      @include cf;
+      width: $article_column_width - $common-margin * 4;
+      margin: $common-margin $common-margin*2 0;
+      h2 {
+        margin-top: 5px;
+        display: inline-block;
+        vertical-align: top;
+        width: 40%;
+        font-family: $common-novelsans-semibold;
+        font-size: 22px;
+        font-weight: normal;
+        line-height: $common-line-height;
+      }
+    }
+  }
+}
+
+#recipe-card-list {
+  @include cf;
+  width: $content_width;
+  font-family: $common-novelsans-light;
+  > li {
+    width: 100%;
+    float: left;
+  }
+  li.state-wrapper {
+    $state_margin_top: 50px;
+    margin-top: -4px;
+    width: $first_column_width + $article_column_width;
+    article {
+      @include cf;
+      display: table;
+      width: 100%;
+      h1.number {
+        display: table-cell;
+        vertical-align: top;
+        z-index: 2;
+        -webkit-padding-start: 13px;
+        width: 30px;
+        max-width: 30px;
+        font-family: $common-novelsans-semibold;
+        font-size: 45px;
+        font-weight: 500;
+        line-height: 140px;
+        color: $common-label-text-color;
+      }
+      .arrow-column {
+        display: table-cell;
+        padding-right: 18px;
+        position: relative;
+        width: 22px;
+        background-image: asset-url("arrow-body.png");
+        background-size: 22px 100%;
+        background-repeat: no-repeat;
+        background-position: 50% 50px;
+        &:before {
+          content: "\0000a0";
+        }
+        .arrow-head {
+          margin-left: 9px;
+          -webkit-margin-start: 4px;
+          position: absolute;
+          bottom: 0;
+          width: 22px;
+          height: 20px;
+          background-image: asset-url("arrow-head.png");
+          background-size: 22px 20px;
+          background-repeat: no-repeat;
+          background-position: 50% 0;
+          &:before {
+            content: "\0000a0";
+          }
+        }
+      }
+
+      .article-column {
+        display: table-cell;
+        background-color: $common-background-color;
+        padding-top: $state_margin_top;
+        .card-content {
+          @include cf;
+          $card_content_width: $article_column_width - $common-margin * 4;
+          $figure_width: 380px;
+          $figure_margin_left: 20px;
+          margin-left: $common-margin * 2;
+          margin-bottom: $common-margin * 2;
+          padding-bottom: 0;
+          width: $card_content_width;
+          border: none;
+
+          .header {
+            @include cf;
+            position: relative;
+            border-bottom: 1px solid $common-gray;
+            h2.title {
+              float: left;
+              margin-bottom: 0;
+              max-width: $card_content_width;
+              font-family: $common-novelsans-light;
+              font-weight: normal;
+              font-size: 25px;
+              line-height: $common-line-height;
+            }
+            .control {
+              position: absolute;
+              right: 0;
+              bottom: 5px;
+              .order-tools {
+                position: absolute;
+                right: -81px;
+                top: 0;
+              }
+            }
+          }
+          .body {
+            @include cf;
+            margin-top: 10px;
+            figure {
+              float: left;
+              max-width: $figure_width;
+              width: $figure_width;
+              margin: 0 0 0 $figure_margin_left;
+              overflow: hidden;
+              border: none;
+              box-shadow: none;
+              iframe {
+                width: 100%;
+                height: $figure_width * 3 / 4;
+              }
+              @include slick;
+              .slick {
+                float: left;
+                max-width: $figure_width;
+                width: $figure_width;
+                margin: 0;
+                .slick-next {
+                  right: 5px;
+                }
+              }
+            }
+            .description {
+              float: left;
+              word-wrap: break-word;
+              width: $card_content_width - $figure_width - $figure_margin_left;
+              font-size: 14px;
+              line-height: 1.75;
+              &.without-figures {
+                width: 100%;
+              }
+            }
+
+          }
+          .attachments {
+            @include cf;
+            float: left;
+          }
+        }
+
+        $annotation_margin_left: $common-margin * 2 + 80px;
+        $annotation_width: $article_column_width - $annotation_margin_left - $common-margin * 2;
+        .annotation-list {
+          $figure_width: 300px;
+          $figure_margin_left: $common-margin * 2;
+          width: $annotation_width;
+          margin-left: $annotation_margin_left;
+          >li {
+            width: 100%;
+            overflow: visible;
+            .annotation>.card-content {
+              @include cf;
+              margin-left: 0;
+              margin-bottom: $common-margin;
+              padding-bottom: 0;
+              width: $annotation_width;
+              border: none;
+
+              .header {
+                @include cf;
+                position: relative;
+                border-bottom: 1px solid $common-gray;
+                h2.title {
+                  float: left;
+                  max-width: $annotation_width;
+                  font-family: $common-verdana;
+                  font-weight: normal;
+                  font-size: 20px;
+                  line-height: $common-line-height;
+                }
+                .control {
+                  position: absolute;
+                  right: 0;
+                  bottom: 5px;
+                  .order-tools {
+                    position: absolute;
+                    right: -61px;
+                    top: 0;
+                  }
+                }
+              }
+
+              figure {
+                float: left;
+                max-width: $figure_width;
+                width: $figure_width;
+                margin: 0 0 0 $figure_margin_left;
+                overflow: hidden;
+                border: none;
+                box-shadow: none;
+                iframe {
+                  width: 100%;
+                  height: $figure_width * 3 / 4;
+                }
+                @include slick;
+                .slick {
+                  float: left;
+                  max-width: $figure_width;
+                  width: $figure_width;
+                  margin: 0;
+                  .slick-next {
+                    right: 5px;
+                  }
+                }
+              }
+
+              h2.title {
+                float: left;
+                max-width: $annotation_width;
+                font-family: $common-novelsans-light;
+                font-weight: normal;
+                font-size: 20px;
+                line-height: $common-line-height;
+              }
+              .description {
+                float: left;
+                word-wrap: break-word;
+                width: $annotation_width - $figure_width - $figure_margin_left;
+                font-size: 14px;
+                line-height: 1.75;
+                &.without-figures {
+                  width: 100%;
+                }
+              }
+              .attachments {
+                @include cf;
+                float: left;
+              }
+              .footer {
+                float: left;
+                margin-top: $common-margin * 2;
+                width: $annotation_width;
+              }
+            }
+          }
+        }
+        .new-card {
+          margin-left: $annotation_margin_left;
+          background-color: $common-basic-color;
+          padding: 4px 0 1px;
+          width: $annotation_width;
+          font-family: $common-novelsans-semibold;
+          font-size: 14px;
+          line-height: $common-line-height;
+          text-align: center;
+          color: $common-btn-text-color;
+        }
+      }
+
+      .update-state {
+        display: none;
+      }
+    }
+    &:first-of-type {
+      h1.number {
+        line-height: 70px;
+      }
+      .arrow-column {
+        background-position: 50% 0;
+      }
+      .article-column {
+        padding-top: 0px;
+        -webkit-padding-before: 15px;
+      }
+    }
+    progress {
+      width: 100%;
+    }
+  }
+}
+
+#recipe-card-list {
+  .order-up-btn {
+    display: none;
+  }
+  .order-down-btn {
+    display: none;
+  }
+  &.order-changing {
+    .order-up-btn, .order-down-btn {
+      display: block;
+      width: 61px;
+      height: 23px;
+    }
+    .order-up-btn {
+      background: asset-url("order_up.png");
+    }
+    .order-down-btn {
+      margin-top: 8px;
+      background: asset-url("order_down.png");
+    }
+    .state-wrapper {
+      &:first-of-type {
+        .order-up-btn {
+          display: none;
+        }
+        .annotation-wrapper {
+          .order-up-btn {
+            display: block;
+          }
+        }
+      }
+      &:last-of-type {
+        .order-down-btn {
+          display: none;
+        }
+        .annotation-wrapper {
+          .order-up-btn {
+            display: block;
+          }
+        }
+      }
+      .annotation-wrapper {
+        &:first-of-type {
+          .order-up-btn {
+            display: none;
+          }
+        }
+        &:last-of-type {
+          .order-down-btn {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .wait4save {
+    .btn {
+      display: none;
+    }
+  }
+}
+
+.order-change-form {
+  display: none;
+}
+
+#material-list, #tool-list, #blueprint-list, #references {
+  display: none;
+  border-top: $common-border;
+  padding: 3px 0 70px;
+  font-family: $common-novelsans-light;
+  &#references {
+    border: none;
+  }
+  &.has-data {
+    display: block;
+  }
+  h2 {
+    display: inline-block;
+    vertical-align: top;
+    width: 240px;
+    font-family: $common-novelsans-semibold;
+    font-size: 22px;
+    line-height: $common-line-height;
+  }
+  ul {
+    display: inline-block;
+    padding-top: 7px;
+    padding-left: 20px;
+    width: 610px;
+    > li {
+      list-style-type: decimal;
+      word-wrap: break-word;
+      width: 100%;
+      font-size: 14px;
+      line-height: $common-line-height;
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+#material-list {
+  li, a {
+    color: $material_color;
+  }
+}
+#tool-list {
+  li, a {
+    color: $tool_color;
+  }
+}
+#blueprint-list {
+  li, a {
+    color: $blueprint_color;
+  }
+}
+
+#state-convert-dialog {
+  display: none;
+  padding: 10px 20px;
+  background: $common-background-color;
+  border-radius: 5px;
+  .src {
+    display: inline;
+  }
+  .text {
+    line-height: 1.75;
+  }
+  #target_state {
+    display: block;
+    margin: 20px 0;
+  }
+}
+
+#loading {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  overflow-x: auto;
+  overflow-y: scroll;
+  background-color: $common-modal-background-color;
+
+  img {
+    position: absolute;
+  }
+}

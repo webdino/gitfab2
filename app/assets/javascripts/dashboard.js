@@ -1,9 +1,10 @@
 //= require jquery
-//= require jquery.ui.sortable
-//= require jquery_ujs
+//= require rails-ujs
 //= require_tree ./helpers
-//= require_tree ../../../vendor/assets/javascripts/tabby
+//= require tabby/buoy
+//= require tabby/tabby
 //= require select2
 //= require ./notifications
-//= require ./maintenance
 //= require ./features
+
+import 'babel-polyfill/dist/polyfill'

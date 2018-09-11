@@ -1,14 +1,10 @@
-- content_for :title do
-  - if @group.name.present?
-    - "Edit " + @group.name
-  - else
-    - "Edit Group"
+- content_for(:title, @group.name.present? ? "Edit #{@group.name}" : "Edit Group")
 
 #groups-edit
   #edit-profile
     h1.page-title
-      == "#{@group.name} Public Profile"
-    == render "form"
+      = "#{@group.name} Public Profile"
+    = render "form"
 
   #edit-members
     .inner
@@ -16,9 +12,16 @@
        'Members
       ul#members
         - @group.members.each do |member|
-          == render "membership", membership: member.membership_in(@group)
+          = render "membership", membership: member.membership_in(@group)
 
-      == render "add_member", group: @group
+      - if can? :manage, @group
+        #new-membership
+          h2.title
+            'Add Member
+          = form_tag group_members_path(group_id: @group.id), method: "post", id: "new_member", remote: true
+          = select_tag :member_name
+          = select_tag :role, options_for_select(Membership::ROLE)
+          = submit_tag "add", id: "add-btn", class: "btn"
 
 - content_for :bottom
 
@@ -31,7 +34,7 @@
       event.preventDefault()
       $("#group-avatar-form").trigger "click"
 
-    $(document).on "change", "#group-avatar-form", (event, data, status) ->
+    $(document).on "change", "#group-avatar-form", (event) ->
       file = event.target.files[0]
       reader = new FileReader()
       reader.onload = ->
@@ -39,14 +42,12 @@
 
       reader.readAsDataURL file
 
-    $(document).on "change", ".membership-role", (event, data) ->
-      event.preventDefault()
-      $(this).submit()
+    $(document).on "change", ".membership-role", (event) ->
+      Rails.fire(event.target.form, "submit")
 
-    $(document).on "click", ".remove-member-btn", (event) ->
-      event.preventDefault
+    $(document).on "ajax:success", ".remove-member-btn", () ->
       $(this).closest("li").remove()
 
-    $(document).on "ajax:success", "#new_member", (event, data) ->
-      $("#members").append data.html
-      clearSelect2Value()
+    $(document).on "ajax:success", "#new_member", (event) ->
+      $("#members").append event.detail[0].html
+      $("#member_name").val(null).trigger("change");

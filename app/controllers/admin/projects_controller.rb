@@ -1,16 +1,10 @@
-class Admin::ProjectsController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::ProjectsController < Admin::ApplicationController
   before_action :load_project, only: [:show, :update, :destroy]
 
   def index
-    q = params[:q].to_s
-    @projects = Project.published.search { |s|
-      s.fulltext q.split.map { |word| "\"#{word}\"" }.join ' AND '
-      s.with(:is_deleted, false)
-      s.paginate page: params[:page]
-    }.results
+    @projects = Project.published
+    @projects = @projects.search_draft(params[:q]) if params[:q]
+    @projects = @projects.page(params[:page])
   end
 
   def show; end
@@ -22,7 +16,7 @@ class Admin::ProjectsController < ApplicationController
 
   private
 
-  def load_project
-    @project = Project.friendly.find(params[:id])
-  end
+    def load_project
+      @project = Project.friendly.find(params[:id])
+    end
 end

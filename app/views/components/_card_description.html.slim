@@ -8,8 +8,8 @@ ruby:
   end
 
 - if figures.present? && (figures.first.content.present? || figures.first.link.present?) || has_stl
-    .description
-      == Sanitize.clean card.description, Sanitize::Config::CARD
+  .description
+    == Sanitize.clean card.description, Sanitize::Config::CARD
 
 - else
   .description.without-figures

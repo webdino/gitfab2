@@ -1,0 +1,46 @@
+@import "mixins/clearfix";
+@import "mixins/variables";
+
+#groups-index {
+  display: inline-block;
+  width: 700px;
+  margin: 20px 20px 0 0;
+  #groups-list {
+    display: inline-block;
+    width: 700px;
+    margin: 20px 20px 0 0;
+    border: $common-border;
+    border-bottom: none;
+
+    h1 {
+      background-color:  $common-gray;
+      padding: 10px 0 10px 10px;
+      font-size: 21px;
+      border-bottom: $common-border;
+    }
+
+    ul#groups li.group {
+      @include cf;
+      height: 50px;
+      border-bottom: $common-border;
+      .avatar {
+        display: inline-block;
+        margin: 5px 10px;
+        width: 40px;
+        height: 40px;
+      }
+      .name {
+        display: inline-block;
+        vertical-align: top;
+        margin: 19px 0 0 10px;
+        font-size: 18px;
+      }
+      .leave-btn {
+        float: right;
+        margin: 10px 10px 0 0;
+        padding: 5px;
+      }
+    }
+  }
+
+}

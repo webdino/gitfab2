@@ -1,0 +1,58 @@
+@import "mixins/variables";
+.btn {
+  display: inline-block;
+  padding: 0 10px;
+  background: $common-gray;
+  font-family: $common-novelsans-semibold;
+  font-size: 11px;
+  color: $common-btn-text-color;
+  line-height: $common-line-height;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background: $common-light-gray;
+  }
+}
+
+.alert {
+  display: block;
+  margin-bottom: 14px;
+  padding: 1.0rem;
+  border-radius: 5px;
+  &.alert-warning {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+}
+
+
+.horizontal-border {
+  width: 60px;
+  height: 0px;
+  border-bottom: 1px solid;
+  &.basic-color {
+    border-color: $common-basic-color;
+  }
+  &.black {
+    border-color: black;
+  }
+  &.white {
+    border-color: white;
+  }
+  &.f-left{
+    float: left;
+  }
+  &.f-right{
+    float: right;
+  }
+  &.m-b-5 {
+    margin-bottom: 5px;
+  }
+  &.m-b-10 {
+    margin-bottom: 10px;
+  }
+}
+
+.hidden {
+  display: none;
+}

@@ -1,24 +1,14 @@
 meta property="og:site_name" content="Fabble"
 meta property="og:email" content="support@fabble.cc"
 meta property="og:type" content="article"
+meta property="og:url" content="#{request.url}"
+meta property="og:title" content="#{local_assigns[:model]&.ogp_title || 'Fabble'}"
+meta property="og:description" content="#{local_assigns[:model]&.ogp_description.presence || 'New Platform to Share Fab Projects all over the world'}"
+meta property="og:image" content="#{local_assigns[:model]&.ogp_image(request.base_url) || asset_url('/images/logo.png')}"
 
-- if local_assigns[:title].present?
-  meta property="og:title" content="#{title}"
-- else
-  meta property="og:title" content="Fabble"
-
-- if local_assigns[:description].present?
-  meta property="og:description" content="#{description}"
-- else
-  meta property="og:description" content="New Platform to Share Fab Projects all over the world"
-
-- if local_assigns[:image].present?
-  meta property="og:image" content="#{image}"
-- else
-  meta property="og:image" content="#{asset_path('logo.png')}"
-
-- if local_assigns[:video].present?
-  meta property="og:video" content="#{video}"
+- ogp_video = local_assigns[:model]&.ogp_video.presence
+- if ogp_video
+  meta property="og:video" content="#{ogp_video}"
   meta property="og:video:width" content="600"
   meta property="og:video:height" content="400"
   meta property="og:video:type" content="application/x-shockwave-flash"

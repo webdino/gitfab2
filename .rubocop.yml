@@ -12,7 +12,6 @@ AllCops:
   Exclude:
     - 'Capfile'
     - 'Gemfile'
-    - 'Guardfile'
     - 'app/validators/*'
     - 'app/models/ability.rb'
     - 'bin/*'
@@ -27,6 +26,19 @@ ClassAndModuleChildren:
 
 GuardClause:
   MinBodyLength: 4
+
+Layout/ExtraSpacing:
+  Enabled: false
+
+Layout/SpaceInLambdaLiteral:
+  Enabled: false
+
+Layout/IndentationWidth:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: rails
 
 Lint/AmbiguousOperator:
   Exclude:
@@ -48,9 +60,14 @@ Lint/UselessSetterCall:
 
 Metrics/ClassLength:
   Max: 180
+  Exclude:
+    - 'db/migrate/**'
 
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - 'db/migrate/**'
+    - 'db/schema.rb'
 
 PredicateName:
   NamePrefixBlacklist:
@@ -59,9 +76,22 @@ PredicateName:
 Style/AsciiComments:
   Enabled: false
 
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/NumericLiterals:
+  Exclude:
+    - 'db/schema.rb'
+
 Style/SignalException:
   Exclude:
     - 'app/controllers/application_controller.rb'
 
 Style/RaiseArgs:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/WordArray:
   Enabled: false

@@ -1,54 +1,48 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe NoteCardsController, type: :controller do
   render_views
 
-  let(:project) { FactoryGirl.create :user_project }
-  let(:note_card) { project.note.note_cards.create title: 'foo', description: 'bar' }
-  let(:new_note_card) { project.note.note_cards.build title: 'foo', description: 'bar' }
+  let(:project) { FactoryBot.create :user_project }
+  let(:note_card) { project.note_cards.create title: 'foo', description: 'bar' }
+  let(:new_note_card) { project.note_cards.build title: 'foo', description: 'bar' }
   let(:user) { project.owner }
 
   subject { response }
 
   describe 'GET new' do
-    before do
-      xhr :get, :new, owner_name: user, project_id: project
-    end
+    before { get :new, params: { owner_name: user, project_id: project }, xhr: true }
     it { is_expected.to render_template :new }
   end
 
   describe 'GET edit' do
-    before do
-      xhr :get, :edit, owner_name: user, project_id: project,
-                       id: note_card.id
-    end
+    before { get :edit, params: { owner_name: user, project_id: project, id: note_card.id }, xhr: true }
     it { is_expected.to render_template :edit }
   end
 
   describe 'POST create' do
     context 'without attachments' do
       before do
-        xhr :post, :create, user_id: user, project_id: project,
-                            note_card: new_note_card.attributes
+        post :create, params: { owner_name: user, project_id: project, note_card: new_note_card.attributes }, xhr: true
         project.reload
       end
       it { is_expected.to render_template :create }
       it 'has 1 note_card' do
-        expect(project.note.note_cards.size).to eq 1
+        expect(project.note_cards.size).to eq 1
       end
     end
     context 'with attachments' do
       before do
-        xhr :post, :create, user_id: user, project_id: project,
-                            note_card: new_note_card.attributes.merge(
-                              attachments_attributes: [FactoryGirl.attributes_for(:attachment_material)]
-                            )
+        post :create, params: {
+          owner_name: user, project_id: project,
+          note_card: new_note_card.attributes.merge(
+            attachments_attributes: [FactoryBot.attributes_for(:attachment_material)]
+          )
+        }, xhr: true
         project.reload
       end
       it "has 1 attachment of kind 'material'" do
-        note_card = project.note.note_cards.first
+        note_card = project.note_cards.first
         aggregate_failures do
           expect(note_card.attachments.size).to eq 1
           expect(note_card.attachments.first.kind).to eq('material')
@@ -59,12 +53,14 @@ describe NoteCardsController, type: :controller do
       before do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
-        xhr :post, :create, user_id: user, project_id: project, note_card: { title: '', description: '' }
+        post :create,
+          params: { owner_name: user, project_id: project, note_card: { title: '', description: '' } },
+          xhr: true
       end
-      it "should render 'errors/failed' with 400" do
+      it do
         aggregate_failures do
-          is_expected.to render_template 'errors/failed'
           is_expected.to have_http_status(400)
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
         end
       end
     end
@@ -77,23 +73,28 @@ describe NoteCardsController, type: :controller do
 
       context 'with a title only' do
         before do
-          xhr :patch, :update, user_id: user, project_id: project,
-                               id: note_card.id, note_card: { title: title_to_change }
+          patch :update,
+            params: { owner_name: user, project_id: project, id: note_card.id, note_card: { title: title_to_change } },
+            xhr: true
           note_card.reload
         end
         it { is_expected.to render_template :update }
-        it { expect(project.note.note_cards.first.title).to eq title_to_change }
+        it { expect(project.note_cards.first.title).to eq title_to_change }
       end
       context 'with a title and a description' do
         before do
-          xhr :patch, :update, user_id: user, project_id: project,
-                               id: note_card.id, note_card: { title: title_to_change, description: description_to_change }
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, id: note_card.id,
+              note_card: { title: title_to_change, description: description_to_change }
+            },
+            xhr: true
           note_card.reload
         end
         it { is_expected.to render_template :update }
         it 'should change both a title and a description' do
           aggregate_failures do
-            note_card = project.note.note_cards.first
+            note_card = project.note_cards.first
             expect(note_card.title).to eq title_to_change
             expect(note_card.description).to eq description_to_change
           end
@@ -105,13 +106,14 @@ describe NoteCardsController, type: :controller do
       before do
         # Card::NoteCardのtitle, descriptionにはバリデーションがあるが
         # card.js.coffeeのvalidateForm(event, is_note_card_form)でもalertを出している
-        xhr :patch, :update, user_id: user, project_id: project,
-                             id: note_card.id, note_card: { title: '', description: '' }
+        patch :update,
+          params: { owner_name: user, project_id: project, id: note_card.id, note_card: { title: '', description: '' } },
+          xhr: true
       end
-      it "should render 'errors/failed' with 400" do
+      it do
         aggregate_failures do
-          is_expected.to render_template 'errors/failed'
           is_expected.to have_http_status(400)
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
         end
       end
     end
@@ -119,13 +121,12 @@ describe NoteCardsController, type: :controller do
 
   describe 'DELETE destroy' do
     before do
-      xhr :delete, :destroy, owner_name: user, project_id: project,
-                             id: note_card.id
+      delete :destroy, params: { owner_name: user, project_id: project, id: note_card.id }, xhr: true
       project.reload
     end
-    it { is_expected.to render_template :destroy }
+    it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     it 'has 0 note_cards' do
-      expect(project.note.note_cards.size).to eq 0
+      expect(project.note_cards_count).to eq 0
     end
   end
 end

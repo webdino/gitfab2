@@ -1,11 +1,10 @@
-- content_for :title do
- - "Create Group"
+- content_for(:title, "Create Group")
 
 #groups-new
   #edit-profile
     h1.page-title
       'New Group
-    == render "form"
+    = render "form"
 
 - content_for :bottom
   coffee:

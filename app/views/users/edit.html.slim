@@ -1,49 +1,29 @@
-- content_for :title do
-  - "Edit Profile"
+- content_for(:title, "Edit Profile")
 
-main#users-edit
-  h1
-    'Public Profile
-  p#notice == notice
+#users-edit
+  = render partial: "form", locals: { user: @user }
 
-  == form_for @user, url: user_path(id: @user.id) do |f|
-    - if @user.errors.any?
-      #error_explanation
-        h2
-          == pluralize(@user.errors.count, "error")
-          'prohibited this user from being saved:
-        ul
-          - @user.errors.full_messages.each do |msg|
-            li == msg
+  div.panel
+    h1 パスワード変更
+    - if flash[:success]
+      div= flash[:success]
+    - if flash[:alert]
+      div style="color: red;"
+        = flash[:alert]
+    ul
+      - @update_password_error_messages&.each do |message|
+        li= message
 
-    .left
-      == image_tag @user.avatar, id: "user-avatar"
-
-    .right
-      == f.file_field :avatar, id: "user-avatar-form"
-      == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-      p style="width: 330px; margin-bottom: 15px; padding: 10px; border: 1px solid #FFF; border-radius: 5px; font-size: 22px; color:#999;"
-        == @user.name
-      == f.url_field :url, placeholder: "URL", class: "text-form"
-      == f.text_field :location, placeholder: "Location", class: "text-form"
-
-    == f.submit "Save", id: "submit", class: "btn"
-
-- content_for :bottom
-
-  coffee:
-    $(document).on "click", "#user-avatar", (event, data) ->
-      event.preventDefault()
-      $("#user-avatar-form").trigger "click"
-
-    $(document).on "click", "#upload-button", (event, data) ->
-      event.preventDefault()
-      $("#user-avatar-form").trigger "click"
-
-    $(document).on "change", "#user-avatar-form", (event, data, status) ->
-      file = event.target.files[0]
-      reader = new FileReader()
-      reader.onload = ->
-        $("#user-avatar").attr "src", reader.result
-
-      reader.readAsDataURL file
+    = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
+      div.form-group
+        = f.label :password
+        = f.password_field :password, class: "form-control"
+      div.form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control"
+      - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
+        div
+          = f.label :current_password, "現在のパスワード"
+          = f.password_field :current_password
+      div.form-group
+        = f.submit "Update password", class: "btn primary"

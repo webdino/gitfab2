@@ -1,80 +1,58 @@
 # frozen_string_literal: true
+# == Schema Information
+#
+# Table name: cards
+#
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
+#
+# Indexes
+#
+#  index_cards_on_state_id  (state_id)
+#  index_cards_project_id   (project_id)
+#
+# Foreign Keys
+#
+#  fk_cards_project_id  (project_id => projects.id)
+#
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :card do
-    type Card.name
-    description 'description'
+    type { Card.name }
+    description { 'description' }
+  end
 
-    factory :note_card, class: Card::NoteCard do
-      type Card::NoteCard.name
-      # title, descriptionはpresence: true
-      sequence(:title) { |n| "NoteCard #{n}" }
-      sequence(:description) { |n| "Description for NoteCard #{n}" }
-      note
-    end
+  factory :note_card, class: Card::NoteCard, parent: :card do
+    type { Card::NoteCard.name }
+    # title, descriptionはpresence: true
+    sequence(:title) { |n| "NoteCard #{n}" }
+    sequence(:description) { |n| "Description for NoteCard #{n}" }
+    project
+  end
 
-    factory :annotation, class: Card::Annotation do
-      type Card::Annotation.name
-      sequence(:title) { |n| "Annotation #{n}" }
+  factory :annotation, class: Card::Annotation, parent: :card do
+    type { Card::Annotation.name }
+    sequence(:title) { |n| "Annotation #{n}" }
+    state
+  end
 
-      after(:build) do |annotation|
-        # TODO: annotation.annotatable がnilであることを許容するのか要確認
-        annotatable = annotation.annotatable || FactoryGirl.build(:state)
-        annotatable.annotations << annotation
-        annotatable.save!
-      end
-    end
+  factory :state, class: Card::State, parent: :card do
+    type { Card::State.name }
+    sequence(:title) { |n| "State #{n}" }
+    project
+  end
 
-    factory :recipe_card, class: Card::RecipeCard do
-      type Card::RecipeCard.name
-      sequence(:title) { |n| "RecipeCard #{n}" }
-      recipe
-
-      after(:create) do |recipe_card|
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-        FactoryGirl.create(:annotation, annotatable: recipe_card)
-
-        # 順番変更のテストのため
-        # 順番がID通りにならないようにする
-        recipe_card.annotations.to_a.shuffle
-                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-        recipe_card.annotations.to_a.shuffle
-                   .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-        recipe_card.annotations(true)
-      end
-    end
-
-    factory :state, class: Card::State do
-      type Card::State.name
-      sequence(:title) { |n| "State #{n}" }
-      recipe
-
-      after(:create) do |state|
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-        FactoryGirl.create(:annotation, annotatable: state)
-
-        # 順番変更のテストのため
-        # 順番がID通りにならないようにする
-        state.annotations.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-        state.annotations.to_a.shuffle
-             .each_with_index { |s, i| s.tap { s.update(position: i + 1) } }
-
-        state.annotations(true)
-      end
-    end
-
-    factory :usage, class: Card::Usage do
-      type Card::Usage.name
-      sequence(:title) { |n| "Usage #{n}" }
-      association :project, factory: :user_project
-    end
+  factory :usage, class: Card::Usage, parent: :card do
+    type { Card::Usage.name }
+    sequence(:title) { |n| "Usage #{n}" }
+    association :project, factory: :user_project
   end
 end

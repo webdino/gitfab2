@@ -1,0 +1,27 @@
+#tabs
+  = link_to project_path(@project, owner_name: @owner.slug) do
+    .tab
+      'Recipe
+      = "(#{@project.states_count})"
+  = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
+    .tab.active
+      'Memos
+      = "(#{@project.note_cards_count})"
+
+section#note-cards
+  .top
+    .inner
+      h1
+        'Memos
+      - if can? :edit, @project
+        - new_url = new_project_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+        = link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
+
+  ul#note-card-list.card-list
+    - @project.note_cards.each do |card|
+      li.note-card-wrapper
+        = render "note_cards/note_card", card: card, owner: @owner, project: @project
+
+  footer
+    .inner
+      / TODO: implement pager

@@ -1,64 +1,41 @@
 li.project
-  .text-container
-    - if project.is_private?
-      .private-project
-        ' private project
-    - if project.title.present?
-      - if is_note
-        == link_to project.title, project_note_path(project.owner, project), class: "title"
+  .header
+    - if project.figures.present?
+      - if project.figures.first.content.present? || project.figures.first.link.present?
+        figure.visual
+          = link_to image_tag(project.thumbnail, class: "thumb"), project_path(project.owner, project), class: "thumb-wrapper"
+
       - else
-        == link_to project.title, project_path(project.owner, project), class: "title"
+        .title-large
+          = link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
 
     - else
-      - if is_note
-        == link_to "no title", project_note_path(project.owner, project), class: "title"
+      .title-large
+        = link_to project.title.truncate(40), project_path(project.owner, project), class: "block"
+    = link_to owner_path(owner_name: project.owner.slug), alt: project.owner.name, title: project.owner.name, class: "user" do
+      .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"
+
+  .inner
+    - if project.figures.present?
+      - if project.figures.first.content.present? || project.figures.first.link.present?
+        .title-small
+          = link_to project.title.truncate(40), project_path(project.owner, project)
       - else
-        == link_to "no title", project_path(project.owner, project), class: "title"
+        .spacer
+    - else
+      .spacer
 
-    .horizontal-border.basic-color.m-b-5
-    .meta
-      .dates
-        span.created
-          span.index
-            'Created Date:
-          span.value
-            == " #{project.created_at.strftime '%Y-%m-%d'} / " if project.created_at
-
-        span.updated
-          span.index
-            'updated date:
-          span.value
-            == " #{project.updated_at.strftime '%Y-%m-%d'}" if project.updated_at
-
-      .numbers
-        span.recipe
-          span.index Steps:
-          span.value
-            == " #{project.recipe.states.length} / "
-
-        span.note
-          span.index Memos:
-          span.value
-            == " #{project.note.note_cards.length}"
+    .horizontal-border.basic-color.m-b-10
 
     - if project.description.present?
-      .horizontal-border.basic-color.m-b-5
-      .summary
-        == "#{project.description}"
+      .description
+        = project.description.truncate(200)
+      .horizontal-border.basic-color.m-b-10
 
-    .horizontal-border.basic-color.m-b-5
-    == render "projects/tags", project: project
-
-  .image-container
-    - if project.figures.present? && (project.figures.first.content.present? || project.figures.first.link.present?)
-      - if is_note
-        == link_to image_tag(project.thumbnail), project_note_path(project.owner, project), class: "image"
-      - else
-        == link_to image_tag(project.thumbnail), project_path(project.owner, project), class: "image"
-
-    - if can? :manage, project
-      .btns
-        - edit_url = edit_project_path(project, owner_name: project.owner.slug)
-        - delete_url = project_path(project.owner.slug, project)
-        == link_to "edit", edit_url, class: "edit btn"
-        == link_to "delete", delete_url, method: "delete", class: "delete btn", confirm: "Are you sure to delete this project?"
+    .status
+      .recipes
+        = "#{project.states_count} Steps /"
+      .notes
+        = "#{project.note_cards_count} Memos"
+      .since
+        = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at

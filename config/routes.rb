@@ -1,7 +1,7 @@
-Gitfab2::Application.routes.draw do
-  match 'about' => 'static_pages#about', via: :get
-  match 'terms' => 'static_pages#terms', via: :get
-  match 'privacy' => 'static_pages#privacy', via: :get
+Rails.application.routes.draw do
+  get 'about', to: 'static_pages#about'
+  get 'terms', to: 'static_pages#terms'
+  get 'privacy', to: 'static_pages#privacy'
 
   namespace :admin do
     root 'dashboard#index'
@@ -9,88 +9,62 @@ Gitfab2::Application.routes.draw do
       resources :featured_items
     end
     resources :projects, via: %i(get put delete)
-    get 'background' => 'background#index', as: :background
-    put 'background' => 'background#update'
+    get 'background', to: 'background#index', as: :background
+    put 'background', to: 'background#update'
   end
 
-  root 'global_projects#index'
+  root 'projects#index'
 
   if Rails.env.development? || Rails.env.test?
-    match 'su' => 'development#su', via: :post
-    match "/delayed_job" => DelayedJobWeb, :anchor => false, via: [:get, :post]
+    post 'su', to: 'development#su'
   end
 
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
-  match 'home' => 'owner_projects#index', via: :get
-  match 'search' => 'global_projects#index', via: :get
+  resources :sessions, only: [:index, :create]
+  get '/users/auth/:provider/callback', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
-  concern :card_features_for_form do
-    resources :annotations, only: [:create, :update], concerns: :comments
-    resources :derivative_cards, only: [:create, :update]
+  get 'search', to: 'projects#search'
+
+  resources :cards, only: [] do
+    resources :card_comments, only: :create
+  end
+  resources :card_comments, only: :destroy
+
+  resources :groups, except: :show do
+    resources :members, only: :create
   end
 
-  concern :card_features_for_link do
-    resources :annotations, except: [:create, :update]
-    resources :annotations do
-      get 'to_state'
-    end
-    resources :derivative_cards, except: [:create, :update]
+  resources :notifications, only: [:index, :update] do
+    get 'mark_all_as_read', on: :collection
   end
 
-  concern :comments do
-    resources :comments, only: [:create, :destroy]
+  resources :users, except: [:show, :edit, :update, :destroy] do
+    resources :memberships, only: [:index, :update, :destroy]
+    patch :update_password
   end
+  resource :user, only: [:edit, :update, :destroy]
 
-  concern :tags do
-    resources :tags, only: [:create, :destroy]
-  end
-
-  resources :owners, only: [:index]
-
-  concern :owner do
-    resources :projects do
-      get 'potential_owners'
-      get 'recipe_cards_list'
-      get 'relation_tree'
-    end
-    resources :projects, only: [:create, :update], concerns: :tags do
-      resources :collaborators, only: [:create, :update]
-      resource :recipe, only: :update do
-        resources :states, only: [:create, :update], concerns: [:card_features_for_form, :comments]
+  resources :collaborations, only: :destroy
+  resources :projects, only: [:new, :create]
+  resources :tags, only: :destroy
+  resources :projects, path: '/:owner_name', except: [:index, :new, :create, :search] do
+    resources :collaborations, only: :create
+    resources :note_cards
+    resources :states, except: :index do
+      resources :annotations, except: :index do
+        get 'to_state'
       end
-      resource :note, only: :update do
-        resources :note_cards, only: [:create, :update], concerns: :comments
-      end
-      resources :usages, only: [:create, :update]
+      get 'to_annotation'
     end
+    resources :tags, only: :create
+    resources :usages, only: [:new, :create, :edit, :update, :destroy]
+    resources :project_comments, only: [:create, :destroy]
+    post :fork
+    patch :change_order
+    get 'recipe_cards_list'
+    get 'relation_tree'
   end
 
-  resources :users, concerns: :owner do
-    resources :collaborations
-    resources :memberships
-    resources :notifications do
-      get 'mark_all_as_read', on: :collection
-    end
-  end
-
-  resources :groups, concerns: :owner do
-    resources :collaborations
-    resources :members
-  end
-
-  resources :global_projects, only: :index
-
-  resources :projects, path: '/:owner_name', except: [:create, :update] do
-    resources :collaborators, except: [:create, :update]
-    resource :note, only: :show do
-      resources :note_cards, except: [:create, :update]
-    end
-    resource :recipe, only: :show do
-      resources :states, except: [:create, :update], concerns: :card_features_for_link
-      resources :states do
-        get 'to_annotation'
-      end
-    end
-    resources :usages, constraints: { id: /.+/ }, except: [:create, :update]
-  end
+  resources :owners, only: :index
+  resource :owners, path: '/:owner_name', as: :owner, only: :show
 end

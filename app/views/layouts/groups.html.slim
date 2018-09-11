@@ -1,18 +1,11 @@
 - content_for :stylesheets do
-  == stylesheet_link_tag "groups", "data-turbolinks-track" => true
+  = stylesheet_link_tag "groups"
 - content_for :javascript do
-  == javascript_include_tag "groups", "data-turbolinks-track" => true
-- content_for :ogp do
-  - if @group.present? && @group.persisted?
-    - title = "#{@group.name} on Fabble"
-    - image = @group.avatar.present? ? "#{@group.avatar}" : nil
-    == render partial: "components/base_ogp", locals: {title: title, image: image}
-  - else
-    == render partial: "components/base_ogp"
+  = javascript_include_tag "groups"
 
 - content_for :content do
   #content
-    == render partial: "layouts/setting_links"
-    == yield
+    = render partial: "layouts/setting_links"
+    = yield
 
-== render partial: "layouts/base_layout"
+= render partial: "layouts/base_layout"

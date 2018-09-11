@@ -1,0 +1,13 @@
+- content_for(:title, "#{@project.owner.name}/#{@project.title} : Recipe")
+
+main#recipes-show data-url="#{project_path(@project.owner, @project)}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
+  = render "projects/basic_informations"
+  = render "projects/recipe_cards"
+  = render "projects/usages"
+  = render "projects/project_comments"
+  = render "projects/templates"
+  = render "projects/state_convert_dialog"
+  #loading
+    = image_tag "loading.gif"
+
+.modal#loading-bar style="display: none;"
