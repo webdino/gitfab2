@@ -47,10 +47,10 @@
 
     $(document).on "ajax:success", ".remove-member-btn", (event) ->
       data = event.detail[0]
-      if data.success == false
-        alert data.message
-      else
+      if data.success
         $(this).closest("li").remove()
+      else
+        alert data.message
 
     $(document).on "ajax:success", "#new_member", (event) ->
       $("#members").append event.detail[0].html

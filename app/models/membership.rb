@@ -30,6 +30,6 @@ class Membership < ApplicationRecord
   end
 
   def deletable?
-    (role == 'admin' && group.admins.count > 1) || role == 'editor'
+    (admin? && group.admins.count > 1) || editor?
   end
 end
