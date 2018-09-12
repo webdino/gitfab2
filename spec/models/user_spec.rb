@@ -174,14 +174,6 @@ describe User do
         expect(user.is_editor_of?(group_membered)).to be true
       end
     end
-
-    context 'グループにadminが存在していない場合' do
-      before { FactoryBot.create(:membership, group: group_membered, user: user, role: Membership::ROLE[:editor]) }
-      it "role: 'admin'として登録されること" do
-        expect(user.is_admin_of?(group_membered)).to be true
-        expect(user.is_editor_of?(group_membered)).to be false
-      end
-    end
   end
 
   describe '#membership_in(group)' do

@@ -16,10 +16,10 @@ class MembershipsController < ApplicationController
   def destroy
     @user = User.friendly.find params[:user_id]
     @membership = @user.memberships.find params[:id]
-    if @membership.group.members.length == 1 && @membership.group.projects.length > 0
-      render json: { success: false, message: 'This group still has projects.' }
-    else
+    if @membership.deletable?
       @membership.destroy
+    else
+      render json: { success: false, message: 'You can not remove this member.' }
     end
   end
 end

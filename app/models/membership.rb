@@ -20,12 +20,15 @@ class Membership < ApplicationRecord
   belongs_to :user
   belongs_to :group
 
-  after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
   validates :role, presence: true, inclusion: { in: ROLE.values }
 
   Membership::ROLE.keys.each do |role|
     define_method "#{role}?" do
       Membership::ROLE[role] == self.role
     end
+  end
+
+  def deletable?
+    (admin? && group.admins.count > 1) || editor?
   end
 end

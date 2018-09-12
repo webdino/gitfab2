@@ -37,14 +37,34 @@ describe MembershipsController, type: :controller do
   end
 
   describe 'DELETE destroy' do
-    context 'when a user destroyed own membership' do
-      before do
-        sign_in user
-        group = Group.create name: 'foo'
-        membership = user.memberships.create group_id: group.id
-        delete :destroy, params: { user_id: user.id, id: membership.id }, format: :json
+    subject { delete :destroy, params: { user_id: user.id, id: membership.id } }
+
+    let!(:group) { FactoryBot.create(:group)}
+    let!(:membership) { user.memberships.create(group: group, role: 'admin') }
+
+    before { sign_in user }
+
+    context 'when 2 group members (admins)' do
+      # Another user's membership
+      before { FactoryBot.create(:membership, group: group, role: 'admin') }
+
+      it 'deletes 1 membership' do
+        expect { subject }.to change { Membership.count }.by(-1)
       end
-      it { is_expected.to render_template :destroy }
+    end
+
+    context 'when 2 group members (admin and editor)' do
+      before { FactoryBot.create(:membership, group: group, role: 'editor') }
+
+      it 'does NOT delete admin membership' do
+        expect { subject }.not_to change { Membership.count }
+      end
+    end
+
+    context 'when 1 group member' do
+      it 'does NOT delete membership' do
+        expect { subject }.not_to change { Membership.count }
+      end
     end
   end
 end
