@@ -1,6 +1,5 @@
 @import "mixins/clearfix";
 @import "mixins/variables";
-@import "mixins/slick";
 @import "projects/_project_variables";
 
 #note-cards-show {
@@ -89,11 +88,6 @@
           iframe {
             width: 100%;
             height: ($note_card_width - 20px) * 3 / 4;
-          }
-          @include slick(15px, 15px);
-          .slick {
-            width: $note_card_width - 20px;
-            height: auto;
           }
         }
 

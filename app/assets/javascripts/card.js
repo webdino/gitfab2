@@ -268,10 +268,7 @@ $(function() {
             $(`#${dst_state_id} .annotation-list`).append(li);
             $(`#${state_id}`).closest(".state-wrapper").remove();
 
-            const article_id = $(data.html).find(".slick").closest("article").attr("id");
-            const selector = `#${article_id} .slick`;
             card.replaceWith(data.html);
-            setupFigureSlider(selector);
             loading.modal('hide');
             checkStateConvertiblity();
             setStateIndex();
@@ -319,10 +316,7 @@ $(function() {
             li.append(card);
             $("#recipe-card-list").append(li);
 
-            const article_id = $(data.html).find(".slick").closest("article").attr("id");
-            const selector = `#${article_id} .slick`;
             card.replaceWith(data.html);
-            setupFigureSlider(selector);
             loading.modal('hide');
             $(`#${annotation_id}`).closest("li").remove();
             checkStateConvertiblity();
@@ -414,24 +408,12 @@ $(function() {
   };
   setStateIndex();
 
-  const setupFigureSlider = selector =>
-    $(selector).slick({
-      adaptiveHeight: true,
-      dots: true,
-      infinite: true,
-      speed: 300
-    });
-
   const updateCard = function(card, data) {
     $("#card-form-container").empty();
-    const article_id = $(data.html).find(".slick").closest("article").attr("id");
-    const selector = `#${article_id} .slick`;
     card.replaceWith(data.html);
     checkStateConvertiblity();
     setStateIndex();
     markup();
-    setTimeout(() => setupFigureSlider(selector)
-    , 100);
     setTimeout(getCardsTop, 100);
     reloadRecipeCardsList();
 

@@ -1,6 +1,5 @@
 @import "mixins/variables";
 @import "mixins/clearfix";
-@import "mixins/slick";
 @import "projects/_project_variables";
 
 section#usages {
@@ -81,13 +80,6 @@ section#usages {
         iframe {
           width: 100%;
           height: $figure_width * 3 / 4;
-        }
-        @include slick;
-        .slick {
-          float: left;
-          max-width: $figure_width;
-          width: $figure_width;
-          margin: 0 $figure_margin_right 0 0 ;
         }
       }
       h2.title {
