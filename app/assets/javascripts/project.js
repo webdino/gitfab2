@@ -13,7 +13,6 @@
 //= require ./bootstrap_custom
 //= require rails-ujs
 //= require jquery_nested_form
-//= require jquery.slick
 //= require jquery.validate
 //= require jquery.validate.additional-methods
 //= require jquery/jquery.selection

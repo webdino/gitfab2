@@ -1,7 +1,6 @@
 @import "mixins/clearfix";
 @import "mixins/clickable";
 @import "mixins/variables";
-@import "mixins/slick";
 @import "projects/_project_variables";
 
 #recipe-cards {
@@ -273,16 +272,6 @@
                 iframe {
                   width: 100%;
                   height: $figure_width * 3 / 4;
-                }
-                @include slick;
-                .slick {
-                  float: left;
-                  max-width: $figure_width;
-                  width: $figure_width;
-                  margin: 0;
-                  .slick-next {
-                    right: 5px;
-                  }
                 }
               }
 
