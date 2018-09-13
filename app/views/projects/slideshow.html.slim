@@ -1,0 +1,37 @@
+= stylesheet_link_tag "slideshow"
+
+.carousel.slide data-ride="carousel" data-interval="false" id="slideshow"
+  .carousel-inner
+    - @cards.each_with_index do |card, i|
+      .carousel-item class="#{'active' if i.zero?}"
+        .container-fluid
+          .row
+            .col-2
+            .col-8
+              h3.font-weight-normal
+                = @project.title
+              h1= card.title
+
+              .figure
+                - youtube_url = card.figures.first&.link
+                - if youtube_url.present?
+                  .text-center.mb-3
+                    iframe src="#{youtube_url}" width="640" height="360"
+                - elsif card.figures.present?
+                  #figures.d-flex.flex-nowrap.mb-3
+                    - card.figures.each do |figure|
+                      - next if figure.content.blank?
+                      = image_tag figure.content.url, alt: figure.content.filename
+
+              p== Sanitize.clean(card.description, Sanitize::Config::CARD)
+            .col-2
+
+  ol.carousel-indicators
+    - @cards.count.times do |i|
+      li data-target="#slideshow" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+  a.carousel-control-prev href="#slideshow" role="button" data-slide="prev"
+    span.carousel-control-prev-icon aria-hidden="true"
+  a.carousel-control-next href="#slideshow" role="button" data-slide="next"
+    span.carousel-control-next-icon aria-hidden="true"
+
+= javascript_include_tag "slideshow"

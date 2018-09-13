@@ -9,6 +9,7 @@ Rails.application.config.assets.precompile += %w(
     masonry.pkgd.min.js
     static_pages.js
     static_pages.css
+    slideshow.css slideshow.js
   )
 
 # Version of your assets, change this if you want to expire all your assets.

@@ -6,7 +6,6 @@
  *= require_tree ./layouts
  *= require_tree ./mixins
  *= require_tree ./projects
- *= require jquery.colorbox-example3
  *= require ./card
  *= require select2
  *= require bootstrap_custom

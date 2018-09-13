@@ -30,7 +30,6 @@
 //= require ./card_markup
 //= require ./card_order
 //= require ./figures
-//= require ./slideshow
 //= require ./helpers/time_offset
 //= require ./comment
 //= require ./tag

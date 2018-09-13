@@ -127,7 +127,7 @@ section#basic-informations
   = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.is_fork?}", id: "project-edit-btn"
 
 section.tools class="#{'forked-project-tools' if @project.is_fork?}"
-  = link_to "", "#", id: "slideshow-btn"
+  = link_to "", project_slideshow_path(@project.owner, @project), id: "slideshow-btn", target: "_blank"
   = link_to "", "#", id: "print-btn"
   - if can? :edit, @project
     #card-order-tools

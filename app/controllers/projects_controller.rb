@@ -118,6 +118,15 @@ class ProjectsController < ApplicationController
     @projects = @projects.order(updated_at: :desc).page(params[:page])
   end
 
+  def slideshow
+    @project = @owner.projects
+                 .includes(states: [:figures, annotations: :figures])
+                 .where(is_deleted: false)
+                 .friendly.find(params[:project_id])
+    @cards = @project.states.map { |state| [state] + state.annotations }.flatten
+    render layout: nil
+  end
+
   private
 
     def project_params

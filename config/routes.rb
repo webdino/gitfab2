@@ -63,6 +63,7 @@ Rails.application.routes.draw do
     patch :change_order
     get 'recipe_cards_list'
     get 'relation_tree'
+    get :slideshow
   end
 
   resources :owners, only: :index

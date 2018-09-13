@@ -504,4 +504,10 @@ describe ProjectsController, type: :controller do
       end
     end
   end
+
+  describe 'GET slideshow' do
+    subject { get :slideshow, params: { owner_name: project.owner, project_id: project } }
+    let(:project) { FactoryBot.create(:project) }
+    it { is_expected.to be_successful }
+  end
 end
