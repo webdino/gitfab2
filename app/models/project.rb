@@ -62,6 +62,7 @@ class Project < ApplicationRecord
   validates :title, presence: true
   validates :license, presence: true
 
+  scope :active, -> { where(is_deleted: false) }
   scope :noted, -> do
     note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
     joins(:note_cards).where(cards: { id: note_cards_sql })

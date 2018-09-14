@@ -16,6 +16,9 @@
         - p = c.project
         - length += 1 if can? :read, p
       = link_to "Collaboration (#{length})", "#", data: {tab: "#collaboration-tab"}
+    - if @owner.is_a?(User)
+      li
+        = link_to "Favorite (#{@liked_projects.count{ |p| can?(:read, p) }})", "#", data: {tab: "#like-tab"}
     / TODO: #486 Implement user.contributed_projects method in user.rb
     / li
     /   = link_to "Contribution", "#", data: {tab: "#contribution-tab"}
@@ -24,6 +27,13 @@
     = render partial: "project_tab"
     = render partial: "note_tab"
     = render partial: "collaboration_tab"
+
+    - if @owner.is_a?(User)
+      #like-tab.tabs-pane
+        ul.project-list
+          - @liked_projects.each do |project|
+            - if can?(:read, project)
+              = render "project", project: project, is_note: false
 
 - content_for :bottom
   coffee:
