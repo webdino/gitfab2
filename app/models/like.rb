@@ -23,10 +23,4 @@ class Like < ApplicationRecord
   belongs_to :user
   belongs_to :project, counter_cache: :likes_count
   validates :user_id, uniqueness: { scope: :project }
-
-  class << self
-    def updatable_columns
-      [:_destroy, :id, :user_id]
-    end
-  end
 end
