@@ -99,7 +99,14 @@ $(function() {
 
       this.container = container;
 
-      const selectionText = $.selection();
+      // ref: https://stackoverflow.com/a/5379408
+      let selectionText;
+      if (window.getSelection) {
+        selectionText = window.getSelection().toString();
+      } else if (document.selection && document.selection.type != "Control") {
+        selectionText = document.selection.createRange().text;
+      }
+
       if (is_safari) {
         const sel_elm = this.ne.selectedInstance.selElm();
         if (sel_elm == null) {
