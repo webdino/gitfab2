@@ -39,6 +39,6 @@ li.project
         = "#{project.note_cards_count} Memos"
       .since
         = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
-      .starred
-        = image_tag("icons/starred", width: 15, height: 15)
+      .liked
+        = image_tag("icons/liked", width: 15, height: 15)
         span.count = project.likes_count
