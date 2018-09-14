@@ -360,6 +360,13 @@
               .notes {
                 margin-left: 5px;
               }
+              .since {
+                margin-bottom: 5px;
+              }
+              .starred {
+                img { margin-bottom: -2px; }
+                .count { margin-left: 3px; }
+              }
             }
           }
         }
