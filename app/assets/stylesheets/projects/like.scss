@@ -1,0 +1,21 @@
+.icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+
+  &:hover {
+    cursor: pointer;
+    opacity: .7;
+  }
+  &.disabled {
+    cursor: default;
+    opacity: .7;
+  }
+
+  &.icon-liked {
+    background-image: asset-url("icons/liked");
+  }
+  &.icon-like {
+    background-image: asset-url("icons/like");
+  }
+}

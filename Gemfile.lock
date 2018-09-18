@@ -161,6 +161,8 @@ GEM
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.1)
+    jb (0.5.0)
+      multi_json
     jbuilder (2.7.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -402,6 +404,7 @@ DEPENDENCIES
   exception_notification
   factory_bot_rails
   friendly_id
+  jb
   jbuilder
   jquery-rails
   kaminari

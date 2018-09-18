@@ -18,7 +18,13 @@ class ProjectsController < ApplicationController
   def show
     @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
-    @project_comments = @project.project_comments.order(:id)
+
+    respond_to do |format|
+      format.html do
+        @project_comments = @project.project_comments.order(:id)
+      end
+      format.json
+    end
   end
 
   def new

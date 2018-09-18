@@ -28,9 +28,19 @@ describe ProjectsController, type: :controller do
     context "with a project owned by a #{owner_type}" do
       describe 'GET show' do
         before do
-          get :show, params: { owner_name: project.owner.slug, id: project.name }
+          get :show, params: { owner_name: project.owner.slug, id: project.name, format: format }
         end
-        it { is_expected.to render_template 'projects/show' }
+        let(:format) { "" }
+
+        context "on format html" do
+          let(:format) { "html" }
+          it { is_expected.to render_template 'projects/show' }
+        end
+
+        context "on format json" do
+          let(:format) { "json" }
+          it { is_expected.to render_template 'projects/show' }
+        end
       end
       describe 'GET new' do
         before do

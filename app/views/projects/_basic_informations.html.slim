@@ -36,6 +36,10 @@ section#basic-informations
               = f.submit "Add", class: "btn"
             = link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
 
+      .right style="text-align: right"
+        #like-component
+        = javascript_webpack_tag "like"
+
   section.body
     - if @project.figures.present?
       - if @project.figures.first.content.present?

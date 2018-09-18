@@ -4,7 +4,7 @@ const ManifestPlugin = require("webpack-manifest-plugin");
 
 module.exports = {
   entry: {
-    hello_world: "./app/frontend/hello_world.tsx",
+    like: "./app/frontend/like.ts",
   },
 
   output: {

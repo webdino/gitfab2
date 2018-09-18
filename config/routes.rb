@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   resources :tags, only: :destroy
   resources :projects, path: '/:owner_name', except: [:index, :new, :create, :search] do
     resources :collaborations, only: :create
+    resource :likes, only: [:create, :destroy]
     resources :note_cards
     resources :states, except: :index do
       resources :annotations, except: :index do
