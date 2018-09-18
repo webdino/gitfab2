@@ -47,14 +47,10 @@ class Group < ApplicationRecord
     end
   end
 
-  def deletable?
-    projects.none? || projects.pluck(:is_deleted).all?
-  end
-
   def soft_destroy!
     transaction do
       update!(is_deleted: true)
-      collaborations.destroy_all
+      projects.where(is_deleted: false).update_all(is_deleted: true)
     end
   end
 

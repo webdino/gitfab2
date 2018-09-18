@@ -37,14 +37,9 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    unless @group.deletable?
-      redirect_to [:edit, @group], alert: 'This group still has projects.'
-      return
-    end
-
     @group.soft_destroy!
     redirect_to :groups
-  rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordNotDestroyed
+  rescue ActiveRecord::RecordNotSaved
     redirect_to [:edit, @group], alert: 'Group was not deleted.'
   end
 

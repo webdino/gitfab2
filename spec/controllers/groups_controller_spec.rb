@@ -133,59 +133,34 @@ describe GroupsController, type: :controller do
       it { expect { subject }.not_to change { group.reload.is_deleted } }
     end
 
-    describe 'collaborations' do
-      before do
-        sign_in user
-        FactoryBot.create_list(:collaboration, 2, owner: group)
-      end
-
-      it { expect { subject }.to change { Collaboration.count }.to(0) }
-    end
-
     describe 'projects' do
       before do
         sign_in user
-        FactoryBot.create_list(:project, 2, owner: group)
+        FactoryBot.create_list(:project, 2, owner: group, is_deleted: false)
       end
 
-      context 'when a group has projects' do
-        it { is_expected.to redirect_to [:edit, group] }
-        it { expect { subject }.not_to change { group.reload.is_deleted } }
-      end
-
-      context 'when a group has NO projects' do
-        before { group.projects.destroy_all }
-        it { is_expected.to redirect_to :groups }
-        it { expect { subject }.to change { group.reload.is_deleted }.from(false).to(true) }
-      end
-
-      context 'when projects are soft deleted' do
-        before { group.projects.update_all(is_deleted: true) }
-        it { is_expected.to redirect_to :groups }
-        it { expect { subject }.to change { group.reload.is_deleted }.from(false).to(true) }
+      it { is_expected.to redirect_to :groups }
+      it 'deletes all projects' do
+        subject
+        expect(group.projects).to be_all { |p| p.is_deleted? }
       end
     end
 
     describe 'raise on soft_destroy!' do
       before do
         sign_in user
-        FactoryBot.create_list(:collaboration, 2, owner: group)
+        FactoryBot.create_list(:project, 2, owner: group, is_deleted: false)
         allow_any_instance_of(Group).to receive(:soft_destroy!).and_raise(error)
       end
 
       shared_examples_for 'rescue' do
         it { is_expected.to redirect_to [:edit, group] }
-        it { expect { subject }.not_to change { group.reload.is_deleted } }
-        it { expect { subject }.not_to change { Collaboration.count } }
+        it { expect { subject }.not_to change { group.is_deleted } }
+        it { expect { subject }.not_to change { group.projects.count } }
       end
 
       describe 'ActiveRecord::RecordNotSaved' do
         let(:error) { ActiveRecord::RecordNotSaved }
-        include_examples 'rescue'
-      end
-
-      describe 'ActiveRecord::RecordNotDestroyed' do
-        let(:error) { ActiveRecord::RecordNotDestroyed }
         include_examples 'rescue'
       end
     end
