@@ -20,6 +20,7 @@ $ rbenv install `cat .ruby-version`
 $ gem install bundler --no-document
 $ bundle install
 $ npm install
+$ npm run build
 $ cp config/database.ymls/development.yml config/database.yml
 $ cp .envrc.sample .envrc
 $ vi .envrc
@@ -52,6 +53,11 @@ $ bundle exec rails s
 ```
 
 Open http://localhost:3000 in your browser.
+
+### Frontend
+
+`app/frontend/` 以下の開発を行う場合は、 `npm start` でwebpackを起動する。
+`app/frontend/` 以下に変更を加えない場合は、一度 `npm run build` をすればOK。
 
 
 ### Run tests
