@@ -20,11 +20,11 @@
   },
   "private": true,
   "devDependencies": {
-    "awesome-typescript-loader": "^5.2.0",
+    "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^0.1.19",
     "source-map-loader": "^0.2.4",
-    "typescript": "^3.0.1",
-    "webpack": "^4.17.1",
-    "webpack-manifest-plugin": "^2.0.3"
+    "typescript": "^3.0.3",
+    "webpack": "^4.19.1",
+    "webpack-manifest-plugin": "^2.0.4"
   }
 }
