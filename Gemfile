@@ -25,7 +25,6 @@ gem 'slack-notifier'
 gem 'slim-rails', github: 'slim-template/slim-rails', ref: 'a6af25b31a59f07d566bc80fa64912a9a4a05889'
 gem 'sprockets-commoner'
 gem 'truncate_html'
-gem 'unicorn'
 
 # Frontend
 gem 'autoprefixer-rails'
@@ -53,6 +52,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'letter_opener_web'
   gem 'meta_request'
+  gem 'puma'
   gem 'rack-mini-profiler', require: false
   gem 'web-console'
 
@@ -71,3 +71,6 @@ group :test do
   gem 'simplecov', require: false
 end
 
+group :production do
+  gem 'unicorn'
+end

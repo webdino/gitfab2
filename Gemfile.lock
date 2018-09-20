@@ -251,6 +251,7 @@ GEM
     popper_js (1.14.3)
     powerpack (0.1.2)
     public_suffix (3.0.3)
+    puma (3.12.0)
     rack (2.0.5)
     rack-contrib (2.0.1)
       rack (~> 2.0)
@@ -427,6 +428,7 @@ DEPENDENCIES
   nested_form
   nokogiri
   omniauth-github
+  puma
   rack-mini-profiler
   rails (~> 5.2.0)
   rails-controller-testing
