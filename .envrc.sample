@@ -1,3 +1,5 @@
 export GITHUB_APP_ID=
 export GITHUB_APP_SECRET=
+export FACEBOOK_APP_ID=
+export FACEBOOK_APP_SECRET=
 export COMPOSE_FILE=docker-compose.development.yml

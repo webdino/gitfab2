@@ -3,4 +3,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     scope: "read:user,user:email",
     callback_path: "/users/auth/github/callback"
   }
+  provider :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {
+    callback_path: "/users/auth/facebook/callback"
+  }
 end
