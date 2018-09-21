@@ -13,7 +13,7 @@
     = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
 
     ul.groups
-      - current_user.groups.each do |group|
+      - current_user.groups.active.each do |group|
         = link_to [:edit, group] do
           li.group
             .inner

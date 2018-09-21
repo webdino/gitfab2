@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   before_action :forbidden, only: [:edit, :update, :destroy]
 
   def index
-    @groups = current_user.groups
+    @groups = current_user.groups.active
   end
 
   def new
@@ -56,7 +56,7 @@ class GroupsController < ApplicationController
     end
 
     def load_group
-      @group = current_user.groups.friendly.find params[:id]
+      @group = current_user.groups.active.friendly.find params[:id]
     end
 
     def forbidden

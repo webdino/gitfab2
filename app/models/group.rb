@@ -35,6 +35,8 @@ class Group < ApplicationRecord
 
   validates :name, presence: true, unique_owner_name: true, name_format: true
 
+  scope :active, -> { where(is_deleted: false) }
+
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
       members.where('memberships.role' => Membership::ROLE[role])

@@ -43,4 +43,15 @@ describe Group do
       expect(group.projects).to be_all { |p| p.is_deleted? }
     end
   end
+
+  describe '#active' do
+    subject { Group.active }
+
+    before do
+      FactoryBot.create_list(:group, 2, is_deleted: false)
+      FactoryBot.create_list(:group, 2, is_deleted: true)
+    end
+
+    it { is_expected.to eq Group.where(is_deleted: false) }
+  end
 end

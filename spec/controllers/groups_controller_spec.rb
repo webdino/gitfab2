@@ -10,11 +10,22 @@ describe GroupsController, type: :controller do
   subject { response }
 
   describe 'GET index' do
-    before do
-      sign_in user
-      get :index
-    end
+    subject { get :index }
+    before { sign_in user }
+
     it { is_expected.to render_template :index }
+
+    context 'when active and deleted projects' do
+      before do
+        user.memberships.create(group: FactoryBot.create(:group, is_deleted: false))
+        user.memberships.create(group: FactoryBot.create(:group, is_deleted: true))
+      end
+
+      it 'fetches active projects only' do
+        subject
+        expect(assigns(:groups)).to be_all { |g| g.is_deleted == false }
+      end
+    end
   end
 
   describe 'GET new' do
