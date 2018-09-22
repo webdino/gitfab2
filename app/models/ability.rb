@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   # TODO: This initialize function is too long to read,
-  #   so it should be divided to multiple fucntions.
+  #   so it should be divided to multiple functions.
   def initialize(user)
     user ||= User.new
     can :manage, User, id: user.id
