@@ -63,12 +63,6 @@ class Ability
     can :destroy, CardComment do |comment|
       comment.user_id == user.id || (can? :manage, comment.card)
     end
-    can :create, Like do |_like|
-      user.persisted?
-    end
-    can :destroy, Like do |like|
-      user.persisted? && like.voter_id == user.id
-    end
     can :manage, Group do |group|
       user.is_admin_of? group
     end
