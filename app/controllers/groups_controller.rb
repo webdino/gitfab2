@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
   def edit
     @group = get_group(params[:id])
     unless can?(:edit, @group)
-      render_forbidden
+      render_403(layout: true)
     end
   end
 
@@ -38,7 +38,7 @@ class GroupsController < ApplicationController
         render :edit
       end
     else
-      render_forbidden
+      render_403(layout: true)
     end
   end
 
@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
         redirect_to edit_group_path(group), alert: 'Group was not deleted.'
       end
     else
-      render_forbidden
+      render_403(layout: true)
     end
   end
 
@@ -70,9 +70,5 @@ class GroupsController < ApplicationController
 
     def get_group(id)
       current_user.groups.active.friendly.find(id)
-    end
-
-    def render_forbidden
-      render file: "public/403.html", status: :forbidden
     end
 end

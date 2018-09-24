@@ -74,6 +74,7 @@ describe GroupsController, type: :controller do
       end
 
       it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
     end
   end
 
@@ -120,6 +121,7 @@ describe GroupsController, type: :controller do
       end
 
       it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
     end
   end
 
@@ -143,6 +145,7 @@ describe GroupsController, type: :controller do
       end
 
       it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
       it { expect { subject }.not_to change { group.reload.is_deleted } }
     end
 
