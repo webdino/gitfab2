@@ -448,25 +448,6 @@ describe ProjectsController, type: :controller do
       end
     end
 
-    describe 'Search projects by user fullname' do
-      let!(:user) { FactoryBot.create(:user, fullname: 'sample-user') }
-      let!(:one_of_the_users) { FactoryBot.create(:user, fullname: 'one-of-the-users') }
-      # group has no fullnameなので今回のテスト対象ではないが
-      # shared_context内で必要なので用意する
-      let!(:group) { FactoryBot.create(:group, name: 'sample-group') }
-
-      include_context 'projects with owner'
-
-      # groupはfullnameを持っていないので、userだけが返ってくる結果を期待する
-      context '完全一致' do
-        include_examples '検索結果(public user project only)', 'sample-user'
-      end
-
-      context '部分一致' do
-        include_examples '検索結果(public user project only)', 'sample user'
-      end
-    end
-
     describe 'Search projects by url' do
       let!(:user) { FactoryBot.create(:user, url: 'https://sample.com') }
       let!(:one_of_the_users) { FactoryBot.create(:user, url: 'https://oneoftheusers.com') }

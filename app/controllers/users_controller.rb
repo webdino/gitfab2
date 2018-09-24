@@ -12,7 +12,6 @@ class UsersController < ApplicationController
         identity = Identity.find_by_encrypted_id(params[:token])
         User.new(
           name: identity.nickname,
-          fullname: identity.name,
           remote_avatar_url: identity.image,
           encrypted_identity_id: params[:token]
         )
@@ -31,7 +30,6 @@ class UsersController < ApplicationController
           identity,
           user_params.reverse_merge(
             email: identity.email,
-            fullname: identity.name,
             remote_avatar_url: (identity.image unless user_params[:avatar_cache])
           )
         )

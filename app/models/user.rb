@@ -6,7 +6,6 @@
 #  authority       :string(255)
 #  avatar          :string(255)
 #  email           :string(255)
-#  fullname        :string(255)
 #  location        :string(255)
 #  name            :string(255)
 #  password_digest :string(255)
@@ -48,7 +47,7 @@ class User < ApplicationRecord
 
   concerning :Draft do
     def generate_draft
-      "#{name}\n#{fullname}\n#{url}\n#{location}"
+      "#{name}\n#{url}\n#{location}"
     end
   end
 

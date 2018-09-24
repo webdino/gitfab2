@@ -33,7 +33,7 @@ describe Project do
     let!(:project1) { FactoryBot.create(:project, title: '私はその人を常に先生と呼んでいた。') }
     let!(:project2) { FactoryBot.create(:project, description: 'だからここでもただ先生と書くだけで本名は打ち明けない。') }
     let!(:project3) do
-      owner = FactoryBot.create(:user, fullname: '先生')
+      owner = FactoryBot.create(:user, location: '先生')
       FactoryBot.create(:project, owner: owner, description: 'その方が私にとって自然だからである。')
     end
 
@@ -155,7 +155,7 @@ describe Project do
   end
 
   describe '#update_draft!' do
-    let!(:owner) { FactoryBot.create(:user, name: 'user1', fullname: 'User One', url: 'http://example.com', location: 'Tokyo') }
+    let!(:owner) { FactoryBot.create(:user, name: 'user1', url: 'http://example.com', location: 'Tokyo') }
     let!(:project) { FactoryBot.create(:user_project, name: 'name', title: 'title', description: 'description', owner: owner) }
 
     it "generates a draft which contains project and owner's draft" do
@@ -164,7 +164,6 @@ describe Project do
         title
         description
         user1
-        User One
         http://example.com
         Tokyo
       EOS
@@ -181,7 +180,6 @@ describe Project do
         title
         description
         user1
-        User One
         http://example.com
         Tokyo
         tag1
