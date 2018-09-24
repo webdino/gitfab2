@@ -44,8 +44,6 @@ class User < ApplicationRecord
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id
   has_many :project_comments, dependent: :destroy
 
-  accepts_nested_attributes_for :memberships, allow_destroy: true
-
   validates :name, unique_owner_name: true, name_format: true
 
   concerning :Draft do
