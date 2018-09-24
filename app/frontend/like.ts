@@ -17,8 +17,6 @@ namespace Like {
   }
 
   export interface Actions {
-    oncreate(): State,
-    onclick(): State,
     initState(state: State): State,
     makeInvisible(): State,
     enable(clickEnabled: boolean): State,
@@ -27,18 +25,6 @@ namespace Like {
     unlike(): State,
   }
   export const actions: ActionsType<State, Actions> = {
-    oncreate: () => (_, actions) => {
-      setupCSRFToken();
-      axios.get(`${window.location.pathname}.json`)
-        .then(response => actions.initState(response.data.like))
-        .catch(actions.makeInvisible);
-    },
-    onclick: () => async (state: State, actions: Actions) => {
-      if (!state.clickEnabled) { return }
-      actions.enable(false);
-      state.liked ? await actions.unlike() : await actions.like();
-      actions.enable(true);
-    },
     initState: ({ liked, updateLikeUrl }) => () => ({ liked, updateLikeUrl }),
     makeInvisible: () => () => ({ visible: false }),
     enable: (clickEnabled: boolean) => () => ({ clickEnabled }),
@@ -71,8 +57,18 @@ namespace Like {
 
 const view: View<Like.State, Like.Actions> = (state: Like.State, actions: Like.Actions) => (
   h("span", {
-    oncreate: actions.oncreate,
-    onclick: actions.onclick,
+    oncreate: () => {
+      setupCSRFToken();
+      axios.get(`${window.location.pathname}.json`)
+        .then(response => actions.initState(response.data.like))
+        .catch(actions.makeInvisible);
+    },
+    onclick: async () => {
+      if (!state.clickEnabled) { return }
+      actions.enable(false);
+      state.liked ? await actions.unlike() : await actions.like();
+      actions.enable(true);
+    },
     className: `${state.visible ? 'icon' : ''} ${state.liked ? 'icon-liked' : 'icon-like'} ${state.clickEnabled ? '' : 'disabled'}`
   })
 )
