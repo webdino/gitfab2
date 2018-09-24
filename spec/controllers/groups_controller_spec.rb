@@ -16,14 +16,16 @@ describe GroupsController, type: :controller do
     it { is_expected.to render_template :index }
 
     context 'when active and deleted projects' do
+      let!(:active) { FactoryBot.create(:group, is_deleted: false) }
+      let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
       before do
-        user.memberships.create(group: FactoryBot.create(:group, is_deleted: false))
-        user.memberships.create(group: FactoryBot.create(:group, is_deleted: true))
+        user.memberships.create(group: active)
+        user.memberships.create(group: deleted)
       end
 
       it 'fetches active projects only' do
         subject
-        expect(assigns(:groups)).to be_all { |g| g.is_deleted == false }
+        expect(assigns(:groups)).to eq [active]
       end
     end
   end
@@ -161,19 +163,12 @@ describe GroupsController, type: :controller do
       before do
         sign_in user
         FactoryBot.create_list(:project, 2, owner: group, is_deleted: false)
-        allow_any_instance_of(Group).to receive(:soft_destroy!).and_raise(error)
+        allow_any_instance_of(Group).to receive(:soft_destroy!).and_raise(ActiveRecord::RecordNotSaved)
       end
 
-      shared_examples_for 'rescue' do
-        it { is_expected.to redirect_to [:edit, group] }
-        it { expect { subject }.not_to change { group.is_deleted } }
-        it { expect { subject }.not_to change { group.projects.count } }
-      end
-
-      describe 'ActiveRecord::RecordNotSaved' do
-        let(:error) { ActiveRecord::RecordNotSaved }
-        include_examples 'rescue'
-      end
+      it { is_expected.to redirect_to edit_group_path(group) }
+      it { expect { subject }.not_to change { group.is_deleted } }
+      it { expect { subject }.not_to change { group.projects.count } }
     end
   end
 end

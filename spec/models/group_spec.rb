@@ -46,12 +46,9 @@ describe Group do
 
   describe '#active' do
     subject { Group.active }
+    let!(:active) { FactoryBot.create(:group, is_deleted: false) }
+    let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
 
-    before do
-      FactoryBot.create_list(:group, 2, is_deleted: false)
-      FactoryBot.create_list(:group, 2, is_deleted: true)
-    end
-
-    it { is_expected.to eq Group.where(is_deleted: false) }
+    it { is_expected.to eq [active] }
   end
 end
