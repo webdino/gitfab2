@@ -1,9 +1,6 @@
 class GroupsController < ApplicationController
   layout 'groups'
 
-  before_action :load_group, only: [:edit, :update, :destroy]
-  before_action :forbidden, only: [:edit, :update, :destroy]
-
   def index
     @groups = current_user.groups.active
   end
@@ -20,27 +17,43 @@ class GroupsController < ApplicationController
       membership.role = 'admin'
       membership.save!
     end
-    redirect_to edit_group_url(@group)
+    redirect_to edit_group_path(@group)
   rescue ActiveRecord::ActiveRecordError
     render :new
   end
 
   def edit
+    @group = load_group
+    unless can?(:edit, @group)
+      render_forbidden
+    end
   end
 
   def update
-    if @group.update_attributes(group_params)
-      redirect_to [:edit, @group], notice: 'Group profile was successfully updated.'
+    @group = load_group
+    if can?(:update, @group)
+      if @group.update_attributes(group_params)
+        redirect_to edit_group_path(@group), notice: 'Group profile was successfully updated.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      render_forbidden
     end
   end
 
   def destroy
-    @group.soft_destroy!
-    redirect_to :groups
-  rescue ActiveRecord::RecordNotSaved
-    redirect_to [:edit, @group], alert: 'Group was not deleted.'
+    group = load_group
+    if can?(:destroy, group)
+      begin
+        group.soft_destroy!
+        redirect_to :groups
+      rescue ActiveRecord::RecordNotSaved
+        redirect_to edit_group_path(group), alert: 'Group was not deleted.'
+      end
+    else
+      render_forbidden
+    end
   end
 
   private
@@ -56,12 +69,10 @@ class GroupsController < ApplicationController
     end
 
     def load_group
-      @group = current_user.groups.active.friendly.find params[:id]
+      current_user.groups.active.friendly.find params[:id]
     end
 
-    def forbidden
-      unless current_user.is_admin_of?(@group)
-        render file: "public/403.html", status: :forbidden
-      end
+    def render_forbidden
+      render file: "public/403.html", status: :forbidden
     end
 end
