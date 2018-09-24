@@ -23,14 +23,14 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @group = load_group
+    @group = get_group(params[:id])
     unless can?(:edit, @group)
       render_forbidden
     end
   end
 
   def update
-    @group = load_group
+    @group = get_group(params[:id])
     if can?(:update, @group)
       if @group.update_attributes(group_params)
         redirect_to edit_group_path(@group), notice: 'Group profile was successfully updated.'
@@ -43,7 +43,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    group = load_group
+    group = get_group(params[:id])
     if can?(:destroy, group)
       begin
         group.soft_destroy!
@@ -68,8 +68,8 @@ class GroupsController < ApplicationController
       [:id, member_ids: []]
     end
 
-    def load_group
-      current_user.groups.active.friendly.find params[:id]
+    def get_group(id)
+      current_user.groups.active.friendly.find(id)
     end
 
     def render_forbidden
