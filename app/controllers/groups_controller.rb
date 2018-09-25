@@ -59,13 +59,7 @@ class GroupsController < ApplicationController
   private
 
     def group_params
-      if params[:group]
-        params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params
-      end
-    end
-
-    def additional_params
-      [:id, member_ids: []]
+      params.require(:group).permit(:name, :avatar, :url, :location)
     end
 
     def get_group(id)
