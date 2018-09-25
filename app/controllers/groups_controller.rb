@@ -59,7 +59,7 @@ class GroupsController < ApplicationController
   private
 
     def group_params
-      params.require(:group).permit(:name, :avatar, :url, :location)
+      params.require(:group).permit(:name, :avatar, :avatar_cache, :url, :location)
     end
 
     def get_group(id)
