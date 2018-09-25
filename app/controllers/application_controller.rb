@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     rescue_from ActionController::RoutingError, with: :render_404
   end
-
-  rescue_from CanCan::AccessDenied do
-    render_401
-  end
+  rescue_from CanCan::AccessDenied, with: :render_401
 
   after_action :store_location
 

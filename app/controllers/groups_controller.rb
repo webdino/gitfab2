@@ -32,7 +32,7 @@ class GroupsController < ApplicationController
   def update
     @group = get_group(params[:id])
     if can?(:update, @group)
-      if @group.update_attributes(group_params)
+      if @group.update(group_params)
         redirect_to edit_group_path(@group), notice: 'Group profile was successfully updated.'
       else
         render :edit
