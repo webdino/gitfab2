@@ -23,7 +23,7 @@
   }
 
   .page-title {
-    padding: 20px 0;
+    margin: 10px 0 30px;
     font-weight: normal;
     font-size: 30px;
   }
@@ -78,7 +78,7 @@
 
   #submit {
     @include clickable;
-    margin: 60px 0 20px;
+    margin-top: 40px;
     padding: 5px 68px;
     font-size: 18px;
     color: $common-btn-text-color;
