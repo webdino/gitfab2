@@ -27,15 +27,15 @@ class ApplicationController < ActionController::Base
   end
 
   def render_401(layout: false)
-    render file: Rails.root.join('public/401.html'), status: :unauthorized, layout: layout, content_type: 'text/html'
+    render file: Rails.root.join('public/401.html'), status: :unauthorized, layout: layout
   end
 
   def render_403(layout: false)
-    render file: Rails.root.join('public/403.html'), status: :forbidden, layout: layout, content_type: 'text/html'
+    render file: Rails.root.join('public/403.html'), status: :forbidden, layout: layout
   end
 
   def render_404(layout: false)
-    render file: Rails.root.join('public/404.html'), status: :not_found, layout: layout, content_type: 'text/html'
+    render file: Rails.root.join('public/404.html'), status: :not_found, layout: layout
   end
 
   private
