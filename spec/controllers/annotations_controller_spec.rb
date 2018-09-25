@@ -120,6 +120,7 @@ describe AnnotationsController, type: :controller do
           xhr: true
       end
       it { expect(response.status).to eq(404) }
+      it { expect(response).to render_template(layout: false) }
     end
   end
 
