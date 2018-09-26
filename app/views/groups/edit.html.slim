@@ -7,21 +7,27 @@
     = render "form"
 
   #edit-members
-    .inner
-      h1.title
-       'Members
-      ul#members
-        - @group.members.each do |member|
-          = render "membership", membership: member.membership_in(@group)
+    h2.title
+      'Members
+    ul#members
+      - @group.members.each do |member|
+        = render "membership", membership: member.membership_in(@group)
 
-      - if can? :manage, @group
-        #new-membership
-          h2.title
-            'Add Member
+    - if can? :manage, @group
+      #new-membership
+        h2.title
+          'Add Member
+        .body
           = form_tag group_members_path(group_id: @group.id), method: "post", id: "new_member", remote: true
           = select_tag :member_name
           = select_tag :role, options_for_select(Membership::ROLE)
           = submit_tag "add", id: "add-btn", class: "btn"
+
+      #delete-group
+        h2.title
+          'Delete this group
+        .body
+          = link_to "Delete", group_path(@group), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to delete this group?" }
 
 - content_for :bottom
 

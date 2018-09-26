@@ -6,10 +6,7 @@ class ApplicationController < ActionController::Base
     rescue_from ActiveRecord::RecordNotFound, with: :render_404
     rescue_from ActionController::RoutingError, with: :render_404
   end
-
-  rescue_from CanCan::AccessDenied do
-    render file: "public/401.html", status: :unauthorized
-  end
+  rescue_from CanCan::AccessDenied, with: :render_401
 
   after_action :store_location
 
@@ -26,6 +23,18 @@ class ApplicationController < ActionController::Base
     @current_user = user
   end
 
+  def render_401(layout: false)
+    render file: Rails.root.join('public/401.html'), status: :unauthorized, layout: layout
+  end
+
+  def render_403(layout: false)
+    render file: Rails.root.join('public/403.html'), status: :forbidden, layout: layout
+  end
+
+  def render_404(layout: false)
+    render file: Rails.root.join('public/404.html'), status: :not_found, layout: layout
+  end
+
   private
 
     def store_location
@@ -33,18 +42,6 @@ class ApplicationController < ActionController::Base
       return if request.xhr?
       return if ['/users/auth/github', '/users/new', '/users/sign_out', '/sessions'].include?(request.path)
       session[:previous_url] = request.fullpath
-    end
-
-    def render_401(_exception = nil)
-      render file: Rails.root.join('public/401.html'), status: 401, layout: false, content_type: 'text/html'
-    end
-
-    def render_403(_exception = nil)
-      render file: Rails.root.join('public/403.html'), status: 403, layout: false, content_type: 'text/html'
-    end
-
-    def render_404(_exception = nil)
-      render file: Rails.root.join('public/404.html'), status: 404, layout: false, content_type: 'text/html'
     end
 
     def render_500(exception = nil)

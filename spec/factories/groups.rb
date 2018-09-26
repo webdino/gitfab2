@@ -5,6 +5,7 @@
 #
 #  id             :integer          not null, primary key
 #  avatar         :string(255)
+#  is_deleted     :boolean          default(FALSE), not null
 #  location       :string(255)
 #  name           :string(255)
 #  projects_count :integer          default(0), not null

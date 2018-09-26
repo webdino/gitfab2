@@ -4,6 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  avatar         :string(255)
+#  is_deleted     :boolean          default(FALSE), not null
 #  location       :string(255)
 #  name           :string(255)
 #  projects_count :integer          default(0), not null
@@ -34,6 +35,8 @@ class Group < ApplicationRecord
 
   validates :name, presence: true, unique_owner_name: true, name_format: true
 
+  scope :active, -> { where(is_deleted: false) }
+
   Membership::ROLE.keys.each do |role|
     define_method role.to_s.pluralize do
       members.where('memberships.role' => Membership::ROLE[role])
@@ -43,6 +46,13 @@ class Group < ApplicationRecord
   concerning :Draft do
     def generate_draft
       "#{name}\n#{url}\n#{location}"
+    end
+  end
+
+  def soft_destroy!
+    transaction do
+      update!(is_deleted: true)
+      projects.where(is_deleted: false).update_all(is_deleted: true)
     end
   end
 

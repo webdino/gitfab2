@@ -1,64 +1,68 @@
 class GroupsController < ApplicationController
   layout 'groups'
 
-  before_action :build_group, only: [:new, :create]
-  before_action :load_group, only: [:edit, :update, :destroy]
-
-  authorize_resource
-
   def index
-    @groups = current_user.groups
+    @groups = current_user.groups.active
   end
 
   def new
+    @group = Group.new
   end
 
   def create
-    @group = Group.new group_params
+    @group = Group.new(group_params)
     Group.transaction do
       @group.save!
       membership = current_user.join_to @group
       membership.role = 'admin'
       membership.save!
     end
-    redirect_to edit_group_url(@group)
+    redirect_to edit_group_path(@group)
   rescue ActiveRecord::ActiveRecordError
     render :new
   end
 
   def edit
+    @group = get_group(params[:id])
+    unless can?(:edit, @group)
+      render_403(layout: true)
+    end
   end
 
   def update
-    if @group.update_attributes group_params
-      redirect_to [:edit, @group], notice: 'Group profile was successfully updated.'
+    @group = get_group(params[:id])
+    if can?(:update, @group)
+      if @group.update(group_params)
+        redirect_to edit_group_path(@group), notice: 'Group profile was successfully updated.'
+      else
+        render :edit
+      end
     else
-      render :edit
+      render_403(layout: true)
     end
   end
 
   def destroy
-    @group.destroy
-    redirect_to :groups
+    group = get_group(params[:id])
+    if can?(:destroy, group)
+      begin
+        group.soft_destroy!
+        redirect_to :groups
+      rescue ActiveRecord::RecordNotSaved
+        redirect_to edit_group_path(group), alert: 'Group was not deleted.'
+      end
+    else
+      render_403(layout: true)
+    end
   end
 
   private
 
     def group_params
-      if params[:group]
-        params.require(:group).permit Group::UPDATABLE_COLUMNS + additional_params
-      end
+      params.require(:group).permit(:name, :avatar, :avatar_cache, :url, :location)
     end
 
-    def additional_params
-      [:id, member_ids: []]
-    end
-
-    def build_group
-      @group = Group.new(group_params)
-    end
-
-    def load_group
-      @group = Group.friendly.find params[:id]
+    def get_group(id)
+      current_user.groups.active.friendly.find(id)
     end
 end

@@ -1,5 +1,6 @@
 = form_for @group, class: "group-form" do |f|
-  p#notice = notice
+  - flash.each do |key, value|
+    = content_tag(:p, value, id: key)
 
   - if @group.errors.any?
     #error_explanation
@@ -14,6 +15,7 @@
 
   .right
     = f.file_field :avatar, id: "group-avatar-form"
+    = f.hidden_field :avatar_cache
     = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
     = f.text_field :name, placeholder: "Name", id: "group-name-form", class: "text-form"
     = f.url_field :url, placeholder: "URL", class: "text-form"

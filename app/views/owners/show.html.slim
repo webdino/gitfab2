@@ -55,7 +55,7 @@
           - if current_user && current_user == @owner
             = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
           ul.groups
-            - @owner.groups.each do |group|
+            - @owner.groups.active.each do |group|
               = link_to owner_path(owner_name: group.slug) do
                 li.group
                   = image_tag group.avatar.url, class: "group-avatar", name: "#{group.name}"

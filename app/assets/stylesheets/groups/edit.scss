@@ -10,19 +10,19 @@
   #edit-members {
     display: block;
     margin-bottom: $common-margin-for-footer;
-    padding: 20px 0;
-    width: 730px;
+    padding: 20px;
+    width: 690px;
     font-family: $common-novelsans-semibold;
     background-color: $common-background-color;
     border-radius: 5px;
-    .inner {
-      padding: 30px 20px 20px;
-    }
     .title{
       padding: 10px 0;
-      font-size: 30px;
+      font-size: 26px;
       font-weight: normal;
       border-bottom: 1px solid $common-gray;
+    }
+    .body {
+      margin-top: 15px;
     }
     ul#members{
       li.membership {
@@ -84,8 +84,11 @@
       }
     }
 
+    #new-membership, #delete-group {
+      margin-top: 40px;
+    }
+
     #new-membership {
-      margin-top: 55px;
       #s2id_member_name {
         margin: 20px 0px;
         font-family: $common-novelsans-semibold;
@@ -107,6 +110,16 @@
         @include clickable;
         font-size: 12px;
         background: $common-basic-color;
+        border: none;
+      }
+    }
+
+    #delete-group {
+      #delete-btn {
+        @include clickable;
+        padding: 3px 30px;
+        font-size: 14px;
+        color: $common-btn-text-color;
         border: none;
       }
     }

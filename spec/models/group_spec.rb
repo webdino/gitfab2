@@ -30,4 +30,25 @@ describe Group do
     end
     it { is_expected.to be true }
   end
+
+  describe '#soft_destroy!' do
+    subject { group.soft_destroy! }
+
+    let!(:group) { FactoryBot.create(:group) }
+    before { FactoryBot.create_list(:project, 2, owner: group, is_deleted: false) }
+
+    it { expect { subject }.to change { group.is_deleted }.from(false).to(true) }
+    it 'deletes all projects' do
+      subject
+      expect(group.projects).to be_all { |p| p.is_deleted? }
+    end
+  end
+
+  describe '#active' do
+    subject { Group.active }
+    let!(:active) { FactoryBot.create(:group, is_deleted: false) }
+    let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
+
+    it { is_expected.to eq [active] }
+  end
 end

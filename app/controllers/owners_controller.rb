@@ -1,6 +1,6 @@
 class OwnersController < ApplicationController
   def index
-    @owners = User.order(name: :asc).all + Group.order(name: :asc).all
+    @owners = User.order(name: :asc).all + Group.active.order(name: :asc).all
   end
 
   def show

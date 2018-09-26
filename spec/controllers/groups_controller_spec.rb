@@ -10,11 +10,24 @@ describe GroupsController, type: :controller do
   subject { response }
 
   describe 'GET index' do
-    before do
-      sign_in user
-      get :index
-    end
+    subject { get :index }
+    before { sign_in user }
+
     it { is_expected.to render_template :index }
+
+    context 'when active and deleted projects' do
+      let!(:active) { FactoryBot.create(:group, is_deleted: false) }
+      let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
+      before do
+        user.memberships.create(group: active)
+        user.memberships.create(group: deleted)
+      end
+
+      it 'fetches active projects only' do
+        subject
+        expect(assigns(:groups)).to eq [active]
+      end
+    end
   end
 
   describe 'GET new' do
@@ -60,7 +73,8 @@ describe GroupsController, type: :controller do
         other.memberships.create(group: group, role: 'editor')
       end
 
-      it { is_expected.to have_http_status :unauthorized }
+      it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
     end
   end
 
@@ -106,34 +120,58 @@ describe GroupsController, type: :controller do
         expect { subject }.not_to change { group.reload.name }
       end
 
-      it { is_expected.to have_http_status :unauthorized }
+      it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
     end
   end
 
   describe 'DELETE destroy' do
     subject { delete :destroy, params: { id: group } }
+    before { user.memberships.create(group_id: group.id, role: 'admin') }
 
     describe 'as an admin' do
       let!(:group) { FactoryBot.create :group }
 
-      before do
-        sign_in user
-        user.memberships.create(group_id: group.id, role: 'admin')
-      end
+      before { sign_in user }
 
       it { is_expected.to have_http_status :redirect }
-      it { expect{ subject }.to change{ Group.count }.by(-1) }
+      it { expect { subject }.to change { group.reload.is_deleted }.from(false).to(true) }
     end
 
     describe 'as an editor' do
       before do
         sign_in other
-        user.memberships.create(group_id: group.id, role: 'admin')
         other.memberships.create(group_id: group.id, role: 'editor')
       end
 
-      it { is_expected.to have_http_status :unauthorized }
-      it { expect{ subject }.to change{ Group.count }.by(0) }
+      it { is_expected.to have_http_status :forbidden }
+      it { is_expected.not_to render_template(layout: false) }
+      it { expect { subject }.not_to change { group.reload.is_deleted } }
+    end
+
+    describe 'projects' do
+      before do
+        sign_in user
+        FactoryBot.create_list(:project, 2, owner: group, is_deleted: false)
+      end
+
+      it { is_expected.to redirect_to :groups }
+      it 'deletes all projects' do
+        subject
+        expect(group.projects).to be_all { |p| p.is_deleted? }
+      end
+    end
+
+    describe 'raise on soft_destroy!' do
+      before do
+        sign_in user
+        FactoryBot.create_list(:project, 2, owner: group, is_deleted: false)
+        allow_any_instance_of(Group).to receive(:soft_destroy!).and_raise(ActiveRecord::RecordNotSaved)
+      end
+
+      it { is_expected.to redirect_to edit_group_path(group) }
+      it { expect { subject }.not_to change { group.is_deleted } }
+      it { expect { subject }.not_to change { group.projects.count } }
     end
   end
 end
