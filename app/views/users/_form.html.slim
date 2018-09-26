@@ -21,23 +21,23 @@ main.panel
         = f.hidden_field :avatar_cache
       .right
         = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-        div.form-group
+        .form-group
           = f.label :name
           = f.text_field :name, placeholder: "Name", class: "form-control"
         - if user.password_auth?
-          div.form-group
+          .form-group
             = f.label :password
             = f.password_field :password, placeholder: "Password", class: "form-control"
-          div.form-group
+          .form-group
             = f.label :password_confirmation
             = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
-        div.form-group
+        .form-group
           = f.label :url
           = f.url_field :url, placeholder: "URL", class: "form-control"
-        div.form-group
+        .form-group
           = f.label :location
           = f.text_field :location, placeholder: "Location", class: "form-control"
-    div.form-group
+    .form-group
       = f.submit id: "submit", class: "btn primary"
 
 - content_for :bottom
