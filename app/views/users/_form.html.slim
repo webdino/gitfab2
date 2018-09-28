@@ -11,7 +11,7 @@ main.panel
         - user.errors.full_messages.each do |msg|
           li = msg
 
-  = form_for user, html: { multipart: true } do |f|
+  = form_with model: user, html: { multipart: true }, local: true do |f|
     = f.hidden_field :encrypted_identity_id
 
     .columns
