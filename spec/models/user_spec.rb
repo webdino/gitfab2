@@ -10,6 +10,59 @@ describe User do
   let(:project) { FactoryBot.create :user_project }
   let(:group) { FactoryBot.create :group }
 
+  describe 'validations' do
+    let(:user) { FactoryBot.create(:user, email: email , email_confirmation: email) }
+    let(:email) { 'foo@example.com' }
+
+    describe '#confirm_email' do
+      subject { user.valid? }
+
+      context 'when email_confirmation is blank' do
+        before { user.email_confirmation = email_confirmation }
+        let(:email_confirmation) { '' }
+
+        context 'on email unchanged' do
+          it { is_expected.to be true }
+        end
+
+        context 'on email changed' do
+          context 'when email_confirmation matches email (email is blank)' do
+            before { user.email = email_confirmation }
+            it { is_expected.to be false }
+          end
+
+          context 'when email_confirmation does not match email' do
+            before { user.email = 'not_match@example.com' }
+            it { is_expected.to be false }
+          end
+        end
+      end
+
+      context 'when email_confirmation is present' do
+        before { user.email_confirmation = email }
+
+        context 'on email unchanged' do
+          it { is_expected.to be true }
+        end
+
+        context 'on email changed' do
+          before { user.email = new_email }
+          let(:new_email) { 'new_email@example.com' }
+
+          context 'when email_confirmation matches email' do
+            before { user.email_confirmation = new_email }
+            it { is_expected.to be true }
+          end
+
+          context 'when email_confirmation does not match email' do
+            before { user.email_confirmation = 'not_match@example.com' }
+            it { is_expected.to be false }
+          end
+        end
+      end
+    end
+  end
+
   describe '.create_from_identity' do
     subject { User.create_from_identity(identity, attributes) }
     let(:identity) { FactoryBot.create(:identity, user: nil) }

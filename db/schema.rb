@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_24_061610) do
+ActiveRecord::Schema.define(version: 2018_09_28_015044) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -203,7 +203,7 @@ ActiveRecord::Schema.define(version: 2018_09_24_061610) do
   end
 
   create_table "users", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
-    t.string "email"
+    t.string "email", null: false
     t.string "slug"
     t.string "name"
     t.string "avatar"

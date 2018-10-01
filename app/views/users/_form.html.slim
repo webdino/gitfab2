@@ -2,11 +2,14 @@ main.panel
   h1
     'Public Profile
 
+  - if flash[:success]
+    .alert.alert-success
+      = flash[:success]
   - if user.errors.any?
-    #error_explanation
+    .alert.alert-danger
       h2
         = pluralize(user.errors.count, "error")
-        'prohibited this user from being saved:
+        '&nbsp;prohibited this user from being saved.
       ul
         - user.errors.full_messages.each do |msg|
           li = msg
@@ -24,6 +27,12 @@ main.panel
         .form-group
           = f.label :name
           = f.text_field :name, placeholder: "Name", class: "form-control"
+        .form-group
+          = f.label :email
+          = f.text_field :email, placeholder: "Email", class: "form-control"
+        .form-group
+          = f.label :email_confirmation
+          = f.text_field :email_confirmation, placeholder: "Email confirmation", class: "form-control"
         - if user.password_auth?
           .form-group
             = f.label :password

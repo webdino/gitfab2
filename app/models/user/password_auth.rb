@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  authority       :string(255)
 #  avatar          :string(255)
-#  email           :string(255)
+#  email           :string(255)      not null
 #  location        :string(255)
 #  name            :string(255)
 #  password_digest :string(255)

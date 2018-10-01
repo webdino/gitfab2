@@ -5,7 +5,7 @@
 #  id              :integer          not null, primary key
 #  authority       :string(255)
 #  avatar          :string(255)
-#  email           :string(255)
+#  email           :string(255)      not null
 #  location        :string(255)
 #  name            :string(255)
 #  password_digest :string(255)
@@ -30,6 +30,7 @@ class User < ApplicationRecord
   friendly_id :name, use: :slugged
 
   attr_accessor :encrypted_identity_id # OAuth認証時に使用
+  attr_accessor :email_confirmation
 
   mount_uploader :avatar, AvatarUploader
 
@@ -44,6 +45,8 @@ class User < ApplicationRecord
   has_many :project_comments, dependent: :destroy
 
   validates :name, unique_owner_name: true, name_format: true
+  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }
+  validate :confirm_email
 
   concerning :Draft do
     def generate_draft
@@ -122,5 +125,12 @@ class User < ApplicationRecord
 
     def should_generate_new_friendly_id?
       name_changed? || super
+    end
+
+    def confirm_email
+      return if email_confirmation.blank? && !email_changed?
+      if email != email_confirmation
+        errors.add(:base, "Email confirmation does not match Email")
+      end
     end
 end

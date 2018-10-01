@@ -42,6 +42,7 @@ describe UsersController, type: :controller do
           {
             encrypted_identity_id: encrypted_identity_id,
             name: 'nickname', url: 'https://sample.com', location: 'Tokyo',
+            email: 'new-user@example.com', email_confirmation: 'new-user@example.com',
             avatar: fixture_file_upload('images/image.jpg'),
           }
         end
@@ -54,7 +55,9 @@ describe UsersController, type: :controller do
       end
 
       context 'with invalid params' do
-        let(:user_params) { { encrypted_identity_id: encrypted_identity_id, name: '' } }
+        let(:user_params) do
+          { encrypted_identity_id: encrypted_identity_id, name: '', email: '', email_confirmation: '' }
+        end
 
         it do
           expect{ subject }.not_to change{ User.count }
@@ -70,6 +73,7 @@ describe UsersController, type: :controller do
           {
             password: 'password', password_confirmation: 'password',
             name: 'nickname', url: 'https://sample.com', location: 'Tokyo',
+            email: 'new-user@example.com', email_confirmation: 'new-user@example.com',
             avatar: fixture_file_upload('images/image.jpg'), encrypted_identity_id: nil
           }
         end
