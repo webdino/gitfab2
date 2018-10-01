@@ -1,0 +1,24 @@
+.form-panel
+  h2.form-panel-title Change your password
+
+  - if flash[:danger]
+    .alert.alert-danger
+      = flash[:danger]
+
+  - if @user.errors.present?
+    .alert.alert-danger
+      ul
+        - @user.errors.full_messages.each do |msg|
+          li = msg
+
+  = form_with(model: @user, url: password_path, method: :patch, local: true) do |f|
+    = f.hidden_field :reset_password_token
+
+    .form-group
+      = f.label :password
+      = f.password_field :password, placeholder: "Password", class: "form-control"
+    .form-group
+      = f.label :password_confirmation
+      = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
+    .form-group
+      = f.submit "Send me reset password instructions", class: "btn primary"

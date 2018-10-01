@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+  end
+
   get 'about', to: 'static_pages#about'
   get 'terms', to: 'static_pages#terms'
   get 'privacy', to: 'static_pages#privacy'
@@ -43,6 +47,7 @@ Rails.application.routes.draw do
     patch :update_password
   end
   resource :user, only: [:edit, :update, :destroy]
+  resource :password, only: [:new, :create, :edit, :update]
 
   resources :collaborations, only: :destroy
   resources :projects, only: [:new, :create]

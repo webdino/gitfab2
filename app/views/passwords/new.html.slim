@@ -1,0 +1,13 @@
+.form-panel
+  h2.form-panel-title Forgot your password?
+
+  - flash.each do |key, value|
+    div class="alert alert-#{key}"
+      = value
+
+  = form_with(url: password_path, method: :post, local: true) do |f|
+    .form-group
+      = f.label :email
+      = f.text_field :email, placeholder: "Enter your email", autofocus: true, class: "form-control"
+    .form-group
+      = f.submit "Send me reset password instructions", class: "btn primary"

@@ -2,18 +2,20 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  authority       :string(255)
-#  avatar          :string(255)
-#  email           :string(255)      not null
-#  location        :string(255)
-#  name            :string(255)
-#  password_digest :string(255)
-#  projects_count  :integer          default(0), not null
-#  slug            :string(255)
-#  url             :string(255)
-#  created_at      :datetime
-#  updated_at      :datetime
+#  id                     :integer          not null, primary key
+#  authority              :string(255)
+#  avatar                 :string(255)
+#  email                  :string(255)      not null
+#  location               :string(255)
+#  name                   :string(255)
+#  password_digest        :string(255)
+#  projects_count         :integer          default(0), not null
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string(255)
+#  slug                   :string(255)
+#  url                    :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
 #
 # Indexes
 #

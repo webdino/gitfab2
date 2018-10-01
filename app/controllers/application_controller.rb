@@ -40,6 +40,7 @@ class ApplicationController < ActionController::Base
     def store_location
       return unless request.get?
       return if request.xhr?
+      return if request.path.start_with?('/password')
       return if ['/users/auth/github', '/users/new', '/users/sign_out', '/sessions'].include?(request.path)
       session[:previous_url] = request.fullpath
     end
