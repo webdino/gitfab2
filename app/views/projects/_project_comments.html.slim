@@ -32,7 +32,7 @@ section#project-comments
               = image_tag current_user.avatar.thumb.url, class: "avatar"
             .right
               - if flash[:alert]
-                div.alert.alert-danger
+                .alert.alert-danger
                   - flash[:alert].each do |message|
                     = message
               = f.text_area :body, size: "40x4", class: "comment-editor", value: flash[:project_comment_body]
