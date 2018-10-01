@@ -15,7 +15,7 @@ describe GroupsController, type: :controller do
 
     it { is_expected.to render_template :index }
 
-    context 'when active and deleted projects' do
+    context 'when active and deleted groups' do
       let!(:active) { FactoryBot.create(:group, is_deleted: false) }
       let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
       before do
@@ -23,7 +23,7 @@ describe GroupsController, type: :controller do
         user.memberships.create(group: deleted)
       end
 
-      it 'fetches active projects only' do
+      it 'fetches active groups only' do
         subject
         expect(assigns(:groups)).to eq [active]
       end
