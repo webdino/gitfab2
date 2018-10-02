@@ -12,6 +12,7 @@ class UsersController < ApplicationController
         identity = Identity.find_by_encrypted_id(params[:token])
         User.new(
           name: identity.nickname,
+          email: identity.email,
           remote_avatar_url: identity.image,
           encrypted_identity_id: params[:token]
         )
