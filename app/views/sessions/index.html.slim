@@ -1,6 +1,11 @@
 .form-panel
   div
     h2.form-panel-title Sign in
+
+    - flash.each do |key, value|
+      div class="alert alert-#{key}"
+        = value
+
     div
       = flash[:alert]
       = form_with(model: @form, url: sessions_path, scope: "sign_in", local: true) do |f|

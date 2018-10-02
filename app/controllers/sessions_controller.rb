@@ -37,7 +37,7 @@ class SessionsController < ApplicationController
         redirect_to session[:previous_url] || root_path
       else
         @form = SignInForm.new(sign_in_params)
-        flash.now[:alert] = "Your name or password is incorrect"
+        flash.now[:danger] = "Your name or password is incorrect"
         render :index
       end
     end
