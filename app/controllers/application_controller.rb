@@ -41,7 +41,8 @@ class ApplicationController < ActionController::Base
       return unless request.get?
       return if request.xhr?
       return if request.path.start_with?('/password')
-      return if ['/users/auth/github', '/users/new', '/users/sign_out', '/sessions'].include?(request.path)
+      return if request.path.start_with?('/users/auth')
+      return if ['/users/new', '/users/sign_out', '/sessions'].include?(request.path)
       session[:previous_url] = request.fullpath
     end
 
