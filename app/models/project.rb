@@ -140,7 +140,17 @@ class Project < ApplicationRecord
   end
 
   def soft_destroy!
-    update!(is_deleted: true)
+    transaction do
+      update!(title: 'Deleted Project', name: "deleted-project-#{SecureRandom.uuid}", is_deleted: true)
+      likes.destroy_all
+      states.destroy_all
+      note_cards.destroy_all
+      usages.destroy_all
+      project_comments.destroy_all
+      figures.destroy_all
+      tags.destroy_all
+      collaborations.destroy_all
+    end
   end
 
   def update_draft!

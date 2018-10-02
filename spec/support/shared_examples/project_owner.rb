@@ -6,13 +6,17 @@ shared_examples 'ProjectOwner' do |*factory_args|
     it { expect(owner).to respond_to(:projects) }
   end
 
-  describe '#soft_destroy_all' do
+  describe '#soft_destroy_all!' do
     let(:owner) { FactoryBot.create(*factory_args) }
     before do
       FactoryBot.create(:project, owner: owner, is_deleted: true)
       FactoryBot.create(:project, owner: owner, is_deleted: false)
     end
-    it { expect{ owner.projects.soft_destroy_all }.to change{ Project.where(is_deleted: true).count }.from(1).to(2) }
+    it { expect{ owner.projects.soft_destroy_all! }.to change{ Project.where(is_deleted: true).count }.from(1).to(2) }
+    it do
+      expect_any_instance_of(Project).to receive(:soft_destroy!).once
+      owner.projects.soft_destroy_all!
+    end
   end
 
   describe '#projects_count' do

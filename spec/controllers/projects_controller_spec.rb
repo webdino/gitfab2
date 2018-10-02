@@ -143,6 +143,75 @@ describe ProjectsController, type: :controller do
     end
   end
 
+  describe 'DELETE destroy_or_render_edit' do
+    subject { delete :destroy_or_render_edit, params: { owner_name: project.owner.slug, project_id: project.id } }
+    let(:user) { FactoryBot.create(:user) }
+    before { sign_in user }
+
+    context 'when destroy user project' do
+      let(:project) { FactoryBot.create(:user_project, owner: user) }
+      it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
+    end
+
+    context 'when destroy group project' do
+      let(:project) { FactoryBot.create(:group_project) }
+      before { user.memberships.create(group_id: project.owner.id, role: 'admin') }
+      it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
+    end
+  end
+
+  describe 'raise on soft_destroy!' do
+    let(:project) { FactoryBot.create(:user_project) }
+    before do
+      allow_any_instance_of(Project).to receive(:soft_destroy!).and_raise(error)
+      sign_in project.owner
+    end
+
+    context 'in destroy' do
+      subject { delete :destroy, params: { owner_name: project.owner.slug, id: project } }
+
+      context 'ActiveRecord::RecordNotDestroyed' do
+        let(:error) { ActiveRecord::RecordNotDestroyed }
+        it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
+        it do
+          subject
+          expect(flash.now[:alert]).to eq 'Project could not be deleted.'
+        end
+      end
+
+      context 'ActiveRecord::RecordNotSaved' do
+        let(:error) { ActiveRecord::RecordNotSaved }
+        it { is_expected.to redirect_to owner_path(owner_name: project.owner.slug) }
+        it do
+          subject
+          expect(flash.now[:alert]).to eq 'Project could not be deleted.'
+        end
+      end
+    end
+
+    context 'in destroy_or_render_edit' do
+      subject { delete :destroy_or_render_edit, params: { owner_name: project.owner.slug, project_id: project.id } }
+
+      context 'ActiveRecord::RecordNotDestroyed' do
+        let(:error) { ActiveRecord::RecordNotDestroyed }
+        it { is_expected.to render_template :edit }
+        it do
+          subject
+          expect(flash.now[:alert]).to eq 'Project could not be deleted.'
+        end
+      end
+
+      context 'ActiveRecord::RecordNotSaved' do
+        let(:error) { ActiveRecord::RecordNotSaved }
+        it { is_expected.to render_template :edit }
+        it do
+          subject
+          expect(flash.now[:alert]).to eq 'Project could not be deleted.'
+        end
+      end
+    end
+  end
+
   describe 'POST #fork' do
     subject { post :fork, params: { owner_name: project.owner, project_id: project, owner_id: target_owner.slug } }
     let(:target_owner) { FactoryBot.create(:user) }

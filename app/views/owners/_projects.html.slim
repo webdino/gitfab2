@@ -1,4 +1,6 @@
 #projects
+  - if flash[:alert]
+    .alert.alert-danger= flash[:alert]
   ul.tabs.tab-hotizontal
     li.active
       - length = 0

@@ -2,8 +2,8 @@ module ProjectOwner
   extend ActiveSupport::Concern
   included do
     has_many :projects, as: :owner do
-      def soft_destroy_all
-        update_all(is_deleted: true)
+      def soft_destroy_all!
+        where(is_deleted: false).find_each(&:soft_destroy!)
       end
     end
     scope :ordered_by_name, -> { order(:name) }
