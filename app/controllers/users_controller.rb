@@ -27,13 +27,8 @@ class UsersController < ApplicationController
     @user =
       if user_params[:encrypted_identity_id].present?
         identity = Identity.find_by_encrypted_id(user_params[:encrypted_identity_id])
-        User.create_from_identity(
-          identity,
-          user_params.reverse_merge(
-            email: identity.email,
-            remote_avatar_url: (identity.image unless user_params[:avatar_cache])
-          )
-        )
+        user_attrs = user_params.reverse_merge(remote_avatar_url: (identity.image unless user_params[:avatar_cache]))
+        User.create_from_identity(identity, user_attrs)
       else
         User::PasswordAuth.create(user_params)
       end
