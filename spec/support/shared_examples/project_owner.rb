@@ -3,8 +3,16 @@
 shared_examples 'ProjectOwner' do |*factory_args|
   describe '#projects' do
     let(:owner) { FactoryBot.create(*factory_args) }
-
     it { expect(owner).to respond_to(:projects) }
+  end
+
+  describe '#soft_destroy_all' do
+    let(:owner) { FactoryBot.create(*factory_args) }
+    before do
+      FactoryBot.create(:project, owner: owner, is_deleted: true)
+      FactoryBot.create(:project, owner: owner, is_deleted: false)
+    end
+    it { expect{ owner.projects.soft_destroy_all }.to change{ Project.where(is_deleted: true).count }.from(1).to(2) }
   end
 
   describe '#projects_count' do

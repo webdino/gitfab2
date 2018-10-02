@@ -51,8 +51,8 @@ class Group < ApplicationRecord
 
   def soft_destroy!
     transaction do
+      projects.soft_destroy_all
       update!(is_deleted: true)
-      projects.where(is_deleted: false).update_all(is_deleted: true)
     end
   end
 
