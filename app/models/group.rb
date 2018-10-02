@@ -50,6 +50,7 @@ class Group < ApplicationRecord
   def soft_destroy!
     transaction do
       projects.soft_destroy_all
+      remove_avatar!
       update!(is_deleted: true)
     end
   end
