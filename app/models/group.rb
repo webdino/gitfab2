@@ -20,8 +20,6 @@
 #
 
 class Group < ApplicationRecord
-  UPDATABLE_COLUMNS = [:name, :avatar, :url, :location]
-
   include ProjectOwner
   include Collaborator
 
