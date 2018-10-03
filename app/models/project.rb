@@ -143,14 +143,6 @@ class Project < ApplicationRecord
     update!(is_deleted: true)
   end
 
-  def soft_restore
-    update(is_deleted: false)
-  end
-
-  def soft_restore!
-    update!(is_deleted: false)
-  end
-
   def update_draft!
     update!(draft: generate_draft)
   end
