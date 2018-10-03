@@ -13,7 +13,10 @@ section#project-comments
                   span.number.header-content
                     = format "No.%03d", i
                   span.owner.header-content
-                    = link_to comment.user.name, projects_path(comment.user)
+                    - if comment.user.is_deleted?
+                      '退会ユーザー
+                    - else
+                      = link_to comment.user.slug, projects_path(comment.user)
 
                   span.created-at.header-content
                     = "Posted date: "

@@ -146,7 +146,7 @@ class User < ApplicationRecord
       memberships.destroy_all
       likes.destroy_all
       card_comments.destroy_all
-      project_comments.destroy_all
+      project_comments.update_all(body: '（このユーザーは退会しました）')
       my_notifications.destroy_all
       notifications_given.destroy_all
       deleted_user_name = "deleted-user-#{SecureRandom.uuid}"

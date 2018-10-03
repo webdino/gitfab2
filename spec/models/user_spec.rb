@@ -396,16 +396,11 @@ describe User do
     end
 
     describe 'project_comments' do
-      let!(:project_comment) { FactoryBot.create(:project_comment, user: user) }
+      let!(:project_comment) { FactoryBot.create_list(:project_comment, 2, user: user) }
 
-      it 'deletes user project_comments' do
+      it 'updates user project_comments' do
         subject
-        expect(user.project_comments).to be_empty
-      end
-
-      it 'decrements project_comments' do
-        project = project_comment.project
-        expect{ subject }.to change{ project.project_comments.count }.by(-1)
+        expect(user.project_comments).to be_all { |comment| comment.body == '（このユーザーは退会しました）' }
       end
     end
 
