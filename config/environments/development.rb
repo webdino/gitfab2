@@ -62,6 +62,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
+  config.force_ssl = true
+
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
