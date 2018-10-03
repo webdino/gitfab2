@@ -3,7 +3,7 @@
 @import "projects/_project_variables";
 
 #content {
-  min-height: calc(100vh - 305px);
+  margin: 35px auto;
 }
 #content, main {
   @include cf;
