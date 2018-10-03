@@ -382,16 +382,11 @@ describe User do
     end
 
     describe 'card_comments' do
-      let!(:card_comment) { FactoryBot.create(:card_comment, user: user) }
+      let!(:card_comment) { FactoryBot.create_list(:card_comment, 2, user: user) }
 
-      it 'deletes user card_comments' do
+      it 'updates user card_comments' do
         subject
-        expect(user.card_comments).to be_empty
-      end
-
-      it 'decrements card comments_count' do
-        card = card_comment.card
-        expect{ subject }.to change{ card.reload.comments_count }.by(-1)
+        expect(user.card_comments).to be_all { |comment| comment.body == '（このユーザーは退会しました）' }
       end
     end
 

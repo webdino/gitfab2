@@ -145,7 +145,7 @@ class User < ApplicationRecord
       projects.update_all(is_deleted: true)
       memberships.destroy_all
       likes.destroy_all
-      card_comments.destroy_all
+      card_comments.update_all(body: '（このユーザーは退会しました）')
       project_comments.update_all(body: '（このユーザーは退会しました）')
       my_notifications.destroy_all
       notifications_given.destroy_all
