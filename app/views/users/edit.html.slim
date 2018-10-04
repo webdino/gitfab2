@@ -5,13 +5,11 @@
 
   .panel
     h1 パスワード変更
-    - if flash[:success]
-      .alert.alert-success= flash[:success]
-    - if flash[:alert]
-      .alert.alert-danger= flash[:alert]
-    ul
-      - @update_password_error_messages&.each do |message|
-        li.alert.alert-danger= message
+
+    - if @update_password_error_messages.present?
+      ul.alert.alert-danger
+        - @update_password_error_messages.each do |message|
+          li= message
 
     = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
       .form-group

@@ -64,7 +64,7 @@ class UsersController < ApplicationController
     user = User::PasswordAuth.find_by!(name: params[:user_id])
 
     if user.password_digest && !user.authenticate(params[:current_password])
-      flash.now[:alert] = "現在のパスワードが間違っています"
+      flash.now[:danger] = "現在のパスワードが間違っています"
       @user = User.find_by(name: params[:user_id])
       render :edit
       return
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
       flash[:success] = "パスワードを更新しました"
       redirect_to edit_user_path
     else
-      flash.now[:alert] = "パスワードの更新に失敗しました"
+      flash.now[:danger] = "パスワードの更新に失敗しました"
       @update_password_error_messages = user.errors.full_messages
       @user = User.find_by(name: params[:user_id])
       render :edit

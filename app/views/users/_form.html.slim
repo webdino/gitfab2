@@ -2,17 +2,10 @@ main.panel
   h1
     'Public Profile
 
-  - if flash[:success]
-    .alert.alert-success
-      = flash[:success]
   - if user.errors.any?
-    .alert.alert-danger
-      h2
-        = pluralize(user.errors.count, "error")
-        '&nbsp;prohibited this user from being saved.
-      ul
-        - user.errors.full_messages.each do |msg|
-          li = msg
+    ul.alert.alert-danger
+      - user.errors.full_messages.each do |msg|
+        li = msg
 
   = form_with model: user, html: { multipart: true }, local: true do |f|
     = f.hidden_field :encrypted_identity_id

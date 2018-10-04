@@ -162,7 +162,7 @@ describe UsersController, type: :controller do
         let(:params) { { current_password: "wrong#{current_password}", user_id: user.name, password: 'password', password_confirmation: 'password' } }
         it do
           is_expected.to be_successful
-          expect(flash.now[:alert]).to eq '現在のパスワードが間違っています'
+          expect(flash.now[:danger]).to eq '現在のパスワードが間違っています'
         end
       end
 
