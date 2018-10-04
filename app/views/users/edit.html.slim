@@ -26,3 +26,23 @@
           = f.password_field :current_password, class: "form-control"
       .form-group
         = f.submit "Update password", class: "btn primary"
+
+  .panel
+    h1 アカウント連携
+    ul
+      li.form-group
+        - if current_user.connected_with_github?
+          .btn.disabled Already signed in to GitHub
+        - else
+          = link_to_github_sign_in
+      li.form-group
+        - if current_user.connected_with_google?
+          .btn.disabled Already signed in to Google
+        - else
+          = link_to_google_sign_in
+      li.form-group
+        - if current_user.connected_with_facebook?
+          .btn.disabled Already signed in to Facebook
+        - else
+          = link_to_facebook_sign_in
+

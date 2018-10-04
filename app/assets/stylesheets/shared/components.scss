@@ -12,6 +12,10 @@
   &:hover {
     background: $common-light-gray;
   }
+  &.disabled {
+    background: $common-light-gray !important;
+    cursor: default;
+  }
 }
 
 .alert {

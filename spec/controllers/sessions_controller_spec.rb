@@ -16,11 +16,6 @@ RSpec.describe SessionsController, type: :controller do
     subject { post :create, params: params }
     let(:params) { {} }
 
-    context "when user already signed in" do
-      before { sign_in(FactoryBot.create(:user)) }
-      it { is_expected.to redirect_to root_path }
-    end
-
     context "when user does not signed in" do
       let(:params) { { provider: "github" } }
 
@@ -36,6 +31,39 @@ RSpec.describe SessionsController, type: :controller do
               image: identity&.image || "https://picsum.photos/1"
             )
           )
+        end
+
+        context "when user already signed in" do
+          before { sign_in(user) }
+          let(:user) { FactoryBot.create(:user) }
+          let(:identity) { FactoryBot.create(:identity, user: identity_user) }
+          let(:identity_user) { nil }
+
+          it { is_expected.to redirect_to edit_user_path }
+
+          context "and identity has another user" do
+            let(:identity_user) { FactoryBot.create(:user) }
+            it do
+              expect{ subject }.not_to change{ identity.reload.user }
+              expect(flash[:danger]).to eq "This account is connected with another user"
+            end
+          end
+
+          context "and identity has current_user" do
+            let(:identity_user) { user }
+            it do
+              expect{ subject }.not_to change{ identity.reload.user }
+              expect(flash[:success]).to eq "Successfully signed in to #{identity.provider}!"
+            end
+          end
+
+          context "and identity does not have user" do
+            let(:identity_user) { nil }
+            it do
+              expect{ subject }.to change{ identity.reload.user }.from(nil).to(user)
+              expect(flash[:success]).to eq "Successfully signed in to #{identity.provider}!"
+            end
+          end
         end
 
         context "when identity exists" do

@@ -123,6 +123,18 @@ class User < ApplicationRecord
     is_in_collaborated_group
   end
 
+  def connected_with_github?
+    connected_with?("github")
+  end
+
+  def connected_with_google?
+    connected_with?("google_oauth2")
+  end
+
+  def connected_with_facebook?
+    connected_with?("facebook")
+  end
+
   private
 
     def should_generate_new_friendly_id?
@@ -134,5 +146,9 @@ class User < ApplicationRecord
       if email != email_confirmation
         errors.add(:base, "Email confirmation does not match Email")
       end
+    end
+
+    def connected_with?(provider)
+      identities.exists?(provider: provider)
     end
 end

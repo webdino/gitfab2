@@ -5,6 +5,10 @@
 
 - content_for :content do
   #content
+    - flash.each do |key, value|
+      div class="alert alert-#{key}"
+        = value
+
     = render partial: "layouts/setting_links"
     = yield
 = render partial: "layouts/base_layout"

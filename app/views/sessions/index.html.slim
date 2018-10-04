@@ -7,7 +7,6 @@
         = value
 
     div
-      = flash[:alert]
       = form_with(model: @form, url: sessions_path, scope: "sign_in", local: true) do |f|
         .form-group
           = f.label :name
@@ -21,10 +20,10 @@
   hr
   ul
     li.form-group
-      = link_to "Sign in with GitHub", "/auth/github", class: "btn"
+      = link_to_github_sign_in
     li.form-group
-      = link_to "Sign in with Google", "/auth/google_oauth2", class: "btn"
+      = link_to_google_sign_in
     li.form-group
-      = link_to "Sign in with Facebook", "/auth/facebook", class: "btn"
+      = link_to_facebook_sign_in
     li.form-group
       = link_to "Sign up with Password", new_user_path, class: "btn"

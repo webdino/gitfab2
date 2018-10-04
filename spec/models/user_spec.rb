@@ -281,4 +281,46 @@ describe User do
     it { expect(user.is_in_collaborated_group?(project_collaborated_by_group)).to be true }
     it { expect(user.is_in_collaborated_group?(project_not_collaborated)).to be false }
   end
+
+  describe '#connected_with_github?' do
+    subject { user.connected_with_github? }
+    let(:user) { FactoryBot.create(:user) }
+
+    context 'when user has GitHub identity' do
+      before { FactoryBot.create(:identity, provider: 'github', user: user) }
+      it { is_expected.to be true }
+    end
+
+    context 'when user does not have GitHub identity' do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#connected_with_google?' do
+    subject { user.connected_with_google? }
+    let(:user) { FactoryBot.create(:user) }
+
+    context 'when user has Google identity' do
+      before { FactoryBot.create(:identity, provider: 'google_oauth2', user: user) }
+      it { is_expected.to be true }
+    end
+
+    context 'when user does not have Google identity' do
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#connected_with_facebook?' do
+    subject { user.connected_with_facebook? }
+    let(:user) { FactoryBot.create(:user) }
+
+    context 'when user has Facebook identity' do
+      before { FactoryBot.create(:identity, provider: 'facebook', user: user) }
+      it { is_expected.to be true }
+    end
+
+    context 'when user does not have Facebook identity' do
+      it { is_expected.to be false }
+    end
+  end
 end
