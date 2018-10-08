@@ -102,7 +102,7 @@ class ProjectsController < ApplicationController
   end
 
   def recipe_cards_list
-    @project = @owner.projects.friendly.find(params[:project_id])
+    @project = @owner.projects.active.friendly.find(params[:project_id])
     render 'recipe_cards_list'
   end
 
@@ -179,7 +179,7 @@ class ProjectsController < ApplicationController
       all_featured_projects = Feature.projects
       all_featured_projects.each do |project_group|
         ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
+        featured_projects = Project.active.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
         project_groups[project_group.name] = featured_projects
       end
       project_groups.to_a

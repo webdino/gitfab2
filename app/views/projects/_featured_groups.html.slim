@@ -20,7 +20,7 @@
 
                 span |
                 span.projects
-                  = "Projects: #{group.projects.count}"
+                  = "Projects: #{group.projects.active.count}"
 
             .description
             / = group.description.truncate(300) #TODO: implement group.description

@@ -85,7 +85,7 @@ class Project < ApplicationRecord
   paginates_per 12
 
   def self.find_with(owner_slug, project_slug)
-    Owner.find(owner_slug).projects.friendly.find(project_slug)
+    Owner.find(owner_slug).projects.active.friendly.find(project_slug)
   end
 
   # このプロジェクトを owner のプロジェクトとしてフォークする
