@@ -38,21 +38,10 @@ class Ability
       !project.is_deleted && is_project_manager?(project, user)
     end
     can :update, Project do |project|
-      if project.is_deleted
-        false
-      else
-        is_project_manager?(project, user)
-      end
-    end
-    can :edit, Project do |project|
       !project.is_deleted && is_project_editor?(project, user)
     end
     can :read, Project do |project|
-      if project.is_deleted
-        false
-      else
-        !project.is_private ? true : is_project_editor?(project, user)
-      end
+      !project.is_deleted && (!project.is_private || is_project_editor?(project, user))
     end
     can :manage, Attachment do |attachment|
       can? :update, attachment.attachable
