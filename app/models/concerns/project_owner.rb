@@ -4,7 +4,9 @@ module ProjectOwner
     has_many :projects, as: :owner do
       def soft_destroy_all!
         transaction do
-          active.find_each(&:soft_destroy!)
+          active
+            .includes(:owner, :states, :tags, :likes, :note_cards, :usages, :project_comments, :figures, :collaborations)
+            .find_each(&:soft_destroy!)
         end
       end
     end
