@@ -64,9 +64,9 @@ class Ability
       comment.user_id == user.id || (can? :manage, comment.card)
     end
     can :manage, Group do |group|
-      user.is_admin_of? group
+      !group.is_deleted && user.is_admin_of?(group)
     end
-    can :create, Group do |_group|
+    can :create, Group do
       user.persisted?
     end
     can :create, Tag do |_tag|
