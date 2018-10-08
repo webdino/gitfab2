@@ -150,7 +150,7 @@ section.tools class="#{'forked-project-tools' if @project.is_fork?}"
         .modal-body
           #fork-destinations
             = render "projects/fork_destination", owner: current_user, project: @project
-            - current_user.groups.each do |group|
+            - current_user.groups.active.each do |group|
               - if can? :manage, group
                 = render "projects/fork_destination", owner: group, project: @project
 

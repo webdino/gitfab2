@@ -20,7 +20,7 @@
           'Project Title
         = f.text_field :title, placeholder: "Title", tabindex: 1, maxlength: "60", autofocus: true
 
-    - if @project.new_record? && current_user.groups.any?
+    - if @project.new_record? && current_user.groups.active.any?
       / TODO: make changing project owner enabled via project/update
       #owner
         .left
@@ -28,7 +28,7 @@
         .right
           .form-title
             'Project Owner
-          - options = current_user.groups.to_a.push(current_user).map{ |o| [o.name, o.slug] }
+          - options = current_user.groups.active.to_a.push(current_user).map{ |o| [o.name, o.slug] }
           = f.select :owner_id, options, selected: current_user.slug
 
     #project-summary

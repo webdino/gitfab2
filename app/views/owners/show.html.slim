@@ -50,7 +50,7 @@
                   .name
                     = member.name
 
-        - elsif @owner.groups.any?
+        - elsif @owner.groups.active.any?
           h2.title GROUPS
           - if current_user && current_user == @owner
             = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
