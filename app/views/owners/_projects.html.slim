@@ -4,12 +4,12 @@
   ul.tabs.tab-hotizontal
     li.active
       - length = 0
-      - @owner.projects.each do |p|
+      - @projects.each do |p|
         - length += 1 if can? :read, p
       = link_to "Project (#{length})", "#", data: {tab: "#project-tab"}
     li
       - length = 0
-      - @owner.projects.noted.each do |p|
+      - @projects.noted.each do |p|
         - length += 1 if can? :read, p
       = link_to "Memo (#{length})", "#", data: {tab: "#note-tab"}
     li

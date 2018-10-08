@@ -3,7 +3,7 @@ module ProjectOwner
   included do
     has_many :projects, as: :owner do
       def soft_destroy_all!
-        where(is_deleted: false).find_each(&:soft_destroy!)
+        active.find_each(&:soft_destroy!)
       end
     end
     scope :ordered_by_name, -> { order(:name) }

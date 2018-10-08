@@ -68,7 +68,7 @@ class Project < ApplicationRecord
     joins(:note_cards).where(cards: { id: note_cards_sql })
   end
   scope :ordered_by_owner, -> { order(:owner_id) }
-  scope :published, -> { where(is_private: false, is_deleted: false) }
+  scope :published, -> { active.where(is_private: false) }
 
   # draft全文検索
   scope :search_draft, -> (text) do
