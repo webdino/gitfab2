@@ -37,7 +37,7 @@ class Attachment < ApplicationRecord
 
   class << self
     def updatable_columns
-      [:id, :content, :link, :_type, :title, :description, :kind, :markup_id]
+      [:id, :content, :link, :title, :description, :kind, :markup_id]
     end
   end
 end
