@@ -357,8 +357,8 @@ describe User do
 
     it 'deletes user projects' do
       FactoryBot.create_list(:project, 2, owner: user)
+      expect(user.projects).to receive(:soft_destroy_all!).once
       subject
-      expect(user.projects).to be_all{ |project| project.is_deleted? }
     end
 
     it 'deletes user memberships' do
@@ -414,6 +414,15 @@ describe User do
       it 'deletes notifications_given' do
         subject
         expect(user.notifications_given).to be_empty
+      end
+    end
+
+    describe 'collaborations' do
+      let!(:collaborations) { FactoryBot.create_list(:collaboration, 2, owner: user) }
+
+      it 'deletes collaborations' do
+        subject
+        expect(user.collaborations).to be_empty
       end
     end
 

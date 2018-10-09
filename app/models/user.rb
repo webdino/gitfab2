@@ -142,13 +142,14 @@ class User < ApplicationRecord
     transaction do
       remove_avatar!
       identities.destroy_all
-      projects.update_all(is_deleted: true)
+      projects.soft_destroy_all!
       memberships.destroy_all
       likes.destroy_all
       card_comments.update_all(body: '（このユーザーは退会しました）')
       project_comments.update_all(body: '（このユーザーは退会しました）')
       my_notifications.destroy_all
       notifications_given.destroy_all
+      collaborations.destroy_all
       deleted_user_name = "deleted-user-#{SecureRandom.uuid}"
       update!(
         email: "#{deleted_user_name}@fabble.cc",
