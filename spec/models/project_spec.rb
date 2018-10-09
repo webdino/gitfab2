@@ -210,4 +210,39 @@ describe Project do
       it { is_expected.to be false }
     end
   end
+
+  describe '#soft_destroy!' do
+    subject { project.soft_destroy! }
+
+    let!(:project) { FactoryBot.create([:user_project, :group_project].sample) }
+
+    before do
+      FactoryBot.create_list(:like, 2, project: project)
+      FactoryBot.create_list(:state, 2, project: project)
+      FactoryBot.create_list(:note_card, 2, project: project)
+      FactoryBot.create_list(:usage, 2, project: project)
+      FactoryBot.create_list(:project_comment, 2, project: project)
+      FactoryBot.create_list(:figure, 2, figurable: project)
+      FactoryBot.create_list(:tag, 2, project: project)
+      FactoryBot.create_list(:collaboration, 2, project: project)
+      project.reload
+    end
+
+    it do
+      subject
+      expect(project).to have_attributes(title: 'Deleted Project', is_deleted: true)
+      expect(project.name).to start_with('deleted-project-')
+    end
+
+    it do
+      expect{ subject }.to change{ project.likes.count }.from(2).to(0)
+                       .and change{ project.note_cards.count }.from(2).to(0)
+                       .and change{ project.usages.count }.from(2).to(0)
+                       .and change{ project.states.count }.from(2).to(0)
+                       .and change{ project.project_comments.count }.from(2).to(0)
+                       .and change{ project.figures.count }.from(2).to(0)
+                       .and change{ project.tags.count }.from(2).to(0)
+                       .and change{ project.collaborations.count }.from(2).to(0)
+    end
+  end
 end

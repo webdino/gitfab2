@@ -10,7 +10,7 @@ class Admin::ProjectsController < Admin::ApplicationController
   def show; end
 
   def destroy
-    @project.soft_destroy
+    @project.soft_destroy!
     redirect_to admin_projects_path
   end
 

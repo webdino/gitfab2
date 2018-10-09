@@ -49,7 +49,7 @@ class UsagesController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find(params[:project_id])
+      @project = @owner.projects.active.friendly.find(params[:project_id])
     end
 
     def load_usage

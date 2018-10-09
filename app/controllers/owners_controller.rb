@@ -5,7 +5,7 @@ class OwnersController < ApplicationController
 
   def show
     @owner = Owner.find(params[:owner_name])
-    @projects = @owner.projects.includes(:figures).order(updated_at: :desc)
+    @projects = @owner.projects.active.includes(:figures).order(updated_at: :desc)
     if @owner.is_a?(User)
       @liked_projects = @owner.liked_projects.order(updated_at: :desc)
     end

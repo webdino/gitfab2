@@ -2,8 +2,8 @@ class ProjectsController < ApplicationController
   layout 'project'
 
   before_action :load_owner, except: [:index, :new, :create, :fork, :change_order, :search]
-  before_action :load_project, only: [:edit, :update, :destroy]
-  before_action :delete_collaborations, only: :destroy
+  before_action :load_project, only: [:edit, :update, :destroy, :destroy_or_render_edit]
+  before_action :delete_collaborations, only: [:destroy, :destroy_or_render_edit]
 
   authorize_resource
 
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = @owner.projects.includes(usages: [:attachments, :figures, :contributions, :project])
+    @project = @owner.projects.active.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
 
     respond_to do |format|
@@ -68,11 +68,18 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    if @project.soft_destroy
-      redirect_to owner_path(owner_name: @project.owner.slug)
-    else
-      render 'error/failed', status: 400
-    end
+    @project.soft_destroy!
+    redirect_to owner_path(owner_name: @project.owner.slug)
+  rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::RecordNotSaved
+    redirect_to owner_path(owner_name: @project.owner.slug), flash: { alert: 'Project could not be deleted.' }
+  end
+
+  def destroy_or_render_edit
+    @project.soft_destroy!
+    redirect_to owner_path(owner_name: @project.owner.slug)
+  rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::RecordNotSaved
+    flash.now[:alert] = 'Project could not be deleted.'
+    render :edit
   end
 
   def fork
@@ -95,7 +102,7 @@ class ProjectsController < ApplicationController
   end
 
   def recipe_cards_list
-    @project = @owner.projects.friendly.find(params[:project_id])
+    @project = @owner.projects.active.friendly.find(params[:project_id])
     render 'recipe_cards_list'
   end
 
@@ -125,9 +132,7 @@ class ProjectsController < ApplicationController
   end
 
   def slideshow
-    @project = @owner.projects
-                 .includes(states: [:figures, annotations: :figures])
-                 .where(is_deleted: false)
+    @project = @owner.projects.active.includes(states: [:figures, annotations: :figures])
                  .friendly.find(params[:project_id])
     @cards = @project.states.map { |state| [state] + state.annotations }.flatten
     render layout: nil
@@ -142,7 +147,7 @@ class ProjectsController < ApplicationController
     end
 
     def load_project
-      @project = @owner.projects.friendly.find(params[:id])
+      @project = @owner.projects.active.friendly.find(params[:id] || params[:project_id])
     end
 
     def load_owner
@@ -172,7 +177,7 @@ class ProjectsController < ApplicationController
       all_featured_projects = Feature.projects
       all_featured_projects.each do |project_group|
         ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
+        featured_projects = Project.active.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
         project_groups[project_group.name] = featured_projects
       end
       project_groups.to_a

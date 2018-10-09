@@ -68,7 +68,7 @@ class Project < ApplicationRecord
     joins(:note_cards).where(cards: { id: note_cards_sql })
   end
   scope :ordered_by_owner, -> { order(:owner_id) }
-  scope :published, -> { where(is_private: false, is_deleted: false) }
+  scope :published, -> { active.where(is_private: false) }
 
   # draft全文検索
   scope :search_draft, -> (text) do
@@ -85,7 +85,7 @@ class Project < ApplicationRecord
   paginates_per 12
 
   def self.find_with(owner_slug, project_slug)
-    Owner.find(owner_slug).projects.friendly.find(project_slug)
+    Owner.find(owner_slug).projects.active.friendly.find(project_slug)
   end
 
   # このプロジェクトを owner のプロジェクトとしてフォークする
@@ -140,7 +140,17 @@ class Project < ApplicationRecord
   end
 
   def soft_destroy!
-    update!(is_deleted: true)
+    transaction do
+      update!(title: 'Deleted Project', name: "deleted-project-#{SecureRandom.uuid}", is_deleted: true)
+      likes.destroy_all
+      states.destroy_all
+      note_cards.destroy_all
+      usages.destroy_all
+      project_comments.destroy_all
+      figures.destroy_all
+      tags.destroy_all
+      collaborations.destroy_all
+    end
   end
 
   def update_draft!
