@@ -159,7 +159,7 @@ describe UsersController, type: :controller do
         let(:error) { ActiveRecord::RecordNotSaved }
         it do
           is_expected.to redirect_to edit_user_path
-          expect(flash[:alert]).to eq 'User has not been deleted.'
+          expect(flash[:alert]).to eq 'Something went wrong. Please try again later.'
         end
       end
 
@@ -167,7 +167,7 @@ describe UsersController, type: :controller do
         let(:error) { ActiveRecord::RecordNotDestroyed }
         it do
           is_expected.to redirect_to edit_user_path
-          expect(flash[:alert]).to eq 'User has not been deleted.'
+          expect(flash[:alert]).to eq 'Something went wrong. Please try again later.'
         end
       end
     end

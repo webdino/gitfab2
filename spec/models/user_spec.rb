@@ -328,21 +328,34 @@ describe User do
     subject { user.resign! }
 
     let(:identity) { FactoryBot.create(:identity, user: nil) }
-    let(:attributes) { FactoryBot.attributes_for(:user).merge(avatar: fixture_file_upload('images/image.jpg')) }
+    let(:attributes) do
+      {
+        authority: 'admin',
+        avatar: fixture_file_upload('images/image.jpg'),
+        email: 'sample@example.com',
+        email_confirmation: 'sample@example.com',
+        is_deleted: false,
+        location: 'Japan',
+        name: 'sample-user',
+        password_digest: 'password_digest',
+        url: 'example.com'
+      }
+    end
+
     let(:user) { User.create_from_identity(identity, attributes) }
 
-    it 'updates a user by dummy' do
+    it 'updates a user with dummy' do
       subject
       expect(user).to have_attributes(
-        url: nil,
-        location: nil,
         authority: nil,
+        email: "#{user.name}@fabble.cc",
+        email_confirmation: "#{user.name}@fabble.cc",
+        is_deleted: true,
+        location: nil,
         password_digest: nil,
-        is_deleted: true
+        url: nil
       )
       expect(user.name).to start_with('deleted-user-')
-      expect(user.slug).to eq user.name
-      expect(user.email).to eq "#{user.name}@fabble.cc"
     end
 
     it 'deletes user avatar' do
@@ -356,7 +369,6 @@ describe User do
     end
 
     it 'deletes user projects' do
-      FactoryBot.create_list(:project, 2, owner: user)
       expect(user.projects).to receive(:soft_destroy_all!).once
       subject
     end

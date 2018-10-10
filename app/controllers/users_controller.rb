@@ -60,7 +60,7 @@ class UsersController < ApplicationController
     self.current_user = nil
     redirect_to root_path
   rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordNotDestroyed
-    redirect_to edit_user_path, flash: { alert: 'User has not been deleted.' }
+    redirect_to edit_user_path, flash: { alert: 'Something went wrong. Please try again later.' }
   end
 
   def update_password
