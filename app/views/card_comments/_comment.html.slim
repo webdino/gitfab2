@@ -9,10 +9,8 @@ li.comment
         span.number.header-content
           = format "No.%03d", i + 1
         span.owner.header-content
-          - if user.is_deleted?
+          = link_to_if !user.is_deleted?, user.name, owner_path(user)
             '退会ユーザー
-          - else
-            = link_to user.slug, owner_path(user)
 
         span.created-at.header-content
           = "Posted date: "
