@@ -25,7 +25,7 @@
 
 class Card::State < Card
   belongs_to :project, counter_cache: :states_count
-  acts_as_list scope: :project
+  acts_as_list scope: [:project_id, type: Card::State.name]
 
   has_many :annotations, ->{ order(:position) },
                         class_name: 'Card::Annotation',
