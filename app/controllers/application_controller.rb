@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= begin
       return unless session[:su]
-      User.readonly.find_by(id: session[:su])
+      User.readonly.active.find_by(id: session[:su])
     end
   end
   helper_method :current_user
