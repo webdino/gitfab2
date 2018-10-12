@@ -73,6 +73,6 @@ group :test do
   gem 'simplecov', require: false
 end
 
-group :production do
+group :production, :staging do
   gem 'unicorn'
 end
