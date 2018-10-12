@@ -66,16 +66,6 @@ Open http://localhost:3000 in your browser.
 $ bundle exec rspec
 ```
 
-### Install node.js on CentOS 7
-- CentOS 7.5
-- node.js 10.7.0
-
-```bash
-$ curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-$ yum install -y gcc-c++ make nodejs
-$ npm install
-```
-
 ## License
 
 gitfab2 is released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0).
