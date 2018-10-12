@@ -46,5 +46,6 @@
           = link_to_facebook_sign_in
 
   .panel
-    h1 アカウントを削除する
-    = link_to "Delete", user_path, method: :delete, class: "btn", id: "delete-btn", data: { confirm: "本当にアカウントを削除しますか?" }
+    ul
+      li.form-group
+        = link_to "退会する", user_path, method: :delete, class: "btn", data: { confirm: "本当に退会しますか?\n退会すると、このユーザーに紐づく全てのデータが削除されます。" }

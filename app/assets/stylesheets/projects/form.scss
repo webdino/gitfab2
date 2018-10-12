@@ -30,6 +30,7 @@
 
 .form-group {
   margin-bottom: 1.5rem;
+  &:last-child { margin-bottom: .5rem; }
   font-family: $common-novelsans-semibold;
   label {
     display: inline-block;
