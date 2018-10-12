@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     user = User.find(current_user.id)
     user.resign!
     self.current_user = nil
-    redirect_to root_path
+    redirect_to root_path, flash: { success: "退会しました。ご利用ありがとうございました。" }
   rescue ActiveRecord::RecordNotSaved, ActiveRecord::RecordNotDestroyed
     redirect_to edit_user_path, flash: { alert: 'Something went wrong. Please try again later.' }
   end

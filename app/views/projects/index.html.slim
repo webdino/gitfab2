@@ -2,6 +2,9 @@
   - if current_user
     = render partial: "dashboard"
   - else
+    - if flash[:success].present?
+      h2 = flash[:success]
+
     - if session["auth.failed.error"].present?
       #error_explanation
         h2
