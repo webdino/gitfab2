@@ -214,9 +214,9 @@ ActiveRecord::Schema.define(version: 2018_10_01_113544) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "password_digest"
-    t.boolean "is_deleted", default: false, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.boolean "is_deleted", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
