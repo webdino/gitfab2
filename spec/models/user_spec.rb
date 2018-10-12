@@ -437,23 +437,6 @@ describe User do
         expect(user.collaborations).to be_empty
       end
     end
-
-    context 'when raise an error' do
-      let!(:data) do
-        [
-          FactoryBot.create_list(:project, 2, owner: user),
-          FactoryBot.create_list(:membership, 2, user: user),
-          FactoryBot.create_list(:like, 2, user: user),
-          FactoryBot.create_list(:card_comment, 2, user: user),
-          FactoryBot.create_list(:project_comment, 2, user: user),
-          FactoryBot.create_list(:notification, 2, notified: user),
-          FactoryBot.create_list(:notification, 2, notifier: user),
-        ]
-      end
-
-      before { allow(subject).to receive(:raise) }
-      it { expect{ subject }.not_to change{ data } }
-    end
   end
 
   describe '#active' do
