@@ -9,7 +9,7 @@ describe Membership do
 
   describe '#editor?' do
     subject { membership.editor? }
-    group = FactoryBot.create(:group)
+    let(:group) { FactoryBot.create(:group) }
     let(:membership) { FactoryBot.create(:membership, role: 'editor', group: group) }
     # 最低でも１人はadminが必要なので作成
     before { FactoryBot.create(:membership, role: 'admin', group: group) }
@@ -31,7 +31,7 @@ describe Membership do
     end
 
     context 'when role is editor' do
-      group = FactoryBot.create(:group)
+      let(:group) { FactoryBot.create(:group) }
       let(:membership) { FactoryBot.create(:membership, role: 'editor', group: group) }
 
       before { FactoryBot.create(:membership, role: 'admin', group: group) }
@@ -40,19 +40,18 @@ describe Membership do
   end
 
   describe 'after_destroy' do
-    group = FactoryBot.create(:group)
-    membership = FactoryBot.create(:membership, group: group)
+    let(:group) { FactoryBot.create(:group) }
+    let(:membership) { FactoryBot.create(:membership, group: group) }
 
-    context 'when group has no members' do
-      before { allow(group).to receive_message_chain(:members, :none?).and_return(true) }
+    context 'when group has no other members' do
       it do
         expect(group).to receive(:soft_destroy!)
         membership.destroy
       end
     end
 
-    context 'when group has some members' do
-      before { allow(group).to receive_message_chain(:members, :none?).and_return(false) }
+    context 'when group has other members' do
+      before { FactoryBot.create(:membership, group: group) }
       it do
         expect(group).not_to receive(:soft_destroy!)
         membership.destroy
