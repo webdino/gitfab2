@@ -7,6 +7,6 @@ class Owner
   end
 
   def self.find_by(slug)
-    User.find_by(slug: slug) || Group.active.find_by(slug: slug)
+    User.active.find_by(slug: slug) || Group.active.find_by(slug: slug)
   end
 end

@@ -4,6 +4,16 @@ describe UsersController, type: :controller do
   describe 'GET index' do
     subject { get :index, format: :json }
     it { is_expected.to be_successful }
+
+    context 'when active and deleted users' do
+      let!(:active) { FactoryBot.create(:user, is_deleted: false) }
+      let!(:deleted) { FactoryBot.create(:user, is_deleted: true) }
+
+      it 'fetches active users only' do
+        subject
+        expect(assigns(:users)).to eq [active]
+      end
+    end
   end
 
   describe 'GET new' do
@@ -135,8 +145,31 @@ describe UsersController, type: :controller do
     before { sign_in(user) }
 
     it do
-      expect{ subject }.to change{ User.count }.by(-1)
-      is_expected.to redirect_to root_path
+      expect_any_instance_of(User).to receive(:resign!)
+      subject
+    end
+
+    it { expect{ subject }.to change{ session[:su] }.from(user.id).to(nil) }
+    it { is_expected.to redirect_to root_path }
+
+    describe 'raise on User#resign!' do
+      before { allow_any_instance_of(User).to receive(:resign!).and_raise(error) }
+
+      context 'ActiveRecord::RecordNotSaved' do
+        let(:error) { ActiveRecord::RecordNotSaved }
+        it do
+          is_expected.to redirect_to edit_user_path
+          expect(flash[:alert]).to eq 'Something went wrong. Please try again later.'
+        end
+      end
+
+      context 'ActiveRecord::RecordNotDestroyed' do
+        let(:error) { ActiveRecord::RecordNotDestroyed }
+        it do
+          is_expected.to redirect_to edit_user_path
+          expect(flash[:alert]).to eq 'Something went wrong. Please try again later.'
+        end
+      end
     end
   end
 

@@ -6,6 +6,7 @@
 #  authority              :string(255)
 #  avatar                 :string(255)
 #  email                  :string(255)      not null
+#  is_deleted             :boolean          default(FALSE), not null
 #  location               :string(255)
 #  name                   :string(255)
 #  password_digest        :string(255)
@@ -49,6 +50,8 @@ class User < ApplicationRecord
   validates :name, unique_owner_name: true, name_format: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }
   validate :confirm_email
+
+  scope :active, -> { where(is_deleted: false) }
 
   concerning :Draft do
     def generate_draft
@@ -133,6 +136,32 @@ class User < ApplicationRecord
 
   def connected_with_facebook?
     connected_with?("facebook")
+  end
+
+  def resign!
+    transaction do
+      remove_avatar!
+      identities.destroy_all
+      projects.soft_destroy_all!
+      memberships.destroy_all
+      likes.destroy_all
+      card_comments.update_all(body: '（このユーザーは退会しました）')
+      project_comments.update_all(body: '（このユーザーは退会しました）')
+      my_notifications.destroy_all
+      notifications_given.destroy_all
+      collaborations.destroy_all
+      deleted_user_name = "deleted-user-#{SecureRandom.uuid}"
+      update!(
+        email: "#{deleted_user_name}@fabble.cc",
+        email_confirmation: "#{deleted_user_name}@fabble.cc",
+        name: deleted_user_name,
+        url: nil,
+        location: nil,
+        authority: nil,
+        password_digest: nil,
+        is_deleted: true
+      )
+    end
   end
 
   private

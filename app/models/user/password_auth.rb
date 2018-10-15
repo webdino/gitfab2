@@ -6,6 +6,7 @@
 #  authority              :string(255)
 #  avatar                 :string(255)
 #  email                  :string(255)      not null
+#  is_deleted             :boolean          default(FALSE), not null
 #  location               :string(255)
 #  name                   :string(255)
 #  password_digest        :string(255)

@@ -1,6 +1,7 @@
 - content_for(:title, "Edit Profile")
 
 #users-edit
+
   = render partial: "form", locals: { user: @user }
 
   .panel
@@ -44,3 +45,7 @@
         - else
           = link_to_facebook_sign_in
 
+  .panel
+    ul
+      li.form-group
+        = link_to "退会する", user_path, method: :delete, class: "btn", data: { confirm: "本当に退会しますか?\n退会すると、このユーザーに紐づく全てのデータが削除されます。" }

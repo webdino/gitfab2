@@ -42,7 +42,7 @@ class SessionsController < ApplicationController
       end
     else
       # Password sign in
-      user = User::PasswordAuth.find_by(name: sign_in_params[:name])
+      user = User::PasswordAuth.active.find_by(name: sign_in_params[:name])
       if user&.password_digest && user&.authenticate(sign_in_params[:password])
         self.current_user = user
         redirect_to session[:previous_url] || root_path

@@ -323,4 +323,127 @@ describe User do
       it { is_expected.to be false }
     end
   end
+
+  describe '#resign!' do
+    subject { user.resign! }
+
+    let(:identity) { FactoryBot.create(:identity, user: nil) }
+    let(:attributes) do
+      {
+        authority: 'admin',
+        avatar: fixture_file_upload('images/image.jpg'),
+        email: 'sample@example.com',
+        email_confirmation: 'sample@example.com',
+        is_deleted: false,
+        location: 'Japan',
+        name: 'sample-user',
+        password_digest: 'password_digest',
+        url: 'example.com'
+      }
+    end
+
+    let(:user) { User.create_from_identity(identity, attributes) }
+
+    it 'updates a user with dummy' do
+      subject
+      expect(user).to have_attributes(
+        authority: nil,
+        email: "#{user.name}@fabble.cc",
+        email_confirmation: "#{user.name}@fabble.cc",
+        is_deleted: true,
+        location: nil,
+        password_digest: nil,
+        url: nil
+      )
+      expect(user.name).to start_with('deleted-user-')
+    end
+
+    it 'deletes user avatar' do
+      subject
+      expect(user.avatar.file).to be_nil
+    end
+
+    it 'deletes user identities' do
+      subject
+      expect(user.identities).to be_empty
+    end
+
+    it 'deletes user projects' do
+      expect(user.projects).to receive(:soft_destroy_all!).once
+      subject
+    end
+
+    it 'deletes user memberships' do
+      FactoryBot.create_list(:membership, 2, user: user)
+      subject
+      expect(user.memberships).to be_empty
+    end
+
+    describe 'likes' do
+      let!(:project) { FactoryBot.create(:project) }
+      before { FactoryBot.create(:like, user: user, project: project) }
+
+      it 'deletes user likes' do
+        subject
+        expect(user.likes).to be_empty
+      end
+
+      it 'decrements project likes_count' do
+        expect{ subject }.to change{ project.reload.likes_count }.by(-1)
+      end
+    end
+
+    describe 'card_comments' do
+      let!(:card_comment) { FactoryBot.create_list(:card_comment, 2, user: user) }
+
+      it 'updates user card_comments' do
+        subject
+        expect(user.card_comments).to be_all { |comment| comment.body == '（このユーザーは退会しました）' }
+      end
+    end
+
+    describe 'project_comments' do
+      let!(:project_comment) { FactoryBot.create_list(:project_comment, 2, user: user) }
+
+      it 'updates user project_comments' do
+        subject
+        expect(user.project_comments).to be_all { |comment| comment.body == '（このユーザーは退会しました）' }
+      end
+    end
+
+    describe 'my_notifications' do
+      let!(:my_notifications) { FactoryBot.create_list(:notification, 2, notified: user) }
+
+      it 'deletes my_notifications' do
+        subject
+        expect(user.my_notifications).to be_empty
+      end
+    end
+
+    describe 'notifications_given' do
+      let!(:notifications_given) { FactoryBot.create_list(:notification, 2, notifier: user) }
+
+      it 'deletes notifications_given' do
+        subject
+        expect(user.notifications_given).to be_empty
+      end
+    end
+
+    describe 'collaborations' do
+      let!(:collaborations) { FactoryBot.create_list(:collaboration, 2, owner: user) }
+
+      it 'deletes collaborations' do
+        subject
+        expect(user.collaborations).to be_empty
+      end
+    end
+  end
+
+  describe '#active' do
+    subject { User.active }
+    let!(:active) { FactoryBot.create(:user, is_deleted: false) }
+    let!(:deleted) { FactoryBot.create(:user, is_deleted: true) }
+
+    it { is_expected.to eq [active] }
+  end
 end

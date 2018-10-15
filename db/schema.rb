@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_01_040654) do
+ActiveRecord::Schema.define(version: 2018_10_01_113544) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 2018_10_01_040654) do
     t.string "password_digest"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.boolean "is_deleted", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
