@@ -136,5 +136,5 @@
       = f.button type: "submit", class: "submit btn"
         span.icon= image_tag("/images/project/update_project.png")
         'Update Project
-      = link_to "Cancel", project_path(owner_name: @owner.slug, id: @project), class: "cancel btn"
-      = link_to "Delete Project", project_destroy_or_render_edit_path(owner_name: @owner.slug, project_id: @project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }
+      = link_to "Cancel", project_path(@owner, @project), class: "cancel btn"
+      = link_to "Delete Project", project_destroy_or_render_edit_path(@owner, @project), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to remove this project?" }

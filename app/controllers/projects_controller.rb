@@ -38,7 +38,7 @@ class ProjectsController < ApplicationController
     @project.name = slug
 
     if @project.save
-      redirect_to edit_project_path(id: @project, owner_name: @owner)
+      redirect_to edit_project_path(@owner, @project)
     else
       render :new
     end
@@ -57,7 +57,7 @@ class ProjectsController < ApplicationController
       notify_users_on_update(@project, @owner)
       respond_to do |format|
         format.json { render json: { success: true } }
-        format.html { redirect_to project_path(@project, owner_name: @owner) }
+        format.html { redirect_to project_path(@owner, @project) }
       end
     else
       respond_to do |format|
@@ -69,14 +69,14 @@ class ProjectsController < ApplicationController
 
   def destroy
     @project.soft_destroy!
-    redirect_to owner_path(owner_name: @project.owner.slug)
+    redirect_to owner_path(@project.owner)
   rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::RecordNotSaved
-    redirect_to owner_path(owner_name: @project.owner.slug), flash: { alert: 'Project could not be deleted.' }
+    redirect_to owner_path(@project.owner), flash: { alert: 'Project could not be deleted.' }
   end
 
   def destroy_or_render_edit
     @project.soft_destroy!
-    redirect_to owner_path(owner_name: @project.owner.slug)
+    redirect_to owner_path(@project.owner)
   rescue ActiveRecord::RecordNotDestroyed, ActiveRecord::RecordNotSaved
     flash.now[:alert] = 'Project could not be deleted.'
     render :edit
@@ -167,7 +167,7 @@ class ProjectsController < ApplicationController
       users = project.notifiable_users current_user
       return if users.blank?
 
-      url = project_path(project, owner_name: owner)
+      url = project_path(owner, project)
       body = "#{project.title} was updated by #{current_user.name}."
       project.notify(users, current_user, url, body)
     end

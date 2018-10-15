@@ -57,5 +57,5 @@ li.project
 
     - if can? :manage, project
       .btns
-        = link_to "edit", edit_project_path(project, owner_name: project.owner.slug), class: "edit btn"
-        = link_to "delete", project_path(project.owner.slug, project), method: "delete", class: "delete btn", data: { confirm: "Are you sure to delete this project?" }
+        = link_to "edit", edit_project_path(project.owner, project), class: "edit btn"
+        = link_to "delete", project_path(project.owner, project), method: "delete", class: "delete btn", data: { confirm: "Are you sure to delete this project?" }

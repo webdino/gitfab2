@@ -8,11 +8,11 @@ main#note-cards-show
   = render "projects/basic_informations"
 
   #tabs
-    = link_to project_path(@project, owner_name: @owner.slug) do
+    = link_to project_path(@owner, @project) do
       .tab
         'Recipe
         = "(#{@project.states_count})"
-    = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
+    = link_to project_note_cards_path(@owner, @project) do
       .tab.active
         'Memos
         = "(#{@project.note_cards_count})"
@@ -23,7 +23,7 @@ main#note-cards-show
         h1
           'Memo
         - if can? :edit, @project
-          - new_url = new_project_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+          - new_url = new_project_note_card_path(@owner, @project)
           = link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
     - card = @note_card
@@ -39,7 +39,7 @@ main#note-cards-show
                 .postedby
                   ruby:
                     author = card.contributors.first || @project.owner
-                    link = author.present? ? link_to(image_tag(author.avatar.thumb.url) + author.name, owner_path(owner_name: author.slug)) : ""
+                    link = author.present? ? link_to(image_tag(author.avatar.thumb.url) + author.name, owner_path(author)) : ""
                     datetime = card.created_at.nil? ? '' : card.created_at.strftime('%B %d, %Y')
 
                   - if author.present?
@@ -50,8 +50,8 @@ main#note-cards-show
                 .control
                   - if can? :manage, card
                     span.edit
-                      - delete_url = project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
-                      - edit_url = edit_project_note_card_path(owner_name: @owner.slug, project_id: @project.name, id: card.id)
+                      - delete_url = project_note_card_path(@owner, @project, card)
+                      - edit_url = edit_project_note_card_path(@owner, @project, card)
                       = link_to "delete", delete_url, remote: true, method: :delete, class: "btn delete-card", "data-container" => ".card"
                       = link_to "edit", edit_url, remote: true, class: "btn edit-card", "data-container" => ".card"
 

@@ -1,9 +1,9 @@
 #tabs
-  = link_to project_path(@project, owner_name: @owner.slug) do
+  = link_to project_path(@owner, @project) do
     .tab.active
       'Recipe
       = "(#{@project.states_count})"
-  = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
+  = link_to project_note_cards_path(@owner, @project) do
     .tab
       'Memos
       = "(#{@project.note_cards_count})"
@@ -34,7 +34,7 @@ section#recipe-cards
 
     .article-column.sp
       - if can? :edit, @project
-        - new_url = new_project_state_path(owner_name: @owner.slug, project_id: @project.name, "state[_type]" => Card::State.name)
+        - new_url = new_project_state_path(@owner, @project, "state[_type]" => Card::State.name)
         = link_to "Add State", new_url, remote: true, class: "btn new-card", "data-list" => "#recipe-card-list", "data-classname" => "state-wrapper", "data-template" => "#state-template"
 
     = nested_form_for @project, url: project_change_order_path(@owner, @project), html: { class: "order-change-form" }, remote: true do |f|

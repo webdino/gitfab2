@@ -18,9 +18,9 @@ section#layouts-header
         #tools
           .user
             .avatar
-              = link_to image_tag(current_user.avatar.thumb.url, class: "avator-thumb"), owner_path(owner_name: current_user.slug)
+              = link_to image_tag(current_user.avatar.thumb.url, class: "avator-thumb"), owner_path(current_user)
             .name
-              = link_to current_user.name, owner_path(owner_name: current_user.slug)
+              = link_to current_user.name, owner_path(current_user)
           .box
             = link_to "", new_project_path, title: "Create Project", class: "icon create-project"
 

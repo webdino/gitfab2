@@ -1,9 +1,9 @@
 #tabs
-  = link_to project_path(@project, owner_name: @owner.slug) do
+  = link_to project_path(@owner, @project) do
     .tab
       'Recipe
       = "(#{@project.states_count})"
-  = link_to project_note_cards_path(@project, owner_name: @owner.slug) do
+  = link_to project_note_cards_path(@owner, @project) do
     .tab.active
       'Memos
       = "(#{@project.note_cards_count})"
@@ -14,7 +14,7 @@ section#note-cards
       h1
         'Memos
       - if can? :edit, @project
-        - new_url = new_project_note_card_path(owner_name: @owner.slug, project_id: @project.name)
+        - new_url = new_project_note_card_path(@owner, @project)
         = link_to "+ add Memo", new_url, remote: true, class: "btn new-card", "data-list" => "#note-card-list", "data-classname" => "note-card-wrapper", "data-template" => "#note-template"
 
   ul#note-card-list.card-list

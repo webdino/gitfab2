@@ -99,11 +99,7 @@ class NoteCardsController < ApplicationController
     def notify
       return unless @_response.response_code == 200
       users = @project.notifiable_users current_user
-      url = project_note_card_path(
-        owner_name: @project.owner.slug,
-        project_id: @project.name,
-        id: @note_card.id
-      )
+      url = project_note_card_path(@project.owner, @project, @note_card)
       if action_name == 'update' && current_user
         body = "#{current_user.name} update a memo, '#{@note_card.title}' in #{@project.title}."
         @project.notify users, current_user, url, body if users.length > 0

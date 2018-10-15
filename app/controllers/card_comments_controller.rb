@@ -29,10 +29,10 @@ class CardCommentsController < ApplicationController
       return if users.blank?
 
       if card.class.name == 'Card::NoteCard'
-        url = project_note_card_path(owner_name: project.owner.slug, project_id: project.slug, id: card.id)
+        url = project_note_card_path(project.owner, project, card)
         body = "#{current_user.name} commented on your memo of #{project.title}."
       else
-        url = project_path(project, owner_name: project.owner.slug)
+        url = project_path(project.owner, project)
         body = "#{current_user.name} commented on your recipe of #{project.title}."
       end
       project.notify(users, current_user, url, body)

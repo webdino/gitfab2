@@ -44,7 +44,7 @@
             = link_to image_tag("create-group.png", alt: "Edit group"), [:edit, @owner], class: "create-group-btn"
           ul.members
             - @owner.members.each do |member|
-              = link_to owner_path(owner_name: member.slug) do
+              = link_to owner_path(member) do
                 li.member
                   = image_tag member.avatar.url, class: "member-avatar", name: "#{member.name}"
                   .name
@@ -56,7 +56,7 @@
             = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
           ul.groups
             - @owner.groups.active.each do |group|
-              = link_to owner_path(owner_name: group.slug) do
+              = link_to owner_path(group) do
                 li.group
                   = image_tag group.avatar.url, class: "group-avatar", name: "#{group.name}"
                   .name

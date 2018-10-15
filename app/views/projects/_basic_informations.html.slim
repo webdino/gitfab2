@@ -80,14 +80,14 @@ section#basic-informations
     section.members
       .title Owner & Collaborators
       .owner
-        = link_to owner_path(owner_name: @owner.slug), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
+        = link_to owner_path(@owner), alt: @owner.name, title: @owner.name, class: "thumb-wrapper" do
           .thumb style="background-image: url('#{@owner.avatar.small.url}')"
 
       - if @project.collaborators.present?
         ul.collaborators
           - @project.collaborators.each do |collaborator|
             li.collaborator
-              = link_to owner_path(owner_name: collaborator.slug), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
+              = link_to owner_path(collaborator), alt: collaborator.name, title: collaborator.name, class: "thumb-wrapper" do
                 .thumb style="background-image: url('#{collaborator.avatar.small.url}')"
 
       - if can? :manage, @project
@@ -114,7 +114,7 @@ section#basic-informations
                     - @project.collaborators.each do |collaborator|
                       = render "collaborations/collaboration", collaboration: collaborator.collaboration_in(@project)
 
-                = link_to "Back", project_path(@project, owner_name: @project.owner.slug), class: "back-btn btn"
+                = link_to "Back", project_path(@project.owner, @project), class: "back-btn btn"
 
     section.license
       .title License
@@ -128,7 +128,7 @@ section#basic-informations
         == Sanitize.clean auto_link(simple_format(@project.description), sanitize: false), Sanitize::Config::CARD
 
 - if can? :manage, @project
-  = link_to "", edit_project_path(@project, owner_name: @owner.slug), class: "btn #{'forked-project-tools' if @project.is_fork?}", id: "project-edit-btn"
+  = link_to "", edit_project_path(@owner, @project), class: "btn #{'forked-project-tools' if @project.is_fork?}", id: "project-edit-btn"
 
 section.tools class="#{'forked-project-tools' if @project.is_fork?}"
   = link_to "", project_slideshow_path(@project.owner, @project), id: "slideshow-btn", target: "_blank"
