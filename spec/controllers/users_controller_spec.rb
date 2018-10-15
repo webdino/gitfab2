@@ -217,4 +217,12 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH backup' do
+    subject { patch :backup, params: params }
+    let(:user) { FactoryBot.create(:user) }
+    let(:params) { { user_id: user, email: 'noriyotcp@example.com' } }
+    before { sign_in user }
+    it { is_expected.to redirect_to edit_user_path }
+  end
 end

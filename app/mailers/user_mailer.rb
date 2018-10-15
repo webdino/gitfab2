@@ -4,4 +4,11 @@ class UserMailer < ApplicationMailer
     @token = token
     mail(to: email, subject: "Reset password instructions")
   end
+
+  def backup(email, token, user)
+    @email = email
+    @token = token
+    @user = user
+    mail(to: email, subject: "Export")
+  end
 end

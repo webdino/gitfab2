@@ -46,6 +46,17 @@
           = link_to_facebook_sign_in
 
   .panel
+    h1 バックアップ
+    h2 入力されたメールアドレスへバックアップ用リンクを送付します
+
+    = form_with(url: user_backup_path(current_user), method: :patch, local: true) do |f|
+      .form-group
+        = f.label :email, "メールアドレス"
+        = f.email_field :email, class: "form-control"
+      .form-group
+        = f.submit "Backup", class: "btn primary"
+
+  .panel
     ul
       li.form-group
         = link_to "退会する", user_path, method: :delete, class: "btn", data: { confirm: "本当に退会しますか?\n退会すると、このユーザーに紐づく全てのデータが削除されます。" }

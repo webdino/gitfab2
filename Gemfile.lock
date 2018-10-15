@@ -318,6 +318,7 @@ GEM
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
     ruby-progressbar (1.10.0)
+    rubyzip (1.2.2)
     sanitize (5.0.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.8.0)
@@ -437,6 +438,7 @@ DEPENDENCIES
   rails_autolink
   rspec-rails
   rubocop
+  rubyzip
   sanitize
   sass-rails
   simplecov
