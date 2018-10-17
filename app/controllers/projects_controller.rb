@@ -18,6 +18,7 @@ class ProjectsController < ApplicationController
   def show
     @project = @owner.projects.active.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
+    authorize!(:read, @project)
 
     respond_to do |format|
       format.html do
