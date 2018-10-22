@@ -28,6 +28,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include ActiveSupport::Testing::TimeHelpers
   config.include ControllerMacros::InstanceMethods, :type => :controller
+  config.include ActiveJob::TestHelper
 
   config.before(:suite) do
     DatabaseRewinder.clean_all

@@ -1,3 +1,21 @@
 RSpec.describe BackupJob, type: :job do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { described_class.perform_later(user, 'noriyotcp@example.com') }
+
+  let!(:user) { FactoryBot.create(:user) }
+  it { expect{ subject }.to have_enqueued_job(described_class).with(user, 'noriyotcp@example.com').on_queue('default') }
+
+  describe 'running backup and mailer' do
+    let(:mailer) { double('mailer') }
+
+    before do
+      allow(SecureRandom).to receive(:urlsafe_base64).and_return('securerandomtoken')
+      allow(UserMailer).to receive(:backup).with('noriyotcp@example.com', SecureRandom.urlsafe_base64, user).and_return(mailer)
+    end
+
+    it do
+      expect_any_instance_of(Backup).to receive(:run)
+      expect(mailer).to receive(:deliver_now)
+      perform_enqueued_jobs { subject }
+    end
+  end
 end
