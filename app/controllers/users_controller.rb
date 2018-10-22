@@ -89,8 +89,9 @@ class UsersController < ApplicationController
     if can?(:backup, user)
       BackupJob.perform_later(user, params[:email])
       redirect_to edit_user_path, flash: { success: "バックアップ用のメールを送信しました" }
+    else
+      render_403
     end
-    # TODO: rescue
   end
 
   def download_backup
