@@ -15,4 +15,23 @@ RSpec.describe UserMailer, type: :mailer do
                               .and include("/password/edit?reset_password_token=#{token}")
     end
   end
+
+  describe '#backup' do
+    let(:mail) { UserMailer.backup(email, token, user) }
+    let(:email) { 'test@example.com' }
+    let(:token) { 'download_backup_token' }
+    let(:user) { FactoryBot.create(:user) }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Download your backup')
+      expect(mail.to).to eq([email])
+      expect(mail.from).to eq(['support@fabble.cc'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match("Hello #{email}")
+                              .and include("users/#{user.name}/download_backup?download_backup_token=#{token}")
+
+    end
+  end
 end

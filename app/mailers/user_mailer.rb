@@ -9,6 +9,6 @@ class UserMailer < ApplicationMailer
     @email = email
     @token = token
     @user = user
-    mail(to: email, subject: "Export")
+    mail(to: email, subject: 'Download your backup')
   end
 end
