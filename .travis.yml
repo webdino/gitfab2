@@ -15,7 +15,7 @@ services:
 env: RAILS_ENV=test CI=true
 
 rvm:
-  - 2.5.1
+  - 2.5.3
   - ruby-head
 gemfile:
   - Gemfile
