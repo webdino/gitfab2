@@ -5,10 +5,9 @@ class UserMailer < ApplicationMailer
     mail(to: email, subject: "Reset password instructions")
   end
 
-  def backup(email, token, user)
-    @email = email
+  def backup(token, user)
     @token = token
     @user = user
-    mail(to: email, subject: 'Download your backup')
+    mail(to: user.email, subject: 'Download your backup')
   end
 end

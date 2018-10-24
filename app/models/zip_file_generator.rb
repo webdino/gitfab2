@@ -1,3 +1,4 @@
+# cf. https://github.com/rubyzip/rubyzip/tree/d07b13a6cf0a413e010c48879aebd9576bfb5f68#zipping-a-directory-recursively
 require 'zip'
 
 # This is a simple example which uses rubyzip to

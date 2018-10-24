@@ -218,16 +218,15 @@ describe UsersController, type: :controller do
     end
   end
 
-  describe 'PATCH backup' do
-    subject { patch :backup, params: params }
+  describe 'POST backup' do
+    subject { post :backup, params: { user_id: user } }
     let(:user) { FactoryBot.create(:user) }
-    let(:params) { { user_id: user, email: 'noriyotcp@example.com' } }
 
     context 'valid user' do
       before { sign_in user }
       it { is_expected.to redirect_to edit_user_path }
       it do
-        expect(BackupJob).to receive(:perform_later).with(user, params[:email])
+        expect(BackupJob).to receive(:perform_later).with(user)
         subject
       end
     end
@@ -236,7 +235,7 @@ describe UsersController, type: :controller do
       before { sign_in FactoryBot.create(:user) }
       it { is_expected.to have_http_status :forbidden }
       it do
-        expect(BackupJob).not_to receive(:perform_later).with(user, params[:email])
+        expect(BackupJob).not_to receive(:perform_later).with(user)
         subject
       end
     end

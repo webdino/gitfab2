@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   resources :users, except: [:show, :edit, :update, :destroy] do
     resources :memberships, only: [:index, :update, :destroy]
     patch :update_password
-    patch :backup
+    post :backup
     get :download_backup
   end
   resource :user, only: [:edit, :update, :destroy]

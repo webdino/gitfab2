@@ -1,8 +1,8 @@
 class BackupJob < ApplicationJob
   queue_as :default
 
-  def perform(user, email)
+  def perform(user)
     Backup.new(user).run
-    UserMailer.backup(email, SecureRandom.urlsafe_base64, user).deliver_now
+    UserMailer.backup(SecureRandom.urlsafe_base64, user).deliver_now
   end
 end
