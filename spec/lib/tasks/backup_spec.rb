@@ -8,37 +8,8 @@ describe 'rake task backup' do
     Rake::Task.define_task(:environment)
   end
 
-  describe 'backup:delete' do
-    before do
-      FileUtils.mkdir_p(Rails.root.join('tmp', 'spec', 'zip'))
-      File.open(Rails.root.join('tmp', 'spec', 'zip', 'example.zip'), 'w')
-      @rake['backup:delete'].reenable
-    end
-
-    describe '3 days later' do
-      around do |example|
-        travel_to(3.days.since) { example.run }
-      end
-
-      it do
-        @rake['backup:delete'].invoke(Rails.root.join('tmp', 'spec', 'zip'))
-        expect(File.exist?(Rails.root.join('tmp', 'spec', 'zip', 'example.zip'))).to eq false
-      end
-    end
-
-    describe '2 days later' do
-      around do |example|
-        travel_to(2.days.since) { example.run }
-      end
-
-      it do
-        @rake['backup:delete'].invoke(Rails.root.join('tmp', 'spec', 'zip'))
-        expect(File.exist?(Rails.root.join('tmp', 'spec', 'zip', 'example.zip'))).to eq true
-      end
-    end
-
-    after do
-      FileUtils.rm_rf(Rails.root.join('tmp', 'spec'))
-    end
+  it do
+    expect(Backup).to receive(:delete_old_files).once
+    @rake['backup:delete'].invoke
   end
 end
