@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Backup
+  include Rails.application.routes.url_helpers
+
   def initialize(user)
     @user = user
   end
@@ -8,70 +10,80 @@ class Backup
   def run
     generate_json_files
     generate_zip_file
-    FileUtils.rm_rf(input_dir) # cleanup json directories
+    FileUtils.rm_rf(json_output_dir) # cleanup json directories
   end
 
   def zip_filename
-    "#{@user.name}_backup.zip"
+    "#{user.name}_backup.zip"
   end
 
   def path_to_zip
-    output_dir.join(zip_filename)
+    zip_output_dir.join(zip_filename)
   end
 
   private
 
-    def input_dir
-      Rails.root.join('tmp', 'backup', @user.name)
+    attr_reader :user
+
+    def json_output_dir
+      Rails.root.join('tmp', 'backup', user.name)
     end
 
-    def output_dir
+    def zip_output_dir
       Rails.root.join('tmp', 'backup', 'zip')
     end
 
     def generate_json_files
-      # input_dirをルートとして階層を作る
+      # json_output_dirをルートとして階層を作る
       # ZipFileGeneratorに渡して、再帰的にzipしてもらう
-      unless Dir.exist?(input_dir)
-        FileUtils.mkdir_p("#{input_dir}/user")
-        FileUtils.mkdir_p("#{input_dir}/projects")
+      unless Dir.exist?(json_output_dir)
+        FileUtils.mkdir_p("#{json_output_dir}/user")
+        FileUtils.mkdir_p("#{json_output_dir}/projects")
       end
 
-      File.open("#{input_dir}/user/user.json", 'w') do |file|
-        JSON.dump(generate_user_hash, file)
+      File.open("#{json_output_dir}/user/user.json", 'w') do |file|
+        JSON.dump(user_hash, file)
       end
-      File.open("#{input_dir}/projects/projects.json", 'w') do |file|
-        JSON.dump(generate_projects_hash, file)
+      File.open("#{json_output_dir}/projects/projects.json", 'w') do |file|
+        JSON.dump(projects_hash, file)
       end
-      File.open("#{input_dir}/comments.json", 'w') do |file|
-        JSON.dump(generate_comments_hash, file)
+      File.open("#{json_output_dir}/comments.json", 'w') do |file|
+        JSON.dump(comments_hash, file)
       end
 
       # copy contents
-      FileUtils.mkdir_p("#{input_dir}/user/avatar")
-      FileUtils.copy(@user.avatar.file.file, "#{input_dir}/user/avatar")
-      @user.projects.each do |project|
+      FileUtils.mkdir_p("#{json_output_dir}/user/avatar")
+      FileUtils.copy(user.avatar.file.file, "#{json_output_dir}/user/avatar")
+      user.projects.each do |project|
         copy_project_contents(project)
       end
     end
 
     def generate_zip_file
       File.delete(path_to_zip) if File.exist?(path_to_zip)
-      Dir.mkdir(output_dir) unless Dir.exist?(output_dir)
-      zf = ZipFileGenerator.new(input_dir, path_to_zip)
+      Dir.mkdir(zip_output_dir) unless Dir.exist?(zip_output_dir)
+      zf = ZipFileGenerator.new(json_output_dir, path_to_zip)
       zf.write
     end
 
-    def generate_user_hash
+    def base_url
+      "https://fabble.cc"
+    end
+
+    def image_url(path)
+      URI.join(base_url, path).to_s
+    end
+
+    def user_hash
       {
-        source: Rails.application.routes.url_helpers.owner_url(@user, host: "https://fabble.cc"),
-        name: @user.name,
-        url: @user.url,
-        location: @user.location,
-        email: @user.email,
-        avatar: "https://fabble.cc#{@user.avatar.url}",
-        created_at: @user.created_at.iso8601,
-        identities: @user.identities.map do |identity|
+        source: owner_url(user, host: base_url),
+        name: user.name,
+        url: user.url,
+        location: user.location,
+        email: user.email,
+        avatar: image_url(user.avatar.url),
+        created_at: user.created_at.iso8601,
+        identities: user.identities.map do |identity|
           {
             provider: identity.provider,
             email: identity.email,
@@ -81,39 +93,39 @@ class Backup
             created_at: identity.created_at.iso8601
           }
         end,
-        groups: @user.groups.map do |group|
+        groups: user.groups.map do |group|
           {
             name: group.name,
             url: group.url,
             location: group.location,
-            avatar: "https://fabble.cc#{group.avatar.url}",
-            role: @user.membership_in(group).role
+            avatar: image_url(group.avatar.url),
+            role: user.membership_in(group).role
           }
         end
       }
     end
 
-    def generate_projects_hash
-      @user.projects.map do |project|
+    def projects_hash
+      user.projects.map do |project|
         {
-          source: Rails.application.routes.url_helpers.project_url(project.owner, project, host: "https://fabble.cc"),
+          source: project_url(project.owner, project, host: base_url),
           title: project.title,
           description: project.description,
           created_at: project.created_at.iso8601,
-          media: project.figures.map { |figure| "https://fabble.cc#{figure.content.url}" },
+          media: project.figures.map { |figure| image_url(figure.content.url) },
           youtube: project.figures.find { |figure| figure.link.present? }&.link,
           states: project.states.order(:position).map do |card|
             {
               contributors: card.contributors.map do |contributor|
                 {
-                  source: Rails.application.routes.url_helpers.owner_url(contributor, host: "https://fabble.cc"),
+                  source: owner_url(contributor, host: base_url),
                   name: contributor.name
                 }
               end,
               title: card.title,
               description: card.description,
               created_at: card.created_at.iso8601,
-              media: card.figures.map { |figure| "https://fabble.cc#{figure.content.url}" },
+              media: card.figures.map { |figure| image_url(figure.content.url) },
               youtube: card.figures.find { |figure| figure.link.present? }&.link,
               material: card.attachments.select { |a| a.kind == 'material' },
               tool: card.attachments.select { |a| a.kind == 'tool' },
@@ -124,7 +136,7 @@ class Backup
                   title: annotation.title,
                   description: annotation.description,
                   created_at: annotation.created_at.iso8601,
-                  media: annotation.figures.map { |figure| "https://fabble.cc#{figure.content.url}" },
+                  media: annotation.figures.map { |figure| image_url(figure.content.url) },
                   youtube: annotation.figures.find { |figure| figure.link.present? }&.link,
                   material: annotation.attachments.select { |a| a.kind == 'material' },
                   tool: annotation.attachments.select { |a| a.kind == 'tool' },
@@ -139,7 +151,7 @@ class Backup
               title: card.title,
               description: card.description,
               created_at: card.created_at.iso8601,
-              media: card.figures.map { |figure| "https://fabble.cc#{figure.content.url}" },
+              media: card.figures.map { |figure| image_url(figure.content.url) },
               youtube: card.figures.find { |figure| figure.link.present? }&.link
             }
           end,
@@ -148,7 +160,7 @@ class Backup
               title: card.title,
               description: card.description,
               created_at: card.created_at.iso8601,
-              media: card.figures.map { |figure| "https://fabble.cc#{figure.content.url}" },
+              media: card.figures.map { |figure| image_url(figure.content.url) },
               youtube: card.figures.find { |figure| figure.link.present? }&.link
             }
           end
@@ -156,21 +168,20 @@ class Backup
       end
     end
 
-    def generate_comments_hash
+    def comments_hash
       {
-        projects: @user.project_comments.map do |comment|
+        projects: user.project_comments.map do |comment|
           {
-            # TODO: project_commentへのアンカーを入れたのだが、要確認
-            source: Rails.application.routes.url_helpers.project_url(comment.project.owner, comment.project, anchor: "project-comment-#{comment.id}", host: "https://fabble.cc"),
+            source: project_url(comment.project.owner, comment.project, anchor: "project-comment-#{comment.id}", host: base_url),
             body: comment.body,
             created_at: comment.created_at.iso8601
           }
         end,
-        recipes: @user.card_comments.map do |comment|
+        recipes: user.card_comments.map do |comment|
           {
             # TODO: source: https://fabble.cc/card_comments/323
             # 上記のようになっているが要確認
-            source: Rails.application.routes.url_helpers.card_comment_url(comment, host: "https://fabble.cc"),
+            source: card_comment_url(comment, host: base_url),
             body: comment.body,
             created_at: comment.created_at.iso8601
           }
@@ -197,8 +208,8 @@ class Backup
       contents.compact!
 
       if contents.present?
-        FileUtils.mkdir_p("#{input_dir}/projects/media/#{project.name}")
-        FileUtils.copy(contents, "#{input_dir}/projects/media/#{project.name}")
+        FileUtils.mkdir_p("#{json_output_dir}/projects/media/#{project.name}")
+        FileUtils.copy(contents, "#{json_output_dir}/projects/media/#{project.name}")
       end
     end
 end
