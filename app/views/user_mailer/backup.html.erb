@@ -2,6 +2,6 @@
 
 <p>To download your data, click the link below.</p>
 
-<p><%= link_to 'Download backup', user_download_backup_url(user_id: @user, download_backup_token: @token) %></p>
+<p><%= link_to 'Download backup', edit_user_url(anchor: 'download-backup') %></p>
 
 <p>If you didn't request this, please ignore this email.</p>

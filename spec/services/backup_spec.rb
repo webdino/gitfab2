@@ -3,10 +3,11 @@
 describe Backup do
   describe '.delete_old_files' do
     subject { Backup.delete_old_files }
+    let(:zip_path) { Rails.root.join('tmp', 'backup', 'zip', 'example.zip') }
 
     before do
-      FileUtils.mkdir_p(Rails.root.join('tmp', 'backup', 'zip'))
-      File.open(Rails.root.join('tmp', 'backup', 'zip', 'example.zip'), 'w')
+      Rails.root.join('tmp', 'backup', 'zip').mkpath
+      File.open(zip_path, 'w')
     end
 
     describe '3 days later' do
@@ -16,7 +17,7 @@ describe Backup do
 
       it do
         subject
-        expect(File.exist?(Rails.root.join('tmp', 'backup', 'zip', 'example.zip'))).to eq false
+        expect(zip_path.exist?).to eq false
       end
     end
 
@@ -27,12 +28,12 @@ describe Backup do
 
       it do
         subject
-        expect(File.exist?(Rails.root.join('tmp', 'backup', 'zip', 'example.zip'))).to eq true
+        expect(zip_path.exist?).to eq true
       end
     end
+  end
 
-    after do
-      FileUtils.rm_rf(Rails.root.join('tmp', 'backup', 'zip', 'example.zip'))
-    end
+  after(:each) do
+    FileUtils.rm(zip_path, force: true)
   end
 end

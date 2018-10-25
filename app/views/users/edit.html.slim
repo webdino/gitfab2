@@ -46,12 +46,17 @@
           = link_to_facebook_sign_in
 
   .panel
-    h1 バックアップ
-    h2 登録済みのメールアドレスへバックアップ用リンクを送付します
+    h1 バックアップファイルの作成
 
     = form_with(url: user_backup_path(current_user), local: true) do |f|
       .form-group
-        = f.submit "Backup", class: "btn primary"
+        = f.submit "Create Backup", class: "btn primary"
+
+    - if Backup.zip_exist?(current_user)
+      h1#download-backup バックアップファイルのダウンロード
+
+      .form-group
+        = link_to "Download Backup", user_download_backup_path(current_user), class: "btn primary", download: ''
 
   .panel
     ul

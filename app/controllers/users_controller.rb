@@ -88,18 +88,20 @@ class UsersController < ApplicationController
     user = User.active.find_by(name: params[:user_id])
     if can?(:backup, user)
       BackupJob.perform_later(user)
-      redirect_to edit_user_path, flash: { success: "バックアップ用のメールを送信しました" }
+      redirect_to edit_user_path, flash: { success: "バックアップを開始しました。バックアップファイルのダウンロードの準備ができ次第、メールでリンクをお送りします。" }
     else
       render_403
     end
   end
 
   def download_backup
-    return if params[:download_backup_token].blank?
-
     user = User.active.find_by(name: params[:user_id])
-    backup = Backup.new(user)
-    send_data(backup.path_to_zip.read, filename: backup.zip_filename)
+    if can?(:download_backup, user)
+      backup = Backup.new(user)
+      send_data(backup.path_to_zip.read, filename: backup.zip_filename)
+    else
+      render_403
+    end
   end
 
   private

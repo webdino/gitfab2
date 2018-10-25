@@ -3,6 +3,6 @@ class BackupJob < ApplicationJob
 
   def perform(user)
     Backup.new(user).create
-    UserMailer.backup(SecureRandom.urlsafe_base64, user).deliver_now
+    UserMailer.backup(user).deliver_now
   end
 end

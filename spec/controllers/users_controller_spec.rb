@@ -240,4 +240,25 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'GET download_backup' do
+    subject { get :download_backup, params: { user_id: user } }
+    let(:user) { FactoryBot.create(:user) }
+    let(:backup) { Backup.new(user) }
+
+    before do
+      Rails.root.join('tmp', 'backup', 'zip').mkpath
+      File.open(Rails.root.join('tmp', 'backup', 'zip', "#{user.name}_backup.zip"), 'w')
+      sign_in user
+    end
+
+    it do
+      expect(@controller).to receive(:send_data).with(backup.path_to_zip.read, filename: backup.zip_filename) { @controller.render nothing: true }
+      subject
+    end
+
+    after do
+      File.delete(backup.path_to_zip)
+    end
+  end
 end

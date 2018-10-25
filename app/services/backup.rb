@@ -31,6 +31,10 @@ class Backup
     end
   end
 
+  def self.zip_exist?(user)
+    Rails.root.join('tmp', 'backup', 'zip', "#{user.name}_backup.zip").exist?
+  end
+
   private
 
     attr_reader :user
