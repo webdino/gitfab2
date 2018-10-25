@@ -46,24 +46,24 @@ class Backup
     def generate_json_files
       # json_output_dirをルートとして階層を作る
       # ZipFileGeneratorに渡して、再帰的にzipしてもらう
-      unless Dir.exist?(json_output_dir)
-        FileUtils.mkdir_p("#{json_output_dir}/user")
-        FileUtils.mkdir_p("#{json_output_dir}/projects")
-      end
+      user_dir = json_output_dir.join('user')
+      projects_dir = json_output_dir.join('projects')
+      user_dir.mkpath
+      projects_dir.mkpath
 
-      File.open("#{json_output_dir}/user/user.json", 'w') do |file|
+      File.open(user_dir.join('user.json'), 'w') do |file|
         JSON.dump(user_hash, file)
       end
-      File.open("#{json_output_dir}/projects/projects.json", 'w') do |file|
+      File.open(projects_dir.join('projects.json'), 'w') do |file|
         JSON.dump(projects_hash, file)
       end
-      File.open("#{json_output_dir}/comments.json", 'w') do |file|
+      File.open(json_output_dir.join('comments.json'), 'w') do |file|
         JSON.dump(comments_hash, file)
       end
 
       # copy contents
-      FileUtils.mkdir_p("#{json_output_dir}/user/avatar")
-      FileUtils.copy(user.avatar.file.file, "#{json_output_dir}/user/avatar")
+      json_output_dir.join('user', 'avatar').mkpath
+      FileUtils.copy(user.avatar.file.file, json_output_dir.join('user', 'avatar'))
       user.projects.each do |project|
         copy_project_contents(project)
       end
@@ -71,7 +71,7 @@ class Backup
 
     def generate_zip_file
       File.delete(path_to_zip) if File.exist?(path_to_zip)
-      Dir.mkdir(zip_output_dir) unless Dir.exist?(zip_output_dir)
+      zip_output_dir.mkpath
       zf = ZipFileGenerator.new(json_output_dir, path_to_zip)
       zf.write
     end
@@ -218,8 +218,9 @@ class Backup
       contents.compact!
 
       if contents.present?
-        FileUtils.mkdir_p("#{json_output_dir}/projects/media/#{project.name}")
-        FileUtils.copy(contents, "#{json_output_dir}/projects/media/#{project.name}")
+        contents_dir = json_output_dir.join('projects', 'media', project.name)
+        contents_dir.mkpath
+        FileUtils.copy(contents, contents_dir)
       end
     end
 end
