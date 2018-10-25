@@ -13,7 +13,7 @@ RSpec.describe BackupJob, type: :job do
     end
 
     it do
-      expect_any_instance_of(Backup).to receive(:run)
+      expect_any_instance_of(Backup).to receive(:create)
       expect(mailer).to receive(:deliver_now)
       perform_enqueued_jobs { subject }
     end

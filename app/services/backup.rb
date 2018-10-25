@@ -7,7 +7,7 @@ class Backup
     @user = user
   end
 
-  def run
+  def create
     generate_json_files
     generate_zip_file
     FileUtils.rm_rf(json_output_dir) # cleanup json directories
