@@ -98,7 +98,7 @@ class UsersController < ApplicationController
     user = User.active.find_by(name: params[:user_id])
     if can?(:download_backup, user)
       backup = Backup.new(user)
-      send_data(backup.path_to_zip.read, filename: backup.zip_filename)
+      send_data(backup.zip_path.read, filename: backup.zip_filename)
     else
       render_403
     end

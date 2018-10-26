@@ -17,7 +17,7 @@ class Backup
     "#{user.name}_backup.zip"
   end
 
-  def path_to_zip
+  def zip_path
     zip_output_dir.join(zip_filename)
   end
 
@@ -32,7 +32,7 @@ class Backup
   end
 
   def self.zip_exist?(user)
-    new(user).path_to_zip.exist?
+    new(user).zip_path.exist?
   end
 
   private
@@ -74,9 +74,9 @@ class Backup
     end
 
     def generate_zip_file
-      File.delete(path_to_zip) if File.exist?(path_to_zip)
+      File.delete(zip_path) if File.exist?(zip_path)
       zip_output_dir.mkpath
-      zf = ZipFileGenerator.new(json_output_dir, path_to_zip)
+      zf = ZipFileGenerator.new(json_output_dir, zip_path)
       zf.write
     end
 
