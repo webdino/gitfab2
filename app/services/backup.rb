@@ -21,6 +21,10 @@ class Backup
     zip_output_dir.join(zip_filename)
   end
 
+  def zip_exist?
+    zip_path.exist?
+  end
+
   def self.delete_old_files
     zip_files = Dir.glob(Rails.root.join('tmp', 'backup', 'zip', '*'))
     zip_files.each do |zip|
@@ -31,20 +35,20 @@ class Backup
     end
   end
 
-  def self.zip_exist?(user)
-    new(user).zip_path.exist?
-  end
-
   private
 
     attr_reader :user
 
+    def backup_dir
+      Rails.root.join('tmp', 'backup')
+    end
+
     def json_output_dir
-      Rails.root.join('tmp', 'backup', user.name)
+      backup_dir.join(user.name)
     end
 
     def zip_output_dir
-      Rails.root.join('tmp', 'backup', 'zip')
+      backup_dir.join('zip')
     end
 
     def generate_json_files

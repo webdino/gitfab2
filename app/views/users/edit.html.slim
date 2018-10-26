@@ -52,7 +52,7 @@
       .form-group
         = f.submit "Create Backup", class: "btn primary"
 
-    - if Backup.zip_exist?(current_user)
+    - if Backup.new(current_user).zip_exist?
       h1#download-backup バックアップファイルのダウンロード
 
       .form-group
