@@ -22,7 +22,7 @@ class Backup
   end
 
   def self.delete_old_files
-    zip_files = Dir.glob("#{Rails.root.join('tmp', 'backup', 'zip', '*')}")
+    zip_files = Dir.glob(Rails.root.join('tmp', 'backup', 'zip', '*'))
     zip_files.each do |zip|
       s = File::Stat.new(zip)
       if s.mtime.to_date <= 3.days.ago
