@@ -32,7 +32,7 @@ class Backup
   end
 
   def self.zip_exist?(user)
-    Rails.root.join('tmp', 'backup', 'zip', "#{user.name}_backup.zip").exist?
+    new(user).path_to_zip.exist?
   end
 
   private
