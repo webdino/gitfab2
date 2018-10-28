@@ -27,7 +27,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match("Hello #{user.email}")
+      expect(mail.body.encoded).to match("Hello #{user.name}")
                               .and include("user/edit#download-backup")
 
     end
