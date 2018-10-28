@@ -46,7 +46,7 @@ class ZipFileGenerator
 
     def recursively_deflate_directory(disk_file_path, zipfile, zipfile_path)
       zipfile.mkdir zipfile_path
-      subdir = Dir.entries(disk_file_path) - %w(. ..)
+      subdir = Dir.children(disk_file_path)
       write_entries subdir, zipfile_path, zipfile
     end
 
