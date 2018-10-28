@@ -87,6 +87,8 @@ class Backup
     end
 
     def image_url(path)
+      return unless path
+
       URI.join(base_url, path).to_s
     end
 
@@ -143,10 +145,10 @@ class Backup
               created_at: card.created_at.iso8601,
               media: card.figures.map { |figure| image_url(figure.content.url) },
               youtube: card.figures.find { |figure| figure.link.present? }&.link,
-              material: card.attachments.select { |a| a.kind == 'material' },
-              tool: card.attachments.select { |a| a.kind == 'tool' },
-              blueprint: card.attachments.select { |a| a.kind == 'blueprint' },
-              attachment: card.attachments.select { |a| a.kind == 'attachment' },
+              material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+              tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+              blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+              attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact,
               annotations: card.annotations.map do |annotation|
                 {
                   title: annotation.title,
@@ -154,10 +156,10 @@ class Backup
                   created_at: annotation.created_at.iso8601,
                   media: annotation.figures.map { |figure| image_url(figure.content.url) },
                   youtube: annotation.figures.find { |figure| figure.link.present? }&.link,
-                  material: annotation.attachments.select { |a| a.kind == 'material' },
-                  tool: annotation.attachments.select { |a| a.kind == 'tool' },
-                  blueprint: annotation.attachments.select { |a| a.kind == 'blueprint' },
-                  attachment: annotation.attachments.select { |a| a.kind == 'attachment' }
+                  material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+                  tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+                  blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+                  attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
                 }
               end
             }
