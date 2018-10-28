@@ -10,7 +10,7 @@ class Backup
   def create
     generate_json_files
     generate_zip_file
-    FileUtils.rm_rf(json_output_dir) # cleanup json directories
+    remove_json_files
   end
 
   def zip_filename
@@ -75,6 +75,10 @@ class Backup
       user.projects.each do |project|
         copy_project_contents(project)
       end
+    end
+
+    def remove_json_files
+      FileUtils.rm_rf(json_output_dir)
     end
 
     def generate_zip_file
