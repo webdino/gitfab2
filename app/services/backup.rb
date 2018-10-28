@@ -9,6 +9,7 @@ class Backup
 
   def create
     generate_json_files
+    copy_contents
     generate_zip_file
     remove_json_files
   end
@@ -67,13 +68,6 @@ class Backup
       end
       File.open(json_output_dir.join('comments.json'), 'w') do |file|
         JSON.dump(comments_hash, file)
-      end
-
-      # copy contents
-      json_output_dir.join('user', 'avatar').mkpath
-      FileUtils.copy(user.avatar.file.file, json_output_dir.join('user', 'avatar'))
-      user.projects.each do |project|
-        copy_project_contents(project)
       end
     end
 
@@ -209,6 +203,15 @@ class Backup
           }
         end
       }
+    end
+
+    def copy_contents
+      avatar_dir = json_output_dir.join('user', 'avatar')
+      avatar_dir.mkpath
+      FileUtils.copy(user.avatar.file.file, avatar_dir)
+      user.projects.each do |project|
+        copy_project_contents(project)
+      end
     end
 
     def copy_project_contents(project)
