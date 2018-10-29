@@ -3,6 +3,10 @@
 class Backup
   include Rails.application.routes.url_helpers
 
+  BACKUP_DIR = Rails.root.join('tmp', 'backup')
+  ZIP_OUTPUT_DIR = BACKUP_DIR.join('zip')
+  private_constant :BACKUP_DIR, :ZIP_OUTPUT_DIR
+
   def initialize(user)
     @user = user
   end
@@ -19,7 +23,7 @@ class Backup
   end
 
   def zip_path
-    zip_output_dir.join(zip_filename)
+    ZIP_OUTPUT_DIR.join(zip_filename)
   end
 
   def zip_exist?
@@ -27,8 +31,7 @@ class Backup
   end
 
   def self.delete_old_files(before = 3.days.ago)
-    zip_files = Dir.glob(Rails.root.join('tmp', 'backup', 'zip', '*'))
-    zip_files.each do |zip|
+    ZIP_OUTPUT_DIR.each_child do |zip|
       s = File::Stat.new(zip)
       if s.mtime.to_date <= before
         File.delete(zip)
@@ -40,16 +43,8 @@ class Backup
 
     attr_reader :user
 
-    def backup_dir
-      Rails.root.join('tmp', 'backup')
-    end
-
     def json_output_dir
-      backup_dir.join(user.name)
-    end
-
-    def zip_output_dir
-      backup_dir.join('zip')
+      BACKUP_DIR.join(user.name)
     end
 
     def generate_json_files
@@ -77,7 +72,7 @@ class Backup
 
     def generate_zip_file
       File.delete(zip_path) if File.exist?(zip_path)
-      zip_output_dir.mkpath
+      ZIP_OUTPUT_DIR.mkpath
       zf = ZipFileGenerator.new(json_output_dir, zip_path)
       zf.write
     end
