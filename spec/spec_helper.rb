@@ -26,7 +26,6 @@ RSpec.configure do |config|
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.include FactoryBot::Syntax::Methods
-  config.include ActiveSupport::Testing::TimeHelpers
   config.include ControllerMacros::InstanceMethods, :type => :controller
   config.include ActiveJob::TestHelper
 
