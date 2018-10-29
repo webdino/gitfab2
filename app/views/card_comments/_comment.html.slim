@@ -1,6 +1,6 @@
 - user = comment.user
 
-li.comment
+li.comment id="card-comment-#{comment.id}"
   .left
     = link_to image_tag(user.avatar.thumb.url, class: 'avatar'), owner_path(user), title: user.name
   .right

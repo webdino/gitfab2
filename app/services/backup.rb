@@ -197,9 +197,7 @@ class Backup
         end,
         recipes: user.card_comments.map do |comment|
           {
-            # TODO: source: https://fabble.cc/card_comments/323
-            # 上記のようになっているが要確認
-            source: card_comment_url(comment, host: base_url),
+            source: project_url(comment.card.project.owner, comment.card.project, anchor: "card-comment-#{comment.id}", host: base_url),
             body: comment.body,
             created_at: comment.created_at.iso8601
           }
