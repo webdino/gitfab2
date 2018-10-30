@@ -21,13 +21,15 @@
           div class="carousel-item #{'active' if count.zero?}"
             = image_tag attachment.content.tmp.url, data: { stl: attachment.content.url }, class: "d-block w-100 clickable-img stl"
           - count += 1
-    ol.carousel-indicators
-      - count.times do |i|
-        li data-target="#carousel-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
-    a.carousel-control-prev href="#carousel-#{card.id}" role="button" data-slide="prev"
-      span.carousel-control-prev-icon aria-hidden="true"
-    a.carousel-control-next href="#carousel-#{card.id}" role="button" data-slide="next"
-      span.carousel-control-next-icon aria-hidden="true"
+
+    - if count > 1
+      ol.carousel-indicators
+        - count.times do |i|
+          li data-target="#carousel-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+      a.carousel-control-prev href="#carousel-#{card.id}" role="button" data-slide="prev"
+        span.carousel-control-prev-icon aria-hidden="true"
+      a.carousel-control-next href="#carousel-#{card.id}" role="button" data-slide="next"
+        span.carousel-control-next-icon aria-hidden="true"
 
   .modal tabindex="-1" role="dialog" id="modal-#{card.id}"
     .modal-dialog.modal-dialog-centered role="document"
@@ -46,10 +48,12 @@
                 div class="carousel-item #{'active' if count.zero?}"
                   = image_tag attachment.content.tmp.url, data: { stl: attachment.content.url }, class: "d-block w-100 clickable-img stl"
                   - count += 1
-          ol.carousel-indicators
-            - count.times do |i|
-              li data-target="#carousel-modal-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
-          a.carousel-control-prev href="#carousel-modal-#{card.id}" role="button" data-slide="prev"
-            span.carousel-control-prev-icon aria-hidden="true"
-          a.carousel-control-next href="#carousel-modal-#{card.id}" role="button" data-slide="next"
-            span.carousel-control-next-icon aria-hidden="true"
+
+          - if count > 1
+            ol.carousel-indicators
+              - count.times do |i|
+                li data-target="#carousel-modal-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+            a.carousel-control-prev href="#carousel-modal-#{card.id}" role="button" data-slide="prev"
+              span.carousel-control-prev-icon aria-hidden="true"
+            a.carousel-control-next href="#carousel-modal-#{card.id}" role="button" data-slide="next"
+              span.carousel-control-next-icon aria-hidden="true"
