@@ -178,7 +178,11 @@ class Backup
               description: card.description,
               created_at: card.created_at.iso8601,
               media: card.figures.map { |figure| image_url(figure.content.url) },
-              youtube: card.figures.find { |figure| figure.link.present? }&.link
+              youtube: card.figures.find { |figure| figure.link.present? }&.link,
+              material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+              tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+              blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+              attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
             }
           end,
           memos: project.note_cards.map do |card|
@@ -187,7 +191,11 @@ class Backup
               description: card.description,
               created_at: card.created_at.iso8601,
               media: card.figures.map { |figure| image_url(figure.content.url) },
-              youtube: card.figures.find { |figure| figure.link.present? }&.link
+              youtube: card.figures.find { |figure| figure.link.present? }&.link,
+              material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+              tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+              blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+              attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
             }
           end
         }
