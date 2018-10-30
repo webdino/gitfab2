@@ -238,13 +238,16 @@ class Backup
 
       project.states.each do |state|
         state.figures.each { |figure| contents << figure&.content&.file&.file }
+        state.attachments.each { |attachment| contents << attachment&.content&.file&.file }
         state.annotations.each do |annotation|
           annotation.figures.each { |figure| contents << figure&.content&.file&.file }
+          annotation.attachments.each { |attachment| contents << attachment&.content&.file&.file }
         end
       end
 
       project.note_cards.each do |note_card|
         note_card.figures.each { |figure| contents << figure&.content&.file&.file }
+        note_card.attachments.each { |attachment| contents << attachment&.content&.file&.file }
       end
       contents.compact!
 
