@@ -1,10 +1,12 @@
 meta property="og:site_name" content="Fabble"
-meta property="og:email" content="support@fabble.cc"
 meta property="og:type" content="article"
 meta property="og:url" content="#{request.url}"
 meta property="og:title" content="#{local_assigns[:model]&.ogp_title || 'Fabble'}"
 meta property="og:description" content="#{local_assigns[:model]&.ogp_description.presence || 'New Platform to Share Fab Projects all over the world'}"
 meta property="og:image" content="#{local_assigns[:model]&.ogp_image(request.base_url) || asset_url('/images/logo.png')}"
+meta property="og:image:width" content="400"
+meta property="og:image:height" content="300"
+meta property="fb:app_id" content="1749131181871409"
 
 - ogp_video = local_assigns[:model]&.ogp_video.presence
 - if ogp_video
