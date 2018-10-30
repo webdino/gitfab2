@@ -38,8 +38,7 @@ class ApplicationController < ActionController::Base
   private
 
     def store_location
-      return unless request.get?
-      return if request.xhr?
+      return if !request.get? || !request.format.html? || request.xhr?
       return if request.path.start_with?('/password')
       return if request.path.start_with?('/users/auth')
       return if ['/users/new', '/users/sign_out', '/sessions'].include?(request.path)
