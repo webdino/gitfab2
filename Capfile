@@ -4,6 +4,7 @@ require "capistrano/rvm"
 require "capistrano/npm"
 require "capistrano/rails"
 require "capistrano/scm/git"
+require "capistrano/delayed_job"
+require "whenever/capistrano"
 install_plugin Capistrano::SCM::Git
-#require "capistrano/delayed-job"
 Dir.glob("lib/capistrano/tasks/*.rake").each{ |task| import(task) }

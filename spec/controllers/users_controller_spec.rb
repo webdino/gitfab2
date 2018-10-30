@@ -217,4 +217,48 @@ describe UsersController, type: :controller do
       end
     end
   end
+
+  describe 'POST backup' do
+    subject { post :backup, params: { user_id: user } }
+    let(:user) { FactoryBot.create(:user) }
+
+    context 'valid user' do
+      before { sign_in user }
+      it { is_expected.to redirect_to edit_user_path }
+      it do
+        expect(BackupJob).to receive(:perform_later).with(user)
+        subject
+      end
+    end
+
+    context 'invalid user' do
+      before { sign_in FactoryBot.create(:user) }
+      it { is_expected.to have_http_status :forbidden }
+      it do
+        expect(BackupJob).not_to receive(:perform_later).with(user)
+        subject
+      end
+    end
+  end
+
+  describe 'GET download_backup' do
+    subject { get :download_backup, params: { user_id: user } }
+    let(:user) { FactoryBot.create(:user) }
+    let(:backup) { Backup.new(user) }
+
+    before do
+      Rails.root.join('tmp', 'backup', 'zip').mkpath
+      File.open(Rails.root.join('tmp', 'backup', 'zip', "#{user.name}_backup.zip"), 'w')
+      sign_in user
+    end
+
+    it do
+      expect(@controller).to receive(:send_data).with(backup.zip_path.read, filename: backup.zip_filename) { @controller.render nothing: true }
+      subject
+    end
+
+    after do
+      File.delete(backup.zip_path)
+    end
+  end
 end

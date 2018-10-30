@@ -27,6 +27,9 @@ gem 'slack-notifier'
 gem 'slim-rails'
 gem 'sprockets-commoner'
 gem 'truncate_html'
+gem 'rubyzip'
+gem 'whenever', require: false
+gem 'delayed_job_active_record'
 
 # Frontend
 gem 'autoprefixer-rails'
@@ -64,6 +67,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rails', require: false
+  gem 'capistrano3-delayed-job', require: false
 end
 
 group :test do
