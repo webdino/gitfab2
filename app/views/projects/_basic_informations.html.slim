@@ -100,9 +100,9 @@ section#basic-informations
               #collaborators-index
                 h1 Project Owner & Collaborators
                 section
-                  = form_with url: project_collaborations_path(@project.owner, @project), id: "new_collaboration"
-                  = select_tag :collaborator_name
-                  = submit_tag "Add", class: "add-collaborator-btn btn"
+                  = form_with url: project_collaborations_path(@project.owner, @project), id: "new_collaboration" do |f|
+                    = f.select :collaborator_name, []
+                    = f.submit "Add", class: "add-collaborator-btn btn"
 
                 h2 Owner
                 section#owner
