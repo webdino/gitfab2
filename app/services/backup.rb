@@ -245,6 +245,11 @@ class Backup
         end
       end
 
+      project.usages.each do |usage|
+        usage.figures.each { |figure| contents << figure&.content&.file&.file }
+        usage.attachments.each { |attachment| contents << attachment&.content&.file&.file }
+      end
+
       project.note_cards.each do |note_card|
         note_card.figures.each { |figure| contents << figure&.content&.file&.file }
         note_card.attachments.each { |attachment| contents << attachment&.content&.file&.file }
