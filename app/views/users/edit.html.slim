@@ -54,7 +54,7 @@
 
     - backup = Backup.new(current_user)
     - if backup.zip_exist?
-      .form-group style="margin-top: 1.2rem"
+      .form-group#download-backup style="margin-top: 1.2rem"
         span= "作成日：#{backup.mtime.strftime('%Y/%m/%d %H:%M')}"
         = link_to "バックアップダウンロード", user_download_backup_path(current_user), class: "btn primary", download: ''
 
