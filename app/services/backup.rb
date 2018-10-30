@@ -164,10 +164,10 @@ class Backup
                   created_at: annotation.created_at.iso8601,
                   media: annotation.figures.map { |figure| image_url(figure.content.url) },
                   youtube: annotation.figures.find { |figure| figure.link.present? }&.link,
-                  material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
-                  tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
-                  blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
-                  attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
+                  material: annotation.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+                  tool: annotation.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+                  blueprint: annotation.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+                  attachment: annotation.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
                 }
               end
             }
