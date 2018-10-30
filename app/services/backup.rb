@@ -87,6 +87,14 @@ class Backup
       URI.join(base_url, path).to_s
     end
 
+    def groups
+      @groups ||= user.groups.active
+    end
+
+    def projects
+      @projects ||= user.projects.active
+    end
+
     def user_hash
       {
         source: owner_url(user, host: base_url),
@@ -106,7 +114,7 @@ class Backup
             created_at: identity.created_at.iso8601
           }
         end,
-        groups: user.groups.map do |group|
+        groups: groups.map do |group|
           {
             name: group.name,
             url: group.url,
@@ -119,7 +127,7 @@ class Backup
     end
 
     def projects_hash
-      user.projects.map do |project|
+      projects.map do |project|
         {
           source: project_url(project.owner, project, host: base_url),
           title: project.title,
@@ -204,7 +212,7 @@ class Backup
       avatar_dir = json_output_dir.join('user', 'avatar')
       avatar_dir.mkpath
       FileUtils.copy(user.avatar.file.file, avatar_dir)
-      user.projects.each do |project|
+      projects.each do |project|
         copy_project_contents(project)
       end
     end
