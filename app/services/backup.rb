@@ -30,6 +30,11 @@ class Backup
     zip_path.exist?
   end
 
+  def mtime
+    return unless zip_exist?
+    zip_path.mtime
+  end
+
   def self.delete_old_files(before = 3.days.ago)
     ZIP_OUTPUT_DIR.each_child do |zip|
       s = File::Stat.new(zip)
