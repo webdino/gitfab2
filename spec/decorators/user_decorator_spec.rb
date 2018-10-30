@@ -10,6 +10,22 @@ describe UserDecorator do
   let(:name) { "itkrt2y" }
   let(:image) { fixture_file_upload("images/image.jpg") }
 
+  describe "#name" do
+    subject { user.name }
+    let(:user) { FactoryBot.create(:user, is_deleted: is_deleted, name: name).extend(UserDecorator) }
+    let(:name) { "user-name" }
+
+    context "when active user" do
+      let(:is_deleted) { false }
+      it { is_expected.to eq name }
+    end
+
+    context "when resigned user" do
+      let(:is_deleted) { true }
+      it { is_expected.to eq "Deleted User" }
+    end
+  end
+
   describe "#ogp_title" do
     context "when name exists" do
       it { expect(user.ogp_title).to eq "#{name} on Fabble" }

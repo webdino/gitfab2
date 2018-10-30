@@ -1,4 +1,8 @@
 module GroupDecorator
+  def name
+    is_deleted ? "Deleted Group" : super
+  end
+
   def ogp_title
     "#{name} on Fabble" if name
   end

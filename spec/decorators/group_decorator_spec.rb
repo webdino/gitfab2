@@ -7,6 +7,22 @@ describe GroupDecorator do
   let(:name) { "my-fabble-group" }
   let(:avatar) { fixture_file_upload('images/image.jpg') }
 
+  describe "#name" do
+    subject { group.name }
+    let(:group) { FactoryBot.create(:group, is_deleted: is_deleted, name: name).extend(GroupDecorator) }
+    let(:name) { "group-name" }
+
+    context "when active group" do
+      let(:is_deleted) { false }
+      it { is_expected.to eq name }
+    end
+
+    context "when deleted group" do
+      let(:is_deleted) { true }
+      it { is_expected.to eq "Deleted Group" }
+    end
+  end
+
   describe "#ogp_title" do
     context "when name exists" do
       it { expect(group.ogp_title).to eq "#{name} on Fabble" }

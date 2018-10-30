@@ -1,4 +1,8 @@
 module UserDecorator
+  def name
+    is_deleted ? "Deleted User" : super
+  end
+
   def ogp_title
     "#{name} on Fabble" if name
   end
