@@ -36,9 +36,9 @@ $(function() {
     cards_top = [];
     const cards = $("#making-list .state");
     //11 TODO: Show annotations index of focused status
-    for (let card of cards) {
+    Array.prototype.forEach.call(cards, (card) => {
       cards_top.push(card.offsetTop);
-    }
+    });
     return cards_top;
   };
   getCardsTop();
@@ -343,7 +343,7 @@ $(function() {
     const ul = card_content.find("figure ul");
     ul.empty();
     const figures = form.find(".card-figure-content");
-    for (let figure of figures) {
+    Array.prototype.forEach.call(figures, (figure) => {
       let src;
       if (figure.files.length > 0) {
         src = window.URL.createObjectURL(figure.files[0]);
@@ -355,7 +355,7 @@ $(function() {
       const li = $(document.createElement("li"));
       li.append(img);
       ul.append(li);
-    }
+    });
     let description = form.find(".card-description").val();
     if ((description === "") || (description === null)) {
       description = $("#inner_content").find(".nicEdit-main").html();
@@ -371,13 +371,13 @@ $(function() {
 
   const markup = function() {
     const attachments = $(".attachment");
-    for (let attachment of attachments) {
+    Array.prototype.forEach.call(attachments, (attachment) => {
       const markupid = attachment.getAttribute("data-markupid");
       const content = attachment.getAttribute("data-content");
       if (content && (content.length > 0)) {
         $(`#${markupid}`).attr("href", content);
       }
-    }
+    });
     $(document.body).trigger("attachment-markuped");
   };
   markup();

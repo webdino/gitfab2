@@ -16,7 +16,7 @@ $(function() {
     container.addClass("has-data");
     $("#making-list .inner").addClass("has-data");
     const result = [];
-    for (let attachment of filtered_attachments) {
+    Array.prototype.forEach.call(filtered_attachments, (attachment) => {
       const href = attachment.getAttribute("href");
       const description = attachment.getAttribute("data-description");
       const name = attachment.textContent;
@@ -29,7 +29,7 @@ $(function() {
       a.attr("target", "_blank");
       li.append(a);
       result.push(ul.append(li));
-    }
+    });
     return result;
   };
 

@@ -282,7 +282,9 @@ $(function() {
 
   $(document).on("card-attached", "", function(event, data) {
     let fields;
-    for (let markupform of $("#attachments .markup_id")) {
+    const markupforms = $("#attachments .markup_id");
+    for ( let i = 0; i < markupforms.length; i ++ ) {
+      let markupform = markupforms[i];
       if (markupform.value === data.id) {
         fields = $(markupform).parent();
         break;
