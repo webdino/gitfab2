@@ -51,7 +51,7 @@ class Group < ApplicationRecord
     transaction do
       projects.soft_destroy_all!
       remove_avatar!
-      update!(is_deleted: true)
+      update!(is_deleted: true, name: "deleted-group-#{SecureRandom.uuid}")
     end
   end
 

@@ -34,10 +34,14 @@ describe Group do
   describe '#soft_destroy!' do
     subject { group.soft_destroy! }
 
-    let!(:group) { FactoryBot.create(:group) }
+    let!(:group) { FactoryBot.create(:group, name: name) }
+    let(:name) { "group-name" }
     before { FactoryBot.create_list(:project, 2, owner: group, is_deleted: false) }
 
-    it { expect { subject }.to change { group.is_deleted }.from(false).to(true) }
+    it do
+      expect { subject }.to change{ group.is_deleted }.from(false).to(true)
+                       .and change{ group.name }.from(name).to(start_with("deleted-group-"))
+    end
     it 'deletes all projects' do
       subject
       expect(group.projects).to be_all { |p| p.is_deleted? }
