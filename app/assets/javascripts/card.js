@@ -36,7 +36,7 @@ $(function() {
     cards_top = [];
     const cards = $("#making-list .state");
     //11 TODO: Show annotations index of focused status
-    Array.prototype.forEach.call(cards, (card) => {
+    [].forEach.call(cards, (card) => {
       cards_top.push(card.offsetTop);
     });
     return cards_top;
@@ -343,7 +343,7 @@ $(function() {
     const ul = card_content.find("figure ul");
     ul.empty();
     const figures = form.find(".card-figure-content");
-    Array.prototype.forEach.call(figures, (figure) => {
+    [].forEach.call(figures, (figure) => {
       let src;
       if (figure.files.length > 0) {
         src = window.URL.createObjectURL(figure.files[0]);
@@ -371,7 +371,7 @@ $(function() {
 
   const markup = function() {
     const attachments = $(".attachment");
-    Array.prototype.forEach.call(attachments, (attachment) => {
+    [].forEach.call(attachments, (attachment) => {
       const markupid = attachment.getAttribute("data-markupid");
       const content = attachment.getAttribute("data-content");
       if (content && (content.length > 0)) {

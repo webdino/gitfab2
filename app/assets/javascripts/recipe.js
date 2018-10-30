@@ -16,7 +16,7 @@ $(function() {
     container.addClass("has-data");
     $("#making-list .inner").addClass("has-data");
     const result = [];
-    Array.prototype.forEach.call(filtered_attachments, (attachment) => {
+    [].forEach.call(filtered_attachments, (attachment) => {
       const href = attachment.getAttribute("href");
       const description = attachment.getAttribute("data-description");
       const name = attachment.textContent;
