@@ -256,6 +256,10 @@ class Backup
       end
       contents.compact!
 
+      # ゴミデータなどでファイルが存在しない場合があり、
+      # その場合 FileUtils.copy が例外を投げるので、存在するファイルにしぼる
+      contents.select! { |path| FileTest.file?(path) }
+
       if contents.present?
         contents_dir = json_output_dir.join('projects', 'media', project.name)
         contents_dir.mkpath
