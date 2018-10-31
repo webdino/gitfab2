@@ -178,7 +178,11 @@ class Backup
               description: card.description,
               created_at: card.created_at.iso8601,
               media: card.figures.map { |figure| image_url(figure.content.url) },
-              youtube: card.figures.find { |figure| figure.link.present? }&.link
+              youtube: card.figures.find { |figure| figure.link.present? }&.link,
+              material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+              tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+              blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+              attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
             }
           end,
           memos: project.note_cards.map do |card|
@@ -187,7 +191,11 @@ class Backup
               description: card.description,
               created_at: card.created_at.iso8601,
               media: card.figures.map { |figure| image_url(figure.content.url) },
-              youtube: card.figures.find { |figure| figure.link.present? }&.link
+              youtube: card.figures.find { |figure| figure.link.present? }&.link,
+              material: card.attachments.where(kind: 'material').map { |a| image_url(a.content.url) }.compact,
+              tool: card.attachments.where(kind: 'tool').map { |a| image_url(a.content.url) }.compact,
+              blueprint: card.attachments.where(kind: 'blueprint').map { |a| image_url(a.content.url) }.compact,
+              attachment: card.attachments.where(kind: 'attachment').map { |a| image_url(a.content.url) }.compact
             }
           end
         }
@@ -230,13 +238,21 @@ class Backup
 
       project.states.each do |state|
         state.figures.each { |figure| contents << figure&.content&.file&.file }
+        state.attachments.each { |attachment| contents << attachment&.content&.file&.file }
         state.annotations.each do |annotation|
           annotation.figures.each { |figure| contents << figure&.content&.file&.file }
+          annotation.attachments.each { |attachment| contents << attachment&.content&.file&.file }
         end
+      end
+
+      project.usages.each do |usage|
+        usage.figures.each { |figure| contents << figure&.content&.file&.file }
+        usage.attachments.each { |attachment| contents << attachment&.content&.file&.file }
       end
 
       project.note_cards.each do |note_card|
         note_card.figures.each { |figure| contents << figure&.content&.file&.file }
+        note_card.attachments.each { |attachment| contents << attachment&.content&.file&.file }
       end
       contents.compact!
 
