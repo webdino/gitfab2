@@ -253,7 +253,7 @@ describe UsersController, type: :controller do
     end
 
     it do
-      expect(@controller).to receive(:send_data).with(backup.zip_path.read, filename: backup.zip_filename) { @controller.render nothing: true }
+      expect(@controller).to receive(:send_file).with(backup.zip_path, filename: backup.zip_filename) { @controller.render nothing: true }
       subject
     end
 
