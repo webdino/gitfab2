@@ -1,5 +1,5 @@
 json.html (render 'annotations/annotation',
                   annotation: @annotation,
-                  parent: @state,
+                  state: @state,
                   owner: @owner,
                   project: @project)

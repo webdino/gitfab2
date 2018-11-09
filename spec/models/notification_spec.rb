@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Notification do
-  let(:notification) { FactoryGirl.build :notification }
+  let(:notification) { FactoryBot.build :notification }
   describe '#was_read_before' do
     describe 'was_read = true' do
       before do

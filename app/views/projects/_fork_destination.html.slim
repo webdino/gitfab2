@@ -1,6 +1,6 @@
 .fork-destination
   p.dest-name
-    == owner.name
-  .fork-btn style="background-image: url('#{owner.avatar.small}')"
-    == form_for [owner, owner.projects.build] do
-      == hidden_field_tag :original_project_id, project.id
+    = owner.name
+  .fork-btn style="background-image: url('#{owner.avatar.small.url}')"
+    = form_with(url: project_fork_path(project.owner, project), local: true) do
+      = hidden_field_tag :owner_id, owner.slug

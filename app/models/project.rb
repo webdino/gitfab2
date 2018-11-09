@@ -1,144 +1,138 @@
-class Project < ActiveRecord::Base
+# == Schema Information
+#
+# Table name: projects
+#
+#  id               :integer          not null, primary key
+#  description      :text(65535)
+#  draft            :text(65535)
+#  is_deleted       :boolean          default(FALSE), not null
+#  is_private       :boolean          default(FALSE), not null
+#  license          :integer          not null
+#  likes_count      :integer          default(0), not null
+#  name             :string(255)      not null
+#  note_cards_count :integer          default(0), not null
+#  owner_type       :string(255)      not null
+#  scope            :string(255)
+#  slug             :string(255)
+#  states_count     :integer          default(0), not null
+#  title            :string(255)      not null
+#  usages_count     :integer          default(0), not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#  original_id      :integer
+#  owner_id         :integer          not null
+#
+# Indexes
+#
+#  index_projects_on_is_private_and_is_deleted  (is_private,is_deleted)
+#  index_projects_original_id                   (original_id)
+#  index_projects_owner                         (owner_type,owner_id)
+#  index_projects_slug_owner                    (slug,owner_type,owner_id) UNIQUE
+#  index_projects_updated_at                    (updated_at)
+#
+
+class Project < ApplicationRecord
   include Figurable
-  include Commentable
-  include Contributable
-  include Taggable
-  include Likable
   include Notificatable
-  include AfterCommitAction
 
   extend FriendlyId
   friendly_id :name, use: %i(slugged scoped), scope: :owner_id
 
+  belongs_to :original, class_name: 'Project', inverse_of: :derivatives, optional: true
+  belongs_to :owner, polymorphic: true
+  has_many :collaborations
   has_many :derivatives, class_name: 'Project', foreign_key: :original_id, inverse_of: :original
-  belongs_to :original, class_name: 'Project', inverse_of: :derivatives, required: false
-  belongs_to :owner, polymorphic: true, required: true
+  has_many :likes, dependent: :destroy
+  has_many :note_cards, class_name: 'Card::NoteCard', dependent: :destroy
+  has_many :states, class_name: 'Card::State', dependent: :destroy
+  has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
-  has_one :recipe, dependent: :destroy
-  has_one :note, dependent: :destroy
+  has_many :project_comments, dependent: :destroy
+
+  enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
 
   before_save :set_draft
 
-  after_initialize -> { self.name = SecureRandom.uuid, self.license = 0 }, if: -> { new_record? && name.blank? }
-  after_create :ensure_a_figure_exists
-  after_create :create_recipe_and_note
-  after_create :update_projects_count_created
-  after_update :update_projects_count
-  after_destroy :update_projects_count_destroyed
+  after_initialize -> { self.license ||= 'by' }
+
+  after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
   validates :name, uniqueness: { scope: [:owner_id, :owner_type] }
   validates :title, presence: true
+  validates :license, presence: true
 
-  scope :noted, -> { joins(:note).where('notes.num_cards > 0') }
-  scope :ordered_by_owner, -> { order('owner_id ASC') }
-  scope :published, -> { where(is_private: [false, nil], is_deleted: [false, nil]) }
+  scope :active, -> { where(is_deleted: false) }
+  scope :noted, -> do
+    note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
+    joins(:note_cards).where(cards: { id: note_cards_sql })
+  end
+  scope :ordered_by_owner, -> { order(:owner_id) }
+  scope :published, -> { active.where(is_private: false) }
 
+  # draft全文検索
+  scope :search_draft, -> (text) do
+    projects = all
+    text.split(/\p{space}+/).each do |word|
+      projects = projects.where("#{table_name}.draft LIKE ?", "%#{word}%")
+    end
+    projects
+  end
+
+  accepts_nested_attributes_for :states
   accepts_nested_attributes_for :usages
 
   paginates_per 12
 
-  # このプロジェクトを owner のプロジェクトとしてフォークする
-  def fork_for!(owner)
-    # 整合性を保つため1トランザクション内でデータを準備
-    transaction do
-      dup.tap do |project|
-        project.owner = owner
-        project.original = self
-        names = owner.projects.pluck :name
-        new_project_name = name.dup
-        if names.include? new_project_name
-          new_project_name << '-1'
-          new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
-        end
-        project.name = new_project_name
-        project.recipe = recipe.dup_document
-        project.figures = figures.map(&:dup_document)
-        project.likes = [] # reset counter
-        project.usages = []
-
-        project.save!
-        project.recipe.save!
-      end
-    end
+  def self.find_with(owner_slug, project_slug)
+    Owner.find(owner_slug).projects.active.friendly.find(project_slug)
   end
 
-  def change_owner!(owner)
-    self.owner = owner
-    self.save!
-    #   if project.collaborators.include?(new_owner)
-    #     old_collaboration = new_owner.collaboration_in project
-    #     old_collaboration.destroy
-    #   end
-    # else
-    #   return false
-    # end
+  # このプロジェクトを owner のプロジェクトとしてフォークする
+  def fork_for!(owner)
+    dup.tap do |project|
+      project.owner = owner
+      project.original = self
+      names = owner.projects.pluck :name
+      new_project_name = name.dup
+      if names.include? new_project_name
+        new_project_name << '-1'
+        new_project_name.sub!(/(\d+)$/, "#{Regexp.last_match(1).to_i + 1}") while names.include? new_project_name
+      end
+      project.name = new_project_name
+      project.states_count = 0
+      project.states = states.map(&:dup_document)
+      project.figures = figures.map(&:dup_document)
+      project.likes_count = 0
+      project.likes = []
+      project.usages_count = 0
+      project.usages = []
+      project.note_cards_count = 0
+
+      project.save!
+    end
   end
 
   def managers
-    users = []
-    if owner.is_a? User
-      users << owner
-    else
-      users += owner.members
-    end
-    users
+    owner.is_a?(User) ? [owner] : owner.members
   end
 
   def collaborate_users
-    users = []
-    collaborators.each do |collaborator|
-      if collaborator.is_a? User
-        users << collaborator
-      else
-        users += collaborator.members
-      end
-    end
-    users
+    collaborators.map do |collaborator|
+      collaborator.is_a?(User) ? collaborator : collaborator.members
+    end.flatten
   end
 
-  # TODO: This function should have less than 10 line.
-  def potential_owners
-    owner_list = []
-    owner = self.owner
-    if owner.instance_of?(User)
-      owner.memberships.each do |membership|
-        owner_list.push membership.group
-      end
-    else
-      owner.members.each do |member|
-        owner_list.push member
-      end
-    end
-    collaborators.each do |collaborator|
-      owner_list.push collaborator
-    end
-    owner_list
+  def root
+    original&.root || self
   end
 
-  def root project
-    return project if project.original.blank? || Project.where(id: project.original_id).length == 0
-    root project.original
-  end
-
-  def thumbnail
-    if figures.first.link.present?
-      'https://img.youtube.com/vi/' + figures.first.link.split('/').last + '/mqdefault.jpg'
-    elsif figures.first.content.present?
-      figures.first.content.small
-    else
-      'fallback/blank.png'
-    end
+  def is_fork?
+    !!original_id
   end
 
   def collaborators
-    users = User.joins(:collaborations).where('collaborations.project_id' => id)
-    groups = Group.joins(:collaborations).where('collaborations.project_id' => id)
-    users.concat groups
-  end
-
-  def licenses
-    ['by', 'by-sa', 'by-nc', 'by-nc-sa']
+    collaborations.map(&:owner)
   end
 
   def soft_destroy
@@ -146,29 +140,30 @@ class Project < ActiveRecord::Base
   end
 
   def soft_destroy!
-    update!(is_deleted: true)
-  end
-
-  def soft_restore
-    update(is_deleted: false)
-  end
-
-  def soft_restore!
-    update!(is_deleted: false)
-  end
-
-  def path
-    [owner.name, title].join('/')
+    transaction do
+      update!(title: 'Deleted Project', name: "deleted-project-#{SecureRandom.uuid}", is_deleted: true)
+      likes.destroy_all
+      states.destroy_all
+      note_cards.destroy_all
+      usages.destroy_all
+      project_comments.destroy_all
+      figures.destroy_all
+      tags.destroy_all
+      collaborations.destroy_all
+    end
   end
 
   def update_draft!
     update!(draft: generate_draft)
   end
 
+  def manageable_by?(user)
+    !is_deleted && user.is_project_manager?(self)
+  end
+
   class << self
     def updatable_columns
-      [:name, :title, :description, :owner_id, :owner_type, :is_private, :is_deleted, :license,
-       usages_attributes: Card::Usage.updatable_columns,
+      [:name, :title, :description, :owner_type, :is_private, :is_deleted, :license,
        figures_attributes: Figure.updatable_columns
       ]
     end
@@ -176,89 +171,22 @@ class Project < ActiveRecord::Base
 
   private
 
-  def ensure_a_figure_exists
-    figures.create if figures.none?
-  end
-
-  def create_recipe_and_note
-    create_recipe unless recipe
-    create_note unless note
-  end
-
-  def generate_draft
-    lines = [name, title, description, owner.generate_draft]
-    tags.each do |t|
-      lines << t.generate_draft
-    end
-    lines << recipe.generate_draft if recipe
-    lines.join("\n")
-  end
-
-  def set_draft
-    self.draft = generate_draft
-  end
-
-  def should_generate_new_friendly_id?
-    name_changed? || super
-  end
-
-  def update_projects_count_created
-    return true if is_private? || is_deleted?
-    execute_after_commit do
-      owner.increment!(:projects_count)
-    end
-    true
-  end
-
-  def update_projects_count
-    return true unless is_private_changed? || is_deleted_changed?
-    private_to_public = is_private_was && !is_private
-    public_to_private = !is_private_was && is_private
-    now_soft_destroyed = !is_deleted_was && is_deleted
-    now_soft_restored = is_deleted_was && !is_deleted
-
-    operations = []
-
-    unless now_soft_restored
-      if private_to_public
-        operations << :increment
+    def generate_draft
+      lines = [name, title, description, owner.generate_draft]
+      states.each do |state|
+        lines << ActionController::Base.helpers.strip_tags(state.description)
       end
-      if public_to_private
-        operations << :decrement
+      tags.each do |t|
+        lines << t.generate_draft
       end
+      lines.join("\n")
     end
 
-    unless is_private
-      if now_soft_destroyed
-        operations << :decrement
-      end
-      if now_soft_restored
-        operations << :increment
-      end
+    def set_draft
+      self.draft = generate_draft
     end
 
-    operations.each do |operation|
-      case operation
-        when :increment
-          execute_after_commit do
-            owner.increment!(:projects_count)
-          end
-        when :decrement
-          execute_after_commit do
-            owner.decrement!(:projects_count)
-          end
-      end
+    def should_generate_new_friendly_id?
+      name_changed? || super
     end
-
-    true
-  end
-
-  def update_projects_count_destroyed
-    return true if is_private?
-    return true if is_deleted?
-    execute_after_commit do
-      owner.decrement!(:projects_count)
-    end
-    true
-  end
 end

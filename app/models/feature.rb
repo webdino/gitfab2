@@ -1,4 +1,16 @@
-class Feature < ActiveRecord::Base
+# == Schema Information
+#
+# Table name: features
+#
+#  id         :integer          not null, primary key
+#  category   :integer          default(0), not null
+#  class_name :string(255)
+#  name       :string(255)      not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+class Feature < ApplicationRecord
   TARGET_CLASS = { Project: 'Project', Group: 'Group', User: 'User' }
 
   scope :projects, -> { where class_name: 'Project' }

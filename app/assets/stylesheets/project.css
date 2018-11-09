@@ -1,12 +1,24 @@
 /*
  *= require_self
- *= require slick
- *= require slick-theme
  *= require_tree ./shared
  *= require_tree ./layouts
+ *= require_tree ./mixins
  *= require_tree ./projects
- *= require jquery.ui.selectable
- *= require jquery.colorbox-example3
  *= require ./card
  *= require select2
+ *= require bootstrap_custom
  */
+
+.clickable { cursor: pointer; }
+.clickable:hover { opacity: 0.8; }
+
+/* ref: https://www.itsupportguides.com/knowledge-base/tech-tips-tricks/how-to-offset-anchor-tag-link-using-css/ */
+:target:before {
+  content: "";
+  display: block;
+  height: 30px;
+  margin: -30px 0 0;
+}
+.anchor {
+  outline: none;
+}

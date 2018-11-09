@@ -1,0 +1,32 @@
+#dashboard
+  .container
+    ul.links
+      li.link.create-project
+        = link_to new_project_path(current_user) do
+          .image-wrapper
+            .image.create_project
+          .title Create New Project
+
+      li.link.create-group
+        = link_to(new_group_path) do
+          .image-wrapper
+            .image.create_group
+          .title Create New Group
+
+      li.link.edit-profile
+        = link_to(edit_user_path) do
+          .image-wrapper
+            .image.edit_profile
+          .title Edit Your Profile
+
+      li.link.your-projects
+        = link_to(owner_path(current_user)) do
+          .image-wrapper
+            = image_tag current_user.avatar.small.url, class: "image"
+          .title See Your Projects
+
+    - if current_page?(controller: 'projects', action: 'index')
+      .label.lang-en
+        'Featured Projects
+      .label.lang-jp
+        '注目のプロジェクト

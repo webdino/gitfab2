@@ -1,36 +1,32 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Card::Annotation do
   it_behaves_like 'Card', :annotation
   it_behaves_like 'Orderable', :annotation
-  it_behaves_like 'Orderable Scoped incrementation', [:annotation], :annotatable
+  it_behaves_like 'Orderable Scoped incrementation', [:annotation], :state
 
   describe '.ordered_by_position' do
-    let(:annotation) { FactoryGirl.create(:annotation) }
+    let(:annotation) { FactoryBot.create(:annotation) }
     it { expect(Card::Annotation).to be_respond_to(:ordered_by_position) }
   end
 
-  describe '#is_taggable?' do
-    let(:annotation) { FactoryGirl.create(:annotation) }
-    subject { annotation.is_taggable? }
-    it { is_expected.to be false }
-  end
+  describe '#to_state!' do
+    subject { annotation.to_state!(project) }
 
-  describe '#to_state!(recipe)' do
-    let!(:annotation) { FactoryGirl.create(:annotation) }
-    let!(:recipe) { FactoryGirl.create(:recipe) }
-    describe '内容を維持してStateとして作りなおす' do
-      subject!(:new_state) { annotation.to_state!(recipe) }
-      it { expect(new_state).to be_an_instance_of(Card::State) }
-      it { expect(new_state.title).to eq(annotation.title) }
-      it { expect(annotation).to be_destroyed }
+    let!(:annotation) { FactoryBot.create(:annotation) }
+    let!(:project) { FactoryBot.create(:project) }
+
+    it { is_expected.to be_an_instance_of(Card::State) }
+    it do
+      expect{ subject }.to change{ annotation.type }.from(Card::Annotation.name).to(Card::State.name)
+                      .and change{ project.states_count }.by(1)
+                      .and change{ Card::Annotation.count }.by(-1)
     end
-    it 'recipeのstatesに追加する' do
-      expect do
-        annotation.to_state!(recipe)
-      end.to change { recipe.states(true).count }
+
+    describe 'position' do
+      before { FactoryBot.create_list(:state, state_count, project: project) }
+      let(:state_count) { 2 }
+      it { expect(subject.position).to eq state_count + 1 }
     end
   end
 end

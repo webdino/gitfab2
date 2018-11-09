@@ -1,0 +1,24 @@
+- user = comment.user
+
+li.comment id="card-comment-#{comment.id}"
+  .left
+    = link_to image_tag(user.avatar.thumb.url, class: 'avatar'), owner_path(user), title: user.name
+  .right
+    .wrapper
+      .header
+        span.number.header-content
+          = format "No.%03d", i + 1
+        span.owner.header-content
+          = link_to_if !user.is_deleted?, user.name, owner_path(user)
+            '退会ユーザー
+
+        span.created-at.header-content
+          = "Posted date: "
+          span.date
+            = comment.created_at.strftime '%Y.%m.%d.%H.%M'
+
+        - if can? :destroy, comment
+          span.comment-tools
+            = link_to "delete", card_comment_path(comment), method: :delete, remote: true, class: "btn delete-btn delete-comment"
+      .body
+        == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED

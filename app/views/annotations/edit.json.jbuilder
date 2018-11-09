@@ -1,5 +1,4 @@
-json.html (render 'annotations/annotation_form',
-                  owner: @owner,
-                  project: @project,
-                  state: @state,
-                  annotation: @annotation)
+json.html (
+  render 'components/card_form', model: @annotation,
+    url: project_state_annotation_path(@owner, @project, @state, @annotation)
+)

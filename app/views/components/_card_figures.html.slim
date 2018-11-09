@@ -1,53 +1,59 @@
-ruby:
-  stl_file_num = 0
-  card.attachments.each do |attachment|
-    if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-      stl_file_num += 1
-    end
-  end
+- youtube_url = card.figures.first&.link
+- if youtube_url.present?
+  figure
+    iframe src="#{youtube_url}"
 
-- if card.figures.present?
-  - if card.figures.first.content.present?
-    - if card.figures.length + stl_file_num > 1
-      figure
-        ul.slides.slick
-          - card.figures.each do |figure|
-            li
-              - if defined? note_card_show
-                == image_tag figure.content.medium, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
-              - else
-                == image_tag figure.content.small, href: figure.content.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+- elsif card.figures.exists? || card.attachments.exists?
+  - figures = card.figures.to_a
+  - attachments = card.attachments.to_a
 
-          - card.attachments.each do |attachment|
-            - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
+  figure.carousel.slide.text-right data-ride="carousel" data-interval="false" id="carousel-#{card.id}"
+    - count = 0
+    .carousel-inner data-toggle="modal" data-target="#modal-#{card.id}"
+      - figures.each do |figure|
+        - next if figure.content.blank?
+        - url = defined?(note_card_show) ? figure.content.medium.url : figure.content.small.url
+        div class="carousel-item #{'active' if count.zero?}"
+          = image_tag url, class: "d-block w-100 clickable-img", alt: figure.content.filename
+          - count += 1
+      - attachments.each do |attachment|
+        - if attachment.content.tmp.url&.end_with?(".png")
+          div class="carousel-item #{'active' if count.zero?}"
+            = image_tag attachment.content.tmp.url, data: { stl: attachment.content.url }, class: "d-block w-100 clickable-img stl"
+          - count += 1
 
-              li
-                - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                  == image_tag attachment.content.tmp, href: attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
+    - if count > 1
+      ol.carousel-indicators
+        - count.times do |i|
+          li data-target="#carousel-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+      a.carousel-control-prev href="#carousel-#{card.id}" role="button" data-slide="prev"
+        span.carousel-control-prev-icon aria-hidden="true"
+      a.carousel-control-next href="#carousel-#{card.id}" role="button" data-slide="next"
+        span.carousel-control-next-icon aria-hidden="true"
 
-    - else
-      figure
-        - if defined? note_card_show
-          == image_tag card.figures.first.content.medium, href: card.figures.first.content.url, data: {groupname: "#{card.id}"}, class: "#{card.id}"
-        - else
-          == image_tag card.figures.first.content.small, href: card.figures.first.content.url, data: {groupname: "#{card.id}"}, class: "clickable-img #{card.id}"
+  .modal tabindex="-1" role="dialog" id="modal-#{card.id}"
+    .modal-dialog.modal-dialog-centered role="document"
+      .modal-content
+        - count = 0
+        .carousel.slide data-ride="carousel" data-interval="false" id="carousel-modal-#{card.id}"
+          .carousel-inner
+            - figures.each do |figure|
+              - next if figure.content.blank?
+              - url = defined?(note_card_show) ? figure.content.medium.url : figure.content.small.url
+              div class="carousel-item #{'active' if count.zero?}"
+                = image_tag url, class: "d-block w-100 clickable-img", alt: figure.content.filename
+                - count += 1
+            - attachments.each do |attachment|
+              - if attachment.content.tmp.url&.end_with?(".png")
+                div class="carousel-item #{'active' if count.zero?}"
+                  = image_tag attachment.content.tmp.url, data: { stl: attachment.content.url }, class: "d-block w-100 clickable-img stl"
+                  - count += 1
 
-
-  - elsif card.figures.first.link.present?
-    figure
-      iframe src="#{card.figures.first.link}"
-
-- else
-  - unless defined? note_card_show
-    - if card.class.to_s.underscore.include? "note"
-      figure class = "#{card.class.to_s.underscore}"
-        == image_tag("fallback/blank.png")
-
-  - if stl_file_num > 0
-    figure
-      ul.slides.slick
-        - card.attachments.each do |attachment|
-          - if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
-            li
-              - if attachment.content.tmp.present? && attachment.content.tmp.url.present? && attachment.content.tmp.url[-4..-1] == '.png'
-                == image_tag attachment.content.tmp, href: attachment.content.tmp.url, data: {stl: "#{attachment.content.url}"}, class: "clickable-img #{card.id} stl"
+          - if count > 1
+            ol.carousel-indicators
+              - count.times do |i|
+                li data-target="#carousel-modal-#{card.id}" data-slide-to="#{i}" class="#{'active' if i.zero?}"
+            a.carousel-control-prev href="#carousel-modal-#{card.id}" role="button" data-slide="prev"
+              span.carousel-control-prev-icon aria-hidden="true"
+            a.carousel-control-next href="#carousel-modal-#{card.id}" role="button" data-slide="next"
+              span.carousel-control-next-icon aria-hidden="true"

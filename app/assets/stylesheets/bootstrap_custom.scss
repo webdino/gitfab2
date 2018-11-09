@@ -1,0 +1,12 @@
+@import "mixins/colors";
+
+$carousel-indicator-active-bg: $common-basic-color;
+$carousel-control-color: $common-basic-color;
+
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/carousel";
+@import "bootstrap/modal";
+@import "bootstrap/utilities";
+

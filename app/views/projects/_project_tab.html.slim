@@ -1,5 +1,0 @@
-#project-tab.tabs-pane.active
-  ul.project-list
-    - @projects.each do |project|
-      - if can? :read, project
-        == render "project", project: project, is_note: false

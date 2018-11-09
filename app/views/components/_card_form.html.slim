@@ -1,46 +1,46 @@
-== nested_form_for resources, html: {class: "card-form", "data-type" => "json"}, remote: true do |f|
+= nested_form_for model, url: url , html: {class: "card-form", "data-type" => "json"}, remote: true do |f|
   #inner_content class="#{f.object.id}"
-    == f.hidden_field :type
-    == f.text_field :title, class: "validate card-title", placeholder: "Title", maxlength: "60", autofocus: true
+    = f.hidden_field :type
+    = f.text_field :title, class: "validate card-title", placeholder: "Title", maxlength: "60", autofocus: true
 
     ul.figures
-      == f.fields_for :figures do |ff|
+      = f.fields_for :figures do |ff|
         - figure = ff.object
         li.figure
           - if figure.content.present?
-            == image_tag figure.content.small
+            = image_tag figure.content.small.url
             .edit.btn
               'edit
             .delete.btn
-              == ff.link_to_remove "Delete"
+              = ff.link_to_remove "Delete"
           - elsif figure.link.present?
             iframe src="#{figure.link}"
             .delete.btn
-              == ff.link_to_remove "Delete"
+              = ff.link_to_remove "Delete"
             .caution
           - else
-            == image_tag "fallback/blank.png"
+            = image_tag "/images/fallback/blank.png"
             iframe src="#{figure.link}"
             .edit.btn
               'edit
             .delete.btn
-              == ff.link_to_remove "Delete"
+              = ff.link_to_remove "Delete"
             .caution
 
-          == ff.file_field :content, class: "validate card-figure-content"
-          == ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
+          = ff.file_field :content, class: "validate card-figure-content"
+          = ff.text_field :link, type: "url", class: "validate card-figure-link", placeholder: "Input youtube video url"
 
-      == f.link_to_add "Add an Image", :figures, class: "add-image btn"
-      == f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
+      = f.link_to_add "Add an Image", :figures, class: "add-image btn"
+      = f.link_to_add "Add a Youtube Video", :figures, class: "add-video btn"
       .remove-all-figures.btn
         'Remove all figures
-    == f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength: "300"
+    = f.text_area :description, id: "markup-area", class: "markup-area card-description", maxlength: "300", style: "width: 100%;"
 
     - unless f.object.class.name.include? "Note"
       .text-length
         span.plain-text-length
           - if f.object.description.present?
-            == f.object.description.length
+            = f.object.description.length
           - else
             '0
         span
@@ -49,18 +49,15 @@
           '300
 
     #attachments
-      == f.fields_for :attachments do |af|
-        == af.text_field :title, class: :title
-        == af.text_field :link, type: "url", class: :link
-        == af.text_field :description, class: :description
-        == af.text_field :kind, class: :kind
-        == af.text_field :markup_id, class: :markup_id
-        == af.file_field :content, class: :content
-      == f.link_to_add "Add a Attachments", :attachments, id: "add-attachment"
-    - if resources.last.is_taggable?
-      'Tags
-      == f.fields_for :tags do |tf|
-        == tf.text_field :name
+      = f.fields_for :attachments do |af|
+        = af.text_field :title, class: :title
+        = af.text_field :link, type: "url", class: :link
+        = af.text_field :description, class: :description
+        = af.text_field :kind, class: :kind
+        = af.text_field :markup_id, class: :markup_id
+        = af.file_field :content, class: :content
+      = f.link_to_add "Add a Attachments", :attachments, id: "add-attachment"
     .invalid-form-error-message
-    == f.submit "Submit", class: "submit btn"
-    == link_to "Cancel", "", class: "cancel-btn btn"
+    = f.submit "Submit", class: "submit btn"
+    button.cancel-btn.btn type="button"
+      'Cacnel

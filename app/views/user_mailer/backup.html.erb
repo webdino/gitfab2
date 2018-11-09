@@ -1,0 +1,7 @@
+<p>Hello <%= @user.name %>!</p>
+
+<p>To download your data, click the link below.</p>
+
+<p><%= link_to 'Download backup', edit_user_url(anchor: 'download-backup') %></p>
+
+<p>If you didn't request this, please ignore this email.</p>

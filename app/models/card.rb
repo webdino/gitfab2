@@ -1,24 +1,55 @@
-class Card < ActiveRecord::Base
-  include Attachable
+# == Schema Information
+#
+# Table name: cards
+#
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
+#
+# Indexes
+#
+#  index_cards_on_state_id  (state_id)
+#  index_cards_project_id   (project_id)
+#
+# Foreign Keys
+#
+#  fk_cards_project_id  (project_id => projects.id)
+#
+
+class Card < ApplicationRecord
   include Figurable
-  include Contributable
-  include Likable
-  include Commentable
-  include CardDecorator
+
+  has_many :attachments, as: :attachable, dependent: :destroy
+  accepts_nested_attributes_for :attachments
+  has_many :comments, class_name: "CardComment", dependent: :destroy
+  has_many :contributions, dependent: :destroy
+  has_many :contributors, through: :contributions, class_name: "User"
 
   validates :type, presence: true
-
-  def dup_document
-    dup_klass = type.present? ? type.constantize : Card
-    becomes(dup_klass).dup.tap do |doc|
-      doc.figures = figures.map(&:dup_document)
-      doc.attachments = attachments.map(&:dup_document)
-      doc.comments = []
+  validate do
+    if title.blank? && description.blank?
+      errors.add(:base, "cannot make empty card.")
     end
   end
 
-  def is_taggable?
-    self.is_a? Taggable
+  def dup_document
+    dup.tap do |card|
+      card.figures = figures.map(&:dup_document)
+      card.attachments = attachments.map(&:dup_document)
+      card.comments_count = 0
+      card.comments = []
+    end
+  end
+
+  def htmlclass
+    type.split(/::/).last.underscore
   end
 
   class << self

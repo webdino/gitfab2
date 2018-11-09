@@ -1,0 +1,28 @@
+@import "mixins/colors";
+
+$carousel-indicator-active-bg: $common-basic-color;
+$carousel-control-color: $common-basic-color;
+$container-max-width: 1600px;
+
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+@import "bootstrap/grid";
+@import "bootstrap/carousel";
+@import "bootstrap/utilities";
+
+html, body { margin: 0 }
+html, body, .carousel, .carousel-inner, .carousel-item {
+  height: 100%;
+}
+
+#figures {
+  overflow-x: scroll;
+  height: 40%;
+  img {
+    object-fit: contain;
+    height: 100%;
+    margin-right: 1rem;
+    &:last-child { margin-right: 0 }
+  }
+}

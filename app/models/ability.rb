@@ -2,8 +2,8 @@ class Ability
   include CanCan::Ability
 
   # TODO: This initialize function is too long to read,
-  #   so it should be divided to multiple fucntions.
-  def initialize(user, params)
+  #   so it should be divided to multiple functions.
+  def initialize(user)
     user ||= User.new
     can :manage, User, id: user.id
     can :manage, Membership do |membership|
@@ -18,72 +18,44 @@ class Ability
     can :create, Card::Annotation do |_card|
       user.persisted?
     end
-    can :manage, Card::Annotation do |card|
-      user.is_contributor_of?(card) || can?(:manage, card.annotatable)
+    can :manage, Card::Annotation do |annotation|
+      user.is_contributor_of?(annotation) || can?(:manage, annotation.state)
     end
     can :manage, Card::State do |card|
-      card.recipe && is_project_editor?(card.recipe.project, user)
+      can? :manage, card.project
     end
     can :manage, Card::NoteCard do |card|
-      card.note && is_project_editor?(card.note.project, user)
+      card.project && is_project_editor?(card.project, user)
     end
     can :read, Card::State do |card|
-      can? :read, card.recipe.project
+      can? :read, card.project
     end
     can :read, Card::NoteCard do |card|
-      can? :read, card.note.project
+      can? :read, card.project
     end
+    # TODO: Project#manageable_by? に同様のロジックを移動、将来的にこれは削除予定
     can :manage, Project do |project|
       !project.is_deleted && is_project_manager?(project, user)
     end
     can :update, Project do |project|
-      if project.is_deleted
-        false
-      else
-        is_project_manager?(project, user)
-      end
-    end
-    can :edit, Project do |project|
       !project.is_deleted && is_project_editor?(project, user)
     end
     can :read, Project do |project|
-      if project.is_deleted
-        false
-      else
-        !project.is_private ? true : is_project_editor?(project, user)
-      end
+      !project.is_deleted && (!project.is_private || is_project_editor?(project, user))
     end
-    can :read, Note do |note|
-      can? :read, note.project
-    end
-    can :update, Recipe do |recipe|
-      user.is_member_of? recipe.owner if recipe.owner_type == Group.name
-    end
-    can :read, Recipe do |recipe|
-      can? :read, recipe.project
-    end
-    can :manage, Attachment do |pa|
-      can? :update, pa.recipe
+    can :manage, Attachment do |attachment|
+      can? :update, attachment.attachable
     end
     can :manage, Collaboration do |collabo|
       can? :manage, collabo.project
     end
-    can :create, Comment do
-      user.persisted?
-    end
-    can :destroy, Comment do |comment|
-      comment.user_id == user.slug || (can? :manage, comment.commentable)
-    end
-    can :create, Like do |_like|
-      user.persisted?
-    end
-    can :destroy, Like do |like|
-      user.persisted? && like.voter_id == user.id
+    can :destroy, CardComment do |comment|
+      comment.user_id == user.id || (can? :manage, comment.card)
     end
     can :manage, Group do |group|
-      user.is_admin_of? group
+      !group.is_deleted && user.is_admin_of?(group)
     end
-    can :create, Group do |_group|
+    can :create, Group do
       user.persisted?
     end
     can :create, Tag do |_tag|
@@ -92,13 +64,11 @@ class Ability
     can :destroy, Tag do |_tag|
       user.persisted?
     end
-    can :manage, Notification do |notification|
-      user == notification.notified || notification.notifier
-    end
   end
 
   private
 
+  # TODO: User#is_project_manager? に同様のロジックを移動、将来的にこれは削除予定
   def is_project_manager?(project, user)
     if project.owner_type == Group.name
       is_admin_of = user.is_admin_of? project.owner

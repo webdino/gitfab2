@@ -1,0 +1,6 @@
+- content_for(:title, "#{@project.owner.name}/#{@project.title} : Memo")
+
+main#notes-show
+  = render "projects/basic_informations"
+  = render "note_cards/note_cards"
+  = render "note_cards/templates"

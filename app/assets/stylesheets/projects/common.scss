@@ -1,0 +1,70 @@
+@import "mixins/variables";
+@import "mixins/clearfix";
+@import "projects/_project_variables";
+
+#content {
+  margin: 35px auto;
+}
+#content, main {
+  @include cf;
+}
+main {
+  float: left;
+  width: 100%;
+  section {
+    h1 {
+      margin-bottom: 20px;
+      height: 40px;
+      line-height: 1.5em;
+      font-size: 36px;
+      font-weight: 700;
+    }
+  }
+}
+article.card .title {
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.card-content {
+  figure {
+    overflow: hidden;
+  }
+  .description {
+    line-height: 1.65;
+  }
+  .contributors {
+    float: right;
+    .contributor {
+      margin-left: 10px;
+    }
+  }
+}
+
+.btn + .btn {
+  margin-left: 4px;
+}
+
+.first-column {
+  float: left;
+  padding-left: $first_column_padding_left;
+  width: $first_column_width;
+}
+.second-column {
+  float: left;
+  width: $second_column_width;
+}
+.third-column {
+  float: left;
+  width: $third_column_width;
+}
+.article-column {
+  float: left;
+  width: $article_column_width;
+}
+
+.fb-comments {
+  background-color: $common-background-color;
+  border-radius: 5px;
+  padding: 10px 0;
+}

@@ -1,0 +1,30 @@
+@import "mixins/variables";
+@import "mixins/clearfix";
+@import "projects/project_variables";
+
+section#project-comments {
+  margin-left: $first_column_width;
+  margin-bottom: 50px;
+  padding-top: 1px;
+  width: $article_column_width;
+  background-color: $common-background-color;
+  border-radius: 5px;
+
+  .inner {
+    @include cf;
+    $margin: 20px;
+    width: $article_column_width - $margin * 2;
+    margin: 20px $margin 0;
+    padding-bottom: 50px;
+    min-height: 256px;
+    word-wrap: break-word;
+
+    h1 {
+      margin-bottom: 7px;
+      font-family: $common-novelsans-semibold;
+      font-weight: normal;
+      font-size: 22px;
+      line-height: $common-line-height;
+    }
+  }
+}

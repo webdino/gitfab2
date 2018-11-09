@@ -3,16 +3,14 @@
   .close-comments-btn
 
   ul.comments
-    - card.comments.includes(:commentable).each_with_index do |comment, i|
-      == render "comments/comment", comment: comment, resources: resources << comment, i: i
-      - resources.delete(comment)
+    - card.comments.order(:id).each_with_index do |comment, i|
+      = render "card_comments/comment", comment: comment, i: i
 
-  - if signed_in? && card.persisted?
-    - resources << Comment.new
-    == form_for resources, html: {class: "comment-form"}, remote: true do |f|
-      .left
-        == image_tag current_user.avatar.thumb, class: "avatar"
-      .right
-        == f.hidden_field :user_id, value: current_user.slug
-        == f.text_area :body, maxlength: 300, size: "40x4", class: "comment-editor"
-        == f.submit "comment", class: "btn"
+  - if current_user && card.persisted?
+    = form_with url: card_card_comments_path(card), html: { class: "comment-form" } do |f|
+      .columns
+        .left
+          = image_tag current_user.avatar.thumb.url, class: "avatar"
+        .right
+          = f.text_area :body, maxlength: 300, size: "40x4", class: "comment-editor"
+          = f.submit "comment", class: "btn"

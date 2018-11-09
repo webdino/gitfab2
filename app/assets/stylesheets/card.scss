@@ -1,0 +1,81 @@
+@import "mixins/variables";
+
+#card-form-container {
+  background-color: $common-background-color;
+  border: $common-border;
+  border-radius: 4px;
+
+  $content_width: $recipe_main_width - 48px;
+
+  ul.figures {
+    li.figure {
+      width: 100%;
+       img {
+         max-width: 300px;
+       }
+       iframe {
+         max-width: 100%;
+       }
+       img + iframe {
+         display: none;
+       }
+       .caution {
+         display: inline-block;
+         width: 40%;
+         font-size: 14px;
+         color: $common-error-text-color;
+       }
+       .btn {
+         margin-left: 5px;
+       }
+       .card-figure-link {
+         width: 80%;
+       }
+    }
+    .btn {
+      margin-top: 5px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      .remove_nested_fields {
+        color: $common-btn-text-color;
+      }
+    }
+    .card-figure-content, .card-figure-link {
+      display: none;
+    }
+    &.hide-add-buttons {
+      a.add-image, .add-video {
+        display: none;
+      }
+    }
+  }
+
+  .card-title {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    font-size: 18px;
+  }
+
+  textarea {
+    display: block;
+    width: $content_width - 2px;
+    height: 200px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .text-length {
+    margin: -30px 10px 30px 0;
+    text-align: right;
+    color: $common-text-color;
+    font-family: $common-verdana;
+    font-size: 18px;
+  }
+
+  #attachments {
+    display: none;
+  }
+}

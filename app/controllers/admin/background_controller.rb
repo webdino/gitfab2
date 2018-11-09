@@ -1,7 +1,4 @@
-class Admin::BackgroundController < ApplicationController
-  include Administration
-  layout 'dashboard'
-
+class Admin::BackgroundController < Admin::ApplicationController
   def index
     @background_image = BackgroundImage.find || BackgroundImage.new
   end

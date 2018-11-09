@@ -1,95 +1,82 @@
 source 'https://rubygems.org'
-gem 'rails', '4.2.10'
-gem 'rake', '~> 10.4.2'
-gem 'sass-rails', '~> 4.0.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
-gem 'turbolinks', '~> 2.5', '>= 2.5.3'
-gem 'jquery-turbolinks'
-gem 'jbuilder', '~> 1.2'
-gem 'resque'
-gem 'resque-pool'
-gem 'rails_config'
-gem 'sanitize'
-gem 'mini_magick'
-gem 'unicorn'
-gem 'capistrano', '~> 3.1.0'
-gem 'capistrano-rvm'
-gem 'capistrano-bundler'
-gem 'capistrano-rails'
-gem 'capistrano-clockwork', github: 'oshimaryo/capistrano-clockwork'
-gem 'devise', '~> 3.4.1'
-gem 'rugged'
-gem 'therubyracer'
-gem 'gitolite'
-gem 'carrierwave'
-gem 'slim-rails', '~> 3.0.0'
-gem 'rails-config'
-gem 'ransack'
-gem 'remotipart'
-gem 'progress_bar'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem 'rails', '~> 5.2.0'
+
+gem 'active_decorator'
+gem 'acts_as_list'
+gem 'bcrypt', require: false
+gem 'bootstrap'
 gem 'cancancan'
-gem 'nested_form'
-gem 'jquery-ui-rails'
+gem 'carrierwave'
+gem 'exception_notification'
+gem 'friendly_id'
+gem 'jb'
+gem 'jbuilder'
 gem 'kaminari'
-gem 'acts-as-taggable-on', '~> 3.1.0'
-gem 'acts_as_commentable'
-gem 'acts_as_votable', '~> 0.8.0'
-gem 'paranoia', github: 'radar/paranoia', branch: 'rails4'
+gem 'mini_magick'
+gem 'mysql2'
+gem 'nested_form'
 gem 'nokogiri'
+gem 'omniauth-facebook'
 gem 'omniauth-github'
-gem 'select2-rails'
-gem 'autoprefixer-rails'
-gem 'jquery-slick-rails'
-gem 'jquery-colorbox-rails'
-gem 'jquery-validation-rails'
-gem 'compass-rails'
-gem 'travis'
-gem 'exception_notification', github: 'smartinez87/exception_notification'
-gem 'slack-notifier'
+gem 'omniauth-google-oauth2'
 gem 'rails_autolink'
+gem 'sanitize'
+gem 'slack-notifier'
+gem 'slim-rails'
+gem 'sprockets-commoner'
+gem 'truncate_html'
+gem 'rubyzip'
+gem 'whenever', require: false
+gem 'delayed_job_active_record'
+
+# Frontend
+gem 'autoprefixer-rails'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'sass-rails'
+gem 'uglifier'
+
 gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
-
-# gem 'capistrano3-delayed-job'
-gem 'carrierwave_backgrounder', github: 'lardawge/carrierwave_backgrounder', ref: 'bff7bc3954b9184157812f948b9a6a4f64ff36d3'
-
-gem 'friendly_id', '~> 5.0.0'
-gem 'stringex', '2.5.2'
-
-gem 'truncate_html'
-gem 'clockwork'
-gem 'daemons', '>= 1.2.0'
-
-group :doc do
-  gem 'sdoc', require: false
-end
+gem 'mathn' # Used in geometry gem in stl gem
 
 group :development, :test do
+  gem 'bullet'
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
+  gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'rspec-rails', '~> 3.4.1'
-  gem 'rubocop', require: false
-  gem 'guard-rspec'
-  gem 'guard-rubocop'
-  gem 'factory_girl_rails'
-  gem 'rb-fsevent'
-  gem 'growl'
-  gem 'better_errors'
-  gem 'resque-web', require: 'resque_web'
-  gem 'rack-mini-profiler'
-  gem 'slim_lint'
-  gem 'coveralls', require: false
-  gem 'simplecov', require: false
-  gem 'delayed_job_web'
-  gem 'bullet'
 end
 
-gem 'ridgepole'
-gem 'mysql2', '~> 0.3.21'
-gem 'acts_as_list'
-gem 'delayed_job_active_record'
-gem 'database_rewinder', group: [:test]
-gem 'after_commit_action'
-gem 'web-console', '~> 2.0', group: :development
+group :development do
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'letter_opener_web'
+  gem 'meta_request'
+  gem 'puma'
+  gem 'rack-mini-profiler', require: false
+  gem 'web-console'
+
+  # Deploy
+  gem 'capistrano', require: false
+  gem 'capistrano-npm', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano3-delayed-job', require: false
+end
+
+group :test do
+  gem 'coveralls', require: false
+  gem 'database_rewinder'
+  gem 'rails-controller-testing'
+  gem 'simplecov', require: false
+end
+
+group :production, :staging do
+  gem 'unicorn'
+end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 shared_examples 'Collaborator' do |*factory_args|
-  let(:collaborator) { FactoryGirl.create(*factory_args) }
-  let(:collaboration) { FactoryGirl.create(:collaboration, owner: collaborator) }
+  let(:collaborator) { FactoryBot.create(*factory_args) }
+  let(:collaboration) { FactoryBot.create(:collaboration, owner: collaborator) }
 
   describe '#collaborations' do
     it do
@@ -22,12 +22,12 @@ shared_examples 'Collaborator' do |*factory_args|
     end
 
     it 'レシーバがprojectをコラボしているなら真を返すこと' do
-      expect(collaborator.is_collaborator_of?(project)).to be_truthy
+      expect(collaborator.is_collaborator_of?(project)).to be true
     end
 
     it 'レシーバがprojectをコラボしていないなら偽を返すこと' do
-      not_collaborated_project = FactoryGirl.create(:user_project)
-      expect(collaborator.is_collaborator_of?(not_collaborated_project)).to be_falsey
+      not_collaborated_project = FactoryBot.create(:user_project)
+      expect(collaborator.is_collaborator_of?(not_collaborated_project)).to be false
     end
   end
 
@@ -43,8 +43,8 @@ shared_examples 'Collaborator' do |*factory_args|
     end
 
     it 'レシーバにcollaborationがないならnilを返すこと' do
-      not_collaborated_project = FactoryGirl.create(:user_project)
-      FactoryGirl.create(:collaboration, project: not_collaborated_project)
+      not_collaborated_project = FactoryBot.create(:user_project)
+      FactoryBot.create(:collaboration, project: not_collaborated_project)
 
       expect(collaborator.collaboration_in(not_collaborated_project)).to be_nil
     end
@@ -56,14 +56,14 @@ shared_examples 'Collaborator' do |*factory_args|
     end
 
     it 'レシーバがprojectをコラボレートすること' do
-      new_project = FactoryGirl.create(:user_project)
+      new_project = FactoryBot.create(:user_project)
       expect {
         collaborator.collaborate!(new_project)
       }.to change { collaborator.is_collaborator_of?(new_project) }
     end
 
     it 'returns an instance of Collaboration.' do
-      new_project = FactoryGirl.create(:user_project)
+      new_project = FactoryBot.create(:user_project)
       expect(collaborator.collaborate!(new_project)).to be_an_instance_of(Collaboration)
     end
   end

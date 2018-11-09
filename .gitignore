@@ -4,6 +4,8 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+!.keep
+
 # Ignore bundler config.
 /.bundle
 /vendor/bundle
@@ -45,3 +47,11 @@ _cho*
 Gemfile.local
 Gemfile.local.lock
 .envrc
+
+node_modules
+
+gemfiles/*.lock
+
+public/javascripts/dist/
+
+/config/certs/*

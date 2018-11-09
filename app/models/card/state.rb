@@ -1,36 +1,58 @@
-class Card::State < Card
-  include Annotatable
-  belongs_to :recipe, required: true
-  acts_as_list scope: :recipe
+# == Schema Information
+#
+# Table name: cards
+#
+#  id             :integer          not null, primary key
+#  comments_count :integer          default(0), not null
+#  description    :text(4294967295)
+#  position       :integer          default(0), not null
+#  title          :string(255)
+#  type           :string(255)      not null
+#  created_at     :datetime
+#  updated_at     :datetime
+#  project_id     :integer
+#  state_id       :integer
+#
+# Indexes
+#
+#  index_cards_on_state_id  (state_id)
+#  index_cards_project_id   (project_id)
+#
+# Foreign Keys
+#
+#  fk_cards_project_id  (project_id => projects.id)
+#
 
-  scope :ordered_by_position, -> { order('position ASC') }
+class Card::State < Card
+  belongs_to :project, counter_cache: :states_count
+  acts_as_list scope: [:project_id, type: Card::State.name]
+
+  has_many :annotations, ->{ order(:position) },
+                        class_name: 'Card::Annotation',
+                        foreign_key: :state_id,
+                        dependent: :destroy
+  accepts_nested_attributes_for :annotations
+
+  scope :ordered_by_position, -> { order(:position) }
 
   class << self
     def updatable_columns
-      super + [:position, :move_to,
-               annotations_attributes: Card::Annotation.updatable_columns
-              ]
+      super + [:position, annotations_attributes: Card::Annotation.updatable_columns]
     end
   end
 
-  # StateをAnnotationに変換
-  # 基底のCardクラスとしてdupした上でAnnotationとしてparent_stateの子に設定する
   def to_annotation!(parent_state)
-    annotation = nil
     transaction do
-      Card.uncached do
-        card = self.class.lock.find(id).tap{ |c| c.type = Card.name }.becomes(Card)
-        # annotation = card.dup_document.becomes(Card::Annotation) キャストすると未保存のRelation(figuresなど)が失われる
-        new_card = card.dup_document
-        new_card.type = Card::Annotation.name
-        new_card.save! # relation保存
-        annotation = Card::Annotation.find(new_card.id)
-        parent_state.annotations << annotation
-        parent_state.save!
-      end
-      destroy
+      update!(type: Card::Annotation.name, state_id: parent_state.id)
+      project.decrement!(:states_count)
     end
-    annotation.reload
+    Card::Annotation.find(id)
+  end
+
+  def dup_document
+    super.tap do |doc|
+      doc.annotations = annotations.map(&:dup_document)
+    end
   end
 end
 

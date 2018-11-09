@@ -1,26 +1,18 @@
-- has_origin = @project.original.present?
-- has_derivatives = @project.derivatives.present?
-
 #link-to-relation-tree
-  - if has_origin && has_derivatives
-    - link_text = "This Project was forked from #{@project.original.owner.slug}/#{@project.original.title}, and was forked  #{@project.derivatives.length} times. See the project relations."
-  - elsif has_origin
-    - link_text = "This project was forked from #{@project.original.owner.slug}/#{@project.original.title}."
-  - elsif has_derivatives
-    - link_text = "This Project was forked #{@project.derivatives.length} times. See the project relations."
+  - if project.original.present? && project.derivatives.present?
+    - link_text = "This Project was forked from #{project.original.title_with_owner_name}, and was forked  #{project.derivatives.count} times. See the project relations."
+  - elsif project.original.present?
+    - link_text = "This project was forked from #{project.original.title_with_owner_name}."
+  - elsif project.derivatives.present?
+    - link_text = "This Project was forked #{project.derivatives.count} times. See the project relations."
 
   .wrapper
     .forked-icon
-    == link_to link_text, "#project-relation-tree", class: "link show-project-relation-tree-link"
+    = link_to link_text, "", class: "link show-project-relation-tree-link", data: { target: "#modal-project-relation-tree", toggle: "modal"}
 
-.hidden
-
-  - if @project.owner_type == "User"
-    - url = root_url.chop + user_project_relation_tree_path(@project.owner, @project) + ".json"
-    - url = url.gsub "http://", "//"
-  - else
-    - url = root_url.chop + group_project_relation_tree_path(@project.owner, @project) + ".json"
-    - url = url.gsub "http://", "//"
-
-  #project-relation-tree data-url="#{url}"
-    h1.title Project Relation Tree
+.modal#modal-project-relation-tree tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered role="document" style="max-width: 97%"
+    .modal-content
+      .modal-body
+        #project-relation-tree data-url="#{project_relation_tree_path(project.owner, project, format: :json)}"
+          h1.title Project Relation Tree

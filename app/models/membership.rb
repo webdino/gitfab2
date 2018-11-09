@@ -1,12 +1,27 @@
-class Membership < ActiveRecord::Base
+# == Schema Information
+#
+# Table name: memberships
+#
+#  id         :integer          not null, primary key
+#  role       :string(255)      default("editor")
+#  created_at :datetime
+#  updated_at :datetime
+#  group_id   :integer
+#  user_id    :integer
+#
+# Indexes
+#
+#  index_users_on_group_id_user_id  (group_id,user_id) UNIQUE
+#
+
+class Membership < ApplicationRecord
   ROLE = { admin: 'admin', editor: 'editor' }
 
-  belongs_to :user, required: true
-  belongs_to :group, required: true
+  belongs_to :user
+  belongs_to :group
 
-  after_create -> { update_attributes role: ROLE[:admin] }, if: -> { group.admins.none? }
-  # after_destroy -> { group.destroy }, if: -> { group && group.members.none? }
-  validates :role, presence: true
+  after_destroy -> { group.soft_destroy! }, if: -> { group.members.none? }
+  validates :role, presence: true, inclusion: { in: ROLE.values }
 
   Membership::ROLE.keys.each do |role|
     define_method "#{role}?" do
@@ -14,9 +29,7 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  class << self
-    def updatable_columns
-      [:id, :group_id, :role, :_destroy]
-    end
+  def deletable?
+    (admin? && group.admins.count > 1) || editor?
   end
 end

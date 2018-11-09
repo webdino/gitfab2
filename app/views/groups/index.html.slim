@@ -1,16 +1,23 @@
 #groups-index
-  == link_to "+ Create new group", [:new, :group], class: "btn"
+  = link_to "+ Create new group", [:new, :group], class: "btn"
 
   #groups-list
     h1
       'Groups
     ul#groups
-      - current_user.groups.each do |group|
-        == render "group", group: group
-
+      - @groups.each do |group|
+        li.group
+          = link_to image_tag(group.avatar.small.url, class: "avatar"), edit_group_path(group)
+          .name
+            = link_to group.name, edit_group_path(group)
+          = link_to "Leave group", user_membership_path(current_user, current_user.membership_in(group)),
+            method: :delete, remote: true, class: "leave-btn btn"
 
 - content_for :bottom do
   coffee:
-    $(document).on "click", ".leave-btn", (event) ->
-      event.preventDefault()
-      $(this).closest("li").remove()
+    $(document).on "ajax:success", ".leave-btn", (event) ->
+      data = event.detail[0]
+      if data.success
+        $(this).closest("li").remove()
+      else
+        alert data.message

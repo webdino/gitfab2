@@ -1,56 +1,25 @@
 class MembershipsController < ApplicationController
-  before_action :load_user
-  before_action :build_membership, only: :create
-  before_action :load_membership, only: [:update, :destroy]
-
   def index
+    @user = User.friendly.find params[:user_id]
     render layout: 'user'
   end
 
-  def create
-    if @membership.save
-      render 'create'
-    else
-      @message = 'create error'
-      render 'failed'
-    end
-  end
-
   def update
-    if @membership.update membership_params
-      render 'update'
+    membership = Membership.find(params[:id])
+    if can?(:update, membership) && membership.update(params.require(:membership).permit(:role))
+      render json: { success: true }
     else
-      @message = 'update error'
-      render 'failed'
+      render json: { success: false }
     end
   end
 
   def destroy
-    if @membership.group.members.length == 1 && @membership.group.projects.length > 0
-      @message = 'This group still has projects.'
-      render 'failed'
-    else
-      @membership.destroy
-    end
-  end
-
-  private
-
-  def membership_params
-    if params[:membership]
-      params.require(:membership).permit Membership.updatable_columns
-    end
-  end
-
-  def load_user
     @user = User.friendly.find params[:user_id]
-  end
-
-  def build_membership
-    @membership = @user.memberships.build membership_params
-  end
-
-  def load_membership
     @membership = @user.memberships.find params[:id]
+    if @membership.deletable?
+      @membership.destroy
+    else
+      render json: { success: false, message: 'You can not remove this member.' }
+    end
   end
 end

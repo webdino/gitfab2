@@ -1,0 +1,5 @@
+#recent.projects-wrapper
+  .container
+    ul#recent-projects.projects
+      - @projects.each do |project|
+        = render "project", project: project

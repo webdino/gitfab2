@@ -9,6 +9,7 @@ gitfab2 [![Build Status](https://travis-ci.org/mozilla-japan/gitfab2.svg?branch=
 - Docker Compose 1.16 or later
 - direnv
 - rbenv
+- node.js
 
 ### Installation
 
@@ -18,6 +19,8 @@ $ cd gitfab2
 $ rbenv install `cat .ruby-version`
 $ gem install bundler --no-document
 $ bundle install
+$ npm install
+$ npm run build
 $ cp config/database.ymls/development.yml config/database.yml
 $ cp .envrc.sample .envrc
 $ vi .envrc
@@ -40,29 +43,21 @@ Dockerコンテナを起動してから
 
 ```bash
 $ bundle exec rake db:create
-$ bundle exec ridgepole -c config/database.yml -E development --apply -f db/schemas/Schemafile
-$ bundle exec ridgepole -c config/database.yml -E test --apply -f db/schemas/Schemafile
+$ bundle exec rake db:migrate
 ```
 
 ### Run Server
 
 ```bash
 $ bundle exec rails s
-[DEPRECATION] requiring "RMagick" is deprecated. Use "rmagick" instead
-warning: parser/current is loading parser/ruby21, which recognizes
-warning: 2.1.6-compliant syntax, but you are running 2.1.2.
-warning: please see https://github.com/whitequark/parser#compatibility-with-ruby-mri.
-=> Booting WEBrick
-=> Rails 4.1.16 application starting in development on http://0.0.0.0:3000
-=> Run `rails server -h` for more startup options
-=> Notice: server is listening on all interfaces (0.0.0.0). Consider using 127.0.0.1 (--binding option)
-=> Ctrl-C to shutdown server
-[2017-11-01 14:47:18] INFO  WEBrick 1.3.1
-[2017-11-01 14:47:19] INFO  ruby 2.1.2 (2014-05-08) [x86_64-linux]
-[2017-11-01 14:47:19] INFO  WEBrick::HTTPServer#start: pid=6533 port=3000
 ```
 
 Open http://localhost:3000 in your browser.
+
+### Frontend
+
+`app/frontend/` 以下の開発を行う場合は、 `npm start` でwebpackを起動する。
+`app/frontend/` 以下に変更を加えない場合は、一度 `npm run build` をすればOK。
 
 
 ### Run tests

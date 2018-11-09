@@ -1,6 +1,0 @@
-#collaboration-tab.tabs-pane
-  ul.project-list
-    - @owner.collaborations.each do |collaboration|
-      - project = collaboration.project
-      - if can? :read, project
-        == render "project", project: project, is_note: false

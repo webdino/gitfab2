@@ -1,0 +1,66 @@
+- content_for(:title, "#{@owner.slug} (#{@owner.name}) : Project list")
+
+#owners-show
+  .left
+    .image-wrapper
+      .owner-avatar style="background-image: url('#{@owner.avatar.url}')"
+
+    .wrapper
+      .owner-name
+        = @owner.name
+
+      .joined-on
+        span
+          'Joined on:
+        = @owner.created_at.strftime "%b %d, %Y"
+
+      .makes
+        .projects
+          span
+            'Project:
+          span.count
+            = "#{@owner.projects_count}"
+
+        / TODO: #487 Implement user.contributions method in user.rb
+        / .contributions
+        /   = @owner.contributions.count
+
+      - if @owner.url.present?
+        .url
+          span
+            'Website:
+          = link_to @owner.url, @owner.url
+
+      - if @owner.location.present?
+        .location
+          span
+            'Location:
+          = @owner.location
+
+      .relation-wrapper
+        - if @owner.is_a? Group
+          h2.title Members
+          - if current_user && current_user.is_admin_of?(@owner)
+            = link_to image_tag("create-group.png", alt: "Edit group"), [:edit, @owner], class: "create-group-btn"
+          ul.members
+            - @owner.members.each do |member|
+              = link_to owner_path(member) do
+                li.member
+                  = image_tag member.avatar.url, class: "member-avatar", name: "#{member.name}"
+                  .name
+                    = member.name
+
+        - elsif @owner.groups.active.any?
+          h2.title GROUPS
+          - if current_user && current_user == @owner
+            = link_to image_tag("create-group.png"), [:new, :group], class: "create-group-btn"
+          ul.groups
+            - @owner.groups.active.each do |group|
+              = link_to owner_path(group) do
+                li.group
+                  = image_tag group.avatar.url, class: "group-avatar", name: "#{group.name}"
+                  .name
+                    = group.name
+
+  .right
+    = render partial: "projects"

@@ -7,11 +7,11 @@
     ul
       - @background_image.errors.full_messages.each do |error|
         li
-          == error
+          = error
 
-  == form_tag(admin_background_path, method: 'PUT', multipart: true) do
-    == file_field_tag(:file)
-    == submit_tag('アップロード')
+  = form_tag(admin_background_path, method: 'PUT', multipart: true) do
+    = file_field_tag(:file)
+    = submit_tag('アップロード')
 
   h2.title-2 現在の画像
 

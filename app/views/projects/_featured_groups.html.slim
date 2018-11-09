@@ -1,0 +1,31 @@
+#featured-groups
+  .container
+    ul.groups
+      - @featured_groups.each do |group|
+        = link_to owner_path(group) do
+          li.group
+            .image-wrapper
+              = image_tag group.avatar.url, class: "image"
+
+            .title
+              = group.name
+            .meta
+              div
+                span.place
+                  = group.location
+                span
+              div
+                span.members
+                  = "Members: #{group.members.count}"
+
+                span |
+                span.projects
+                  = "Projects: #{group.projects_count}"
+
+            .description
+            / = group.description.truncate(300) #TODO: implement group.description
+
+  .label.lang-en
+    'Tags & Keywords
+  .label.lang-jp
+    'タグとキーワード

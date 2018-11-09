@@ -1,24 +1,33 @@
-- content_for :title do
-  - if @group.name.present?
-    - "Edit " + @group.name
-  - else
-    - "Edit Group"
+- content_for(:title, @group.name.present? ? "Edit #{@group.name}" : "Edit Group")
 
 #groups-edit
   #edit-profile
     h1.page-title
-      == "#{@group.name} Public Profile"
-    == render "form"
+      = "#{@group.name} Public Profile"
+    = render "form"
 
   #edit-members
-    .inner
-      h1.title
-       'Members
-      ul#members
-        - @group.members.each do |member|
-          == render "membership", membership: member.membership_in(@group)
+    h2.title
+      'Members
+    ul#members
+      - @group.members.each do |member|
+        = render "membership", membership: member.membership_in(@group)
 
-      == render "add_member", group: @group
+    - if can? :manage, @group
+      #new-membership
+        h2.title
+          'Add Member
+        .body
+          = form_tag group_members_path(group_id: @group.id), method: "post", id: "new_member", remote: true
+          = select_tag :member_name
+          = select_tag :role, options_for_select(Membership::ROLE)
+          = submit_tag "add", id: "add-btn", class: "btn"
+
+      #delete-group
+        h2.title
+          'Delete this group
+        .body
+          = link_to "Delete", group_path(@group), method: :delete, class: "btn", id: "delete-btn", data: { confirm: "Are you sure to delete this group?" }
 
 - content_for :bottom
 
@@ -31,7 +40,7 @@
       event.preventDefault()
       $("#group-avatar-form").trigger "click"
 
-    $(document).on "change", "#group-avatar-form", (event, data, status) ->
+    $(document).on "change", "#group-avatar-form", (event) ->
       file = event.target.files[0]
       reader = new FileReader()
       reader.onload = ->
@@ -39,14 +48,16 @@
 
       reader.readAsDataURL file
 
-    $(document).on "change", ".membership-role", (event, data) ->
-      event.preventDefault()
-      $(this).submit()
+    $(document).on "change", ".membership-role", (event) ->
+      Rails.fire(event.target.form, "submit")
 
-    $(document).on "click", ".remove-member-btn", (event) ->
-      event.preventDefault
-      $(this).closest("li").remove()
+    $(document).on "ajax:success", ".remove-member-btn", (event) ->
+      data = event.detail[0]
+      if data.success
+        $(this).closest("li").remove()
+      else
+        alert data.message
 
-    $(document).on "ajax:success", "#new_member", (event, data) ->
-      $("#members").append data.html
-      clearSelect2Value()
+    $(document).on "ajax:success", "#new_member", (event) ->
+      $("#members").append event.detail[0].html
+      $("#member_name").val(null).trigger("change");

@@ -1,38 +1,23 @@
 - content_for :stylesheet do
-  == stylesheet_link_tag "project", media: "all", "data-turbolinks-track" => true
+  = stylesheet_link_tag "project", media: "all"
 - content_for :javascript do
-  == javascript_include_tag "project", "data-turbolinks-track" => true
+  = javascript_include_tag "project"
 - content_for :ogp do
-
-  - if @project.persisted?
-
-    ruby:
-      title = "#{@project.title} by #{@project.owner.name}"
-      description = @project.description
-      image = nil
-      video = nil
-      if @project.figures.present?
-        if @project.figures.first.content.present?
-          image = "#{@project.figures.first.content}"
-          video = nil
-        elsif @project.figures.first.link.present?
-          image = @project.thumbnail
-          video = @project.figures.first.link
-        end
-      end
-
-    == render partial: "components/base_ogp", locals: {title: title, description: description, image: image, video: video}
-
-  - else
-    == render partial: "components/base_ogp"
+  = render partial: "components/base_ogp", locals: { model: @project }
 
 - content_for :content do
-  - has_origin = @project.original.present?
-  - has_derivatives = @project.derivatives.present?
-  - if has_origin || has_derivatives
-    == render "projects/relations"
+  - if @project&.original.present? || @project&.derivatives.present?
+    = render partial: "projects/relations", locals: { project: @project }
 
-  #content.project-layout
-    == yield
-  == render "recipes/facebook"
-== render "layouts/base_layout"
+  - if current_page?(controller: 'projects', action: 'index') || current_page?(controller: 'projects', action: 'search')
+    = yield
+  - else
+    #content.project-layout
+      = yield
+
+= render "layouts/base_layout"
+
+.modal#modal-card-form tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false"
+  .modal-dialog.modal-dialog-centered.modal-lg role="document"
+    .modal-content
+      .modal-body#card-form-container

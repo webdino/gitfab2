@@ -1,0 +1,6 @@
+{
+  like: {
+    liked: Like.exists?(user: current_user, project: @project),
+    updateLikeUrl: project_likes_path(@project.owner, @project, format: :json)
+  }
+}

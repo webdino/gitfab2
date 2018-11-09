@@ -1,6 +1,0 @@
-.fork-destination
-  p.dest-name
-    == owner.name
-  .fork-btn style="background-image: url('#{owner.avatar.small}')"
-    == form_for projects_path(owner.projects.build, owner_name: owner.name) do
-      == hidden_field_tag :original_project_id, project.id

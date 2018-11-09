@@ -1,22 +1,24 @@
-== form_for @group, class: "group-form" do |f|
-  p#notice == notice
+= form_for @group, class: "group-form" do |f|
+  - flash.each do |key, value|
+    = content_tag(:p, value, id: key)
 
   - if @group.errors.any?
     #error_explanation
       h2
-        == pluralize(@group.errors.count, "error occured:: ")
+        = pluralize(@group.errors.count, "error occured:: ")
         'prohibited this user from being saved:
       ul
         - @group.errors.full_messages.each do |msg|
-          li == msg
+          li = msg
   .left
-    == image_tag @group.avatar, id: "group-avatar"
+    = image_tag @group.avatar.url, id: "group-avatar"
 
   .right
-    == f.file_field :avatar, id: "group-avatar-form"
-    == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-    == f.text_field :name, placeholder: "Name", id: "group-name-form", class: "text-form"
-    == f.url_field :url, placeholder: "URL", class: "text-form"
-    == f.text_field :location, placeholder: "Location", class: "text-form"
+    = f.file_field :avatar, id: "group-avatar-form"
+    = f.hidden_field :avatar_cache
+    = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+    = f.text_field :name, placeholder: "Name", id: "group-name-form", class: "text-form"
+    = f.url_field :url, placeholder: "URL", class: "text-form"
+    = f.text_field :location, placeholder: "Location", class: "text-form"
 
-  == f.submit "Save", id: "submit", class: "btn"
+  = f.submit "Save", id: "submit", class: "btn"

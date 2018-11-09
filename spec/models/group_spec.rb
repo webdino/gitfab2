@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe Group do
   it_behaves_like 'Collaborator', :group
   it_behaves_like 'ProjectOwner', :user
+  it_behaves_like 'DraftInterfaceTest', FactoryBot.create(:group)
 
-  let(:user1) { FactoryGirl.create :user }
-  let(:user2) { FactoryGirl.create :user }
-  let(:group1) { FactoryGirl.create :group }
+  let(:user1) { FactoryBot.create :user }
+  let(:user2) { FactoryBot.create :user }
+  let(:group1) { FactoryBot.create :group }
 
   describe '#admins' do
     subject do
@@ -32,8 +31,28 @@ describe Group do
     it { is_expected.to be true }
   end
 
-  describe '#generate_draft' do
-    group = FactoryGirl.create(:group)
-    it_behaves_like 'DraftGenerator', group
+  describe '#soft_destroy!' do
+    subject { group.soft_destroy! }
+
+    let!(:group) { FactoryBot.create(:group, name: name) }
+    let(:name) { "group-name" }
+    before { FactoryBot.create_list(:project, 2, owner: group, is_deleted: false) }
+
+    it do
+      expect { subject }.to change{ group.is_deleted }.from(false).to(true)
+                       .and change{ group.name }.from(name).to(start_with("deleted-group-"))
+    end
+    it 'deletes all projects' do
+      subject
+      expect(group.projects).to be_all { |p| p.is_deleted? }
+    end
+  end
+
+  describe '#active' do
+    subject { Group.active }
+    let!(:active) { FactoryBot.create(:group, is_deleted: false) }
+    let!(:deleted) { FactoryBot.create(:group, is_deleted: true) }
+
+    it { is_expected.to eq [active] }
   end
 end

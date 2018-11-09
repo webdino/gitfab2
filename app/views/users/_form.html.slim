@@ -1,0 +1,61 @@
+main.panel
+  h1
+    'Public Profile
+
+  - if user.errors.any?
+    ul.alert.alert-danger
+      - user.errors.full_messages.each do |msg|
+        li = msg
+
+  = form_with model: user, html: { multipart: true }, local: true do |f|
+    = f.hidden_field :encrypted_identity_id
+
+    .columns
+      .left
+        = image_tag user.avatar.url, id: "user-avatar"
+        = f.file_field :avatar, id: "user-avatar-form"
+        = f.hidden_field :avatar_cache
+      .right
+        = link_to "Upload new picture", "#", id: "upload-button", class: "btn"
+        .form-group
+          = f.label :name
+          = f.text_field :name, placeholder: "Name", class: "form-control"
+        .form-group
+          = f.label :email
+          = f.text_field :email, placeholder: "Email", class: "form-control"
+        .form-group
+          = f.label :email_confirmation
+          = f.text_field :email_confirmation, placeholder: "Email confirmation", class: "form-control"
+        - if user.password_auth?
+          .form-group
+            = f.label :password
+            = f.password_field :password, placeholder: "Password", class: "form-control"
+          .form-group
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation, placeholder: "Password Confirmation", class: "form-control"
+        .form-group
+          = f.label :url
+          = f.url_field :url, placeholder: "URL", class: "form-control"
+        .form-group
+          = f.label :location
+          = f.text_field :location, placeholder: "Location", class: "form-control"
+    .form-group
+      = f.submit id: "submit", class: "btn primary"
+
+- content_for :bottom
+  coffee:
+    $(document).on "click", "#user-avatar", (event, data) ->
+      event.preventDefault()
+      $("#user-avatar-form").trigger "click"
+
+    $(document).on "click", "#upload-button", (event, data) ->
+      event.preventDefault()
+      $("#user-avatar-form").trigger "click"
+
+    $(document).on "change", "#user-avatar-form", (event, data, status) ->
+      file = event.target.files[0]
+      reader = new FileReader()
+      reader.onload = ->
+        $("#user-avatar").attr "src", reader.result
+
+      reader.readAsDataURL file

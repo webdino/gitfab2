@@ -1,0 +1,55 @@
+source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+gem 'rails', github: 'rails/rails'
+
+gem 'active_decorator'
+gem 'acts_as_list'
+gem 'bcrypt', require: false
+gem 'bootstrap'
+gem 'cancancan'
+gem 'carrierwave'
+gem 'exception_notification'
+gem 'friendly_id'
+gem 'jb'
+gem 'jbuilder'
+gem 'kaminari'
+gem 'mini_magick'
+gem 'mysql2'
+gem 'nested_form'
+gem 'nokogiri'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+gem 'puma'
+gem 'rails_autolink'
+gem 'sanitize'
+gem 'slack-notifier'
+gem 'slim-rails'
+gem 'sprockets-commoner'
+gem 'truncate_html'
+gem 'rubyzip'
+gem 'whenever', require: false
+gem 'delayed_job_active_record'
+
+# Frontend
+gem 'autoprefixer-rails'
+gem 'coffee-rails'
+gem 'jquery-rails'
+gem 'sass-rails'
+gem 'uglifier'
+
+gem 'stl', github: 'oshimaryo/stl-ruby'
+gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
+gem 'mathn' # Used in geometry gem in stl gem
+
+group :test do
+  gem 'factory_bot_rails'
+  gem 'rspec-rails'
+  gem 'slim_lint'
+  gem 'coveralls', require: false
+  gem 'database_rewinder'
+  gem 'rails-controller-testing'
+  gem 'simplecov', require: false
+end
+

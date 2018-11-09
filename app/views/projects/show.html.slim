@@ -1,0 +1,27 @@
+- content_for(:title, "#{@project.owner.name}/#{@project.title} : Recipe")
+
+main#recipes-show data-url="#{project_path(@project.owner, @project)}" data-owner="#{@project.owner.name}" data-project="#{@project.name}"
+  = render "projects/basic_informations"
+  = render "projects/recipe_cards"
+  = render "projects/usages"
+  = render "projects/project_comments"
+  = render "projects/templates"
+
+.modal#modal-loading tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered.justify-content-md-center role="document"
+    = image_tag "loading"
+
+.modal#state-convert-modal tabindex="-1" role="dialog"
+  .modal-dialog.modal-dialog-centered role="document"
+    .modal-content
+      .modal-body
+        .text
+          'Convert State
+          p.src.d-inline
+          '&nbsp;to Annotation.
+          p Select the numebr of the state to annotate.
+        = select_tag "target_state"
+        .ok-btn.btn
+          'OK
+        .cancel-btn.btn
+          'cancel

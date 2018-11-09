@@ -4,8 +4,9 @@ class UniqueOwnerNameValidator < ActiveModel::EachValidator
       record.errors[:name] << ' is nil'
       return
     end
-    rec = User.find_by_slug(record.normalize_friendly_id(record.name))
-    rec ||= Group.find_by_slug(record.normalize_friendly_id(record.name))
-    record.errors[:name] << 'has already been taken.' if rec && record != rec
+    slug = record.normalize_friendly_id(record.name)
+    if User.where(slug: slug).where.not(id: record.id).exists? || Group.where(slug: slug).where.not(id: record.id).exists?
+      record.errors[:name] << 'has already been taken.'
+    end
   end
 end

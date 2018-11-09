@@ -1,49 +1,64 @@
-- content_for :title do
-  - "Edit Profile"
+- content_for(:title, "Edit Profile")
 
-main#users-edit
-  h1
-    'Public Profile
-  p#notice == notice
+#users-edit
 
-  == form_for @user, url: user_path(id: @user.id) do |f|
-    - if @user.errors.any?
-      #error_explanation
-        h2
-          == pluralize(@user.errors.count, "error")
-          'prohibited this user from being saved:
-        ul
-          - @user.errors.full_messages.each do |msg|
-            li == msg
+  = render partial: "form", locals: { user: @user }
 
-    .left
-      == image_tag @user.avatar, id: "user-avatar"
+  .panel
+    h1 パスワード変更
 
-    .right
-      == f.file_field :avatar, id: "user-avatar-form"
-      == link_to "Upload new picture", "#", id: "upload-button", class: "btn"
-      p style="width: 330px; margin-bottom: 15px; padding: 10px; border: 1px solid #FFF; border-radius: 5px; font-size: 22px; color:#999;"
-        == @user.name
-      == f.url_field :url, placeholder: "URL", class: "text-form"
-      == f.text_field :location, placeholder: "Location", class: "text-form"
+    - if @update_password_error_messages.present?
+      ul.alert.alert-danger
+        - @update_password_error_messages.each do |message|
+          li= message
 
-    == f.submit "Save", id: "submit", class: "btn"
+    = form_with(url: user_update_password_path(current_user.name), method: :patch, local: true) do |f|
+      .form-group
+        = f.label :password
+        = f.password_field :password, class: "form-control"
+      .form-group
+        = f.label :password_confirmation
+        = f.password_field :password_confirmation, class: "form-control"
+      - if current_user.password_digest # OAuthで会員登録してpassword_digestがnilの場合は非表示
+        .form-group
+          = f.label :current_password, "現在のパスワード"
+          = f.password_field :current_password, class: "form-control"
+      .form-group
+        = f.submit "Update password", class: "btn primary"
 
-- content_for :bottom
+  .panel
+    h1 アカウント連携
+    ul
+      li.form-group
+        - if current_user.connected_with_github?
+          .btn.disabled Already signed in to GitHub
+        - else
+          = link_to_github_sign_in
+      li.form-group
+        - if current_user.connected_with_google?
+          .btn.disabled Already signed in to Google
+        - else
+          = link_to_google_sign_in
+      li.form-group
+        - if current_user.connected_with_facebook?
+          .btn.disabled Already signed in to Facebook
+        - else
+          = link_to_facebook_sign_in
 
-  coffee:
-    $(document).on "click", "#user-avatar", (event, data) ->
-      event.preventDefault()
-      $("#user-avatar-form").trigger "click"
+  .panel
+    h1 バックアップ
 
-    $(document).on "click", "#upload-button", (event, data) ->
-      event.preventDefault()
-      $("#user-avatar-form").trigger "click"
+    = form_with(url: user_backup_path(current_user), local: true) do |f|
+      .form-group
+        = f.submit "バックアップ作成", class: "btn primary"
 
-    $(document).on "change", "#user-avatar-form", (event, data, status) ->
-      file = event.target.files[0]
-      reader = new FileReader()
-      reader.onload = ->
-        $("#user-avatar").attr "src", reader.result
+    - backup = Backup.new(current_user)
+    - if backup.zip_exist?
+      .form-group#download-backup style="margin-top: 1.2rem"
+        span= "作成日：#{backup.mtime.strftime('%Y/%m/%d %H:%M')}"
+        = link_to "バックアップダウンロード", user_download_backup_path(current_user), class: "btn primary", download: ''
 
-      reader.readAsDataURL file
+  .panel
+    ul
+      li.form-group
+        = link_to "退会する", user_path, method: :delete, class: "btn", data: { confirm: "本当に退会しますか?\n退会すると、このユーザーに紐づく全てのデータが削除されます。" }

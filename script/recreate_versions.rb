@@ -6,7 +6,7 @@ Project.all.each do |project|
     figure.content.recreate_versions! if figure.content.present?
   end
 
-  project.note.note_cards.each do |note_card|
+  project.note_cards.each do |note_card|
     note_card.figures.each do |figure|
       figure.content.recreate_versions! if figure.content.present?
     end

@@ -1,0 +1,15 @@
+section#usages
+  .inner
+    h1
+      'Usages
+
+    ul#usage-list.card-list
+      - @project.usages.each do |usage|
+        li
+          = render "components/usage", card: usage,
+                                       delete_url: project_usage_path(@owner, @project, usage),
+                                       edit_url: edit_project_usage_path(@owner, @project, usage)
+
+    - if current_user
+      = link_to "+ Add Usage", new_project_usage_path(@owner, @project), remote: true,
+          class: "btn new-card", "data-list" => "#usage-list", "data-template" => "#usage-template"
