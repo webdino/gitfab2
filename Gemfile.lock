@@ -426,6 +426,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails
   coveralls
+  daemons
   database_rewinder
   delayed_job_active_record
   exception_notification
@@ -470,4 +471,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.16.6
+   1.17.1

@@ -79,4 +79,5 @@ end
 
 group :production, :staging do
   gem 'unicorn'
+  gem 'daemons' # https://github.com/collectiveidea/delayed_job/blob/740bbca3ee52ad3c8938f2ea673bb3d778c33bd5/lib/delayed/command.rb#L5
 end
