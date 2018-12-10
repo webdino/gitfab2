@@ -161,7 +161,7 @@ section.tools class="#{'forked-project-tools' if @project.is_fork?}"
     .modal-dialog.modal-dialog-centered.modal-sm role="document"
       .modal-content
         .modal-body.text-center
-          - url = "https://fabble.cc#{project_path(@owner, @project)}"
+          - url = project_url(@owner, @project)
           = link_to "http://twitter.com/share?url=#{url}&text=#{@project.title} on Fabble&hashtags=Fabble", target: "_blank" do
             = image_tag("icons/twitter_100", style: "margin-right: 20px")
           = link_to "http://www.facebook.com/share.php?u=#{url}", onclick: "window.open(this.href, 'FBwindow', 'width=650, height=450, menubar=no, toolbar=no, scrollbars=yes'); return false;" do
