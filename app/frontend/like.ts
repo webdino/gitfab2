@@ -1,27 +1,27 @@
-import { h, app, ActionsType, View } from "hyperapp"
-import axios from "axios"
-import setupCSRFToken from './lib/setupCSRFToken'
+import axios from "axios";
+import { ActionsType, app, h, View } from "hyperapp";
+import setupCSRFToken from "./lib/setupCSRFToken";
 
 interface State {
-  visible: boolean,
-  liked: boolean,
-  clickEnabled: boolean,
-  updateLikeUrl: string,
+  visible: boolean;
+  liked: boolean;
+  clickEnabled: boolean;
+  updateLikeUrl: string;
 }
 const state: State = {
   visible: true,
   liked: false,
   clickEnabled: true,
-  updateLikeUrl: "",
-}
+  updateLikeUrl: ""
+};
 
 interface Actions {
-  initState(state: State): State,
-  makeInvisible(): State,
-  enable(clickEnabled: boolean): State,
-  setIcon(liked: boolean): State,
-  like(): State,
-  unlike(): State,
+  initState(state: State): State;
+  makeInvisible(): State;
+  enable(clickEnabled: boolean): State;
+  setIcon(liked: boolean): State;
+  like(): State;
+  unlike(): State;
 }
 const actions: ActionsType<State, Actions> = {
   initState: ({ liked, updateLikeUrl }) => () => ({ liked, updateLikeUrl }),
@@ -33,7 +33,9 @@ const actions: ActionsType<State, Actions> = {
 
     try {
       const response = await axios.post(state.updateLikeUrl);
-      if (!response.data.success) { actions.setIcon(false) }
+      if (!response.data.success) {
+        actions.setIcon(false);
+      }
     } catch {
       alertError();
       actions.setIcon(false);
@@ -43,32 +45,37 @@ const actions: ActionsType<State, Actions> = {
     actions.setIcon(false);
 
     try {
-      await axios.delete(state.updateLikeUrl)
+      await axios.delete(state.updateLikeUrl);
     } catch {
       alertError();
       actions.setIcon(true);
     }
-  },
-}
+  }
+};
 
-const alertError = () => alert("An unexpected error occurred. Please try again later.");
+const alertError = () =>
+  alert("An unexpected error occurred. Please try again later.");
 
-const view: View<State, Actions> = (state: State, actions: Actions) => (
+const view: View<State, Actions> = (state: State, actions: Actions) =>
   h("span", {
     oncreate: () => {
       setupCSRFToken();
-      axios.get(`${window.location.pathname}.json`)
+      axios
+        .get(`${window.location.pathname}.json`)
         .then(response => actions.initState(response.data.like))
         .catch(actions.makeInvisible);
     },
     onclick: async () => {
-      if (!state.clickEnabled) { return }
+      if (!state.clickEnabled) {
+        return;
+      }
       actions.enable(false);
       state.liked ? await actions.unlike() : await actions.like();
       actions.enable(true);
     },
-    className: `${state.visible ? 'icon' : ''} ${state.liked ? 'icon-liked' : 'icon-like'} ${state.clickEnabled ? '' : 'disabled'}`
-  })
-)
+    className: `${state.visible ? "icon" : ""} ${
+      state.liked ? "icon-liked" : "icon-like"
+    } ${state.clickEnabled ? "" : "disabled"}`
+  });
 
-app(state, actions, view, document.querySelector("#like-component"))
+app(state, actions, view, document.querySelector("#like-component"));
