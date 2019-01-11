@@ -2,33 +2,41 @@ const path = require("path");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const ManifestPlugin = require("webpack-manifest-plugin");
 
-module.exports = {
-  entry: {
-    like: "./app/frontend/like.ts",
-  },
+module.exports = (_, argv) => {
+  const isProduction = argv.mode === "production";
+  const dist = path.resolve(__dirname, "public/javascripts/dist");
 
-  output: {
-    filename: "[name].[chunkhash].js",
-    path: path.resolve(__dirname, "public/javascripts/dist"),
-  },
+  return {
+    entry: {
+      like: "./app/frontend/like.ts"
+    },
 
-  mode: "development",
+    output: {
+      filename: "[name].[chunkhash].js",
+      path: dist
+    },
 
-  devtool: "inline-source-map",
+    mode: isProduction ? "production" : "development",
 
-  resolve: {
-    extensions: [".ts", ".tsx", ".js", ".json"]
-  },
+    devtool: isProduction ? "source-map" : "inline-source-map",
 
-  module: {
-    rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+    resolve: {
+      extensions: [".ts", ".tsx", ".js"]
+    },
+
+    module: {
+      rules: [
+        { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+        { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      ]
+    },
+
+    plugins: [
+      new CleanWebpackPlugin(dist),
+      new ManifestPlugin({
+        fileName: "webpack-manifest.json",
+        publicPath: "dist/"
+      })
     ]
-  },
-
-  plugins: [
-    new CleanWebpackPlugin("public/javascripts/dist"),
-    new ManifestPlugin({fileName: "webpack-manifest.json", publicPath: 'dist/'}),
-  ],
+  };
 };
