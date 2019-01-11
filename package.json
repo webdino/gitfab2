@@ -20,7 +20,10 @@
   },
   "devDependencies": {
     "clean-webpack-plugin": "^1.0.0",
+    "prettier": "^1.15.3",
     "ts-loader": "^5.3.3",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.17.0",
     "typescript": "^3.2.2",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
