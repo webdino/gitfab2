@@ -19,9 +19,8 @@
     "hyperapp": "^1.2.9"
   },
   "devDependencies": {
-    "awesome-typescript-loader": "^5.2.1",
     "clean-webpack-plugin": "^1.0.0",
-    "source-map-loader": "^0.2.4",
+    "ts-loader": "^5.3.3",
     "typescript": "^3.2.2",
     "webpack": "^4.28.4",
     "webpack-cli": "^3.2.1",
