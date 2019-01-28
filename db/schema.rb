@@ -27,6 +27,16 @@ ActiveRecord::Schema.define(version: 2019_01_29_091644) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
   end
 
+  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
+    t.integer "project_id", null: false, comment: "ブラックリスト対象プロジェクト"
+    t.integer "user_id", null: false, comment: "登録した管理者"
+    t.text "reason", null: false, comment: "理由"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_black_lists_on_project_id"
+    t.index ["user_id"], name: "index_black_lists_on_user_id"
+  end
+
   create_table "card_comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "card_id", null: false
@@ -246,6 +256,8 @@ ActiveRecord::Schema.define(version: 2019_01_29_091644) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  add_foreign_key "black_lists", "projects"
+  add_foreign_key "black_lists", "users"
   add_foreign_key "card_comments", "cards"
   add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
