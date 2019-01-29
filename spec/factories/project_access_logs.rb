@@ -6,7 +6,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  project_id :integer          not null
-#  user_id    :integer          not null
+#  user_id    :integer
 #
 # Indexes
 #

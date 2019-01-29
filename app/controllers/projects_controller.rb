@@ -26,6 +26,7 @@ class ProjectsController < ApplicationController
 
     respond_to do |format|
       format.html do
+        ProjectAccessLog.log!(@project, current_user)
         @project_comments = @project.project_comments.order(:id)
       end
       format.json

@@ -6,7 +6,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  project_id :integer          not null
-#  user_id    :integer          not null
+#  user_id    :integer
 #
 # Indexes
 #
@@ -21,5 +21,11 @@
 
 class ProjectAccessLog < ApplicationRecord
   belongs_to :project
-  belongs_to :user
+  belongs_to :user, optional: true
+
+  def self.log!(project, user)
+    if user.nil? || !user.is_project_manager?(project)
+      create!(project: project, user: user)
+    end
+  end
 end

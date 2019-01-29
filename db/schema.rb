@@ -173,7 +173,7 @@ ActiveRecord::Schema.define(version: 2019_01_29_091644) do
 
   create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "project_id", null: false
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_project_access_logs_on_project_id"
