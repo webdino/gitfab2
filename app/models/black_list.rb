@@ -23,4 +23,6 @@
 class BlackList < ApplicationRecord
   belongs_to :project
   belongs_to :user
+
+  validates :reason, presence: true
 end

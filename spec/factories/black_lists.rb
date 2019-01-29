@@ -22,8 +22,8 @@
 
 FactoryBot.define do
   factory :black_list do
-    project { nil }
-    user { nil }
-    reason { "MyString" }
+    project
+    user
+    reason { "不適切な表現が含まれる" }
   end
 end

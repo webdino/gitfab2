@@ -1,0 +1,21 @@
+h2.h2 アクセスランキングブラックリスト
+
+- flash.each do |key, message|
+  div class="alert alert-#{key}"
+    = message
+
+div style="margin: 30px auto"
+  = link_to "ブラックリスト追加", new_admin_black_list_path, class: "btn btn-primary btn-sm"
+
+- if @black_lists.exists?
+  table.table
+    thead
+      tr
+        th ブラックリスト済みプロジェクト
+        th
+    tbody
+      - @black_lists.each do |black_list|
+        tr
+          td = link_to black_list.project.title, project_path(black_list.project.owner, black_list.project)
+          td = link_to "詳細", admin_black_list_path(black_list)
+
