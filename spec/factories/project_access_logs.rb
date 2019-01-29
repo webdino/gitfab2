@@ -21,7 +21,7 @@
 
 FactoryBot.define do
   factory :project_access_log do
-    project { nil }
-    user { nil }
+    project
+    user
   end
 end
