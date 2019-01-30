@@ -10,7 +10,7 @@
 @import "bootstrap/mixins";
 //@import "bootstrap/root";
 //@import "bootstrap/reboot";
-//@import "bootstrap/type";
+@import "bootstrap/type";
 //@import "bootstrap/images";
 //@import "bootstrap/code";
 //@import "bootstrap/grid";
@@ -22,7 +22,7 @@
 //@import "bootstrap/button-group";
 //@import "bootstrap/input-group";
 //@import "bootstrap/custom-forms";
-//@import "bootstrap/nav";
+@import "bootstrap/nav";
 //@import "bootstrap/navbar";
 //@import "bootstrap/card";
 //@import "bootstrap/breadcrumb";
@@ -40,7 +40,20 @@
 //@import "bootstrap/popover";
 //@import "bootstrap/carousel";
 //@import "bootstrap/spinners";
-//@import "bootstrap/utilities";
+@import "bootstrap/utilities";
 //@import "bootstrap/print";
 
+@import "mixins/variables";
 
+#content {
+  margin-bottom: 50px;
+  padding: 30px 40px;
+  font-family: $common-novelsans-light;
+  font-size: 14px;
+  background-color: $common-background-color;
+  border-radius: 5px;
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: $common-novelsans-semibold;
+  }
+}
