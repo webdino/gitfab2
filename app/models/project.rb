@@ -48,6 +48,7 @@ class Project < ApplicationRecord
   has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
+  has_many :project_access_logs, dependent: :destroy
 
   enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
 
@@ -77,6 +78,14 @@ class Project < ApplicationRecord
       projects = projects.where("#{table_name}.draft LIKE ?", "%#{word}%")
     end
     projects
+  end
+
+  scope :access_ranking, -> (since: nil, limit: 10) do
+    joins(:project_access_logs)
+      .then { |query| since ? query.where("project_access_logs.created_at > ?", since) : query }
+      .group(:id)
+      .order(Arel.sql("COUNT(projects.id) DESC"))
+      .limit(limit)
   end
 
   accepts_nested_attributes_for :states

@@ -41,6 +41,36 @@ describe Project do
     it { expect(Project.search_draft('先生 　その')).to match_array [project1, project3] }
   end
 
+  describe '.access_ranking' do
+    let(:project1) { FactoryBot.create(:project) }
+    let(:project2) { FactoryBot.create(:project) }
+    let(:project3) { FactoryBot.create(:project) }
+
+    before do
+      # project1
+      FactoryBot.create(:project_access_log, created_at: 11.days.ago, project: project1)
+      FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: project1)
+      FactoryBot.create(:project_access_log, created_at: 9.days.ago,  project: project1)
+
+      # project2
+      FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: project2)
+      FactoryBot.create(:project_access_log, created_at: 4.days.ago,  project: project2)
+      FactoryBot.create(:project_access_log, created_at: 3.days.ago,  project: project2)
+      FactoryBot.create(:project_access_log, created_at: 2.days.ago,  project: project2)
+
+      # project3
+      FactoryBot.create(:project_access_log, created_at: 11.days.ago, project: project3)
+      FactoryBot.create(:project_access_log, created_at: 2.days.ago,  project: project3)
+      FactoryBot.create(:project_access_log, created_at: 1.day.ago,   project: project3)
+    end
+
+    it do
+      expect(Project.access_ranking).to match_array([project2, project3, project1])
+      expect(Project.access_ranking(since: 2.days.ago - 3.minutes)).to match_array([project3, project2])
+      expect(Project.access_ranking(limit: 1)).to match_array([project2])
+    end
+  end
+
   describe '.find_with' do
     let!(:project) { FactoryBot.create(:project, name: 'my-project', owner: owner) }
     let!(:owner) { FactoryBot.create(:user, name: 'itkrt2y') }
