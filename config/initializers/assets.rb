@@ -4,6 +4,7 @@ Rails.application.config.assets.precompile += %w(
     application.js
     groups.js    groups.css
     dashboard.js dashboard.css
+    admin.js admin.css
     project.css  project.js
     user.js      user.css
     masonry.pkgd.min.js

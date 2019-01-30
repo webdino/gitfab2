@@ -1,0 +1,11 @@
+- content_for :stylesheet do
+  = stylesheet_link_tag "admin", media: "all"
+- content_for :javascript do
+  = javascript_include_tag "admin"
+- content_for :ogp do
+  = render partial: "components/base_ogp", locals: { model: @owner }
+
+- content_for :content do
+  #content
+    = yield
+= render "layouts/base_layout"

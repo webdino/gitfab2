@@ -1,5 +1,5 @@
 class Admin::ApplicationController < ApplicationController
-  layout 'dashboard'
+  layout "admin"
 
   before_action do
     if !current_user || !current_user.is_system_admin?
