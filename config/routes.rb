@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :projects, via: %i(get put delete)
     get 'background', to: 'background#index', as: :background
     put 'background', to: 'background#update'
+    resources :black_lists, except: [:edit, :update]
   end
 
   root 'projects#index'

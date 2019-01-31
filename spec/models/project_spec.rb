@@ -45,6 +45,7 @@ describe Project do
     let(:project1) { FactoryBot.create(:project) }
     let(:project2) { FactoryBot.create(:project) }
     let(:project3) { FactoryBot.create(:project) }
+    let(:blacklisted) { FactoryBot.create(:black_list).project }
 
     before do
       # project1
@@ -62,6 +63,9 @@ describe Project do
       FactoryBot.create(:project_access_log, created_at: 11.days.ago, project: project3)
       FactoryBot.create(:project_access_log, created_at: 2.days.ago,  project: project3)
       FactoryBot.create(:project_access_log, created_at: 1.day.ago,   project: project3)
+
+      # blacklisted
+      FactoryBot.create(:project_access_log, created_at: 1.day.ago,   project: blacklisted)
     end
 
     it do

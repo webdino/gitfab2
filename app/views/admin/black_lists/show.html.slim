@@ -1,0 +1,18 @@
+h2.h2 アクセスランキングブラックリスト詳細
+
+div style="margin: 30px auto"
+  = link_to "ブラックリストから削除", admin_black_list_path(@black_list),
+    method: :delete, data: { confirm: "本当にブラックリストから削除していいですか？" }, class: "btn btn-danger btn-sm"
+
+table.table style="margin: 30px auto"
+  tr
+    th.col-3 プロジェクト
+    td = link_to @black_list.project.title, project_path(@black_list.project.owner, @black_list.project)
+  tr
+    th ブラックリスト理由
+    td = @black_list.reason
+  tr
+    th 登録日
+    td = @black_list.created_at.strftime("%Y/%m/%d %H:%M")
+
+=< link_to "戻る", admin_black_lists_path
