@@ -4,27 +4,25 @@
   .carousel-inner
     - @cards.each_with_index do |card, i|
       .carousel-item class="#{'active' if i.zero?}"
-        .container-fluid
-          .row
-            .col-2
-            .col-8
-              h3.font-weight-normal
-                = @project.title
-              h1= card.title
+        .row
+          .col-10.offset-1
+            - if card.title
+              .row
+                h1.title= card.title
 
-              .figure
-                - youtube_url = card.figures.first&.link
-                - if youtube_url.present?
-                  .text-center.mb-3
-                    iframe src="#{youtube_url}" width="640" height="360"
-                - elsif card.figures.present?
-                  #figures.d-flex.flex-nowrap.mb-3
-                    - card.figures.each do |figure|
-                      - next if figure.content.blank?
-                      = image_tag figure.content.url, alt: figure.content.filename
+            - youtube_url = card.figures.first&.link
+            - if youtube_url.present?
+              .row.justify-content-center.mb-3
+                iframe src="#{youtube_url}" width="640" height="360"
+            - elsif card.figures.present?
+              .row.justify-content-center.mb-3
+                .figures.d-flex.flex-nowrap
+                  - card.figures.each do |figure|
+                    - next if figure.content.blank?
+                    = image_tag figure.content.url, alt: figure.content.filename
 
-              p== Sanitize.clean(card.description, Sanitize::Config::CARD)
-            .col-2
+            .row
+              .description== Sanitize.clean(card.description, Sanitize::Config::CARD)
 
   ol.carousel-indicators
     - @cards.count.times do |i|
