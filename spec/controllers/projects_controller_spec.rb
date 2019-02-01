@@ -413,7 +413,7 @@ describe ProjectsController, type: :controller do
       end
 
       context '完全一致' do
-        let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample').attributes }
+        let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample', user: FactoryBot.create(:user)).attributes }
         include_context 'projects'
 
         before do
@@ -433,7 +433,7 @@ describe ProjectsController, type: :controller do
       end
 
       context '部分一致' do
-        let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar').attributes }
+        let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar', user: FactoryBot.create(:user)).attributes }
         include_context 'projects'
 
         before do
