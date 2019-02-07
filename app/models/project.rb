@@ -80,10 +80,10 @@ class Project < ApplicationRecord
     projects
   end
 
-  scope :access_ranking, -> (since: nil, limit: 10) do
+  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
     joins(:project_access_logs)
+      .where("project_access_logs.created_at > ?", since)
       .where.not(id: BlackList.select(:project_id))
-      .then { |query| since ? query.where("project_access_logs.created_at > ?", since) : query }
       .group(:id)
       .order(Arel.sql("COUNT(projects.id) DESC"))
       .limit(limit)

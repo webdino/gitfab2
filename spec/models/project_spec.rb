@@ -49,29 +49,29 @@ describe Project do
 
     before do
       # project1
-      FactoryBot.create(:project_access_log, created_at: 11.days.ago, project: project1)
       FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: project1)
-      FactoryBot.create(:project_access_log, created_at: 9.days.ago,  project: project1)
+      FactoryBot.create(:project_access_log, created_at: 20.days.ago, project: project1)
 
       # project2
-      FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: project2)
-      FactoryBot.create(:project_access_log, created_at: 4.days.ago,  project: project2)
-      FactoryBot.create(:project_access_log, created_at: 3.days.ago,  project: project2)
-      FactoryBot.create(:project_access_log, created_at: 2.days.ago,  project: project2)
+      FactoryBot.create(:project_access_log, created_at: Time.current, project: project2)
+      FactoryBot.create(:project_access_log, created_at: 5.days.ago, project: project2)
+      FactoryBot.create(:project_access_log, created_at: 1.month.ago - 1.minute, project: project2)
+      FactoryBot.create(:project_access_log, created_at: 1.month.ago + 1.minute, project: project2)
 
       # project3
-      FactoryBot.create(:project_access_log, created_at: 11.days.ago, project: project3)
-      FactoryBot.create(:project_access_log, created_at: 2.days.ago,  project: project3)
-      FactoryBot.create(:project_access_log, created_at: 1.day.ago,   project: project3)
+      FactoryBot.create(:project_access_log, created_at: 5.days.ago, project: project3)
+      FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: project3)
+      FactoryBot.create(:project_access_log, created_at: 15.days.ago, project: project3)
+      FactoryBot.create(:project_access_log, created_at: 20.days.ago, project: project3)
 
       # blacklisted
-      FactoryBot.create(:project_access_log, created_at: 1.day.ago,   project: blacklisted)
+      FactoryBot.create(:project_access_log, created_at: Time.current, project: blacklisted)
     end
 
     it do
-      expect(Project.access_ranking).to match_array([project2, project3, project1])
-      expect(Project.access_ranking(since: 2.days.ago - 3.minutes)).to match_array([project3, project2])
-      expect(Project.access_ranking(limit: 1)).to match_array([project2])
+      expect(Project.access_ranking).to match_array([project3, project2, project1])
+      expect(Project.access_ranking(since: 5.days.ago - 1.minute)).to match_array([project2, project3])
+      expect(Project.access_ranking(limit: 1)).to match_array([project3])
     end
   end
 
