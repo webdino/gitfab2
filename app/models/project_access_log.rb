@@ -27,8 +27,8 @@ class ProjectAccessLog < ApplicationRecord
     # プロジェクト管理者の場合はログしない
     return if user&.is_project_manager?(project)
 
-    # ログは1ユーザーにつき1日1回
-    return if where(user: user).where("DATE(created_at) = ?", created_on).exists?
+    # ログは1ユーザーにつき1プロジェクト1日1回
+    return if where(user: user, project: project).where("DATE(created_at) = ?", created_on).exists?
 
     create!(project: project, user: user)
   end

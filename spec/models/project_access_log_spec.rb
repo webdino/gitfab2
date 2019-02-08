@@ -22,19 +22,27 @@ RSpec.describe ProjectAccessLog, type: :model do
     end
 
     describe "revisit" do
-      subject { ProjectAccessLog.log!(project, nil, date) }
+      subject { ProjectAccessLog.log!(revisit_project, nil, date) }
+      let(:revisit_project) { project }
 
       before { ProjectAccessLog.log!(project, nil, created_on) }
       let(:created_on) { Date.current }
 
       context "on the same day" do
         let(:date) { created_on }
-        it { expect{ subject }.not_to change(ProjectAccessLog, :count) }
+
+        context "on the same project" do
+          it { expect{ subject }.not_to change(ProjectAccessLog, :count) }
+        end
+
+        context "on another project" do
+          let(:revisit_project) { FactoryBot.create(:project) }
+          it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+        end
       end
 
       context "on the next day" do
         let(:date) { created_on.next_day }
-        it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
       end
     end
   end
