@@ -64,6 +64,7 @@ class Project < ApplicationRecord
   validates :license, presence: true
 
   scope :active, -> { where(is_deleted: false) }
+  scope :exclude_blacklisted, -> { where.not(id: BlackList.select(:project_id)) }
   scope :noted, -> do
     note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
     joins(:note_cards).where(cards: { id: note_cards_sql })
@@ -83,7 +84,7 @@ class Project < ApplicationRecord
   scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
     joins(:project_access_logs)
       .where("project_access_logs.created_at > ?", since)
-      .where.not(id: BlackList.select(:project_id))
+      .exclude_blacklisted
       .group(:id)
       .order(Arel.sql("COUNT(projects.id) DESC"))
       .limit(limit)
