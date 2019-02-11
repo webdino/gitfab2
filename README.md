@@ -52,7 +52,7 @@ $ bundle exec rake db:migrate
 $ bundle exec rails s
 ```
 
-Open http://localhost:3000 in your browser.
+Open https://localhost:3000 in your browser.
 
 ### Frontend
 
