@@ -24,9 +24,19 @@
     border-radius: 5px 5px 0 0;
   }
 
+  .project-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 1200px;
+  }
+
   .project-card {
     position: relative;
+    margin-bottom: 20px;
     min-width: 0;
+    width: 288px;
+    height: 313px;
     background-color: white;
     a:hover .project-cover .hover-layer {
       opacity: 1;
@@ -123,28 +133,30 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        right: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 15px;
         border-top: 1px solid $common-light-gray;
+        width: 100%;
         height: 33px;
         color: $common-gray;
         .project-views {
-          display: inline-flex;
-          align-items: center;
+          position: absolute;
+          bottom: 0;
+          left: 15px;
           font-size: 12px;
-          &:before {
-            content: "visibility";
+          line-height: 33px;
+          .material-icons {
+            position: relative;
+            top: 5px;
             margin-right: 4px;
-            font-family: "Material Icons";
             font-size: 20px;
             font-weight: normal;
           }
         }
         .project-date {
+          position: absolute;
+          bottom: 0;
+          right: 15px;
           font-size: 12px;
+          line-height: 33px;
         }
       }
     }
@@ -189,14 +201,6 @@
         }
       }
     }
-  }
-
-  .project-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 313px;
-    gap: 20px 16px;
-    width: 1200px;
   }
 
 
@@ -300,8 +304,7 @@
       margin: 0 auto;
       width: 1010px;
       #about {
-        box-sizing: border-box;
-        flex: 0 0 670px;
+        flex: 0 0 570px;
         margin-right: 34px;
         padding: 40px 50px;
         background-color: white;
@@ -360,7 +363,7 @@
                 &:after {
                   position: absolute;
                   right: 14px;
-                  content: "arrow_forward";
+                  content: "\e5c8";
                   font-family: "Material Icons";
                   font-size: 20px;
                   font-weight: normal;
@@ -419,7 +422,6 @@
     background: white;
     .container {
       display: flex;
-      margin: 0 auto;
       .title {
         display: flex;
         align-items: center;
@@ -510,10 +512,11 @@
     .container {
       margin: 0 auto;
       .populur-projects-title {
-        grid-column: 1 / 3;
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 592px;
+        height: 313px;
         background-color: white;
         .inner {
           text-align: center;

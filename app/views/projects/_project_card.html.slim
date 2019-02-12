@@ -23,7 +23,9 @@
       - if project.description.present?
         .project-description = project.description.truncate(200)
     .project-meta
-      .project-views 123,456
+      .project-views
+        i.material-icons visibility
+        span 123,456
       .project-date = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
   .project-rank 10
   / .project-rank.gold => 金, .project-rank.silver => 銀, .project-rank.bronze => 銅, .project-rank => その他
