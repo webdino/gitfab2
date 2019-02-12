@@ -37,18 +37,13 @@
         .sign-up
           = link_to "", sessions_path, class: "sign-up-btn-jp"
 
-      .label.lang-en
-        'About
-      .label.lang-jp
-        'Fabble の特長
+    = render partial: "introduction"
 
-    = render partial: "functions"
-    = render partial: "occasions"
-
-  = render partial: "featured_projects"
+  = render partial: "howto_use_fabble"
+  = render partial: "popular_projects"
   = render partial: "featured_groups"
-  = render partial: "tags_and_keywords"
   = render partial: "recent_projects"
+  = render partial: "tags_and_keywords"
 
   - unless current_user
     = render partial: "sign_up_pane"
