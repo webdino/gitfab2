@@ -28,7 +28,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 1200px;
+    max-width: 1200px;
   }
 
   .project-card {
@@ -302,7 +302,8 @@
       display: flex;
       align-items: flex-end;
       margin: 0 auto;
-      width: 1010px;
+      max-width: 1010px;
+      width: 100%;
       #about {
         flex: 0 0 570px;
         margin-right: 34px;
@@ -338,7 +339,7 @@
         }
       }
       #usage {
-        flex: 1 0 306px;
+        flex: 1 1 306px;
         .usage-list {
           h2 {
             margin-bottom: .75em;
