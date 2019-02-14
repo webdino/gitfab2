@@ -12,7 +12,6 @@ class ProjectsController < ApplicationController
 
     @projects = published_projects.page(params[:page]).order(updated_at: :desc)
     @popular_projects = published_projects.access_ranking
-    @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
     @featured_groups = Group.access_ranking
   end
 
@@ -177,16 +176,5 @@ class ProjectsController < ApplicationController
       url = project_path(owner, project)
       body = "#{project.title} was updated by #{current_user.name}."
       project.notify(users, current_user, url, body)
-    end
-
-    def featured_project_groups
-      project_groups = {}
-      all_featured_projects = Feature.projects
-      all_featured_projects.each do |project_group|
-        ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.active.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
-        project_groups[project_group.name] = featured_projects
-      end
-      project_groups.to_a
     end
 end
