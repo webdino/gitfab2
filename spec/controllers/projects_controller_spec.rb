@@ -13,12 +13,7 @@ describe ProjectsController, type: :controller do
     context 'without queries' do
       subject { get :index }
 
-      before { FactoryBot.create_list(:project, 13, :public) }
-
-      it "gets 12 projects for the 1st page" do
-        subject
-        expect(assigns(:projects).count).to eq 12
-      end
+      before { FactoryBot.create(:project, :public) }
 
       it { is_expected.to render_template :index }
     end

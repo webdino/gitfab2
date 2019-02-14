@@ -4,4 +4,4 @@
       .inner
         h2.title POPULAR PROJECTS
         p.description この1ヶ月で人気のプロジェクトのランキングです
-    = render partial: "project_card", collection: @popular_projects, as: "project"
+    = render partial: "project_card", collection: @popular_projects, as: "project", locals: { show_rank_badge: true }
