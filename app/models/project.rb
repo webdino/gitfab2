@@ -83,7 +83,8 @@ class Project < ApplicationRecord
   end
 
   scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
-    joins(:project_access_logs)
+    published
+      .joins(:project_access_logs)
       .where("project_access_logs.created_at > ?", since)
       .exclude_blacklisted
       .group(:id)
