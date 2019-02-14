@@ -24,11 +24,13 @@ class ProjectAccessLog < ApplicationRecord
   belongs_to :user, optional: true
 
   def self.log!(project, user, created_on = Date.current)
-    # プロジェクト管理者の場合はログしない
-    return if user&.is_project_manager?(project)
+    if user
+      # プロジェクト管理者の場合はログしない
+      return if user.is_project_manager?(project)
 
-    # ログは1ユーザーにつき1プロジェクト1日1回
-    return if where(user: user, project: project).where("DATE(created_at) = ?", created_on).exists?
+      # ログは1ユーザーにつき1プロジェクト1日1回
+      return if where(user: user, project: project).where("DATE(created_at) = ?", created_on).exists?
+    end
 
     create!(project: project, user: user)
   end

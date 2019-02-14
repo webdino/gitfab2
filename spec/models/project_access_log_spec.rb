@@ -5,8 +5,12 @@ RSpec.describe ProjectAccessLog, type: :model do
     let(:project) { FactoryBot.create(:user_project) }
 
     context "when anonymous user" do
-      let(:user) { nil }
-      it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+      it "creates log each time" do
+        expect{
+          ProjectAccessLog.log!(project, nil)
+          ProjectAccessLog.log!(project, nil) # revisit
+        }.to change(ProjectAccessLog, :count).by(2)
+      end
     end
 
     context "when logged in user" do
@@ -22,10 +26,11 @@ RSpec.describe ProjectAccessLog, type: :model do
     end
 
     describe "revisit" do
-      subject { ProjectAccessLog.log!(revisit_project, nil, date) }
+      subject { ProjectAccessLog.log!(revisit_project, user, date) }
       let(:revisit_project) { project }
+      let(:user) { FactoryBot.create(:user) }
 
-      before { ProjectAccessLog.log!(project, nil, created_on) }
+      before { ProjectAccessLog.log!(project, user, created_on) }
       let(:created_on) { Date.current }
 
       context "on the same day" do
@@ -43,6 +48,15 @@ RSpec.describe ProjectAccessLog, type: :model do
 
       context "on the next day" do
         let(:date) { created_on.next_day }
+
+        context "on the same project" do
+          it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+        end
+
+        context "on another project" do
+          let(:revisit_project) { FactoryBot.create(:project) }
+          it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+        end
       end
     end
   end
