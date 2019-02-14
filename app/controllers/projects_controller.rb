@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
     @projects = published_projects.page(params[:page]).order(updated_at: :desc)
     @popular_projects = published_projects.access_ranking
     @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
-    @featured_groups = Group.order(projects_count: :desc).limit(3)
+    @featured_groups = Group.access_ranking
   end
 
   def show

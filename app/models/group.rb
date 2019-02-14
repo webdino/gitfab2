@@ -35,7 +35,7 @@ class Group < ApplicationRecord
 
   scope :active, -> { where(is_deleted: false) }
 
-  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
+  scope :access_ranking, -> (since: 1.month.ago, limit: 3) do
     Project
       .joins(:project_access_logs)
       .where("project_access_logs.created_at > ?", since)
