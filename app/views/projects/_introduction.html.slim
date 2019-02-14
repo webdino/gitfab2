@@ -64,13 +64,13 @@
       .usage-data
         .usage-data-item
           = image_tag('/images/data-users.svg', class: "usage-data-item-icon")
-          .usage-data-item-value 12,345
+          .usage-data-item-value = users_count
           .usage-data-item-label users
         .usage-data-item
           = image_tag('/images/data-groups.svg', class: "usage-data-item-icon")
-          .usage-data-item-value 3,456
+          .usage-data-item-value = groups_count
           .usage-data-item-label groups
         .usage-data-item
           = image_tag('/images/data-projects.svg', class: "usage-data-item-icon")
-          .usage-data-item-value 999,999
+          .usage-data-item-value = projects_count
           .usage-data-item-label projects
