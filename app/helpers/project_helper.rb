@@ -31,4 +31,17 @@ module ProjectHelper
   def projects_count
     number_with_delimiter(Project.active.count) # private projectを含む
   end
+
+  def project_rank_badge(rank)
+    case rank
+    when 1
+      "gold"
+    when 2
+      "silver"
+    when 3
+      "bronze"
+    else
+      ""
+    end
+  end
 end
