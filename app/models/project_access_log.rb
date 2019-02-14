@@ -20,7 +20,7 @@
 #
 
 class ProjectAccessLog < ApplicationRecord
-  belongs_to :project
+  belongs_to :project, counter_cache: :project_access_logs_count
   belongs_to :user, optional: true
 
   def self.log!(project, user, created_on = Date.current)
