@@ -1,0 +1,34 @@
+.project-card
+  = link_to project_path(project.owner, project)
+    .project-cover
+      .hover-layer
+        .steps_and_memos
+          = "#{project.states_count} Steps / #{project.note_cards_count} Memos"
+        .liked
+          = image_tag("icons/liked.png", width: 15, height: 15)
+          span.count = project.likes_count
+      - if project.figures.present?
+        - if project.figures.first.content.present? || project.figures.first.link.present?
+          .img style="background-image: url('#{project.thumbnail}')"
+
+        - else
+          .project-cover-dummy
+
+      - else
+        .project-cover-dummy
+  .project-spec
+    .project-outline
+      = link_to project_path(project.owner, project)
+        .project-title = project.title
+      - if project.description.present?
+        .project-description = project.description.truncate(200)
+    .project-meta
+      .project-views
+        i.material-icons visibility
+        span 123,456
+      .project-date = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
+  .project-rank 10
+  / .project-rank.gold => 金, .project-rank.silver => 銀, .project-rank.bronze => 銅, .project-rank => その他
+  .project-author
+    = link_to owner_path(project.owner), alt: project.owner.name, title: project.owner.name, class: "user" do
+      .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"

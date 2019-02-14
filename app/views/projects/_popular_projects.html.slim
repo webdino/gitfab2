@@ -1,0 +1,8 @@
+#populur-projects
+  .container.project-cards
+    .populur-projects-title
+      .inner
+        h2.title POPULAR PROJECTS
+        p.description この1ヶ月で人気のプロジェクトのランキングです
+    - @projects.each do |project|
+      = render "project_card", project: project
