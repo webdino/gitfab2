@@ -3,25 +3,26 @@
 #
 # Table name: projects
 #
-#  id               :integer          not null, primary key
-#  description      :text(65535)
-#  draft            :text(65535)
-#  is_deleted       :boolean          default(FALSE), not null
-#  is_private       :boolean          default(FALSE), not null
-#  license          :integer          not null
-#  likes_count      :integer          default(0), not null
-#  name             :string(255)      not null
-#  note_cards_count :integer          default(0), not null
-#  owner_type       :string(255)      not null
-#  scope            :string(255)
-#  slug             :string(255)
-#  states_count     :integer          default(0), not null
-#  title            :string(255)      not null
-#  usages_count     :integer          default(0), not null
-#  created_at       :datetime
-#  updated_at       :datetime
-#  original_id      :integer
-#  owner_id         :integer          not null
+#  id                        :integer          not null, primary key
+#  description               :text(65535)
+#  draft                     :text(65535)
+#  is_deleted                :boolean          default(FALSE), not null
+#  is_private                :boolean          default(FALSE), not null
+#  license                   :integer          not null
+#  likes_count               :integer          default(0), not null
+#  name                      :string(255)      not null
+#  note_cards_count          :integer          default(0), not null
+#  owner_type                :string(255)      not null
+#  project_access_logs_count :integer          default(0), not null
+#  scope                     :string(255)
+#  slug                      :string(255)
+#  states_count              :integer          default(0), not null
+#  title                     :string(255)      not null
+#  usages_count              :integer          default(0), not null
+#  created_at                :datetime
+#  updated_at                :datetime
+#  original_id               :integer
+#  owner_id                  :integer          not null
 #
 # Indexes
 #
