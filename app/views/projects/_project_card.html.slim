@@ -25,10 +25,14 @@
     .project-meta
       .project-views
         i.material-icons visibility
-        span 123,456
-      .project-date = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
-  .project-rank 10
-  / .project-rank.gold => 金, .project-rank.silver => 銀, .project-rank.bronze => 銅, .project-rank => その他
+        span = number_with_delimiter(project.project_access_logs_count)
+      .project-date = "since #{time_ago_in_words(project.created_at)} ago" if project.created_at
+
+  - if local_assigns[:show_rank_badge]
+    / project_counterはrender collectionで自動で作られる変数
+    .project-rank class="#{project_rank_badge(project_counter + 1)}"
+      = project_counter + 1
+
   .project-author
     = link_to owner_path(project.owner), alt: project.owner.name, title: project.owner.name, class: "user" do
       .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"

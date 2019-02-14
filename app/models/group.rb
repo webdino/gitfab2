@@ -35,8 +35,9 @@ class Group < ApplicationRecord
 
   scope :active, -> { where(is_deleted: false) }
 
-  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
+  scope :access_ranking, -> (since: 1.month.ago, limit: 3) do
     Project
+      .published
       .joins(:project_access_logs)
       .where("project_access_logs.created_at > ?", since)
       .exclude_blacklisted
@@ -44,7 +45,7 @@ class Group < ApplicationRecord
       .order(Arel.sql("COUNT(projects.owner_id) DESC"))
       .where(owner_type: name)
       .pluck(:owner_id)
-      .then { |ids| where(id: ids).order([Arel.sql("FIELD(id, ?)"), ids]).limit(limit) }
+      .then { |ids| active.where(id: ids).order([Arel.sql("FIELD(id, ?)"), ids]).limit(limit) }
   end
 
   Membership::ROLE.keys.each do |role|
