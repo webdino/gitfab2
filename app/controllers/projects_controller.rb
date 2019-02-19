@@ -8,9 +8,10 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    @popular_projects = Project.access_ranking
+    projects = Project.published.includes(:figures, :owner)
+    @popular_projects = projects.access_ranking
     @featured_groups = Group.access_ranking
-    @recent_projects = Project.order(updated_at: :desc).limit(12)
+    @recent_projects = projects.order(updated_at: :desc).limit(12)
   end
 
   def show
