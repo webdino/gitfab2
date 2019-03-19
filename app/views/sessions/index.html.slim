@@ -21,8 +21,9 @@
   ul
     li.form-group
       = link_to_github_sign_in
-    li.form-group
-      = link_to_google_sign_in
+    - if ENV["GOOGLE_APP_ID"]
+      li.form-group
+        = link_to_google_sign_in
     li.form-group
       = link_to_facebook_sign_in
     li.form-group

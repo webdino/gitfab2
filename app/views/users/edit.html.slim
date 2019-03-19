@@ -34,11 +34,12 @@
           .btn.disabled Already signed in to GitHub
         - else
           = link_to_github_sign_in
-      li.form-group
-        - if current_user.connected_with_google?
-          .btn.disabled Already signed in to Google
-        - else
-          = link_to_google_sign_in
+      - if ENV["GOOGLE_APP_ID"]
+        li.form-group
+          - if current_user.connected_with_google?
+            .btn.disabled Already signed in to Google
+          - else
+            = link_to_google_sign_in
       li.form-group
         - if current_user.connected_with_facebook?
           .btn.disabled Already signed in to Facebook
