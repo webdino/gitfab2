@@ -23,6 +23,8 @@ class ProjectAccessLog < ApplicationRecord
   belongs_to :project, counter_cache: :project_access_logs_count
   belongs_to :user, optional: true
 
+  ONE_MONTH = 30
+
   def self.log!(project, user, created_on = Date.current)
     if user
       # プロジェクト管理者の場合はログしない
@@ -33,5 +35,20 @@ class ProjectAccessLog < ApplicationRecord
     end
 
     create!(project: project, user: user)
+  end
+
+  def self.log_last_days!(project, total, days: ONE_MONTH)
+    if total < days
+      total.downto(1) do |i|
+        create!(project: project, created_at: DateTime.current - i.day)
+      end
+    else
+      count_per_day = (total / days).round
+      days.downto(1) do |i|
+        count_per_day.times do
+          create!(project: project, created_at: DateTime.current - i.day)
+        end
+      end
+    end
   end
 end
