@@ -40,11 +40,12 @@
             .btn.disabled Already signed in to Google
           - else
             = link_to_google_sign_in
-      li.form-group
-        - if current_user.connected_with_facebook?
-          .btn.disabled Already signed in to Facebook
-        - else
-          = link_to_facebook_sign_in
+      - if ENV["FACEBOOK_APP_ID"]
+        li.form-group
+          - if current_user.connected_with_facebook?
+            .btn.disabled Already signed in to Facebook
+          - else
+            = link_to_facebook_sign_in
 
   .panel
     h1 バックアップ
