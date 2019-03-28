@@ -1,7 +1,7 @@
 #admin-background-index
-  h1.title トップページ画像
+  h2.h2 トップページ画像
 
-  h2.title-2 新しい画像
+  h3.h3 新しい画像
 
   - if @background_image.errors.any?
     ul
@@ -13,7 +13,7 @@
     = file_field_tag(:file)
     = submit_tag('アップロード')
 
-  h2.title-2 現在の画像
+  h3.h3 現在の画像
 
   - if @background_image.request_uri.present?
     img.background src="#{@background_image.request_uri}"

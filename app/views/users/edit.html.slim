@@ -34,16 +34,18 @@
           .btn.disabled Already signed in to GitHub
         - else
           = link_to_github_sign_in
-      li.form-group
-        - if current_user.connected_with_google?
-          .btn.disabled Already signed in to Google
-        - else
-          = link_to_google_sign_in
-      li.form-group
-        - if current_user.connected_with_facebook?
-          .btn.disabled Already signed in to Facebook
-        - else
-          = link_to_facebook_sign_in
+      - if ENV["GOOGLE_APP_ID"]
+        li.form-group
+          - if current_user.connected_with_google?
+            .btn.disabled Already signed in to Google
+          - else
+            = link_to_google_sign_in
+      - if ENV["FACEBOOK_APP_ID"]
+        li.form-group
+          - if current_user.connected_with_facebook?
+            .btn.disabled Already signed in to Facebook
+          - else
+            = link_to_facebook_sign_in
 
   .panel
     h1 バックアップ
@@ -55,7 +57,7 @@
     - backup = Backup.new(current_user)
     - if backup.zip_exist?
       .form-group#download-backup style="margin-top: 1.2rem"
-        span= "作成日：#{backup.mtime.strftime('%Y/%m/%d %H:%M')}"
+        span= "作成日：#{backup.mtime.strftime("%Y/%m/%d %H:%M")} (UTC)"
         = link_to "バックアップダウンロード", user_download_backup_path(current_user), class: "btn primary", download: ''
 
   .panel

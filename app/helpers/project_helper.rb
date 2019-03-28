@@ -19,4 +19,29 @@ module ProjectHelper
   def selected_materials
     ["wood", "leather", "MDF", "paper", "Arduino", "Open Web Board"]
   end
+
+  def users_count
+    number_with_delimiter(User.active.count)
+  end
+
+  def groups_count
+    number_with_delimiter(Group.active.count)
+  end
+
+  def projects_count
+    number_with_delimiter(Project.active.count) # private projectを含む
+  end
+
+  def project_rank_badge(rank)
+    case rank
+    when 1
+      "gold"
+    when 2
+      "silver"
+    when 3
+      "bronze"
+    else
+      ""
+    end
+  end
 end

@@ -1,0 +1,22 @@
+h2.h2 ブラックリスト登録フォーム
+
+- if @black_list.errors.any?
+  .alert.alert-danger
+    h6.h6.text-bold ブラックリストに登録できませんでした
+    ul
+      - @black_list.errors.full_messages.each do |message|
+        li = message
+
+div style="margin: 30px auto;"
+  = form_with model: [:admin, @black_list], local: true do |f|
+    div.form-group
+      = f.label :project_id, "プロジェクト"
+      = f.select :project_id, options_from_collection_for_select(Project.access_ranking, :id, :title), {}, class: "form-control"
+
+    div.form-group
+      = f.label :reason, "ブラックリスト理由"
+      = f.text_field :reason, class: "form-control"
+
+    = f.submit "ブラックリストに登録", class: "btn btn-primary"
+
+= link_to "戻る", admin_black_lists_path

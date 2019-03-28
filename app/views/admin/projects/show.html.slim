@@ -1,13 +1,13 @@
 #admin-projects-show
-  h1.title Manage Project
+  h2.h2 Manage Project
 
-  h2.title-2
+  h3.h3
     = @project.title_with_owner_name
 
   p
     = link_to(project_path(@project.owner, @project), project_path(@project.owner, @project))
 
-  table
+  table.table
     tr
       th
         'プロジェクト名

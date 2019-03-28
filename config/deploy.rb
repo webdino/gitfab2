@@ -3,10 +3,10 @@ pid_file = '/tmp/unicorn_gitfab2.pid'
 set :application, 'gitfab2'
 set :repo_url, 'https://github.com/webdino/gitfab2.git'
 set :rvm_type, :system
-set :rvm_ruby_version, '2.5.3'
+set :rvm_ruby_version, '2.6.0'
 set :assets_roles, [:web, :app]
 set :npm_flags, '--silent --no-progress' # Not use --production to install devDependencies
-set :whenever_command, "bundle exec whenever"
+set :whenever_command, -> { "cd #{release_path} && bundle exec whenever" }
 
 if ENV['DEPLOY_BRANCH']
   set :branch, ENV['DEPLOY_BRANCH']
@@ -33,7 +33,7 @@ set :deploy_to, '/usr/local/rails_apps/gitfab2'
 # set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w(log public/uploads)
+set :linked_dirs, %w(log public/uploads tmp/backup)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

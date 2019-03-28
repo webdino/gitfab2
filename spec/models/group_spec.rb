@@ -9,6 +9,33 @@ describe Group do
   let(:user2) { FactoryBot.create :user }
   let(:group1) { FactoryBot.create :group }
 
+  describe ".access_ranking" do
+    let(:group1) { FactoryBot.create(:group) }
+    let(:group2) { FactoryBot.create(:group) }
+    let(:group3) { FactoryBot.create(:group) }
+
+    before do
+      # group1
+      FactoryBot.create(:project_access_log, created_at: 10.days.ago, project: FactoryBot.create(:project, owner: group1))
+      FactoryBot.create(:project_access_log, created_at: 1.month.ago - 1.minute, project: FactoryBot.create(:project, owner: group1))
+      FactoryBot.create(:project_access_log, created_at: 1.month.ago + 1.minute, project: FactoryBot.create(:project, owner: group1))
+
+      # group2
+      FactoryBot.create(:project_access_log, created_at: Time.current, project: FactoryBot.create(:project, owner: group2))
+      FactoryBot.create(:project_access_log, created_at: 5.days.ago, project: FactoryBot.create(:project, owner: group2))
+      FactoryBot.create(:project_access_log, created_at: 15.days.ago, project: FactoryBot.create(:project, owner: group2))
+
+      # group3
+      FactoryBot.create(:project_access_log, created_at: Time.current, project: FactoryBot.create(:project, owner: group3))
+    end
+
+    it do
+      expect(Group.access_ranking).to match_array([group2, group1, group3])
+      expect(Group.access_ranking(since: 5.days.ago - 1.minute)).to match_array([group2, group3])
+      expect(Group.access_ranking(limit: 1)).to match_array([group2])
+    end
+  end
+
   describe '#admins' do
     subject do
       group1.admins.map do |admin|

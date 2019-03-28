@@ -8,20 +8,24 @@ class ProjectsController < ApplicationController
   authorize_resource
 
   def index
-    published_projects = Project.published.includes(:figures, :owner)
-
-    @projects = published_projects.page(params[:page]).order(updated_at: :desc)
-    @featured_project_groups = Feature.projects.count >= 3 ? featured_project_groups : []
-    @featured_groups = Group.order(projects_count: :desc).limit(3)
+    projects = Project.published.includes(:figures, :owner)
+    @popular_projects = projects.access_ranking
+    @featured_groups = Group.access_ranking
+    @recent_projects = projects.order(updated_at: :desc).limit(12)
   end
 
   def show
     @project = @owner.projects.active.includes(usages: [:attachments, :figures, :contributions, :project])
                      .friendly.find(params[:id])
-    authorize!(:read, @project)
+
+    unless can?(:read, @project)
+      render_404
+      return
+    end
 
     respond_to do |format|
       format.html do
+        ProjectAccessLog.log!(@project, current_user)
         @project_comments = @project.project_comments.order(:id)
       end
       format.json
@@ -171,16 +175,5 @@ class ProjectsController < ApplicationController
       url = project_path(owner, project)
       body = "#{project.title} was updated by #{current_user.name}."
       project.notify(users, current_user, url, body)
-    end
-
-    def featured_project_groups
-      project_groups = {}
-      all_featured_projects = Feature.projects
-      all_featured_projects.each do |project_group|
-        ids = project_group.featured_items.select(:target_object_id)
-        featured_projects = Project.active.includes(:figures, :owner).where(id: ids).order(likes_count: :desc)
-        project_groups[project_group.name] = featured_projects
-      end
-      project_groups.to_a
     end
 end

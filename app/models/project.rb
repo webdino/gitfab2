@@ -2,25 +2,26 @@
 #
 # Table name: projects
 #
-#  id               :integer          not null, primary key
-#  description      :text(65535)
-#  draft            :text(65535)
-#  is_deleted       :boolean          default(FALSE), not null
-#  is_private       :boolean          default(FALSE), not null
-#  license          :integer          not null
-#  likes_count      :integer          default(0), not null
-#  name             :string(255)      not null
-#  note_cards_count :integer          default(0), not null
-#  owner_type       :string(255)      not null
-#  scope            :string(255)
-#  slug             :string(255)
-#  states_count     :integer          default(0), not null
-#  title            :string(255)      not null
-#  usages_count     :integer          default(0), not null
-#  created_at       :datetime
-#  updated_at       :datetime
-#  original_id      :integer
-#  owner_id         :integer          not null
+#  id                        :integer          not null, primary key
+#  description               :text(65535)
+#  draft                     :text(65535)
+#  is_deleted                :boolean          default(FALSE), not null
+#  is_private                :boolean          default(FALSE), not null
+#  license                   :integer          not null
+#  likes_count               :integer          default(0), not null
+#  name                      :string(255)      not null
+#  note_cards_count          :integer          default(0), not null
+#  owner_type                :string(255)      not null
+#  project_access_logs_count :integer          default(0), not null
+#  scope                     :string(255)
+#  slug                      :string(255)
+#  states_count              :integer          default(0), not null
+#  title                     :string(255)      not null
+#  usages_count              :integer          default(0), not null
+#  created_at                :datetime
+#  updated_at                :datetime
+#  original_id               :integer
+#  owner_id                  :integer          not null
 #
 # Indexes
 #
@@ -48,6 +49,7 @@ class Project < ApplicationRecord
   has_many :tags, dependent: :destroy
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
+  has_many :project_access_logs, dependent: :destroy
 
   enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
 
@@ -63,6 +65,7 @@ class Project < ApplicationRecord
   validates :license, presence: true
 
   scope :active, -> { where(is_deleted: false) }
+  scope :exclude_blacklisted, -> { where.not(id: BlackList.select(:project_id)) }
   scope :noted, -> do
     note_cards_sql = Card::NoteCard.select(:id).group(:project_id).having("COUNT(id) > 0")
     joins(:note_cards).where(cards: { id: note_cards_sql })
@@ -77,6 +80,16 @@ class Project < ApplicationRecord
       projects = projects.where("#{table_name}.draft LIKE ?", "%#{word}%")
     end
     projects
+  end
+
+  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
+    published
+      .joins(:project_access_logs)
+      .where("project_access_logs.created_at > ?", since)
+      .exclude_blacklisted
+      .group(:id)
+      .order(Arel.sql("COUNT(projects.id) DESC"))
+      .limit(limit)
   end
 
   accepts_nested_attributes_for :states

@@ -1,0 +1,38 @@
+.project-card
+  = link_to project_path(project.owner, project)
+    .project-cover
+      .hover-layer
+        .steps_and_memos
+          = "#{project.states_count} Steps / #{project.note_cards_count} Memos"
+        .liked
+          = image_tag("icons/liked.png", width: 15, height: 15)
+          span.count = project.likes_count
+      - if project.figures.present?
+        - if project.figures.first.content.present? || project.figures.first.link.present?
+          .img style="background-image: url('#{project.thumbnail}')"
+
+        - else
+          .project-cover-dummy
+
+      - else
+        .project-cover-dummy
+  .project-spec
+    .project-outline
+      = link_to project_path(project.owner, project)
+        .project-title = project.title
+      - if project.description.present?
+        .project-description = project.description.truncate(200)
+    .project-meta
+      .project-views
+        i.material-icons visibility
+        span = number_with_delimiter(project.project_access_logs_count)
+      .project-date = "since #{time_ago_in_words(project.created_at)} ago" if project.created_at
+
+  - if local_assigns[:show_rank_badge]
+    / project_counterはrender collectionで自動で作られる変数
+    .project-rank class="#{project_rank_badge(project_counter + 1)}"
+      = project_counter + 1
+
+  .project-author
+    = link_to owner_path(project.owner), alt: project.owner.name, title: project.owner.name, class: "user" do
+      .icon style="background-image: url('#{project.owner.avatar.thumb.url}')"

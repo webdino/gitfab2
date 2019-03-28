@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_19_085037) do
+ActiveRecord::Schema.define(version: 2019_02_14_080456) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 2018_10_19_085037) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
+  end
+
+  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
+    t.integer "project_id", null: false, comment: "ブラックリスト対象プロジェクト"
+    t.integer "user_id", null: false, comment: "登録した管理者"
+    t.text "reason", null: false, comment: "理由"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_black_lists_on_project_id"
+    t.index ["user_id"], name: "index_black_lists_on_user_id"
   end
 
   create_table "card_comments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -171,6 +181,15 @@ ActiveRecord::Schema.define(version: 2018_10_19_085037) do
     t.index ["notifier_id"], name: "index_notifications_on_notifier_id"
   end
 
+  create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "project_id", null: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_project_access_logs_on_project_id"
+    t.index ["user_id"], name: "index_project_access_logs_on_user_id"
+  end
+
   create_table "project_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.text "body", null: false
     t.integer "user_id", null: false
@@ -200,6 +219,7 @@ ActiveRecord::Schema.define(version: 2018_10_19_085037) do
     t.integer "states_count", default: 0, null: false
     t.integer "usages_count", default: 0, null: false
     t.integer "note_cards_count", default: 0, null: false
+    t.integer "project_access_logs_count", default: 0, null: false
     t.index ["is_private", "is_deleted"], name: "index_projects_on_is_private_and_is_deleted"
     t.index ["original_id"], name: "index_projects_original_id"
     t.index ["owner_type", "owner_id"], name: "index_projects_owner"
@@ -229,14 +249,16 @@ ActiveRecord::Schema.define(version: 2018_10_19_085037) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string "password_digest"
-    t.boolean "is_deleted", default: false, null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.boolean "is_deleted", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  add_foreign_key "black_lists", "projects"
+  add_foreign_key "black_lists", "users"
   add_foreign_key "card_comments", "cards"
   add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
@@ -247,6 +269,8 @@ ActiveRecord::Schema.define(version: 2018_10_19_085037) do
   add_foreign_key "likes", "users", name: "fk_likes_liker_id"
   add_foreign_key "notifications", "users", column: "notified_id", name: "fk_notifications_notified_id"
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
+  add_foreign_key "project_access_logs", "projects"
+  add_foreign_key "project_access_logs", "users"
   add_foreign_key "project_comments", "projects"
   add_foreign_key "project_comments", "users"
   add_foreign_key "tags", "projects"

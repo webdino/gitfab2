@@ -1,0 +1,76 @@
+#introduction
+  .container
+    #about
+      .lang-jp
+        h2 ABOUT
+        p.main-copy
+          'Fabble（ファブル）はFABプロジェクトのドキュメンテーション（記録）のためのサービスです。メモ書きから、レシピを書き、世界中に共有するところまで、ドキュメンテーションのすべてのプロセスをカバーしています。
+        h3 力をあつめる
+        p.sub-copy
+          '協力してプロジェクトを進めましょう！Fabble ではさまざまな方法で好きなプロジェクトに貢献できます。メモやレシピを書くことはもちろん、コメント、別の使いみちの提案、スターをつけること、そのすべてがプロジェクトを進める助けになります。
+        h3 人にみせる
+        p.sub-copy
+          'Fabble ではオンライン、オフライン問わずさまざまな方法でつくったプロジェクトを広めることができます。たとえばプレゼンテーションモードでは、レシピをステップ・バイ・ステップのスライドショーで表示できます。
+
+        .link-wrapper
+          = link_to "Fabble についてさらに詳しく", "/about", class: "about"
+
+      .lang-en
+        h2 ABOUT
+        p.main-copy
+          'Fabble is a documentation service for your FAB projects. It covers the entire process of documentation from making Memos to share your great Recipes to the world.
+        h3 Do It With Others
+        p.sub-copy
+          'Advance your projects with others! You can contribute your favorite projects by various ways. Making Memo or Recipes, comments on someone’s documents, suggest usages or give a star.
+        h3 Support Presentation
+        p.sub-copy
+          'Fabble has a presentation mode which helps you to show your project to others. It generate step by step view version of recipes for your presentation.
+
+        .link-wrapper
+          = link_to "Show more about Fabble", "/about", class: "about"
+
+    #usage
+      .usage-list
+        .lang-jp
+          h2 こんな用途に
+          ul
+            li
+              = link_to "/fabble/tutorial" do
+                'ポートフォリオとして
+            li
+              = link_to "/fabble/about-group" do
+                'グループワークに
+            li
+              = link_to "/fabble/about-group#555db85d6769746346133400" do
+                '何かをつくる授業で
+            li
+              = link_to "/fabble/tutorial-for-workshop" do
+                'ワークショップで
+        .lang-en
+          h2 Occasions
+          ul
+            li
+              = link_to "/fabble/tutorial-en" do
+                'for Portfolio
+            li
+              = link_to "/fabble/about-group-en" do
+                'for Group Works
+            li
+              = link_to "/fabble/about-group-en#555db85d6769746346133400" do
+                'with Students
+            li
+              = link_to "/fabble/tutorial-for-workshop-en" do
+                'in Workshop
+      .usage-data
+        .usage-data-item
+          = image_tag('/images/data-users.svg', class: "usage-data-item-icon")
+          .usage-data-item-value = users_count
+          .usage-data-item-label users
+        .usage-data-item
+          = image_tag('/images/data-groups.svg', class: "usage-data-item-icon")
+          .usage-data-item-value = groups_count
+          .usage-data-item-label groups
+        .usage-data-item
+          = image_tag('/images/data-projects.svg', class: "usage-data-item-icon")
+          .usage-data-item-value = projects_count
+          .usage-data-item-label projects

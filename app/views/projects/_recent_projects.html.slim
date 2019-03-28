@@ -1,5 +1,6 @@
-#recent.projects-wrapper
-  .container
-    ul#recent-projects.projects
-      - @projects.each do |project|
-        = render "project", project: project
+#recent
+  h2.section-title
+    .lang-jp 最近のプロジェクト
+    .lang-en Recent Projects
+  .container.project-cards
+    = render partial: "project_card", collection: @recent_projects, as: "project"

@@ -46,6 +46,7 @@ class User < ApplicationRecord
   has_many :notifications_given, class_name: 'Notification', inverse_of: :notifier, foreign_key: :notifier_id
   has_many :my_notifications, class_name: 'Notification', inverse_of: :notified, foreign_key: :notified_id
   has_many :project_comments, dependent: :destroy
+  has_many :project_access_logs
 
   validates :name, unique_owner_name: true, name_format: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }

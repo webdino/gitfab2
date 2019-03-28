@@ -40,5 +40,5 @@ li.project
       .since
         = "since #{((Time.now.to_i - project.created_at.to_i) / 86400.0).floor} days ago" if project.created_at
       .liked
-        = image_tag("icons/liked", width: 15, height: 15)
+        = image_tag("icons/liked.png", width: 15, height: 15)
         span.count = project.likes_count

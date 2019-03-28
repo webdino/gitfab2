@@ -36,9 +36,3 @@
           - selected_tools.each do |tool_name|
             .tool
               = link_to tool_name, "/search?q=#{tool_name}"
-
-  - if current_page?(controller: 'projects', action: 'index')
-    .label.lang-en
-      'Recent Projects
-    .label.lang-jp
-      '最近のプロジェクト

@@ -1,5 +1,8 @@
 #featured-groups
   .container
+    h2.section-title
+      .lang-jp 注目のグループ
+      .lang-en Featured Groups
     ul.groups
       - @featured_groups.each do |group|
         = link_to owner_path(group) do
@@ -21,11 +24,3 @@
                 span |
                 span.projects
                   = "Projects: #{group.projects_count}"
-
-            .description
-            / = group.description.truncate(300) #TODO: implement group.description
-
-  .label.lang-en
-    'Tags & Keywords
-  .label.lang-jp
-    'タグとキーワード

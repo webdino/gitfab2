@@ -5,19 +5,15 @@ describe ProjectsController, type: :controller do
 
   subject { response }
 
-  let(:user_project) { FactoryBot.create :user_project }
-  let(:group_project) { FactoryBot.create :group_project }
+  let(:user_project) { FactoryBot.create(:user_project, is_private: is_private) }
+  let(:group_project) { FactoryBot.create(:group_project, is_private: is_private) }
+  let(:is_private) { false }
 
   describe 'GET index' do
     context 'without queries' do
       subject { get :index }
 
-      before { FactoryBot.create_list(:project, 13, :public) }
-
-      it "gets 12 projects for the 1st page" do
-        subject
-        expect(assigns(:projects).count).to eq 12
-      end
+      before { FactoryBot.create(:project, :public) }
 
       it { is_expected.to render_template :index }
     end
@@ -27,19 +23,31 @@ describe ProjectsController, type: :controller do
     let(:project) { send "#{owner_type}_project" }
     context "with a project owned by a #{owner_type}" do
       describe 'GET show' do
-        before do
-          get :show, params: { owner_name: project.owner.slug, id: project.name, format: format }
-        end
-        let(:format) { "" }
+        subject { get :show, params: { owner_name: project.owner.slug, id: project.name, format: format } }
+        let(:format) { "html" }
 
         context "on format html" do
           let(:format) { "html" }
-          it { is_expected.to render_template 'projects/show' }
+          it { is_expected.to render_template :show }
         end
 
         context "on format json" do
           let(:format) { "json" }
-          it { is_expected.to render_template 'projects/show' }
+          it { is_expected.to render_template :show }
+        end
+
+        context "when project is private" do
+          let(:is_private) { true }
+
+          context "when user can read project" do
+            before { allow_any_instance_of(User).to receive(:is_owner_of?).with(project).and_return(true) }
+            it { is_expected.to render_template(:show) }
+          end
+
+          context "when user cannot read project" do
+            before { allow_any_instance_of(User).to receive(:is_owner_of?).with(project).and_return(false) }
+            it { is_expected.to have_http_status(:not_found) }
+          end
         end
       end
       describe 'GET new' do
@@ -400,7 +408,7 @@ describe ProjectsController, type: :controller do
       end
 
       context '完全一致' do
-        let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample').attributes }
+        let!(:tag_hash) { FactoryBot.build(:tag, name: 'sample', user: FactoryBot.create(:user)).attributes }
         include_context 'projects'
 
         before do
@@ -420,7 +428,7 @@ describe ProjectsController, type: :controller do
       end
 
       context '部分一致' do
-        let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar').attributes }
+        let!(:tag_hash) { FactoryBot.build(:tag, name: 'foobar', user: FactoryBot.create(:user)).attributes }
         include_context 'projects'
 
         before do

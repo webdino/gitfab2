@@ -1,9 +1,9 @@
 #admin-projects-index
-  h1.title Edit Projects
+  h2.h2 Edit Projects
   = form_tag admin_projects_path, method: :get do
     = search_field_tag(:q, params[:q])
     = submit_tag('Search')
-  table.projects
+  table.table
     thead
       tr
         th.name

@@ -16,13 +16,30 @@ html, body, .carousel, .carousel-inner, .carousel-item {
   height: 100%;
 }
 
-#figures {
-  overflow-x: scroll;
-  height: 40%;
-  img {
-    object-fit: contain;
-    height: 100%;
-    margin-right: 1rem;
-    &:last-child { margin-right: 0 }
+.carousel-control-prev, .carousel-control-next {
+  width: 6%;
+}
+
+.carousel .carousel-inner .carousel-item {
+  overflow-y: scroll !important;
+
+  .figures {
+    overflow-x: scroll;
+    height: 35vh;
+    img {
+      object-fit: contain;
+      height: 100%;
+      margin-right: 1rem;
+      &:last-child { margin-right: 0 }
+    }
+  }
+
+  .title {
+    font-size: 3.2vw;
+  }
+
+  .description {
+    font-size: 3vw;
+    line-height: 1.5em;
   }
 }
