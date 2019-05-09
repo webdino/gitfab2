@@ -82,8 +82,8 @@ $(function() {
           positionForm.val(position);
           idForm = annotation_field.find(".id");
           idForm.val(id);
-          state.find(".submit-annotation-order").click();
         }
+        state.find(".submit-annotation-order").click();
       }
     }
 
