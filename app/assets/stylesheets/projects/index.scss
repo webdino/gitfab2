@@ -9,7 +9,8 @@
   font-family: $common-novelsans-semibold;
   margin-top: -35px;
   width: 100%;
-  background-color: $common-dark-blue;
+  background-color: $common-light-gray;
+
 
   // Components
   .label {
@@ -237,24 +238,27 @@
 
   // Main Visual
   #splash-wrapper {
-    // background: asset-url("background.jpg") no-repeat;
-    background-size: cover;
-    background-color: $common-basic-color;
+    background: asset-url("/uploads/background_image.jpg") center center no-repeat;
+    background-size: contain;
+    // background-color: $common-basic-color;
+    background-color: $common-light-gray;
     border-bottom: 2px solid white;
     .container {
       position: relative;
       margin: 0 auto;
-      width: $content_width;
+      // width: $content_width;
+      width: 500px;
       height: 270px;
       padding: 230px 0 60px;
       .text {
         margin: 0 auto;
-        width: $content_width;
+        // width: $content_width;
         height: 100px;
         color: $common-title-text-color;
         line-height: 1.2;
+        background-color: rgba(128, 128, 128, 0.5);
         .main-copy {
-          width: $content_width;
+          // width: $content_width;
           font-size: 50px;
           font-weight: normal;
           text-align: center;
