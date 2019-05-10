@@ -238,7 +238,7 @@
 
   // Main Visual
   #splash-wrapper {
-    background: asset-url("/uploads/background_image.jpg") center center no-repeat;
+    // background: asset-url("/uploads/background_image.jpg") center center no-repeat;
     background-size: contain;
     background-color: $common-light-gray;
     border-bottom: 2px solid white;
@@ -270,7 +270,7 @@
       }
       .sign-up {
         position: absolute;
-        right: 40px;
+        right: -190px;
         bottom: 35px;
         z-index: 100;
         .sign-up-btn {
