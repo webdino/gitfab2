@@ -246,11 +246,22 @@
     .container {
       position: relative;
       margin: 0 auto;
-      width: 500px;
+      width: 980px;
       height: 270px;
       padding: 230px 0 60px;
+      .text-en {
+        width: 880px;
+        text-align: center;
+        text-align-last: none;
+      }
+      .text-jp {
+        width: 680px;
+        text-align: justify;
+        text-align-last: justify;
+      }
       .text {
         margin: 0 auto;
+        // width: 680px;
         height: 100px;
         color: $common-title-text-color;
         line-height: 1.2;
@@ -263,15 +274,13 @@
         }
         .sub-copy {
           margin: 20px auto;
-          width: 490px;
           height: auto;
           font-size: 20px;
-          text-align: center;
         }
       }
       .sign-up {
         position: absolute;
-        right: -190px;
+        right: 40px;
         bottom: 35px;
         z-index: 100;
         .sign-up-btn {

@@ -20,20 +20,20 @@
 
     #splash-wrapper style="background: url(#{BackgroundImage.find&.request_uri || image_path('background.jpg')}) center center no-repeat"
       .container.lang-en
-        .text
+        .text.text-en
           h1.main-copy
             'Making stories of Making something
           .sub-copy
-            'New Platform to Share Fab Projects all over the world
+            'New Platform to Share FAB Projects all over the world
         .sign-up
           = link_to "", sessions_path, class: "sign-up-btn"
 
       .container.lang-jp
-        .text
+        .text.text-jp
           h1.main-copy
-            'つくる・つたえる
+            'つくる・つたえる・つなげる
           .sub-copy
-            '世界中のFabプロジェクトのためのプラットフォーム
+            '世界中のFABプロジェクトのためのプラットフォーム
         .sign-up
           = link_to "", sessions_path, class: "sign-up-btn-jp"
 
