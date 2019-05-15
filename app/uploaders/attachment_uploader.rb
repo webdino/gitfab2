@@ -44,7 +44,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     def generate_png(_file)
       stl = Stl2gif::Stl.new self.file.path
       tmp_png_file = stl.to_png self.file.original_filename
-      image = MiniMagick::Image.read tmp_png_file
+      image = MiniMagick::Image.open(tmp_png_file.path)
       filepath = self.file.file.slice(0..-4) << 'png'
       image.write filepath
     end
@@ -53,7 +53,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
       stl = Stl2gif::Stl.new self.file.path
       stl.generate_frames
       tmp_gif_file = stl.to_gif self.file.original_filename
-      image = MiniMagick::Image.read tmp_gif_file
+      image = MiniMagick::Image.open(tmp_gif_file.path)
       filepath = self.file.file.slice(0..-4) << 'gif'
       image.write filepath
     end
