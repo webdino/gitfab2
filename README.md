@@ -57,8 +57,19 @@ Open https://localhost:3000 in your browser.
 ### Frontend
 
 `app/frontend/` 以下の開発を行う場合は、 `npm start` でwebpackを起動する。
+
 `app/frontend/` 以下に変更を加えない場合は、一度 `npm run build` をすればOK。
 
+### Assets
+
+`assets/stylesheets/` 以下に変更を加えた場合は、
+
+```bash
+$ bundle exec rake assets:clear
+$ bundle exec rake assets:precompile
+```
+
+で反映される。
 
 ### Run tests
 
