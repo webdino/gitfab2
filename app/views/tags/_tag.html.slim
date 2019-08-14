@@ -1,4 +1,4 @@
 li.tag
-  = link_to tag.name, "#{search_path}?q=#{tag.name}"
+  = link_to tag.name, search_path(q: tag.name)
   - if can?(:destroy, tag)
     = link_to "", tag_path(tag), method: :delete, remote: true, class: "delete-tag"
