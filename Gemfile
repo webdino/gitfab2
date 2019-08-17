@@ -60,6 +60,7 @@ group :development do
   gem 'puma'
   gem 'rack-mini-profiler', require: false
   gem 'web-console'
+  gem 'listen'
 
   # Deploy
   gem 'capistrano', require: false
