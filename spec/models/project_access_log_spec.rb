@@ -26,16 +26,13 @@ RSpec.describe ProjectAccessLog, type: :model do
     end
 
     describe "revisit" do
-      subject { ProjectAccessLog.log!(revisit_project, user, date) }
+      subject { ProjectAccessLog.log!(revisit_project, user) }
       let(:revisit_project) { project }
       let(:user) { FactoryBot.create(:user) }
 
-      before { ProjectAccessLog.log!(project, user, created_on) }
-      let(:created_on) { Date.current }
+      before { ProjectAccessLog.log!(project, user) }
 
       context "on the same day" do
-        let(:date) { created_on }
-
         context "on the same project" do
           it { expect{ subject }.not_to change(ProjectAccessLog, :count) }
         end
@@ -47,15 +44,28 @@ RSpec.describe ProjectAccessLog, type: :model do
       end
 
       context "on the next day" do
-        let(:date) { created_on.next_day }
-
         context "on the same project" do
-          it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+          it "creates a new log" do
+            travel 1.day
+            expect { subject }.to change(ProjectAccessLog, :count).by(1)
+          end
+
+          specify "Each log creates on different days" do
+            expect(ProjectAccessLog.first.created_at.today?).to eq true
+
+            travel 1.day
+            expect { subject }.to change(ProjectAccessLog, :count).by(1)
+            expect(ProjectAccessLog.first.created_at.today?).to eq false
+            expect(ProjectAccessLog.second.created_at.today?).to eq true
+          end
         end
 
         context "on another project" do
           let(:revisit_project) { FactoryBot.create(:project) }
-          it { expect{ subject }.to change(ProjectAccessLog, :count).by(1) }
+          it "creates a new log" do
+            travel 1.day
+            expect { subject }.to change(ProjectAccessLog, :count).by(1)
+          end
         end
       end
     end

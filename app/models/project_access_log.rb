@@ -25,13 +25,13 @@ class ProjectAccessLog < ApplicationRecord
 
   ONE_MONTH = 30
 
-  def self.log!(project, user, created_on = Date.current)
+  def self.log!(project, user)
     if user
       # プロジェクト管理者の場合はログしない
       return if user.is_project_manager?(project)
 
       # ログは1ユーザーにつき1プロジェクト1日1回
-      return if where(user: user, project: project).where("DATE(created_at) = ?", created_on).exists?
+      return if where(user: user, project: project).where(created_at: DateTime.current.all_day).exists?
     end
 
     create!(project: project, user: user)
