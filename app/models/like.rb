@@ -22,5 +22,5 @@
 class Like < ApplicationRecord
   belongs_to :user
   belongs_to :project, counter_cache: :likes_count
-  validates :user_id, uniqueness: { scope: :project }
+  validates :user_id, uniqueness: { scope: :project, case_sensitive: true }
 end
