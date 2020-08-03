@@ -47,7 +47,7 @@ gem 'mathn' # Used in geometry gem in stl gem
 group :development, :test do
   gem 'bullet'
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 4.0.0.beta2'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
