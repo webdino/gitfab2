@@ -60,7 +60,7 @@ class Project < ApplicationRecord
   after_commit -> { owner.update_projects_count }
 
   validates :name, presence: true, name_format: true
-  validates :name, uniqueness: { scope: [:owner_id, :owner_type], case_sensitive: true }
+  validates :name, uniqueness: { scope: [:owner_id, :owner_type], case_sensitive: false }
   validates :title, presence: true
   validates :license, presence: true
 

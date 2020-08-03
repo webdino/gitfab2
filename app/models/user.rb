@@ -49,7 +49,7 @@ class User < ApplicationRecord
   has_many :project_access_logs
 
   validates :name, unique_owner_name: true, name_format: true
-  validates :email, uniqueness: { case_sensitive: true }, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }
+  validates :email, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP, message: "format is invalid" }
   validate :confirm_email
 
   scope :active, -> { where(is_deleted: false) }
