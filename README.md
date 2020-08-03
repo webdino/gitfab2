@@ -7,74 +7,40 @@ gitfab2 [![Build Status](https://travis-ci.org/mozilla-japan/gitfab2.svg?branch=
 
 - Docker 17 ce or later
 - Docker Compose 1.16 or later
-- direnv
-- rbenv
-- node.js
 
 ### Installation
 
 ```bash
 $ git clone git@github.com:webdino/gitfab2.git
 $ cd gitfab2
-$ rbenv install `cat .ruby-version`
-$ gem install bundler --no-document
-$ bundle install
-$ npm install
-$ npm run build
-$ cp config/database.ymls/development.yml config/database.yml
-$ cp .envrc.sample .envrc
-$ vi .envrc
-$ direnv allow
+$ cp .env.sample .env
+$ docker-compose build
 ```
 
 ### Start Docker Compose
 
 ```bash
-$ docker-compose up -d
+$ docker-compose up
 $ docker-compose ps
-              Name                             Command               State            Ports
-----------------------------------------------------------------------------------------------------
-gitfab2_db_1                 docker-entrypoint.sh --inn ...   Up      0.0.0.0:13306->3306/tcp
-```
-
-#### Create database
-
-Dockerコンテナを起動してから
-
-```bash
-$ bundle exec rake db:create
-$ bundle exec rake db:migrate
-```
-
-### Run Server
-
-```bash
-$ bundle exec rails s
+    Name                   Command                  State               Ports         
+--------------------------------------------------------------------------------------
+gitfab2_app_1   prehook ruby -v bundle ins ...   Up             0.0.0.0:3000->3000/tcp
+gitfab2_db_1    docker-entrypoint.sh --inn ...   Up (healthy)   3306/tcp
 ```
 
 Open https://localhost:3000 in your browser.
 
-### Frontend
-
-`app/frontend/` 以下の開発を行う場合は、 `npm start` でwebpackを起動する。
-
-`app/frontend/` 以下に変更を加えない場合は、一度 `npm run build` をすればOK。
-
-### Assets
-
-`assets/stylesheets/` 以下に変更を加えた場合は、
+#### Create database
 
 ```bash
-$ bundle exec rake assets:clear
-$ bundle exec rake assets:precompile
+$ docker-compose run app bundle exec rails db:setup
 ```
-
-で反映される。
 
 ### Run tests
 
 ```bash
-$ bundle exec rspec
+$ docker-compose run app bundle exec rails db:test:prepare
+$ docker-compose run app bundle exec rspec
 ```
 
 ## License
