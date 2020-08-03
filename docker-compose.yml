@@ -1,0 +1,48 @@
+version: '3'
+volumes:
+  mysql-data:
+    driver: 'local'
+services:
+  db:
+    image: mysql:5.6
+    command: '--innodb-file-format=Barracuda --innodb-file-per-table=true --innodb-large-prefix=true --max-allowed-packet=32MB'
+    environment:
+      MYSQL_USER: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ROOT_HOST: '%'
+      TZ: /usr/share/zoneinfo/Asia/Tokyo
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot", "-P", "3306"]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+  app:
+    image: gitfab2_dev
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    command: >
+      /bin/sh -c "rm -f tmp/pids/server.pid && cp config/database.ymls/development.yml config/database.yml && bundle exec rails s"
+    volumes:
+      - .:/src
+    ports:
+      - 3000:3000
+    tty: true
+    stdin_open: true
+    env_file: .env
+    environment:
+      DB_HOST: db
+      DB_USERNAME: root
+      DB_PASSWORD: 
+      DB_PORT: 3306
+    depends_on:
+      - db
+      - webpack
+  webpack:
+    image: gitfab2_dev
+    command: >
+      /bin/sh -c "npm start"
+    volumes:
+      - .:/src
