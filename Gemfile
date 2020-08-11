@@ -42,7 +42,7 @@ gem 'uglifier'
 gem 'sprockets', '3.7.2'
 
 gem 'stl', github: 'oshimaryo/stl-ruby'
-gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
+gem 'stl2gif', github: 'takeyuwebinc/stl2gif', branch: 'develop'
 gem 'mathn' # Used in geometry gem in stl gem
 
 group :development, :test do
