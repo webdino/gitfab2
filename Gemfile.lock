@@ -6,9 +6,8 @@ GIT
       geometry
 
 GIT
-  remote: https://github.com/oshimaryo/stl2gif.git
-  revision: 2e508559aa3e2e5f935214d2e6988f1862cea26f
-  ref: 2e508559aa3e2e5f935214d2e6988f1862cea26f
+  remote: https://github.com/takeyuwebinc/stl2gif.git
+  revision: df7f91e4b3b12e2e0c6c27807f4ccec47ab31003
   branch: develop
   specs:
     stl2gif (0.0.2)
@@ -237,7 +236,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.6.0)
     multipart-post (2.1.1)
-    mustache (1.1.0)
+    mustache (1.1.1)
     mysql2 (0.5.2)
     nested_form (0.3.2)
     net-scp (2.0.0)
