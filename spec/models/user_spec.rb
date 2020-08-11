@@ -14,6 +14,16 @@ describe User do
     let(:user) { FactoryBot.create(:user, email: email , email_confirmation: email) }
     let(:email) { 'foo@example.com' }
 
+    describe '#email' do
+      it 'does not case sensitive' do
+        FactoryBot.create(:user, email: email.upcase, email_confirmation: email.upcase)
+
+        expect {
+          FactoryBot.create(:user, email: email, email_confirmation: email)
+        }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
     describe '#confirm_email' do
       subject { user.valid? }
 

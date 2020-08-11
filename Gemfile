@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.6'
 
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.3'
 
 gem 'active_decorator'
 gem 'acts_as_list'
@@ -39,6 +39,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'sass-rails'
 gem 'uglifier'
+gem 'sprockets', '3.7.2'
 
 gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'oshimaryo/stl2gif', branch: 'develop', ref: '2e508559aa3e2e5f935214d2e6988f1862cea26f'
@@ -62,6 +63,7 @@ group :development do
   gem 'puma'
   gem 'rack-mini-profiler', require: false
   gem 'web-console'
+  gem 'listen'
 
   # Deploy
   gem 'capistrano', require: false
