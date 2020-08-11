@@ -5,13 +5,13 @@ import setupCSRFToken from "./lib/setupCSRFToken";
 interface State {
   clickEnabled: boolean;
   liked: boolean;
-  updateLikeUrl: string;
+  likeUrl: string;
   visible: boolean;
 }
 const State: State = {
   clickEnabled: true,
   liked: false,
-  updateLikeUrl: "",
+  likeUrl: "",
   visible: true
 };
 
@@ -25,12 +25,12 @@ interface Actions {
 }
 const Actions: ActionsType<State, Actions> = {
   enable: (clickEnabled: boolean) => () => ({ clickEnabled }),
-  initState: ({ liked, updateLikeUrl }) => () => ({ liked, updateLikeUrl }),
+  initState: ({ liked }) => () => ({ liked }),
   like: () => async (state, actions) => {
     actions.setIcon(true);
 
     try {
-      const response = await axios.post(state.updateLikeUrl);
+      const response = await axios.post(state.likeUrl);
       if (!response.data.success) {
         actions.setIcon(false);
       }
@@ -45,7 +45,7 @@ const Actions: ActionsType<State, Actions> = {
     actions.setIcon(false);
 
     try {
-      await axios.delete(state.updateLikeUrl);
+      await axios.delete(state.likeUrl);
     } catch {
       alertError();
       actions.setIcon(true);
@@ -72,10 +72,14 @@ const View: View<State, Actions> = (state, actions) =>
     oncreate: () => {
       setupCSRFToken();
       axios
-        .get(`${window.location.pathname}.json`)
+        .get(state.likeUrl)
         .then(response => actions.initState(response.data.like))
         .catch(actions.makeInvisible);
     }
   });
 
-app(State, Actions, View, document.querySelector("#like-component"));
+const container = document.querySelector<HTMLDivElement>("#like-component");
+if (container) {
+  State.likeUrl = String(container.dataset.likeUrl);
+  app(State, Actions, View, container);
+}

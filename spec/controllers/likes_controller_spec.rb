@@ -1,5 +1,28 @@
 RSpec.describe LikesController, type: :controller do
 
+  describe "GET #show" do
+    let(:project) { FactoryBot.create(:project) }
+    let(:user) { FactoryBot.create(:user) }
+
+    before { sign_in(user) }
+  
+    context "when liked project" do
+      before { Like.create!(project: project, user: user) }
+
+      it "returns liked" do
+        get :show, params: { owner_name: project.owner, project_id: project }
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true, like: { liked: true } })
+      end
+    end
+
+    context "when not liked project" do
+      it "likes a project" do
+        get :show, params: { owner_name: project.owner, project_id: project }
+        expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true, like: { liked: false } })
+      end
+    end
+  end
+
   describe "POST #create" do
     subject { post :create, params: { owner_name: project.owner, project_id: project } }
     let(:project) { FactoryBot.create(:project) }
