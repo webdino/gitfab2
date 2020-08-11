@@ -30,6 +30,7 @@ RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - \
   autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libcurl4-openssl-dev libxml2-dev \
   default-mysql-client \
   nodejs vim \
+  povray povray-includes \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
