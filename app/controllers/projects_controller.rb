@@ -23,13 +23,8 @@ class ProjectsController < ApplicationController
       return
     end
 
-    respond_to do |format|
-      format.html do
-        ProjectAccessLog.log!(@project, current_user)
-        @project_comments = @project.project_comments.order(:id)
-      end
-      format.json
-    end
+    ProjectAccessLog.log!(@project, current_user)
+    @project_comments = @project.project_comments.order(:id)
   end
 
   def new

@@ -37,7 +37,7 @@ section#basic-informations
             = link_to "Add Tag", "#", class: "btn", id: "show-tag-form"
 
       .right style="text-align: right"
-        #like-component
+        #like-component data-like-url="#{project_likes_path(@project.owner, @project, format: :json)}"
         = javascript_webpack_tag "like"
 
   section.body
