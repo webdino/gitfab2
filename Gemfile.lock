@@ -63,6 +63,8 @@ GEM
     activerecord (6.0.3.2)
       activemodel (= 6.0.3.2)
       activesupport (= 6.0.3.2)
+    activerecord-import (1.0.6)
+      activerecord (>= 3.2)
     activestorage (6.0.3.2)
       actionpack (= 6.0.3.2)
       activejob (= 6.0.3.2)
@@ -164,6 +166,8 @@ GEM
     factory_bot_rails (5.0.2)
       factory_bot (~> 5.0.2)
       railties (>= 4.2.0)
+    faker (2.13.0)
+      i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
@@ -437,6 +441,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_decorator
+  activerecord-import
   acts_as_list
   annotate
   autoprefixer-rails
@@ -460,6 +465,7 @@ DEPENDENCIES
   delayed_job_active_record
   exception_notification
   factory_bot_rails
+  faker
   friendly_id
   jb
   jbuilder

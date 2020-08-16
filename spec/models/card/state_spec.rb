@@ -31,9 +31,7 @@ describe Card::State do
     end
 
     let(:card) do
-      FactoryBot.create(:state) do |state|
-        FactoryBot.create_list(:annotation, annotation_count, state: state)
-      end
+      FactoryBot.create(:state, annotations_count: annotation_count)
     end
     let(:annotation_count) { 5 }
 

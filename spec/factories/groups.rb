@@ -22,6 +22,6 @@
 
 FactoryBot.define do
   factory :group do
-    name { "group#{SecureRandom.hex 10}" }
+    name { Faker::Team.unique.name }
   end
 end
