@@ -32,6 +32,7 @@ gem 'truncate_html'
 gem 'rubyzip'
 gem 'whenever', require: false
 gem 'delayed_job_active_record'
+gem 'scout_apm'
 
 # Frontend
 gem 'autoprefixer-rails'

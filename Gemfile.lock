@@ -369,6 +369,8 @@ GEM
       sprockets-rails
       tilt
     schmooze (0.1.6)
+    scout_apm (2.6.8)
+      parser
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -484,6 +486,7 @@ DEPENDENCIES
   rubyzip
   sanitize
   sass-rails
+  scout_apm
   simplecov
   slack-notifier
   slim-rails
