@@ -28,9 +28,9 @@
 
 FactoryBot.define do
   factory :user do
-    name { "user-#{SecureRandom.uuid}" }
-    sequence(:email) { |i| "sample#{i}@example.com" }
-    sequence(:email_confirmation) { |i| "sample#{i}@example.com" }
+    name { Faker::Internet.unique.username(separators: '-') }
+    email { Faker::Internet.unique.email }
+    email_confirmation { email }
   end
 
   factory :administrator, parent: :user do

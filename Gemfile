@@ -53,6 +53,8 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
+  gem 'activerecord-import'
+  gem 'faker'
 end
 
 group :development do

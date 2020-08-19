@@ -22,7 +22,7 @@
 
 FactoryBot.define do
   factory :project_comment do
-    body { "MyText" }
+    body { Faker::Lorem.sentence }
     user
     project
   end

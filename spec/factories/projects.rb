@@ -36,11 +36,12 @@
 FactoryBot.define do
   factory :project do
     association :owner, factory: :user
-    name { "project-#{SecureRandom.hex 10}" }
-    title { SecureRandom.uuid }
-    description { SecureRandom.uuid }
+    name { SecureRandom.uuid }
+    title { Faker::Lorem.word }
+    description { Faker::Lorem.paragraph }
     license { Project.licenses.keys.sample }
     is_deleted { false }
+    created_at { rand(1.years).seconds.ago }
 
     trait :public do
       is_private { false }
