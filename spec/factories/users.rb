@@ -28,13 +28,9 @@
 
 FactoryBot.define do
   factory :user do
-    name { Faker::Internet.unique.username }
-
-    after(:build) do |user, evaluation|
-      new_email = Faker::Internet.unique.email
-      user.email ||= new_email
-      user.email_confirmation ||= new_email
-    end
+    name { Faker::Internet.unique.username(separators: '-') }
+    email { Faker::Internet.unique.email }
+    email_confirmation { email }
   end
 
   factory :administrator, parent: :user do
