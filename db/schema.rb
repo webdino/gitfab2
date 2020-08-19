@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_134327) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
   end
 
-  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
+  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
     t.integer "project_id", null: false, comment: "ブラックリスト対象プロジェクト"
     t.integer "user_id", null: false, comment: "登録した管理者"
     t.text "reason", null: false, comment: "理由"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_134327) do
     t.index ["contributor_id"], name: "index_contributions_contributor_id"
   end
 
-  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -181,7 +181,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_134327) do
     t.index ["notifier_id"], name: "index_notifications_on_notifier_id"
   end
 
-  create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
@@ -267,6 +267,10 @@ ActiveRecord::Schema.define(version: 2020_08_19_134327) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
+  add_foreign_key "black_lists", "projects"
+  add_foreign_key "black_lists", "users"
+  add_foreign_key "card_comments", "cards"
+  add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
