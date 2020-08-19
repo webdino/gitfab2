@@ -82,13 +82,14 @@ class Project < ApplicationRecord
     projects
   end
 
-  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
+  scope :access_ranking, -> (from: 1.month.ago, to: Time.current, limit: 10) do
     published
       .joins(:project_access_logs)
-      .where("project_access_logs.created_at > ?", since)
+      .where("project_access_logs.created_at BETWEEN :from AND :to", from: from, to: to)
       .exclude_blacklisted
       .group(:id)
-      .order(Arel.sql("COUNT(projects.id) DESC"))
+      .select('projects.*, COUNT(projects.id) as access_count')
+      .order(Arel.sql("access_count DESC"))
       .limit(limit)
   end
 
@@ -180,6 +181,10 @@ class Project < ApplicationRecord
        figures_attributes: Figure.updatable_columns
       ]
     end
+  end
+
+  def self.take_statistics!
+
   end
 
   private

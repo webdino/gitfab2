@@ -35,11 +35,11 @@ class Group < ApplicationRecord
 
   scope :active, -> { where(is_deleted: false) }
 
-  scope :access_ranking, -> (since: 1.month.ago, limit: 3) do
+  scope :access_ranking, -> (from: 1.month.ago, to: Time.current, limit: 3) do
     Project
       .published
       .joins(:project_access_logs)
-      .where("project_access_logs.created_at > ?", since)
+      .where("project_access_logs.created_at BETWEEN :from AND :to", from: from, to: to)
       .exclude_blacklisted
       .group(:owner_id)
       .order(Arel.sql("COUNT(projects.owner_id) DESC"))
