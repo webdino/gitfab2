@@ -375,6 +375,8 @@ GEM
     schmooze (0.1.6)
     scout_apm (2.6.8)
       parser
+    sentry-raven (3.0.0)
+      faraday (>= 1.0)
     simplecov (0.17.0)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -493,6 +495,7 @@ DEPENDENCIES
   sanitize
   sass-rails
   scout_apm
+  sentry-raven
   simplecov
   slack-notifier
   slim-rails
