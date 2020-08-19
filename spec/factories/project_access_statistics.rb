@@ -11,7 +11,7 @@
 #
 # Indexes
 #
-#  index_project_access_statistics_on_date_on_and_project_id  (date_on,project_id)
+#  index_project_access_statistics_on_date_on_and_project_id  (date_on,project_id) UNIQUE
 #  index_project_access_statistics_on_project_id              (project_id)
 #
 # Foreign Keys

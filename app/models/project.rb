@@ -50,6 +50,7 @@ class Project < ApplicationRecord
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
   has_many :project_access_logs, dependent: :destroy
+  has_many :project_access_statistics, dependent: :destroy
 
   enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
 

@@ -7,7 +7,7 @@ class CreateProjectAccessStatistics < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index %i[date_on project_id]
+      t.index %i[date_on project_id], unique: true
     end
   end
 end

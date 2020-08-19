@@ -196,7 +196,7 @@ ActiveRecord::Schema.define(version: 2020_08_19_134327) do
     t.integer "access_count", default: 0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["date_on", "project_id"], name: "index_project_access_statistics_on_date_on_and_project_id"
+    t.index ["date_on", "project_id"], name: "index_project_access_statistics_on_date_on_and_project_id", unique: true
     t.index ["project_id"], name: "index_project_access_statistics_on_project_id"
   end
 
