@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_17_060121) do
+ActiveRecord::Schema.define(version: 2020_08_19_134327) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -190,6 +190,16 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
     t.index ["user_id"], name: "index_project_access_logs_on_user_id"
   end
 
+  create_table "project_access_statistics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.date "date_on", null: false
+    t.integer "project_id", null: false
+    t.integer "access_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date_on", "project_id"], name: "index_project_access_statistics_on_date_on_and_project_id"
+    t.index ["project_id"], name: "index_project_access_statistics_on_project_id"
+  end
+
   create_table "project_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.text "body", null: false
     t.integer "user_id", null: false
@@ -257,10 +267,6 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
     t.index ["slug"], name: "index_users_on_slug", unique: true
   end
 
-  add_foreign_key "black_lists", "projects"
-  add_foreign_key "black_lists", "users"
-  add_foreign_key "card_comments", "cards"
-  add_foreign_key "card_comments", "users", name: "fk_comments_user_id"
   add_foreign_key "cards", "projects", name: "fk_cards_project_id"
   add_foreign_key "contributions", "cards"
   add_foreign_key "contributions", "users", column: "contributor_id", name: "fk_contributions_contributor_id"
@@ -271,6 +277,7 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
   add_foreign_key "project_access_logs", "projects"
   add_foreign_key "project_access_logs", "users"
+  add_foreign_key "project_access_statistics", "projects"
   add_foreign_key "project_comments", "projects"
   add_foreign_key "project_comments", "users"
   add_foreign_key "tags", "projects"
