@@ -50,6 +50,7 @@ class Project < ApplicationRecord
   has_many :usages, class_name: 'Card::Usage', dependent: :destroy
   has_many :project_comments, dependent: :destroy
   has_many :project_access_logs, dependent: :destroy
+  has_many :project_access_statistics, dependent: :destroy
 
   enum license: { 'by' => 0, 'by-sa' => 1, 'by-nc' => 2, 'by-nc-sa' => 3 }
 
@@ -82,13 +83,14 @@ class Project < ApplicationRecord
     projects
   end
 
-  scope :access_ranking, -> (since: 1.month.ago, limit: 10) do
+  scope :access_ranking, -> (from: 1.month.ago, to: Time.current, limit: 10) do
     published
       .joins(:project_access_logs)
-      .where("project_access_logs.created_at > ?", since)
+      .where("project_access_logs.created_at BETWEEN :from AND :to", from: from, to: to)
       .exclude_blacklisted
       .group(:id)
-      .order(Arel.sql("COUNT(projects.id) DESC"))
+      .select('projects.*, COUNT(projects.id) as access_count')
+      .order(Arel.sql("access_count DESC"))
       .limit(limit)
   end
 

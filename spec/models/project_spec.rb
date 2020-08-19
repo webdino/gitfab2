@@ -70,8 +70,9 @@ describe Project do
 
     it do
       expect(Project.access_ranking).to match_array([project3, project2, project1])
-      expect(Project.access_ranking(since: 5.days.ago - 1.minute)).to match_array([project2, project3])
+      expect(Project.access_ranking(from: 5.days.ago - 1.minute, to: Time.current)).to match_array([project2, project3])
       expect(Project.access_ranking(limit: 1)).to match_array([project3])
+      expect(Project.access_ranking[0].access_count).to eq 4
     end
   end
 

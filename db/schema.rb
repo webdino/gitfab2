@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_17_060121) do
+ActiveRecord::Schema.define(version: 2020_08_19_134327) do
 
   create_table "attachments", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "content"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_attachable"
   end
 
-  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
+  create_table "black_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", comment: "アクセスランキングブラックリスト", force: :cascade do |t|
     t.integer "project_id", null: false, comment: "ブラックリスト対象プロジェクト"
     t.integer "user_id", null: false, comment: "登録した管理者"
     t.text "reason", null: false, comment: "理由"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
     t.index ["contributor_id"], name: "index_contributions_contributor_id"
   end
 
-  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "delayed_jobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
     t.text "handler", null: false
@@ -181,13 +181,23 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
     t.index ["notifier_id"], name: "index_notifications_on_notifier_id"
   end
 
-  create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "project_access_logs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.integer "project_id", null: false
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["project_id"], name: "index_project_access_logs_on_project_id"
     t.index ["user_id"], name: "index_project_access_logs_on_user_id"
+  end
+
+  create_table "project_access_statistics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+    t.date "date_on", null: false
+    t.integer "project_id", null: false
+    t.integer "access_count", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["date_on", "project_id"], name: "index_project_access_statistics_on_date_on_and_project_id", unique: true
+    t.index ["project_id"], name: "index_project_access_statistics_on_project_id"
   end
 
   create_table "project_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
@@ -271,6 +281,7 @@ ActiveRecord::Schema.define(version: 2019_08_17_060121) do
   add_foreign_key "notifications", "users", column: "notifier_id", name: "fk_notifications_notifier_id"
   add_foreign_key "project_access_logs", "projects"
   add_foreign_key "project_access_logs", "users"
+  add_foreign_key "project_access_statistics", "projects"
   add_foreign_key "project_comments", "projects"
   add_foreign_key "project_comments", "users"
   add_foreign_key "tags", "projects"

@@ -31,7 +31,7 @@ describe Group do
 
     it do
       expect(Group.access_ranking).to match_array([group2, group1, group3])
-      expect(Group.access_ranking(since: 5.days.ago - 1.minute)).to match_array([group2, group3])
+      expect(Group.access_ranking(from: 5.days.ago - 1.minute, to: Time.current)).to match_array([group2, group3])
       expect(Group.access_ranking(limit: 1)).to match_array([group2])
     end
   end
