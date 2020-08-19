@@ -184,10 +184,6 @@ class Project < ApplicationRecord
     end
   end
 
-  def self.take_statistics!
-
-  end
-
   private
 
     def generate_draft
