@@ -3,7 +3,7 @@
   .close-comments-btn
 
   ul.comments
-    - card.comments.order(:id).each_with_index do |comment, i|
+    - card.comments.each_with_index do |comment, i|
       = render "card_comments/comment", comment: comment, i: i
 
   - if current_user && card.persisted?

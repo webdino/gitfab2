@@ -15,8 +15,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = @owner.projects.active.includes(usages: [:attachments, :figures, :contributions, :project])
-                     .friendly.find(params[:id])
+    @project = @owner.projects.active.friendly.find(params[:id])
 
     unless can?(:read, @project)
       render_404
@@ -24,7 +23,9 @@ class ProjectsController < ApplicationController
     end
 
     ProjectAccessLog.log!(@project, current_user)
-    @project_comments = @project.project_comments.order(:id)
+    @project_comments = @project.project_comments.includes(:user).order(:id)
+    @states = @project.states.includes(:attachments, :contributors, :figures, comments: [:user], annotations: [:attachments, :figures, :contributors, comments: [:user]]).ordered_by_position
+    @usages = @project.usages.includes(:attachments, :figures, :contributors, contributions: [:contributor])
   end
 
   def new

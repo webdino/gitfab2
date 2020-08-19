@@ -24,7 +24,7 @@
 #
 
 class Card::Annotation < Card
-  belongs_to :state, class_name: "Card::State", foreign_key: :state_id
+  belongs_to :state, class_name: "Card::State", foreign_key: :state_id, inverse_of: :annotations
   acts_as_list scope: :state
 
   scope :ordered_by_position, -> { order(:position) }

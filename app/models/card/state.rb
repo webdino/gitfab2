@@ -30,7 +30,8 @@ class Card::State < Card
   has_many :annotations, ->{ order(:position) },
                         class_name: 'Card::Annotation',
                         foreign_key: :state_id,
-                        dependent: :destroy
+                        dependent: :destroy,
+                        inverse_of: :state
   accepts_nested_attributes_for :annotations
 
   scope :ordered_by_position, -> { order(:position) }

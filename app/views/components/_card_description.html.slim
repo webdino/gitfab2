@@ -1,5 +1,5 @@
 ruby:
-  figures = card.figures
+  figures = card.figures.to_a
   has_stl = false
   card.attachments.each do |attachment|
     if attachment.content.present? && attachment.content.url[-4..-1] == '.stl'
