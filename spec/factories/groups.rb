@@ -22,6 +22,6 @@
 
 FactoryBot.define do
   factory :group do
-    name { Faker::Team.unique.name }
+    name { Faker::Team.unique.name.parameterize }
   end
 end
