@@ -4,7 +4,7 @@ section#usages
       'Usages
 
     ul#usage-list.card-list
-      - @project.usages.each do |usage|
+      - @usages.each do |usage|
         li
           = render "components/usage", card: usage,
                                        delete_url: project_usage_path(@owner, @project, usage),
