@@ -13,7 +13,7 @@ groups = Group.where(name: new_groups.map(&:name))
 
 puts "Create projects"
 
-new_projects = users.map { |user| FactoryBot.build_list(:user_project, rand(0..10), owner: user) }.flatten + groups.map { |group| FactoryBot.build(:group_project, rand(0..5), owner: group) }.flatten
+new_projects = users.map { |user| FactoryBot.build_list(:user_project, rand(0..10), owner: user) }.flatten + groups.map { |group| FactoryBot.build_list(:group_project, rand(0..5), owner: group) }.flatten
 Project.import(new_projects)
 projects = Project.where(name: new_projects.map(&:name))
 
