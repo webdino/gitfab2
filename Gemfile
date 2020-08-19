@@ -46,6 +46,8 @@ gem 'stl', github: 'oshimaryo/stl-ruby'
 gem 'stl2gif', github: 'takeyuwebinc/stl2gif', branch: 'develop'
 gem 'mathn' # Used in geometry gem in stl gem
 
+gem "sentry-raven"
+
 group :development, :test do
   gem 'bullet'
   gem 'factory_bot_rails'

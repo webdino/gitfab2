@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: -> { render_401 }
 
   after_action :store_location
+  before_action :set_raven_context
 
   def current_user
     @current_user ||= begin
@@ -59,5 +60,10 @@ class ApplicationController < ActionController::Base
       message = "#{method} '#{path}' \n UA: '#{user_agent}'"
       ExceptionNotifier.notify_exception exception, env: env, data: { message: message }
       render file: Rails.root.join('public/500.html'), status: 500, layout: false, content_type: 'text/html'
+    end
+
+    def set_raven_context
+      Raven.user_context(id: current_user&.id)
+      Raven.extra_context(params: params.to_unsafe_h, url: request.url)
     end
 end
