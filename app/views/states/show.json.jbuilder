@@ -1,1 +1,1 @@
-json.html (render 'states/state', state: @state)
+json.html (render partial: 'states/state', locals: { state: @state }, formats: :html)

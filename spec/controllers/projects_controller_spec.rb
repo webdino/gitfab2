@@ -23,18 +23,8 @@ describe ProjectsController, type: :controller do
     let(:project) { send "#{owner_type}_project" }
     context "with a project owned by a #{owner_type}" do
       describe 'GET show' do
-        subject { get :show, params: { owner_name: project.owner.slug, id: project.name, format: format } }
-        let(:format) { "html" }
-
-        context "on format html" do
-          let(:format) { "html" }
-          it { is_expected.to render_template :show }
-        end
-
-        context "on format json" do
-          let(:format) { "json" }
-          it { is_expected.to render_template :show }
-        end
+        subject { get :show, params: { owner_name: project.owner.slug, id: project.name } }
+        it { is_expected.to render_template :show }
 
         context "when project is private" do
           let(:is_private) { true }

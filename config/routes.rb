@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   resources :projects, path: '/:owner_name', except: [:index, :new, :create, :search] do
     delete 'destroy_or_render_edit', to: 'projects#destroy_or_render_edit'
     resources :collaborations, only: :create
-    resource :likes, only: [:create, :destroy]
+    resource :likes, only: [:show, :create, :destroy]
     resources :note_cards
     resources :states, except: :index do
       resources :annotations, except: :index do
