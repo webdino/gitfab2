@@ -27,32 +27,44 @@
 FactoryBot.define do
   factory :card do
     type { Card.name }
-    description { 'description' }
+    description { Faker::Lorem.paragraph }
   end
 
   factory :note_card, class: Card::NoteCard, parent: :card do
     type { Card::NoteCard.name }
     # title, descriptionはpresence: true
-    sequence(:title) { |n| "NoteCard #{n}" }
-    sequence(:description) { |n| "Description for NoteCard #{n}" }
+    title { Faker::Lorem.word }
+    description { Faker::Lorem.paragraph }
     project
   end
 
   factory :annotation, class: Card::Annotation, parent: :card do
     type { Card::Annotation.name }
-    sequence(:title) { |n| "Annotation #{n}" }
-    state
+    title { Faker::Lorem.word }
+    association :state, factory: [:state, :without_annotations]
   end
 
   factory :state, class: Card::State, parent: :card do
     type { Card::State.name }
-    sequence(:title) { |n| "State #{n}" }
+    title { Faker::Lorem.word }
     project
+
+    transient do
+      annotations_count { rand(0..5) }
+    end
+
+    after(:build) do |state, evaluator|
+      state.annotations = FactoryBot.build_list(:annotation, evaluator.annotations_count, state: state) unless evaluator.annotations_count.nil?
+    end
+
+    trait :without_annotations do
+      annotations_count { nil }
+    end
   end
 
   factory :usage, class: Card::Usage, parent: :card do
     type { Card::Usage.name }
-    sequence(:title) { |n| "Usage #{n}" }
+    title { Faker::Lorem.word }
     association :project, factory: :user_project
   end
 end

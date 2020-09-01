@@ -23,7 +23,7 @@
 
 FactoryBot.define do
   factory :card_comment do
-    sequence(:body) { |n| "Comment##{n}" }
+    body { Faker::Lorem.sentence }
     association :user
     card
   end

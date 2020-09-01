@@ -2,12 +2,12 @@
 #
 # Table name: black_lists
 #
-#  id                          :bigint(8)        not null, primary key
-#  reason(理由)                  :text(65535)      not null
-#  created_at                  :datetime         not null
-#  updated_at                  :datetime         not null
+#  id                                         :bigint(8)        not null, primary key
+#  reason(理由)                               :text(65535)      not null
+#  created_at                                 :datetime         not null
+#  updated_at                                 :datetime         not null
 #  project_id(ブラックリスト対象プロジェクト) :integer          not null
-#  user_id(登録した管理者)            :integer          not null
+#  user_id(登録した管理者)                    :integer          not null
 #
 # Indexes
 #

@@ -9,7 +9,7 @@ class ProjectsController < ApplicationController
 
   def index
     projects = Project.published.includes(:figures, :owner)
-    @popular_projects = projects.access_ranking
+    @popular_projects = ProjectAccessStatistic.access_ranking.merge(projects).limit(10)
     @featured_groups = Group.access_ranking
     @recent_projects = projects.order(updated_at: :desc).limit(12)
   end
