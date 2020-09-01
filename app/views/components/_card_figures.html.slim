@@ -1,12 +1,11 @@
-- youtube_url = card.figures.first&.link
+- figures = card.figures.to_a
+- attachments = card.attachments.to_a
+- youtube_url = figures.first&.link
 - if youtube_url.present?
   figure
     iframe src="#{youtube_url}"
 
-- elsif card.figures.exists? || card.attachments.exists?
-  - figures = card.figures.to_a
-  - attachments = card.attachments.to_a
-
+- elsif figures.any? || attachments.any?
   figure.carousel.slide.text-right data-ride="carousel" data-interval="false" id="carousel-#{card.id}"
     - count = 0
     .carousel-inner data-toggle="modal" data-target="#modal-#{card.id}"
