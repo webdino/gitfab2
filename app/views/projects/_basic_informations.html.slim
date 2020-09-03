@@ -42,6 +42,7 @@ section#basic-informations
 
   section.body
     - if @project.figures.present?
+      - cache [@project.figures] do
       - if @project.figures.first.content.present?
         - figures = @project.figures.to_a
         figure.visual.carousel.slide data-ride="carousel" data-interval="false" id="carousel-#{@project.id}"

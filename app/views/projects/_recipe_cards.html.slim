@@ -30,7 +30,8 @@ section#recipe-cards
     ul#recipe-card-list.card-list
       - @states.each do |state|
         li class="card-wrapper #{state.htmlclass}-wrapper"
-          = render "states/state", state: state, owner: @owner, project: @project
+          - cache [state, state.annotations, state.comments, current_user] do
+            = render "states/state", state: state, owner: @owner, project: @project
 
     .article-column.sp
       - if can? :edit, @project

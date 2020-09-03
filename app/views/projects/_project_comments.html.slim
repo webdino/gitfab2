@@ -4,28 +4,29 @@ section#project-comments
     .comments-wrapper
       ul.comments
         - @project_comments.each.with_index(1) do |comment, i|
-          li.comment id="project-comment-#{comment.id}"
-            .left
-              = link_to image_tag(comment.user.avatar.thumb.url, class: 'avatar'), owner_path(comment.user), title: comment.user.name
-            .right
-              .wrapper
-                .header
-                  span.number.header-content
-                    = format "No.%03d", i
-                  span.owner.header-content
-                    = link_to_if !comment.user.is_deleted?, comment.user.name, owner_path(comment.user)
-                      '退会ユーザー
+          - cache [comment, comment.user, current_user] do
+            li.comment id="project-comment-#{comment.id}"
+              .left
+                = link_to image_tag(comment.user.avatar.thumb.url, class: 'avatar'), owner_path(comment.user), title: comment.user.name
+              .right
+                .wrapper
+                  .header
+                    span.number.header-content
+                      = format "No.%03d", i
+                    span.owner.header-content
+                      = link_to_if !comment.user.is_deleted?, comment.user.name, owner_path(comment.user)
+                        '退会ユーザー
 
-                  span.created-at.header-content
-                    = "Posted date: "
-                    span.date
-                      = l(comment.created_at.to_date)
+                    span.created-at.header-content
+                      = "Posted date: "
+                      span.date
+                        = l(comment.created_at.to_date)
 
-                  - if current_user && comment.manageable_by?(current_user)
-                    span.comment-tools
-                      = link_to "delete", project_project_comment_path(comment.project.owner, comment.project.id, comment), method: :delete, data: { confirm: "Are you sure to remove this comment?" }, class: "btn delete-btn delete-comment"
-                .body
-                  == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED
+                    - if current_user && comment.manageable_by?(current_user)
+                      span.comment-tools
+                        = link_to "delete", project_project_comment_path(comment.project.owner, comment.project.id, comment), method: :delete, data: { confirm: "Are you sure to remove this comment?" }, class: "btn delete-btn delete-comment"
+                  .body
+                    == Sanitize.clean auto_link(comment.body, sanitize: false), Sanitize::Config::RELAXED
       - if current_user
         = form_with(scope: :project_comment, url: project_project_comments_path(@project.owner, @project.id), id: 'project-comment-form', class: 'comment-form', local: true) do |f|
           .columns
