@@ -47,6 +47,7 @@ gem 'stl2gif', github: 'takeyuwebinc/stl2gif', branch: 'develop'
 gem 'mathn' # Used in geometry gem in stl gem
 
 gem "sentry-raven"
+gem 'activerecord-import'
 
 group :development, :test do
   gem 'bullet'
@@ -55,7 +56,6 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'spring'
   gem 'spring-commands-rspec'
-  gem 'activerecord-import'
   gem 'faker'
 end
 
