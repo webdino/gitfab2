@@ -6,9 +6,10 @@ section#usages
     ul#usage-list.card-list
       - @usages.each do |usage|
         li
-          = render "components/usage", card: usage,
-                                       delete_url: project_usage_path(@owner, @project, usage),
-                                       edit_url: edit_project_usage_path(@owner, @project, usage)
+          - cache [usage, current_user] do
+            = render "components/usage", card: usage,
+                delete_url: project_usage_path(@owner, @project, usage),
+                edit_url: edit_project_usage_path(@owner, @project, usage)
 
     - if current_user
       = link_to "+ Add Usage", new_project_usage_path(@owner, @project), remote: true,

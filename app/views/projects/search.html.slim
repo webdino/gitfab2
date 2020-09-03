@@ -16,8 +16,7 @@
       h2.title
         ="Searched Projects: #{@query}"
       ul#searched-projects.projects
-        - @projects.each do |project|
-          = render "project", project: project
+        = render partial: "project", collection: @projects, as: "project", cached: true
       = paginate @projects
 
       - if @projects.blank?

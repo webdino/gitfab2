@@ -10,7 +10,7 @@ class ProjectsController < ApplicationController
   def index
     projects = Project.published.includes(:figures, :owner)
     @popular_projects = ProjectAccessStatistic.access_ranking.merge(projects).limit(10)
-    @featured_groups = Group.access_ranking
+    @featured_groups = Rails.cache.fetch("Group.access_ranking", expires_in: 1.hour) { Group.access_ranking }
     @recent_projects = projects.order(updated_at: :desc).limit(12)
   end
 

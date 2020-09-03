@@ -6,3 +6,7 @@ end
 every 1.day, at: ['00:30'] do
   rake 'statistic:daily'
 end
+
+every 1.hour do
+  runner 'Rails.cache.clear'
+end
