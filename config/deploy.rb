@@ -6,8 +6,7 @@ set :rvm_type, :system
 set :rvm_ruby_version, '2.6.6'
 set :assets_roles, [:web, :app]
 set :npm_flags, '--silent --no-progress' # Not use --production to install devDependencies
-+set :whenever_command, -> { "cd #{release_path} && bundle exec whenever --update-crontab -i gitfab2" }
-+set :whenever_roles, ->{ :cron }
+set :whenever_command, -> { "cd #{release_path} && bundle exec whenever" }
 
 if ENV['DEPLOY_BRANCH']
   set :branch, ENV['DEPLOY_BRANCH']
