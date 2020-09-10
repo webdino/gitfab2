@@ -212,11 +212,51 @@ describe ProjectsController, type: :controller do
 
   describe 'POST #fork' do
     subject { post :fork, params: { owner_name: project.owner, project_id: project, owner_id: target_owner.slug } }
-    let(:target_owner) { FactoryBot.create(:user) }
-    let!(:project) { FactoryBot.create(:project) }
-    before { sign_in target_owner }
-    it { is_expected.to redirect_to project_path(target_owner, Project.last) }
-    it { expect{ subject }.to change{ Project.count }.by(1) }
+
+    let!(:project) { FactoryBot.create(:project, :public) }
+
+    before { sign_in(current_user) }
+
+    context 'target_owner is a User' do
+      let(:target_owner) { FactoryBot.create(:user) }
+
+      context 'when the user is himself' do
+        let(:current_user) { target_owner }
+
+        it { is_expected.to redirect_to project_path(target_owner, Project.last) }
+        it { expect{ subject }.to change{ Project.count }.by(1) }
+      end
+
+      context 'when the user is not himself' do
+        let(:current_user) { FactoryBot.create(:user) }
+
+        it { expect{ subject }.to_not change{ Project.count } }
+      end
+    end
+
+    context 'target_owner is a Group' do
+      let(:current_user) { FactoryBot.create(:user) }
+      let(:target_owner) { FactoryBot.create(:group) }
+
+      context 'when the user is in' do
+        context 'when the role is an administrator' do
+          before { FactoryBot.create(:membership, role: "admin", group: target_owner, user: current_user) }
+  
+          it { is_expected.to redirect_to project_path(target_owner, Project.last) }
+          it { expect{ subject }.to change{ Project.count }.by(1) }
+        end
+
+        context 'when the role is a editor' do
+          before { FactoryBot.create(:membership, role: "editor", group: target_owner, user: current_user) }
+
+          it { expect{ subject }.to_not change{ Project.count } }
+        end
+      end
+
+      context 'when the user is not in' do
+        it { expect{ subject }.to_not change{ Project.count } }
+      end
+    end
   end
 
   describe 'PATCH #update' do

@@ -85,6 +85,11 @@ class ProjectsController < ApplicationController
 
   def fork
     target_owner = Owner.find(params[:owner_id])
+    unless can?(:manage, target_owner)
+      render_404
+      return
+    end
+
     original_project = Project.find_with(params[:owner_name], params[:project_id])
     forked_project = original_project.fork_for!(target_owner)
     path = project_path(target_owner, forked_project)
