@@ -5,7 +5,8 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    membership = Membership.find(params[:id])
+    @user = User.friendly.find params[:user_id]
+    membership = @user.memberships.find(params[:id])
     if can?(:update, membership) && membership.update(params.require(:membership).permit(:role))
       render json: { success: true }
     else
@@ -16,7 +17,7 @@ class MembershipsController < ApplicationController
   def destroy
     @user = User.friendly.find params[:user_id]
     @membership = @user.memberships.find params[:id]
-    if @membership.deletable?
+    if can?(:manage, @membership.group) && @membership.deletable?
       @membership.destroy
     else
       render json: { success: false, message: 'You can not remove this member.' }
