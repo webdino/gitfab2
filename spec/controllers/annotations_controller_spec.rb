@@ -43,84 +43,180 @@ describe AnnotationsController, type: :controller do
 
   describe 'POST #create' do
     describe 'with correct parameters' do
-      before do
-        sign_in user
+      subject do
         state = project.states.create type: Card::State.name, description: 'foo'
         post :create,
           params: { owner_name: user, project_id: project, state_id: state.id, annotation: { description: 'ann' } },
           xhr: true
       end
-      it { is_expected.to render_template :create }
+
+      context 'when a user is signed in' do
+        before { sign_in(FactoryBot.create(:user)) }
+
+        it { is_expected.to render_template :create }
+        it { expect { subject }.to change(Card::Annotation, :count).by(1) }
+      end
+
+      context 'when a user is not signed in' do
+        it { is_expected.to_not render_template :create }
+        it { expect { subject }.to_not change(Card::Annotation, :count) }
+      end
     end
   end
 
   describe 'PATCH #update' do
-    describe 'with correct parameters' do
-      before do
-        sign_in user
-        state = project.states.create type: Card::State.name, description: 'foo'
-        annotation = state.annotations.create description: 'ann'
-        patch :update,
-          params: {
-            owner_name: user, project_id: project, state_id: state.id,
-            id: annotation.id, annotation: { description: '_ann' }
-          },
-          xhr: true
+    context 'when a current user is an owner' do
+      let(:current_user) { user }
+      before { sign_in(current_user) }
+
+      describe 'with correct parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create description: 'ann'
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, state_id: state.id,
+              id: annotation.id, annotation: { description: '_ann' }
+            },
+            xhr: true
+        end
+        it { is_expected.to render_template :update }
       end
-      it { is_expected.to render_template :update }
+
+      describe 'with incorrect parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create description: 'ann'
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, state_id: state.id,
+              id: annotation.id, annotation: { type: nil, description: '_ann' }
+            },
+            xhr: true
+        end
+        it { expect(response.status).to eq(400) }
+      end
     end
-    describe 'with incorrect parameters' do
-      before do
-        sign_in user
-        state = project.states.create type: Card::State.name, description: 'foo'
-        annotation = state.annotations.create description: 'ann'
-        patch :update,
-          params: {
-            owner_name: user, project_id: project, state_id: state.id,
-            id: annotation.id, annotation: { type: nil, description: '_ann' }
-          },
-          xhr: true
+
+    context 'when a current user is not an owner' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+
+      describe 'with correct parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create description: 'ann'
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, state_id: state.id,
+              id: annotation.id, annotation: { description: '_ann' }
+            },
+            xhr: true
+        end
+        it { is_expected.to_not render_template :update }
       end
-      it { expect(response.status).to eq(400) }
+    end
+
+    context 'when a user is not logged in' do
+      describe 'with correct parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create description: 'ann'
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, state_id: state.id,
+              id: annotation.id, annotation: { description: '_ann' }
+            },
+            xhr: true
+        end
+        it { is_expected.to_not render_template :update }
+      end
     end
   end
 
   describe 'DELETE #destroy' do
-    before do
-      sign_in user
-      state = project.states.create type: Card::State.name, description: 'foo'
-      annotation = state.annotations.create description: 'ann'
-      delete :destroy,
-        params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
-        xhr: true
+    context 'when a current user is an owner' do
+      let(:current_user) { user }
+      before do
+        sign_in current_user
+        state = project.states.create type: Card::State.name, description: 'foo'
+        annotation = state.annotations.create description: 'ann'
+        delete :destroy,
+          params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+          xhr: true
+      end
+      it { is_expected.to have_http_status(:ok) }
+      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     end
-    it {  expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
+
+    context 'when a current user is not an owner' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before do
+        sign_in current_user
+        state = project.states.create type: Card::State.name, description: 'foo'
+        annotation = state.annotations.create description: 'ann'
+        delete :destroy,
+          params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+          xhr: true
+      end
+      it { is_expected.to have_http_status(:unauthorized) }
+    end
+
+    context 'when a user is not logged' do
+      before do
+        state = project.states.create type: Card::State.name, description: 'foo'
+        annotation = state.annotations.create description: 'ann'
+        delete :destroy,
+          params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+          xhr: true
+      end
+      it { is_expected.to have_http_status(:unauthorized) }
+    end
   end
 
   describe 'POST #to_state' do
-    # TODO: #1366 change #to_state route
-    # describe "with correct parameters" do
-    #   before do
-    #     sign_in user
-    #     state = project.states.create type: Card::State.name, description: "foo"
-    #     annotation = state.annotations.create description: "ann"
-    #     get :to_state,
-    #       params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: annotation.id },
-    #       xhr: true
-    #   end
-    #   it{expect(project.states.first.annotations.length).to eq(0)}
-    # end
-    describe 'with incorrect parameters' do
-      before do
-        sign_in user
-        state = project.states.create type: Card::State.name, description: 'foo'
-        state.annotations.create description: 'ann'
-        get :to_state,
-          params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: 'unexisted_id' },
-          xhr: true
+    context 'when a current user is an owner' do
+      let(:current_user) { user }
+      before { sign_in(current_user) }
+
+      describe 'with correct parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create(description: 'ann')
+          get :to_state,
+            params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: annotation.id },
+            xhr: true
+        end
+        it { expect(response).to have_http_status(:ok) }
       end
-      it { expect(response.status).to eq(404) }
-      it { expect(response).to render_template(layout: false) }
+
+      describe 'with incorrect parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          state.annotations.create description: 'ann'
+          get :to_state,
+            params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: 'unexisted_id' },
+            xhr: true
+        end
+        it { expect(response).to have_http_status(:not_found) }
+        it { expect(response).to render_template(layout: false) }
+      end
+    end
+    
+    context 'when a current user is not an owner' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+
+      describe 'with correct parameters' do
+        before do
+          state = project.states.create type: Card::State.name, description: 'foo'
+          annotation = state.annotations.create(description: 'ann')
+          get :to_state,
+            params: { owner_name: user.slug, project_id: project, state_id: state.id, annotation_id: annotation.id },
+            xhr: true
+        end
+        it { expect(response).to_not have_http_status(:ok) }
+      end
     end
   end
 
