@@ -65,7 +65,7 @@ describe AnnotationsController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    context 'when a current user is an owner' do
+    context 'when a current user is a project owner' do
       let(:current_user) { user }
       before { sign_in(current_user) }
 
@@ -98,7 +98,7 @@ describe AnnotationsController, type: :controller do
       end
     end
 
-    context 'when a current user is not an owner' do
+    context 'when a current user is not a project owner' do
       let(:current_user) { FactoryBot.create(:user) }
       before { sign_in(current_user) }
 
@@ -114,6 +114,26 @@ describe AnnotationsController, type: :controller do
             xhr: true
         end
         it { is_expected.to_not render_template :update }
+      end
+    end
+
+    context 'when a current user is a annotation contributor' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+
+      describe 'with correct parameters' do
+        before do
+          state = FactoryBot.create(:state, project: project)
+          annotation = FactoryBot.create(:annotation, state: state)
+          FactoryBot.create(:contribution, contributor: current_user, card: annotation)
+          patch :update,
+            params: {
+              owner_name: user, project_id: project, state_id: state.id,
+              id: annotation.id, annotation: { description: '_ann' }
+            },
+            xhr: true
+        end
+        it { is_expected.to render_template :update }
       end
     end
 
@@ -135,7 +155,7 @@ describe AnnotationsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    context 'when a current user is an owner' do
+    context 'when a current user is a project owner' do
       let(:current_user) { user }
       before do
         sign_in current_user
@@ -149,7 +169,7 @@ describe AnnotationsController, type: :controller do
       it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
     end
 
-    context 'when a current user is not an owner' do
+    context 'when a current user is not a project owner' do
       let(:current_user) { FactoryBot.create(:user) }
       before do
         sign_in current_user
@@ -160,6 +180,20 @@ describe AnnotationsController, type: :controller do
           xhr: true
       end
       it { is_expected.to have_http_status(:unauthorized) }
+    end
+
+    context 'when a current user is a annotation contributor' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before do
+        sign_in(current_user)
+        state = FactoryBot.create(:state, project: project)
+        annotation = FactoryBot.create(:annotation, state: state)
+        FactoryBot.create(:contribution, contributor: current_user, card: annotation)
+        delete :destroy,
+          params: { owner_name: user, project_id: project, state_id: state.id, id: annotation.id },
+          xhr: true
+      end
+      it { is_expected.to have_http_status(:ok) }
     end
 
     context 'when a user is not logged' do
@@ -175,7 +209,7 @@ describe AnnotationsController, type: :controller do
   end
 
   describe 'POST #to_state' do
-    context 'when a current user is an owner' do
+    context 'when a current user is a project owner' do
       let(:current_user) { user }
       before { sign_in(current_user) }
 
@@ -203,7 +237,7 @@ describe AnnotationsController, type: :controller do
       end
     end
     
-    context 'when a current user is not an owner' do
+    context 'when a current user is not a project owner' do
       let(:current_user) { FactoryBot.create(:user) }
       before { sign_in(current_user) }
 
