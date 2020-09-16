@@ -20,7 +20,7 @@ class NoteCardsController < ApplicationController
 
   def create
     @note_card.description = view_context.auto_link @note_card.description, html: { target: '_blank' }
-    if @note_card.save
+    if can?(:create, @note_card) && @note_card.save
       @project.touch
       render :create
     else
@@ -40,7 +40,7 @@ class NoteCardsController < ApplicationController
       description = view_context.auto_link(note_card_params[:description], html: { target: '_blank' })
       auto_linked_params[:description] = description
     end
-    if @note_card.update auto_linked_params
+    if can?(:update, @note_card) && @note_card.update(auto_linked_params)
       @project.touch
       render :update
     else
@@ -49,7 +49,7 @@ class NoteCardsController < ApplicationController
   end
 
   def destroy
-    if @note_card.destroy
+    if can?(:destroy, @note_card) && @note_card.destroy
       @project.touch
       render json: { success: true }
     else
