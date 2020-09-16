@@ -1,12 +1,17 @@
 class CollaborationsController < ApplicationController
   def create
+    project = Project.find_with(params[:owner_name], params[:project_id])
+    unless can?(:manage, project)
+      render json: { success: false }, status: 400
+      return
+    end
+
     collaborator = Owner.find_by(params[:collaborator_name])
     unless collaborator
       render json: { success: false }, status: 400
       return
     end
 
-    project = Project.find_with(params[:owner_name], params[:project_id])
     @collaboration = collaborator.collaborations.build(project: project)
     if @collaboration.save
       notify_users(project, collaborator)
