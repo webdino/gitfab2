@@ -3,39 +3,109 @@
 describe StatesController, type: :controller do
   render_views
 
-  let(:project) { FactoryBot.create :user_project }
-  let(:state) { project.states.create type: Card::State.name, description: 'foo' }
-  let(:new_state) { FactoryBot.build :state }
-
-  subject { response }
-
   describe 'GET new' do
-    before do
-      sign_in project.owner
+    let(:project) { FactoryBot.create :user_project }
+
+    before { sign_in project.owner }
+
+    it do
       get :new, params: { owner_name: project.owner, project_id: project.name }, xhr: true
+      expect(response).to render_template :_card_form
     end
-    it { is_expected.to render_template :_card_form }
   end
 
   describe 'GET show' do
-    before do
+    let(:project) { FactoryBot.create :user_project }
+    let(:state) { FactoryBot.create(:state, project: project) }
+
+    before { sign_in project.owner }
+  
+    it do
       get :show, params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+      expect(response).to render_template :show, formats: :json
     end
-    it { is_expected.to render_template :show, formats: :json }
   end
 
   describe 'GET edit' do
-    before do
-      sign_in project.owner
+    let(:project) { FactoryBot.create :user_project }
+    let(:state) { FactoryBot.create(:state, project: project) }
+
+    before { sign_in(project.owner) }
+  
+    it do
       get :edit, params: { owner_name: project.owner, project_id: project, id: state }, xhr: true
+      expect(response).to render_template :edit
     end
-    it { is_expected.to render_template :edit }
   end
 
   describe 'POST create' do
-    context 'with proper values' do
+    let(:project) { FactoryBot.create :user_project }
+  
+    context 'when an owner is signed in' do
+      let(:current_user) { project.owner }
+      before { sign_in(current_user) }
+
+      context 'with proper values' do
+        it do
+          post :create,
+            params: {
+              owner_name: project.owner, project_id: project,
+              state: { type: Card::State.name, title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(response).to have_http_status(:ok)
+        end
+
+        it do
+          post :create,
+            params: {
+              owner_name: project.owner, project_id: project,
+              state: { type: Card::State.name, title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(response).to render_template :create
+        end
+
+        it 'has 1 state' do
+          expect {
+            post :create,
+            params: {
+              owner_name: project.owner, project_id: project,
+              state: { type: Card::State.name, title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          }.to change(project.states, :count).by(1)
+        end
+      end
+
+      context 'with invalid values' do
+        it do
+          post :create,
+            params: {
+              owner_name: project.owner, project_id: project,
+              state: { type: '', title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(response).to_not have_http_status(:ok)
+        end
+
+        it do
+          post :create,
+            params: {
+              owner_name: project.owner, project_id: project,
+              state: { type: '', title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
+        end
+      end
+    end
+
+    context 'when an user is signed in' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+
       before do
-        sign_in project.owner
         post :create,
           params: {
             owner_name: project.owner, project_id: project,
@@ -44,82 +114,235 @@ describe StatesController, type: :controller do
           xhr: true
         project.reload
       end
-      it { is_expected.to render_template :create }
-      it 'has 1 state' do
-        expect(project.states_count).to eq 1
-      end
+      it { expect(response).to_not have_http_status(:ok) }
     end
-    context 'with invalid values' do
+
+    context 'when an user is not signed in' do
       before do
-        sign_in project.owner
         post :create,
           params: {
             owner_name: project.owner, project_id: project,
-            state: { type: '', title: 'foo', description: 'bar' }
+            state: { type: Card::State.name, title: 'foo', description: 'bar' }
           },
           xhr: true
+        project.reload
       end
-      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
+      it { expect(response).to_not have_http_status(:ok) }
     end
   end
 
   describe 'PATCH update' do
-    context 'when updating the card itself' do
-      let!(:state) { project.states.create type: Card::State.name, description: 'foo' }
+    let(:project) { FactoryBot.create :user_project }
+    let(:state) { FactoryBot.create(:state, project: project) }
 
-      before do
-        sign_in project.owner
+    context 'when an owner is signed in' do
+      let(:current_user) { project.owner }
+      before { sign_in(current_user) }
+
+      it 'should have new title and new description' do
         patch :update,
           params: {
             owner_name: project.owner, project_id: project.id, id: state.id,
             state: { title: 'new_title', description: 'new_desc' }
           },
           xhr: true
-      end
-      it 'should have new title and new description' do
+
         state.reload
         expect(state.title).to eq 'new_title'
         expect(state.description).to eq 'new_desc'
       end
-      it { is_expected.to render_template :update }
-    end
-    context 'with invalid values' do
-      before do
-        sign_in project.owner
+
+      it do
         patch :update,
           params: {
             owner_name: project.owner, project_id: project.id, id: state.id,
-            state: { type: '', title: 'foo', description: 'bar' }
+            state: { title: 'new_title', description: 'new_desc' }
           },
           xhr: true
+  
+        expect(response).to have_http_status(:ok)
       end
-      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false }) }
+
+      it do
+        patch :update,
+          params: {
+            owner_name: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
+
+        expect(response).to render_template :update
+      end
+      
+      context 'with invalid values' do
+        it do
+          patch :update,
+            params: {
+              owner_name: project.owner, project_id: project.id, id: state.id,
+              state: { type: '', title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(response).to_not have_http_status(:ok)
+        end
+        it do
+          patch :update,
+            params: {
+              owner_name: project.owner, project_id: project.id, id: state.id,
+              state: { type: '', title: 'foo', description: 'bar' }
+            },
+            xhr: true
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: false })
+        end
+      end
+    end
+
+    context 'when an user is signed in' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+  
+      it do
+        patch :update,
+          params: {
+            owner_name: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
+        expect(response).to_not have_http_status(:ok)
+      end
+
+      it do
+        patch :update,
+          params: {
+            owner_name: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
+        expect(response).to_not render_template :update
+      end
+    end
+
+    context 'when an user is not signed in' do
+      let!(:state) { FactoryBot.create(:state, project: project) }
+
+      it do
+        patch :update,
+          params: {
+            owner_name: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
+        expect(response).to_not have_http_status(:ok) 
+      end
+
+      it do
+        patch :update,
+          params: {
+            owner_name: project.owner, project_id: project.id, id: state.id,
+            state: { title: 'new_title', description: 'new_desc' }
+          },
+          xhr: true
+        expect(response).to_not render_template :update
+      end
     end
   end
 
   describe 'DELETE destroy' do
-    context 'by who can manage the state' do
-      before do
-        sign_in project.owner
-        delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+    let(:project) { FactoryBot.create :user_project }
+    let(:state) { FactoryBot.create(:state, project: project) }
+  
+    context 'when an owner is signed in' do
+      let(:current_user) { project.owner }
+      before { sign_in(current_user) }
+
+      context 'by who can manage the state' do
+        it do
+          delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+          expect(response).to have_http_status(:ok)
+        end
+
+        it do
+          delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+          expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true })
+        end
       end
-      it { expect(JSON.parse(response.body, symbolize_names: true)).to eq({ success: true }) }
+    end
+
+    context 'when a user is signed in' do
+      let(:current_user) { FactoryBot.create(:user) }
+      before { sign_in(current_user) }
+
+      context 'by who can manage the state' do
+        it do
+          delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+          expect(response).to_not have_http_status(:ok)
+        end
+      end
+    end
+
+    context 'when a user is not signed in' do
+      context 'by who can manage the state' do
+        it do
+          delete :destroy,params: { owner_name: project.owner, project_id: project.name, id: state.id }, xhr: true
+          expect(response).to_not have_http_status(:ok)
+        end
+      end
     end
   end
 
   describe 'POST to_annotation' do
-    let(:state_2) { project.states.create type: Card::State.name, description: 'bar' }
-    before do
-      sign_in project.owner
-      post :to_annotation,
-        params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
-        xhr: true
-      project.reload
+    let(:project) { FactoryBot.create :user_project }
+    let!(:state) { FactoryBot.create(:state, project: project) }
+    let!(:state_2) { FactoryBot.create(:state, project: project) }
+
+    context 'when an owner is signed in' do
+      let(:current_user) { project.owner }
+
+      before { sign_in(current_user) }
+
+      it do
+        post :to_annotation,
+          params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+          xhr: true
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'creates an annotation from a state' do
+        expect {
+          post :to_annotation,
+            params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+            xhr: true
+        }.to change(project.states, :count).by(-1)
+      end
+
+      it 'creates an annotation from a state' do
+        expect {
+          post :to_annotation,
+            params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+            xhr: true
+        }.to change(state.annotations, :count).by(1)
+      end
     end
-    it 'creates an annotation from a state' do
-      aggregate_failures '1 state, 1 annotation' do
-        expect(project.states_count).to eq 1
-        expect(project.states.first.annotations.count).to eq 1
+
+    context 'when a user is signed in' do
+      let(:current_user) { FactoryBot.create(:user) }
+
+      before { sign_in(current_user) }
+
+      it do
+        post :to_annotation,
+          params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+          xhr: true
+        expect(response).to_not have_http_status(:ok)
+      end
+    end
+
+    context 'when a user is not signed in' do
+      it do
+        post :to_annotation,
+          params: { owner_name: project.owner, project_id: project.name, state_id: state_2.id, dst_state_id: state.id },
+          xhr: true
+
+        expect(response).to_not have_http_status(:ok)
       end
     end
   end

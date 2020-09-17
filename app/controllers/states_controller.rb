@@ -44,9 +44,13 @@ class StatesController < ApplicationController
 
   def to_annotation
     state = @project.states.find(params[:state_id])
-    parent_state = @project.states.find(params[:dst_state_id])
-    annotation = state.to_annotation!(parent_state)
-    render json: {'$oid' => annotation.id}
+    if can?(:manage, state)
+      parent_state = @project.states.find(params[:dst_state_id])
+      annotation = state.to_annotation!(parent_state)
+      render json: {'$oid' => annotation.id}
+    else
+      render json: { success: false }, status: 400
+    end
   end
 
   private
