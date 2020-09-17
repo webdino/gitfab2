@@ -45,12 +45,12 @@ class AnnotationsController < ApplicationController
   end
 
   def to_state
-    annotation = @state.annotations.where(id: params[:annotation_id]).first
-    if annotation.blank?
-      render_404
-    else
+    annotation = @state.annotations.find(params[:annotation_id])
+    if can?(:manage, annotation)
       state = annotation.to_state!(@project)
       render json: {'$oid' => state.id}
+    else
+      render json: { success: false }, status: :unauthorized
     end
   end
 
