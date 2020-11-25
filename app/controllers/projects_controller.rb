@@ -145,7 +145,7 @@ class ProjectsController < ApplicationController
   def slideshow
     @project = @owner.projects.active.includes(states: [:figures, annotations: :figures])
                  .friendly.find(params[:project_id])
-    @cards = @project.states.map { |state| [state] + state.annotations }.flatten
+    @cards = @project.states.ordered_by_position.map { |state| [state] + state.annotations.ordered_by_position }.flatten
     render layout: nil
   end
 
